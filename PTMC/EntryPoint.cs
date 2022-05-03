@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PTMC
 {
@@ -12,13 +7,32 @@ namespace PTMC
     {
         public static void Main(string[] args)
         {
-            string ptmlSourceFile = "test.ptml";
+            Console.WriteLine("PTMC - Programmable Tile Machine Compiler");
 
+            const string ptmlSourceFile = "test.ptml";
+            const string transpiledSourceFile = "generated.c";
+
+            if (!File.Exists(ptmlSourceFile))
+            {
+                Console.WriteLine($"Source file not found: {ptmlSourceFile}");
+                return;
+            }
+
+            Console.WriteLine("Compiling PTML to C...");
             var transpiler = new Transpiler();
-            transpiler.Run(ptmlSourceFile);
+            transpiler.Run(ptmlSourceFile, transpiledSourceFile);
+            
+            if (transpiler.Success)
+            {
+                Console.WriteLine("Compiling C to EXE...");
+                var compiler = new Compiler();
+                compiler.Run(ptmlSourceFile, transpiledSourceFile);
 
-            var compiler = new Compiler();
-            compiler.Run(ptmlSourceFile);
+                if (compiler.Success)
+                {
+                    Console.WriteLine("Success!");
+                }
+            }
         }
     }
 }

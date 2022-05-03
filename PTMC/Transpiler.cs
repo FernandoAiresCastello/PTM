@@ -11,13 +11,56 @@ namespace PTMC
     {
         public bool Success { get; private set; } = false;
 
-        public void Run(string ptmlSourceFile)
+        public void Run(string ptmlSourceFile, string transpiledSourceFile)
         {
-            var file = File.ReadAllLines(ptmlSourceFile);
+            StringBuilder c = new StringBuilder();
+            c.AppendLine("#include \"ptm.h\"");
+            c.AppendLine("int main(int argc, char* argv[]) {");
 
-            foreach (var line in file)
+            var ptml = File.ReadAllLines(ptmlSourceFile);
+            int srcLineNumber = 1;
+
+            foreach (var ptmlLine in ptml)
             {
+                if (ptmlLine.Trim() != string.Empty)
+                {
+                    var transpiledLine = TranspileLine(ptmlLine, srcLineNumber);
+                    if (transpiledLine != null)
+                        c.AppendLine(transpiledLine);
+                    else
+                        return;
+                }
+                else
+                {
+                    c.AppendLine(ptmlLine);
+                }
+
+                srcLineNumber++;
             }
+
+            c.AppendLine("return 0; }");
+
+            File.WriteAllText(transpiledSourceFile, c.ToString());
+            Success = true;
+        }
+
+        private void Error(string msg, string srcLine, int srcLineNumber)
+        {
+            Console.WriteLine($"ERROR at line {srcLineNumber}: " + msg);
+            Console.WriteLine($"Source: {srcLine}");
+        }
+
+        private string TranspileLine(string ptml, int srcLineNumber)
+        {
+            string cmd = ptml.Substring(0, ptml.IndexOf(' ')).ToUpper();
+
+            if (cmd == "TEST")
+            {
+                return "test();";
+            }
+
+            Error("Unknown command", ptml, srcLineNumber);
+            return null;
         }
     }
 }

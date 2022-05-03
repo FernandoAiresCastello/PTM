@@ -14,3 +14,6 @@ debug
 *.dia~
 *.props
 Debug
+test.ptml
+generated.c
+test.exe
