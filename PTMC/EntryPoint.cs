@@ -12,11 +12,13 @@ namespace PTMC
     {
         public static void Main(string[] args)
         {
-            var file = File.ReadAllLines("test.ptml");
+            string ptmlSourceFile = "test.ptml";
 
-            foreach (var line in file)
-            {
-            }
+            var transpiler = new Transpiler();
+            transpiler.Run(ptmlSourceFile);
+
+            var compiler = new Compiler();
+            compiler.Run(ptmlSourceFile);
         }
     }
 }

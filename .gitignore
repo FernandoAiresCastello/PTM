@@ -1,5 +1,4 @@
 .vs
-bin
 obj
 debug
 *.ini
@@ -15,6 +14,3 @@ debug
 *.dia~
 *.props
 Debug
-Docs/Generated
-old
-output
