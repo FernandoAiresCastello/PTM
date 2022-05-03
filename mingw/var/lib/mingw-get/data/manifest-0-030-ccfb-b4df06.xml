@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<package id="manifest-0-030-ccfb-b4df06">
+    <release tarname="gcc-8.2.0-5-mingw32-lic.tar.xz" />
+    <references>
+        <sysroot id="sysroot-0-002-a7c6-d7dbb5" />
+    </references>
+    <manifest>
+        <file path="share/doc/gcc/8.2.0/COPYING.RUNTIME" />
+        <file path="share/doc/gcc/8.2.0/COPYING3" />
+        <file path="share/doc/gcc/8.2.0/COPYING.LIB" />
+        <file path="share/doc/gcc/8.2.0/COPYING" />
+        <file path="share/doc/gcc/8.2.0/COPYING3.LIB" />
+        <file path="share/doc/gcc/8.2.0/zlib/LICENSE_1_0.txt" />
+    </manifest>
+</package>
