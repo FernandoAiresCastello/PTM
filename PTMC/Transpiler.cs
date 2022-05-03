@@ -52,14 +52,24 @@ namespace PTMC
 
         private string TranspileLine(string ptml, int srcLineNumber)
         {
-            string cmd = ptml.Substring(0, ptml.IndexOf(' ')).ToUpper();
+            string cmd;
+            ptml = ptml.Trim();
+            int indexOfFirstSpace = ptml.IndexOf(' ');
+
+            if (indexOfFirstSpace > 0)
+                cmd = ptml.Substring(0, indexOfFirstSpace).ToUpper();
+            else
+                cmd = ptml.ToUpper();
 
             if (cmd == "TEST")
             {
                 return "test();";
             }
+            else
+            {
+                Error("Unknown command", ptml, srcLineNumber);
+            }
 
-            Error("Unknown command", ptml, srcLineNumber);
             return null;
         }
     }
