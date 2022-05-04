@@ -55,15 +55,22 @@ namespace PTMC
             string cmd;
             ptml = ptml.Trim();
             int indexOfFirstSpace = ptml.IndexOf(' ');
+            string args;
 
             if (indexOfFirstSpace > 0)
-                cmd = ptml.Substring(0, indexOfFirstSpace).ToUpper();
-            else
-                cmd = ptml.ToUpper();
-
-            if (cmd == "TEST")
             {
-                return "test();";
+                cmd = ptml.Substring(0, indexOfFirstSpace).ToUpper();
+                args = ptml.Substring(indexOfFirstSpace).Trim();
+            }
+            else
+            {
+                cmd = ptml.ToUpper();
+                args = "";
+            }
+
+            if (cmd == "WINDOW")
+            {
+                return $"ptm_init_window({args});";
             }
             else
             {
