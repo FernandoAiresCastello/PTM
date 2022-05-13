@@ -28,7 +28,7 @@ namespace PTMC
             var psi = new ProcessStartInfo(Environment.CurrentDirectory + "\\mingw\\bin\\gcc");
             psi.UseShellExecute = false;
             psi.EnvironmentVariables["PATH"] = Environment.CurrentDirectory + "\\mingw\\bin";
-            psi.Arguments = $"-static-libgcc {ptmApiSourceFiles} {transpiledSourceFile} -o \"{outputExePath}\" -lmingw32 -lSDL2main -lSDL2 -mwindows";
+            psi.Arguments = $"-static-libgcc {ptmApiSourceFiles} {transpiledSourceFile} -o \"{outputExePath}\" -lmingw32 -lSDL2main -lSDL2 -mwindows -fno-diagnostics-color";
             Process.Start(psi);
 
             string sdlFilePath = Path.Combine(outputFolder, "SDL2.dll");

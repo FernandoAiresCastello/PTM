@@ -23,17 +23,26 @@ namespace PTMC
 
             foreach (var ptmlLine in ptml)
             {
-                if (ptmlLine.Trim() != string.Empty)
+                string trimmedLine = ptmlLine.Trim();
+
+                if (trimmedLine != string.Empty)
                 {
-                    var transpiledLine = TranspileLine(ptmlLine, srcLineNumber);
-                    if (transpiledLine != null)
-                        c.AppendLine(transpiledLine);
+                    if (trimmedLine.StartsWith(";"))
+                    {
+                        c.AppendLine("//" + trimmedLine.Substring(1));
+                    }
                     else
-                        return;
+                    {
+                        var transpiledLine = TranspileLine(trimmedLine, srcLineNumber);
+                        if (transpiledLine != null)
+                            c.AppendLine(transpiledLine);
+                        else
+                            return;
+                    }
                 }
                 else
                 {
-                    c.AppendLine(ptmlLine);
+                    c.AppendLine(trimmedLine);
                 }
 
                 srcLineNumber++;
@@ -81,6 +90,26 @@ namespace PTMC
             else if (cmd == "EXIT")
             {
                 return $"ptm_exit();";
+            }
+            else if (cmd == "LPSET")
+            {
+                return $"ptm_put_pixel_linear({args});";
+            }
+            else if (cmd == "PSET")
+            {
+                return $"ptm_put_pixel({args});";
+            }
+            else if (cmd == "REFR")
+            {
+                return $"ptm_update_window();";
+            }
+            else if (cmd == "CLS")
+            {
+                return $"ptm_clear_window({args});";
+            }
+            else if (cmd == "FOR")
+            {
+
             }
             else
             {
