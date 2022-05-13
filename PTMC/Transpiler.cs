@@ -16,6 +16,7 @@ namespace PTMC
             StringBuilder c = new StringBuilder();
             c.AppendLine("#include \"ptm.h\"");
             c.AppendLine("int main(int argc, char* argv[]) {");
+            c.AppendLine("ptm_init();");
 
             var ptml = File.ReadAllLines(ptmlSourceFile);
             int srcLineNumber = 1;
@@ -38,6 +39,7 @@ namespace PTMC
                 srcLineNumber++;
             }
 
+            c.AppendLine("ptm_exit();");
             c.AppendLine("return 0; }");
 
             File.WriteAllText(transpiledSourceFile, c.ToString());
@@ -70,7 +72,15 @@ namespace PTMC
 
             if (cmd == "WINDOW")
             {
-                return $"ptm_init_window({args});";
+                return $"ptm_open_window({args});";
+            }
+            else if (cmd == "HALT")
+            {
+                return $"ptm_halt();";
+            }
+            else if (cmd == "EXIT")
+            {
+                return $"ptm_exit();";
             }
             else
             {
