@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <time.h>
 #include "ptm.h"
 
 struct {
@@ -25,6 +26,8 @@ void ptm_init() {
     graphics.buf_h = 0;
     graphics.buf_len = 0;
     graphics.buf = NULL;
+
+    srand(time(0));
 }
 void ptm_exit() {
     free(graphics.buf);
@@ -85,6 +88,16 @@ void ptm_clear_window(int rgb) {
         graphics.buf[i] = rgb;
     }
 }
-void ptm_msgbox(const char* msg) {
-    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "", msg, NULL);
+void ptm_msgbox_info(const char* title, const char* msg) {
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, title, msg, graphics.wnd);
+}
+void ptm_fill_rect(int x, int y, int w, int h, int rgb) {
+    for (int px = x; px < x + w; px++) {
+        for (int py = y; py < y + h; py++) {
+            graphics.buf[py * graphics.buf_w + px] = rgb;
+        }
+    }
+}
+int ptm_random_number(int min, int max) {
+    return (rand() % (max - min + 1)) + min;
 }

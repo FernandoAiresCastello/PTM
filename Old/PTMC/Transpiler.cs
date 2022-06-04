@@ -107,9 +107,17 @@ namespace PTMC
             {
                 return $"ptm_clear_window({args});";
             }
-            else if (cmd == "FOR")
+            else if (cmd == "RECT")
             {
-
+                return $"ptm_fill_rect({args});";
+            }
+            else if (cmd == "MSGBOX")
+            {
+                return $"ptm_msgbox_info({args});";
+            }
+            else if (cmd == "RND")
+            {
+                return $"ptm_random_number({args});";
             }
             else
             {
