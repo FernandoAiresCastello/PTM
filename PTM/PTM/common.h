@@ -9,3 +9,4 @@ using namespace TileGameLib;
 using string = std::string;
 using ixp = PaletteIndex;
 using ixc = CharsetIndex;
+#define debugger __debugbreak()

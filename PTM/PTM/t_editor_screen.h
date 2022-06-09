@@ -12,12 +12,17 @@ struct t_editor_screen {
 	int get_cursor_y();
 	TTileSeq& get_tile_under_cursor();
 	TTileSeq& get_tile_at(int x, int y);
+	void delete_tile_under_cursor();
+	void shift_line_from_cursor();
+	string get_line_string_at_cursor();
 	void set_colors(int fg, int bg, int bdr);
 	void draw_border();
 	void draw_cursor();
 	void print(string text);
 	void println(string text);
+	void print_keep_cursor(string text);
 	void put_char(ixc ch);
+	void set_tile(TTileSeq tile, int x, int y);
 	void new_line();
 	void scroll_up();
 	void scroll_right();

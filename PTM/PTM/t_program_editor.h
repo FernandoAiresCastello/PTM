@@ -1,5 +1,6 @@
 #pragma once
 #include "common.h"
+#include "t_program.h"
 
 struct t_editor_screen;
 
@@ -10,7 +11,12 @@ struct t_program_editor {
 	void draw();
 	void on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt);
 private:
+	t_program prg;
 	t_editor_screen* scr;
-	string get_line_at_cursor();
+	void print_ok();
+	void print_msg(string msg);
+	void print_error(string error);
 	void process_line(string line);
+	void execute_command(string line);
+	void store_program_line(string line);
 };

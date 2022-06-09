@@ -8,9 +8,8 @@ t_program_editor::~t_program_editor() {
 	delete scr;
 }
 void t_program_editor::print_intro() {
-	scr->clear();
-	scr->print("   Hello World!\nSecond line");
-	scr->set_cursor(0, 0);
+	scr->println("PTM 1.0");
+	print_ok();
 }
 void t_program_editor::draw() {
 	scr->draw_border();
@@ -25,35 +24,91 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 		scr->move_cursor(0, -1);
 	} else if (key == SDLK_DOWN) {
 		scr->move_cursor(0, 1);
+	} else if (key == SDLK_BACKSPACE) {
+		scr->move_cursor(-1, 0);
+		scr->delete_tile_under_cursor();
+	} else if (key == SDLK_DELETE) {
+		scr->shift_line_from_cursor();
+	} else if (key == SDLK_HOME) {
+		if (shift) {
+			scr->clear();
+		} else if (ctrl) {
+			scr->set_cursor(0, 0);
+		}
 	} else if (key == SDLK_RETURN) {
-		string line = get_line_at_cursor();
+		string line = scr->get_line_string_at_cursor();
 		scr->new_line();
 		if (!line.empty()) {
 			process_line(line);
 		}
 	} else if (key >= 0x20 && key < 0x7f) {
-		scr->put_char(key);
-	}
-}
-string t_program_editor::get_line_at_cursor() {
-	string line;
-	for (int x = 0; x < scr->cols - 1; x++) {
-		auto& tile = scr->get_tile_at(x, scr->get_cursor_y());
-		if (!tile.IsEmpty()) {
-			int chr = tile.GetChar(0);
-			if (chr >= 0x20 && chr < 0xff) {
-				line += chr;
-			}
-			else {
-				line += ' ';
-			}
+		if (shift) {
+			scr->put_char(String::ShiftChar(toupper(key)));
 		} else {
-			line += ' ';
+			scr->put_char(TKey::CapsLock() ? toupper(key) : key);
 		}
 	}
-	return String::Trim(line);
+}
+void t_program_editor::print_ok() {
+	scr->println("Ok");
+}
+void t_program_editor::print_msg(string msg) {
+	scr->println(msg);
+	print_ok();
+}
+void t_program_editor::print_error(string error) {
+	print_msg(error);
 }
 void t_program_editor::process_line(string line) {
-	scr->println("Syntax error");
-	scr->println("Ok");
+	if (String::StartsWithNumber(line)) {
+		store_program_line(line);
+	} else {
+		execute_command(line);
+	}
+}
+void t_program_editor::execute_command(string line) {
+	string cmd = "";
+	string arg = "";
+	std::vector<string> args;
+	int ixSpace = String::FindFirst(line, ' ');
+	if (ixSpace >= 0) {
+		auto cmdParts = String::Split(line, ' ', true);
+		cmd = cmdParts[0];
+		args = String::Split(cmdParts[1], ',', true);
+		if (!args.empty()) {
+			arg = args[0];
+		}
+	} else {
+		cmd = line;
+	}
+
+	print_error("Syntax error");
+}
+void t_program_editor::store_program_line(string line) {
+	int number = 0;
+	bool emptyLine = false;
+	int ixSpace = String::FindFirst(line, ' ');
+	if (ixSpace >= 0) {
+		auto firstChars = String::GetFirstChars(line, ixSpace);
+		auto lineNr = String::Trim(firstChars);
+		number = String::ToInt(lineNr);
+	} else {
+		emptyLine = true;
+		number = String::ToInt(line);
+	}
+	if (number <= 0) {
+		print_error("Illegal line number");
+		return;
+	}
+	if (emptyLine) {
+		if (prg.has_line_number(number)) {
+			prg.delete_line(number);
+			print_msg(String::Format("Line %i deleted", number));
+		} else {
+			print_error("Line not found");
+		}
+		return;
+	}
+	string code = String::Trim(line.substr(ixSpace));
+	prg.add_line(number, code);
 }
