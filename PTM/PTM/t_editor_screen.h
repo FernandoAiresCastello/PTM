@@ -2,6 +2,7 @@
 #include "common.h"
 
 struct t_editor_screen {
+	TBufferedWindow* wnd;
 	int cols;
 	int rows;
 	t_editor_screen(TBufferedWindow* wnd);
@@ -16,6 +17,9 @@ struct t_editor_screen {
 	void shift_line_from_cursor();
 	string get_line_string_at_cursor();
 	void set_colors(int fg, int bg, int bdr);
+	void set_fgcolor(int fg);
+	void set_bgcolor(int bg);
+	void set_bdrcolor(int bdr);
 	void draw_border();
 	void draw_cursor();
 	void print(string text);
@@ -28,7 +32,6 @@ struct t_editor_screen {
 	void scroll_right();
 	void scroll_left();
 private:
-	TBufferedWindow* wnd;
 	TTileBuffer* buf;
 	struct {
 		int x;

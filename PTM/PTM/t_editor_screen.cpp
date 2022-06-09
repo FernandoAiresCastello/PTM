@@ -13,9 +13,16 @@ t_editor_screen::t_editor_screen(TBufferedWindow* wnd) {
 	color.fg = 15;
 	color.bg = 0;
 	color.bdr = 5;
+	clear();
 }
 void t_editor_screen::clear() {
 	buf->ClearAllLayers();
+	for (int y = 0; y < rows; y++) {
+		for (int x = 0; x < cols; x++) {
+			auto& tile = buf->GetTile(LAYER_0, x, y);
+			tile.Add(TTile(' ', color.fg, color.bg));
+		}
+	}
 	set_cursor(0, 0);
 }
 void t_editor_screen::set_cursor(int x, int y) {
@@ -39,7 +46,9 @@ TTileSeq& t_editor_screen::get_tile_at(int x, int y) {
 	return buf->GetTile(LAYER_0, x + 1, y + 1);
 }
 void t_editor_screen::delete_tile_under_cursor() {
-	get_tile_under_cursor().Clear();
+	auto& tile = get_tile_under_cursor();
+	tile.Clear();
+	tile.Add(TTile(' ', color.fg, color.bg));
 }
 void t_editor_screen::shift_line_from_cursor() {
 	string chars;
@@ -75,6 +84,25 @@ void t_editor_screen::set_colors(int fg, int bg, int bdr) {
 	color.fg = fg;
 	color.bg = bg;
 	color.bdr = bdr;
+
+	for (int y = 0; y < rows; y++) {
+		for (int x = 0; x < cols; x++) {
+			auto& tile = buf->GetTile(LAYER_0, x, y);
+			if (!tile.IsEmpty()) {
+				tile.SetForeColor(0, fg);
+				tile.SetBackColor(0, bg);
+			}
+		}
+	}
+}
+void t_editor_screen::set_fgcolor(int fg) {
+	set_colors(fg, color.bg, color.bdr);
+}
+void t_editor_screen::set_bgcolor(int bg) {
+	set_colors(color.fg, bg, color.bdr);
+}
+void t_editor_screen::set_bdrcolor(int bdr) {
+	set_colors(color.fg, color.bg, bdr);
 }
 void t_editor_screen::draw_border() {
 	TTileSeq tile(0, color.fg, color.bdr);

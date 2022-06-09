@@ -5,6 +5,7 @@
 struct t_editor_screen;
 
 struct t_program_editor {
+	bool exit_requested;
 	t_program_editor(TBufferedWindow* wnd);
 	~t_program_editor();
 	void print_intro();
@@ -18,5 +19,7 @@ private:
 	void print_error(string error);
 	void process_line(string line);
 	void execute_command(string line);
+	bool assert_color_ix(int ix);
+	bool assert_argc(std::vector<string>& args, int argc);
 	void store_program_line(string line);
 };

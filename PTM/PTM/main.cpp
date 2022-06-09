@@ -7,7 +7,13 @@ int main(int argc, char* argv[]) {
 	t_program_editor* editor = new t_program_editor(wnd);
 	editor->print_intro();
 
-	while (true) {
+	bool running = true;
+
+	while (running) {
+		if (editor->exit_requested) {
+			running = false;
+			break;
+		}
 		editor->draw();
 		wnd->Update();
 		SDL_Event e = { 0 };
@@ -15,6 +21,7 @@ int main(int argc, char* argv[]) {
 		bool handled = false;
 		if (e.type == SDL_QUIT) {
 			handled = true;
+			running = false;
 			break;
 		} else if (e.type == SDL_KEYDOWN) {
 			auto key = e.key.keysym.sym;

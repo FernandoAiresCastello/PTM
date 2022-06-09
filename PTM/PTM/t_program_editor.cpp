@@ -2,6 +2,7 @@
 #include "t_editor_screen.h"
 
 t_program_editor::t_program_editor(TBufferedWindow* wnd) {
+	exit_requested = false;
 	scr = new t_editor_screen(wnd);
 }
 t_program_editor::~t_program_editor() {
@@ -81,8 +82,57 @@ void t_program_editor::execute_command(string line) {
 	} else {
 		cmd = line;
 	}
+	cmd = String::ToUpper(cmd);
 
-	print_error("Syntax error");
+	if (cmd == "FGCOLOR") {
+		if (assert_argc(args, 1)) {
+			int fg = String::ToInt(arg);
+			if (assert_color_ix(fg)) {
+				scr->set_fgcolor(fg);
+				print_ok();
+			}
+		}
+	} else if (cmd == "BGCOLOR") {
+		if (assert_argc(args, 1)) {
+			int bg = String::ToInt(arg);
+			if (assert_color_ix(bg)) {
+				scr->set_bgcolor(bg);
+				print_ok();
+			}
+		}
+	} else if (cmd == "BDCOLOR") {
+		if (assert_argc(args, 1)) {
+			int bdr = String::ToInt(arg);
+			if (assert_color_ix(bdr)) {
+				scr->set_bdrcolor(bdr);
+				print_ok();
+			}
+		}
+	} else if (cmd == "EXIT") {
+		if (assert_argc(args, 0)) {
+			exit_requested = true;
+		}
+	} else {
+		print_error("Syntax error");
+		return;
+	}
+}
+bool t_program_editor::assert_color_ix(int ix) {
+	if (ix < 0 || ix >= scr->wnd->GetPalette()->GetSize()) {
+		print_error("Invalid color index");
+		return false;
+	}
+	return true;
+}
+bool t_program_editor::assert_argc(std::vector<string>& args, int argc) {
+	if (args.size() < argc) {
+		print_error("Missing arguments");
+		return false;
+	} else if (args.size() > argc) {
+		print_error("Too many arguments");
+		return false;
+	}
+	return true;
 }
 void t_program_editor::store_program_line(string line) {
 	int number = 0;
