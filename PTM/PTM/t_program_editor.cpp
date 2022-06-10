@@ -33,7 +33,11 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 	} else if (key == SDLK_BACKSPACE) {
 		scr->csr_backspace();
 	} else if (key == SDLK_DELETE) {
-		scr->csr_delete();
+		if (shift) {
+			scr->clear_current_line();
+		} else {
+			scr->csr_delete();
+		}
 	} else if (key == SDLK_HOME) {
 		if (shift) {
 			scr->clear_lines();
@@ -80,6 +84,7 @@ void t_program_editor::process_line(string line) {
 	}
 }
 void t_program_editor::execute_command(string line) {
+	if (String::Trim(line).empty()) return;
 	string cmd = "";
 	string arg = "";
 	std::vector<string> args;
@@ -123,6 +128,7 @@ void t_program_editor::execute_command(string line) {
 	} else if (cmd == "EXIT") {
 		if (assert_argc(args, 0)) {
 			exit_requested = true;
+			print_ok();
 		}
 	} else {
 		print_error("Syntax error");

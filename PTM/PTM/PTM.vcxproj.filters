@@ -2,18 +2,60 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="t_program_line.cpp" />
-    <ClCompile Include="t_program.cpp" />
-    <ClCompile Include="t_editor_screen.cpp" />
-    <ClCompile Include="t_program_editor.cpp" />
-    <ClCompile Include="t_editor_screen_line.cpp" />
+    <ClCompile Include="t_editor_screen.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="t_editor_screen_line.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="t_program_editor.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="t_program.cpp">
+      <Filter>Program</Filter>
+    </ClCompile>
+    <ClCompile Include="t_program_line.cpp">
+      <Filter>Program</Filter>
+    </ClCompile>
+    <ClCompile Include="t_interpreter.cpp">
+      <Filter>Interpreter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="t_program_line.h" />
-    <ClInclude Include="common.h" />
-    <ClInclude Include="t_program.h" />
-    <ClInclude Include="t_editor_screen.h" />
-    <ClInclude Include="t_program_editor.h" />
-    <ClInclude Include="t_editor_screen_line.h" />
+    <ClInclude Include="t_editor_screen.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="t_editor_screen_line.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="t_program_editor.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="t_program.h">
+      <Filter>Program</Filter>
+    </ClInclude>
+    <ClInclude Include="t_program_line.h">
+      <Filter>Program</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="t_interpreter.h">
+      <Filter>Interpreter</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Editor">
+      <UniqueIdentifier>{0e280fbc-ee34-44a0-9078-8cfa322393c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program">
+      <UniqueIdentifier>{0d95466d-6a97-4c32-983e-5b041b80109e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{5a78058d-4114-4c60-aae8-0ff9c987d499}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interpreter">
+      <UniqueIdentifier>{db1a3207-4ac7-42c4-b654-6d79873c80e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

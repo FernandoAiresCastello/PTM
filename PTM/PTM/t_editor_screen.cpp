@@ -25,12 +25,16 @@ void t_editor_screen::clear_lines() {
 	csr_home();
 	update();
 }
+void t_editor_screen::clear_current_line() {
+	get_current_line().clear();
+	csr.x = 0;
+	update();
+}
 void t_editor_screen::update() {
 	wnd->SetBackColor(color.bg);
 	clear_wbuf();
 	draw_border();
 	draw_lines();
-	wnd->Update();
 }
 void t_editor_screen::clear_wbuf() {
 	wnd_buf->ClearAllLayers();
@@ -65,9 +69,10 @@ void t_editor_screen::draw_line(t_editor_screen_line& line, int ybuf) {
 		tile.Add(0, color.fg, color.bg);
 		wnd_buf->SetTile(tile, 0, x, ybuf, false);
 	} else {
-		for (auto& ch : text) {
+		for (int i = first_char_ix; i < line.length(); i++) {
+			ixc ch = line.text()[i];
 			tile.Clear();
-			if (x - 1 == csr.x && ybuf - 1 == csr.y) {
+			if (x - 1 == csr.x && ybuf - 1 == csr.y && csr.x) {
 				tile.Add(ch, color.bg, color.fg);
 				tile.Add(ch, color.fg, color.bg);
 			} else {
@@ -76,7 +81,7 @@ void t_editor_screen::draw_line(t_editor_screen_line& line, int ybuf) {
 			wnd_buf->SetTile(tile, 0, x, ybuf, false);
 			x++;
 			if (x >= last_col) {
-				break;
+				return;
 			}
 		}
 		if (csr.y == ybuf - 1 && csr.x >= text.length()) {
@@ -112,6 +117,7 @@ void t_editor_screen::csr_delete() {
 void t_editor_screen::csr_home() {
 	csr.x = 0;
 	csr.y = 0;
+	first_line_ix = 0;
 	update();
 }
 void t_editor_screen::csr_line_start() {
@@ -200,4 +206,8 @@ int t_editor_screen::line_count() {
 }
 bool t_editor_screen::is_cursor_on_last_line() {
 	return csr.y == lines.size() - 1;
+}
+void t_editor_screen::scroll_right() {
+	first_char_ix++;
+	update();
 }

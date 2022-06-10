@@ -2,7 +2,7 @@
 #include "t_program_editor.h"
 
 int main(int argc, char* argv[]) {
-	TBufferedWindow* wnd = new TBufferedWindow(2, 32, 24, 3, 3);
+	TBufferedWindow* wnd = new TBufferedWindow(2, 33, 25, 3, 3);
 	wnd->SetTitle("PTM");
 	wnd->Show();
 	t_program_editor* editor = new t_program_editor(wnd);

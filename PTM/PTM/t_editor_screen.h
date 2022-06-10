@@ -12,6 +12,7 @@ struct t_editor_screen {
 	TPalette* palette;
 	TCharset* charset;
 	void clear_lines();
+	void clear_current_line();
 	void csr_move(int dx, int dy);
 	void csr_backspace();
 	void csr_delete();
@@ -30,6 +31,7 @@ struct t_editor_screen {
 	void debug(string str);
 	int line_count();
 	bool is_cursor_on_last_line();
+	void scroll_right();
 private:
 	int cols;
 	int rows;
