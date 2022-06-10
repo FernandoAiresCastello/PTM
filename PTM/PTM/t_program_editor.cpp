@@ -80,6 +80,24 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 		} else {
 			scr->type_char(TKey::CapsLock() ? toupper(key) : key, false, true);
 		}
+	} else if (key == SDLK_TAB) {
+		for (int i = 0; i < 4; i++) {
+			scr->type_char(' ', false, true);
+		}
+	} else if (key == SDLK_F1) {
+		scr->print("SAVE \"\"", false);
+		scr->csr_move(-1, 0);
+	} else if (key == SDLK_F2) {
+		scr->print("LOAD \"\"", false);
+		scr->csr_move(-1, 0);
+	} else if (key == SDLK_F3) {
+		scr->print("COLOR ", false);
+	} else if (key == SDLK_F4) {
+		scr->print("LIST ", false);
+	} else if (key == SDLK_F5) {
+		scr->print("RUN ", false);
+	} else if (key == SDLK_F6) {
+		scr->print("RENUM ", false);
 	}
 }
 void t_program_editor::print_ok() {
@@ -92,7 +110,11 @@ void t_program_editor::print_msg(string msg) {
 void t_program_editor::print_error(string error) {
 	print_msg(error);
 }
+void t_program_editor::print_program_line(t_program_line* line) {
+	scr->println(String::Format("%i %s", line->number, line->src.c_str()), true);
+}
 void t_program_editor::process_line(string line) {
+	line = String::Trim(line);
 	if (String::StartsWithNumber(line)) {
 		store_program_line(line);
 	} else {
@@ -100,18 +122,16 @@ void t_program_editor::process_line(string line) {
 	}
 }
 void t_program_editor::execute_command(string line) {
-	if (String::Trim(line).empty()) return;
+	if (line.empty()) { 
+		return; 
+	}
 	string cmd = "";
-	string arg = "";
 	std::vector<string> args;
 	int ixSpace = String::FindFirst(line, ' ');
 	if (ixSpace >= 0) {
 		auto cmdParts = String::Split(line, ' ', true);
 		cmd = cmdParts[0];
 		args = String::Split(cmdParts[1], ',', true);
-		if (!args.empty()) {
-			arg = args[0];
-		}
 	} else {
 		cmd = line;
 	}
@@ -119,7 +139,7 @@ void t_program_editor::execute_command(string line) {
 
 	if (cmd == "FGCOLOR") {
 		if (assert_argc(args, 1)) {
-			int fg = String::ToInt(arg);
+			int fg = String::ToInt(args[0]);
 			if (assert_color_ix(fg)) {
 				scr->color.fg = fg;
 				print_ok();
@@ -127,7 +147,7 @@ void t_program_editor::execute_command(string line) {
 		}
 	} else if (cmd == "BGCOLOR") {
 		if (assert_argc(args, 1)) {
-			int bg = String::ToInt(arg);
+			int bg = String::ToInt(args[0]);
 			if (assert_color_ix(bg)) {
 				scr->color.bg = bg;
 				print_ok();
@@ -135,16 +155,74 @@ void t_program_editor::execute_command(string line) {
 		}
 	} else if (cmd == "BDCOLOR") {
 		if (assert_argc(args, 1)) {
-			int bdr = String::ToInt(arg);
+			int bdr = String::ToInt(args[0]);
 			if (assert_color_ix(bdr)) {
 				scr->color.bdr = bdr;
 				print_ok();
 			}
 		}
+	} else if (cmd == "COLOR") {
+		if (assert_argc(args, 3)) {
+			int fg = String::ToInt(args[0]);
+			if (assert_color_ix(fg)) {
+				scr->color.fg = fg;
+			} else {
+				return;
+			}
+			int bg = String::ToInt(args[1]);
+			if (assert_color_ix(bg)) {
+				scr->color.bg = bg;
+			} else {
+				return;
+			}
+			int bdr = String::ToInt(args[2]);
+			if (assert_color_ix(bdr)) {
+				scr->color.bdr = bdr;
+			} else {
+				return;
+			}
+			print_ok();
+		}
 	} else if (cmd == "EXIT") {
 		if (assert_argc(args, 0)) {
 			exit_requested = true;
 			print_ok();
+		}
+	} else if (cmd == "LIST") {
+		if (args.empty()) {
+			for (auto& line : prg.lines) {
+				print_program_line(&line);
+			}
+			print_ok();
+		} else if (args.size() == 1) {
+			int line_nr = String::ToInt(args[0]);
+			auto line = prg.get_line(line_nr);
+			if (line) {
+				print_program_line(line);
+				print_ok();
+			} else {
+				print_error("Line not found");
+			}
+		} else if (args.size() == 2) {
+			int begin = String::ToInt(args[0]);
+			int end = String::ToInt(args[1]);
+			for (int i = begin; i <= end; i++) {
+				auto line = prg.get_line(i);
+				if (line) {
+					print_program_line(line);
+				}
+			}
+			print_ok();
+		}
+	} else if (cmd == "RENUM") {
+		if (assert_argc(args, 1)) {
+			int increment = String::ToInt(args[0]);
+			if (increment > 0) {
+				prg.renumerate(increment);
+				print_ok();
+			} else {
+				print_error("Illegal increment");
+			}
 		}
 	} else {
 		print_error("Syntax error");
@@ -170,6 +248,7 @@ bool t_program_editor::assert_argc(std::vector<string>& args, int argc) {
 }
 void t_program_editor::store_program_line(string line) {
 	int number = 0;
+	line = String::Trim(line);
 	bool emptyLine = false;
 	int ixSpace = String::FindFirst(line, ' ');
 	if (ixSpace >= 0) {

@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "t_program.h"
 
 t_program::t_program() {
@@ -7,6 +8,15 @@ void t_program::add_line(int number, string src) {
 	line.number = number;
 	line.src = src;
 	lines.push_back(line);
+	sort();
+}
+t_program_line* t_program::get_line(int number) {
+	for (auto& line : lines) {
+		if (line.number == number) {
+			return &line;
+		}
+	}
+	return nullptr;
 }
 bool t_program::delete_line(int number) {
 	int curIndex = 0;
@@ -31,4 +41,15 @@ bool t_program::has_line_number(int number) {
 		}
 	}
 	return false;
+}
+void t_program::sort() {
+	std::sort(lines.begin(), lines.end());
+}
+void t_program::renumerate(int increment) {
+	sort();
+	int new_number = 0;
+	for (int i = 0; i < lines.size(); i++) {
+		new_number += increment;
+		lines[i].number = new_number;
+	}
 }
