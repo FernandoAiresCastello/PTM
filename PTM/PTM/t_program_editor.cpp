@@ -14,12 +14,6 @@ void t_program_editor::print_intro() {
 	print_ok();
 }
 void t_program_editor::print_debug() {
-	scr->debug(
-		String::Format("%i %i %s %i %i", 
-		scr->csr_x(), scr->csr_y(),
-		scr->is_cursor_on_last_line() ? "B" : "-",
-		scr->line_count(),
-		scr->get_current_line().length()));
 }
 void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt) {
 	if (key == SDLK_RIGHT) {
@@ -74,16 +68,12 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 		if (!line.empty()) {
 			process_line(line);
 		}
-	} else if (key >= 0x20 && key < 0x7f) {
-		if (shift) {
-			scr->type_char(String::ShiftChar(toupper(key)), false, true);
-		} else {
-			scr->type_char(TKey::CapsLock() ? toupper(key) : key, false, true);
-		}
 	} else if (key == SDLK_TAB) {
 		for (int i = 0; i < 4; i++) {
 			scr->type_char(' ', false, true);
 		}
+	} else if (key == SDLK_t && alt) {
+		scr->type_tile(TTileSeq("64,10,20;65,30,40"), false, true);
 	} else if (key == SDLK_F1) {
 		scr->print("SAVE \"\"", false);
 		scr->csr_move(-1, 0);
@@ -91,13 +81,21 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 		scr->print("LOAD \"\"", false);
 		scr->csr_move(-1, 0);
 	} else if (key == SDLK_F3) {
-		scr->print("COLOR ", false);
+		scr->print("FILES ", false);
 	} else if (key == SDLK_F4) {
 		scr->print("LIST ", false);
 	} else if (key == SDLK_F5) {
 		scr->print("RUN ", false);
 	} else if (key == SDLK_F6) {
+		scr->print("COLOR ", false);
+	} else if (key == SDLK_F7) {
 		scr->print("RENUM ", false);
+	} else if (key >= 0x20 && key < 0x7f) {
+		if (shift) {
+			scr->type_char(String::ShiftChar(toupper(key)), false, true);
+		} else {
+			scr->type_char(TKey::CapsLock() ? toupper(key) : key, false, true);
+		}
 	}
 }
 void t_program_editor::print_ok() {
@@ -224,6 +222,18 @@ void t_program_editor::execute_command(string line) {
 				print_error("Illegal increment");
 			}
 		}
+	} else if (cmd == "FILES") {
+		string pattern = "";
+		if (args.size() == 1) {
+			pattern = "*." + args[0];
+		}
+		auto files = File::List(".", pattern, false, false);
+		for (auto& file : files) {
+			if (file != "." && file != "..") {
+				scr->println(file, true);
+			}
+		}
+		print_ok();
 	} else {
 		print_error("Syntax error");
 		return;

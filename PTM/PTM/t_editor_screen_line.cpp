@@ -49,3 +49,6 @@ void t_editor_screen_line::backspace(int ix) {
 string t_editor_screen_line::linebrk(int ix) {
 	return "";
 }
+TTileSeq& t_editor_screen_line::get_tile(int ix) {
+	return tiles[ix];
+}

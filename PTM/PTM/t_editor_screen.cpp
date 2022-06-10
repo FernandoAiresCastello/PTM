@@ -63,13 +63,14 @@ void t_editor_screen::draw_lines() {
 }
 void t_editor_screen::draw_line(t_editor_screen_line& line, int ybuf) {
 	string text = line.text();
-	TTileSeq tile;
 	int x = 1;
 	for (int i = first_char_ix; i < line.length(); i++) {
-		ixc ch = line.text()[i];
-		tile.Clear();
-		tile.Add(ch, color.fg, color.bg);
-		wnd_buf->SetTile(tile, 0, x, ybuf, false);
+		auto tile = line.get_tile(i);
+		if (tile.Prop.Has("own_color")) {
+			wnd_buf->SetTile(tile, 0, x, ybuf, false);
+		} else {
+			wnd_buf->SetTile(TTileSeq(tile.GetChar(0), color.fg, color.bg), 0, x, ybuf, false);
+		}
 		x++;
 		if (x >= last_col) {
 			return;
@@ -186,12 +187,11 @@ void t_editor_screen::next_line() {
 	csr.y++;
 	update();
 }
-void t_editor_screen::type_char(ixc ch, bool overwrite, bool must_update) {
+void t_editor_screen::type_char(TTileSeq tile, bool overwrite, bool must_update) {
+	ixc ch = tile.GetChar(0);
 	if (ch == '\n') {
 		crlf();
-	}
-	else {
-		TTileSeq tile(ch, color.fg, color.bg);
+	} else {
 		if (csr.y >= lines.size()) {
 			new_line();
 			csr.y--;
@@ -209,6 +209,13 @@ void t_editor_screen::type_char(ixc ch, bool overwrite, bool must_update) {
 		update();
 	}
 }
+void t_editor_screen::type_tile(TTileSeq tile, bool overwrite, bool must_update) {
+	tile.Prop.Set("own_color");
+	type_char(tile, overwrite, must_update);
+}
+void t_editor_screen::type_char(ixc ch, bool overwrite, bool must_update) {
+	type_char(TTileSeq(ch, color.fg, color.bg), overwrite, must_update);
+}
 void t_editor_screen::print(string str, bool overwrite) {
 	for (auto& ch : str) {
 		type_char(ch, overwrite, false);
@@ -218,7 +225,7 @@ void t_editor_screen::print(string str, bool overwrite) {
 void t_editor_screen::println(string str, bool overwrite) {
 	print(str + "\n", overwrite);
 }
-void t_editor_screen::debug(string str) {
+void t_editor_screen::print_debug(string str) {
 	int x = 1;
 	int y = 0;
 	for (auto& ch : str) {

@@ -12,6 +12,7 @@ struct t_editor_screen_line {
 	void erase(int ix);
 	void backspace(int ix);
 	string linebrk(int ix);
+	TTileSeq& get_tile(int ix);
 private:
 	std::vector<TTileSeq> tiles;
 };

@@ -25,10 +25,12 @@ struct t_editor_screen {
 	void crlf();
 	t_editor_screen_line& get_current_line();
 	string get_current_string();
+	void type_char(TTileSeq tile, bool overwrite, bool must_update);
+	void type_tile(TTileSeq tile, bool overwrite, bool must_update);
 	void type_char(ixc ch, bool overwrite, bool must_update);
 	void print(string str, bool overwrite);
 	void println(string str, bool overwrite);
-	void debug(string str);
+	void print_debug(string str);
 	int line_count();
 	bool is_cursor_on_last_line();
 	void scroll_right();
