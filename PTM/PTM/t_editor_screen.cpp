@@ -35,6 +35,7 @@ void t_editor_screen::update() {
 	clear_wbuf();
 	draw_border();
 	draw_lines();
+	draw_cursor();
 }
 void t_editor_screen::clear_wbuf() {
 	wnd_buf->ClearAllLayers();
@@ -61,36 +62,43 @@ void t_editor_screen::draw_lines() {
 	}
 }
 void t_editor_screen::draw_line(t_editor_screen_line& line, int ybuf) {
-	int x = 1;
 	string text = line.text();
 	TTileSeq tile;
-	if (text.empty() && csr.y == ybuf - 1) {
-		tile.Add(0, color.bg, color.fg);
-		tile.Add(0, color.fg, color.bg);
+	int x = 1;
+	for (int i = first_char_ix; i < line.length(); i++) {
+		ixc ch = line.text()[i];
+		tile.Clear();
+		tile.Add(ch, color.fg, color.bg);
 		wnd_buf->SetTile(tile, 0, x, ybuf, false);
-	} else {
-		for (int i = first_char_ix; i < line.length(); i++) {
-			ixc ch = line.text()[i];
-			tile.Clear();
-			if (x - 1 == csr.x && ybuf - 1 == csr.y && csr.x) {
-				tile.Add(ch, color.bg, color.fg);
-				tile.Add(ch, color.fg, color.bg);
-			} else {
-				tile.Add(ch, color.fg, color.bg);
-			}
-			wnd_buf->SetTile(tile, 0, x, ybuf, false);
-			x++;
-			if (x >= last_col) {
-				return;
-			}
-		}
-		if (csr.y == ybuf - 1 && csr.x >= text.length()) {
-			tile.Clear();
-			tile.Add(0, color.bg, color.fg);
-			tile.Add(0, color.fg, color.bg);
-			wnd_buf->SetTile(tile, 0, x, ybuf, false);
+		x++;
+		if (x >= last_col) {
+			return;
 		}
 	}
+	
+}
+void t_editor_screen::draw_cursor() {
+	ixc ch = get_char_at_cursor();
+	TTileSeq tile;
+	if (ch > 0) {
+		tile.Add(ch, color.bg, color.fg);
+		tile.Add(ch, color.fg, color.bg);
+	} else {
+		tile.Add(0, color.bg, color.fg);
+		tile.Add(0, color.fg, color.bg);
+	}
+	int x = (csr.x - first_char_ix) + 1;
+	int y = (csr.y - first_line_ix) + 1;
+	if (x > 0 && y > 0 && x < last_col && y < last_row) {
+		wnd_buf->SetTile(tile, 1, x, y, false);
+	}
+}
+ixc t_editor_screen::get_char_at_cursor() {
+	auto line = get_current_line().text();
+	if (line.empty() || csr.x >= line.length() || csr.x < 0) {
+		return 0;
+	}
+	return line[csr.x];
 }
 void t_editor_screen::csr_move(int dx, int dy) {
 	if (csr.x + dx >= 0 && csr.x + dx <= get_current_line().length()) {
@@ -98,6 +106,9 @@ void t_editor_screen::csr_move(int dx, int dy) {
 	}
 	if (csr.y + dy >= 0 && csr.y + dy < lines.size()) {
 		csr.y += dy;
+		if (csr.x >= get_current_line().length()) {
+			csr.x = get_current_line().length();
+		}
 	}
 	update();
 }
@@ -118,19 +129,26 @@ void t_editor_screen::csr_home() {
 	csr.x = 0;
 	csr.y = 0;
 	first_line_ix = 0;
+	first_char_ix = 0;
 	update();
 }
 void t_editor_screen::csr_line_start() {
 	csr.x = 0;
+	first_char_ix = 0;
 	update();
 }
 void t_editor_screen::csr_line_end() {
-	csr.x = get_current_line().length();
+	int len = get_current_line().length();
+	csr.x = len;
+	first_char_ix = len - max_visible_chars + 1;
+	if (first_char_ix < 0) {
+		first_char_ix = 0;
+	}
 	update();
 }
 void t_editor_screen::csr_end() {
 	csr.y = lines.size() - 1;
-	csr.x = get_current_line().length();
+	csr_line_end();
 	update();
 }
 int t_editor_screen::csr_x() {
@@ -145,6 +163,10 @@ void t_editor_screen::crlf() {
 	} else {
 		next_line();
 	}
+	if (first_line_ix + max_visible_lines <= csr.y) {
+		scroll_down();
+	}
+	first_char_ix = 0;
 }
 t_editor_screen_line& t_editor_screen::get_current_line() {
 	return lines[csr.y];
@@ -179,6 +201,9 @@ void t_editor_screen::type_char(ixc ch, bool overwrite, bool must_update) {
 		} else {
 			lines[csr.y].insert(csr.x++, tile);
 		}
+		if (first_char_ix + max_visible_chars <= csr.x) {
+			scroll_right();
+		}
 	}
 	if (must_update) {
 		update();
@@ -209,5 +234,21 @@ bool t_editor_screen::is_cursor_on_last_line() {
 }
 void t_editor_screen::scroll_right() {
 	first_char_ix++;
+	update();
+}
+void t_editor_screen::scroll_left() {
+	if (first_char_ix > 0) {
+		first_char_ix--;
+	}
+	update();
+}
+void t_editor_screen::scroll_down() {
+	first_line_ix++;
+	update();
+}
+void t_editor_screen::scroll_up() {
+	if (first_line_ix > 0) {
+		first_line_ix--;
+	}
 	update();
 }

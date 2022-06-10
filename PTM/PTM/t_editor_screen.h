@@ -32,6 +32,9 @@ struct t_editor_screen {
 	int line_count();
 	bool is_cursor_on_last_line();
 	void scroll_right();
+	void scroll_left();
+	void scroll_up();
+	void scroll_down();
 private:
 	int cols;
 	int rows;
@@ -57,4 +60,6 @@ private:
 	void draw_border();
 	void draw_lines();
 	void draw_line(t_editor_screen_line& line, int ybuf);
+	void draw_cursor();
+	ixc get_char_at_cursor();
 };

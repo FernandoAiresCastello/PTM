@@ -2,5 +2,5 @@
 
 t_program_line::t_program_line() {
 	number = 0;
-	code = "";
+	src = "";
 }

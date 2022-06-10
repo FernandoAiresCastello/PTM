@@ -2,10 +2,10 @@
 
 t_program::t_program() {
 }
-void t_program::add_line(int number, string code) {
+void t_program::add_line(int number, string src) {
 	t_program_line line;
 	line.number = number;
-	line.code = code;
+	line.src = src;
 	lines.push_back(line);
 }
 bool t_program::delete_line(int number) {

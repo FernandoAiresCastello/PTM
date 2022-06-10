@@ -23,13 +23,29 @@ void t_program_editor::print_debug() {
 }
 void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt) {
 	if (key == SDLK_RIGHT) {
-		scr->csr_move(1, 0);
+		if (ctrl) {
+			scr->scroll_right();
+		} else {
+			scr->csr_move(1, 0);
+		}
 	} else if (key == SDLK_LEFT) {
-		scr->csr_move(-1, 0);
+		if (ctrl) {
+			scr->scroll_left();
+		} else {
+			scr->csr_move(-1, 0);
+		}
 	} else if (key == SDLK_UP) {
-		scr->csr_move(0, -1);
+		if (ctrl) {
+			scr->scroll_up();
+		} else {
+			scr->csr_move(0, -1);
+		}
 	} else if (key == SDLK_DOWN) {
-		scr->csr_move(0, 1);
+		if (ctrl) {
+			scr->scroll_down();
+		} else {
+			scr->csr_move(0, 1);
+		}
 	} else if (key == SDLK_BACKSPACE) {
 		scr->csr_backspace();
 	} else if (key == SDLK_DELETE) {
@@ -177,6 +193,6 @@ void t_program_editor::store_program_line(string line) {
 		}
 		return;
 	}
-	string code = String::Trim(line.substr(ixSpace));
-	prg.add_line(number, code);
+	prg.add_line(number, String::Trim(line.substr(ixSpace)));
+	scr->csr_line_start();
 }
