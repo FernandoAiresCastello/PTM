@@ -110,7 +110,7 @@ void t_program_editor::print_error(string error) {
 	print_msg(error);
 	snd->Beep(2500, 50);
 }
-void t_program_editor::print_program_line(t_program_line* line) {
+void t_program_editor::print_program_line(t_source_line* line) {
 	scr->println(String::Format("%i %s", line->number, line->src.c_str()), true);
 }
 void t_program_editor::process_line(string line) {
@@ -190,13 +190,13 @@ void t_program_editor::execute_command(string line) {
 		}
 	} else if (cmd == "LIST") {
 		if (args.empty()) {
-			for (auto& line : prg.lines) {
+			for (auto& line : prg.src_lines) {
 				print_program_line(&line);
 			}
 			print_ok();
 		} else if (args.size() == 1) {
 			int line_nr = String::ToInt(args[0]);
-			auto line = prg.get_line(line_nr);
+			auto line = prg.get_src_line(line_nr);
 			if (line) {
 				print_program_line(line);
 				print_ok();
@@ -207,7 +207,7 @@ void t_program_editor::execute_command(string line) {
 			int begin = String::ToInt(args[0]);
 			int end = String::ToInt(args[1]);
 			for (int i = begin; i <= end; i++) {
-				auto line = prg.get_line(i);
+				auto line = prg.get_src_line(i);
 				if (line) {
 					print_program_line(line);
 				}
@@ -250,7 +250,7 @@ void t_program_editor::execute_command(string line) {
 				return;
 			}
 			auto src = File::ReadLines(file, "\r\n");
-			prg.lines.clear();
+			prg.src_lines.clear();
 			for (auto& src_line : src) {
 				if (!String::Trim(src_line).empty()) {
 					store_program_line(src_line);
@@ -260,7 +260,7 @@ void t_program_editor::execute_command(string line) {
 		}
 	} else if (cmd == "NEW") {
 		if (assert_argc(args, 0)) {
-			prg.lines.clear();
+			prg.src_lines.clear();
 			print_ok();
 		}
 	} else if (cmd == "DELETE") {
@@ -320,6 +320,6 @@ void t_program_editor::store_program_line(string line) {
 		}
 		return;
 	}
-	prg.add_line(number, String::Trim(line.substr(ixSpace)));
+	prg.add_src_line(number, String::Trim(line.substr(ixSpace)));
 	scr->csr_line_start();
 }

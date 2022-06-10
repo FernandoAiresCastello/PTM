@@ -3,15 +3,15 @@
 
 t_program::t_program() {
 }
-void t_program::add_line(int number, string src) {
-	t_program_line line;
+void t_program::add_src_line(int number, string src) {
+	t_source_line line;
 	line.number = number;
 	line.src = src;
-	lines.push_back(line);
+	src_lines.push_back(line);
 	sort();
 }
-t_program_line* t_program::get_line(int number) {
-	for (auto& line : lines) {
+t_source_line* t_program::get_src_line(int number) {
+	for (auto& line : src_lines) {
 		if (line.number == number) {
 			return &line;
 		}
@@ -20,7 +20,7 @@ t_program_line* t_program::get_line(int number) {
 }
 std::vector<string> t_program::get_src_lines() {
 	std::vector<string> src;
-	for (auto& line : lines) {
+	for (auto& line : src_lines) {
 		src.push_back(String::Format("%i %s", line.number, line.src.c_str()));
 	}
 	return src;
@@ -28,7 +28,7 @@ std::vector<string> t_program::get_src_lines() {
 bool t_program::delete_line(int number) {
 	int curIndex = 0;
 	int index = -1;
-	for (auto& line : lines) {
+	for (auto& line : src_lines) {
 		if (line.number == number) {
 			index = curIndex;
 			break;
@@ -36,27 +36,27 @@ bool t_program::delete_line(int number) {
 		curIndex++;
 	}
 	if (index >= 0) {
-		lines.erase(lines.begin() + index);
+		src_lines.erase(src_lines.begin() + index);
 		return true;
 	}
 	return false;
 }
 bool t_program::has_line_number(int number) {
-	for (int i = 0; i < lines.size(); i++) {
-		if (lines[i].number == number) {
+	for (int i = 0; i < src_lines.size(); i++) {
+		if (src_lines[i].number == number) {
 			return true;
 		}
 	}
 	return false;
 }
 void t_program::sort() {
-	std::sort(lines.begin(), lines.end());
+	std::sort(src_lines.begin(), src_lines.end());
 }
 void t_program::renumerate(int increment) {
 	sort();
 	int new_number = 0;
-	for (int i = 0; i < lines.size(); i++) {
+	for (int i = 0; i < src_lines.size(); i++) {
 		new_number += increment;
-		lines[i].number = new_number;
+		src_lines[i].number = new_number;
 	}
 }

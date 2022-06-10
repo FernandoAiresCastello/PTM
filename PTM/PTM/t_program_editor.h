@@ -18,7 +18,7 @@ private:
 	void print_ok();
 	void print_msg(string msg);
 	void print_error(string error);
-	void print_program_line(t_program_line* line);
+	void print_program_line(t_source_line* line);
 	void process_line(string line);
 	void execute_command(string line);
 	bool assert_color_ix(int ix);

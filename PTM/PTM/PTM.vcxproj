@@ -149,6 +149,7 @@
     <ClCompile Include="t_program.cpp" />
     <ClCompile Include="t_program_editor.cpp" />
     <ClCompile Include="t_program_line.cpp" />
+    <ClCompile Include="t_source_line.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h" />
@@ -158,6 +159,7 @@
     <ClInclude Include="t_program.h" />
     <ClInclude Include="t_program_editor.h" />
     <ClInclude Include="t_program_line.h" />
+    <ClInclude Include="t_source_line.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

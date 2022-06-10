@@ -20,6 +20,9 @@
     <ClCompile Include="t_interpreter.cpp">
       <Filter>Interpreter</Filter>
     </ClCompile>
+    <ClCompile Include="t_source_line.cpp">
+      <Filter>Program</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="t_editor_screen.h">
@@ -42,6 +45,9 @@
     </ClInclude>
     <ClInclude Include="t_interpreter.h">
       <Filter>Interpreter</Filter>
+    </ClInclude>
+    <ClInclude Include="t_source_line.h">
+      <Filter>Program</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
