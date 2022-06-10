@@ -1,164 +1,141 @@
 #include "t_editor_screen.h"
 
-#define LAYER_0 0
-#define LAYER_1 1
-
 t_editor_screen::t_editor_screen(TBufferedWindow* wnd) {
 	this->wnd = wnd;
-	buf = wnd->GetBuffer();
-	cols = buf->Cols;
-	rows = buf->Rows;
+	wnd_buf = wnd->GetBuffer();
+	palette = wnd->GetPalette();
+	charset = wnd->GetCharset();
+	cols = wnd_buf->Cols;
+	rows = wnd_buf->Rows;
+	last_col = cols - 1;
+	last_row = rows - 1;
 	csr.x = 0;
 	csr.y = 0;
 	color.fg = 15;
 	color.bg = 0;
 	color.bdr = 5;
-	clear();
+	first_line_ix = 0;
+	first_char_ix = 0;
+	max_visible_lines = rows - 2;
+	max_visible_chars = cols - 2;
 }
-void t_editor_screen::clear() {
-	buf->ClearAllLayers();
-	for (int y = 0; y < rows; y++) {
-		for (int x = 0; x < cols; x++) {
-			auto& tile = buf->GetTile(LAYER_0, x, y);
-			tile.Add(TTile(' ', color.fg, color.bg));
-		}
-	}
-	set_cursor(0, 0);
+void t_editor_screen::clear_lines() {
+	lines.clear();
+	lines.push_back(t_editor_screen_line());
+	csr_home();
+	update();
 }
-void t_editor_screen::set_cursor(int x, int y) {
-	buf->EraseTile(LAYER_1, csr.x + 1, csr.y + 1);
-	csr.x = x;
-	csr.y = y;
+void t_editor_screen::update() {
+	clear_wbuf();
+	draw_border();
+	draw_lines();
+	wnd->Update();
 }
-void t_editor_screen::move_cursor(int dx, int dy) {
-	set_cursor(csr.x + dx, csr.y + dy);
-}
-int t_editor_screen::get_cursor_x() {
-	return csr.x;
-}
-int t_editor_screen::get_cursor_y() {
-	return csr.y;
-}
-TTileSeq& t_editor_screen::get_tile_under_cursor() {
-	return buf->GetTile(LAYER_0, csr.x + 1, csr.y + 1);
-}
-TTileSeq& t_editor_screen::get_tile_at(int x, int y) {
-	return buf->GetTile(LAYER_0, x + 1, y + 1);
-}
-void t_editor_screen::delete_tile_under_cursor() {
-	auto& tile = get_tile_under_cursor();
-	tile.Clear();
-	tile.Add(TTile(' ', color.fg, color.bg));
-}
-void t_editor_screen::shift_line_from_cursor() {
-	string chars;
-	int y = csr.y + 1;
-	for (int x = csr.x + 2; x < cols; x++) {
-		auto tile = buf->GetTile(LAYER_0, x, y);
-		if (tile.IsEmpty()) {
-			chars += ' ';
-		} else {
-			chars += tile.GetChar(0);
-		}
-	}
-	print_keep_cursor(chars);
-}
-string t_editor_screen::get_line_string_at_cursor() {
-	string line;
-	for (int x = 0; x < cols - 1; x++) {
-		auto& tile = get_tile_at(x, csr.y);
-		if (!tile.IsEmpty()) {
-			int chr = tile.GetChar(0);
-			if (chr >= 0x20 && chr < 0x7f) {
-				line += chr;
-			} else {
-				line += ' ';
-			}
-		} else {
-			line += ' ';
-		}
-	}
-	return String::Trim(line);
-}
-void t_editor_screen::set_colors(int fg, int bg, int bdr) {
-	color.fg = fg;
-	color.bg = bg;
-	color.bdr = bdr;
-
-	for (int y = 0; y < rows; y++) {
-		for (int x = 0; x < cols; x++) {
-			auto& tile = buf->GetTile(LAYER_0, x, y);
-			if (!tile.IsEmpty()) {
-				tile.SetForeColor(0, fg);
-				tile.SetBackColor(0, bg);
-			}
-		}
-	}
-}
-void t_editor_screen::set_fgcolor(int fg) {
-	set_colors(fg, color.bg, color.bdr);
-}
-void t_editor_screen::set_bgcolor(int bg) {
-	set_colors(color.fg, bg, color.bdr);
-}
-void t_editor_screen::set_bdrcolor(int bdr) {
-	set_colors(color.fg, color.bg, bdr);
+void t_editor_screen::clear_wbuf() {
+	wnd_buf->ClearAllLayers();
 }
 void t_editor_screen::draw_border() {
 	TTileSeq tile(0, color.fg, color.bdr);
-	for (int x = 0; x < buf->Cols; x++) {
-		buf->SetTile(tile, LAYER_0, x, 0, false);
-		buf->SetTile(tile, LAYER_0, x, buf->LastRow, false);
+	for (int ybuf = 0; ybuf < rows; ybuf++) {
+		wnd_buf->SetTile(tile, 0, 0, ybuf, false);
+		wnd_buf->SetTile(tile, 0, last_col, ybuf, false);
 	}
-	for (int y = 0; y < buf->Rows; y++) {
-		buf->SetTile(tile, LAYER_0, 0, y, false);
-		buf->SetTile(tile, LAYER_0, buf->LastCol, y, false);
+	for (int xbuf = 0; xbuf < cols; xbuf++) {
+		wnd_buf->SetTile(tile, 0, xbuf, 0, false);
+		wnd_buf->SetTile(tile, 0, xbuf, last_row, false);
 	}
 }
-void t_editor_screen::draw_cursor() {
-	csr.tile.Clear();
-	auto& under = get_tile_under_cursor();
-	if (!under.IsEmpty()) {
-		csr.tile.Add(under.GetChar(0), color.bg, color.fg);
-		csr.tile.Add(under.GetChar(0), color.fg, color.bg);
+void t_editor_screen::draw_lines() {
+	int ix = first_line_ix;
+	for (int ybuf = 1; ybuf <= last_row; ybuf++) {
+		if (ix >= first_line_ix + max_visible_lines || ix >= lines.size()) {
+			break;
+		}
+		draw_line(lines[ix], ybuf);
+		ix++;
+	}
+}
+void t_editor_screen::draw_line(t_editor_screen_line& line, int ybuf) {
+	int x = 1;
+	string text = line.text();
+	TTileSeq tile;
+	if (text.empty() && csr.y == ybuf - 1) {
+		tile.Add(0, color.bg, color.fg);
+		tile.Add(0, color.fg, color.bg);
+		wnd_buf->SetTile(tile, 0, x, ybuf, false);
 	} else {
-		csr.tile.Add(0, color.fg, color.bg);
-		csr.tile.Add(0, color.bg, color.fg);
-	}
-	buf->SetTile(csr.tile, LAYER_1, csr.x + 1, csr.y + 1, false);
-}
-void t_editor_screen::print(string text) {
-	for (auto& ch : text) {
-		put_char(ch);
-	}
-}
-void t_editor_screen::println(string text) {
-	print(text + "\n");
-}
-void t_editor_screen::print_keep_cursor(string text) {
-	int x = csr.x + 1;
-	for (auto& ch : text) {
-		buf->SetTile(TTileSeq(ch, color.fg, color.bg), LAYER_0, x, csr.y + 1, false);
-		x++;
-	}
-}
-void t_editor_screen::put_char(ixc ch) {
-	if (ch != '\n') {
-		buf->SetTile(TTileSeq(ch, color.fg, color.bg), LAYER_0, csr.x + 1, csr.y + 1, false);
-		move_cursor(1, 0);
-	} else {
-		set_cursor(0, csr.y + 1);
+		for (auto& ch : text) {
+			tile.Clear();
+			if (x - 1 == csr.x && ybuf - 1 == csr.y) {
+				tile.Add(ch, color.bg, color.fg);
+				tile.Add(ch, color.fg, color.bg);
+			} else {
+				tile.Add(ch, color.fg, color.bg);
+			}
+			wnd_buf->SetTile(tile, 0, x, ybuf, false);
+			x++;
+			if (x >= last_col) {
+				break;
+			}
+		}
+		if (csr.y == ybuf - 1 && csr.x >= text.length()) {
+			tile.Clear();
+			tile.Add(0, color.bg, color.fg);
+			tile.Add(0, color.fg, color.bg);
+			wnd_buf->SetTile(tile, 0, x, ybuf, false);
+		}
 	}
 }
-void t_editor_screen::set_tile(TTileSeq tile, int x, int y) {
-	buf->SetTile(tile, LAYER_0, x + 1, y + 1, false);
+void t_editor_screen::csr_move(int dx, int dy) {
+	csr.x += dx;
+	csr.y += dy;
+	update();
+}
+void t_editor_screen::csr_backspace() {
+}
+void t_editor_screen::csr_delete() {
+}
+void t_editor_screen::csr_home() {
+	csr.x = 0;
+	csr.y = 0;
+	update();
+}
+string t_editor_screen::get_current_line() {
+	return lines[csr.y].text();
 }
 void t_editor_screen::new_line() {
-	set_cursor(0, csr.y + 1);
+	t_editor_screen_line line;
+	lines.push_back(line);
+	csr.x = 0;
+	csr.y++;
+	update();
 }
-void t_editor_screen::scroll_up() {
+void t_editor_screen::type_char(ixc ch, bool overwrite, bool must_update) {
+	if (ch == '\n') {
+		new_line();
+	}
+	else {
+		TTileSeq tile(ch, color.fg, color.bg);
+		if (csr.y >= lines.size()) {
+			new_line();
+			csr.y--;
+		}
+		if (overwrite) {
+			lines[csr.y].overwrite(csr.x++, tile);
+		} else {
+			lines[csr.y].insert(csr.x++, tile);
+		}
+	}
+	if (must_update) {
+		update();
+	}
 }
-void t_editor_screen::scroll_right() {
+void t_editor_screen::print(string str, bool overwrite) {
+	for (auto& ch : str) {
+		type_char(ch, overwrite, false);
+	}
+	update();
 }
-void t_editor_screen::scroll_left() {
+void t_editor_screen::println(string str, bool overwrite) {
+	print(str + "\n", overwrite);
 }

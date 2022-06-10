@@ -1,46 +1,47 @@
 #pragma once
 #include "common.h"
+#include "t_editor_screen_line.h"
 
 struct t_editor_screen {
-	TBufferedWindow* wnd;
-	int cols;
-	int rows;
-	t_editor_screen(TBufferedWindow* wnd);
-	void clear();
-	void set_cursor(int x, int y);
-	void move_cursor(int dx, int dy);
-	int get_cursor_x();
-	int get_cursor_y();
-	TTileSeq& get_tile_under_cursor();
-	TTileSeq& get_tile_at(int x, int y);
-	void delete_tile_under_cursor();
-	void shift_line_from_cursor();
-	string get_line_string_at_cursor();
-	void set_colors(int fg, int bg, int bdr);
-	void set_fgcolor(int fg);
-	void set_bgcolor(int bg);
-	void set_bdrcolor(int bdr);
-	void draw_border();
-	void draw_cursor();
-	void print(string text);
-	void println(string text);
-	void print_keep_cursor(string text);
-	void put_char(ixc ch);
-	void set_tile(TTileSeq tile, int x, int y);
-	void new_line();
-	void scroll_up();
-	void scroll_right();
-	void scroll_left();
-private:
-	TTileBuffer* buf;
-	struct {
-		int x;
-		int y;
-		TTileSeq tile;
-	} csr;
 	struct {
 		ixp fg;
 		ixp bg;
 		ixp bdr;
 	} color;
+	t_editor_screen(TBufferedWindow* wnd);
+	TPalette* palette;
+	TCharset* charset;
+	void clear_lines();
+	void csr_move(int dx, int dy);
+	void csr_backspace();
+	void csr_delete();
+	void csr_home();
+	string get_current_line();
+	void new_line();
+	void type_char(ixc ch, bool overwrite, bool must_update);
+	void print(string str, bool overwrite);
+	void println(string str, bool overwrite);
+private:
+	int cols;
+	int rows;
+	int last_col;
+	int last_row;
+	std::vector<t_editor_screen_line> lines;
+	TBufferedWindow* wnd;
+	TTileBuffer* wnd_buf;
+	struct {
+		int x;
+		int y;
+		TTileSeq tile;
+	} csr;
+	int first_line_ix;
+	int first_char_ix;
+	int max_visible_lines;
+	int max_visible_chars;
+	
+	void update();
+	void clear_wbuf();
+	void draw_border();
+	void draw_lines();
+	void draw_line(t_editor_screen_line& line, int ybuf);
 };

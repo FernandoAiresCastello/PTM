@@ -9,52 +9,50 @@ t_program_editor::~t_program_editor() {
 	delete scr;
 }
 void t_program_editor::print_intro() {
-	scr->println("PTM 1.0");
+	scr->clear_lines();
+	scr->println("PTM 1.0", false);
 	print_ok();
 }
 void t_program_editor::draw() {
-	scr->draw_border();
-	scr->draw_cursor();
 }
 void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt) {
 	if (key == SDLK_RIGHT) {
-		scr->move_cursor(1, 0);
+		scr->csr_move(1, 0);
 	} else if (key == SDLK_LEFT) {
-		scr->move_cursor(-1, 0);
+		scr->csr_move(-1, 0);
 	} else if (key == SDLK_UP) {
-		scr->move_cursor(0, -1);
+		scr->csr_move(0, -1);
 	} else if (key == SDLK_DOWN) {
-		scr->move_cursor(0, 1);
+		scr->csr_move(0, 1);
 	} else if (key == SDLK_BACKSPACE) {
-		scr->move_cursor(-1, 0);
-		scr->delete_tile_under_cursor();
+		scr->csr_backspace();
 	} else if (key == SDLK_DELETE) {
-		scr->shift_line_from_cursor();
+		scr->csr_delete();
 	} else if (key == SDLK_HOME) {
 		if (shift) {
-			scr->clear();
+			scr->clear_lines();
 		} else if (ctrl) {
-			scr->set_cursor(0, 0);
+			scr->csr_home();
 		}
 	} else if (key == SDLK_RETURN) {
-		string line = scr->get_line_string_at_cursor();
+		string line = scr->get_current_line();
 		scr->new_line();
 		if (!line.empty()) {
 			process_line(line);
 		}
 	} else if (key >= 0x20 && key < 0x7f) {
 		if (shift) {
-			scr->put_char(String::ShiftChar(toupper(key)));
+			scr->type_char(String::ShiftChar(toupper(key)), false, true);
 		} else {
-			scr->put_char(TKey::CapsLock() ? toupper(key) : key);
+			scr->type_char(TKey::CapsLock() ? toupper(key) : key, false, true);
 		}
 	}
 }
 void t_program_editor::print_ok() {
-	scr->println("Ok");
+	scr->println("Ok", true);
 }
 void t_program_editor::print_msg(string msg) {
-	scr->println(msg);
+	scr->println(msg, true);
 	print_ok();
 }
 void t_program_editor::print_error(string error) {
@@ -88,7 +86,7 @@ void t_program_editor::execute_command(string line) {
 		if (assert_argc(args, 1)) {
 			int fg = String::ToInt(arg);
 			if (assert_color_ix(fg)) {
-				scr->set_fgcolor(fg);
+				scr->color.fg = fg;
 				print_ok();
 			}
 		}
@@ -96,7 +94,7 @@ void t_program_editor::execute_command(string line) {
 		if (assert_argc(args, 1)) {
 			int bg = String::ToInt(arg);
 			if (assert_color_ix(bg)) {
-				scr->set_bgcolor(bg);
+				scr->color.bg = bg;
 				print_ok();
 			}
 		}
@@ -104,7 +102,7 @@ void t_program_editor::execute_command(string line) {
 		if (assert_argc(args, 1)) {
 			int bdr = String::ToInt(arg);
 			if (assert_color_ix(bdr)) {
-				scr->set_bdrcolor(bdr);
+				scr->color.bdr = bdr;
 				print_ok();
 			}
 		}
@@ -118,7 +116,7 @@ void t_program_editor::execute_command(string line) {
 	}
 }
 bool t_program_editor::assert_color_ix(int ix) {
-	if (ix < 0 || ix >= scr->wnd->GetPalette()->GetSize()) {
+	if (ix < 0 || ix >= scr->palette->GetSize()) {
 		print_error("Invalid color index");
 		return false;
 	}

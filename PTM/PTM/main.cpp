@@ -28,6 +28,10 @@ int main(int argc, char* argv[]) {
 			if (key == SDLK_RETURN && TKey::Alt()) {
 				handled = true;
 				wnd->ToggleFullscreen();
+			} else if (key == SDLK_ESCAPE) {
+				handled = true;
+				running = false;
+				break;
 			}
 			if (!handled) {
 				editor->on_keydown(key, TKey::Ctrl(), TKey::Shift(), TKey::Alt());
