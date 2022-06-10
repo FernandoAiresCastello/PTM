@@ -3,9 +3,11 @@
 
 int main(int argc, char* argv[]) {
 	TBufferedWindow* wnd = new TBufferedWindow(2, 33, 25, 3, 3);
+	TSound snd;
+	snd.SetVolume(TSound::MinVolume + 1000);
 	wnd->SetTitle("PTM");
 	wnd->Show();
-	t_program_editor* editor = new t_program_editor(wnd);
+	t_program_editor* editor = new t_program_editor(wnd, &snd);
 	editor->print_intro();
 
 	bool running = true;

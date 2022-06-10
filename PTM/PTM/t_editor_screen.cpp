@@ -218,7 +218,7 @@ void t_editor_screen::type_char(ixc ch, bool overwrite, bool must_update) {
 }
 void t_editor_screen::print(string str, bool overwrite) {
 	for (auto& ch : str) {
-		type_char(ch, overwrite, false);
+		type_char(ch >= 0 ? ch : 0, overwrite, false);
 	}
 	update();
 }

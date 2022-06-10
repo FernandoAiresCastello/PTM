@@ -1,9 +1,10 @@
 #include "t_program_editor.h"
 #include "t_editor_screen.h"
 
-t_program_editor::t_program_editor(TBufferedWindow* wnd) {
+t_program_editor::t_program_editor(TBufferedWindow* wnd, TSound* snd) {
 	exit_requested = false;
 	scr = new t_editor_screen(wnd);
+	this->snd = snd;
 }
 t_program_editor::~t_program_editor() {
 	delete scr;
@@ -107,6 +108,7 @@ void t_program_editor::print_msg(string msg) {
 }
 void t_program_editor::print_error(string error) {
 	print_msg(error);
+	snd->Beep(2500, 50);
 }
 void t_program_editor::print_program_line(t_program_line* line) {
 	scr->println(String::Format("%i %s", line->number, line->src.c_str()), true);
@@ -234,6 +236,43 @@ void t_program_editor::execute_command(string line) {
 			}
 		}
 		print_ok();
+	} else if (cmd == "SAVE") {
+		if (assert_argc(args, 1)) {
+			auto file = String::RemoveFirstAndLast(args[0]);
+			File::WriteLines(file, prg.get_src_lines());
+			print_ok();
+		}
+	} else if (cmd == "LOAD") {
+		if (assert_argc(args, 1)) {
+			auto file = String::RemoveFirstAndLast(args[0]);
+			if (!File::Exists(file)) {
+				print_error("File not found");
+				return;
+			}
+			auto src = File::ReadLines(file, "\r\n");
+			prg.lines.clear();
+			for (auto& src_line : src) {
+				if (!String::Trim(src_line).empty()) {
+					store_program_line(src_line);
+				}
+			}
+			print_ok();
+		}
+	} else if (cmd == "NEW") {
+		if (assert_argc(args, 0)) {
+			prg.lines.clear();
+			print_ok();
+		}
+	} else if (cmd == "DELETE") {
+		if (assert_argc(args, 1)) {
+			auto file = String::RemoveFirstAndLast(args[0]);
+			if (!File::Exists(file)) {
+				print_error("File not found");
+				return;
+			}
+			File::Delete(file);
+			print_ok();
+		}
 	} else {
 		print_error("Syntax error");
 		return;
@@ -276,7 +315,6 @@ void t_program_editor::store_program_line(string line) {
 	if (emptyLine) {
 		if (prg.has_line_number(number)) {
 			prg.delete_line(number);
-			print_msg(String::Format("Line %i deleted", number));
 		} else {
 			print_error("Line not found");
 		}

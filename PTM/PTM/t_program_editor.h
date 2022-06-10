@@ -6,7 +6,7 @@ struct t_editor_screen;
 
 struct t_program_editor {
 	bool exit_requested;
-	t_program_editor(TBufferedWindow* wnd);
+	t_program_editor(TBufferedWindow* wnd, TSound* snd);
 	~t_program_editor();
 	void print_intro();
 	void print_debug();
@@ -14,6 +14,7 @@ struct t_program_editor {
 private:
 	t_program prg;
 	t_editor_screen* scr;
+	TSound* snd;
 	void print_ok();
 	void print_msg(string msg);
 	void print_error(string error);

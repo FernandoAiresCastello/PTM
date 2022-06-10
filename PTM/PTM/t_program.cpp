@@ -18,6 +18,13 @@ t_program_line* t_program::get_line(int number) {
 	}
 	return nullptr;
 }
+std::vector<string> t_program::get_src_lines() {
+	std::vector<string> src;
+	for (auto& line : lines) {
+		src.push_back(String::Format("%i %s", line.number, line.src.c_str()));
+	}
+	return src;
+}
 bool t_program::delete_line(int number) {
 	int curIndex = 0;
 	int index = -1;
