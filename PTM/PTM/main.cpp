@@ -3,18 +3,18 @@
 
 int main(int argc, char* argv[]) {
 	TBufferedWindow* wnd = new TBufferedWindow(2, 32, 24, 3, 3);
+	wnd->SetTitle("PTM");
 	wnd->Show();
 	t_program_editor* editor = new t_program_editor(wnd);
 	editor->print_intro();
 
 	bool running = true;
-
 	while (running) {
 		if (editor->exit_requested) {
 			running = false;
 			break;
 		}
-		editor->draw();
+		editor->print_debug();
 		wnd->Update();
 		SDL_Event e = { 0 };
 		SDL_PollEvent(&e);

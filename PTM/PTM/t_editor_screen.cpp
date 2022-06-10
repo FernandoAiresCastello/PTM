@@ -12,8 +12,8 @@ t_editor_screen::t_editor_screen(TBufferedWindow* wnd) {
 	csr.x = 0;
 	csr.y = 0;
 	color.fg = 15;
-	color.bg = 0;
-	color.bdr = 5;
+	color.bg = 0x52;
+	color.bdr = 0x56;
 	first_line_ix = 0;
 	first_char_ix = 0;
 	max_visible_lines = rows - 2;
@@ -26,6 +26,7 @@ void t_editor_screen::clear_lines() {
 	update();
 }
 void t_editor_screen::update() {
+	wnd->SetBackColor(color.bg);
 	clear_wbuf();
 	draw_border();
 	draw_lines();
@@ -87,20 +88,62 @@ void t_editor_screen::draw_line(t_editor_screen_line& line, int ybuf) {
 	}
 }
 void t_editor_screen::csr_move(int dx, int dy) {
-	csr.x += dx;
-	csr.y += dy;
+	if (csr.x + dx >= 0 && csr.x + dx <= get_current_line().length()) {
+		csr.x += dx;
+	}
+	if (csr.y + dy >= 0 && csr.y + dy < lines.size()) {
+		csr.y += dy;
+	}
 	update();
 }
 void t_editor_screen::csr_backspace() {
+	if (csr.x > 0) {
+		csr.x--;
+		csr_delete();
+	}
 }
 void t_editor_screen::csr_delete() {
+	auto& line = get_current_line();
+	if (csr.x < line.length()) {
+		line.erase(csr.x);
+		update();
+	}
 }
 void t_editor_screen::csr_home() {
 	csr.x = 0;
 	csr.y = 0;
 	update();
 }
-string t_editor_screen::get_current_line() {
+void t_editor_screen::csr_line_start() {
+	csr.x = 0;
+	update();
+}
+void t_editor_screen::csr_line_end() {
+	csr.x = get_current_line().length();
+	update();
+}
+void t_editor_screen::csr_end() {
+	csr.y = lines.size() - 1;
+	csr.x = get_current_line().length();
+	update();
+}
+int t_editor_screen::csr_x() {
+	return csr.x;
+}
+int t_editor_screen::csr_y() {
+	return csr.y;
+}
+void t_editor_screen::crlf() {
+	if (is_cursor_on_last_line()) {
+		new_line();
+	} else {
+		next_line();
+	}
+}
+t_editor_screen_line& t_editor_screen::get_current_line() {
+	return lines[csr.y];
+}
+string t_editor_screen::get_current_string() {
 	return lines[csr.y].text();
 }
 void t_editor_screen::new_line() {
@@ -110,9 +153,14 @@ void t_editor_screen::new_line() {
 	csr.y++;
 	update();
 }
+void t_editor_screen::next_line() {
+	csr.x = 0;
+	csr.y++;
+	update();
+}
 void t_editor_screen::type_char(ixc ch, bool overwrite, bool must_update) {
 	if (ch == '\n') {
-		new_line();
+		crlf();
 	}
 	else {
 		TTileSeq tile(ch, color.fg, color.bg);
@@ -138,4 +186,18 @@ void t_editor_screen::print(string str, bool overwrite) {
 }
 void t_editor_screen::println(string str, bool overwrite) {
 	print(str + "\n", overwrite);
+}
+void t_editor_screen::debug(string str) {
+	int x = 1;
+	int y = 0;
+	for (auto& ch : str) {
+		wnd_buf->SetTile(TTileSeq(ch, color.fg, color.bdr), 0, x, y, false);
+		x++;
+	}
+}
+int t_editor_screen::line_count() {
+	return lines.size();
+}
+bool t_editor_screen::is_cursor_on_last_line() {
+	return csr.y == lines.size() - 1;
 }

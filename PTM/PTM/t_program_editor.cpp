@@ -10,10 +10,16 @@ t_program_editor::~t_program_editor() {
 }
 void t_program_editor::print_intro() {
 	scr->clear_lines();
-	scr->println("PTM 1.0", false);
+	scr->println("PTM 0.1", false);
 	print_ok();
 }
-void t_program_editor::draw() {
+void t_program_editor::print_debug() {
+	scr->debug(
+		String::Format("%i %i %s %i %i", 
+		scr->csr_x(), scr->csr_y(),
+		scr->is_cursor_on_last_line() ? "B" : "-",
+		scr->line_count(),
+		scr->get_current_line().length()));
 }
 void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt) {
 	if (key == SDLK_RIGHT) {
@@ -33,10 +39,18 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 			scr->clear_lines();
 		} else if (ctrl) {
 			scr->csr_home();
+		} else {
+			scr->csr_line_start();
+		}
+	} else if (key == SDLK_END) {
+		if (ctrl) {
+			scr->csr_end();
+		} else {
+			scr->csr_line_end();
 		}
 	} else if (key == SDLK_RETURN) {
-		string line = scr->get_current_line();
-		scr->new_line();
+		string line = scr->get_current_string();
+		scr->crlf();
 		if (!line.empty()) {
 			process_line(line);
 		}

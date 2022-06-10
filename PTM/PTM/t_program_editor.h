@@ -9,7 +9,7 @@ struct t_program_editor {
 	t_program_editor(TBufferedWindow* wnd);
 	~t_program_editor();
 	void print_intro();
-	void draw();
+	void print_debug();
 	void on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt);
 private:
 	t_program prg;
