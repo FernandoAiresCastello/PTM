@@ -3,6 +3,6 @@
 
 struct t_program;
 
-struct t_interpreter {
-	void run(t_program* prg);
+struct t_compiler {
+	void compile(t_program* prg);
 };

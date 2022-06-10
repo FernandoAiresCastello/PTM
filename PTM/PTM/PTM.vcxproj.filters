@@ -23,6 +23,9 @@
     <ClCompile Include="t_source_line.cpp">
       <Filter>Program</Filter>
     </ClCompile>
+    <ClCompile Include="t_compiler.cpp">
+      <Filter>Compiler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="t_editor_screen.h">
@@ -49,6 +52,9 @@
     <ClInclude Include="t_source_line.h">
       <Filter>Program</Filter>
     </ClInclude>
+    <ClInclude Include="t_compiler.h">
+      <Filter>Compiler</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Editor">
@@ -62,6 +68,9 @@
     </Filter>
     <Filter Include="Interpreter">
       <UniqueIdentifier>{db1a3207-4ac7-42c4-b654-6d79873c80e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compiler">
+      <UniqueIdentifier>{fa145803-b6e6-4064-9ce0-4ac3bb843ef6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

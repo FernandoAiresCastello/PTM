@@ -1,5 +1,7 @@
 #include "t_program_editor.h"
 #include "t_editor_screen.h"
+#include "t_compiler.h"
+#include "t_interpreter.h"
 
 t_program_editor::t_program_editor(TBufferedWindow* wnd, TSound* snd) {
 	exit_requested = false;
@@ -273,6 +275,12 @@ void t_program_editor::execute_command(string line) {
 			File::Delete(file);
 			print_ok();
 		}
+	} else if (cmd == "RUN") {
+		t_compiler compiler;
+		compiler.compile(&prg);
+		t_interpreter interpreter;
+		interpreter.run(&prg);
+		print_ok();
 	} else {
 		print_error("Syntax error");
 		return;
