@@ -1,15 +1,21 @@
 #include "t_program_editor.h"
+#include "t_config.h"
 #include "t_editor_screen.h"
 #include "t_compiler.h"
 #include "t_interpreter.h"
 
-t_program_editor::t_program_editor(TBufferedWindow* wnd, TSound* snd) {
+t_program_editor::t_program_editor(
+	TBufferedWindow* wnd, TSound* snd, t_config* cfg) {
+
 	exit_requested = false;
 	scr = new t_editor_screen(wnd);
 	this->snd = snd;
 	print_intro();
-	if (File::Exists("autoload.ptml")) {
-		execute_command("LOAD \"autoload.ptml\"");
+
+	if (!cfg->autorun.empty() && File::Exists(cfg->autorun)) {
+		execute_command("RUN \"" + cfg->autorun + "\"");
+	} else if (!cfg->autoload.empty() && File::Exists(cfg->autoload)) {
+		execute_command("LOAD \"" + cfg->autoload + "\"");
 	} else {
 		print_ok();
 	}

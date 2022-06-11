@@ -1,13 +1,19 @@
 #include "common.h"
+#include "t_config.h"
 #include "t_program_editor.h"
 
 int main(int argc, char* argv[]) {
-	TBufferedWindow* wnd = new TBufferedWindow(2, 33, 25, 3, 3);
-	TSound snd;
-	snd.SetVolume(TSound::MinVolume + 1000);
+	t_config cfg;
+	cfg.load();
+
+	TBufferedWindow* wnd = new TBufferedWindow(2, cfg.cols, cfg.rows, cfg.pixel_w, cfg.pixel_h);
 	wnd->SetTitle("PTM");
 	wnd->Show();
-	t_program_editor* editor = new t_program_editor(wnd, &snd);
+
+	TSound snd;
+	snd.SetVolume(TSound::MinVolume + 1000);
+
+	t_program_editor* editor = new t_program_editor(wnd, &snd, &cfg);
 
 	bool running = true;
 	while (running) {

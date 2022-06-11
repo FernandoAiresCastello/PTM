@@ -2,6 +2,8 @@
 #include "t_program.h"
 
 t_interpreter::t_interpreter() {
+	wnd = nullptr;
+	wnd_buf = nullptr;
 	running = false;
 	user_break = false;
 	cur_line = 0;

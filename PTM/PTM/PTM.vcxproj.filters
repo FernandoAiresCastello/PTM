@@ -26,6 +26,9 @@
     <ClCompile Include="t_compiler.cpp">
       <Filter>Compiler</Filter>
     </ClCompile>
+    <ClCompile Include="t_config.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="t_editor_screen.h">
@@ -54,6 +57,9 @@
     </ClInclude>
     <ClInclude Include="t_compiler.h">
       <Filter>Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="t_config.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

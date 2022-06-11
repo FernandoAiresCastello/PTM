@@ -2,11 +2,12 @@
 #include "common.h"
 #include "t_program.h"
 
+struct t_config;
 struct t_editor_screen;
 
 struct t_program_editor {
 	bool exit_requested;
-	t_program_editor(TBufferedWindow* wnd, TSound* snd);
+	t_program_editor(TBufferedWindow* wnd, TSound* snd, t_config* cfg);
 	~t_program_editor();
 	void print_intro();
 	void print_debug();
