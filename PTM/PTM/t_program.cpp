@@ -7,7 +7,12 @@ void t_program::add_src_line(int number, string src) {
 	t_source_line line;
 	line.number = number;
 	line.src = src;
-	src_lines.push_back(line);
+	auto existing_line = get_src_line(number);
+	if (existing_line) {
+		existing_line->src = src;
+	} else {
+		src_lines.push_back(line);
+	}
 	sort();
 }
 t_source_line* t_program::get_src_line(int number) {

@@ -8,7 +8,6 @@ int main(int argc, char* argv[]) {
 	wnd->SetTitle("PTM");
 	wnd->Show();
 	t_program_editor* editor = new t_program_editor(wnd, &snd);
-	editor->print_intro();
 
 	bool running = true;
 	while (running) {

@@ -4,5 +4,13 @@
 struct t_program;
 
 struct t_interpreter {
-	void run(t_program* prg);
+	t_interpreter();
+	bool has_user_break();
+	void run(t_program* prg, TBufferedWindow* wnd);
+private:
+	TBufferedWindow* wnd;
+	TTileBuffer* wnd_buf;
+	bool running;
+	bool user_break;
+	int cur_line;
 };

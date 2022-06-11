@@ -7,6 +7,12 @@ t_program_editor::t_program_editor(TBufferedWindow* wnd, TSound* snd) {
 	exit_requested = false;
 	scr = new t_editor_screen(wnd);
 	this->snd = snd;
+	print_intro();
+	if (File::Exists("autoload.ptml")) {
+		execute_command("LOAD \"autoload.ptml\"");
+	} else {
+		print_ok();
+	}
 }
 t_program_editor::~t_program_editor() {
 	delete scr;
@@ -14,7 +20,6 @@ t_program_editor::~t_program_editor() {
 void t_program_editor::print_intro() {
 	scr->clear_lines();
 	scr->println("PTM 0.1", false);
-	print_ok();
 }
 void t_program_editor::print_debug() {
 }
@@ -279,8 +284,12 @@ void t_program_editor::execute_command(string line) {
 		t_compiler compiler;
 		compiler.compile(&prg);
 		t_interpreter interpreter;
-		interpreter.run(&prg);
-		print_ok();
+		interpreter.run(&prg, scr->wnd);
+		if (interpreter.has_user_break()) {
+			print_error("Break");
+		} else {
+			print_ok();
+		}
 	} else {
 		print_error("Syntax error");
 		return;

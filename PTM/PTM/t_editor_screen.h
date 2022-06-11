@@ -3,6 +3,7 @@
 #include "t_editor_screen_line.h"
 
 struct t_editor_screen {
+	TBufferedWindow* wnd;
 	struct {
 		ixp fg;
 		ixp bg;
@@ -43,7 +44,6 @@ private:
 	int last_col;
 	int last_row;
 	std::vector<t_editor_screen_line> lines;
-	TBufferedWindow* wnd;
 	TTileBuffer* wnd_buf;
 	struct {
 		int x;
