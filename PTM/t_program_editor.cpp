@@ -10,6 +10,7 @@ t_program_editor::t_program_editor(
 	exit_requested = false;
 	scr = new t_editor_screen(wnd, cfg);
 	this->snd = snd;
+	csr_overwrite = true;
 	print_intro();
 
 	if (!cfg->autorun.empty() && File::Exists(cfg->autorun)) {
@@ -27,7 +28,9 @@ void t_program_editor::print_intro() {
 	scr->clear_lines();
 	scr->println("PTM 0.1", false);
 }
-void t_program_editor::print_debug() {
+void t_program_editor::print_borders() {
+	scr->print_bdr_top("");
+	scr->print_bdr_bottom(csr_overwrite ? "ovr" : "ins");
 }
 void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt) {
 	if (key == SDLK_RIGHT) {
@@ -84,10 +87,10 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 		}
 	} else if (key == SDLK_TAB) {
 		for (int i = 0; i < 4; i++) {
-			scr->type_char(' ', false, true);
+			scr->type_char(' ', csr_overwrite, true);
 		}
-	} else if (key == SDLK_t && alt) {
-		scr->type_tile(TTileSeq("64,10,20;65,30,40"), false, true);
+	} else if (key == SDLK_INSERT) {
+		csr_overwrite = !csr_overwrite;
 	} else if (key == SDLK_F1) {
 		scr->print("SAVE \"\"", false);
 		scr->csr_move(-1, 0);
@@ -106,9 +109,9 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 		scr->print("RENUM ", false);
 	} else if (key >= 0x20 && key < 0x7f) {
 		if (shift) {
-			scr->type_char(String::ShiftChar(toupper(key)), false, true);
+			scr->type_char(String::ShiftChar(toupper(key)), csr_overwrite, true);
 		} else {
-			scr->type_char(TKey::CapsLock() ? toupper(key) : key, false, true);
+			scr->type_char(TKey::CapsLock() ? toupper(key) : key, csr_overwrite, true);
 		}
 	}
 }

@@ -10,12 +10,13 @@ struct t_program_editor {
 	t_program_editor(TBufferedWindow* wnd, TSound* snd, t_config* cfg);
 	~t_program_editor();
 	void print_intro();
-	void print_debug();
+	void print_borders();
 	void on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt);
 private:
 	t_program prg;
 	t_editor_screen* scr;
 	TSound* snd;
+	bool csr_overwrite;
 	void print_ok();
 	void print_msg(string msg);
 	void print_error(string error);

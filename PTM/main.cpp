@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
 			running = false;
 			break;
 		}
-		editor->print_debug();
+		editor->print_borders();
 		wnd->Update();
 		SDL_Event e = { 0 };
 		SDL_PollEvent(&e);

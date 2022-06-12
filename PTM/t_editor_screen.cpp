@@ -226,9 +226,15 @@ void t_editor_screen::print(string str, bool overwrite) {
 void t_editor_screen::println(string str, bool overwrite) {
 	print(str + "\n", overwrite);
 }
-void t_editor_screen::print_debug(string str) {
+void t_editor_screen::print_bdr_top(string str) {
+	print_bdr(str, 0);
+}
+void t_editor_screen::print_bdr_bottom(string str) {
+	print_bdr(str, 1);
+}
+void t_editor_screen::print_bdr(string str, int top_or_bottom) {
 	int x = 1;
-	int y = 0;
+	int y = top_or_bottom == 0 ? 0 : last_row;
 	for (auto& ch : str) {
 		wnd_buf->SetTile(TTileSeq(ch, color.fg, color.bdr), 0, x, y, false);
 		x++;

@@ -33,7 +33,8 @@ struct t_editor_screen {
 	void type_char(ixc ch, bool overwrite, bool must_update);
 	void print(string str, bool overwrite);
 	void println(string str, bool overwrite);
-	void print_debug(string str);
+	void print_bdr_top(string str);
+	void print_bdr_bottom(string str);
 	int line_count();
 	bool is_cursor_on_last_line();
 	void scroll_right();
@@ -66,4 +67,5 @@ private:
 	void draw_line(t_editor_screen_line& line, int ybuf);
 	void draw_cursor();
 	ixc get_char_at_cursor();
+	void print_bdr(string str, int top_or_bottom);
 };
