@@ -23,6 +23,7 @@ private:
 	void process_line(string line);
 	void execute_command(string line);
 	bool assert_color_ix(int ix);
+	bool assert_tile_ix(int ix);
 	bool assert_argc(std::vector<string>& args, int argc);
 	void store_program_line(string line);
 };

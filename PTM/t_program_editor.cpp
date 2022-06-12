@@ -226,6 +226,8 @@ void t_program_editor::execute_command(string line) {
 				}
 			}
 			print_ok();
+		} else {
+			print_error("Invalid argument count");
 		}
 	} else if (cmd == "RENUM") {
 		if (assert_argc(args, 1)) {
@@ -287,14 +289,62 @@ void t_program_editor::execute_command(string line) {
 			print_ok();
 		}
 	} else if (cmd == "RUN") {
-		t_compiler compiler;
-		compiler.run(&prg);
-		t_interpreter interpreter;
-		interpreter.run(&prg, scr->wnd);
-		if (interpreter.has_user_break()) {
-			print_error("Break");
+		if (assert_argc(args, 0)) {
+			t_compiler compiler;
+			compiler.run(&prg);
+			t_interpreter interpreter;
+			interpreter.run(&prg, scr->wnd);
+			if (interpreter.has_user_break()) {
+				print_error("Break");
+			} else {
+				print_ok();
+			}
+		}
+	} else if (cmd == "CHR") {
+		if (args.size() == 1) {
+			int ch = String::ToInt(args[0]);
+			if (assert_tile_ix(ch)) {
+				TTileSeq tile(ch, scr->color.fg, scr->color.bg);
+				scr->type_char(tile, true, true);
+				scr->type_char('\n', true, true);
+				print_ok();
+			}
+		} else if (args.size() == 2) {
+			int begin = String::ToInt(args[0]);
+			int end = String::ToInt(args[1]);
+			if (assert_tile_ix(begin) && assert_tile_ix(end)) {
+				for (int ch = begin; ch <= end; ch++) {
+					TTileSeq tile(ch, scr->color.fg, scr->color.bg);
+					scr->type_char(tile, true, true);
+				}
+				scr->type_char('\n', true, true);
+				print_ok();
+			}
 		} else {
-			print_ok();
+			print_error("Invalid argument count");
+		}
+	} else if (cmd == "PAL") {
+		if (args.size() == 1) {
+			int ix = String::ToInt(args[0]);
+			if (assert_color_ix(ix)) {
+				TTileSeq tile(0, ix, ix);
+				scr->type_tile(tile, true, true);
+				scr->type_char('\n', true, true);
+				print_ok();
+			}
+		} else if (args.size() == 2) {
+			int begin = String::ToInt(args[0]);
+			int end = String::ToInt(args[1]);
+			if (assert_color_ix(begin) && assert_color_ix(end)) {
+				for (int ix = begin; ix <= end; ix++) {
+					TTileSeq tile(0, ix, ix);
+					scr->type_tile(tile, true, true);
+				}
+				scr->type_char('\n', true, true);
+				print_ok();
+			}
+		} else {
+			print_error("Invalid argument count");
 		}
 	} else {
 		print_error("Syntax error");
@@ -308,12 +358,16 @@ bool t_program_editor::assert_color_ix(int ix) {
 	}
 	return true;
 }
-bool t_program_editor::assert_argc(std::vector<string>& args, int argc) {
-	if (args.size() < argc) {
-		print_error("Missing arguments");
+bool t_program_editor::assert_tile_ix(int ix) {
+	if (ix < 0 || ix >= scr->charset->GetSize()) {
+		print_error("Invalid char index");
 		return false;
-	} else if (args.size() > argc) {
-		print_error("Too many arguments");
+	}
+	return true;
+}
+bool t_program_editor::assert_argc(std::vector<string>& args, int argc) {
+	if (args.size() != argc) {
+		print_error("Invalid argument count");
 		return false;
 	}
 	return true;
