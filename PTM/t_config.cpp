@@ -21,6 +21,12 @@ void t_config::load() {
 			rows = String::ToInt(values[1]);
 			pixel_w = String::ToInt(values[2]);
 			pixel_h = String::ToInt(values[3]);
+		} else if (name == "color") {
+			auto values = String::Split(value, ' ', true);
+			if (values.size() != 3) continue;
+			fg_color = String::ToInt(values[0]);
+			bg_color = String::ToInt(values[1]);
+			bdr_color = String::ToInt(values[2]);
 		}
 	}
 }

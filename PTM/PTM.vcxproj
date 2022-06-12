@@ -88,12 +88,12 @@
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\..\..\..\Lib\SDL2-2.0.8\include;..\..\..\CppUtils\CppUtils;..\..\..\TileGameToolkit\TileGameLibC\TileGameLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\Lib\SDL2-2.0.8\include;..\..\CppUtils\CppUtils;..\..\TileGameToolkit\TileGameLibC\TileGameLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\..\..\..\Lib\SDL2-2.0.8\lib\x86;..\..\..\CppUtils\Debug;..\..\..\TileGameToolkit\TileGameLibC\Builds;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\..\Lib\SDL2-2.0.8\lib\x86;..\..\CppUtils\Debug;..\..\TileGameToolkit\TileGameLibC\Builds;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;CppUtils.lib;TileGameLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

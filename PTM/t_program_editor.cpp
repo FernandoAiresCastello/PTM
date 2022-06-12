@@ -8,7 +8,7 @@ t_program_editor::t_program_editor(
 	TBufferedWindow* wnd, TSound* snd, t_config* cfg) {
 
 	exit_requested = false;
-	scr = new t_editor_screen(wnd);
+	scr = new t_editor_screen(wnd, cfg);
 	this->snd = snd;
 	print_intro();
 

@@ -1,6 +1,7 @@
 #include "t_editor_screen.h"
+#include "t_config.h"
 
-t_editor_screen::t_editor_screen(TBufferedWindow* wnd) {
+t_editor_screen::t_editor_screen(TBufferedWindow* wnd, t_config* cfg) {
 	this->wnd = wnd;
 	wnd_buf = wnd->GetBuffer();
 	palette = wnd->GetPalette();
@@ -11,9 +12,9 @@ t_editor_screen::t_editor_screen(TBufferedWindow* wnd) {
 	last_row = rows - 1;
 	csr.x = 0;
 	csr.y = 0;
-	color.fg = 15;
-	color.bg = 0x52;
-	color.bdr = 0x56;
+	color.fg = cfg->fg_color;
+	color.bg = cfg->bg_color;
+	color.bdr = cfg->bdr_color;
 	first_line_ix = 0;
 	first_char_ix = 0;
 	max_visible_lines = rows - 2;

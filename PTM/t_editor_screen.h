@@ -2,6 +2,8 @@
 #include "common.h"
 #include "t_editor_screen_line.h"
 
+struct t_config;
+
 struct t_editor_screen {
 	TBufferedWindow* wnd;
 	struct {
@@ -9,7 +11,7 @@ struct t_editor_screen {
 		ixp bg;
 		ixp bdr;
 	} color;
-	t_editor_screen(TBufferedWindow* wnd);
+	t_editor_screen(TBufferedWindow* wnd, t_config* cfg);
 	TPalette* palette;
 	TCharset* charset;
 	void clear_lines();
