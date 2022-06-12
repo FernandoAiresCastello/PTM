@@ -288,7 +288,7 @@ void t_program_editor::execute_command(string line) {
 		}
 	} else if (cmd == "RUN") {
 		t_compiler compiler;
-		compiler.compile(&prg);
+		compiler.run(&prg);
 		t_interpreter interpreter;
 		interpreter.run(&prg, scr->wnd);
 		if (interpreter.has_user_break()) {

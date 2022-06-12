@@ -1,14 +1,18 @@
 #include "t_compiler.h"
 #include "t_program.h"
 #include "t_source_line.h"
+#include "t_program_line.h"
 
-void t_compiler::compile(t_program* prg) {
+void t_compiler::run(t_program* prg) {
 	prg->lines.clear();
 	for (auto& srcline : prg->src_lines) {
-		compile_line(prg, &srcline);
+		t_program_line line;
+		parse_src_line(prg, &srcline, &line);
+		compile(&line);
+		prg->lines.push_back(line);
 	}
 }
-void t_compiler::compile_line(t_program* prg, t_source_line* srcline) {
+void t_compiler::parse_src_line(t_program* prg, t_source_line* srcline, t_program_line* line) {
 	auto src = srcline->src;
 	auto ixSpace = String::FindFirst(src, ' ');
 	auto cmd = ixSpace >= 0 ? String::Trim(src.substr(0, ixSpace)) : src;
@@ -30,9 +34,11 @@ void t_compiler::compile_line(t_program* prg, t_source_line* srcline) {
 			arg += ch;
 		}
 	}
-	t_program_line line;
-	line.src = srcline;
-	line.cmd = cmd;
-	line.args = args;
-	prg->lines.push_back(line);
+
+	line->src = srcline;
+	line->cmd = cmd;
+	line->args = args;
+}
+void t_compiler::compile(t_program_line* line) {
+	line->code.push_back(0xff);
 }
