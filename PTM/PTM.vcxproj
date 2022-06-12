@@ -96,6 +96,9 @@
       <AdditionalLibraryDirectories>..\..\..\..\Lib\SDL2-2.0.8\lib\x86;..\..\CppUtils\Debug;..\..\TileGameToolkit\TileGameLibC\Builds;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;CppUtils.lib;TileGameLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(TargetPath)" "$(SolutionDir)Build\$(TargetFileName)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

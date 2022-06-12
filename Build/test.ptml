@@ -1,0 +1,6 @@
+10 REM Test Program
+20 CLS
+25 COLOR 10,20,30
+30 PRINT "Hello World!"
+40 HALT
+50 EXIT
