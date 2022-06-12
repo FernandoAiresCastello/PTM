@@ -4,7 +4,8 @@
 struct t_editor_screen_line {
 	void clear();
 	int length();
-	string text();
+	string get_text();
+	std::vector<TTileSeq>& get_tiles();
 	void overwrite(int ix, TTileSeq ch);
 	void overwrite(int ix, string chars, ixp fgc, ixp bgc);
 	void insert(int ix, TTileSeq ch);

@@ -305,19 +305,26 @@ void t_program_editor::execute_command(string line) {
 			int ch = String::ToInt(args[0]);
 			if (assert_tile_ix(ch)) {
 				TTileSeq tile(ch, scr->color.fg, scr->color.bg);
-				scr->type_char(tile, true, true);
-				scr->type_char('\n', true, true);
+				scr->type_char(tile, true, false);
+				scr->type_char('\n', true, false);
 				print_ok();
 			}
 		} else if (args.size() == 2) {
 			int begin = String::ToInt(args[0]);
 			int end = String::ToInt(args[1]);
 			if (assert_tile_ix(begin) && assert_tile_ix(end)) {
+				int col = 0;
 				for (int ch = begin; ch <= end; ch++) {
+					if (col > 15) {
+						scr->type_char('\n', true, false);
+						col = 0;
+					}
 					TTileSeq tile(ch, scr->color.fg, scr->color.bg);
-					scr->type_char(tile, true, true);
+					tile.Prop.Set("ignore_crlf");
+					scr->type_char(tile, true, false);
+					col++;
 				}
-				scr->type_char('\n', true, true);
+				scr->type_char('\n', true, false);
 				print_ok();
 			}
 		} else {
@@ -328,19 +335,25 @@ void t_program_editor::execute_command(string line) {
 			int ix = String::ToInt(args[0]);
 			if (assert_color_ix(ix)) {
 				TTileSeq tile(0, ix, ix);
-				scr->type_tile(tile, true, true);
-				scr->type_char('\n', true, true);
+				scr->type_tile(tile, true, false);
+				scr->type_char('\n', true, false);
 				print_ok();
 			}
 		} else if (args.size() == 2) {
 			int begin = String::ToInt(args[0]);
 			int end = String::ToInt(args[1]);
 			if (assert_color_ix(begin) && assert_color_ix(end)) {
+				int col = 0;
 				for (int ix = begin; ix <= end; ix++) {
+					if (col > 15) {
+						scr->type_char('\n', true, false);
+						col = 0;
+					}
 					TTileSeq tile(0, ix, ix);
-					scr->type_tile(tile, true, true);
+					scr->type_tile(tile, true, false);
+					col++;
 				}
-				scr->type_char('\n', true, true);
+				scr->type_char('\n', true, false);
 				print_ok();
 			}
 		} else {

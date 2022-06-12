@@ -6,7 +6,7 @@ void t_editor_screen_line::clear() {
 int t_editor_screen_line::length() {
 	return tiles.size();
 }
-string t_editor_screen_line::text() {
+string t_editor_screen_line::get_text() {
 	string chars = "";
 	for (auto& tile : tiles) {
 		if (!tile.IsEmpty()) {
@@ -15,6 +15,9 @@ string t_editor_screen_line::text() {
 		}
 	}
 	return chars;
+}
+std::vector<TTileSeq>& t_editor_screen_line::get_tiles() {
+	return tiles;
 }
 void t_editor_screen_line::overwrite(int ix, TTileSeq ch) {
 	if (ix >= tiles.size()) {

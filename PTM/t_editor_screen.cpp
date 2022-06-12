@@ -63,7 +63,7 @@ void t_editor_screen::draw_lines() {
 	}
 }
 void t_editor_screen::draw_line(t_editor_screen_line& line, int ybuf) {
-	string text = line.text();
+	string text = line.get_text();
 	int x = 1;
 	for (int i = first_char_ix; i < line.length(); i++) {
 		auto tile = line.get_tile(i);
@@ -96,11 +96,11 @@ void t_editor_screen::draw_cursor() {
 	}
 }
 ixc t_editor_screen::get_char_at_cursor() {
-	auto line = get_current_line().text();
-	if (line.empty() || csr.x >= line.length() || csr.x < 0) {
+	auto line = get_current_line().get_tiles();
+	if (line.empty() || csr.x >= line.size() || csr.x < 0) {
 		return 0;
 	}
-	return line[csr.x];
+	return line[csr.x].GetChar(0);
 }
 void t_editor_screen::csr_move(int dx, int dy) {
 	if (csr.x + dx >= 0 && csr.x + dx <= get_current_line().length()) {
@@ -174,7 +174,7 @@ t_editor_screen_line& t_editor_screen::get_current_line() {
 	return lines[csr.y];
 }
 string t_editor_screen::get_current_string() {
-	return lines[csr.y].text();
+	return lines[csr.y].get_text();
 }
 void t_editor_screen::new_line() {
 	t_editor_screen_line line;
@@ -190,7 +190,7 @@ void t_editor_screen::next_line() {
 }
 void t_editor_screen::type_char(TTileSeq tile, bool overwrite, bool must_update) {
 	ixc ch = tile.GetChar(0);
-	if (ch == '\n') {
+	if (ch == '\n' && !tile.Prop.Has("ignore_crlf")) {
 		crlf();
 	} else {
 		if (csr.y >= lines.size()) {
