@@ -3,19 +3,34 @@
 #include "t_source_line.h"
 #include "t_program_line.h"
 
+#define TOKEN_COMMENT "'"
+#define TOKEN_LABEL ":"
+
 void t_compiler::run(t_program* prg) {
 	prg->lines.clear();
+	prg->labels.clear();
 	for (auto& srcline : prg->src_lines) {
 		t_program_line line;
-		parse_src_line(prg, &srcline, &line);
-		compile(&line);
-		prg->lines.push_back(line);
+		compile(prg, &srcline, &line);
+		if (!line.ignore) {
+			prg->lines.push_back(line);
+		}
 	}
 }
-void t_compiler::parse_src_line(t_program* prg, t_source_line* srcline, t_program_line* line) {
+void t_compiler::compile(t_program* prg, t_source_line* srcline, t_program_line* line) {
 	auto src = srcline->src;
+	if (is_comment(src)) {
+		line->ignore = true;
+		return;
+	}
+	if (is_label(src)) {
+		prg->labels[String::Skip(src, 1)] = prg->lines.size();
+		line->ignore = true;
+		return;
+	}
+	line->src = srcline;
 	auto ixSpace = String::FindFirst(src, ' ');
-	auto cmd = ixSpace >= 0 ? String::Trim(src.substr(0, ixSpace)) : src;
+	line->cmd = ixSpace >= 0 ? String::Trim(src.substr(0, ixSpace)) : src;
 	auto raw_args = ixSpace >= 0 ? String::Trim(src.substr(ixSpace)) : "";
 	std::vector<string> args;
 	bool quote = false;
@@ -35,10 +50,15 @@ void t_compiler::parse_src_line(t_program* prg, t_source_line* srcline, t_progra
 		}
 	}
 
-	line->src = srcline;
-	line->cmd = cmd;
-	line->args = args;
+	for (auto& arg : args) {
+		t_param param;
+		// todo
+		line->params.push_back(param);
+	}
 }
-void t_compiler::compile(t_program_line* line) {
-	line->code.push_back(0xff);
+bool t_compiler::is_comment(string src) {
+	return String::StartsWith(src, TOKEN_COMMENT);
+}
+bool t_compiler::is_label(string src) {
+	return String::StartsWith(src, TOKEN_LABEL);
 }

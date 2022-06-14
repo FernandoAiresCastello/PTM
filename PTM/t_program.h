@@ -6,6 +6,7 @@
 struct t_program {
 	std::vector<t_source_line> src_lines;
 	std::vector<t_program_line> lines;
+	std::map<string, int> labels;
 	t_program();
 	void add_src_line(int number, string src);
 	t_source_line* get_src_line(int number);

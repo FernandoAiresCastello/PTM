@@ -151,6 +151,7 @@
     <ClCompile Include="t_editor_screen.cpp" />
     <ClCompile Include="t_editor_screen_line.cpp" />
     <ClCompile Include="t_interpreter.cpp" />
+    <ClCompile Include="t_param.cpp" />
     <ClCompile Include="t_program.cpp" />
     <ClCompile Include="t_program_editor.cpp" />
     <ClCompile Include="t_program_line.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="t_editor_screen.h" />
     <ClInclude Include="t_editor_screen_line.h" />
     <ClInclude Include="t_interpreter.h" />
+    <ClInclude Include="t_param.h" />
     <ClInclude Include="t_program.h" />
     <ClInclude Include="t_program_editor.h" />
     <ClInclude Include="t_program_line.h" />

@@ -29,6 +29,9 @@
     <ClCompile Include="t_config.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="t_param.cpp">
+      <Filter>Program</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="t_editor_screen.h">
@@ -61,6 +64,9 @@
     <ClInclude Include="t_config.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="t_param.h">
+      <Filter>Program</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Editor">
@@ -77,6 +83,9 @@
     </Filter>
     <Filter Include="Compiler">
       <UniqueIdentifier>{fa145803-b6e6-4064-9ce0-4ac3bb843ef6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Environment">
+      <UniqueIdentifier>{1227c78f-5b40-4025-9929-bbe7dfde9f31}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
