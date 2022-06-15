@@ -12,6 +12,7 @@ private:
 	TTileBuffer* buf;
 	bool running;
 	t_program prg;
+	bool csr_overwrite;
 	struct {
 		int fg = 15;
 		int bg = 0;
@@ -37,7 +38,8 @@ private:
 	void draw_border();
 	void draw_program();
 	void draw_cursor();
-	string* get_line_under_cursor();
+	string* get_current_line();
+	string* get_line_below();
 	int get_char_under_cursor();
 	void move_prg_csr_right();
 	void move_prg_csr_left();
@@ -47,4 +49,9 @@ private:
 	void move_prg_csr_home_x();
 	void move_prg_csr_home();
 	void move_prg_csr_end();
+	bool is_valid_prg_char(int ch);
+	void type_char(int ch);
+	void type_crlf();
+	void type_backspace();
+	void type_delete();
 };
