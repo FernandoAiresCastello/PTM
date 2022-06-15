@@ -3,6 +3,7 @@
 
 struct t_program;
 struct t_program_line;
+struct t_environment;
 
 struct t_interpreter {
 	std::vector<string> errors;
@@ -12,6 +13,7 @@ struct t_interpreter {
 private:
 	TBufferedWindow* wnd;
 	TTileBuffer* wnd_buf;
+	t_environment* env;
 	bool running;
 	bool halted;
 	bool user_break;

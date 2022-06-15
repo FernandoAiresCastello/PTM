@@ -2,7 +2,7 @@
 #include "common.h"
 
 enum class t_param_type {
-	undefined, number, string, variable, index, label
+	undefined, number, string, variable, array_index_literal, array_index_variable, label
 };
 
 struct t_param {
@@ -12,6 +12,7 @@ struct t_param {
 	int number_literal = 0;
 	string label;
 	string variable;
-	int index = 0;
+	int array_index_literal = 0;
+	string array_index_variable;
 	string resolved_variable;
 };

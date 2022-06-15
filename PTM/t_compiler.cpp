@@ -65,6 +65,25 @@ bool t_compiler::compile(t_program* prg, t_program_line* new_line, string src_li
 		} else if (String::StartsAndEndsWith(arg, '"')) {
 			param.type = t_param_type::string;
 			param.string_literal = String::RemoveFirstAndLast(arg);
+		} else if (String::StartsWith(arg, '$')) {
+			if (String::Contains(arg, '[') && String::Contains(arg, ']')) {
+				int ixOpenBracket = String::FindFirst(arg, '[') + 1;
+				int ixCloseBracket = String::FindFirst(arg, ']');
+				string index = String::Substring(arg, ixOpenBracket, ixCloseBracket);
+				if (String::StartsWithNumber(index)) {
+					param.type = t_param_type::array_index_literal;
+					param.array_index_literal = String::ToInt(index);
+				} else if (String::StartsWith(index, '$')) {
+					param.type = t_param_type::array_index_variable;
+					param.variable = String::Substring(arg, 1, ixOpenBracket - 1);
+					param.array_index_variable = String::RemoveFirst(index);
+				} else {
+					add_error(src_line_nr, src_line, "Syntax error");
+				}
+			} else {
+				param.type = t_param_type::variable;
+				param.variable = String::RemoveFirst(arg);
+			}
 		} else if (String::StartsWithLetter(arg)) {
 			param.type = t_param_type::label;
 			param.label = arg;

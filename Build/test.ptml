@@ -1,6 +1,1 @@
-; Test Program
-main:
- CLS
- LOCATE 0,0
- PRINT "Hello World!"
- HALT
+SET $x,123

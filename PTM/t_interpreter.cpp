@@ -1,6 +1,7 @@
 #include "t_interpreter.h"
 #include "t_program.h"
 #include "t_program_line.h"
+#include "t_environment.h"
 
 t_interpreter::t_interpreter() {
 	wnd = nullptr;
@@ -8,6 +9,8 @@ t_interpreter::t_interpreter() {
 	running = false;
 	user_break = false;
 	halted = false;
+	branched = false;
+	env = nullptr;
 	cur_line_ix = 0;
 }
 bool t_interpreter::has_user_break() {
@@ -15,6 +18,7 @@ bool t_interpreter::has_user_break() {
 }
 void t_interpreter::run(t_program* prg, TBufferedWindow* wnd) {
 	errors.clear();
+	env = new t_environment();
 	running = true;
 	halted = false;
 	branched = false;
@@ -46,6 +50,8 @@ void t_interpreter::run(t_program* prg, TBufferedWindow* wnd) {
 			abort(nullptr, "Invalid execution pointer");
 		}
 	}
+
+	delete env;
 }
 void t_interpreter::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt) {
 	if (key == SDLK_RETURN && TKey::Alt()) {
@@ -67,7 +73,12 @@ void t_interpreter::abort(t_program_line* line, string error) {
 void t_interpreter::resolve_vars(t_program_line* line) {
 	for (auto& param : line->params) {
 		if (param.type == t_param_type::variable) {
-		} else if (param.type == t_param_type::index) {
+			if (env->has_var(param.variable)) {
+			} else {
+				abort(line, "Variable not found");
+			}
+		} else if (param.type == t_param_type::array_index_literal) {
+		} else if (param.type == t_param_type::array_index_variable) {
 		}
 	}
 }
