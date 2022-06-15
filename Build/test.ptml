@@ -1,7 +1,6 @@
 ; Test Program
-main_1:
+main:
  CLS
- LOCATE -1,0xff
+ LOCATE 0,0
  PRINT "Hello World!"
- GOTO main_1
  HALT

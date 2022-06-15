@@ -33,6 +33,7 @@ bool t_compiler::compile(t_program* prg, t_program_line* new_line, string src_li
 	new_line->src_line_nr = src_line_nr;
 	auto ixSpace = String::FindFirst(src_line, ' ');
 	new_line->cmd = ixSpace >= 0 ? String::Trim(src_line.substr(0, ixSpace)) : src_line;
+	new_line->cmd = String::ToUpper(new_line->cmd);
 	auto raw_args = ixSpace >= 0 ? String::Trim(src_line.substr(ixSpace)) : "";
 	std::vector<string> args;
 	bool quote = false;
@@ -83,5 +84,6 @@ bool t_compiler::is_label(string src) {
 	return String::EndsWith(src, TOKEN_LABEL);
 }
 void t_compiler::add_error(int line, string src, string msg) {
-	errors.push_back(String::Format("%s at line %i: %s", msg.c_str(), line, src.c_str()));
+	errors.push_back(String::Format("At line %i:\n%s\n\n%s", 
+		line, msg.c_str(), src.c_str()));
 }

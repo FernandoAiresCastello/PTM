@@ -5,11 +5,12 @@
 struct t_config;
 
 struct t_program_editor {
-	t_program_editor(TBufferedWindow* wnd, t_config* cfg);
+	t_program_editor(TBufferedWindow* wnd, t_config* cfg, TSound* snd);
 	void run();
 private:
 	TBufferedWindow* wnd;
 	TTileBuffer* buf;
+	TSound* snd;
 	bool running;
 	t_program prg;
 	bool csr_overwrite;
@@ -37,7 +38,9 @@ private:
 		int max_chars = 0;
 	} prg_view;
 	void on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt);
+	void draw_screen_base();
 	void draw_border();
+	void draw_border_info();
 	void print_border(string str, int top_or_bottom, int x);
 	void print_border_top(string str, int x);
 	void print_border_bottom(string str, int x);
@@ -63,5 +66,6 @@ private:
 	void type_pgdn();
 	void load_program(string file);
 	void compile_and_run();
-	void print_compilation_errors(std::vector<string>& errors);
+	void print_errors(std::vector<string>& errors);
+	void print(string text, int x, int y);
 };

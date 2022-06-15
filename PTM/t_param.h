@@ -13,4 +13,5 @@ struct t_param {
 	string label;
 	string variable;
 	int index = 0;
+	string resolved_variable;
 };

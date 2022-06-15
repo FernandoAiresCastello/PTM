@@ -3,9 +3,10 @@
 #include "t_compiler.h"
 #include "t_interpreter.h"
 
-t_program_editor::t_program_editor(TBufferedWindow* wnd, t_config* cfg) {
+t_program_editor::t_program_editor(TBufferedWindow* wnd, t_config* cfg, TSound* snd) {
 	this->wnd = wnd;
 	buf = wnd->GetBuffer();
+	this->snd = snd;
 	csr_overwrite = false;
 	running = false;
 	prg_view.max_chars = wnd->Cols - 2;
@@ -23,9 +24,8 @@ t_program_editor::t_program_editor(TBufferedWindow* wnd, t_config* cfg) {
 void t_program_editor::run() {
 	running = true;
 	while (running) {
-		wnd->SetBackColor(color.bg);
-		buf->ClearAllLayers();
-		draw_border();
+		draw_screen_base();
+		draw_border_info();
 		draw_program();
 		draw_cursor();
 		wnd->Update();
@@ -80,6 +80,11 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 		type_char(key);
 	}
 }
+void t_program_editor::draw_screen_base() {
+	wnd->SetBackColor(color.bg);
+	buf->ClearAllLayers();
+	draw_border();
+}
 void t_program_editor::draw_border() {
 	TTileSeq tile(0, color.bdr_bg, color.bdr_bg);
 	for (int y = 0; y < buf->Rows; y++) {
@@ -90,11 +95,12 @@ void t_program_editor::draw_border() {
 		buf->SetTile(tile, 0, x, 0, false);
 		buf->SetTile(tile, 0, x, buf->LastRow, false);
 	}
-	if (info_visible) {
-		print_border_top(prg_filename, 0);
-		print_border_bottom(String::Format("%i,%i", prg_csr.line_ix, prg_csr.char_ix), 0);
-		print_border_bottom(csr_overwrite ? "ovr" : "ins", 28);
-	}
+}
+void t_program_editor::draw_border_info() {
+	if (!info_visible) return;
+	print_border_top(prg_filename, 0);
+	print_border_bottom(String::Format("%i,%i", prg_csr.line_ix + 1, prg_csr.char_ix), 0);
+	print_border_bottom(csr_overwrite ? "ovr" : "ins", 28);
 }
 void t_program_editor::print_border(string str, int top_or_bottom, int x) {
 	int px = x + 1;
@@ -311,10 +317,51 @@ void t_program_editor::compile_and_run() {
 	if (compiler.errors.empty()) {
 		t_interpreter* interpreter = new t_interpreter();
 		interpreter->run(&prg, wnd);
+		auto errors = interpreter->errors;
 		delete interpreter;
+		if (!errors.empty()) {
+			print_errors(errors);
+		}
 	} else {
-		print_compilation_errors(compiler.errors);
+		print_errors(compiler.errors);
 	}
 }
-void t_program_editor::print_compilation_errors(std::vector<string>& errors) {
+void t_program_editor::print_errors(std::vector<string>& errors) {
+	snd->Beep(2500, 100);
+	string error = errors[0];
+	while (running) {
+		draw_screen_base();
+		print_border_top("RUNTIME ERROR", 0);
+		print_border_bottom("Press ENTER to continue...", 0);
+		print(error, 0, 0);
+		wnd->Update();
+		SDL_Event e = { 0 };
+		SDL_PollEvent(&e);
+		if (e.type == SDL_QUIT) {
+			running = false;
+			break;
+		} else if (e.type == SDL_KEYDOWN) {
+			auto key = e.key.keysym.sym;
+			if (key == SDLK_RETURN) {
+				return;
+			}
+		} else {
+			SDL_Delay(1);
+		}
+	}
+}
+void t_program_editor::print(string text, int x, int y) {
+	x++; y++;
+	for (auto& ch : text) {
+		if (ch == '\n') {
+			x = 1;
+			y++;
+		} else {
+			TTileSeq tile(ch, color.fg, color.bg);
+			buf->SetTile(tile, 0, x, y, false);
+			if (++x > buf->LastCol - 1) {
+				break;
+			}
+		}
+	}
 }

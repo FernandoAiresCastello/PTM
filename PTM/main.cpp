@@ -10,7 +10,7 @@ int main(int argc, char* argv[]) {
 	TBufferedWindow* wnd = new TBufferedWindow(2, cfg.cols, cfg.rows, cfg.pixel_w, cfg.pixel_h);
 	wnd->SetTitle("PTM");
 	wnd->Show();
-	t_program_editor* editor = new t_program_editor(wnd, &cfg);
+	t_program_editor* editor = new t_program_editor(wnd, &cfg, &snd);
 	editor->run();
 
 	delete editor;
