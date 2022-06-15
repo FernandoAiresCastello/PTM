@@ -1,5 +1,7 @@
 #include "t_program_editor.h"
 #include "t_config.h"
+#include "t_compiler.h"
+#include "t_interpreter.h"
 
 t_program_editor::t_program_editor(TBufferedWindow* wnd, t_config* cfg) {
 	this->wnd = wnd;
@@ -72,6 +74,8 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 		type_delete();
 	} else if (key == SDLK_F1) {
 		info_visible = !info_visible;
+	} else if (key == SDLK_F5) {
+		compile_and_run();
 	} else if (is_valid_prg_char(key)) {
 		type_char(key);
 	}
@@ -300,4 +304,17 @@ void t_program_editor::load_program(string file) {
 	prg.load(file);
 	move_prg_csr_home();
 	prg_filename = file;
+}
+void t_program_editor::compile_and_run() {
+	t_compiler compiler;
+	compiler.run(&prg);
+	if (compiler.errors.empty()) {
+		t_interpreter* interpreter = new t_interpreter();
+		interpreter->run(&prg, wnd);
+		delete interpreter;
+	} else {
+		print_compilation_errors(compiler.errors);
+	}
+}
+void t_program_editor::print_compilation_errors(std::vector<string>& errors) {
 }

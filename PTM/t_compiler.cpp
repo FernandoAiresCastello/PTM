@@ -2,29 +2,35 @@
 #include "t_program.h"
 #include "t_program_line.h"
 
-#define TOKEN_COMMENT "'"
+#define TOKEN_COMMENT ";"
 #define TOKEN_LABEL ":"
 
 void t_compiler::run(t_program* prg) {
+	errors.clear();
 	prg->lines.clear();
 	prg->labels.clear();
+	int src_line_nr = 1;
 	for (auto& srcline : prg->src_lines) {
 		t_program_line new_line;
-		bool must_add_line = compile(prg, &new_line, srcline);
+		bool must_add_line = compile(prg, &new_line, srcline, src_line_nr);
 		if (must_add_line) {
 			prg->lines.push_back(new_line);
 		}
+		src_line_nr++;
 	}
 }
-bool t_compiler::compile(t_program* prg, t_program_line* new_line, string src_line) {
+bool t_compiler::compile(t_program* prg, t_program_line* new_line, string src_line, int src_line_nr) {
+	int line_ix = prg->lines.size();
+	src_line = String::Trim(src_line);
 	if (is_comment(src_line)) {
 		return false;
 	}
 	if (is_label(src_line)) {
-		prg->labels[String::Skip(src_line, 1)] = prg->lines.size();
+		prg->labels[String::RemoveLast(src_line)] = line_ix;
 		return false;
 	}
 	new_line->src = src_line;
+	new_line->src_line_nr = src_line_nr;
 	auto ixSpace = String::FindFirst(src_line, ' ');
 	new_line->cmd = ixSpace >= 0 ? String::Trim(src_line.substr(0, ixSpace)) : src_line;
 	auto raw_args = ixSpace >= 0 ? String::Trim(src_line.substr(ixSpace)) : "";
@@ -36,8 +42,12 @@ bool t_compiler::compile(t_program* prg, t_program_line* new_line, string src_li
 		char ch = raw_args[i];
 		if (ch == '\"') {
 			quote = !quote;
-		}
-		if (ch == ',' || i == raw_args.length() - 1) {
+			arg += ch;
+			if (!quote && i == raw_args.length() - 1) {
+				args.push_back(String::Trim(arg));
+				arg = "";
+			}
+		} else if (!quote && ch == ',' || i == raw_args.length() - 1) {
 			if (ch != ',') arg += ch;
 			args.push_back(String::Trim(arg));
 			arg = "";
@@ -48,7 +58,19 @@ bool t_compiler::compile(t_program* prg, t_program_line* new_line, string src_li
 
 	for (auto& arg : args) {
 		t_param param;
-		// todo
+		if (String::StartsWithNumber(arg) || String::StartsWith(arg, '-')) {
+			param.type = t_param_type::number;
+			param.number_literal = String::ToInt(arg);
+		} else if (String::StartsAndEndsWith(arg, '"')) {
+			param.type = t_param_type::string;
+			param.string_literal = String::RemoveFirstAndLast(arg);
+		} else if (String::StartsWithLetter(arg)) {
+			param.type = t_param_type::label;
+			param.label = arg;
+		} else {
+			add_error(src_line_nr, src_line, "Syntax error");
+		}
+		param.src = arg;
 		new_line->params.push_back(param);
 	}
 
@@ -58,5 +80,8 @@ bool t_compiler::is_comment(string src) {
 	return String::StartsWith(src, TOKEN_COMMENT);
 }
 bool t_compiler::is_label(string src) {
-	return String::StartsWith(src, TOKEN_LABEL);
+	return String::EndsWith(src, TOKEN_LABEL);
+}
+void t_compiler::add_error(int line, string src, string msg) {
+	errors.push_back(String::Format("%s at line %i: %s", msg.c_str(), line, src.c_str()));
 }

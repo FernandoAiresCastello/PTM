@@ -62,4 +62,6 @@ private:
 	void type_pgup();
 	void type_pgdn();
 	void load_program(string file);
+	void compile_and_run();
+	void print_compilation_errors(std::vector<string>& errors);
 };

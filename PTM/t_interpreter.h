@@ -12,5 +12,6 @@ private:
 	TTileBuffer* wnd_buf;
 	bool running;
 	bool user_break;
-	int cur_line;
+	int cur_line_ix;
+	void on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt);
 };

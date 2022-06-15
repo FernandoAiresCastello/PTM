@@ -1,32 +1,7 @@
 ; Test Program
 main_1:
  CLS
- COLOR 10,20,30
- PRINT "Hello World! This one long line"
- PRINT "Hello World! This another long line"
- PRINT "Lorem ipsum"
- PRINT "Hello, hello"
+ LOCATE -1,0xff
  PRINT "Hello World!"
- PRINT "Finally"
-main_2:
- CLS
- COLOR 10,20,30
- PRINT "Hello World! This one long line"
- PRINT "Hello World! This another long line"
- PRINT "Lorem ipsum"
- PRINT "Hello, hello"
- PRINT "Hello World!"
- PRINT "Finally"
-main_3:
- CLS
- COLOR
- PRINT "Hello World! This one long line"
- PRINT "Hello World! This another long line"
- PRINT "Lorem ipsum"
- PRINT "Hello, hello"
- PRINT "Hello World!"
- PRINT "Finally"
-; Finished
-finish:
+ GOTO main_1
  HALT
- EXIT
