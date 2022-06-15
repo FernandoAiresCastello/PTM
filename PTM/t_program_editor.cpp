@@ -8,16 +8,20 @@ t_program_editor::t_program_editor(TBufferedWindow* wnd, t_config* cfg) {
 	running = false;
 	prg_view.max_chars = wnd->Cols - 2;
 	prg_view.max_lines = wnd->Rows - 2;
+	info_visible = true;
 
 	if (!cfg->autoload.empty()) {
 		if (File::Exists(cfg->autoload)) {
-			prg.load(cfg->autoload);
+			load_program(cfg->autoload);
 		}
+	} else {
+		prg.src_lines.push_back("");
 	}
 }
 void t_program_editor::run() {
 	running = true;
 	while (running) {
+		wnd->SetBackColor(color.bg);
 		buf->ClearAllLayers();
 		draw_border();
 		draw_program();
@@ -38,6 +42,8 @@ void t_program_editor::run() {
 void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt) {
 	if (key == SDLK_ESCAPE) {
 		running = false;
+	} else if (TKey::Alt() && key == SDLK_RETURN) {
+		wnd->ToggleFullscreen();
 	} else if (key == SDLK_RIGHT) {
 		move_prg_csr_right();
 	} else if (key == SDLK_LEFT) {
@@ -52,6 +58,10 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 	} else if (key == SDLK_HOME) {
 		if (ctrl) move_prg_csr_home();
 		else move_prg_csr_home_x();
+	} else if (key == SDLK_PAGEUP) {
+		type_pgup();
+	} else if (key == SDLK_PAGEDOWN) {
+		type_pgdn();
 	} else if (key == SDLK_INSERT) {
 		csr_overwrite = !csr_overwrite;
 	} else if (key == SDLK_RETURN) {
@@ -60,6 +70,8 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 		type_backspace();
 	} else if (key == SDLK_DELETE) {
 		type_delete();
+	} else if (key == SDLK_F1) {
+		info_visible = !info_visible;
 	} else if (is_valid_prg_char(key)) {
 		type_char(key);
 	}
@@ -74,6 +86,24 @@ void t_program_editor::draw_border() {
 		buf->SetTile(tile, 0, x, 0, false);
 		buf->SetTile(tile, 0, x, buf->LastRow, false);
 	}
+	if (info_visible) {
+		print_border_top(prg_filename, 0);
+		print_border_bottom(String::Format("%i,%i", prg_csr.line_ix, prg_csr.char_ix), 0);
+		print_border_bottom(csr_overwrite ? "ovr" : "ins", 28);
+	}
+}
+void t_program_editor::print_border(string str, int top_or_bottom, int x) {
+	int px = x + 1;
+	int y = top_or_bottom > 0 ? buf->LastRow : 0;
+	for (auto& ch : str) {
+		buf->SetTile(TTileSeq(ch, color.bdr_fg, color.bdr_bg), 0, px++, y, false);
+	}
+}
+void t_program_editor::print_border_top(string str, int x) {
+	print_border(str, 0, x);
+}
+void t_program_editor::print_border_bottom(string str, int x) {
+	print_border(str, 1, x);
 }
 void t_program_editor::draw_program() {
 	int x = 1;
@@ -253,4 +283,21 @@ void t_program_editor::type_delete() {
 			get_current_line()->append(str_line_below);
 		}
 	}
+}
+void t_program_editor::type_pgup() {
+	move_prg_csr_home_x();
+	for (int i = 0; i < buf->Rows / 2 - 1; i++) {
+		move_prg_csr_up();
+	}
+}
+void t_program_editor::type_pgdn() {
+	move_prg_csr_home_x();
+	for (int i = 0; i < buf->Rows / 2 - 1; i++) {
+		move_prg_csr_down();
+	}
+}
+void t_program_editor::load_program(string file) {
+	prg.load(file);
+	move_prg_csr_home();
+	prg_filename = file;
 }
