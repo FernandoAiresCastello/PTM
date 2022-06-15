@@ -3,28 +3,44 @@
 #include "t_program.h"
 
 struct t_config;
-struct t_editor_screen;
 
 struct t_program_editor {
-	bool exit_requested;
-	t_program_editor(TBufferedWindow* wnd, TSound* snd, t_config* cfg);
-	~t_program_editor();
-	void print_intro();
-	void print_borders();
-	void on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt);
+	t_program_editor(TBufferedWindow* wnd, t_config* cfg);
+	void run();
 private:
+	TBufferedWindow* wnd;
+	TTileBuffer* buf;
+	bool running;
 	t_program prg;
-	t_editor_screen* scr;
-	TSound* snd;
-	bool csr_overwrite;
-	void print_ok();
-	void print_msg(string msg);
-	void print_error(string error);
-	void print_program_line(t_source_line* line);
-	void process_line(string line);
-	void execute_command(string line);
-	bool assert_color_ix(int ix);
-	bool assert_tile_ix(int ix);
-	bool assert_argc(std::vector<string>& args, int argc);
-	void store_program_line(string line);
+	struct {
+		int fg = 15;
+		int bg = 0;
+		int bdr_fg = 15;
+		int bdr_bg = 5;
+	} color;
+	struct {
+		int line_ix = 0;
+		int char_ix = 0;
+	} prg_csr;
+	struct {
+		int x = 1;
+		int y = 1;
+		TTileSeq tile;
+	} scr_csr;
+	struct {
+		int first_line_ix = 0;
+		int first_char_ix = 0;
+		int max_lines = 0;
+		int max_chars = 0;
+	} prg_view;
+	void on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt);
+	void draw_border();
+	void draw_program();
+	void draw_cursor();
+	string* get_line_under_cursor();
+	int get_char_under_cursor();
+	void move_prg_csr_right();
+	void move_prg_csr_left();
+	void move_prg_csr_down();
+	void move_prg_csr_up();
 };

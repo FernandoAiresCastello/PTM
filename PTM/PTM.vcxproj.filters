@@ -2,15 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="t_editor_screen.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="t_editor_screen_line.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="t_program_editor.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
     <ClCompile Include="t_program.cpp">
       <Filter>Program</Filter>
     </ClCompile>
@@ -19,9 +10,6 @@
     </ClCompile>
     <ClCompile Include="t_interpreter.cpp">
       <Filter>Interpreter</Filter>
-    </ClCompile>
-    <ClCompile Include="t_source_line.cpp">
-      <Filter>Program</Filter>
     </ClCompile>
     <ClCompile Include="t_compiler.cpp">
       <Filter>Compiler</Filter>
@@ -32,17 +20,11 @@
     <ClCompile Include="t_param.cpp">
       <Filter>Program</Filter>
     </ClCompile>
+    <ClCompile Include="t_program_editor.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="t_editor_screen.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="t_editor_screen_line.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="t_program_editor.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
     <ClInclude Include="t_program.h">
       <Filter>Program</Filter>
     </ClInclude>
@@ -55,9 +37,6 @@
     <ClInclude Include="t_interpreter.h">
       <Filter>Interpreter</Filter>
     </ClInclude>
-    <ClInclude Include="t_source_line.h">
-      <Filter>Program</Filter>
-    </ClInclude>
     <ClInclude Include="t_compiler.h">
       <Filter>Compiler</Filter>
     </ClInclude>
@@ -66,6 +45,9 @@
     </ClInclude>
     <ClInclude Include="t_param.h">
       <Filter>Program</Filter>
+    </ClInclude>
+    <ClInclude Include="t_program_editor.h">
+      <Filter>Editor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

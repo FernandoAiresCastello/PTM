@@ -1,8 +1,32 @@
-10 'Test Program
-20 :main
-30 CLS
-40 COLOR 10,20,30
-50 PRINT "Hello World!"
-60 'Finished
-70 HALT
-80 EXIT
+; Test Program
+main_1:
+ CLS
+ COLOR 10,20,30
+ PRINT "Hello World! This one long line"
+ PRINT "Hello World! This another long line"
+ PRINT "Lorem ipsum"
+ PRINT "Hello, hello"
+ PRINT "Hello World!"
+ PRINT "Finally"
+main_2:
+ CLS
+ COLOR 10,20,30
+ PRINT "Hello World! This one long line"
+ PRINT "Hello World! This another long line"
+ PRINT "Lorem ipsum"
+ PRINT "Hello, hello"
+ PRINT "Hello World!"
+ PRINT "Finally"
+main_3:
+ CLS
+ COLOR 10,20,30
+ PRINT "Hello World! This one long line"
+ PRINT "Hello World! This another long line"
+ PRINT "Lorem ipsum"
+ PRINT "Hello, hello"
+ PRINT "Hello World!"
+ PRINT "Finally"
+; Finished
+finish:
+ HALT
+ EXIT
