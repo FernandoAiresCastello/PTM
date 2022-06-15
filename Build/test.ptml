@@ -19,7 +19,7 @@ main_2:
  PRINT "Finally"
 main_3:
  CLS
- COLOR 10,20,30
+ COLOR
  PRINT "Hello World! This one long line"
  PRINT "Hello World! This another long line"
  PRINT "Lorem ipsum"

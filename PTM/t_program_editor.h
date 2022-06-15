@@ -43,4 +43,8 @@ private:
 	void move_prg_csr_left();
 	void move_prg_csr_down();
 	void move_prg_csr_up();
+	void move_prg_csr_end_x();
+	void move_prg_csr_home_x();
+	void move_prg_csr_home();
+	void move_prg_csr_end();
 };

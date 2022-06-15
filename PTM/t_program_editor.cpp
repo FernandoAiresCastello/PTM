@@ -45,6 +45,12 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 		move_prg_csr_down();
 	} else if (key == SDLK_UP) {
 		move_prg_csr_up();
+	} else if (key == SDLK_END) {
+		if (ctrl) move_prg_csr_end();
+		else move_prg_csr_end_x();
+	} else if (key == SDLK_HOME) {
+		if (ctrl) move_prg_csr_home();
+		else move_prg_csr_home_x();
 	}
 }
 void t_program_editor::draw_border() {
@@ -122,12 +128,18 @@ void t_program_editor::move_prg_csr_left() {
 	}
 }
 void t_program_editor::move_prg_csr_down() {
+	string* line = get_line_under_cursor();
+	if (!line) return;
 	if (prg_csr.line_ix < prg.src_lines.size() - 1) {
 		prg_csr.line_ix++;
 		if (scr_csr.y < buf->LastRow - 1) {
 			scr_csr.y++;
 		} else {
 			prg_view.first_line_ix++;
+		}
+		string* line = get_line_under_cursor();
+		while (prg_csr.char_ix > line->length()) {
+			move_prg_csr_left();
 		}
 	}
 }
@@ -139,5 +151,35 @@ void t_program_editor::move_prg_csr_up() {
 		} else {
 			prg_view.first_line_ix--;
 		}
+		string* line = get_line_under_cursor();
+		while (prg_csr.char_ix > line->length()) {
+			move_prg_csr_left();
+		}
 	}
+}
+void t_program_editor::move_prg_csr_end_x() {
+	string* line = get_line_under_cursor();
+	if (!line) return;
+	while (prg_csr.char_ix < line->length()) {
+		move_prg_csr_right();
+	}
+}
+void t_program_editor::move_prg_csr_home_x() {
+	string* line = get_line_under_cursor();
+	if (!line) return;
+	while (prg_csr.char_ix > 0) {
+		move_prg_csr_left();
+	}
+}
+void t_program_editor::move_prg_csr_home() {
+	move_prg_csr_home_x();
+	while (prg_csr.line_ix > 0) {
+		move_prg_csr_up();
+	}
+}
+void t_program_editor::move_prg_csr_end() {
+	while (prg_csr.line_ix < prg.src_lines.size() - 1) {
+		move_prg_csr_down();
+	}
+	move_prg_csr_end_x();
 }
