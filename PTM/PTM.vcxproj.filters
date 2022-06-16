@@ -26,6 +26,9 @@
     <ClCompile Include="t_environment.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
+    <ClCompile Include="t_command.cpp">
+      <Filter>Interpreter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="t_program.h">
@@ -54,6 +57,9 @@
     </ClInclude>
     <ClInclude Include="t_environment.h">
       <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="t_command.h">
+      <Filter>Interpreter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

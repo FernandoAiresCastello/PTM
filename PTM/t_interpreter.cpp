@@ -2,6 +2,7 @@
 #include "t_program.h"
 #include "t_program_line.h"
 #include "t_environment.h"
+#include "t_command.h"
 
 t_interpreter::t_interpreter() {
 	wnd = nullptr;
@@ -19,6 +20,7 @@ bool t_interpreter::has_user_break() {
 void t_interpreter::run(t_program* prg, TBufferedWindow* wnd) {
 	errors.clear();
 	env = new t_environment();
+	cmd = new t_command(this);
 	running = true;
 	halted = false;
 	branched = false;
@@ -40,18 +42,21 @@ void t_interpreter::run(t_program* prg, TBufferedWindow* wnd) {
 			continue;
 		}
 		if (cur_line_ix >= 0 && cur_line_ix < prg->lines.size()) {
-			execute_line(&prg->lines[cur_line_ix]);
+			cur_line = &prg->lines[cur_line_ix];
+			execute_current_line();
 			if (branched) {
 				branched = false;
 			} else {
 				cur_line_ix++;
 			}
 		} else {
-			abort(nullptr, "Invalid execution pointer");
+			cur_line = nullptr;
+			abort("Invalid execution pointer");
 		}
 	}
 
 	delete env;
+	delete cmd;
 }
 void t_interpreter::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt) {
 	if (key == SDLK_RETURN && TKey::Alt()) {
@@ -61,11 +66,11 @@ void t_interpreter::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt)
 		running = false;
 	}
 }
-void t_interpreter::abort(t_program_line* line, string error) {
+void t_interpreter::abort(string error) {
 	running = false;
-	if (line) {
+	if (cur_line) {
 		errors.push_back(String::Format("At line %i:\n%s\n\n%s",
-			line->src_line_nr, error.c_str(), line->src.c_str()));
+			cur_line->src_line_nr, error.c_str(), cur_line->src.c_str()));
 	} else {
 		errors.push_back(error);
 	}
@@ -75,32 +80,16 @@ void t_interpreter::resolve_vars(t_program_line* line) {
 		if (param.type == t_param_type::variable) {
 			if (env->has_var(param.variable)) {
 			} else {
-				abort(line, "Variable not found");
+				abort("Variable not found");
 			}
-		} else if (param.type == t_param_type::array_index_literal) {
-		} else if (param.type == t_param_type::array_index_variable) {
 		}
 	}
 }
-void t_interpreter::argc(t_program_line* line, int expected) {
-	if (line->params.size() != expected) {
-		abort(line, "Invalid argument count");
-	}
-}
-void t_interpreter::argc(t_program_line* line, int min, int max) {
-	if (line->params.size() < min || line->params.size() > max) {
-		abort(line, "Invalid argument count");
-	}
-}
-void t_interpreter::execute_line(t_program_line* line) {
-	resolve_vars(line);
-	string& cmd = line->cmd;
-	auto& params = line->params;
-	if (cmd == "HALT") {
-		argc(line, 0);
-		halted = true;
-	} else if (cmd == "EXIT") {
-		argc(line, 0);
-		running = false;
-	}
+void t_interpreter::execute_current_line() {
+	resolve_vars(cur_line);
+	string& c = cur_line->cmd;
+	auto& args = cur_line->params;
+
+	if (c == "HALT") cmd->halt(args);
+	else if (c == "EXIT") cmd->exit(args);
 }
