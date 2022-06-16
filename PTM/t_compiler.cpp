@@ -58,10 +58,12 @@ bool t_compiler::compile(t_program* prg, t_program_line* new_line, string src_li
 		t_param param;
 		if (String::StartsWithNumber(arg) || String::StartsWith(arg, '-') || String::StartsWith(arg, '+')) {
 			param.type = t_param_type::number;
-			param.number_literal = String::ToInt(arg);
+			param.numeric_value = String::ToInt(arg);
+			param.textual_value = arg;
 		} else if (String::StartsAndEndsWith(arg, '"')) {
 			param.type = t_param_type::string;
-			param.string_literal = String::RemoveFirstAndLast(arg);
+			param.textual_value = String::RemoveFirstAndLast(arg);
+			param.numeric_value = String::ToInt(param.textual_value);
 		} else if (String::StartsWith(arg, '$')) {
 			param.type = t_param_type::variable;
 			param.variable = String::RemoveFirst(arg);

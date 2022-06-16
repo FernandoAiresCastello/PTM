@@ -13,6 +13,8 @@ t_interpreter::t_interpreter() {
 	branched = false;
 	env = nullptr;
 	cur_line_ix = 0;
+	cmd = nullptr;
+	cur_line = nullptr;
 }
 bool t_interpreter::has_user_break() {
 	return user_break;
@@ -79,6 +81,8 @@ void t_interpreter::resolve_vars(t_program_line* line) {
 	for (auto& param : line->params) {
 		if (param.type == t_param_type::variable) {
 			if (env->has_var(param.variable)) {
+				param.textual_value = env->get_var(param.variable);
+				param.numeric_value = String::ToInt(param.textual_value);
 			} else {
 				abort("Variable not found");
 			}
