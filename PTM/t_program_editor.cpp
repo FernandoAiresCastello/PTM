@@ -1,45 +1,28 @@
 #include "t_program_editor.h"
+#include "t_globals.h"
 #include "t_config.h"
 #include "t_compiler.h"
 #include "t_interpreter.h"
 
-t_program_editor::t_program_editor(TBufferedWindow* wnd, t_config* cfg, TSound* snd) {
-	this->wnd = wnd;
-	buf = wnd->GetBuffer();
-	this->snd = snd;
+t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
 	csr_overwrite = false;
-	running = false;
 	prg_view.max_chars = wnd->Cols - 2;
 	prg_view.max_lines = wnd->Rows - 2;
 	info_visible = true;
 
-	if (!cfg->autoload.empty()) {
-		if (File::Exists(cfg->autoload)) {
-			load_program(cfg->autoload);
+	if (!g->cfg->autoload.empty()) {
+		if (File::Exists(g->cfg->autoload)) {
+			load_program(g->cfg->autoload);
 		}
 	} else {
 		prg.src_lines.push_back("");
 	}
 }
-void t_program_editor::run() {
-	running = true;
-	while (running) {
-		draw_screen_base();
-		draw_border_info();
-		draw_program();
-		draw_cursor();
-		wnd->Update();
-		SDL_Event e = { 0 };
-		SDL_PollEvent(&e);
-		if (e.type == SDL_QUIT) {
-			running = false;
-			break;
-		} else if (e.type == SDL_KEYDOWN) {
-			on_keydown(e.key.keysym.sym, TKey::Ctrl(), TKey::Shift(), TKey::Alt());
-		} else {
-			SDL_Delay(1);
-		}
-	}
+void t_program_editor::on_run_loop() {
+	draw_screen_base();
+	draw_border_info();
+	draw_program();
+	draw_cursor();
 }
 void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt) {
 	if (key == SDLK_ESCAPE) {
@@ -80,41 +63,12 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 		type_char(key);
 	}
 }
-void t_program_editor::draw_screen_base() {
-	wnd->SetBackColor(color.bg);
-	buf->ClearAllLayers();
-	draw_border();
-}
-void t_program_editor::draw_border() {
-	TTileSeq tile(0, color.bdr_bg, color.bdr_bg);
-	for (int y = 0; y < buf->Rows; y++) {
-		buf->SetTile(tile, 0, 0, y, false);
-		buf->SetTile(tile, 0, buf->LastCol, y, false);
-	}
-	for (int x = 0; x < buf->Cols; x++) {
-		buf->SetTile(tile, 0, x, 0, false);
-		buf->SetTile(tile, 0, x, buf->LastRow, false);
-	}
-}
 void t_program_editor::draw_border_info() {
 	if (!info_visible) return;
 	print_border_top(prg_filename, 0);
 	print_border_bottom(String::Format("l:%i/%i c:%i", 
 		prg_csr.line_ix + 1, prg.src_lines.size(), prg_csr.char_ix), 0);
 	print_border_bottom(csr_overwrite ? "ovr" : "ins", 28);
-}
-void t_program_editor::print_border(string str, int top_or_bottom, int x) {
-	int px = x + 1;
-	int y = top_or_bottom > 0 ? buf->LastRow : 0;
-	for (auto& ch : str) {
-		buf->SetTile(TTileSeq(ch, color.bdr_fg, color.bdr_bg), 0, px++, y, false);
-	}
-}
-void t_program_editor::print_border_top(string str, int x) {
-	print_border(str, 0, x);
-}
-void t_program_editor::print_border_bottom(string str, int x) {
-	print_border(str, 1, x);
 }
 void t_program_editor::draw_program() {
 	int x = 1;

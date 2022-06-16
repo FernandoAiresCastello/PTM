@@ -1,27 +1,17 @@
 #pragma once
 #include "common.h"
 #include "t_program.h"
+#include "t_ui_base.h"
 
 struct t_config;
 
-struct t_program_editor {
-	t_program_editor(TBufferedWindow* wnd, t_config* cfg, TSound* snd);
-	void run();
+struct t_program_editor : public t_ui_base {
+	t_program_editor(t_globals* g);
 private:
-	TBufferedWindow* wnd;
-	TTileBuffer* buf;
-	TSound* snd;
-	bool running;
 	t_program prg;
-	bool csr_overwrite;
 	string prg_filename;
+	bool csr_overwrite;
 	bool info_visible;
-	struct {
-		int fg = 0x0c;
-		int bg = 0x80;
-		int bdr_fg = 0x08;
-		int bdr_bg = 0x82;
-	} color;
 	struct {
 		int line_ix = 0;
 		int char_ix = 0;
@@ -37,13 +27,9 @@ private:
 		int max_lines = 0;
 		int max_chars = 0;
 	} prg_view;
+	void on_run_loop();
 	void on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt);
-	void draw_screen_base();
-	void draw_border();
 	void draw_border_info();
-	void print_border(string str, int top_or_bottom, int x);
-	void print_border_top(string str, int x);
-	void print_border_bottom(string str, int x);
 	void draw_program();
 	void draw_cursor();
 	string* get_current_line();

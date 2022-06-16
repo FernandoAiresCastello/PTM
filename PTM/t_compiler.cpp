@@ -22,8 +22,8 @@ bool t_compiler::compile(t_program* prg, t_program_line* new_line, string src_li
 	if (String::StartsWith(src_line, ';')) {
 		return false;
 	}
-	if (String::EndsWith(src_line, ':')) {
-		prg->labels[String::RemoveLast(src_line)] = line_ix;
+	if (String::StartsWith(src_line, ':')) {
+		prg->labels[String::RemoveFirst(src_line)] = line_ix;
 		return false;
 	}
 	new_line->src = src_line;
@@ -67,9 +67,12 @@ bool t_compiler::compile(t_program* prg, t_program_line* new_line, string src_li
 		} else if (String::StartsWith(arg, '$')) {
 			param.type = t_param_type::variable;
 			param.variable = String::RemoveFirst(arg);
-		} else if (String::StartsWithLetter(arg)) {
+		} else if (String::StartsWith(arg, ':')) {
 			param.type = t_param_type::label;
-			param.label = arg;
+			param.label = String::RemoveFirst(arg);
+		} else if (String::StartsWithLetter(arg)) {
+			param.type = t_param_type::object;
+			param.object_id = arg;
 		} else {
 			add_error(src_line_nr, src_line, "Syntax error");
 		}
