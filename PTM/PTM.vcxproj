@@ -145,12 +145,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="t_board_editor.cpp" />
     <ClCompile Include="t_command.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="t_config.cpp" />
     <ClCompile Include="t_compiler.cpp" />
-    <ClCompile Include="t_environment.cpp" />
+    <ClCompile Include="t_game.cpp" />
     <ClCompile Include="t_globals.cpp" />
     <ClCompile Include="t_program_editor.cpp" />
     <ClCompile Include="t_interpreter.cpp" />
@@ -160,12 +159,11 @@
     <ClCompile Include="t_ui_base.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="t_board_editor.h" />
     <ClInclude Include="t_command.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="t_config.h" />
     <ClInclude Include="t_compiler.h" />
-    <ClInclude Include="t_environment.h" />
+    <ClInclude Include="t_game.h" />
     <ClInclude Include="t_globals.h" />
     <ClInclude Include="t_program_editor.h" />
     <ClInclude Include="t_interpreter.h" />

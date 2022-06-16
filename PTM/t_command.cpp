@@ -1,10 +1,10 @@
 #include "t_command.h"
 #include "t_interpreter.h"
-#include "t_environment.h"
+#include "t_game.h"
 
 t_command::t_command(t_interpreter* intp) {
 	this->intp = intp;
-	env = intp->env;
+	game = intp->game;
 }
 void t_command::argc(t_params& arg, int expected) {
 	if (arg.size() != expected) {

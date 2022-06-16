@@ -23,20 +23,17 @@
     <ClCompile Include="t_program_editor.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
-    <ClCompile Include="t_environment.cpp">
-      <Filter>Environment</Filter>
+    <ClCompile Include="t_game.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="t_command.cpp">
       <Filter>Interpreter</Filter>
     </ClCompile>
-    <ClCompile Include="t_board_editor.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="t_ui_base.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="t_globals.cpp">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="t_ui_base.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -61,8 +58,8 @@
     <ClInclude Include="t_program_editor.h">
       <Filter>Editor</Filter>
     </ClInclude>
-    <ClInclude Include="t_environment.h">
-      <Filter>Environment</Filter>
+    <ClInclude Include="t_game.h">
+      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="t_command.h">
       <Filter>Interpreter</Filter>
@@ -70,14 +67,11 @@
     <ClInclude Include="t_interpreter.h">
       <Filter>Interpreter</Filter>
     </ClInclude>
-    <ClInclude Include="t_board_editor.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="t_ui_base.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="t_globals.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="t_ui_base.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -96,7 +90,10 @@
     <Filter Include="Compiler">
       <UniqueIdentifier>{fa145803-b6e6-4064-9ce0-4ac3bb843ef6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Environment">
+    <Filter Include="UI">
+      <UniqueIdentifier>{ba4ff5c2-c866-4839-a108-6157431b517c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
       <UniqueIdentifier>{1227c78f-5b40-4025-9929-bbe7dfde9f31}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

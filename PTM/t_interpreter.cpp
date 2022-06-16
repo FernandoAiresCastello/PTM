@@ -1,7 +1,7 @@
 #include "t_interpreter.h"
 #include "t_program.h"
 #include "t_program_line.h"
-#include "t_environment.h"
+#include "t_game.h"
 #include "t_command.h"
 
 t_interpreter::t_interpreter() {
@@ -11,7 +11,7 @@ t_interpreter::t_interpreter() {
 	user_break = false;
 	halted = false;
 	branched = false;
-	env = nullptr;
+	game = nullptr;
 	cur_line_ix = 0;
 	cmd = nullptr;
 	cur_line = nullptr;
@@ -19,10 +19,10 @@ t_interpreter::t_interpreter() {
 bool t_interpreter::has_user_break() {
 	return user_break;
 }
-void t_interpreter::run(t_program* prg, TBufferedWindow* wnd) {
+void t_interpreter::run(t_program* prg, t_game* game, TBufferedWindow* wnd) {
 	errors.clear();
-	env = new t_environment();
 	cmd = new t_command(this);
+	this->game = game;
 	running = true;
 	halted = false;
 	branched = false;
@@ -57,7 +57,6 @@ void t_interpreter::run(t_program* prg, TBufferedWindow* wnd) {
 		}
 	}
 
-	delete env;
 	delete cmd;
 }
 void t_interpreter::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt) {
@@ -80,8 +79,8 @@ void t_interpreter::abort(string error) {
 void t_interpreter::resolve_vars(t_program_line* line) {
 	for (auto& param : line->params) {
 		if (param.type == t_param_type::variable) {
-			if (env->has_var(param.variable)) {
-				param.textual_value = env->get_var(param.variable);
+			if (game->has_var(param.variable)) {
+				param.textual_value = game->get_var(param.variable);
 				param.numeric_value = String::ToInt(param.textual_value);
 			} else {
 				abort("Variable not found");

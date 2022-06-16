@@ -3,7 +3,7 @@
 #include "t_param.h"
 
 struct t_interpreter;
-struct t_environment;
+struct t_game;
 
 struct t_command {
 	t_command(t_interpreter* intp);
@@ -11,7 +11,7 @@ struct t_command {
 	void exit(t_params& arg);
 private:
 	t_interpreter* intp;
-	t_environment* env;
+	t_game* game;
 	void argc(t_params& arg, int expected);
 	void argc(t_params& arg, int min, int max);
 };

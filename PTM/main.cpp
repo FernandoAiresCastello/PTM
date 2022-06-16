@@ -1,7 +1,6 @@
 #include "common.h"
 #include "t_config.h"
 #include "t_program_editor.h"
-#include "t_board_editor.h"
 #include "t_globals.h"
 
 int main(int argc, char* argv[]) {
@@ -14,8 +13,6 @@ int main(int argc, char* argv[]) {
 
 	t_program_editor* editor = new t_program_editor(&g);
 	editor->run();
-	//t_board_editor* editor = new t_board_editor(&g);
-	//editor->run();
 
 	delete editor;
 	return 0;

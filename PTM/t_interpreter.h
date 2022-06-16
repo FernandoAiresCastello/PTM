@@ -3,19 +3,19 @@
 
 struct t_program;
 struct t_program_line;
-struct t_environment;
+struct t_game;
 struct t_command;
 
 struct t_interpreter {
 	std::vector<string> errors;
 	t_interpreter();
 	bool has_user_break();
-	void run(t_program* prg, TBufferedWindow* wnd);
+	void run(t_program* prg, t_game* game, TBufferedWindow* wnd);
 private:
 	friend struct t_command;
 	TBufferedWindow* wnd;
 	TTileBuffer* wnd_buf;
-	t_environment* env;
+	t_game* game;
 	t_program_line* cur_line;
 	bool running;
 	bool halted;
