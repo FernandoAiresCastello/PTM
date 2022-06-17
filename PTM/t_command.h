@@ -3,29 +3,17 @@
 #include "t_param.h"
 
 struct t_interpreter;
-struct t_game;
+struct t_machine;
 
 struct t_command {
 	t_command(t_interpreter* intp);
-	void execute(string& cmd, t_params& args);
+	bool execute(string& cmd, t_params& args);
 private:
 	t_interpreter* intp;
-	t_game* game;
-	void run_debugger(t_params& arg);
+	t_machine* machine;
+	void save_memory_dump(t_params& arg);
 	void halt(t_params& arg);
 	void exit(t_params& arg);
-	void set_wnd_bgcolor(t_params& arg);
-	void set_text_fgcolor(t_params& arg);
-	void set_text_bgcolor(t_params& arg);
-	void set_text_colors(t_params& arg);
-	void clear_screen(t_params& arg);
-	void update_screen(t_params& arg);
-	void print_text(t_params& arg);
-	void print_memory(t_params& arg);
-	void print_char(t_params& arg);
-	void set_text_cursor_pos(t_params& arg);
-	void add_tile(t_params& arg);
-	void delete_tile(t_params& arg);
 	void branch(t_params& arg);
 	void define_alias(t_params& arg);
 	void poke(t_params& arg);

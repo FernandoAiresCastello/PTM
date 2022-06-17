@@ -23,8 +23,8 @@
     <ClCompile Include="t_program_editor.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
-    <ClCompile Include="t_game.cpp">
-      <Filter>Game</Filter>
+    <ClCompile Include="t_machine.cpp">
+      <Filter>Machine</Filter>
     </ClCompile>
     <ClCompile Include="t_command.cpp">
       <Filter>Interpreter</Filter>
@@ -58,8 +58,8 @@
     <ClInclude Include="t_program_editor.h">
       <Filter>Editor</Filter>
     </ClInclude>
-    <ClInclude Include="t_game.h">
-      <Filter>Game</Filter>
+    <ClInclude Include="t_machine.h">
+      <Filter>Machine</Filter>
     </ClInclude>
     <ClInclude Include="t_command.h">
       <Filter>Interpreter</Filter>
@@ -93,7 +93,7 @@
     <Filter Include="UI">
       <UniqueIdentifier>{ba4ff5c2-c866-4839-a108-6157431b517c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game">
+    <Filter Include="Machine">
       <UniqueIdentifier>{1227c78f-5b40-4025-9929-bbe7dfde9f31}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

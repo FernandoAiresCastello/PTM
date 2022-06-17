@@ -3,7 +3,7 @@
 #include "t_config.h"
 #include "t_compiler.h"
 #include "t_interpreter.h"
-#include "t_game.h"
+#include "t_machine.h"
 
 t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
 	csr_overwrite = false;
@@ -271,11 +271,12 @@ void t_program_editor::compile_and_run() {
 	t_compiler compiler;
 	compiler.run(&prg);
 	if (compiler.errors.empty()) {
-		t_game game;
+		t_machine* machine = new t_machine();
 		t_interpreter* interpreter = new t_interpreter();
-		interpreter->run(&prg, &game, wnd);
+		interpreter->run(&prg, machine, wnd);
 		auto errors = interpreter->errors;
 		delete interpreter;
+		delete machine;
 		if (!errors.empty()) {
 			print_errors(errors);
 		}
