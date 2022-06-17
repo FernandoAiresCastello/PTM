@@ -7,6 +7,11 @@ struct t_game;
 
 struct t_command {
 	t_command(t_interpreter* intp);
+	void execute(string& cmd, t_params& args);
+private:
+	t_interpreter* intp;
+	t_game* game;
+	void run_debugger(t_params& arg);
 	void halt(t_params& arg);
 	void exit(t_params& arg);
 	void set_wnd_bgcolor(t_params& arg);
@@ -16,6 +21,7 @@ struct t_command {
 	void clear_screen(t_params& arg);
 	void update_screen(t_params& arg);
 	void print_text(t_params& arg);
+	void print_memory(t_params& arg);
 	void print_char(t_params& arg);
 	void set_text_cursor_pos(t_params& arg);
 	void add_tile(t_params& arg);
@@ -24,7 +30,8 @@ struct t_command {
 	void define_alias(t_params& arg);
 	void poke(t_params& arg);
 	void poke_string(t_params& arg);
-private:
-	t_interpreter* intp;
-	t_game* game;
+	void add_to_memory_value(t_params& arg);
+	void increment_memory_value(t_params& arg);
+	void increment_alias_address(t_params& arg);
+	void decrement_alias_address(t_params& arg);
 };

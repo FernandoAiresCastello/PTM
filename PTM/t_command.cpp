@@ -7,6 +7,32 @@ t_command::t_command(t_interpreter* intp) {
 	this->intp = intp;
 	game = intp->game;
 }
+void t_command::execute(string& cmd, t_params& args) {
+	if (cmd == "DEBUG") run_debugger(args);
+	else if (cmd == "HALT") halt(args);
+	else if (cmd == "EXIT") exit(args);
+	else if (cmd == "WCOLOR") set_wnd_bgcolor(args);
+	else if (cmd == "FGCOLOR") set_text_fgcolor(args);
+	else if (cmd == "BGCOLOR") set_text_bgcolor(args);
+	else if (cmd == "COLOR") set_text_colors(args);
+	else if (cmd == "CLS") clear_screen(args);
+	else if (cmd == "REFR") update_screen(args);
+	else if (cmd == "PRINT") print_text(args);
+	else if (cmd == "PRINTM") print_memory(args);
+	else if (cmd == "PUTCH") print_char(args);
+	else if (cmd == "LOCATE") set_text_cursor_pos(args);
+	else if (cmd == "PUT") add_tile(args);
+	else if (cmd == "DEL") delete_tile(args);
+	else if (cmd == "GOTO") branch(args);
+	else if (cmd == "PTR") define_alias(args);
+	else if (cmd == "POKE") poke(args);
+	else if (cmd == "INC") increment_memory_value(args);
+	else if (cmd == "PTR+") increment_alias_address(args);
+	else if (cmd == "PTR-") decrement_alias_address(args);
+}
+void t_command::run_debugger(t_params& arg) {
+	debugger;
+}
 void t_command::halt(t_params& arg) {
 	intp->argc(arg, 0);
 	intp->halted = true;
@@ -50,6 +76,15 @@ void t_command::print_text(t_params& arg) {
 	intp->argc(arg, 1);
 	string str = intp->require_string(arg[0]);
 	for (auto& ch : str) {
+		intp->wnd_buf->SetTile(TTile(ch, game->text.fg, game->text.bg),
+			game->text.layer, game->text.x, game->text.y, false);
+		game->text.x++;
+	}
+}
+void t_command::print_memory(t_params& arg) {
+	intp->argc(arg, 1);
+	int value = game->peek_address(intp->require_number(arg[0]));
+	for (auto& ch : String::ToString(value)) {
 		intp->wnd_buf->SetTile(TTile(ch, game->text.fg, game->text.bg),
 			game->text.layer, game->text.x, game->text.y, false);
 		game->text.x++;
@@ -135,4 +170,35 @@ void t_command::poke_string(t_params& arg) {
 		}
 	}
 	game->poke_address(address, 0);
+}
+void t_command::add_to_memory_value(t_params& arg) {
+	intp->argc(arg, 2);
+	int address = intp->require_adress_or_alias(arg[0]);
+	int value = intp->require_number(arg[1]);
+	game->poke_address(address, game->peek_address(address) + value);
+}
+void t_command::increment_memory_value(t_params& arg) {
+	intp->argc(arg, 1);
+	int address = intp->require_adress_or_alias(arg[0]);
+	game->poke_address(address, game->peek_address(address) + 1);
+}
+void t_command::increment_alias_address(t_params& arg) {
+	intp->argc(arg, 1, 2);
+	intp->require_aliased_address(arg[0]);
+	if (arg.size() == 1) {
+		game->address_alias[arg[0].address_alias] = game->address_alias[arg[0].address_alias] + 1;
+	} else if (arg.size() == 2) {
+		int value = intp->require_number(arg[1]);
+		game->address_alias[arg[0].address_alias] = game->address_alias[arg[0].address_alias] + value;
+	}
+}
+void t_command::decrement_alias_address(t_params& arg) {
+	intp->argc(arg, 1, 2);
+	intp->require_aliased_address(arg[0]);
+	if (arg.size() == 1) {
+		game->address_alias[arg[0].address_alias] = game->address_alias[arg[0].address_alias] - 1;
+	} else if (arg.size() == 2) {
+		int value = intp->require_number(arg[1]);
+		game->address_alias[arg[0].address_alias] = game->address_alias[arg[0].address_alias] - value;
+	}
 }

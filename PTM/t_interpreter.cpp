@@ -142,6 +142,18 @@ int t_interpreter::require_adress_or_alias(t_param& arg) {
 	}
 	return ILLEGAL_ADDRESS;
 }
+int t_interpreter::require_aliased_address(t_param& arg) {
+	if (arg.type == t_param_type::address_alias) {
+		if (game->has_address_alias(arg.address_alias)) {
+			return game->get_address_with_alias(arg.address_alias);
+		} else {
+			abort("Undefined alias: " + arg.address_alias);
+		}
+	} else {
+		abort("Alias expected");
+	}
+	return ILLEGAL_ADDRESS;
+}
 string t_interpreter::require_string(t_param& arg) {
 	if (arg.type == t_param_type::string || arg.type == t_param_type::number) {
 		return arg.textual_value;
@@ -167,21 +179,5 @@ string t_interpreter::require_string(t_param& arg) {
 void t_interpreter::execute_current_line() {
 	string& c = cur_line->cmd;
 	auto& args = cur_line->params;
-
-	if (c == "HALT") cmd->halt(args);
-	else if (c == "EXIT") cmd->exit(args);
-	else if (c == "WCOLOR") cmd->set_wnd_bgcolor(args);
-	else if (c == "FGCOLOR") cmd->set_text_fgcolor(args);
-	else if (c == "BGCOLOR") cmd->set_text_bgcolor(args);
-	else if (c == "COLOR") cmd->set_text_colors(args);
-	else if (c == "CLS") cmd->clear_screen(args);
-	else if (c == "REFR") cmd->update_screen(args);
-	else if (c == "PRINT") cmd->print_text(args);
-	else if (c == "PUTCH") cmd->print_char(args);
-	else if (c == "LOCATE") cmd->set_text_cursor_pos(args);
-	else if (c == "PUT") cmd->add_tile(args);
-	else if (c == "DEL") cmd->delete_tile(args);
-	else if (c == "GOTO") cmd->branch(args);
-	else if (c == "DEF") cmd->define_alias(args);
-	else if (c == "POKE") cmd->poke(args);
+	cmd->execute(c, args);
 }

@@ -33,6 +33,7 @@ private:
 	int require_number(t_param& arg);
 	string require_label(t_param& arg);
 	int require_adress_or_alias(t_param& arg);
+	int require_aliased_address(t_param& arg);
 	string require_string(t_param& arg);
 	void execute_current_line();
 };
