@@ -2,12 +2,13 @@
 #include "t_config.h"
 #include "t_program_editor.h"
 #include "t_globals.h"
+#include "t_machine.h"
 
 int main(int argc, char* argv[]) {
 	t_globals g;
 	g.cfg->load();
 	g.snd->SetVolume(TSound::MinVolume + 1000);
-	g.wnd = new TBufferedWindow(2, g.cfg->cols, g.cfg->rows, g.cfg->pixel_w, g.cfg->pixel_h);
+	g.wnd = new TBufferedWindow(2, t_machine::scrbuf_cols, t_machine::scrbuf_rows, 3, 3);
 	g.wnd->SetTitle("PTM");
 	g.wnd->Show();
 

@@ -14,16 +14,16 @@ struct t_interpreter {
 	void run(t_program* prg, t_machine* machine, TBufferedWindow* wnd);
 private:
 	friend struct t_command;
-	TBufferedWindow* wnd;
-	TTileBuffer* wnd_buf;
-	t_machine* machine;
-	t_program* prg;
-	t_program_line* cur_line;
 	bool running;
 	bool halted;
 	bool user_break;
 	int cur_line_ix;
 	bool branched;
+	TBufferedWindow* wnd;
+	TTileBuffer* wnd_buf;
+	t_machine* machine;
+	t_program* prg;
+	t_program_line* cur_line;
 	t_command* cmd;
 	std::stack<int> callstack;
 	
@@ -37,8 +37,6 @@ private:
 	int require_adress_or_alias(t_param& arg);
 	int require_aliased_address(t_param& arg);
 	string require_string(t_param& arg);
-
-	std::map<string, int> address_alias;
 	bool has_address_alias(string alias);
 	int get_address_with_alias(string alias);
 	int peek_address_with_alias(string alias);

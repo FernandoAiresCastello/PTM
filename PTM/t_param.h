@@ -11,6 +11,6 @@ struct t_param {
 	int numeric_value = 0;
 	string label;
 	string address_alias;
-	int address = ILLEGAL_ADDRESS;
+	int address = -1;
 };
 using t_params = std::vector<t_param>;

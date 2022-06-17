@@ -55,7 +55,7 @@ void t_interpreter::run(t_program* prg, t_machine* machine, TBufferedWindow* wnd
 			}
 		} else {
 			cur_line = nullptr;
-			abort("Invalid execution pointer");
+			running = false;
 		}
 	}
 
@@ -147,7 +147,7 @@ int t_interpreter::require_adress_or_alias(t_param& arg) {
 	} else {
 		abort("Address or alias expected");
 	}
-	return ILLEGAL_ADDRESS;
+	return t_machine::illegal_address;
 }
 int t_interpreter::require_aliased_address(t_param& arg) {
 	if (arg.type == t_param_type::address_alias) {
@@ -159,7 +159,7 @@ int t_interpreter::require_aliased_address(t_param& arg) {
 	} else {
 		abort("Alias expected");
 	}
-	return ILLEGAL_ADDRESS;
+	return t_machine::illegal_address;
 }
 string t_interpreter::require_string(t_param& arg) {
 	if (arg.type == t_param_type::string || arg.type == t_param_type::number) {
@@ -184,10 +184,10 @@ string t_interpreter::require_string(t_param& arg) {
 	return "";
 }
 bool t_interpreter::has_address_alias(string alias) {
-	return address_alias.find(alias) != address_alias.end();
+	return machine->mmap.find(alias) != machine->mmap.end();
 }
 int t_interpreter::get_address_with_alias(string alias) {
-	return has_address_alias(alias) ? address_alias[alias] : ILLEGAL_ADDRESS;
+	return has_address_alias(alias) ? machine->mmap[alias] : t_machine::illegal_address;
 }
 int t_interpreter::peek_address_with_alias(string alias) {
 	return machine->memory[get_address_with_alias(alias)];
@@ -212,7 +212,7 @@ string t_interpreter::get_string_from_address(int start_address) {
 			str += (char)ch;
 		}
 		addr++;
-		if (addr >= MEMORY_TOP) {
+		if (addr >= t_machine::memory_top) {
 			scanning = false;
 		}
 	}

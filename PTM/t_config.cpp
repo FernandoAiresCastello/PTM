@@ -14,13 +14,6 @@ void t_config::load() {
 			autoload = value;
 		} else if (name == "autorun") {
 			autorun = value;
-		} else if (name == "screen") {
-			auto values = String::Split(value, ' ', true);
-			if (values.size() != 4) continue;
-			cols = String::ToInt(values[0]);
-			rows = String::ToInt(values[1]);
-			pixel_w = String::ToInt(values[2]);
-			pixel_h = String::ToInt(values[3]);
 		} else if (name == "color") {
 			auto values = String::Split(value, ' ', true);
 			if (values.size() != 3) continue;

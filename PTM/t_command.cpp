@@ -24,7 +24,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 void t_command::save_memory_dump(t_params& arg) {
 	intp->argc(arg, 0, 2);
 	int first_addr = 0;
-	int last_addr = MEMORY_TOP - 1;
+	int last_addr = t_machine::memory_top - 1;
 	if (arg.size() == 1) {
 		first_addr = intp->require_number(arg[0]);
 	}
@@ -70,12 +70,12 @@ void t_command::define_alias(t_params& arg) {
 	}
 	if (arg[1].type == t_param_type::address_alias) {
 		if (intp->has_address_alias(arg[1].address_alias)) {
-			intp->address_alias[arg[0].address_alias] = intp->get_address_with_alias(arg[1].address_alias);
+			machine->mmap[arg[0].address_alias] = intp->get_address_with_alias(arg[1].address_alias);
 		} else {
 			intp->abort("Undefined alias: " + arg[1].address_alias);
 		}
 	} else {
-		intp->address_alias[arg[0].address_alias] = arg[1].numeric_value;
+		machine->mmap[arg[0].address_alias] = arg[1].numeric_value;
 	}
 }
 void t_command::poke(t_params& arg) {
@@ -84,22 +84,26 @@ void t_command::poke(t_params& arg) {
 		poke_string(arg);
 	} else {
 		int address = intp->require_adress_or_alias(arg[0]);
-		int value = intp->require_number(arg[1]);
-		machine->poke(address, value);
+		if (address != t_machine::illegal_address) {
+			int value = intp->require_number(arg[1]);
+			machine->poke(address, value);
+		}
 	}
 }
 void t_command::poke_string(t_params& arg) {
 	intp->argc(arg, 2);
 	int address = intp->require_adress_or_alias(arg[0]);
-	string value = intp->require_string(arg[1]);
-	for (char& ch : value) {
-		machine->poke(address, ch);
-		address++;
-		if (address >= MEMORY_TOP) {
-			break;
+	if (address != t_machine::illegal_address) {
+		string value = intp->require_string(arg[1]);
+		for (char& ch : value) {
+			machine->poke(address, ch);
+			address++;
+			if (address >= t_machine::memory_top) {
+				break;
+			}
 		}
+		machine->poke(address, 0);
 	}
-	machine->poke(address, 0);
 }
 void t_command::add_to_memory_value(t_params& arg) {
 	intp->argc(arg, 2);
@@ -116,19 +120,19 @@ void t_command::increment_alias_address(t_params& arg) {
 	intp->argc(arg, 1, 2);
 	intp->require_aliased_address(arg[0]);
 	if (arg.size() == 1) {
-		intp->address_alias[arg[0].address_alias] = intp->address_alias[arg[0].address_alias] + 1;
+		machine->mmap[arg[0].address_alias] = machine->mmap[arg[0].address_alias] + 1;
 	} else if (arg.size() == 2) {
 		int value = intp->require_number(arg[1]);
-		intp->address_alias[arg[0].address_alias] = intp->address_alias[arg[0].address_alias] + value;
+		machine->mmap[arg[0].address_alias] = machine->mmap[arg[0].address_alias] + value;
 	}
 }
 void t_command::decrement_alias_address(t_params& arg) {
 	intp->argc(arg, 1, 2);
 	intp->require_aliased_address(arg[0]);
 	if (arg.size() == 1) {
-		intp->address_alias[arg[0].address_alias] = intp->address_alias[arg[0].address_alias] - 1;
+		machine->mmap[arg[0].address_alias] = machine->mmap[arg[0].address_alias] - 1;
 	} else if (arg.size() == 2) {
 		int value = intp->require_number(arg[1]);
-		intp->address_alias[arg[0].address_alias] = intp->address_alias[arg[0].address_alias] - value;
+		machine->mmap[arg[0].address_alias] = machine->mmap[arg[0].address_alias] - value;
 	}
 }
