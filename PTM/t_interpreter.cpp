@@ -36,12 +36,12 @@ void t_interpreter::run(t_program* prg, t_machine* machine, TBufferedWindow* wnd
 	wnd_buf->ClearAllLayers();
 
 	while (running) {
-		wnd->Update();
 		SDL_Event e = { 0 };
 		SDL_PollEvent(&e);
 		if (e.type == SDL_KEYDOWN) {
 			on_keydown(e.key.keysym.sym, TKey::Ctrl(), TKey::Shift(), TKey::Alt());
 		}
+		machine->update_window(wnd);
 		if (halted) {
 			continue;
 		}

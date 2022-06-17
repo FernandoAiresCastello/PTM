@@ -10,4 +10,5 @@ struct t_machine {
 	void clear_memory();
 	int peek(int addr);
 	void poke(int addr, int value);
+	void update_window(TBufferedWindow* wnd);
 };

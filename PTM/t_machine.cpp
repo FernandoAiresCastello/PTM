@@ -15,3 +15,6 @@ int t_machine::peek(int addr) {
 void t_machine::poke(int addr, int value) {
 	memory[addr] = value;
 }
+void t_machine::update_window(TBufferedWindow* wnd) {
+	wnd->Update();
+}
