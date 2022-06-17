@@ -271,7 +271,7 @@ void t_program_editor::compile_and_run() {
 	t_compiler compiler;
 	compiler.run(&prg);
 	if (compiler.errors.empty()) {
-		t_machine* machine = new t_machine();
+		t_machine* machine = new t_machine(wnd);
 		t_interpreter* interpreter = new t_interpreter();
 		interpreter->run(&prg, machine, wnd);
 		auto errors = interpreter->errors;

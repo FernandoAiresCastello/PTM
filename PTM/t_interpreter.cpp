@@ -24,16 +24,14 @@ void t_interpreter::run(t_program* prg, t_machine* machine, TBufferedWindow* wnd
 	errors.clear();
 	this->prg = prg;
 	this->machine = machine;
-	cmd = new t_command(this);
+	this->wnd = wnd;
 	running = true;
 	halted = false;
 	branched = false;
 	user_break = false;
 	cur_line_ix = 0;
+	cmd = new t_command(this);
 	callstack = std::stack<int>();
-	this->wnd = wnd;
-	wnd_buf = wnd->GetBuffer();
-	wnd_buf->ClearAllLayers();
 
 	while (running) {
 		SDL_Event e = { 0 };
@@ -41,7 +39,7 @@ void t_interpreter::run(t_program* prg, t_machine* machine, TBufferedWindow* wnd
 		if (e.type == SDL_KEYDOWN) {
 			on_keydown(e.key.keysym.sym, TKey::Ctrl(), TKey::Shift(), TKey::Alt());
 		}
-		machine->update_window(wnd);
+		machine->update_window();
 		if (halted) {
 			continue;
 		}

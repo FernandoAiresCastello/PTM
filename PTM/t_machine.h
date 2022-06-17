@@ -7,9 +7,10 @@ struct t_machine {
 	static const int scrbuf_cols = 32;
 	static const int scrbuf_rows = 24;
 
+	TBufferedWindow* wnd;
 	std::vector<int> memory;
 	std::map<string, int> mmap;
-	t_machine();
+	t_machine(TBufferedWindow* wnd);
 	~t_machine();
 	void clear_memory();
 	void init_memory_map();
@@ -17,5 +18,5 @@ struct t_machine {
 	int peek(string alias);
 	void poke(int addr, int value);
 	void poke(string alias, int value);
-	void update_window(TBufferedWindow* wnd);
+	void update_window();
 };

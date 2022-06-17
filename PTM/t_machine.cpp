@@ -1,8 +1,19 @@
 #include "t_machine.h"
 
-t_machine::t_machine() {
+t_machine::t_machine(TBufferedWindow* wnd) {
+	this->wnd = wnd;
 	clear_memory();
 	init_memory_map();
+
+	auto buf = wnd->GetBuffer();
+	buf->ClearAllLayers();
+	for (int layer = 0; layer < buf->LayerCount; layer++) {
+		for (int y = 0; y < buf->Rows; y++) {
+			for (int x = 0; x < buf->Cols; x++) {
+				buf->GetTile(layer, x, y).Add(0, 0, 0);
+			}
+		}
+	}
 }
 t_machine::~t_machine() {
 }
@@ -27,7 +38,7 @@ void t_machine::poke(int addr, int value) {
 void t_machine::poke(string alias, int value) {
 	memory[mmap[alias]] = value;
 }
-void t_machine::update_window(TBufferedWindow* wnd) {
+void t_machine::update_window() {
 	auto buf = wnd->GetBuffer();
 	wnd->Update();
 }
