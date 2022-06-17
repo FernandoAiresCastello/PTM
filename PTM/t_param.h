@@ -2,7 +2,7 @@
 #include "common.h"
 
 enum class t_param_type {
-	undefined, number, string, variable, label, object
+	undefined, number, char_literal, string, label, address_alias, address_deref_literal, address_deref_alias
 };
 struct t_param {
 	string src;
@@ -10,7 +10,7 @@ struct t_param {
 	string textual_value;
 	int numeric_value = 0;
 	string label;
-	string variable;
-	string object_id;
+	string address_alias;
+	int address = ILLEGAL_ADDRESS;
 };
 using t_params = std::vector<t_param>;

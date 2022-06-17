@@ -67,7 +67,7 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 void t_program_editor::draw_border_info() {
 	if (!info_visible) return;
 	print_border_top(prg_filename, 0);
-	print_border_bottom(String::Format("l:%i/%i c:%i", 
+	print_border_bottom(String::Format("L:%i/%i C:%i", 
 		prg_csr.line_ix + 1, prg.src_lines.size(), prg_csr.char_ix), 0);
 	print_border_bottom(csr_overwrite ? "ovr" : "ins", 28);
 }

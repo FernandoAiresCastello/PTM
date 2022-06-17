@@ -64,15 +64,32 @@ bool t_compiler::compile(t_program* prg, t_program_line* new_line, string src_li
 			param.type = t_param_type::string;
 			param.textual_value = String::RemoveFirstAndLast(arg);
 			param.numeric_value = String::ToInt(param.textual_value);
-		} else if (String::StartsWith(arg, '$')) {
-			param.type = t_param_type::variable;
-			param.variable = String::RemoveFirst(arg);
+		} else if (String::StartsAndEndsWith(arg, '\'')) {
+			param.type = t_param_type::char_literal;
+			string raw = String::RemoveFirstAndLast(arg);
+			if (raw.length() != 1) {
+				add_error(src_line_nr, src_line, "Syntax error");
+			} else {
+				param.textual_value = raw;
+				param.numeric_value = raw[0];
+			}
+		} else if (String::StartsWithLetter(arg)) {
+			param.type = t_param_type::address_alias;
+			param.address_alias = arg;
+		} else if (String::StartsWith(arg, '@')) {
+			auto value = String::RemoveFirst(arg);
+			if (String::StartsWithNumber(value)) {
+				param.type = t_param_type::address_deref_literal;
+				param.address = String::ToInt(value);
+			} else if (String::StartsWithLetter(value)) {
+				param.type = t_param_type::address_deref_alias;
+				param.address_alias = value;
+			} else {
+				add_error(src_line_nr, src_line, "Syntax error");
+			}
 		} else if (String::StartsWith(arg, ':')) {
 			param.type = t_param_type::label;
 			param.label = String::RemoveFirst(arg);
-		} else if (String::StartsWithLetter(arg)) {
-			param.type = t_param_type::object;
-			param.object_id = arg;
 		} else {
 			add_error(src_line_nr, src_line, "Syntax error");
 		}
