@@ -74,19 +74,8 @@ bool t_compiler::compile(t_program* prg, t_program_line* new_line, string src_li
 				param.numeric_value = raw[0];
 			}
 		} else if (String::StartsWithLetter(arg)) {
-			param.type = t_param_type::address_alias;
-			param.address_alias = arg;
-		} else if (String::StartsWith(arg, '@')) {
-			auto value = String::RemoveFirst(arg);
-			if (String::StartsWithNumber(value)) {
-				param.type = t_param_type::address_deref_literal;
-				param.address = String::ToInt(value);
-			} else if (String::StartsWithLetter(value)) {
-				param.type = t_param_type::address_deref_alias;
-				param.address_alias = value;
-			} else {
-				add_error(src_line_nr, src_line, "Syntax error");
-			}
+			param.type = t_param_type::id;
+			param.id = arg;
 		} else if (String::StartsWith(arg, ':')) {
 			param.type = t_param_type::label;
 			param.label = String::RemoveFirst(arg);

@@ -39,7 +39,7 @@ void t_interpreter::run(t_program* prg, t_machine* machine, TBufferedWindow* wnd
 		if (e.type == SDL_KEYDOWN) {
 			on_keydown(e.key.keysym.sym, TKey::Ctrl(), TKey::Shift(), TKey::Alt());
 		}
-		machine->update_window();
+		machine->wnd->Update();
 		if (halted) {
 			continue;
 		}
@@ -98,30 +98,6 @@ bool t_interpreter::argc(t_params& arg, int min, int max) {
 	}
 	return true;
 }
-int t_interpreter::require_number(t_param& arg) {
-	if (arg.type == t_param_type::number || 
-		arg.type == t_param_type::string || 
-		arg.type == t_param_type::char_literal) {
-		return arg.numeric_value;
-	} else if (arg.type == t_param_type::address_alias) {
-		if (has_address_alias(arg.address_alias)) {
-			return get_address_with_alias(arg.address_alias);
-		} else {
-			abort("Undefined alias: " + arg.address_alias);
-		}
-	} else if (arg.type == t_param_type::address_deref_alias) {
-		if (has_address_alias(arg.address_alias)) {
-			return peek_address_with_alias(arg.address_alias);
-		} else {
-			abort("Undefined alias: " + arg.address_alias);
-		}
-	} else if (arg.type == t_param_type::address_deref_literal) {
-		return machine->peek(arg.address);
-	} else {
-		abort("Syntax error");
-	}
-	return 0;
-}
 string t_interpreter::require_label(t_param& arg) {
 	if (arg.type != t_param_type::label) {
 		abort("Label expected");
@@ -133,86 +109,25 @@ string t_interpreter::require_label(t_param& arg) {
 	}
 	return arg.label;
 }
-int t_interpreter::require_adress_or_alias(t_param& arg) {
-	if (arg.type == t_param_type::number) {
+int t_interpreter::require_number(t_param& arg) {
+	if (arg.type == t_param_type::number || 
+		arg.type == t_param_type::string || 
+		arg.type == t_param_type::char_literal) {
 		return arg.numeric_value;
-	} else if (arg.type == t_param_type::address_alias) {
-		if (has_address_alias(arg.address_alias)) {
-			return get_address_with_alias(arg.address_alias);
-		} else {
-			abort("Undefined alias: " + arg.address_alias);
-		}
+	} else if (arg.type == t_param_type::id) {
+		// todo
 	} else {
-		abort("Address or alias expected");
+		abort("Syntax error");
 	}
-	return t_machine::illegal_address;
-}
-int t_interpreter::require_aliased_address(t_param& arg) {
-	if (arg.type == t_param_type::address_alias) {
-		if (has_address_alias(arg.address_alias)) {
-			return get_address_with_alias(arg.address_alias);
-		} else {
-			abort("Undefined alias: " + arg.address_alias);
-		}
-	} else {
-		abort("Alias expected");
-	}
-	return t_machine::illegal_address;
+	return 0;
 }
 string t_interpreter::require_string(t_param& arg) {
 	if (arg.type == t_param_type::string || arg.type == t_param_type::number) {
 		return arg.textual_value;
-	} else if (arg.type == t_param_type::address_alias) {
-		if (has_address_alias(arg.address_alias)) {
-			return String::ToString(get_address_with_alias(arg.address_alias));
-		} else {
-			abort("Undefined alias: " + arg.address_alias);
-		}
-	} else if (arg.type == t_param_type::address_deref_alias) {
-		if (has_address_alias(arg.address_alias)) {
-			return get_string_from_address_with_alias(arg.address_alias);
-		} else {
-			abort("Undefined alias: " + arg.address_alias);
-		}
-	} else if (arg.type == t_param_type::address_deref_literal) {
-		return get_string_from_address(arg.address);
+	} else if (arg.type == t_param_type::id) {
+		// todo
 	} else {
 		abort("String expected");
 	}
 	return "";
-}
-bool t_interpreter::has_address_alias(string alias) {
-	return machine->mmap.find(alias) != machine->mmap.end();
-}
-int t_interpreter::get_address_with_alias(string alias) {
-	return has_address_alias(alias) ? machine->mmap[alias] : t_machine::illegal_address;
-}
-int t_interpreter::peek_address_with_alias(string alias) {
-	return machine->memory[get_address_with_alias(alias)];
-}
-void t_interpreter::poke_address_with_alias(string alias, int value) {
-	if (has_address_alias(alias)) {
-		machine->memory[get_address_with_alias(alias)] = value;
-	}
-}
-string t_interpreter::get_string_from_address_with_alias(string alias) {
-	return get_string_from_address(get_address_with_alias(alias));
-}
-string t_interpreter::get_string_from_address(int start_address) {
-	string str = "";
-	int addr = start_address;
-	bool scanning = true;
-	while (scanning) {
-		int ch = machine->memory[addr];
-		if (ch <= 0) {
-			scanning = false;
-		} else if (ch <= 255) {
-			str += (char)ch;
-		}
-		addr++;
-		if (addr >= t_machine::memory_top) {
-			scanning = false;
-		}
-	}
-	return str;
 }

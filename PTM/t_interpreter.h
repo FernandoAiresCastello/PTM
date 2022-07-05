@@ -34,13 +34,5 @@ private:
 	bool argc(t_params& arg, int min, int max);
 	int require_number(t_param& arg);
 	string require_label(t_param& arg);
-	int require_adress_or_alias(t_param& arg);
-	int require_aliased_address(t_param& arg);
 	string require_string(t_param& arg);
-	bool has_address_alias(string alias);
-	int get_address_with_alias(string alias);
-	int peek_address_with_alias(string alias);
-	void poke_address_with_alias(string alias, int value);
-	string get_string_from_address_with_alias(string alias);
-	string get_string_from_address(int start_address);
 };

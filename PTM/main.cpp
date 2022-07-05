@@ -8,7 +8,7 @@ int main(int argc, char* argv[]) {
 	t_globals g;
 	g.cfg->load();
 	g.snd->SetVolume(TSound::MinVolume + 1000);
-	g.wnd = new TBufferedWindow(2, t_machine::scrbuf_cols, t_machine::scrbuf_rows, 3, 3);
+	g.wnd = new TBufferedWindow(2, 32, 24, 3, 3);
 	g.wnd->SetTitle("PTM");
 	g.wnd->Show();
 
