@@ -1,11 +1,16 @@
 #include "t_ui_base.h"
 #include "t_globals.h"
+#include "t_config.h"
 
 t_ui_base::t_ui_base(t_globals* g) {
 	wnd = g->wnd;
 	buf = g->wnd->GetBuffer();
 	snd = g->snd;
 	running = false;
+	color.fg = g->cfg->fg_color;
+	color.bg = g->cfg->bg_color;
+	color.bdr_fg = g->cfg->bdr_fg_color;
+	color.bdr_bg = g->cfg->bdr_bg_color;
 }
 void t_ui_base::run() {
 	running = true;
@@ -30,7 +35,7 @@ void t_ui_base::poll_events() {
 	}
 }
 void t_ui_base::draw_screen_base() {
-	wnd->SetBackColor(color.bg);
+	wnd->SetBackColor(wnd->GetPalette()->GetColorRGB(color.bg));
 	buf->ClearAllLayers();
 	draw_border();
 }

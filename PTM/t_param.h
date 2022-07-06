@@ -11,6 +11,5 @@ struct t_param {
 	int numeric_value = 0;
 	string label;
 	string id;
-	int address = -1;
 };
 using t_params = std::vector<t_param>;

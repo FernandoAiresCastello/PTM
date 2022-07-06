@@ -13,10 +13,10 @@ protected:
 	TSound* snd;
 	bool running;
 	struct {
-		int fg = 0x0c;
-		int bg = 0x80;
-		int bdr_fg = 0x08;
-		int bdr_bg = 0x82;
+		int fg;
+		int bg;
+		int bdr_fg;
+		int bdr_bg;
 	} color;
 	virtual void on_run_loop() = 0;
 	void poll_events();

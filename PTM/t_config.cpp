@@ -16,10 +16,11 @@ void t_config::load() {
 			autorun = value;
 		} else if (name == "color") {
 			auto values = String::Split(value, ' ', true);
-			if (values.size() != 3) continue;
+			if (values.size() != 4) continue;
 			fg_color = String::ToInt(values[0]);
 			bg_color = String::ToInt(values[1]);
-			bdr_color = String::ToInt(values[2]);
+			bdr_fg_color = String::ToInt(values[2]);
+			bdr_bg_color = String::ToInt(values[3]);
 		}
 	}
 }

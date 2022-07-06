@@ -4,8 +4,9 @@
 struct t_config {
 	string autoload;
 	string autorun;
-	int fg_color = 0x0d;
-	int bg_color = 0x90;
-	int bdr_color = 0x92;
+	int fg_color = 0x0c;
+	int bg_color = 0x80;
+	int bdr_fg_color = 0x08;
+	int bdr_bg_color = 0x82;
 	void load();
 };
