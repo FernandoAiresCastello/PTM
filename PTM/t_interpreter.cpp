@@ -99,15 +99,15 @@ bool t_interpreter::argc(t_params& arg, int min, int max) {
 	return true;
 }
 string t_interpreter::require_label(t_param& arg) {
-	if (arg.type != t_param_type::label) {
+	if (arg.type != t_param_type::id) {
 		abort("Label expected");
 		return "";
 	}
-	if (prg->labels.find(arg.label) == prg->labels.end()) {
+	if (prg->labels.find(arg.id) == prg->labels.end()) {
 		abort("Label not found");
 		return "";
 	}
-	return arg.label;
+	return arg.id;
 }
 int t_interpreter::require_number(t_param& arg) {
 	if (arg.type == t_param_type::number || 
