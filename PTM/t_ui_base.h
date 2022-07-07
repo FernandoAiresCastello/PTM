@@ -14,10 +14,13 @@ protected:
 	TSound* snd;
 	bool running;
 	struct {
+		int csr_fg;
 		int fg;
 		int bg;
 		int bdr_fg;
 		int bdr_bg;
+		int label_fg;
+		int cmd_fg;
 	} color;
 	virtual void on_run_loop() = 0;
 	void poll_events();

@@ -1,4 +1,5 @@
 #include "t_machine.h"
+#include "t_default_gfx.h"
 
 t_machine::t_machine(TBufferedWindow* wnd) {
 	this->wnd = wnd;
@@ -8,10 +9,12 @@ t_machine::t_machine(TBufferedWindow* wnd) {
 
 	original_chr = wnd->GetCharset();
 	chr = new TCharset();
+	t_default_gfx::init_charset(chr);
 	wnd->SetCharset(chr);
 
 	original_pal = wnd->GetPalette();
 	pal = new TPalette();
+	t_default_gfx::init_palette(pal);
 	wnd->SetPalette(pal);
 
 	default_view.x = 0;

@@ -79,11 +79,26 @@ void t_program_editor::draw_program() {
 	int y = 1;
 	for (int line_ix = prg_view.first_line_ix; line_ix < prg_view.first_line_ix + prg_view.max_lines && line_ix < prg.src_lines.size(); line_ix++) {
 		x = 1;
+		bool is_cmd = true;
+		int fgc = color.fg;
 		auto& line = prg.src_lines[line_ix];
 		for (int char_ix = prg_view.first_char_ix; char_ix < prg_view.first_char_ix + prg_view.max_chars && char_ix < line.length(); char_ix++) {
 			int ch = line[char_ix];
-			if (ch == '\t') ch = ' ';
-			TTileSeq tile(ch, color.fg, color.bg);
+			if (ch == ' ') {
+				is_cmd = false;
+			}
+			auto trim = String::Trim(line);
+			if (String::StartsWith(trim, "->")) {
+				fgc = color.label_fg;
+			} else {
+				if (is_cmd) {
+					ch = String::ToUpper(ch);
+					fgc = color.cmd_fg;
+				} else {
+					fgc = color.fg;
+				}
+			}
+			TTileSeq tile(ch, fgc, color.bg);
 			buf->SetTile(tile, 0, x, y, false);
 			if (++x > buf->LastCol - 1) break;
 		}
@@ -92,10 +107,9 @@ void t_program_editor::draw_program() {
 }
 void t_program_editor::draw_cursor() {
 	TTileSeq tile;
-	int ch = get_char_under_cursor();
-	tile.Add(ch, color.bg, color.fg);
-	tile.Add(ch, color.fg, color.bg);
-	buf->SetTile(tile, 1, scr_csr.x, scr_csr.y, false);
+	tile.Add('_', color.csr_fg, color.bg);
+	tile.Add(' ', color.csr_fg, color.bg);
+	buf->SetTile(tile, 1, scr_csr.x, scr_csr.y, true);
 }
 string* t_program_editor::get_current_line() {
 	if (prg_csr.line_ix >= 0 && prg_csr.line_ix < prg.src_lines.size()) {

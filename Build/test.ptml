@@ -1,32 +1,22 @@
 goto test1
-exit
+halt
 
 -> test1
-bgcol 200
-tile 1,10,20
-tile 2,15,25
-loc 37,10
-transp 1
-put
-halt
--> test2
-bgcol 200
-transp 1
+bgcol 0
+transp 0
 
 mkv main,1,1,20,20
 view main
 rtile
-tile 1,10,20
-tile 2,15,25
+tile 1,1,2
+tile 2,3,4
 fill
 
 mkv sub,10,10,10,10
 view sub
 rtile
-tile 3,50,60
-tile 4,70,80
+tile 3,1,2
+tile 4,3,4
 layer 1
 fill
-
 halt
-

@@ -1,16 +1,22 @@
 #include "t_ui_base.h"
 #include "t_globals.h"
 #include "t_config.h"
+#include "t_default_gfx.h"
 
 t_ui_base::t_ui_base(t_globals* g) {
 	wnd = g->wnd;
 	buf = g->wnd->GetBuffer();
 	snd = g->snd;
+	t_default_gfx::init_palette(wnd->GetPalette());
+	t_default_gfx::init_charset(wnd->GetCharset());
 	running = false;
+	color.csr_fg = g->cfg->csr_fg_color;
 	color.fg = g->cfg->fg_color;
 	color.bg = g->cfg->bg_color;
 	color.bdr_fg = g->cfg->bdr_fg_color;
 	color.bdr_bg = g->cfg->bdr_bg_color;
+	color.label_fg = g->cfg->label_fg_color;
+	color.cmd_fg = g->cfg->cmd_fg_color;
 }
 t_ui_base::~t_ui_base() {
 }
