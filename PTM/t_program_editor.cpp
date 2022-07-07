@@ -58,11 +58,18 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 	} else if (key == SDLK_BACKSPACE) {
 		type_backspace();
 	} else if (key == SDLK_DELETE) {
-		type_delete();
+		if (ctrl) clear_line();
+		else type_delete();
 	} else if (key == SDLK_F1) {
 		info_visible = !info_visible;
 	} else if (key == SDLK_F5) {
 		compile_and_run();
+	} else if (ctrl && key == SDLK_c) {
+		copy_line();
+	} else if (ctrl && key == SDLK_x) {
+		cut_line();
+	} else if (ctrl && key == SDLK_v) {
+		paste_line();
 	} else if (is_valid_prg_char(key)) {
 		type_char(key);
 	}
@@ -109,8 +116,12 @@ void t_program_editor::draw_program() {
 }
 void t_program_editor::draw_cursor() {
 	TTileSeq tile;
-	tile.Add('_', color.csr_fg, color.bg);
-	tile.Add(' ', color.csr_fg, color.bg);
+	if (csr_overwrite) {
+		tile.Add(0xfb, color.csr_fg, color.bg);
+	} else {
+		tile.Add(0xfc, color.csr_fg, color.bg);
+	}
+	tile.Add(0x00, color.csr_fg, color.bg);
 	buf->SetTile(tile, 1, scr_csr.x, scr_csr.y, true);
 }
 string* t_program_editor::get_current_line() {
@@ -282,15 +293,18 @@ void t_program_editor::type_pgdn() {
 	}
 }
 void t_program_editor::load_program(string file) {
-	prg.load(file);
+	if (file.empty()) return;
+	prg.load_plain(file);
 	move_prg_csr_home();
 	prg_filename = file;
 }
 void t_program_editor::save_program(string file) {
-	prg.save(file);
+	if (file.empty()) return;
+	prg.save_plain(file);
 	prg_filename = file;
 }
 void t_program_editor::compile_and_run() {
+	save_program(prg_filename);
 	t_compiler compiler;
 	compiler.run(&prg);
 	if (compiler.errors.empty()) {
@@ -345,4 +359,19 @@ void t_program_editor::print(string text, int x, int y) {
 			}
 		}
 	}
+}
+void t_program_editor::copy_line() {
+	clipboard = *get_current_line();
+}
+void t_program_editor::cut_line() {
+	copy_line();
+	clear_line();
+}
+void t_program_editor::paste_line() {
+	prg.src_lines.insert(prg.src_lines.begin() + prg_csr.line_ix, clipboard);
+	move_prg_csr_home_x();
+	move_prg_csr_down();
+}
+void t_program_editor::clear_line() {
+	get_current_line()->clear();
 }

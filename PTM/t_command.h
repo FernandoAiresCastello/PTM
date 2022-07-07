@@ -29,4 +29,5 @@ private:
 	void set_wnd_bgcolor(t_params& arg);
 	void set_tile_transparency(t_params& arg);
 	void select_layer(t_params& arg);
+	void define_char(t_params& arg);
 };

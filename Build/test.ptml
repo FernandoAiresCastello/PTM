@@ -2,6 +2,13 @@
 goto test1
 halt
 
+-> test2
+chr 0x01,1,2,3,4,5,6,7,8
+tile 1,1,0
+loc 10,10
+PUT
+HALT
+
 -> test1
 bgcol 0
 transp 0
@@ -21,4 +28,3 @@ tile 4,3,4
 layer 1
 fill
 halt
-

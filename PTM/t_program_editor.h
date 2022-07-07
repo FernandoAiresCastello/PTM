@@ -28,6 +28,7 @@ private:
 		int max_lines = 0;
 		int max_chars = 0;
 	} prg_view;
+	string clipboard;
 	void on_run_loop();
 	void on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt);
 	void draw_border_info();
@@ -56,4 +57,8 @@ private:
 	void compile_and_run();
 	void print_errors(std::vector<string>& errors);
 	void print(string text, int x, int y);
+	void copy_line();
+	void cut_line();
+	void paste_line();
+	void clear_line();
 };

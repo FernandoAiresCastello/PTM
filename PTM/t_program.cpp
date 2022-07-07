@@ -3,7 +3,7 @@
 
 t_program::t_program() {
 }
-void t_program::load(string path) {
+void t_program::load_plain(string path) {
 	src_lines.clear();
 	lines.clear();
 	for (auto& src : File::ReadLines(path, "\r\n")) {
@@ -13,6 +13,10 @@ void t_program::load(string path) {
 		src_lines.pop_back();
 	}
 }
-void t_program::save(string path) {
+void t_program::save_plain(string path) {
 	File::WriteLines(path, src_lines);
+}
+void t_program::load_encrypted(string path) {
+}
+void t_program::save_encrypted(string path) {
 }

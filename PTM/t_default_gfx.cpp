@@ -1,7 +1,8 @@
 #include "t_default_gfx.h"
 
 void t_default_gfx::init_palette(TPalette* pal) {
-	pal->Clear();
+	pal->DeleteAll();
+	pal->AddBlank(256);
 	pal->Set(0, 0x000000); // black
 	pal->Set(1, 0xc0c0c0); // fgcolor
 	pal->Set(2, 0x000080); // bgcolor
@@ -13,4 +14,24 @@ void t_default_gfx::init_palette(TPalette* pal) {
 	pal->Set(8, 0x808080); // comment_fgcolor
 }
 void t_default_gfx::init_charset(TCharset* chr) {
+	// Cursor overwrite
+	chr->Set(0xfb, 
+		"00000000"
+		"00000000"
+		"00000000"
+		"00000000"
+		"00000000"
+		"00000000"
+		"11111111"
+		"11111111");
+	// Cursor insert
+	chr->Set(0xfc,
+		"11000000"
+		"11000000"
+		"11000000"
+		"11000000"
+		"11000000"
+		"11000000"
+		"11000000"
+		"11000000");
 }
