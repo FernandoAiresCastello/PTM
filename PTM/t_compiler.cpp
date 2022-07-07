@@ -22,8 +22,9 @@ bool t_compiler::compile(t_program* prg, t_program_line* new_line, string src_li
 	if (String::StartsWith(src_line, ';')) {
 		return false;
 	}
-	if (String::EndsWith(src_line, ':')) {
-		prg->labels[String::RemoveLast(src_line)] = line_ix;
+	if (String::StartsWith(src_line, "->")) {
+		string label = String::Trim(String::Skip(src_line, 2));
+		prg->labels[label] = line_ix;
 		return false;
 	}
 	new_line->src = src_line;

@@ -8,4 +8,5 @@ struct t_program {
 	std::map<string, int> labels;
 	t_program();
 	void load(string path);
+	void save(string path);
 };

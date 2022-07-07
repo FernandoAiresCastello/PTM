@@ -34,5 +34,7 @@ private:
 	bool argc(t_params& arg, int min, int max);
 	int require_number(t_param& arg);
 	string require_label(t_param& arg);
+	string require_varname(t_param& arg);
+	string require_existing_varname(t_param& arg);
 	string require_string(t_param& arg);
 };

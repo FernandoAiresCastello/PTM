@@ -1,0 +1,32 @@
+goto test1
+exit
+
+-> test1
+bgcol 200
+tile 1,10,20
+tile 2,15,25
+loc 37,10
+transp 1
+put
+halt
+-> test2
+bgcol 200
+transp 1
+
+mkv main,1,1,20,20
+view main
+rtile
+tile 1,10,20
+tile 2,15,25
+fill
+
+mkv sub,10,10,10,10
+view sub
+rtile
+tile 3,50,60
+tile 4,70,80
+layer 1
+fill
+
+halt
+

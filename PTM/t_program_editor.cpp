@@ -19,6 +19,9 @@ t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
 		prg.src_lines.push_back("");
 	}
 }
+t_program_editor::~t_program_editor() {
+	save_program(prg_filename);
+}
 void t_program_editor::on_run_loop() {
 	draw_screen_base();
 	draw_border_info();
@@ -265,6 +268,10 @@ void t_program_editor::type_pgdn() {
 void t_program_editor::load_program(string file) {
 	prg.load(file);
 	move_prg_csr_home();
+	prg_filename = file;
+}
+void t_program_editor::save_program(string file) {
+	prg.save(file);
 	prg_filename = file;
 }
 void t_program_editor::compile_and_run() {

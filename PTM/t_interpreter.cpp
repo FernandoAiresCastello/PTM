@@ -39,7 +39,7 @@ void t_interpreter::run(t_program* prg, t_machine* machine, TBufferedWindow* wnd
 		if (e.type == SDL_KEYDOWN) {
 			on_keydown(e.key.keysym.sym, TKey::Ctrl(), TKey::Shift(), TKey::Alt());
 		}
-		machine->wnd->Update();
+		machine->on_loop();
 		if (halted) {
 			continue;
 		}
@@ -109,13 +109,35 @@ string t_interpreter::require_label(t_param& arg) {
 	}
 	return arg.id;
 }
+string t_interpreter::require_varname(t_param& arg) {
+	if (arg.type != t_param_type::id) {
+		abort("Variable name expected");
+		return "";
+	}
+	return arg.id;
+}
+string t_interpreter::require_existing_varname(t_param& arg) {
+	if (arg.type != t_param_type::id) {
+		abort("Variable name expected");
+		return "";
+	}
+	if (machine->vars.find(arg.id) == machine->vars.end()) {
+		abort("Variable not found");
+		return "";
+	}
+	return arg.id;
+}
 int t_interpreter::require_number(t_param& arg) {
 	if (arg.type == t_param_type::number || 
 		arg.type == t_param_type::string || 
 		arg.type == t_param_type::char_literal) {
 		return arg.numeric_value;
 	} else if (arg.type == t_param_type::id) {
-		// todo
+		if (machine->vars.find(arg.id) != machine->vars.end()) {
+			return String::ToInt(machine->vars[arg.id]);
+		} else {
+			abort("Variable not found");
+		}
 	} else {
 		abort("Syntax error");
 	}
@@ -125,7 +147,11 @@ string t_interpreter::require_string(t_param& arg) {
 	if (arg.type == t_param_type::string || arg.type == t_param_type::number) {
 		return arg.textual_value;
 	} else if (arg.type == t_param_type::id) {
-		// todo
+		if (machine->vars.find(arg.id) != machine->vars.end()) {
+			return machine->vars[arg.id];
+		} else {
+			abort("Variable not found");
+		}
 	} else {
 		abort("String expected");
 	}

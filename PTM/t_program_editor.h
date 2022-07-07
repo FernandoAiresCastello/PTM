@@ -7,6 +7,7 @@ struct t_config;
 
 struct t_program_editor : public t_ui_base {
 	t_program_editor(t_globals* g);
+	~t_program_editor();
 private:
 	t_program prg;
 	string prg_filename;
@@ -51,6 +52,7 @@ private:
 	void type_pgup();
 	void type_pgdn();
 	void load_program(string file);
+	void save_program(string file);
 	void compile_and_run();
 	void print_errors(std::vector<string>& errors);
 	void print(string text, int x, int y);

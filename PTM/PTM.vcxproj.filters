@@ -35,6 +35,9 @@
     <ClCompile Include="t_ui_base.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="t_view.cpp">
+      <Filter>Machine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="t_program.h">
@@ -72,6 +75,9 @@
     </ClInclude>
     <ClInclude Include="t_ui_base.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="t_view.h">
+      <Filter>Machine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

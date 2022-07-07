@@ -6,6 +6,7 @@ struct t_globals;
 
 struct t_ui_base {
 	t_ui_base(t_globals* g);
+	virtual ~t_ui_base();
 	void run();
 protected:
 	TBufferedWindow* wnd;

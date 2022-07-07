@@ -12,6 +12,8 @@ t_ui_base::t_ui_base(t_globals* g) {
 	color.bdr_fg = g->cfg->bdr_fg_color;
 	color.bdr_bg = g->cfg->bdr_bg_color;
 }
+t_ui_base::~t_ui_base() {
+}
 void t_ui_base::run() {
 	running = true;
 	while (running) {
