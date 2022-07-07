@@ -10,6 +10,7 @@ void t_default_gfx::init_palette(TPalette* pal) {
 	pal->Set(5, 0xd0d000); // label_fgcolor
 	pal->Set(6, 0x00d0d0); // cmd_fgcolor
 	pal->Set(7, 0xffffff); // csr_fgcolor
+	pal->Set(8, 0x808080); // comment_fgcolor
 }
 void t_default_gfx::init_charset(TCharset* chr) {
 }

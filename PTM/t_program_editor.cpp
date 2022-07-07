@@ -88,7 +88,9 @@ void t_program_editor::draw_program() {
 				is_cmd = false;
 			}
 			auto trim = String::Trim(line);
-			if (String::StartsWith(trim, "->")) {
+			if (String::StartsWith(trim, ";")) {
+				fgc = color.comment_fg;
+			} else if (String::StartsWith(trim, "->")) {
 				fgc = color.label_fg;
 			} else {
 				if (is_cmd) {

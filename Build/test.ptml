@@ -1,3 +1,4 @@
+; test program
 goto test1
 halt
 
@@ -20,3 +21,4 @@ tile 4,3,4
 layer 1
 fill
 halt
+
