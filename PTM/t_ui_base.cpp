@@ -18,6 +18,7 @@ t_ui_base::t_ui_base(t_globals* g) {
 	color.cmd_fg = 250;
 	color.csr_fg = 249;
 	color.comment_fg = 248;
+	color.sel_bg = 247;
 }
 t_ui_base::~t_ui_base() {
 }

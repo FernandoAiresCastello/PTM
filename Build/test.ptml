@@ -1,3 +1,4 @@
+; Test Program
 chr 1,0,0b00111100
 chr 1,1,0b01000010
 chr 1,2,0b10100101
@@ -6,10 +7,6 @@ chr 1,4,0b10100101
 chr 1,5,0b10011001
 chr 1,6,0b01000010
 chr 1,7,0b00111100
-
-;pal 0,0xff0000
-;pal 1,0x00ffff
-;bgcol 0
 
 rtile
 tile 3,1,0

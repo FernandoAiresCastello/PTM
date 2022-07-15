@@ -20,7 +20,6 @@ t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
 	}
 }
 t_program_editor::~t_program_editor() {
-	save_program(prg_filename);
 }
 void t_program_editor::on_run_loop() {
 	draw_screen_base();
@@ -29,17 +28,23 @@ void t_program_editor::on_run_loop() {
 	draw_cursor();
 }
 void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt) {
-	if (key == SDLK_ESCAPE) {
-		running = false;
-	} else if (TKey::Alt() && key == SDLK_RETURN) {
+	just_saved = false;
+	if (!shift && !ctrl && key != SDLK_DELETE) {
+		cancel_line_selection();
+	}
+	if (TKey::Alt() && key == SDLK_RETURN) {
 		wnd->ToggleFullscreen();
+	} else if (key == SDLK_ESCAPE) {
+		cancel_line_selection();
 	} else if (key == SDLK_RIGHT) {
 		move_prg_csr_right();
 	} else if (key == SDLK_LEFT) {
 		move_prg_csr_left();
 	} else if (key == SDLK_DOWN) {
+		if (shift && !has_selection()) line_selection_start = prg_csr.line_ix;
 		move_prg_csr_down();
 	} else if (key == SDLK_UP) {
+		if (shift && !has_selection()) line_selection_start = prg_csr.line_ix;
 		move_prg_csr_up();
 	} else if (key == SDLK_END) {
 		if (ctrl) move_prg_csr_end();
@@ -58,18 +63,21 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 	} else if (key == SDLK_BACKSPACE) {
 		type_backspace();
 	} else if (key == SDLK_DELETE) {
-		if (ctrl) clear_line();
+		if (has_selection()) delete_lines();
 		else type_delete();
 	} else if (key == SDLK_F1) {
 		info_visible = !info_visible;
 	} else if (key == SDLK_F5) {
 		compile_and_run();
 	} else if (ctrl && key == SDLK_c) {
-		copy_line();
+		copy_lines(true);
 	} else if (ctrl && key == SDLK_x) {
-		cut_line();
+		cut_lines();
 	} else if (ctrl && key == SDLK_v) {
-		paste_line();
+		paste_lines();
+	} else if (ctrl && key == SDLK_s) {
+		save_program(prg_filename);
+		just_saved = true;
 	} else if (is_valid_prg_char(key)) {
 		type_char(key);
 	}
@@ -80,6 +88,9 @@ void t_program_editor::draw_border_info() {
 	print_border_bottom(String::Format("L:%i/%i C:%i", 
 		prg_csr.line_ix + 1, prg.src_lines.size(), prg_csr.char_ix), 0);
 	print_border_bottom(csr_overwrite ? "ovr" : "ins", 40);
+	if (just_saved) {
+		print_border_bottom("Saved!", 20);
+	}
 }
 void t_program_editor::draw_program() {
 	int x = 1;
@@ -107,7 +118,7 @@ void t_program_editor::draw_program() {
 					fgc = color.fg;
 				}
 			}
-			TTileSeq tile(ch, fgc, color.bg);
+			TTileSeq tile(ch, fgc, is_selected(line_ix) ? color.sel_bg : color.bg);
 			buf->SetTile(tile, 0, x, y, false);
 			if (++x > buf->LastCol - 1) break;
 		}
@@ -196,8 +207,10 @@ void t_program_editor::move_prg_csr_up() {
 			prg_view.first_line_ix--;
 		}
 		string* line = get_current_line();
-		while (prg_csr.char_ix > line->length()) {
-			move_prg_csr_left();
+		if (line) {
+			while (prg_csr.char_ix > line->length()) {
+				move_prg_csr_left();
+			}
 		}
 	}
 }
@@ -360,18 +373,79 @@ void t_program_editor::print(string text, int x, int y) {
 		}
 	}
 }
-void t_program_editor::copy_line() {
-	clipboard = *get_current_line();
+void t_program_editor::copy_lines(bool cancel_selection) {
+	if (!has_selection()) return;
+	clipboard.clear();
+	auto range = get_line_selection_range();
+	for (int i = range.first; i < range.second; i++) {
+		clipboard.push_back(prg.src_lines[i]);
+	}
+	if (cancel_selection) {
+		cancel_line_selection();
+	}
 }
-void t_program_editor::cut_line() {
-	copy_line();
-	clear_line();
+void t_program_editor::cut_lines() {
+	if (!has_selection()) return;
+	copy_lines(false);
+	delete_lines();
 }
-void t_program_editor::paste_line() {
-	prg.src_lines.insert(prg.src_lines.begin() + prg_csr.line_ix, clipboard);
-	move_prg_csr_home_x();
-	move_prg_csr_down();
+void t_program_editor::paste_lines() {
+	cancel_line_selection();
+	for (auto& line : clipboard) {
+		prg.src_lines.insert(prg.src_lines.begin() + prg_csr.line_ix, line);
+		move_prg_csr_home_x();
+		move_prg_csr_down();
+	}
 }
-void t_program_editor::clear_line() {
+void t_program_editor::clear_current_line() {
 	get_current_line()->clear();
+	cancel_line_selection();
+}
+void t_program_editor::clear_lines() {
+	auto range = get_line_selection_range();
+	for (int i = range.first; i < range.second; i++) {
+		prg.src_lines[i].clear();
+	}
+}
+void t_program_editor::delete_lines() {
+	auto range = get_line_selection_range();
+	prg.src_lines.erase(prg.src_lines.begin() + range.first, prg.src_lines.begin() + range.second);
+	if (prg.src_lines.empty()) {
+		prg.src_lines.push_back("");
+	}
+	if (prg_csr.line_ix > line_selection_start) {
+		int dist = range.second - range.first;
+		for (int i = 0; i < dist; i++) {
+			move_prg_csr_up();
+		}
+	}
+	cancel_line_selection();
+}
+void t_program_editor::start_line_selection() {
+	line_selection_start = prg_csr.line_ix;
+}
+void t_program_editor::cancel_line_selection() {
+	line_selection_start = -1;
+}
+std::pair<int, int> t_program_editor::get_line_selection_range() {
+	if (!has_selection()) { 
+		return std::pair<int, int>(-1, -1); 
+	}
+	int first = -1;
+	int last = -1;
+	if (line_selection_start < prg_csr.line_ix) {
+		first = line_selection_start;
+		last = prg_csr.line_ix;
+	} else {
+		first = prg_csr.line_ix;
+		last = line_selection_start;
+	}
+	return std::pair<int, int>(first, last);
+}
+bool t_program_editor::is_selected(int line_ix) {
+	auto range = get_line_selection_range();
+	return line_ix >= range.first && line_ix < range.second;
+}
+bool t_program_editor::has_selection() {
+	return line_selection_start >= 0;
 }

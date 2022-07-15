@@ -28,7 +28,10 @@ private:
 		int max_lines = 0;
 		int max_chars = 0;
 	} prg_view;
-	string clipboard;
+	int line_selection_start = -1;
+	std::vector<string> clipboard;
+	bool just_saved = false;
+
 	void on_run_loop();
 	void on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt);
 	void draw_border_info();
@@ -57,8 +60,15 @@ private:
 	void compile_and_run();
 	void print_errors(std::vector<string>& errors);
 	void print(string text, int x, int y);
-	void copy_line();
-	void cut_line();
-	void paste_line();
-	void clear_line();
+	void copy_lines(bool cancel_selection);
+	void cut_lines();
+	void paste_lines();
+	void clear_current_line();
+	void clear_lines();
+	void delete_lines();
+	void start_line_selection();
+	void cancel_line_selection();
+	std::pair<int, int> get_line_selection_range();
+	bool is_selected(int line_ix);
+	bool has_selection();
 };

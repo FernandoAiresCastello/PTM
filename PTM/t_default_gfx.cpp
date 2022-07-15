@@ -15,6 +15,7 @@ void t_default_gfx::init_palette(TPalette* pal) {
 	pal->Set(250, 0x00d0d0); // cmd_fgcolor
 	pal->Set(249, 0xffffff); // csr_fgcolor
 	pal->Set(248, 0x808080); // comment_fgcolor
+	pal->Set(247, 0x0000ff); // sel_bgcolor
 }
 void t_default_gfx::init_charset(TCharset* chr) {
 	// Cursor overwrite

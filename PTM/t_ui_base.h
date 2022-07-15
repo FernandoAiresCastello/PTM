@@ -22,6 +22,7 @@ protected:
 		int label_fg;
 		int cmd_fg;
 		int comment_fg;
+		int sel_bg;
 	} color;
 	virtual void on_run_loop() = 0;
 	void poll_events();
