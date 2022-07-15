@@ -10,14 +10,14 @@ t_ui_base::t_ui_base(t_globals* g) {
 	t_default_gfx::init_palette(wnd->GetPalette());
 	t_default_gfx::init_charset(wnd->GetCharset());
 	running = false;
-	color.fg = 1;
-	color.bg = 2;
-	color.bdr_fg = 3;
-	color.bdr_bg = 4;
-	color.label_fg = 5;
-	color.cmd_fg = 6;
-	color.csr_fg = 7;
-	color.comment_fg = 8;
+	color.fg = 255;
+	color.bg = 254;
+	color.bdr_fg = 253;
+	color.bdr_bg = 252;
+	color.label_fg = 251;
+	color.cmd_fg = 250;
+	color.csr_fg = 249;
+	color.comment_fg = 248;
 }
 t_ui_base::~t_ui_base() {
 }

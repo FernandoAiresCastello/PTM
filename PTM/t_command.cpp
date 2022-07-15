@@ -29,6 +29,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "TRANSP")	set_tile_transparency(args);
 	else if (cmd == "LAYER")	select_layer(args);
 	else if (cmd == "CHR")		define_char(args);
+	else if (cmd == "PAL")		define_color(args);
+	else if (cmd == "REFR")		update_screen(args);
 
 	else return false;
 	return true;
@@ -165,15 +167,19 @@ void t_command::select_layer(t_params& arg) {
 	}
 }
 void t_command::define_char(t_params& arg) {
-	ARGC(9);
-	int ix = intp->require_number(arg[0]);
-	int row1 = intp->require_number(arg[1]);
-	int row2 = intp->require_number(arg[2]);
-	int row3 = intp->require_number(arg[3]);
-	int row4 = intp->require_number(arg[4]);
-	int row5 = intp->require_number(arg[5]);
-	int row6 = intp->require_number(arg[6]);
-	int row7 = intp->require_number(arg[7]);
-	int row8 = intp->require_number(arg[8]);
-	machine->chr->Set(ix, row1, row2, row3, row4, row5, row6, row7, row8);
+	ARGC(3);
+	int chr_ix = intp->require_number(arg[0]);
+	int row_ix = intp->require_number(arg[1]);
+	string data = intp->require_string(arg[2]);
+	machine->chr->Set(chr_ix, row_ix, String::ToInt(data));
+}
+void t_command::define_color(t_params& arg) {
+	ARGC(2);
+	int pal_ix = intp->require_number(arg[0]);
+	int rgb = intp->require_number(arg[1]);
+	machine->pal->Set(pal_ix, rgb);
+}
+void t_command::update_screen(t_params& arg) {
+	ARGC(0);
+	machine->wnd->Update();
 }

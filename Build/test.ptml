@@ -1,30 +1,18 @@
-; test program
-goto test1
-halt
+chr 1,0,0b00111100
+chr 1,1,0b01000010
+chr 1,2,0b10100101
+chr 1,3,0b10000001
+chr 1,4,0b10100101
+chr 1,5,0b10011001
+chr 1,6,0b01000010
+chr 1,7,0b00111100
 
--> test2
-chr 0x01,1,2,3,4,5,6,7,8
+;pal 0,0xff0000
+;pal 1,0x00ffff
+;bgcol 0
+
 tile 1,1,0
-loc 10,10
-PUT
-HALT
-
--> test1
-bgcol 0
-transp 0
-
-mkv main,1,1,20,20
-view main
-rtile
-tile 1,1,2
-tile 2,3,4
-fill
-
-mkv sub,10,10,10,10
-view sub
-rtile
-tile 3,1,2
-tile 4,3,4
-layer 1
-fill
+put
+REFR
 halt
+

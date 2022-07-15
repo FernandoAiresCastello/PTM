@@ -30,4 +30,6 @@ private:
 	void set_tile_transparency(t_params& arg);
 	void select_layer(t_params& arg);
 	void define_char(t_params& arg);
+	void define_color(t_params& arg);
+	void update_screen(t_params& arg);
 };

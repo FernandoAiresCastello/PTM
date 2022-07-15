@@ -18,6 +18,7 @@ struct t_machine {
 	TTileBuffer* tilebuf;
 	TTileSeq cur_tile;
 	bool tile_transparency = false;
+	bool auto_refresh = false;
 
 	t_machine(TBufferedWindow* wnd);
 	~t_machine();
