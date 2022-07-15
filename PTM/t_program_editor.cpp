@@ -16,7 +16,7 @@ t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
 			load_program(g->cfg->autoload);
 		}
 	} else {
-		prg.src_lines.push_back("");
+		add_empty_line();
 	}
 }
 t_program_editor::~t_program_editor() {
@@ -28,12 +28,13 @@ void t_program_editor::on_run_loop() {
 	draw_cursor();
 }
 void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt) {
-	just_saved = false;
 	if (!shift && !ctrl && key != SDLK_DELETE) {
 		cancel_line_selection();
 	}
 	if (TKey::Alt() && key == SDLK_RETURN) {
 		wnd->ToggleFullscreen();
+	} else if (ctrl && key == SDLK_q) {
+		running = false;
 	} else if (key == SDLK_ESCAPE) {
 		cancel_line_selection();
 	} else if (key == SDLK_RIGHT) {
@@ -60,12 +61,15 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 		csr_overwrite = !csr_overwrite;
 	} else if (key == SDLK_RETURN) {
 		type_crlf();
+		unsaved = true;
 	} else if (key == SDLK_BACKSPACE) {
 		type_backspace();
+		unsaved = true;
 	} else if (key == SDLK_DELETE) {
 		if (has_selection()) delete_lines();
 		else type_delete();
-	} else if (key == SDLK_F1) {
+		unsaved = true;
+	} else if (ctrl && key == SDLK_i) {
 		info_visible = !info_visible;
 	} else if (key == SDLK_F5) {
 		compile_and_run();
@@ -73,13 +77,16 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 		copy_lines(true);
 	} else if (ctrl && key == SDLK_x) {
 		cut_lines();
+		unsaved = true;
 	} else if (ctrl && key == SDLK_v) {
 		paste_lines();
+		unsaved = true;
 	} else if (ctrl && key == SDLK_s) {
 		save_program(prg_filename);
-		just_saved = true;
+		unsaved = false;
 	} else if (is_valid_prg_char(key)) {
 		type_char(key);
+		unsaved = true;
 	}
 }
 void t_program_editor::draw_border_info() {
@@ -87,9 +94,8 @@ void t_program_editor::draw_border_info() {
 	print_border_top(prg_filename, 0);
 	print_border_bottom(String::Format("L:%i/%i C:%i", 
 		prg_csr.line_ix + 1, prg.src_lines.size(), prg_csr.char_ix), 0);
-	print_border_bottom(csr_overwrite ? "ovr" : "ins", 40);
-	if (just_saved) {
-		print_border_bottom("Saved!", 20);
+	if (unsaved) {
+		print_border_bottom("Unsaved", 36);
 	}
 }
 void t_program_editor::draw_program() {
@@ -108,7 +114,7 @@ void t_program_editor::draw_program() {
 			auto trim = String::Trim(line);
 			if (String::StartsWith(trim, ";")) {
 				fgc = color.comment_fg;
-			} else if (String::StartsWith(trim, "->")) {
+			} else if (String::StartsWith(trim, ":")) {
 				fgc = color.label_fg;
 			} else {
 				if (is_cmd) {
@@ -242,6 +248,9 @@ void t_program_editor::move_prg_csr_end() {
 }
 bool t_program_editor::is_valid_prg_char(int ch) {
 	return ch >= 0x20 && ch < 0x7f;
+}
+void t_program_editor::add_empty_line() {
+	prg.src_lines.push_back("");
 }
 void t_program_editor::type_char(int ch) {
 	if (TKey::Shift()) {
@@ -411,7 +420,7 @@ void t_program_editor::delete_lines() {
 	auto range = get_line_selection_range();
 	prg.src_lines.erase(prg.src_lines.begin() + range.first, prg.src_lines.begin() + range.second);
 	if (prg.src_lines.empty()) {
-		prg.src_lines.push_back("");
+		add_empty_line();
 	}
 	if (prg_csr.line_ix > line_selection_start) {
 		int dist = range.second - range.first;

@@ -30,7 +30,7 @@ private:
 	} prg_view;
 	int line_selection_start = -1;
 	std::vector<string> clipboard;
-	bool just_saved = false;
+	bool unsaved = false;
 
 	void on_run_loop();
 	void on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt);
@@ -49,6 +49,7 @@ private:
 	void move_prg_csr_home();
 	void move_prg_csr_end();
 	bool is_valid_prg_char(int ch);
+	void add_empty_line();
 	void type_char(int ch);
 	void type_crlf();
 	void type_backspace();

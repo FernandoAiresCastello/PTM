@@ -1,8 +1,10 @@
 #include "t_config.h"
 
+#define CONFIG_FILE "config.ini"
+
 void t_config::load() {
-	if (!File::Exists("boot.cfg")) return;
-	for (auto& rawline : File::ReadLines("boot.cfg", "\r\n")) {
+	if (!File::Exists(CONFIG_FILE)) return;
+	for (auto& rawline : File::ReadLines(CONFIG_FILE, "\r\n")) {
 		string line = String::Trim(rawline);
 		if (line.empty() || String::StartsWith(line, '#')) continue;
 		auto cfg = String::Split(line, '=', true);

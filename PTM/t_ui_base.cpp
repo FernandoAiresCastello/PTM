@@ -7,9 +7,10 @@ t_ui_base::t_ui_base(t_globals* g) {
 	wnd = g->wnd;
 	buf = g->wnd->GetBuffer();
 	snd = g->snd;
+	running = false;
 	t_default_gfx::init_palette(wnd->GetPalette());
 	t_default_gfx::init_charset(wnd->GetCharset());
-	running = false;
+
 	color.fg = 255;
 	color.bg = 254;
 	color.bdr_fg = 253;

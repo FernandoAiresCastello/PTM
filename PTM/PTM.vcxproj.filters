@@ -9,10 +9,7 @@
       <Filter>Program</Filter>
     </ClCompile>
     <ClCompile Include="t_interpreter.cpp">
-      <Filter>Interpreter</Filter>
-    </ClCompile>
-    <ClCompile Include="t_compiler.cpp">
-      <Filter>Compiler</Filter>
+      <Filter>Compiler / Interpreter</Filter>
     </ClCompile>
     <ClCompile Include="t_config.cpp">
       <Filter>Common</Filter>
@@ -27,16 +24,19 @@
       <Filter>Machine</Filter>
     </ClCompile>
     <ClCompile Include="t_command.cpp">
-      <Filter>Interpreter</Filter>
+      <Filter>Compiler / Interpreter</Filter>
     </ClCompile>
     <ClCompile Include="t_globals.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="t_ui_base.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="t_default_gfx.cpp">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="t_ui_base.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="t_compiler.cpp">
+      <Filter>Compiler / Interpreter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -48,9 +48,6 @@
     </ClInclude>
     <ClInclude Include="common.h">
       <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="t_compiler.h">
-      <Filter>Compiler</Filter>
     </ClInclude>
     <ClInclude Include="t_config.h">
       <Filter>Common</Filter>
@@ -65,19 +62,22 @@
       <Filter>Machine</Filter>
     </ClInclude>
     <ClInclude Include="t_command.h">
-      <Filter>Interpreter</Filter>
+      <Filter>Compiler / Interpreter</Filter>
     </ClInclude>
     <ClInclude Include="t_interpreter.h">
-      <Filter>Interpreter</Filter>
+      <Filter>Compiler / Interpreter</Filter>
     </ClInclude>
     <ClInclude Include="t_globals.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="t_ui_base.h">
-      <Filter>UI</Filter>
-    </ClInclude>
     <ClInclude Include="t_default_gfx.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="t_ui_base.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="t_compiler.h">
+      <Filter>Compiler / Interpreter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -90,17 +90,11 @@
     <Filter Include="Common">
       <UniqueIdentifier>{5a78058d-4114-4c60-aae8-0ff9c987d499}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Interpreter">
-      <UniqueIdentifier>{db1a3207-4ac7-42c4-b654-6d79873c80e1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Compiler">
-      <UniqueIdentifier>{fa145803-b6e6-4064-9ce0-4ac3bb843ef6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="UI">
-      <UniqueIdentifier>{ba4ff5c2-c866-4839-a108-6157431b517c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Machine">
       <UniqueIdentifier>{1227c78f-5b40-4025-9929-bbe7dfde9f31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compiler / Interpreter">
+      <UniqueIdentifier>{db1a3207-4ac7-42c4-b654-6d79873c80e1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
