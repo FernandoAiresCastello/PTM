@@ -1,15 +1,12 @@
 #pragma once
 #include "common.h"
-#include "t_view.h"
 
 struct t_machine {
 	TBufferedWindow* wnd;
 	TCharset* chr;
 	TPalette* pal;
 	std::map<string, string> vars;
-	std::map<string, t_view> views;
-	t_view* cur_view = nullptr;
-	t_view default_view;
+	std::map<string, TTileSeq> saved_tiles;
 	struct {
 		int layer = 0;
 		int x = 0;
@@ -23,7 +20,6 @@ struct t_machine {
 	t_machine(TBufferedWindow* wnd);
 	~t_machine();
 	void on_loop();
-	bool is_csr_within_view();
 
 private:
 	TCharset* original_chr;

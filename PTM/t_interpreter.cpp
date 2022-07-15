@@ -39,10 +39,11 @@ void t_interpreter::run(t_program* prg, t_machine* machine, TBufferedWindow* wnd
 		if (e.type == SDL_KEYDOWN) {
 			on_keydown(e.key.keysym.sym, TKey::Ctrl(), TKey::Shift(), TKey::Alt());
 		}
-		machine->on_loop();
 		if (halted) {
+			machine->wnd->Update();
 			continue;
 		}
+		machine->on_loop();
 		if (cur_line_ix >= 0 && cur_line_ix < prg->lines.size()) {
 			cur_line = &prg->lines[cur_line_ix];
 			execute_current_line();

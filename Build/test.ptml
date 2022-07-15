@@ -11,8 +11,24 @@ chr 1,7,0b00111100
 ;pal 1,0x00ffff
 ;bgcol 0
 
+rtile
+tile 3,1,0
+tile 3,0,1
+stile heart_blink
 tile 1,1,0
-put
+tile 2,0,1
+stile smiley_blink
+
+loc 0,0
+ltile heart_blink
+putr 13
+putd 3
+putl 13
+putu 3
+mvc 1,1
+ltile smiley_blink
+rfill 12,2
+
 REFR
 halt
 

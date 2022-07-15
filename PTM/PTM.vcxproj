@@ -158,7 +158,6 @@
     <ClCompile Include="t_program.cpp" />
     <ClCompile Include="t_program_line.cpp" />
     <ClCompile Include="t_ui_base.cpp" />
-    <ClCompile Include="t_view.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="t_command.h" />
@@ -174,7 +173,6 @@
     <ClInclude Include="t_program.h" />
     <ClInclude Include="t_program_line.h" />
     <ClInclude Include="t_ui_base.h" />
-    <ClInclude Include="t_view.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
