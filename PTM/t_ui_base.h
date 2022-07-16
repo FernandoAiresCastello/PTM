@@ -27,6 +27,7 @@ protected:
 	virtual void on_run_loop() = 0;
 	void poll_events();
 	virtual void on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt) = 0;
+	virtual void on_mouse_wheel(int dist_y) = 0;
 	void draw_screen_base();
 	void draw_border();
 	void print_border(string str, int top_or_bottom, int x);

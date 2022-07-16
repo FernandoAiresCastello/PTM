@@ -43,6 +43,8 @@ void t_ui_base::poll_events() {
 		} else {
 			on_keydown(key, TKey::Ctrl(), TKey::Shift(), TKey::Alt());
 		}
+	} else if (e.type == SDL_MOUSEWHEEL) {
+		on_mouse_wheel(-e.wheel.y);
 	}
 }
 void t_ui_base::draw_screen_base() {

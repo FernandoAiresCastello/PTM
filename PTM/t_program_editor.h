@@ -34,6 +34,7 @@ private:
 
 	void on_run_loop();
 	void on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt);
+	void on_mouse_wheel(int dist_y);
 	void draw_border_info();
 	void draw_program();
 	void draw_cursor();

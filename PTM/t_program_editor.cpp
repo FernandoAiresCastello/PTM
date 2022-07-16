@@ -89,6 +89,15 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 		unsaved = true;
 	}
 }
+void t_program_editor::on_mouse_wheel(int dist_y) {
+	for (int i = 0; i < abs(dist_y); i++) {
+		if (dist_y > 0) {
+			move_prg_csr_down();
+		} else if (dist_y < 0) {
+			move_prg_csr_up();
+		}
+	}
+}
 void t_program_editor::draw_border_info() {
 	if (!info_visible) return;
 	print_border_top(prg_filename, 0);
