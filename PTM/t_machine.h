@@ -1,5 +1,6 @@
 #pragma once
 #include "common.h"
+#include "t_obj.h"
 
 struct t_machine {
 	TBufferedWindow* wnd;
@@ -7,6 +8,8 @@ struct t_machine {
 	TPalette* pal;
 	std::map<string, string> vars;
 	std::map<string, TTileSeq> saved_tiles;
+	std::map<string, t_obj> objs;
+	t_obj* cur_obj = nullptr;
 	struct {
 		int layer = 0;
 		int x = 0;

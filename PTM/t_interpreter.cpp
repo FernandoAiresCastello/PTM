@@ -39,7 +39,8 @@ void t_interpreter::run(t_program* prg, t_machine* machine, TBufferedWindow* wnd
 		if (e.type == SDL_KEYDOWN) {
 			on_keydown(e.key.keysym.sym, TKey::Ctrl(), TKey::Shift(), TKey::Alt());
 		}
-		if (halted) {
+		if (halted || pause_cycles > 0) {
+			pause_cycles--;
 			machine->wnd->Update();
 			continue;
 		}
@@ -65,7 +66,7 @@ void t_interpreter::execute_current_line() {
 	if (c.empty()) return;
 	auto& args = cur_line->params;
 	if (!cmd->execute(c, args)) {
-		abort("Invalid command");
+		abort("Invalid command: " + c);
 	}
 }
 void t_interpreter::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt) {
@@ -105,14 +106,14 @@ string t_interpreter::require_label(t_param& arg) {
 		return "";
 	}
 	if (prg->labels.find(arg.id) == prg->labels.end()) {
-		abort("Label not found");
+		abort("Label not found: " + arg.id);
 		return "";
 	}
 	return arg.id;
 }
-string t_interpreter::require_varname(t_param& arg) {
+string t_interpreter::require_id(t_param& arg) {
 	if (arg.type != t_param_type::id) {
-		abort("Variable name expected");
+		abort("Identifier expected");
 		return "";
 	}
 	return arg.id;
@@ -123,7 +124,7 @@ string t_interpreter::require_existing_varname(t_param& arg) {
 		return "";
 	}
 	if (machine->vars.find(arg.id) == machine->vars.end()) {
-		abort("Variable not found");
+		abort("Variable not found: " + arg.id);
 		return "";
 	}
 	return arg.id;
@@ -137,7 +138,12 @@ int t_interpreter::require_number(t_param& arg) {
 		if (machine->vars.find(arg.id) != machine->vars.end()) {
 			return String::ToInt(machine->vars[arg.id]);
 		} else {
-			abort("Variable not found");
+			abort("Variable not found: " + arg.id);
+		}
+	} else if (arg.type == t_param_type::obj_prop) {
+		t_obj* o = require_obj_prop(arg, true);
+		if (o) {
+			return o->prop.GetNumber(arg.prop.name);
 		}
 	} else {
 		abort("Syntax error");
@@ -151,10 +157,31 @@ string t_interpreter::require_string(t_param& arg) {
 		if (machine->vars.find(arg.id) != machine->vars.end()) {
 			return machine->vars[arg.id];
 		} else {
-			abort("Variable not found");
+			abort("Variable not found: " + arg.id);
+		}
+	} else if (arg.type == t_param_type::obj_prop) {
+		t_obj* o = require_obj_prop(arg, true);
+		if (o) {
+			return o->prop.GetString(arg.prop.name);
 		}
 	} else {
 		abort("String expected");
 	}
 	return "";
+}
+t_obj* t_interpreter::require_obj_prop(t_param& arg, bool must_exist) {
+	if (arg.type != t_param_type::obj_prop) {
+		abort("Property expected");
+		return nullptr;
+	}
+	if (machine->objs.find(arg.prop.obj_id) == machine->objs.end()) {
+		abort("Object not found: " + arg.prop.obj_id);
+		return nullptr;
+	}
+	t_obj* o = &machine->objs[arg.prop.obj_id];
+	if (must_exist && !o->prop.Has(arg.prop.name)) {
+		abort("Property not found: " + arg.prop.name);
+		return nullptr;
+	}
+	return o;
 }

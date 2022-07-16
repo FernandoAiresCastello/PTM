@@ -38,6 +38,9 @@
     <ClCompile Include="t_compiler.cpp">
       <Filter>Compiler / Interpreter</Filter>
     </ClCompile>
+    <ClCompile Include="t_obj.cpp">
+      <Filter>Machine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="t_program.h">
@@ -79,6 +82,9 @@
     <ClInclude Include="t_compiler.h">
       <Filter>Compiler / Interpreter</Filter>
     </ClInclude>
+    <ClInclude Include="t_obj.h">
+      <Filter>Machine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Editor">
@@ -95,6 +101,9 @@
     </Filter>
     <Filter Include="Compiler / Interpreter">
       <UniqueIdentifier>{db1a3207-4ac7-42c4-b654-6d79873c80e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Widgets">
+      <UniqueIdentifier>{c9835a73-266f-4ed2-90cd-5b61d650de01}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

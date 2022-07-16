@@ -6,9 +6,11 @@ struct t_program;
 struct t_program_line;
 struct t_machine;
 struct t_command;
+struct t_obj;
 
 struct t_interpreter {
 	std::vector<string> errors;
+	int pause_cycles = 0;
 	t_interpreter();
 	bool has_user_break();
 	void run(t_program* prg, t_machine* machine, TBufferedWindow* wnd);
@@ -34,7 +36,8 @@ private:
 	bool argc(t_params& arg, int min, int max);
 	int require_number(t_param& arg);
 	string require_label(t_param& arg);
-	string require_varname(t_param& arg);
+	string require_id(t_param& arg);
 	string require_existing_varname(t_param& arg);
 	string require_string(t_param& arg);
+	t_obj* require_obj_prop(t_param& arg, bool must_exist);
 };

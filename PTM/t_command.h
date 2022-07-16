@@ -13,10 +13,13 @@ private:
 	t_machine* machine;
 	void halt(t_params& arg);
 	void exit(t_params& arg);
-	void branch(t_params& arg);
+	void goto_label(t_params& arg);
+	void call_label(t_params& arg);
+	void return_from_label(t_params& arg);
 	void set_variable(t_params& arg);
 	void set_cursor_pos(t_params& arg);
 	void move_cursor(t_params& arg);
+	void init_cur_tile(t_params& arg);
 	void append_cur_tile(t_params& arg);
 	void clear_cur_tile(t_params& arg);
 	void store_cur_tile(t_params& arg);
@@ -26,9 +29,9 @@ private:
 	void put_tile_repeat_left(t_params& arg);
 	void put_tile_repeat_up(t_params& arg);
 	void put_tile_repeat_down(t_params& arg);
-	void fill_layer(t_params& arg);
 	void fill_rect(t_params& arg);
 	void clear_all_layers(t_params& arg);
+	void clear_layer(t_params& arg);
 	void clear_rect(t_params& arg);
 	void set_wnd_bgcolor(t_params& arg);
 	void set_tile_transparency(t_params& arg);
@@ -37,4 +40,8 @@ private:
 	void define_color(t_params& arg);
 	void update_screen(t_params& arg);
 	void get_random_number(t_params& arg);
+	void move_tile(t_params& arg);
+	void pause(t_params& arg);
+	void create_obj(t_params& arg);
+	void set_obj_prop(t_params& arg);
 };
