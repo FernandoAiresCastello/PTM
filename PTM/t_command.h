@@ -21,6 +21,7 @@ private:
 	void move_cursor(t_params& arg);
 	void init_cur_tile(t_params& arg);
 	void append_cur_tile(t_params& arg);
+	void parse_cur_tile(t_params& arg);
 	void clear_cur_tile(t_params& arg);
 	void store_cur_tile(t_params& arg);
 	void load_cur_tile(t_params& arg);
@@ -45,4 +46,7 @@ private:
 	void create_obj(t_params& arg);
 	void set_obj_prop(t_params& arg);
 	void set_obj_tile(t_params& arg);
+	void print_text(t_params& arg);
+	void set_text_fgcolor(t_params& arg);
+	void set_text_bgcolor(t_params& arg);
 };

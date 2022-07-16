@@ -19,6 +19,10 @@ struct t_machine {
 	TTileSeq cur_tile;
 	bool tile_transparency = false;
 	bool auto_refresh = false;
+	struct {
+		int fg = 1;
+		int bg = 0;
+	} text_color;
 
 	t_machine(TBufferedWindow* wnd);
 	~t_machine();

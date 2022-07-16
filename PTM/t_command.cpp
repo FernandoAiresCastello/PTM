@@ -20,6 +20,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "CSRM")		move_cursor(args);
 	else if (cmd == "TILE")		init_cur_tile(args);
 	else if (cmd == "TILE+")	append_cur_tile(args);
+	else if (cmd == "PTILE")	parse_cur_tile(args);
 	else if (cmd == "STILE")	store_cur_tile(args);
 	else if (cmd == "LTILE")	load_cur_tile(args);
 	else if (cmd == "PUT")		put_tile(args);
@@ -43,6 +44,9 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "OBJ")		create_obj(args);
 	else if (cmd == "SET")		set_obj_prop(args);
 	else if (cmd == "OBJT")		set_obj_tile(args);
+	else if (cmd == "PRINT")	print_text(args);
+	else if (cmd == "TXF")		set_text_fgcolor(args);
+	else if (cmd == "TXB")		set_text_bgcolor(args);
 
 	else return false;
 	return true;
@@ -127,6 +131,11 @@ void t_command::append_cur_tile(t_params& arg) {
 	tile.ForeColor = intp->require_number(arg[1]);
 	tile.BackColor = intp->require_number(arg[2]);
 	machine->cur_tile.Add(tile);
+}
+void t_command::parse_cur_tile(t_params& arg) {
+	ARGC(1);
+	string tile = intp->require_string(arg[0]);
+	machine->cur_tile.Parse(tile);
 }
 void t_command::clear_cur_tile(t_params& arg) {
 	ARGC(0);
@@ -316,4 +325,34 @@ void t_command::set_obj_tile(t_params& arg) {
 			intp->abort("Object not found: " + id);
 		}
 	}
+}
+void t_command::print_text(t_params& arg) {
+	ARGC(1);
+	string text = intp->require_string(arg[0]);
+	if (!text.empty()) {
+		const int initial_x = machine->csr.x;
+		for (int i = 0; i < text.length(); i++) {
+			char ch = text[i];
+			if (ch == '\\' && i < text.length() - 1) {
+				i++;
+				if (text[i] == 'n') {
+					machine->csr.x = initial_x;
+					machine->csr.y++;
+				}
+			} else {
+				machine->tilebuf->SetTile(
+					TTileSeq(ch, machine->text_color.fg, machine->text_color.bg),
+					machine->csr.layer, machine->csr.x, machine->csr.y, machine->tile_transparency);
+				machine->csr.x++;
+			}
+		}
+	}
+}
+void t_command::set_text_fgcolor(t_params& arg) {
+	ARGC(1);
+	machine->text_color.fg = intp->require_number(arg[0]);
+}
+void t_command::set_text_bgcolor(t_params& arg) {
+	ARGC(1);
+	machine->text_color.bg = intp->require_number(arg[0]);
 }
