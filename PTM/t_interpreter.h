@@ -41,4 +41,7 @@ private:
 	string require_string(t_param& arg);
 	t_obj* require_existing_obj(t_param& arg);
 	t_obj* require_obj_prop(t_param& arg, bool must_exist);
+	void goto_label(string label);
+	void call_label(string label);
+	void return_from_call();
 };

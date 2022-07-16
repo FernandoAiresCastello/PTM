@@ -10,7 +10,7 @@ t_command::t_command(t_interpreter* intp) {
 	machine = intp->machine;
 }
 bool t_command::execute(string& cmd, t_params& args) {
-	if		(cmd == "HALT")		halt(args);
+	if (cmd == "HALT")		halt(args);
 	else if (cmd == "EXIT")		exit(args);
 	else if (cmd == "GOTO")		goto_label(args);
 	else if (cmd == "CALL")		call_label(args);
@@ -32,7 +32,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "CLS")		clear_all_layers(args);
 	else if (cmd == "CLL")		clear_layer(args);
 	else if (cmd == "CLR")		clear_rect(args);
-	else if (cmd == "BGCOL")	set_wnd_bgcolor(args);
+	else if (cmd == "WNDBG")	set_wnd_bgcolor(args);
 	else if (cmd == "TRANSP")	set_tile_transparency(args);
 	else if (cmd == "LAYER")	select_layer(args);
 	else if (cmd == "CHR")		define_char(args);
@@ -45,9 +45,11 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "SET")		set_obj_prop(args);
 	else if (cmd == "OBJT")		set_obj_tile(args);
 	else if (cmd == "PRINT")	print_text(args);
-	else if (cmd == "TXF")		set_text_fgcolor(args);
-	else if (cmd == "TXB")		set_text_bgcolor(args);
+	else if (cmd == "FGC")		set_text_fgcolor(args);
+	else if (cmd == "BGC")		set_text_bgcolor(args);
 	else if (cmd == "DRAW")		draw_obj(args);
+	else if (cmd == "INKEY")	get_key_pressed(args);
+	else if (cmd == "KCALL")	call_if_key_pressed(args);
 
 	else return false;
 	return true;
@@ -64,28 +66,19 @@ void t_command::goto_label(t_params& arg) {
 	ARGC(1);
 	string label = intp->require_label(arg[0]);
 	if (!label.empty()) {
-		intp->cur_line_ix = intp->prg->labels[label];
-		intp->branched = true;
+		intp->goto_label(label);
 	}
 }
 void t_command::call_label(t_params& arg) {
 	ARGC(1);
 	string label = intp->require_label(arg[0]);
 	if (!label.empty()) {
-		intp->callstack.push(intp->cur_line_ix + 1);
-		intp->cur_line_ix = intp->prg->labels[label];
-		intp->branched = true;
+		intp->call_label(label);
 	}
 }
 void t_command::return_from_label(t_params& arg) {
 	ARGC(0);
-	if (!intp->callstack.empty()) {
-		intp->cur_line_ix = intp->callstack.top();
-		intp->callstack.pop();
-		intp->branched = true;
-	} else {
-		intp->abort("Call stack is empty");
-	}
+	intp->return_from_call();
 }
 void t_command::set_variable(t_params& arg) {
 	ARGC(2);
@@ -373,6 +366,25 @@ void t_command::draw_obj(t_params& arg) {
 			} else {
 				intp->abort("Object is not drawable");
 			}
+		}
+	}
+}
+void t_command::get_key_pressed(t_params& arg) {
+	ARGC(1);
+	string id = intp->require_id(arg[0]);
+	if (!id.empty()) {
+		machine->vars[id] = String::ToString(machine->last_key_pressed);
+		machine->last_key_pressed = 0;
+	}
+}
+void t_command::call_if_key_pressed(t_params& arg) {
+	ARGC(2);
+	int key = intp->require_number(arg[0]);
+	if (key > 0) {
+		string label = intp->require_label(arg[1]);
+		if (key == machine->last_key_pressed) {
+			machine->last_key_pressed = 0;
+			intp->call_label(label);
 		}
 	}
 }

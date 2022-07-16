@@ -22,6 +22,9 @@ void t_program::load_encrypted(string path) {
 	lines.clear();
 	auto file_lines = File::ReadLines(path, "\r\n");
 	t_obfuscator::decrypt(&file_lines, &src_lines);
+	if (String::Trim(src_lines.back()).empty()) {
+		src_lines.pop_back();
+	}
 }
 void t_program::save_encrypted(string path) {
 	auto encrypted = t_obfuscator::encrypt(&src_lines);

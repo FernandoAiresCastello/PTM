@@ -23,6 +23,7 @@ struct t_machine {
 		int fg = 1;
 		int bg = 0;
 	} text_color;
+	SDL_Keycode last_key_pressed = 0;
 
 	t_machine(TBufferedWindow* wnd);
 	~t_machine();

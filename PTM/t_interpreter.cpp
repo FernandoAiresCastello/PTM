@@ -75,6 +75,8 @@ void t_interpreter::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt)
 	} else if (key == SDLK_ESCAPE) {
 		user_break = true;
 		running = false;
+	} else {
+		machine->last_key_pressed = key;
 	}
 }
 void t_interpreter::abort(string error) {
@@ -195,4 +197,22 @@ t_obj* t_interpreter::require_obj_prop(t_param& arg, bool must_exist) {
 		return nullptr;
 	}
 	return o;
+}
+void t_interpreter::goto_label(string label) {
+	cur_line_ix = prg->labels[label];
+	branched = true;
+}
+void t_interpreter::call_label(string label) {
+	callstack.push(cur_line_ix + 1);
+	cur_line_ix = prg->labels[label];
+	branched = true;
+}
+void t_interpreter::return_from_call() {
+	if (!callstack.empty()) {
+		cur_line_ix = callstack.top();
+		callstack.pop();
+		branched = true;
+	} else {
+		abort("Call stack is empty");
+	}
 }

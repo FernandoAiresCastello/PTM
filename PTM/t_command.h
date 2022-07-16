@@ -50,4 +50,6 @@ private:
 	void set_text_fgcolor(t_params& arg);
 	void set_text_bgcolor(t_params& arg);
 	void draw_obj(t_params& arg);
+	void get_key_pressed(t_params& arg);
+	void call_if_key_pressed(t_params& arg);
 };
