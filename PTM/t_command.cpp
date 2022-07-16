@@ -47,6 +47,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "PRINT")	print_text(args);
 	else if (cmd == "TXF")		set_text_fgcolor(args);
 	else if (cmd == "TXB")		set_text_bgcolor(args);
+	else if (cmd == "DRAW")		draw_obj(args);
 
 	else return false;
 	return true;
@@ -318,11 +319,9 @@ void t_command::set_obj_tile(t_params& arg) {
 	ARGC(1);
 	string id = intp->require_id(arg[0]);
 	if (!id.empty()) {
-		if (machine->objs.find(id) != machine->objs.end()) {
-			machine->objs[id].tile = machine->cur_tile;
-			machine->cur_tile.Clear();
-		} else {
-			intp->abort("Object not found: " + id);
+		auto o = intp->require_existing_obj(arg[0]);
+		if (o) {
+			o->tile = machine->cur_tile;
 		}
 	}
 }
@@ -357,4 +356,23 @@ void t_command::set_text_fgcolor(t_params& arg) {
 void t_command::set_text_bgcolor(t_params& arg) {
 	ARGC(1);
 	machine->text_color.bg = intp->require_number(arg[0]);
+}
+void t_command::draw_obj(t_params& arg) {
+	ARGC(1);
+	string id = intp->require_id(arg[0]);
+	if (!id.empty()) {
+		auto o = intp->require_existing_obj(arg[0]);
+		if (o) {
+			if (o->prop.Has("layer") && o->prop.Has("x") && o->prop.Has("y")) {
+				machine->tilebuf->SetTile(
+					o->tile,
+					o->prop.GetNumber("layer"),
+					o->prop.GetNumber("x"),
+					o->prop.GetNumber("y"),
+					machine->tile_transparency);
+			} else {
+				intp->abort("Object is not drawable");
+			}
+		}
+	}
 }

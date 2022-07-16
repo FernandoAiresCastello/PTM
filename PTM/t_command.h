@@ -49,4 +49,5 @@ private:
 	void print_text(t_params& arg);
 	void set_text_fgcolor(t_params& arg);
 	void set_text_bgcolor(t_params& arg);
+	void draw_obj(t_params& arg);
 };

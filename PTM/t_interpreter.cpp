@@ -169,6 +169,17 @@ string t_interpreter::require_string(t_param& arg) {
 	}
 	return "";
 }
+t_obj* t_interpreter::require_existing_obj(t_param& arg) {
+	if (arg.type != t_param_type::id) {
+		abort("Object identifier expected");
+		return nullptr;
+	}
+	if (machine->objs.find(arg.id) == machine->objs.end()) {
+		abort("Object not found: " + arg.prop.obj_id);
+		return nullptr;
+	}
+	return &machine->objs[arg.id];
+}
 t_obj* t_interpreter::require_obj_prop(t_param& arg, bool must_exist) {
 	if (arg.type != t_param_type::obj_prop) {
 		abort("Property expected");

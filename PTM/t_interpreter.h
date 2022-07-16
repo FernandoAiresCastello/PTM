@@ -39,5 +39,6 @@ private:
 	string require_id(t_param& arg);
 	string require_existing_varname(t_param& arg);
 	string require_string(t_param& arg);
+	t_obj* require_existing_obj(t_param& arg);
 	t_obj* require_obj_prop(t_param& arg, bool must_exist);
 };

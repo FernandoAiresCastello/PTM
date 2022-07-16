@@ -316,13 +316,13 @@ void t_program_editor::type_pgdn() {
 }
 void t_program_editor::load_program(string file) {
 	if (file.empty()) return;
-	prg.load_plain(file);
+	prg.load_encrypted(file);
 	move_prg_csr_home();
 	prg_filename = file;
 }
 void t_program_editor::save_program(string file) {
 	if (file.empty()) return;
-	prg.save_plain(file);
+	prg.save_encrypted(file);
 	prg_filename = file;
 }
 void t_program_editor::compile_and_run() {

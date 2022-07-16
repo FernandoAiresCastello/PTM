@@ -41,6 +41,12 @@
     <ClCompile Include="t_obj.cpp">
       <Filter>Machine</Filter>
     </ClCompile>
+    <ClCompile Include="t_obfuscator.cpp">
+      <Filter>Cryptography</Filter>
+    </ClCompile>
+    <ClCompile Include="base64.cpp">
+      <Filter>Cryptography</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="t_program.h">
@@ -85,6 +91,12 @@
     <ClInclude Include="t_obj.h">
       <Filter>Machine</Filter>
     </ClInclude>
+    <ClInclude Include="t_obfuscator.h">
+      <Filter>Cryptography</Filter>
+    </ClInclude>
+    <ClInclude Include="base64.h">
+      <Filter>Cryptography</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Editor">
@@ -104,6 +116,9 @@
     </Filter>
     <Filter Include="Widgets">
       <UniqueIdentifier>{c9835a73-266f-4ed2-90cd-5b61d650de01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cryptography">
+      <UniqueIdentifier>{8b24975f-8788-4ddd-a53a-c1f96ededae2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
