@@ -333,11 +333,13 @@ void t_command::print_text(t_params& arg) {
 		const int initial_x = machine->csr.x;
 		for (int i = 0; i < text.length(); i++) {
 			char ch = text[i];
-			if (ch == '\\' && i < text.length() - 1) {
+			if (ch == '\\') {
 				i++;
-				if (text[i] == 'n') {
-					machine->csr.x = initial_x;
-					machine->csr.y++;
+				if (i < text.length()) {
+					if (text[i] == 'n') {
+						machine->csr.x = initial_x;
+						machine->csr.y++;
+					}
 				}
 			} else {
 				machine->tilebuf->SetTile(
