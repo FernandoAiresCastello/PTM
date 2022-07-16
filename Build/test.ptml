@@ -10,7 +10,6 @@ SET player.bgc,0
 
 TILE player.char0,player.fgc,player.bgc
 TILE+ player.char1,player.fgc,player.bgc
-PUT
 REFR
 halt
 

@@ -44,4 +44,5 @@ private:
 	void pause(t_params& arg);
 	void create_obj(t_params& arg);
 	void set_obj_prop(t_params& arg);
+	void set_obj_tile(t_params& arg);
 };

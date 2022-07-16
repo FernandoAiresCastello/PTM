@@ -42,6 +42,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "PAUSE")	pause(args);
 	else if (cmd == "OBJ")		create_obj(args);
 	else if (cmd == "SET")		set_obj_prop(args);
+	else if (cmd == "OBJT")		set_obj_tile(args);
 
 	else return false;
 	return true;
@@ -303,4 +304,16 @@ void t_command::set_obj_prop(t_params& arg) {
 	t_obj* o = intp->require_obj_prop(arg[0], false);
 	if (!o) return;
 	o->prop.Set(arg[0].prop.name, arg[1].textual_value);
+}
+void t_command::set_obj_tile(t_params& arg) {
+	ARGC(1);
+	string id = intp->require_id(arg[0]);
+	if (!id.empty()) {
+		if (machine->objs.find(id) != machine->objs.end()) {
+			machine->objs[id].tile = machine->cur_tile;
+			machine->cur_tile.Clear();
+		} else {
+			intp->abort("Object not found: " + id);
+		}
+	}
 }
