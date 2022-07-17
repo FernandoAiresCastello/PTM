@@ -26,7 +26,4 @@ t_machine::~t_machine() {
 	delete pal;
 }
 void t_machine::on_loop() {
-	if (auto_refresh) {
-		wnd->Update();
-	}
 }

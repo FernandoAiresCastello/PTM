@@ -11,6 +11,7 @@ struct t_command {
 private:
 	t_interpreter* intp;
 	t_machine* machine;
+	std::vector<string> get_debug_info();
 	void halt(t_params& arg);
 	void exit(t_params& arg);
 	void goto_label(t_params& arg);
@@ -55,4 +56,5 @@ private:
 	void draw_obj(t_params& arg);
 	void get_key_pressed(t_params& arg);
 	void call_if_key_pressed(t_params& arg);
+	void save_debug_file(t_params& arg);
 };

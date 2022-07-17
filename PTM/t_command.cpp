@@ -64,9 +64,48 @@ bool t_command::execute(string& cmd, t_params& args) {
 	// Keyboard
 	else if (cmd == "KEY.GET")		get_key_pressed(args);
 	else if (cmd == "KEY.CALL")		call_if_key_pressed(args);
+	// Debug
+	else if (cmd == "DBG.FILE")		save_debug_file(args);
 
 	else return false;
 	return true;
+}
+std::vector<string> t_command::get_debug_info() {
+	std::vector<string> info;
+	info.push_back("Variables");
+	for (auto& var : machine->vars) {
+		info.push_back(String::Format("\t%s = %s", var.first.c_str(), var.second.c_str()));
+	}
+	info.push_back("");
+	info.push_back("Objects");
+	for (auto& obj : machine->objs) {
+		string id = obj.first;
+		t_obj& o = obj.second;
+		info.push_back("\tID: " + id);
+		info.push_back("\tTiles: " + o.tile.ToString());
+		info.push_back("\tProperties: ");
+		for (auto& prop : o.prop.Entries) {
+			string name = prop.first;
+			string value = prop.second;
+			info.push_back(String::Format("\t\t%s = %s", name.c_str(), value.c_str()));
+		}
+	}
+	info.push_back("");
+	info.push_back("Tilestore");
+	for (auto& saved_tile : machine->tilestore) {
+		string id = saved_tile.first;
+		string tile = saved_tile.second.ToString();
+		info.push_back(String::Format("\t%s = %s", id.c_str(), tile.c_str()));
+	}
+	info.push_back("");
+	info.push_back("Current tile");
+	info.push_back(String::Format("\t%s", machine->cur_tile.ToString().c_str()));
+	info.push_back("");
+	info.push_back("Callstack");
+	for (auto& prg_ix : intp->callstack._Get_container()) {
+		info.push_back("\t" + String::ToString(prg_ix));
+	}
+	return info;
 }
 void t_command::halt(t_params& arg) {
 	ARGC(0);
@@ -184,8 +223,7 @@ void t_command::store_cur_tile(t_params& arg) {
 	ARGC(1);
 	string id = intp->require_id(arg[0]);
 	if (!id.empty()) {
-		machine->saved_tiles[id] = machine->cur_tile;
-		machine->cur_tile.Clear();
+		machine->tilestore[id] = machine->cur_tile;
 	}
 }
 void t_command::parse_and_store_tile(t_params& arg) {
@@ -197,7 +235,7 @@ void t_command::parse_and_store_tile(t_params& arg) {
 			TTileSeq tile;
 			bool ok = tile.Parse(tile_def);
 			if (ok) {
-				machine->saved_tiles[id] = tile;
+				machine->tilestore[id] = tile;
 			} else {
 				intp->abort("Malformed tile definition");
 			}
@@ -207,8 +245,8 @@ void t_command::parse_and_store_tile(t_params& arg) {
 void t_command::load_cur_tile(t_params& arg) {
 	ARGC(1);
 	string id = intp->require_id(arg[0]);
-	if (machine->saved_tiles.find(id) != machine->saved_tiles.end()) {
-		machine->cur_tile = machine->saved_tiles[id];
+	if (machine->tilestore.find(id) != machine->tilestore.end()) {
+		machine->cur_tile = machine->tilestore[id];
 	} else {
 		intp->abort("Tile definition not found: " + id);
 	}
@@ -350,7 +388,6 @@ void t_command::create_obj(t_params& arg) {
 		if (machine->objs.find(id) == machine->objs.end()) {
 			machine->objs[id] = t_obj();
 		}
-		machine->cur_obj = &machine->objs[id];
 	}
 }
 void t_command::set_obj_prop(t_params& arg) {
@@ -442,5 +479,12 @@ void t_command::call_if_key_pressed(t_params& arg) {
 			machine->last_key_pressed = 0;
 			intp->call_label(label);
 		}
+	}
+}
+void t_command::save_debug_file(t_params& arg) {
+	ARGC(1);
+	string path = intp->require_string(arg[0]);
+	if (!path.empty()) {
+		File::WriteLines(path, get_debug_info());
 	}
 }
