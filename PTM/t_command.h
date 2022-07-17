@@ -25,7 +25,6 @@ private:
 	void set_cur_tile_fgcolor(t_params& arg);
 	void set_cur_tile_bgcolor(t_params& arg);
 	void parse_cur_tile(t_params& arg);
-	void clear_cur_tile(t_params& arg);
 	void store_cur_tile(t_params& arg);
 	void parse_and_store_tile(t_params& arg);
 	void load_cur_tile(t_params& arg);
@@ -52,6 +51,7 @@ private:
 	void print_text(t_params& arg);
 	void set_text_fgcolor(t_params& arg);
 	void set_text_bgcolor(t_params& arg);
+	void set_text_colors(t_params& arg);
 	void draw_obj(t_params& arg);
 	void get_key_pressed(t_params& arg);
 	void call_if_key_pressed(t_params& arg);
