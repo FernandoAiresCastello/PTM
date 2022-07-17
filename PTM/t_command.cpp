@@ -19,6 +19,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "PAUSE")		pause(args);
 	// Variables
 	else if (cmd == "VAR")			set_variable(args);
+	else if (cmd == "CONST")		define_constant(args);
 	else if (cmd == "RND")			get_random_number(args);
 	// Tile buffer cursor
 	else if (cmd == "CSR.LAYER")	select_layer(args);
@@ -37,10 +38,10 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "TILE.TRA")		set_tile_transparency(args);
 	// Tile buffer
 	else if (cmd == "BUF.PUT")		put_tile(args);
-	else if (cmd == "BUF.PUT.R")	put_tile_repeat_right(args);
-	else if (cmd == "BUF.PUT.L")	put_tile_repeat_left(args);
-	else if (cmd == "BUF.PUT.U")	put_tile_repeat_up(args);
-	else if (cmd == "BUF.PUT.D")	put_tile_repeat_down(args);
+	else if (cmd == "BUF.REP.R")	put_tile_repeat_right(args);
+	else if (cmd == "BUF.REP.L")	put_tile_repeat_left(args);
+	else if (cmd == "BUF.REP.U")	put_tile_repeat_up(args);
+	else if (cmd == "BUF.REP.D")	put_tile_repeat_down(args);
 	else if (cmd == "BUF.FILL")		fill_rect(args);
 	else if (cmd == "BUF.CLS")		clear_all_layers(args);
 	else if (cmd == "BUF.CLL")		clear_layer(args);
@@ -74,7 +75,9 @@ std::vector<string> t_command::get_debug_info() {
 	std::vector<string> info;
 	info.push_back("Variables");
 	for (auto& var : machine->vars) {
-		info.push_back(String::Format("\t%s = %s", var.first.c_str(), var.second.c_str()));
+		info.push_back(
+			(var.second.is_const ? "\tconst " : "\t") +
+			String::Format("%s = %s", var.first.c_str(), var.second.value.c_str()));
 	}
 	info.push_back("");
 	info.push_back("Objects");
@@ -100,6 +103,11 @@ std::vector<string> t_command::get_debug_info() {
 	info.push_back("");
 	info.push_back("Current tile");
 	info.push_back(String::Format("\t%s", machine->cur_tile.ToString().c_str()));
+	info.push_back("");
+	info.push_back("Tile buffer cursor");
+	info.push_back("\tLayer: " + String::ToString(machine->csr.layer));
+	info.push_back("\tX: " + String::ToString(machine->csr.x));
+	info.push_back("\tY: " + String::ToString(machine->csr.y));
 	info.push_back("");
 	info.push_back("Callstack");
 	for (auto& prg_ix : intp->callstack._Get_container()) {
@@ -137,10 +145,15 @@ void t_command::set_variable(t_params& arg) {
 	ARGC(2);
 	string dst_var = intp->require_id(arg[0]);
 	if (!dst_var.empty()) {
+		if (machine->vars.find(dst_var) != machine->vars.end() && machine->vars[dst_var].is_const) {
+			intp->abort("Constant cannot be modified");
+			return;
+		}
 		if (arg[1].type == t_param_type::id) {
 			string src_var = intp->require_existing_varname(arg[1]);
 			if (!src_var.empty()) {
 				machine->vars[dst_var] = machine->vars[src_var];
+				machine->vars[dst_var].is_const = false;
 			}
 		} else if (arg[1].type == t_param_type::obj_prop) {
 			t_obj* o = intp->require_obj_prop(arg[1], true);
@@ -149,6 +162,28 @@ void t_command::set_variable(t_params& arg) {
 			}
 		} else {
 			machine->vars[dst_var] = arg[1].textual_value;
+		}
+	}
+}
+void t_command::define_constant(t_params& arg) {
+	ARGC(2);
+	string dst_var = intp->require_id(arg[0]);
+	if (!dst_var.empty()) {
+		if (arg[1].type == t_param_type::id) {
+			string src_var = intp->require_existing_varname(arg[1]);
+			if (!src_var.empty()) {
+				machine->vars[dst_var] = machine->vars[src_var];
+				machine->vars[dst_var].is_const = true;
+			}
+		} else if (arg[1].type == t_param_type::obj_prop) {
+			t_obj* o = intp->require_obj_prop(arg[1], true);
+			if (o) {
+				machine->vars[dst_var] = o->prop.GetString(arg[1].prop.name);
+				machine->vars[dst_var].is_const = true;
+			}
+		} else {
+			machine->vars[dst_var] = arg[1].textual_value;
+			machine->vars[dst_var].is_const = true;
 		}
 	}
 }

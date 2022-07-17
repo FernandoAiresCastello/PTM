@@ -47,6 +47,9 @@
     <ClCompile Include="base64.cpp">
       <Filter>Cryptography</Filter>
     </ClCompile>
+    <ClCompile Include="t_variable.cpp">
+      <Filter>Machine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="t_program.h">
@@ -96,6 +99,9 @@
     </ClInclude>
     <ClInclude Include="base64.h">
       <Filter>Cryptography</Filter>
+    </ClInclude>
+    <ClInclude Include="t_variable.h">
+      <Filter>Machine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

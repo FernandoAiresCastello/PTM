@@ -161,6 +161,7 @@
     <ClCompile Include="t_program.cpp" />
     <ClCompile Include="t_program_line.cpp" />
     <ClCompile Include="t_ui_base.cpp" />
+    <ClCompile Include="t_variable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base64.h" />
@@ -179,6 +180,7 @@
     <ClInclude Include="t_program.h" />
     <ClInclude Include="t_program_line.h" />
     <ClInclude Include="t_ui_base.h" />
+    <ClInclude Include="t_variable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

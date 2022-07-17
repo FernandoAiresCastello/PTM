@@ -18,6 +18,7 @@ private:
 	void call_label(t_params& arg);
 	void return_from_label(t_params& arg);
 	void set_variable(t_params& arg);
+	void define_constant(t_params& arg);
 	void set_cursor_pos(t_params& arg);
 	void move_cursor(t_params& arg);
 	void init_cur_tile(t_params& arg);

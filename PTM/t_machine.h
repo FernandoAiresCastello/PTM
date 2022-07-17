@@ -1,12 +1,13 @@
 #pragma once
 #include "common.h"
+#include "t_variable.h"
 #include "t_obj.h"
 
 struct t_machine {
 	TBufferedWindow* wnd;
 	TCharset* chr;
 	TPalette* pal;
-	std::map<string, string> vars;
+	std::map<string, t_variable> vars;
 	std::map<string, TTileSeq> tilestore;
 	std::map<string, t_obj> objs;
 	struct {

@@ -138,7 +138,7 @@ int t_interpreter::require_number(t_param& arg) {
 		return arg.numeric_value;
 	} else if (arg.type == t_param_type::id) {
 		if (machine->vars.find(arg.id) != machine->vars.end()) {
-			return String::ToInt(machine->vars[arg.id]);
+			return String::ToInt(machine->vars[arg.id].value);
 		} else {
 			abort("Variable not found: " + arg.id);
 		}
@@ -157,7 +157,7 @@ string t_interpreter::require_string(t_param& arg) {
 		return arg.textual_value;
 	} else if (arg.type == t_param_type::id) {
 		if (machine->vars.find(arg.id) != machine->vars.end()) {
-			return machine->vars[arg.id];
+			return machine->vars[arg.id].value;
 		} else {
 			abort("Variable not found: " + arg.id);
 		}
