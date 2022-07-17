@@ -90,7 +90,7 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 	}
 }
 void t_program_editor::on_mouse_wheel(int dist_y) {
-	for (int i = 0; i < abs(dist_y); i++) {
+	for (int i = 0; i < abs(dist_y) * 3; i++) {
 		if (dist_y > 0) {
 			move_prg_csr_down();
 		} else if (dist_y < 0) {

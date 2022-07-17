@@ -21,9 +21,13 @@ private:
 	void move_cursor(t_params& arg);
 	void init_cur_tile(t_params& arg);
 	void append_cur_tile(t_params& arg);
+	void set_cur_tile_char(t_params& arg);
+	void set_cur_tile_fgcolor(t_params& arg);
+	void set_cur_tile_bgcolor(t_params& arg);
 	void parse_cur_tile(t_params& arg);
 	void clear_cur_tile(t_params& arg);
 	void store_cur_tile(t_params& arg);
+	void parse_and_store_tile(t_params& arg);
 	void load_cur_tile(t_params& arg);
 	void put_tile(t_params& arg);
 	void put_tile_repeat_right(t_params& arg);
@@ -41,7 +45,6 @@ private:
 	void define_color(t_params& arg);
 	void update_screen(t_params& arg);
 	void get_random_number(t_params& arg);
-	void move_tile(t_params& arg);
 	void pause(t_params& arg);
 	void create_obj(t_params& arg);
 	void set_obj_prop(t_params& arg);

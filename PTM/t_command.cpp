@@ -10,7 +10,7 @@ t_command::t_command(t_interpreter* intp) {
 	machine = intp->machine;
 }
 bool t_command::execute(string& cmd, t_params& args) {
-	if (cmd == "HALT")		halt(args);
+		 if (cmd == "HALT")		halt(args);
 	else if (cmd == "EXIT")		exit(args);
 	else if (cmd == "GOTO")		goto_label(args);
 	else if (cmd == "CALL")		call_label(args);
@@ -20,8 +20,12 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "CSRM")		move_cursor(args);
 	else if (cmd == "TILE")		init_cur_tile(args);
 	else if (cmd == "TILE+")	append_cur_tile(args);
+	else if (cmd == "TILEC")	set_cur_tile_char(args);
+	else if (cmd == "TILEF")	set_cur_tile_fgcolor(args);
+	else if (cmd == "TILEB")	set_cur_tile_bgcolor(args);
 	else if (cmd == "PTILE")	parse_cur_tile(args);
 	else if (cmd == "STILE")	store_cur_tile(args);
+	else if (cmd == "PST")		parse_and_store_tile(args);
 	else if (cmd == "LTILE")	load_cur_tile(args);
 	else if (cmd == "PUT")		put_tile(args);
 	else if (cmd == "PUTR")		put_tile_repeat_right(args);
@@ -32,21 +36,20 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "CLS")		clear_all_layers(args);
 	else if (cmd == "CLL")		clear_layer(args);
 	else if (cmd == "CLR")		clear_rect(args);
-	else if (cmd == "WNDBG")	set_wnd_bgcolor(args);
+	else if (cmd == "WNDB")		set_wnd_bgcolor(args);
 	else if (cmd == "TRANSP")	set_tile_transparency(args);
 	else if (cmd == "LAYER")	select_layer(args);
 	else if (cmd == "CHR")		define_char(args);
 	else if (cmd == "PAL")		define_color(args);
 	else if (cmd == "REFR")		update_screen(args);
 	else if (cmd == "RND")		get_random_number(args);
-	else if (cmd == "MOV")		move_tile(args);
 	else if (cmd == "PAUSE")	pause(args);
 	else if (cmd == "OBJ")		create_obj(args);
 	else if (cmd == "SET")		set_obj_prop(args);
 	else if (cmd == "OBJT")		set_obj_tile(args);
 	else if (cmd == "PRINT")	print_text(args);
-	else if (cmd == "FGC")		set_text_fgcolor(args);
-	else if (cmd == "BGC")		set_text_bgcolor(args);
+	else if (cmd == "TEXTF")	set_text_fgcolor(args);
+	else if (cmd == "TEXTB")	set_text_bgcolor(args);
 	else if (cmd == "DRAW")		draw_obj(args);
 	else if (cmd == "INKEY")	get_key_pressed(args);
 	else if (cmd == "KCALL")	call_if_key_pressed(args);
@@ -126,10 +129,33 @@ void t_command::append_cur_tile(t_params& arg) {
 	tile.BackColor = intp->require_number(arg[2]);
 	machine->cur_tile.Add(tile);
 }
+void t_command::set_cur_tile_char(t_params& arg) {
+	ARGC(2);
+	int frame = intp->require_number(arg[0]);
+	int ch = intp->require_number(arg[1]);
+	machine->cur_tile.SetChar(frame, ch);
+}
+void t_command::set_cur_tile_fgcolor(t_params& arg) {
+	ARGC(2);
+	int frame = intp->require_number(arg[0]);
+	int color = intp->require_number(arg[1]);
+	machine->cur_tile.SetForeColor(frame, color);
+}
+void t_command::set_cur_tile_bgcolor(t_params& arg) {
+	ARGC(2);
+	int frame = intp->require_number(arg[0]);
+	int color = intp->require_number(arg[1]);
+	machine->cur_tile.SetBackColor(frame, color);
+}
 void t_command::parse_cur_tile(t_params& arg) {
 	ARGC(1);
 	string tile = intp->require_string(arg[0]);
-	machine->cur_tile.Parse(tile);
+	if (!tile.empty()) {
+		bool ok = machine->cur_tile.Parse(tile);
+		if (!ok) {
+			intp->abort("Malformed tile definition");
+		}
+	}
 }
 void t_command::clear_cur_tile(t_params& arg) {
 	ARGC(0);
@@ -138,8 +164,26 @@ void t_command::clear_cur_tile(t_params& arg) {
 void t_command::store_cur_tile(t_params& arg) {
 	ARGC(1);
 	string id = intp->require_id(arg[0]);
-	machine->saved_tiles[id] = machine->cur_tile;
-	machine->cur_tile.Clear();
+	if (!id.empty()) {
+		machine->saved_tiles[id] = machine->cur_tile;
+		machine->cur_tile.Clear();
+	}
+}
+void t_command::parse_and_store_tile(t_params& arg) {
+	ARGC(2);
+	string id = intp->require_id(arg[0]);
+	if (!id.empty()) {
+		string tile_def = intp->require_string(arg[1]);
+		if (!tile_def.empty()) {
+			TTileSeq tile;
+			bool ok = tile.Parse(tile_def);
+			if (ok) {
+				machine->saved_tiles[id] = tile;
+			} else {
+				intp->abort("Malformed tile definition");
+			}
+		}
+	}
 }
 void t_command::load_cur_tile(t_params& arg) {
 	ARGC(1);
@@ -276,16 +320,6 @@ void t_command::get_random_number(t_params& arg) {
 	int min = intp->require_number(arg[1]);
 	int max = intp->require_number(arg[2]);
 	machine->vars[var] = String::ToString(Util::Random(min, max));
-}
-void t_command::move_tile(t_params& arg) {
-	ARGC(4);
-	int src_x = intp->require_number(arg[0]);
-	int src_y = intp->require_number(arg[1]);
-	int dist_x = intp->require_number(arg[2]);
-	int dist_y = intp->require_number(arg[3]);
-	auto& src = machine->tilebuf->GetTile(machine->csr.layer, src_x, src_y);
-	machine->tilebuf->SetTile(src, machine->csr.layer, src_x + dist_x, src_y + dist_y, machine->tile_transparency);
-	machine->tilebuf->EraseTile(machine->csr.layer, src_x, src_y);
 }
 void t_command::pause(t_params& arg) {
 	ARGC(1);
