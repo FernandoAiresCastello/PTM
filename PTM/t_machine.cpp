@@ -18,6 +18,11 @@ t_machine::t_machine(TBufferedWindow* wnd) {
 	wnd->SetPalette(pal);
 
 	wnd->Update();
+
+	set_const("RIGHT", 1073741903);
+	set_const("LEFT", 1073741904);
+	set_const("DOWN", 1073741905);
+	set_const("UP", 1073741906);
 }
 t_machine::~t_machine() {
 	wnd->SetCharset(original_chr);
@@ -26,4 +31,16 @@ t_machine::~t_machine() {
 	delete pal;
 }
 void t_machine::on_loop() {
+}
+void t_machine::set_const(string id, int value) {
+	vars[id] = t_variable(value, true);
+}
+void t_machine::set_const(string id, string value) {
+	vars[id] = t_variable(value, true);
+}
+void t_machine::set_var(string id, int value) {
+	vars[id] = t_variable(value);
+}
+void t_machine::set_var(string id, string value) {
+	vars[id] = t_variable(value);
 }

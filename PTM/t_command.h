@@ -55,7 +55,11 @@ private:
 	void set_text_bgcolor(t_params& arg);
 	void set_text_colors(t_params& arg);
 	void draw_obj(t_params& arg);
+	void move_obj(t_params& arg);
 	void get_key_pressed(t_params& arg);
 	void call_if_key_pressed(t_params& arg);
 	void save_debug_file(t_params& arg);
+	void create_obj_array(t_params& arg);
+	void get_obj_array_element(t_params& arg);
+	void set_obj_array_element(t_params& arg);
 };

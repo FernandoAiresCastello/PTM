@@ -50,6 +50,9 @@
     <ClCompile Include="t_variable.cpp">
       <Filter>Machine</Filter>
     </ClCompile>
+    <ClCompile Include="t_obj_array.cpp">
+      <Filter>Machine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="t_program.h">
@@ -101,6 +104,9 @@
       <Filter>Cryptography</Filter>
     </ClInclude>
     <ClInclude Include="t_variable.h">
+      <Filter>Machine</Filter>
+    </ClInclude>
+    <ClInclude Include="t_obj_array.h">
       <Filter>Machine</Filter>
     </ClInclude>
   </ItemGroup>

@@ -11,7 +11,7 @@ t_command::t_command(t_interpreter* intp) {
 }
 bool t_command::execute(string& cmd, t_params& args) {
 	// Control flow
-		 if (cmd == "HALT")			halt(args);
+	if (cmd == "HALT")				halt(args);
 	else if (cmd == "EXIT")			exit(args);
 	else if (cmd == "GOTO")			goto_label(args);
 	else if (cmd == "CALL")			call_label(args);
@@ -57,6 +57,11 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "OBJ.PROP")		set_obj_prop(args);
 	else if (cmd == "OBJ.TILE")		set_obj_tile(args);
 	else if (cmd == "OBJ.DRAW")		draw_obj(args);
+	else if (cmd == "OBJ.MOVE")		move_obj(args);
+	// Object array
+	else if (cmd == "OBJ.ARR")		create_obj_array(args);
+	else if (cmd == "OBJ.ARR.GET")	get_obj_array_element(args);
+	else if (cmd == "OBJ.ARR.SET")	set_obj_array_element(args);
 	// Text output
 	else if (cmd == "PRINT")		print_text(args);
 	else if (cmd == "TEXT.FG")		set_text_fgcolor(args);
@@ -92,6 +97,14 @@ std::vector<string> t_command::get_debug_info() {
 			string value = prop.second;
 			info.push_back(String::Format("\t\t%s = %s", name.c_str(), value.c_str()));
 		}
+		info.push_back("");
+	}
+	info.push_back("");
+	info.push_back("Object arrays");
+	for (auto& obj_arr : machine->obj_arr) {
+		string id = obj_arr.first;
+		t_obj_array& arr = obj_arr.second;
+		info.push_back(String::Format("\t%s = W:%i H:%i", id.c_str(), arr.width, arr.height));
 	}
 	info.push_back("");
 	info.push_back("Tilestore");
@@ -497,6 +510,23 @@ void t_command::draw_obj(t_params& arg) {
 		}
 	}
 }
+void t_command::move_obj(t_params& arg) {
+	ARGC(3);
+	string id = intp->require_id(arg[0]);
+	if (!id.empty()) {
+		auto o = intp->require_existing_obj(arg[0]);
+		if (o) {
+			if (o->prop.Has("x") && o->prop.Has("y")) {
+				int dx = intp->require_number(arg[1]);
+				int dy = intp->require_number(arg[2]);
+				o->prop.Set("x", o->prop.GetNumber("x") + dx);
+				o->prop.Set("y", o->prop.GetNumber("y") + dy);
+			} else {
+				intp->abort("Object is not movable");
+			}
+		}
+	}
+}
 void t_command::get_key_pressed(t_params& arg) {
 	ARGC(1);
 	string id = intp->require_id(arg[0]);
@@ -521,5 +551,52 @@ void t_command::save_debug_file(t_params& arg) {
 	string path = intp->require_string(arg[0]);
 	if (!path.empty()) {
 		File::WriteLines(path, get_debug_info());
+	}
+}
+void t_command::create_obj_array(t_params& arg) {
+	ARGC(3);
+	string id = intp->require_id(arg[0]);
+	if (!id.empty()) {
+		int w = intp->require_number(arg[1]);
+		int h = intp->require_number(arg[2]);
+		machine->obj_arr[id] = t_obj_array(w, h);
+	}
+}
+void t_command::get_obj_array_element(t_params& arg) {
+	ARGC(4);
+	string arr_id = intp->require_id(arg[0]);
+	string obj_id = intp->require_id(arg[1]);
+	if (!obj_id.empty() && !arr_id.empty()) {
+		if (machine->obj_arr.find(arr_id) == machine->obj_arr.end()) {
+			intp->abort("Array not found: " + arr_id);
+			return;
+		}
+		t_obj_array& arr = machine->obj_arr[arr_id];
+		int ix = intp->require_number(arg[2]);
+		int iy = intp->require_number(arg[3]);
+		if (ix < 0 || iy < 0 || ix >= arr.width || iy >= arr.height) {
+			intp->abort("Array index out of bounds");
+			return;
+		}
+		machine->objs[obj_id] = arr.objs[iy * arr.width + ix];
+	}
+}
+void t_command::set_obj_array_element(t_params& arg) {
+	ARGC(4);
+	string arr_id = intp->require_id(arg[0]);
+	string obj_id = intp->require_id(arg[1]);
+	if (!obj_id.empty() && !arr_id.empty()) {
+		if (machine->obj_arr.find(arr_id) == machine->obj_arr.end()) {
+			intp->abort("Array not found: " + arr_id);
+			return;
+		}
+		t_obj_array& arr = machine->obj_arr[arr_id];
+		int ix = intp->require_number(arg[2]);
+		int iy = intp->require_number(arg[3]);
+		if (ix < 0 || iy < 0 || ix >= arr.width || iy >= arr.height) {
+			intp->abort("Array index out of bounds");
+			return;
+		}
+		arr.objs[iy * arr.width + ix] = machine->objs[obj_id];
 	}
 }
