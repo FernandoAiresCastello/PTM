@@ -62,4 +62,18 @@ private:
 	void create_obj_array(t_params& arg);
 	void get_obj_array_element(t_params& arg);
 	void set_obj_array_element(t_params& arg);
+	void compare_numbers(t_params& arg);
+	void compare_strings(t_params& arg);
+	void if_eq_call(t_params& arg);
+	void if_neq_call(t_params& arg);
+	void if_gt_call(t_params& arg);
+	void if_gte_call(t_params& arg);
+	void if_lt_call(t_params& arg);
+	void if_lte_call(t_params& arg);
+	void if_eq_goto(t_params& arg);
+	void if_neq_goto(t_params& arg);
+	void if_gt_goto(t_params& arg);
+	void if_gte_goto(t_params& arg);
+	void if_lt_goto(t_params& arg);
+	void if_lte_goto(t_params& arg);
 };

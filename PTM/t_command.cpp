@@ -4,6 +4,7 @@
 #include "t_program.h"
 
 #define ARGC(x) if (!intp->argc(arg, x)) return;
+#define ARGCX(x, y) if (!intp->argc(arg, x, y)) return;
 
 t_command::t_command(t_interpreter* intp) {
 	this->intp = intp;
@@ -72,6 +73,21 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "KEY.CALL")		call_if_key_pressed(args);
 	// Debug
 	else if (cmd == "DBG.FILE")		save_debug_file(args);
+	// Conditionals
+	else if (cmd == "CMP")			compare_numbers(args);
+	else if (cmd == "CMPS")			compare_strings(args);
+	else if (cmd == "IF.EQ.CALL")	if_eq_call(args);
+	else if (cmd == "IF.NEQ.CALL")	if_neq_call(args);
+	else if (cmd == "IF.GT.CALL")	if_gt_call(args);
+	else if (cmd == "IF.GTE.CALL")	if_gte_call(args);
+	else if (cmd == "IF.LT.CALL")	if_lt_call(args);
+	else if (cmd == "IF.LTE.CALL")	if_lte_call(args);
+	else if (cmd == "IF.EQ.GOTO")	if_eq_goto(args);
+	else if (cmd == "IF.NEQ.GOTO")	if_neq_goto(args);
+	else if (cmd == "IF.GT.GOTO")	if_gt_goto(args);
+	else if (cmd == "IF.GTE.GOTO")	if_gte_goto(args);
+	else if (cmd == "IF.LT.GOTO")	if_lt_goto(args);
+	else if (cmd == "IF.LTE.GOTO")	if_lte_goto(args);
 
 	else return false;
 	return true;
@@ -79,6 +95,9 @@ bool t_command::execute(string& cmd, t_params& args) {
 std::vector<string> t_command::get_debug_info() {
 	std::vector<string> info;
 	info.push_back("Variables");
+	if (machine->vars.empty()) {
+		info.push_back("\t(empty)");
+	}
 	for (auto& var : machine->vars) {
 		info.push_back(
 			(var.second.is_const ? "\tconst " : "\t") +
@@ -86,28 +105,39 @@ std::vector<string> t_command::get_debug_info() {
 	}
 	info.push_back("");
 	info.push_back("Objects");
+	if (machine->objs.empty()) {
+		info.push_back("\t(empty)");
+	}
 	for (auto& obj : machine->objs) {
 		string id = obj.first;
 		t_obj& o = obj.second;
 		info.push_back("\tID: " + id);
 		info.push_back("\tTiles: " + o.tile.ToString());
 		info.push_back("\tProperties: ");
+		if (o.prop.Entries.empty()) {
+			info.push_back("\t\t(empty)");
+		}
 		for (auto& prop : o.prop.Entries) {
 			string name = prop.first;
 			string value = prop.second;
 			info.push_back(String::Format("\t\t%s = %s", name.c_str(), value.c_str()));
 		}
-		info.push_back("");
 	}
 	info.push_back("");
 	info.push_back("Object arrays");
+	if (machine->obj_arr.empty()) {
+		info.push_back("\t(empty)");
+	}
 	for (auto& obj_arr : machine->obj_arr) {
 		string id = obj_arr.first;
 		t_obj_array& arr = obj_arr.second;
-		info.push_back(String::Format("\t%s = W:%i H:%i", id.c_str(), arr.width, arr.height));
+		info.push_back(String::Format("\t%s = Width:%i Height:%i", id.c_str(), arr.width, arr.height));
 	}
 	info.push_back("");
 	info.push_back("Tilestore");
+	if (machine->tilestore.empty()) {
+		info.push_back("\t(empty)");
+	}
 	for (auto& saved_tile : machine->tilestore) {
 		string id = saved_tile.first;
 		string tile = saved_tile.second.ToString();
@@ -115,14 +145,20 @@ std::vector<string> t_command::get_debug_info() {
 	}
 	info.push_back("");
 	info.push_back("Current tile");
-	info.push_back(String::Format("\t%s", machine->cur_tile.ToString().c_str()));
+	if (machine->cur_tile.IsEmpty()) {
+		info.push_back("\t(empty)");
+	} else {
+		info.push_back(String::Format("\t%s", machine->cur_tile.ToString().c_str()));
+	}
 	info.push_back("");
 	info.push_back("Tile buffer cursor");
-	info.push_back("\tLayer: " + String::ToString(machine->csr.layer));
-	info.push_back("\tX: " + String::ToString(machine->csr.x));
-	info.push_back("\tY: " + String::ToString(machine->csr.y));
+	info.push_back(String::Format("\tLayer:%i X:%i Y:%i", 
+		machine->csr.layer, machine->csr.x, machine->csr.y));
 	info.push_back("");
 	info.push_back("Callstack");
+	if (intp->callstack.empty()) {
+		info.push_back("\t(empty)");
+	}
 	for (auto& prg_ix : intp->callstack._Get_container()) {
 		info.push_back("\t" + String::ToString(prg_ix));
 	}
@@ -554,16 +590,16 @@ void t_command::save_debug_file(t_params& arg) {
 	}
 }
 void t_command::create_obj_array(t_params& arg) {
-	ARGC(3);
+	ARGCX(2, 3);
 	string id = intp->require_id(arg[0]);
 	if (!id.empty()) {
 		int w = intp->require_number(arg[1]);
-		int h = intp->require_number(arg[2]);
+		int h = arg.size() == 3 ? intp->require_number(arg[2]) : 1;
 		machine->obj_arr[id] = t_obj_array(w, h);
 	}
 }
 void t_command::get_obj_array_element(t_params& arg) {
-	ARGC(4);
+	ARGCX(3, 4);
 	string arr_id = intp->require_id(arg[0]);
 	string obj_id = intp->require_id(arg[1]);
 	if (!obj_id.empty() && !arr_id.empty()) {
@@ -573,7 +609,7 @@ void t_command::get_obj_array_element(t_params& arg) {
 		}
 		t_obj_array& arr = machine->obj_arr[arr_id];
 		int ix = intp->require_number(arg[2]);
-		int iy = intp->require_number(arg[3]);
+		int iy = arg.size() == 4 ? intp->require_number(arg[3]) : 0;
 		if (ix < 0 || iy < 0 || ix >= arr.width || iy >= arr.height) {
 			intp->abort("Array index out of bounds");
 			return;
@@ -582,7 +618,7 @@ void t_command::get_obj_array_element(t_params& arg) {
 	}
 }
 void t_command::set_obj_array_element(t_params& arg) {
-	ARGC(4);
+	ARGCX(3, 4);
 	string arr_id = intp->require_id(arg[0]);
 	string obj_id = intp->require_id(arg[1]);
 	if (!obj_id.empty() && !arr_id.empty()) {
@@ -592,11 +628,99 @@ void t_command::set_obj_array_element(t_params& arg) {
 		}
 		t_obj_array& arr = machine->obj_arr[arr_id];
 		int ix = intp->require_number(arg[2]);
-		int iy = intp->require_number(arg[3]);
+		int iy = arg.size() == 4 ? intp->require_number(arg[3]) : 0;
 		if (ix < 0 || iy < 0 || ix >= arr.width || iy >= arr.height) {
 			intp->abort("Array index out of bounds");
 			return;
 		}
 		arr.objs[iy * arr.width + ix] = machine->objs[obj_id];
+	}
+}
+void t_command::compare_numbers(t_params& arg) {
+	ARGC(2);
+	int a = intp->require_number(arg[0]);
+	int b = intp->require_number(arg[1]);
+	machine->cmp_numeric_result = a - b;
+}
+void t_command::compare_strings(t_params& arg) {
+	ARGC(2);
+	string a = intp->require_string(arg[0]);
+	string b = intp->require_string(arg[1]);
+	if (a == b) {
+		machine->cmp_numeric_result = 0;
+	} else {
+		machine->cmp_numeric_result = -1;
+	}
+}
+void t_command::if_eq_call(t_params& arg) {
+	string label = intp->require_label(arg[0]);
+	if (!label.empty() && machine->cmp_numeric_result == 0) {
+		intp->call_label(label);
+	}
+}
+void t_command::if_neq_call(t_params& arg) {
+	string label = intp->require_label(arg[0]);
+	if (!label.empty() && machine->cmp_numeric_result != 0) {
+		intp->call_label(label);
+	}
+}
+void t_command::if_gt_call(t_params& arg) {
+	string label = intp->require_label(arg[0]);
+	if (!label.empty() && machine->cmp_numeric_result > 0) {
+		intp->call_label(label);
+	}
+}
+void t_command::if_gte_call(t_params& arg) {
+	string label = intp->require_label(arg[0]);
+	if (!label.empty() && machine->cmp_numeric_result >= 0) {
+		intp->call_label(label);
+	}
+}
+void t_command::if_lt_call(t_params& arg) {
+	string label = intp->require_label(arg[0]);
+	if (!label.empty() && machine->cmp_numeric_result < 0) {
+		intp->call_label(label);
+	}
+}
+void t_command::if_lte_call(t_params& arg) {
+	string label = intp->require_label(arg[0]);
+	if (!label.empty() && machine->cmp_numeric_result <= 0) {
+		intp->call_label(label);
+	}
+}
+void t_command::if_eq_goto(t_params& arg) {
+	string label = intp->require_label(arg[0]);
+	if (!label.empty() && machine->cmp_numeric_result == 0) {
+		intp->goto_label(label);
+	}
+}
+void t_command::if_neq_goto(t_params& arg) {
+	string label = intp->require_label(arg[0]);
+	if (!label.empty() && machine->cmp_numeric_result != 0) {
+		intp->goto_label(label);
+	}
+}
+void t_command::if_gt_goto(t_params& arg) {
+	string label = intp->require_label(arg[0]);
+	if (!label.empty() && machine->cmp_numeric_result > 0) {
+		intp->goto_label(label);
+	}
+}
+void t_command::if_gte_goto(t_params& arg) {
+	string label = intp->require_label(arg[0]);
+	if (!label.empty() && machine->cmp_numeric_result >= 0) {
+		intp->goto_label(label);
+	}
+}
+void t_command::if_lt_goto(t_params& arg) {
+	string label = intp->require_label(arg[0]);
+	if (!label.empty() && machine->cmp_numeric_result < 0) {
+		intp->goto_label(label);
+	}
+}
+void t_command::if_lte_goto(t_params& arg) {
+	string label = intp->require_label(arg[0]);
+	if (!label.empty() && machine->cmp_numeric_result <= 0) {
+		intp->goto_label(label);
 	}
 }

@@ -26,6 +26,7 @@ struct t_machine {
 	std::map<string, TTileSeq> tilestore;
 	std::map<string, t_obj> objs;
 	std::map<string, t_obj_array> obj_arr;
+	int cmp_numeric_result = 0;
 
 	t_machine(TBufferedWindow* wnd);
 	~t_machine();
