@@ -63,6 +63,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "OBJ.ARR")		create_obj_array(args);
 	else if (cmd == "OBJ.ARR.GET")	get_obj_array_element(args);
 	else if (cmd == "OBJ.ARR.SET")	set_obj_array_element(args);
+	else if (cmd == "OBJ.ARR.DRAW")	draw_obj_array(args);
+	else if (cmd == "OBJ.ARR.MOVE")	move_obj_array(args);
 	// Text output
 	else if (cmd == "PRINT")		print_text(args);
 	else if (cmd == "TEXT.FG")		set_text_fgcolor(args);
@@ -71,6 +73,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	// Keyboard
 	else if (cmd == "KEY.GET")		get_key_pressed(args);
 	else if (cmd == "KEY.CALL")		call_if_key_pressed(args);
+	else if (cmd == "KEY.GOTO")		goto_if_key_pressed(args);
 	// Debug
 	else if (cmd == "DBG.FILE")		save_debug_file(args);
 	// Conditionals
@@ -88,6 +91,9 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "IF.GTE.GOTO")	if_gte_goto(args);
 	else if (cmd == "IF.LT.GOTO")	if_lt_goto(args);
 	else if (cmd == "IF.LTE.GOTO")	if_lte_goto(args);
+	// Sound
+	else if (cmd == "SND.PLAY")		play_sound(args);
+	else if (cmd == "SND.LOOP")		loop_sound(args);
 
 	else return false;
 	return true;
@@ -582,6 +588,17 @@ void t_command::call_if_key_pressed(t_params& arg) {
 		}
 	}
 }
+void t_command::goto_if_key_pressed(t_params& arg) {
+	ARGC(2);
+	int key = intp->require_number(arg[0]);
+	if (key > 0) {
+		string label = intp->require_label(arg[1]);
+		if (key == machine->last_key_pressed) {
+			machine->last_key_pressed = 0;
+			intp->goto_label(label);
+		}
+	}
+}
 void t_command::save_debug_file(t_params& arg) {
 	ARGC(1);
 	string path = intp->require_string(arg[0]);
@@ -633,7 +650,56 @@ void t_command::set_obj_array_element(t_params& arg) {
 			intp->abort("Array index out of bounds");
 			return;
 		}
-		arr.objs[iy * arr.width + ix] = machine->objs[obj_id];
+		if (machine->objs.find(obj_id) != machine->objs.end()) {
+			arr.objs[iy * arr.width + ix] = machine->objs[obj_id];
+		} else {
+			intp->abort("Object not found: " + obj_id);
+			return;
+		}
+	}
+}
+void t_command::draw_obj_array(t_params& arg) {
+	ARGC(1);
+	string arr_id = intp->require_id(arg[0]);
+	if (!arr_id.empty()) {
+		if (machine->obj_arr.find(arr_id) == machine->obj_arr.end()) {
+			intp->abort("Array not found: " + arr_id);
+			return;
+		}
+		t_obj_array& arr = machine->obj_arr[arr_id];
+		for (auto& o : arr.objs) {
+			if (o.prop.Has("layer") && o.prop.Has("x") && o.prop.Has("y")) {
+				machine->tilebuf->SetTile(
+					o.tile,
+					o.prop.GetNumber("layer"),
+					o.prop.GetNumber("x"),
+					o.prop.GetNumber("y"),
+					machine->tile_transparency);
+			} else {
+				intp->abort("Object is not drawable");
+			}
+		}
+	}
+}
+void t_command::move_obj_array(t_params& arg) {
+	ARGC(3);
+	string arr_id = intp->require_id(arg[0]);
+	if (!arr_id.empty()) {
+		if (machine->obj_arr.find(arr_id) == machine->obj_arr.end()) {
+			intp->abort("Array not found: " + arr_id);
+			return;
+		}
+		t_obj_array& arr = machine->obj_arr[arr_id];
+		for (auto& o : arr.objs) {
+			if (o.prop.Has("x") && o.prop.Has("y")) {
+				int dx = intp->require_number(arg[1]);
+				int dy = intp->require_number(arg[2]);
+				o.prop.Set("x", o.prop.GetNumber("x") + dx);
+				o.prop.Set("y", o.prop.GetNumber("y") + dy);
+			} else {
+				intp->abort("Object is not movable");
+			}
+		}
 	}
 }
 void t_command::compare_numbers(t_params& arg) {
@@ -723,4 +789,14 @@ void t_command::if_lte_goto(t_params& arg) {
 	if (!label.empty() && machine->cmp_numeric_result <= 0) {
 		intp->goto_label(label);
 	}
+}
+void t_command::play_sound(t_params& arg) {
+	ARGC(1);
+	string notes = intp->require_string(arg[0]);
+	machine->snd->PlaySubSound(notes);
+}
+void t_command::loop_sound(t_params& arg) {
+	ARGC(1);
+	string notes = intp->require_string(arg[0]);
+	machine->snd->PlayMainSound(notes);
 }

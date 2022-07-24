@@ -58,10 +58,13 @@ private:
 	void move_obj(t_params& arg);
 	void get_key_pressed(t_params& arg);
 	void call_if_key_pressed(t_params& arg);
+	void goto_if_key_pressed(t_params& arg);
 	void save_debug_file(t_params& arg);
 	void create_obj_array(t_params& arg);
 	void get_obj_array_element(t_params& arg);
 	void set_obj_array_element(t_params& arg);
+	void draw_obj_array(t_params& arg);
+	void move_obj_array(t_params& arg);
 	void compare_numbers(t_params& arg);
 	void compare_strings(t_params& arg);
 	void if_eq_call(t_params& arg);
@@ -76,4 +79,6 @@ private:
 	void if_gte_goto(t_params& arg);
 	void if_lt_goto(t_params& arg);
 	void if_lte_goto(t_params& arg);
+	void play_sound(t_params& arg);
+	void loop_sound(t_params& arg);
 };

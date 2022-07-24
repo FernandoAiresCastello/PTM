@@ -10,6 +10,7 @@ t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
 	prg_view.max_chars = wnd->Cols - 2;
 	prg_view.max_lines = wnd->Rows - 2;
 	info_visible = true;
+	snd = g->snd;
 
 	if (!g->cfg->autoload.empty()) {
 		if (File::Exists(g->cfg->autoload)) {
@@ -340,6 +341,7 @@ void t_program_editor::compile_and_run() {
 	compiler.run(&prg);
 	if (compiler.errors.empty()) {
 		t_machine* machine = new t_machine(wnd);
+		machine->snd = snd;
 		t_interpreter* interpreter = new t_interpreter();
 		interpreter->run(&prg, machine, wnd);
 		auto errors = interpreter->errors;

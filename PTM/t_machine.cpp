@@ -27,6 +27,8 @@ t_machine::t_machine(TBufferedWindow* wnd) {
 t_machine::~t_machine() {
 	wnd->SetCharset(original_chr);
 	wnd->SetPalette(original_pal);
+	snd->StopMainSound();
+	snd->StopSubSound();
 	delete chr;
 	delete pal;
 }
