@@ -1,10 +1,12 @@
 #pragma once
 #include "common.h"
 #include "t_variable.h"
-#include "t_obj.h"
-#include "t_obj_array.h"
 
 struct t_machine {
+	// Namespaces
+	std::map<string, t_variable> vars;
+	std::map<string, TTileSeq> tilestore;
+	// Graphics
 	TBufferedWindow* wnd;
 	TCharset* chr;
 	TPalette* pal;
@@ -20,14 +22,12 @@ struct t_machine {
 		int fg = 1;
 		int bg = 0;
 	} text_color;
+	// Input
 	SDL_Keycode last_key_pressed = 0;
-	// Namespaces
-	std::map<string, t_variable> vars;
-	std::map<string, TTileSeq> tilestore;
-	std::map<string, t_obj> objs;
-	std::map<string, t_obj_array> obj_arr;
-	int cmp_numeric_result = 0;
+	// Sound
 	TSound* snd = nullptr;
+	// Comparisons
+	int cmp_numeric_result = 0;
 
 	t_machine(TBufferedWindow* wnd);
 	~t_machine();

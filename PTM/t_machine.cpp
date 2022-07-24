@@ -19,10 +19,10 @@ t_machine::t_machine(TBufferedWindow* wnd) {
 
 	wnd->Update();
 
-	set_const("RIGHT", 1073741903);
-	set_const("LEFT", 1073741904);
-	set_const("DOWN", 1073741905);
-	set_const("UP", 1073741906);
+	set_const("kb.right", 1073741903);
+	set_const("kb.left", 1073741904);
+	set_const("kb.down", 1073741905);
+	set_const("kb.up", 1073741906);
 }
 t_machine::~t_machine() {
 	wnd->SetCharset(original_chr);

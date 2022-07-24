@@ -154,8 +154,6 @@
     <ClCompile Include="t_machine.cpp" />
     <ClCompile Include="t_globals.cpp" />
     <ClCompile Include="t_obfuscator.cpp" />
-    <ClCompile Include="t_obj.cpp" />
-    <ClCompile Include="t_obj_array.cpp" />
     <ClCompile Include="t_program_editor.cpp" />
     <ClCompile Include="t_interpreter.cpp" />
     <ClCompile Include="t_param.cpp" />
@@ -174,8 +172,6 @@
     <ClInclude Include="t_machine.h" />
     <ClInclude Include="t_globals.h" />
     <ClInclude Include="t_obfuscator.h" />
-    <ClInclude Include="t_obj.h" />
-    <ClInclude Include="t_obj_array.h" />
     <ClInclude Include="t_program_editor.h" />
     <ClInclude Include="t_interpreter.h" />
     <ClInclude Include="t_param.h" />

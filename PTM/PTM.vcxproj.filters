@@ -38,9 +38,6 @@
     <ClCompile Include="t_compiler.cpp">
       <Filter>Compiler / Interpreter</Filter>
     </ClCompile>
-    <ClCompile Include="t_obj.cpp">
-      <Filter>Machine</Filter>
-    </ClCompile>
     <ClCompile Include="t_obfuscator.cpp">
       <Filter>Cryptography</Filter>
     </ClCompile>
@@ -48,9 +45,6 @@
       <Filter>Cryptography</Filter>
     </ClCompile>
     <ClCompile Include="t_variable.cpp">
-      <Filter>Machine</Filter>
-    </ClCompile>
-    <ClCompile Include="t_obj_array.cpp">
       <Filter>Machine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -94,9 +88,6 @@
     <ClInclude Include="t_compiler.h">
       <Filter>Compiler / Interpreter</Filter>
     </ClInclude>
-    <ClInclude Include="t_obj.h">
-      <Filter>Machine</Filter>
-    </ClInclude>
     <ClInclude Include="t_obfuscator.h">
       <Filter>Cryptography</Filter>
     </ClInclude>
@@ -104,9 +95,6 @@
       <Filter>Cryptography</Filter>
     </ClInclude>
     <ClInclude Include="t_variable.h">
-      <Filter>Machine</Filter>
-    </ClInclude>
-    <ClInclude Include="t_obj_array.h">
       <Filter>Machine</Filter>
     </ClInclude>
   </ItemGroup>

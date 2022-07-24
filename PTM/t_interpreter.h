@@ -6,7 +6,6 @@ struct t_program;
 struct t_program_line;
 struct t_machine;
 struct t_command;
-struct t_obj;
 
 struct t_interpreter {
 	std::vector<string> errors;
@@ -39,8 +38,6 @@ private:
 	string require_id(t_param& arg);
 	string require_existing_varname(t_param& arg);
 	string require_string(t_param& arg);
-	t_obj* require_existing_obj(t_param& arg);
-	t_obj* require_obj_prop(t_param& arg, bool must_exist);
 	void goto_label(string label);
 	void call_label(string label);
 	void return_from_call();

@@ -143,11 +143,6 @@ int t_interpreter::require_number(t_param& arg) {
 		} else {
 			abort("Variable not found: " + arg.id);
 		}
-	} else if (arg.type == t_param_type::obj_prop) {
-		t_obj* o = require_obj_prop(arg, true);
-		if (o) {
-			return o->prop.GetNumber(arg.prop.name);
-		}
 	} else {
 		abort("Syntax error");
 	}
@@ -162,42 +157,10 @@ string t_interpreter::require_string(t_param& arg) {
 		} else {
 			abort("Variable not found: " + arg.id);
 		}
-	} else if (arg.type == t_param_type::obj_prop) {
-		t_obj* o = require_obj_prop(arg, true);
-		if (o) {
-			return o->prop.GetString(arg.prop.name);
-		}
 	} else {
 		abort("String expected");
 	}
 	return "";
-}
-t_obj* t_interpreter::require_existing_obj(t_param& arg) {
-	if (arg.type != t_param_type::id) {
-		abort("Object identifier expected");
-		return nullptr;
-	}
-	if (machine->objs.find(arg.id) == machine->objs.end()) {
-		abort("Object not found: " + arg.prop.obj_id);
-		return nullptr;
-	}
-	return &machine->objs[arg.id];
-}
-t_obj* t_interpreter::require_obj_prop(t_param& arg, bool must_exist) {
-	if (arg.type != t_param_type::obj_prop) {
-		abort("Property expected");
-		return nullptr;
-	}
-	if (machine->objs.find(arg.prop.obj_id) == machine->objs.end()) {
-		abort("Object not found: " + arg.prop.obj_id);
-		return nullptr;
-	}
-	t_obj* o = &machine->objs[arg.prop.obj_id];
-	if (must_exist && !o->prop.Has(arg.prop.name)) {
-		abort("Property not found: " + arg.prop.name);
-		return nullptr;
-	}
-	return o;
 }
 void t_interpreter::goto_label(string label) {
 	cur_line_ix = prg->labels[label];

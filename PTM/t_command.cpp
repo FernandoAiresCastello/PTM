@@ -47,24 +47,11 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "BUF.CLS")		clear_all_layers(args);
 	else if (cmd == "BUF.CLL")		clear_layer(args);
 	else if (cmd == "BUF.CLR")		clear_rect(args);
-	// Window
-	else if (cmd == "WND.BG")		set_wnd_bgcolor(args);
 	// Graphics
 	else if (cmd == "CHR")			define_char(args);
 	else if (cmd == "PAL")			define_color(args);
 	else if (cmd == "VSYNC")		update_screen(args);
-	// Object
-	else if (cmd == "OBJ.NEW")		create_obj(args);
-	else if (cmd == "OBJ.PROP")		set_obj_prop(args);
-	else if (cmd == "OBJ.TILE")		set_obj_tile(args);
-	else if (cmd == "OBJ.DRAW")		draw_obj(args);
-	else if (cmd == "OBJ.MOVE")		move_obj(args);
-	// Object array
-	else if (cmd == "OBJ.ARR")		create_obj_array(args);
-	else if (cmd == "OBJ.ARR.GET")	get_obj_array_element(args);
-	else if (cmd == "OBJ.ARR.SET")	set_obj_array_element(args);
-	else if (cmd == "OBJ.ARR.DRAW")	draw_obj_array(args);
-	else if (cmd == "OBJ.ARR.MOVE")	move_obj_array(args);
+	else if (cmd == "SCR.BG")		set_wnd_bgcolor(args);
 	// Text output
 	else if (cmd == "PRINT")		print_text(args);
 	else if (cmd == "TEXT.FG")		set_text_fgcolor(args);
@@ -108,36 +95,6 @@ std::vector<string> t_command::get_debug_info() {
 		info.push_back(
 			(var.second.is_const ? "\tconst " : "\t") +
 			String::Format("%s = %s", var.first.c_str(), var.second.value.c_str()));
-	}
-	info.push_back("");
-	info.push_back("Objects");
-	if (machine->objs.empty()) {
-		info.push_back("\t(empty)");
-	}
-	for (auto& obj : machine->objs) {
-		string id = obj.first;
-		t_obj& o = obj.second;
-		info.push_back("\tID: " + id);
-		info.push_back("\tTiles: " + o.tile.ToString());
-		info.push_back("\tProperties: ");
-		if (o.prop.Entries.empty()) {
-			info.push_back("\t\t(empty)");
-		}
-		for (auto& prop : o.prop.Entries) {
-			string name = prop.first;
-			string value = prop.second;
-			info.push_back(String::Format("\t\t%s = %s", name.c_str(), value.c_str()));
-		}
-	}
-	info.push_back("");
-	info.push_back("Object arrays");
-	if (machine->obj_arr.empty()) {
-		info.push_back("\t(empty)");
-	}
-	for (auto& obj_arr : machine->obj_arr) {
-		string id = obj_arr.first;
-		t_obj_array& arr = obj_arr.second;
-		info.push_back(String::Format("\t%s = Width:%i Height:%i", id.c_str(), arr.width, arr.height));
 	}
 	info.push_back("");
 	info.push_back("Tilestore");
@@ -210,11 +167,6 @@ void t_command::set_variable(t_params& arg) {
 				machine->vars[dst_var] = machine->vars[src_var];
 				machine->vars[dst_var].is_const = false;
 			}
-		} else if (arg[1].type == t_param_type::obj_prop) {
-			t_obj* o = intp->require_obj_prop(arg[1], true);
-			if (o) {
-				machine->vars[dst_var] = o->prop.GetString(arg[1].prop.name);
-			}
 		} else {
 			machine->vars[dst_var] = arg[1].textual_value;
 		}
@@ -228,12 +180,6 @@ void t_command::define_constant(t_params& arg) {
 			string src_var = intp->require_existing_varname(arg[1]);
 			if (!src_var.empty()) {
 				machine->vars[dst_var] = machine->vars[src_var];
-				machine->vars[dst_var].is_const = true;
-			}
-		} else if (arg[1].type == t_param_type::obj_prop) {
-			t_obj* o = intp->require_obj_prop(arg[1], true);
-			if (o) {
-				machine->vars[dst_var] = o->prop.GetString(arg[1].prop.name);
 				machine->vars[dst_var].is_const = true;
 			}
 		} else {
@@ -471,31 +417,6 @@ void t_command::pause(t_params& arg) {
 	int cycles = intp->require_number(arg[0]);
 	intp->pause_cycles = cycles;
 }
-void t_command::create_obj(t_params& arg) {
-	ARGC(1);
-	string id = intp->require_id(arg[0]);
-	if (!id.empty()) {
-		if (machine->objs.find(id) == machine->objs.end()) {
-			machine->objs[id] = t_obj();
-		}
-	}
-}
-void t_command::set_obj_prop(t_params& arg) {
-	ARGC(2);
-	t_obj* o = intp->require_obj_prop(arg[0], false);
-	if (!o) return;
-	o->prop.Set(arg[0].prop.name, arg[1].textual_value);
-}
-void t_command::set_obj_tile(t_params& arg) {
-	ARGC(1);
-	string id = intp->require_id(arg[0]);
-	if (!id.empty()) {
-		auto o = intp->require_existing_obj(arg[0]);
-		if (o) {
-			o->tile = machine->cur_tile;
-		}
-	}
-}
 void t_command::print_text(t_params& arg) {
 	ARGC(1);
 	string text = intp->require_string(arg[0]);
@@ -533,42 +454,6 @@ void t_command::set_text_colors(t_params& arg) {
 	machine->text_color.fg = intp->require_number(arg[0]);
 	machine->text_color.bg = intp->require_number(arg[1]);
 }
-void t_command::draw_obj(t_params& arg) {
-	ARGC(1);
-	string id = intp->require_id(arg[0]);
-	if (!id.empty()) {
-		auto o = intp->require_existing_obj(arg[0]);
-		if (o) {
-			if (o->prop.Has("layer") && o->prop.Has("x") && o->prop.Has("y")) {
-				machine->tilebuf->SetTile(
-					o->tile,
-					o->prop.GetNumber("layer"),
-					o->prop.GetNumber("x"),
-					o->prop.GetNumber("y"),
-					machine->tile_transparency);
-			} else {
-				intp->abort("Object is not drawable");
-			}
-		}
-	}
-}
-void t_command::move_obj(t_params& arg) {
-	ARGC(3);
-	string id = intp->require_id(arg[0]);
-	if (!id.empty()) {
-		auto o = intp->require_existing_obj(arg[0]);
-		if (o) {
-			if (o->prop.Has("x") && o->prop.Has("y")) {
-				int dx = intp->require_number(arg[1]);
-				int dy = intp->require_number(arg[2]);
-				o->prop.Set("x", o->prop.GetNumber("x") + dx);
-				o->prop.Set("y", o->prop.GetNumber("y") + dy);
-			} else {
-				intp->abort("Object is not movable");
-			}
-		}
-	}
-}
 void t_command::get_key_pressed(t_params& arg) {
 	ARGC(1);
 	string id = intp->require_id(arg[0]);
@@ -604,102 +489,6 @@ void t_command::save_debug_file(t_params& arg) {
 	string path = intp->require_string(arg[0]);
 	if (!path.empty()) {
 		File::WriteLines(path, get_debug_info());
-	}
-}
-void t_command::create_obj_array(t_params& arg) {
-	ARGCX(2, 3);
-	string id = intp->require_id(arg[0]);
-	if (!id.empty()) {
-		int w = intp->require_number(arg[1]);
-		int h = arg.size() == 3 ? intp->require_number(arg[2]) : 1;
-		machine->obj_arr[id] = t_obj_array(w, h);
-	}
-}
-void t_command::get_obj_array_element(t_params& arg) {
-	ARGCX(3, 4);
-	string arr_id = intp->require_id(arg[0]);
-	string obj_id = intp->require_id(arg[1]);
-	if (!obj_id.empty() && !arr_id.empty()) {
-		if (machine->obj_arr.find(arr_id) == machine->obj_arr.end()) {
-			intp->abort("Array not found: " + arr_id);
-			return;
-		}
-		t_obj_array& arr = machine->obj_arr[arr_id];
-		int ix = intp->require_number(arg[2]);
-		int iy = arg.size() == 4 ? intp->require_number(arg[3]) : 0;
-		if (ix < 0 || iy < 0 || ix >= arr.width || iy >= arr.height) {
-			intp->abort("Array index out of bounds");
-			return;
-		}
-		machine->objs[obj_id] = arr.objs[iy * arr.width + ix];
-	}
-}
-void t_command::set_obj_array_element(t_params& arg) {
-	ARGCX(3, 4);
-	string arr_id = intp->require_id(arg[0]);
-	string obj_id = intp->require_id(arg[1]);
-	if (!obj_id.empty() && !arr_id.empty()) {
-		if (machine->obj_arr.find(arr_id) == machine->obj_arr.end()) {
-			intp->abort("Array not found: " + arr_id);
-			return;
-		}
-		t_obj_array& arr = machine->obj_arr[arr_id];
-		int ix = intp->require_number(arg[2]);
-		int iy = arg.size() == 4 ? intp->require_number(arg[3]) : 0;
-		if (ix < 0 || iy < 0 || ix >= arr.width || iy >= arr.height) {
-			intp->abort("Array index out of bounds");
-			return;
-		}
-		if (machine->objs.find(obj_id) != machine->objs.end()) {
-			arr.objs[iy * arr.width + ix] = machine->objs[obj_id];
-		} else {
-			intp->abort("Object not found: " + obj_id);
-			return;
-		}
-	}
-}
-void t_command::draw_obj_array(t_params& arg) {
-	ARGC(1);
-	string arr_id = intp->require_id(arg[0]);
-	if (!arr_id.empty()) {
-		if (machine->obj_arr.find(arr_id) == machine->obj_arr.end()) {
-			intp->abort("Array not found: " + arr_id);
-			return;
-		}
-		t_obj_array& arr = machine->obj_arr[arr_id];
-		for (auto& o : arr.objs) {
-			if (o.prop.Has("layer") && o.prop.Has("x") && o.prop.Has("y")) {
-				machine->tilebuf->SetTile(
-					o.tile,
-					o.prop.GetNumber("layer"),
-					o.prop.GetNumber("x"),
-					o.prop.GetNumber("y"),
-					machine->tile_transparency);
-			} else {
-				intp->abort("Object is not drawable");
-			}
-		}
-	}
-}
-void t_command::move_obj_array(t_params& arg) {
-	ARGC(3);
-	string arr_id = intp->require_id(arg[0]);
-	if (!arr_id.empty()) {
-		if (machine->obj_arr.find(arr_id) == machine->obj_arr.end()) {
-			intp->abort("Array not found: " + arr_id);
-			return;
-		}
-		t_obj_array& arr = machine->obj_arr[arr_id];
-		for (auto& o : arr.objs) {
-			if (o.prop.Has("x") && o.prop.Has("y")) {
-				int dx = intp->require_number(arg[1]);
-				int dy = intp->require_number(arg[2]);
-				o.prop.Set("x", o.prop.GetNumber("x") + dx);
-				o.prop.Set("y", o.prop.GetNumber("y") + dy);
-			} else {
-				intp->abort("Object is not movable");
-			}
-		}
 	}
 }
 void t_command::compare_numbers(t_params& arg) {

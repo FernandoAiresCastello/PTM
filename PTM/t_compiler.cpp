@@ -75,15 +75,8 @@ bool t_compiler::compile(t_program* prg, t_program_line* new_line, string src_li
 				param.numeric_value = raw[0];
 			}
 		} else if (String::StartsWithLetter(arg)) {
-			if (String::Contains(arg, '.')) {
-				auto prop = String::Split(arg, '.', true);
-				param.type = t_param_type::obj_prop;
-				param.prop.obj_id = prop[0];
-				param.prop.name = prop[1];
-			} else {
-				param.type = t_param_type::id;
-				param.id = arg;
-			}
+			param.type = t_param_type::id;
+			param.id = arg;
 		} else {
 			add_error(src_line_nr, src_line, "Syntax error");
 		}
