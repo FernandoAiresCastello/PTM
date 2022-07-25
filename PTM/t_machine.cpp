@@ -40,6 +40,9 @@ void t_machine::set_const(string id, int value) {
 void t_machine::set_const(string id, string value) {
 	vars[id] = t_variable(value, true);
 }
+void t_machine::put_cur_tile_at_cursor_pos() {
+	tilebuf->SetTile(cur_tile, csr.layer, csr.x, csr.y, tile_transparency);
+}
 void t_machine::set_var(string id, int value) {
 	vars[id] = t_variable(value);
 }

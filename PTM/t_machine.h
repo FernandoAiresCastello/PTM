@@ -6,6 +6,7 @@ struct t_machine {
 	// Namespaces
 	std::map<string, t_variable> vars;
 	std::map<string, TTileSeq> tilestore;
+	std::map<string, std::vector<string>> arrays;
 	// Graphics
 	TBufferedWindow* wnd;
 	TCharset* chr;
@@ -36,6 +37,7 @@ struct t_machine {
 	void set_var(string id, string value);
 	void set_const(string id, int value);
 	void set_const(string id, string value);
+	void put_cur_tile_at_cursor_pos();
 
 private:
 	TCharset* original_chr;

@@ -21,7 +21,16 @@ bool t_command::execute(string& cmd, t_params& args) {
 	// Variables
 	else if (cmd == "VAR")			set_variable(args);
 	else if (cmd == "CONST")		define_constant(args);
+	// Arrays
+	else if (cmd == "ARR.NEW")		create_array(args);
+	else if (cmd == "ARR.PUSH")		array_push(args);
+	else if (cmd == "ARR.LEN")		get_array_length(args);
+	else if (cmd == "ARR.SET")		set_array_element(args);
+	else if (cmd == "ARR.ERASE")	erase_array_element(args);
+	else if (cmd == "ARR.CLR")		clear_array(args);
+	// Math
 	else if (cmd == "RND")			get_random_number(args);
+	else if (cmd == "INC")			increment_variable(args);
 	// Tile buffer cursor
 	else if (cmd == "CSR.LAYER")	select_layer(args);
 	else if (cmd == "CSR.SET")		set_cursor_pos(args);
@@ -53,7 +62,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "VSYNC")		update_screen(args);
 	else if (cmd == "SCR.BG")		set_wnd_bgcolor(args);
 	// Text output
-	else if (cmd == "PRINT")		print_text(args);
+	else if (cmd == "PRINT")		print_text(args, false);
+	else if (cmd == "PRINTLN")		print_text(args, true);
 	else if (cmd == "TEXT.FG")		set_text_fgcolor(args);
 	else if (cmd == "TEXT.BG")		set_text_bgcolor(args);
 	else if (cmd == "TEXT.COL")		set_text_colors(args);
@@ -87,6 +97,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 }
 std::vector<string> t_command::get_debug_info() {
 	std::vector<string> info;
+	// Variables
 	info.push_back("Variables");
 	if (machine->vars.empty()) {
 		info.push_back("\t(empty)");
@@ -97,6 +108,21 @@ std::vector<string> t_command::get_debug_info() {
 			String::Format("%s = %s", var.first.c_str(), var.second.value.c_str()));
 	}
 	info.push_back("");
+	// Arrays
+	info.push_back("Arrays");
+	if (machine->arrays.empty()) {
+		info.push_back("\t(empty)");
+	}
+	for (auto& arr_inst : machine->arrays) {
+		string id = arr_inst.first;
+		auto& arr = arr_inst.second;
+		info.push_back(String::Format("\t%s (length=%i)", id.c_str(), arr.size()));
+		for (int i = 0; i < arr.size(); i++) {
+			info.push_back(String::Format("\t\t[%i] = %s", i, arr[i].c_str()));
+		}
+	}
+	info.push_back("");
+	// Tilestore
 	info.push_back("Tilestore");
 	if (machine->tilestore.empty()) {
 		info.push_back("\t(empty)");
@@ -107,6 +133,7 @@ std::vector<string> t_command::get_debug_info() {
 		info.push_back(String::Format("\t%s = %s", id.c_str(), tile.c_str()));
 	}
 	info.push_back("");
+	// Current tile
 	info.push_back("Current tile");
 	if (machine->cur_tile.IsEmpty()) {
 		info.push_back("\t(empty)");
@@ -114,10 +141,12 @@ std::vector<string> t_command::get_debug_info() {
 		info.push_back(String::Format("\t%s", machine->cur_tile.ToString().c_str()));
 	}
 	info.push_back("");
+	// Tile buffer cursor
 	info.push_back("Tile buffer cursor");
-	info.push_back(String::Format("\tLayer:%i X:%i Y:%i", 
+	info.push_back(String::Format("\tLayer=%i X=%i Y=%i", 
 		machine->csr.layer, machine->csr.x, machine->csr.y));
 	info.push_back("");
+	// Callstack
 	info.push_back("Callstack");
 	if (intp->callstack.empty()) {
 		info.push_back("\t(empty)");
@@ -167,6 +196,9 @@ void t_command::set_variable(t_params& arg) {
 				machine->vars[dst_var] = machine->vars[src_var];
 				machine->vars[dst_var].is_const = false;
 			}
+		} if (arg[1].is_array()) {
+			string value = intp->require_array_element(arg[1]);
+			machine->vars[dst_var] = value;
 		} else {
 			machine->vars[dst_var] = arg[1].textual_value;
 		}
@@ -289,63 +321,54 @@ void t_command::load_cur_tile(t_params& arg) {
 }
 void t_command::put_tile(t_params& arg) {
 	ARGC(0);
-	machine->tilebuf->SetTile(
-		machine->cur_tile, machine->csr.layer, machine->csr.x, machine->csr.y, machine->tile_transparency);
+	machine->put_cur_tile_at_cursor_pos();
 }
 void t_command::put_tile_repeat_right(t_params& arg) {
 	ARGC(1);
 	int count = intp->require_number(arg[0]);
 	for (int i = 0; i < count; i++) {
-		const int dest_x = machine->csr.x;
-		const int dest_y = machine->csr.y;
+		machine->put_cur_tile_at_cursor_pos();
 		machine->csr.x++;
-		machine->tilebuf->SetTile(
-			machine->cur_tile, machine->csr.layer, dest_x, dest_y, machine->tile_transparency);
+		machine->put_cur_tile_at_cursor_pos();
 	}
 }
 void t_command::put_tile_repeat_left(t_params& arg) {
 	ARGC(1);
 	int count = intp->require_number(arg[0]);
 	for (int i = 0; i < count; i++) {
-		const int dest_x = machine->csr.x;
-		const int dest_y = machine->csr.y;
+		machine->put_cur_tile_at_cursor_pos();
 		machine->csr.x--;
-		machine->tilebuf->SetTile(
-			machine->cur_tile, machine->csr.layer, dest_x, dest_y, machine->tile_transparency);
+		machine->put_cur_tile_at_cursor_pos();
 	}
 }
 void t_command::put_tile_repeat_up(t_params& arg) {
 	ARGC(1);
 	int count = intp->require_number(arg[0]);
 	for (int i = 0; i < count; i++) {
-		const int dest_x = machine->csr.x;
-		const int dest_y = machine->csr.y;
+		machine->put_cur_tile_at_cursor_pos();
 		machine->csr.y--;
-		machine->tilebuf->SetTile(
-			machine->cur_tile, machine->csr.layer, dest_x, dest_y, machine->tile_transparency);
+		machine->put_cur_tile_at_cursor_pos();
 	}
 }
 void t_command::put_tile_repeat_down(t_params& arg) {
 	ARGC(1);
 	int count = intp->require_number(arg[0]);
 	for (int i = 0; i < count; i++) {
-		const int dest_x = machine->csr.x;
-		const int dest_y = machine->csr.y;
+		machine->put_cur_tile_at_cursor_pos();
 		machine->csr.y++;
-		machine->tilebuf->SetTile(
-			machine->cur_tile, machine->csr.layer, dest_x, dest_y, machine->tile_transparency);
+		machine->put_cur_tile_at_cursor_pos();
 	}
 }
 void t_command::fill_rect(t_params& arg) {
-	ARGC(2);
-	int w = intp->require_number(arg[0]);
-	int h = intp->require_number(arg[1]);
-	int dest_x = machine->csr.x;
-	int dest_y = machine->csr.y;
-	for (int y = 0; y < h; y++) {
-		for (int x = 0; x < w; x++) {
+	ARGC(4);
+	int x = intp->require_number(arg[0]);
+	int y = intp->require_number(arg[1]);
+	int w = intp->require_number(arg[2]);
+	int h = intp->require_number(arg[3]);
+	for (int py = 0; py < h; py++) {
+		for (int px = 0; px < w; px++) {
 			machine->tilebuf->SetTile(
-				machine->cur_tile, machine->csr.layer, dest_x + x, dest_y + y, machine->tile_transparency);
+				machine->cur_tile, machine->csr.layer, x + px, y + py, machine->tile_transparency);
 		}
 	}
 }
@@ -417,10 +440,13 @@ void t_command::pause(t_params& arg) {
 	int cycles = intp->require_number(arg[0]);
 	intp->pause_cycles = cycles;
 }
-void t_command::print_text(t_params& arg) {
+void t_command::print_text(t_params& arg, bool crlf) {
 	ARGC(1);
 	string text = intp->require_string(arg[0]);
 	if (!text.empty()) {
+		if (crlf) {
+			text += "\\n";
+		}
 		const int initial_x = machine->csr.x;
 		for (int i = 0; i < text.length(); i++) {
 			char ch = text[i];
@@ -588,4 +614,67 @@ void t_command::loop_sound(t_params& arg) {
 	ARGC(1);
 	string notes = intp->require_string(arg[0]);
 	machine->snd->PlayMainSound(notes);
+}
+void t_command::create_array(t_params& arg) {
+	ARGCX(1, 2);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	int len = arg.size() == 1 ? 0 : intp->require_number(arg[1]);
+	if (len >= 0) {
+		machine->arrays[id] = std::vector<string>();
+		for (int i = 0; i < len; i++) {
+			machine->arrays[id].push_back("");
+		}
+	} else {
+		intp->abort("Illegal array length");
+	}
+}
+void t_command::array_push(t_params& arg) {
+	ARGC(2);
+	string id = intp->require_existing_array(arg[0]);
+	if (id.empty()) return;
+	machine->arrays[id].push_back(arg[1].textual_value);
+}
+void t_command::get_array_length(t_params& arg) {
+	ARGC(2);
+	string arr_id = intp->require_existing_array(arg[0]);
+	if (arr_id.empty()) return;
+	string var_id = intp->require_id(arg[1]);
+	if (var_id.empty()) return;
+	machine->vars[var_id] = machine->arrays[arr_id].size();
+}
+void t_command::set_array_element(t_params& arg) {
+	ARGC(2);
+	string arr_id = intp->require_existing_array(arg[0]);
+	if (arr_id.empty()) return;
+	auto& arr = machine->arrays[arr_id];
+	int ix = intp->require_array_index(arr, arg[0]);
+	arr[ix] = intp->require_string(arg[1]);
+}
+void t_command::erase_array_element(t_params& arg) {
+	ARGC(1);
+	string arr_id = intp->require_existing_array(arg[0]);
+	if (arr_id.empty()) return;
+	auto& arr = machine->arrays[arr_id];
+	int ix = intp->require_array_index(arr, arg[0]);
+	if (ix >= 0) {
+		if (!arr.empty()) {
+			arr.erase(arr.begin() + ix);
+		} else {
+			intp->abort("Array is empty: " + arr_id);
+		}
+	}
+}
+void t_command::clear_array(t_params& arg) {
+	ARGC(1);
+	string id = intp->require_existing_array(arg[0]);
+	if (id.empty()) return;
+	machine->arrays[id].clear();
+}
+void t_command::increment_variable(t_params& arg) {
+	ARGC(1);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	auto& var = machine->vars[id];
+	machine->vars[id] = String::ToString(String::ToInt(var.value) + 1);
 }

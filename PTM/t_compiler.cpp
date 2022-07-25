@@ -58,14 +58,17 @@ bool t_compiler::compile(t_program* prg, t_program_line* new_line, string src_li
 	for (auto& arg : args) {
 		t_param param;
 		if (String::StartsWithNumber(arg) || String::StartsWith(arg, '-') || String::StartsWith(arg, '+')) {
+			// Number
 			param.type = t_param_type::number;
 			param.numeric_value = String::ToInt(arg);
 			param.textual_value = arg;
 		} else if (String::StartsAndEndsWith(arg, '"')) {
+			// String literal
 			param.type = t_param_type::string;
 			param.textual_value = String::RemoveFirstAndLast(arg);
 			param.numeric_value = String::ToInt(param.textual_value);
 		} else if (String::StartsAndEndsWith(arg, '\'')) {
+			// Character literal
 			param.type = t_param_type::char_literal;
 			string raw = String::RemoveFirstAndLast(arg);
 			if (raw.length() != 1) {
@@ -75,8 +78,36 @@ bool t_compiler::compile(t_program* prg, t_program_line* new_line, string src_li
 				param.numeric_value = raw[0];
 			}
 		} else if (String::StartsWithLetter(arg)) {
-			param.type = t_param_type::id;
-			param.id = arg;
+			// Identifier
+			if (String::Contains(arg, '[') && !String::Contains(arg, ']') ||
+				String::Contains(arg, ']') && !String::Contains(arg, '[')) {
+				add_error(src_line_nr, src_line, "Syntax error");
+			} else if (String::Contains(arg, '[') && String::Contains(arg, ']')) {
+				// Array identifier
+				int begin = String::FindFirst(arg, '[');
+				int end = String::FindLast(arg, ']');
+				if (begin >= end) {
+					add_error(src_line_nr, src_line, "Syntax error");
+				} else {
+					param.id = String::Substring(arg, 0, begin);
+					string ix = String::Substring(arg, begin + 1, end);
+					if (String::StartsWithNumber(ix) || String::StartsWith(ix, '-') || String::StartsWith(ix, '+')) {
+						// Literal array index
+						param.type = t_param_type::arr_ix_literal;
+						param.arr_ix_literal = String::ToInt(ix);
+					} else if (String::StartsWithLetter(ix)) {
+						// Variable array index
+						param.type = t_param_type::arr_ix_var;
+						param.arr_ix_var = ix;
+					} else {
+						add_error(src_line_nr, src_line, "Syntax error");
+					}
+				}
+			} else {
+				// Variable identifier
+				param.type = t_param_type::id;
+				param.id = arg;
+			}
 		} else {
 			add_error(src_line_nr, src_line, "Syntax error");
 		}

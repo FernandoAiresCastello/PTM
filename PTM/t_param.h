@@ -2,7 +2,7 @@
 #include "common.h"
 
 enum class t_param_type {
-	undefined, number, char_literal, string, id
+	undefined, number, char_literal, string, id, arr_ix_literal, arr_ix_var
 };
 struct t_param {
 	string src;
@@ -10,5 +10,8 @@ struct t_param {
 	string textual_value;
 	int numeric_value = 0;
 	string id;
+	int arr_ix_literal = -1;
+	string arr_ix_var;
+	bool is_array();
 };
 using t_params = std::vector<t_param>;

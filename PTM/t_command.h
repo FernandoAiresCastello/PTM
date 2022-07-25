@@ -47,7 +47,7 @@ private:
 	void update_screen(t_params& arg);
 	void get_random_number(t_params& arg);
 	void pause(t_params& arg);
-	void print_text(t_params& arg);
+	void print_text(t_params& arg, bool crlf);
 	void set_text_fgcolor(t_params& arg);
 	void set_text_bgcolor(t_params& arg);
 	void set_text_colors(t_params& arg);
@@ -71,4 +71,11 @@ private:
 	void if_lte_goto(t_params& arg);
 	void play_sound(t_params& arg);
 	void loop_sound(t_params& arg);
+	void create_array(t_params& arg);
+	void array_push(t_params& arg);
+	void get_array_length(t_params& arg);
+	void set_array_element(t_params& arg);
+	void erase_array_element(t_params& arg);
+	void clear_array(t_params& arg);
+	void increment_variable(t_params& arg);
 };

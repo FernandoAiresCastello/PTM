@@ -122,7 +122,12 @@ string t_interpreter::require_id(t_param& arg) {
 	return arg.id;
 }
 string t_interpreter::require_existing_varname(t_param& arg) {
-	if (arg.type != t_param_type::id) {
+	if (arg.is_array()) {
+		if (machine->arrays.find(arg.id) == machine->arrays.end()) {
+			abort("Array not found: " + arg.id);
+			return "";
+		}
+	} else if (arg.type != t_param_type::id) {
 		abort("Variable name expected");
 		return "";
 	}
@@ -143,6 +148,9 @@ int t_interpreter::require_number(t_param& arg) {
 		} else {
 			abort("Variable not found: " + arg.id);
 		}
+	} else if (arg.is_array()) {
+		string value = require_array_element(arg);
+		return String::ToInt(value);
 	} else {
 		abort("Syntax error");
 	}
@@ -157,10 +165,70 @@ string t_interpreter::require_string(t_param& arg) {
 		} else {
 			abort("Variable not found: " + arg.id);
 		}
+	} else if (arg.is_array()) {
+		return require_array_element(arg);
 	} else {
 		abort("String expected");
 	}
 	return "";
+}
+string t_interpreter::require_existing_array(t_param& arg) {
+	if (machine->arrays.find(arg.id) != machine->arrays.end()) {
+		return arg.id;
+	} else {
+		abort("Array not found: " + arg.id);
+	}
+	return "";
+}
+string t_interpreter::require_array_element(t_param& arg) {
+	if (!arg.is_array()) {
+		abort("Array expected");
+		return "";
+	}
+	if (machine->arrays.find(arg.id) == machine->arrays.end()) {
+		abort("Array not found: " + arg.id);
+		return "";
+	}
+	auto& src_arr = machine->arrays[arg.id];
+	if (arg.type == t_param_type::arr_ix_literal) {
+		int ix = arg.arr_ix_literal;
+		if (ix >= 0 && ix < src_arr.size()) {
+			return src_arr[ix];
+		} else {
+			abort(String::Format("Array index out of bounds: %i", ix));
+		}
+	} else if (arg.type == t_param_type::arr_ix_var) {
+		string ix_var_id = arg.arr_ix_var;
+		if (machine->vars.find(ix_var_id) == machine->vars.end()) {
+			abort("Variable not found: " + ix_var_id);
+			return "";
+		}
+		int ix = String::ToInt(machine->vars[ix_var_id].value);
+		if (ix >= 0 && ix < src_arr.size()) {
+			return src_arr[ix];
+		} else {
+			abort(String::Format("Array index out of bounds: %i", ix));
+		}
+	}
+	return "";
+}
+int t_interpreter::require_array_index(std::vector<string>& arr, t_param& arg) {
+	if (arg.type == t_param_type::arr_ix_literal) {
+		return arg.arr_ix_literal;
+	} else if (arg.type == t_param_type::arr_ix_var) {
+		string ix_var_id = arg.arr_ix_var;
+		if (machine->vars.find(ix_var_id) == machine->vars.end()) {
+			abort("Variable not found: " + ix_var_id);
+		}
+		int ix = String::ToInt(machine->vars[ix_var_id].value);
+		if (ix >= 0 && ix < arr.size()) {
+			return ix;
+		} else {
+			abort(String::Format("Array index out of bounds: %i", ix));
+		}
+	}
+	abort("Array index expected");
+	return -1;
 }
 void t_interpreter::goto_label(string label) {
 	cur_line_ix = prg->labels[label];

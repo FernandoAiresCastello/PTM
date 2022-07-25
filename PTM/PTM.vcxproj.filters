@@ -114,9 +114,6 @@
     <Filter Include="Compiler / Interpreter">
       <UniqueIdentifier>{db1a3207-4ac7-42c4-b654-6d79873c80e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Widgets">
-      <UniqueIdentifier>{c9835a73-266f-4ed2-90cd-5b61d650de01}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Cryptography">
       <UniqueIdentifier>{8b24975f-8788-4ddd-a53a-c1f96ededae2}</UniqueIdentifier>
     </Filter>
