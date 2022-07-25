@@ -63,7 +63,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "SCR.BG")		set_wnd_bgcolor(args);
 	// Text output
 	else if (cmd == "PRINT")		print_text(args, false);
-	else if (cmd == "PRINTLN")		print_text(args, true);
+	else if (cmd == "PRINT.LN")		print_text(args, true);
 	else if (cmd == "TEXT.FG")		set_text_fgcolor(args);
 	else if (cmd == "TEXT.BG")		set_text_bgcolor(args);
 	else if (cmd == "TEXT.COL")		set_text_colors(args);
@@ -196,7 +196,7 @@ void t_command::set_variable(t_params& arg) {
 				machine->vars[dst_var] = machine->vars[src_var];
 				machine->vars[dst_var].is_const = false;
 			}
-		} if (arg[1].is_array()) {
+		} if (arg[1].is_array_element_ix()) {
 			string value = intp->require_array_element(arg[1]);
 			machine->vars[dst_var] = value;
 		} else {

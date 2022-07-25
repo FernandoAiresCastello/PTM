@@ -12,6 +12,6 @@ struct t_param {
 	string id;
 	int arr_ix_literal = -1;
 	string arr_ix_var;
-	bool is_array();
+	bool is_array_element_ix();
 };
 using t_params = std::vector<t_param>;

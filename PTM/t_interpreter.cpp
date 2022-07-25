@@ -116,13 +116,13 @@ string t_interpreter::require_label(t_param& arg) {
 }
 string t_interpreter::require_id(t_param& arg) {
 	if (arg.type != t_param_type::id) {
-		abort("Identifier expected");
+		abort("Identifier expected: " + arg.src);
 		return "";
 	}
 	return arg.id;
 }
 string t_interpreter::require_existing_varname(t_param& arg) {
-	if (arg.is_array()) {
+	if (arg.is_array_element_ix()) {
 		if (machine->arrays.find(arg.id) == machine->arrays.end()) {
 			abort("Array not found: " + arg.id);
 			return "";
@@ -148,7 +148,7 @@ int t_interpreter::require_number(t_param& arg) {
 		} else {
 			abort("Variable not found: " + arg.id);
 		}
-	} else if (arg.is_array()) {
+	} else if (arg.is_array_element_ix()) {
 		string value = require_array_element(arg);
 		return String::ToInt(value);
 	} else {
@@ -165,7 +165,7 @@ string t_interpreter::require_string(t_param& arg) {
 		} else {
 			abort("Variable not found: " + arg.id);
 		}
-	} else if (arg.is_array()) {
+	} else if (arg.is_array_element_ix()) {
 		return require_array_element(arg);
 	} else {
 		abort("String expected");
@@ -181,7 +181,7 @@ string t_interpreter::require_existing_array(t_param& arg) {
 	return "";
 }
 string t_interpreter::require_array_element(t_param& arg) {
-	if (!arg.is_array()) {
+	if (!arg.is_array_element_ix()) {
 		abort("Array expected");
 		return "";
 	}
