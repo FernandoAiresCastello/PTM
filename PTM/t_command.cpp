@@ -553,11 +553,8 @@ void t_command::goto_if_key_pressed(t_params& arg) {
 	}
 }
 void t_command::save_debug_file(t_params& arg) {
-	ARGC(1);
-	string path = intp->require_string(arg[0]);
-	if (!path.empty()) {
-		File::WriteLines(path, get_debug_info());
-	}
+	ARGC(0);
+	File::WriteLines(PTM_DEBUG_FILE, get_debug_info());
 }
 void t_command::compare_numbers(t_params& arg) {
 	ARGC(2);

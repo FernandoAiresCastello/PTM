@@ -510,10 +510,8 @@ void t_program_editor::show_help() {
 	hide_cursor();
 	t_panel pnl(buf, color.fg, color.bdr_bg);
 	pnl.title = "Help";
-	pnl.bottom_text = "2022.0 (pre-alpha)";
 	pnl.maximize();
 	pnl.center_title();
-	pnl.center_bottom_text();
 	
 	while (true) {
 		pnl.draw_frame();

@@ -1,10 +1,8 @@
 #include "t_config.h"
 
-#define CONFIG_FILE "config.ini"
-
 void t_config::load() {
-	if (!File::Exists(CONFIG_FILE)) return;
-	for (auto& rawline : File::ReadLines(CONFIG_FILE, "\r\n")) {
+	if (!File::Exists(PTM_CONFIG_FILE)) return;
+	for (auto& rawline : File::ReadLines(PTM_CONFIG_FILE, "\r\n")) {
 		string line = String::Trim(rawline);
 		if (line.empty() || String::StartsWith(line, '#')) continue;
 		auto cfg = String::Split(line, '=', true);
@@ -20,8 +18,8 @@ void t_config::load() {
 	}
 }
 void t_config::check_for_autorunnable_file() {
-	if (File::Exists("exec")) {
-		autorun = "exec";
+	if (File::Exists(PTM_AUTOEXEC_FILE)) {
+		autorun = PTM_AUTOEXEC_FILE;
 		return;
 	}
 	/*
