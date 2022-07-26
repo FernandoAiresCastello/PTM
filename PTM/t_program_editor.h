@@ -37,6 +37,7 @@ private:
 	void on_mouse_wheel(int dist_y);
 	void draw_border_info();
 	void draw_program();
+	void apply_syntax_coloring();
 	void draw_cursor();
 	string* get_current_line();
 	string* get_line_below();

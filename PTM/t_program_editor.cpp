@@ -15,6 +15,9 @@ t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
 	if (!g->cfg->autoload.empty()) {
 		if (File::Exists(g->cfg->autoload)) {
 			load_program(g->cfg->autoload);
+			if (prg.src_lines.empty()) {
+				add_empty_line();
+			}
 		}
 	} else {
 		add_empty_line();
@@ -26,6 +29,7 @@ void t_program_editor::on_run_loop() {
 	draw_screen_base();
 	draw_border_info();
 	draw_program();
+	apply_syntax_coloring();
 	draw_cursor();
 }
 void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt) {
@@ -113,28 +117,48 @@ void t_program_editor::draw_program() {
 	int y = 1;
 	for (int line_ix = prg_view.first_line_ix; line_ix < prg_view.first_line_ix + prg_view.max_lines && line_ix < prg.src_lines.size(); line_ix++) {
 		x = 1;
-		bool is_cmd = true;
-		int fgc = color.fg;
 		auto& line = prg.src_lines[line_ix];
 		for (int char_ix = prg_view.first_char_ix; char_ix < prg_view.first_char_ix + prg_view.max_chars && char_ix < line.length(); char_ix++) {
-			int ch = line[char_ix];
-			auto trim = String::Trim(line);
-			if (String::StartsWith(trim, ";")) {
-				fgc = color.comment_fg;
-			} else if (String::StartsWith(trim, ":")) {
-				fgc = color.label_fg;
-			} else if (ch == ' ') {
-				fgc = color.fg;
-				is_cmd = false;
-			} else if (is_cmd) {
-				ch = String::ToUpper(ch);
-				fgc = color.cmd_fg;
-			}
-			TTileSeq tile(ch, fgc, is_selected(line_ix) ? color.sel_bg : color.bg);
+			TTileSeq tile(line[char_ix], color.fg, is_selected(line_ix) ? color.sel_bg : color.bg);
 			buf->SetTile(tile, 0, x, y, false);
 			if (++x > buf->LastCol - 1) break;
 		}
 		y++;
+	}
+}
+void t_program_editor::apply_syntax_coloring() {
+	int line_ix = prg_view.first_line_ix;
+	int char_ix = prg_view.first_char_ix;
+	int fgc = color.fg;
+	for (int y = 1; y < buf->LastRow; y++) {
+		for (int x = 1; x < buf->LastCol - 1; x++) {
+			auto& tile = buf->GetTile(0, x, y);
+			if (!tile.IsEmpty()) {
+				const string line = prg.src_lines[line_ix];
+				if (String::StartsWith(line, ';')) {
+					fgc = color.comment_fg;
+				} else if (String::StartsWith(line, ':')) {
+					fgc = color.label_fg;
+				} else {
+					const int cmd_end_ix = String::FindFirst(line, ' ');
+					if (cmd_end_ix < 0 || (char_ix >= prg_view.first_char_ix && 
+						char_ix < prg_view.first_char_ix + prg_view.max_chars &&
+						cmd_end_ix >= 0 && cmd_end_ix > char_ix)) {
+						fgc = color.cmd_fg;
+						tile.SetChar(0, String::ToUpper(tile.GetChar(0)));
+					} else {
+						fgc = color.fg;
+					}
+				}
+				tile.SetForeColor(0, fgc);
+			}
+			char_ix++;
+		}
+		line_ix++;
+		if (line_ix >= prg.src_lines.size()) {
+			break;
+		}
+		char_ix = prg_view.first_char_ix;
 	}
 }
 void t_program_editor::draw_cursor() {
