@@ -364,7 +364,6 @@ void t_program_editor::save_program(string file) {
 	prg_filename = file;
 }
 void t_program_editor::compile_and_run() {
-	save_program(prg_filename);
 	t_compiler compiler;
 	compiler.run(&prg);
 	if (compiler.errors.empty()) {
