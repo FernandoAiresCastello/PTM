@@ -8,6 +8,10 @@ t_panel::t_panel(TTileBuffer* buf, int x, int y, int w, int h, int fgc, int bgc)
 	frame_h = h + 1;
 	this->fgc = fgc;
 	this->bgc = bgc;
+	title = "";
+	bottom_text = "";
+	title_x = 0;
+	bottom_text_x = 0;
 }
 void t_panel::draw_frame() {
 	const int x = frame_x;
@@ -51,6 +55,38 @@ void t_panel::draw_frame() {
 			tile.SetChar(0, ch_back);
 			buf->SetTile(tile, layer, bg_x, bg_y, false);
 		}
+	}
+	// Top text
+	if (!title.empty()) {
+		string visible_text;
+		if (title.length() >= frame_w) {
+			visible_text = String::Substring(title, 0, frame_w - 1);
+		} else {
+			visible_text = title;
+		}
+		buf->Print(visible_text, layer, frame_x + title_x + 1, frame_y, fgc, bgc, false);
+	}
+	// Bottom bottom
+	if (!bottom_text.empty()) {
+		string visible_text;
+		if (bottom_text.length() >= frame_w) {
+			visible_text = String::GetFirstChars(bottom_text, frame_w - 1);
+		} else {
+			visible_text = bottom_text;
+		}
+		buf->Print(visible_text, layer, frame_x + bottom_text_x + 1, frame_y + h, fgc, bgc, false);
+	}
+}
+void t_panel::center_title() {
+	if (!title.empty()) {
+		title_x = ((frame_w / 2) - (title.length() / 2)) - 1;
+		if (title_x < 0) title_x = 0;
+	}
+}
+void t_panel::center_bottom_text() {
+	if (!bottom_text.empty()) {
+		bottom_text_x = ((frame_w / 2) - (bottom_text.length() / 2)) - 1;
+		if (bottom_text_x < 0) bottom_text_x = 0;
 	}
 }
 void t_panel::put_tile(TTileSeq tile, int x, int y, bool transparent) {

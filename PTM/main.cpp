@@ -1,3 +1,4 @@
+#include <TWindowCreationFlags.h>
 #include "common.h"
 #include "t_config.h"
 #include "t_program_editor.h"
@@ -8,6 +9,7 @@ int main(int argc, char* argv[]) {
 	t_globals g;
 	g.cfg->load();
 	g.snd->SetVolume(TSound::MinVolume + 1000);
+	TWindowCreationFlags::RenderScaleQuality = "best";
 	g.wnd = new TBufferedWindow(2, 45, 25, 3, 3);
 	g.wnd->SetTitle("PTM");
 	g.wnd->Show();

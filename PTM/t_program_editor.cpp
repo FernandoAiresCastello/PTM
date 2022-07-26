@@ -500,10 +500,10 @@ bool t_program_editor::has_selection() {
 	return line_selection_start >= 0;
 }
 void t_program_editor::show_test_panel() {
-	t_panel pnl(buf, 2, 2, 20, 10, color.fg, color.bdr_bg);
+	t_panel pnl(buf, 2, 2, 1, 1, color.fg, color.bdr_bg);
 	while (true) {
 		pnl.draw_frame();
-		pnl.print("Hello World! Hello World! Hello World! Hello World!", 0, 0);
+		pnl.print("Hello World!", 0, 0);
 		wnd->Update();
 		SDL_Event e = { 0 };
 		SDL_PollEvent(&e);
@@ -512,9 +512,13 @@ void t_program_editor::show_test_panel() {
 			if (key == SDLK_F1 || key == SDLK_ESCAPE) {
 				break;
 			} else if (key == SDLK_RIGHT) {
+				pnl.frame_w++;
 			} else if (key == SDLK_LEFT) {
+				pnl.frame_w--;
 			} else if (key == SDLK_DOWN) {
+				pnl.frame_h++;
 			} else if (key == SDLK_UP) {
+				pnl.frame_h--;
 			}
 		}
 	}
