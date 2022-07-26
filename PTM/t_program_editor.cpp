@@ -5,6 +5,7 @@
 #include "t_interpreter.h"
 #include "t_machine.h"
 #include "t_panel.h"
+#include "t_input_widget.h"
 
 t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
 	csr_overwrite = false;
@@ -98,7 +99,8 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 		paste_lines();
 		unsaved = true;
 	} else if (ctrl && key == SDLK_s) {
-		save_program(prg_filename);
+		if (shift) save_program_as();
+		else save_program(prg_filename);
 		unsaved = false;
 	} else if (is_valid_prg_char(key)) {
 		type_char(key);
@@ -365,6 +367,17 @@ void t_program_editor::load_program(string file) {
 	prg_filename = file;
 }
 void t_program_editor::save_program(string file) {
+	if (file.empty()) {
+		save_program_as();
+	} else {
+		prg.save_encrypted(file);
+		prg_filename = file;
+	}
+}
+void t_program_editor::save_program_as() {
+	t_input_widget* widget = new t_input_widget(globals);
+	string file = widget->show();
+	delete widget;
 	if (file.empty()) return;
 	prg.save_encrypted(file);
 	prg_filename = file;

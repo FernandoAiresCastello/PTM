@@ -63,6 +63,7 @@ private:
 	void type_pgdn();
 	void load_program(string file);
 	void save_program(string file);
+	void save_program_as();
 	void compile_and_run();
 	void print_errors(std::vector<string>& errors);
 	void print(string text, int x, int y);

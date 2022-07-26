@@ -125,6 +125,6 @@ bool t_compiler::compile(t_program* prg, t_program_line* new_line, string src_li
 	return true;
 }
 void t_compiler::add_error(int line, string src, string msg) {
-	errors.push_back(String::Format("COMPILATION ERROR\nAt line %i:\n%s\n\n%s", 
+	errors.push_back(String::Format("COMPILE ERROR\nAt line %i:\n%s\n\n%s", 
 		line, msg.c_str(), src.c_str()));
 }

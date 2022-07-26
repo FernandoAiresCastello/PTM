@@ -3,8 +3,8 @@
 #include "t_machine.h"
 #include "t_program.h"
 
-#define ARGC(x) if (!intp->argc(arg, x)) return;
-#define ARGCX(x, y) if (!intp->argc(arg, x, y)) return;
+#define ARGC(x)				if (!intp->argc(arg, x)) return;
+#define ARGC_MIN_MAX(x, y)	if (!intp->argc(arg, x, y)) return;
 
 t_command::t_command(t_interpreter* intp) {
 	this->intp = intp;
@@ -573,72 +573,84 @@ void t_command::compare_strings(t_params& arg) {
 	}
 }
 void t_command::if_eq_call(t_params& arg) {
+	ARGC(1);
 	string label = intp->require_label(arg[0]);
 	if (!label.empty() && machine->cmp_result == 0) {
 		intp->call_label(label);
 	}
 }
 void t_command::if_neq_call(t_params& arg) {
+	ARGC(1);
 	string label = intp->require_label(arg[0]);
 	if (!label.empty() && machine->cmp_result != 0) {
 		intp->call_label(label);
 	}
 }
 void t_command::if_gt_call(t_params& arg) {
+	ARGC(1);
 	string label = intp->require_label(arg[0]);
 	if (!label.empty() && machine->cmp_result > 0) {
 		intp->call_label(label);
 	}
 }
 void t_command::if_gte_call(t_params& arg) {
+	ARGC(1);
 	string label = intp->require_label(arg[0]);
 	if (!label.empty() && machine->cmp_result >= 0) {
 		intp->call_label(label);
 	}
 }
 void t_command::if_lt_call(t_params& arg) {
+	ARGC(1);
 	string label = intp->require_label(arg[0]);
 	if (!label.empty() && machine->cmp_result < 0) {
 		intp->call_label(label);
 	}
 }
 void t_command::if_lte_call(t_params& arg) {
+	ARGC(1);
 	string label = intp->require_label(arg[0]);
 	if (!label.empty() && machine->cmp_result <= 0) {
 		intp->call_label(label);
 	}
 }
 void t_command::if_eq_goto(t_params& arg) {
+	ARGC(1);
 	string label = intp->require_label(arg[0]);
 	if (!label.empty() && machine->cmp_result == 0) {
 		intp->goto_label(label);
 	}
 }
 void t_command::if_neq_goto(t_params& arg) {
+	ARGC(1);
 	string label = intp->require_label(arg[0]);
 	if (!label.empty() && machine->cmp_result != 0) {
 		intp->goto_label(label);
 	}
 }
 void t_command::if_gt_goto(t_params& arg) {
+	ARGC(1);
 	string label = intp->require_label(arg[0]);
 	if (!label.empty() && machine->cmp_result > 0) {
 		intp->goto_label(label);
 	}
 }
 void t_command::if_gte_goto(t_params& arg) {
+	ARGC(1);
 	string label = intp->require_label(arg[0]);
 	if (!label.empty() && machine->cmp_result >= 0) {
 		intp->goto_label(label);
 	}
 }
 void t_command::if_lt_goto(t_params& arg) {
+	ARGC(1);
 	string label = intp->require_label(arg[0]);
 	if (!label.empty() && machine->cmp_result < 0) {
 		intp->goto_label(label);
 	}
 }
 void t_command::if_lte_goto(t_params& arg) {
+	ARGC(1);
 	string label = intp->require_label(arg[0]);
 	if (!label.empty() && machine->cmp_result <= 0) {
 		intp->goto_label(label);
@@ -655,7 +667,7 @@ void t_command::loop_sound(t_params& arg) {
 	machine->snd->PlayMainSound(notes);
 }
 void t_command::create_array(t_params& arg) {
-	ARGCX(1, 2);
+	ARGC_MIN_MAX(1, 2);
 	string arr_id = intp->require_id(arg[0]);
 	if (arr_id.empty()) return;
 	int len = arg.size() == 1 ? 0 : intp->require_number(arg[1]);
@@ -726,7 +738,6 @@ void t_command::increment_variable(t_params& arg) {
 	auto& var = machine->vars[arr_id];
 	machine->vars[arr_id] = String::ToString(String::ToInt(var.value) + 1);
 }
-
 void t_command::allow_exit_on_escape_key(t_params& arg, bool allow) {
 	ARGC(0);
 	machine->exit_key = allow ? SDLK_ESCAPE : 0;

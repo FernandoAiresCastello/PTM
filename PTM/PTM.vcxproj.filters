@@ -50,6 +50,9 @@
     <ClCompile Include="t_ui_base.cpp">
       <Filter>Editor\Core</Filter>
     </ClCompile>
+    <ClCompile Include="t_input_widget.cpp">
+      <Filter>Editor\Widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="t_program.h">
@@ -103,6 +106,9 @@
     <ClInclude Include="t_ui_base.h">
       <Filter>Editor\Core</Filter>
     </ClInclude>
+    <ClInclude Include="t_input_widget.h">
+      <Filter>Editor\Widgets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Editor">
@@ -129,5 +135,8 @@
     <Filter Include="Editor\Core">
       <UniqueIdentifier>{ae8e45bd-8eff-4cf5-a00f-a10db60dc012}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md" />
   </ItemGroup>
 </Project>

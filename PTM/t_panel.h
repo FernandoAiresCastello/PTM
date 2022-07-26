@@ -12,6 +12,7 @@ struct t_panel {
 	string bottom_text;
 	int title_x;
 	int bottom_text_x;
+
 	t_panel(TTileBuffer* buf, int fgc, int bgc);
 	t_panel(TTileBuffer* buf, int x, int y, int w, int h, int fgc, int bgc);
 	void draw_frame();
@@ -22,6 +23,7 @@ struct t_panel {
 	void erase_tile(int x, int y);
 	void print(string text, int x, int y);
 	void print(string text, int x, int y, int text_fgc);
+
 private:
 	TTileBuffer* buf;
 };

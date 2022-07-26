@@ -9,6 +9,7 @@ struct t_ui_base {
 	virtual ~t_ui_base();
 	void run();
 protected:
+	t_globals* globals;
 	t_config* cfg;
 	TBufferedWindow* wnd;
 	TTileBuffer* buf;
