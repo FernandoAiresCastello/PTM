@@ -25,6 +25,7 @@ struct t_machine {
 	} text_color;
 	// Input
 	SDL_Keycode last_key_pressed = 0;
+	SDL_Keycode exit_key = 0;
 	// Sound
 	TSound* snd = nullptr;
 	// Comparisons

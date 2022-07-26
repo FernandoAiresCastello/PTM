@@ -71,6 +71,8 @@ void t_interpreter::execute_current_line() {
 void t_interpreter::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt) {
 	if (key == SDLK_RETURN && TKey::Alt()) {
 		wnd->ToggleFullscreen();
+	} else if (machine->exit_key != 0 && key == machine->exit_key) {
+		running = false;
 	} else {
 		machine->last_key_pressed = key;
 	}
@@ -78,7 +80,7 @@ void t_interpreter::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt)
 void t_interpreter::abort(string error) {
 	running = false;
 	if (cur_line) {
-		errors.push_back(String::Format("At line %i:\n%s\n\n%s",
+		errors.push_back(String::Format("RUNTIME ERROR\nAt line %i:\n%s\n\n%s",
 			cur_line->src_line_nr, error.c_str(), cur_line->src.c_str()));
 	} else {
 		errors.push_back(error);

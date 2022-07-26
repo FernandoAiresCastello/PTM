@@ -40,7 +40,7 @@ private:
 	void clear_layer(t_params& arg);
 	void clear_rect(t_params& arg);
 	void set_wnd_bgcolor(t_params& arg);
-	void set_tile_transparency(t_params& arg);
+	void set_tile_transparency(t_params& arg, bool transparent);
 	void select_layer(t_params& arg);
 	void define_char(t_params& arg);
 	void define_color(t_params& arg);
@@ -79,4 +79,5 @@ private:
 	void clear_array(t_params& arg);
 	void copy_array(t_params& arg);
 	void increment_variable(t_params& arg);
+	void allow_exit_on_escape_key(t_params& arg, bool allow);
 };

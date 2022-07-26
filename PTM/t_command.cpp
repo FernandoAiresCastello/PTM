@@ -42,7 +42,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "TILE.STORE")	store_cur_tile(args);
 	else if (cmd == "TILE.PSTORE")	parse_and_store_tile(args);
 	else if (cmd == "TILE.LOAD")	load_cur_tile(args);
-	else if (cmd == "TILE.TRA")		set_tile_transparency(args);
+	else if (cmd == "TILE.TRA.ON")	set_tile_transparency(args, true);
+	else if (cmd == "TILE.TRA.OFF")	set_tile_transparency(args, false);
 	// Tile buffer cursor
 	else if (cmd == "CSR.LAYER")	select_layer(args);
 	else if (cmd == "CSR.SET")		set_cursor_pos(args);
@@ -72,6 +73,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "KEY.GET")		get_key_pressed(args);
 	else if (cmd == "KEY.CALL")		call_if_key_pressed(args);
 	else if (cmd == "KEY.GOTO")		goto_if_key_pressed(args);
+	else if (cmd == "KEY.ESC.ON")	allow_exit_on_escape_key(args, true);
+	else if (cmd == "KEY.ESC.OFF")	allow_exit_on_escape_key(args, false);
 	// Debug
 	else if (cmd == "DBG.FILE")		save_debug_file(args);
 	// Conditionals
@@ -398,10 +401,9 @@ void t_command::set_wnd_bgcolor(t_params& arg) {
 	ARGC(1);
 	machine->wnd->SetBackColor(machine->pal->GetColorRGB(intp->require_number(arg[0])));
 }
-void t_command::set_tile_transparency(t_params& arg) {
-	ARGC(1);
-	int value = intp->require_number(arg[0]);
-	machine->tile_transparency = value > 0;
+void t_command::set_tile_transparency(t_params& arg, bool transparent) {
+	ARGC(0);
+	machine->tile_transparency = transparent;
 }
 void t_command::select_layer(t_params& arg) {
 	ARGC(1);
@@ -726,4 +728,9 @@ void t_command::increment_variable(t_params& arg) {
 	if (arr_id.empty()) return;
 	auto& var = machine->vars[arr_id];
 	machine->vars[arr_id] = String::ToString(String::ToInt(var.value) + 1);
+}
+
+void t_command::allow_exit_on_escape_key(t_params& arg, bool allow) {
+	ARGC(0);
+	machine->exit_key = allow ? SDLK_ESCAPE : 0;
 }

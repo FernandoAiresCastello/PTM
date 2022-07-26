@@ -7,9 +7,9 @@ void t_compiler::run(t_program* prg) {
 	prg->lines.clear();
 	prg->labels.clear();
 	int src_line_nr = 1;
-	for (auto& srcline : prg->src_lines) {
+	for (auto& src_line : prg->src_lines) {
 		t_program_line new_line;
-		bool must_add_line = compile(prg, &new_line, srcline, src_line_nr);
+		bool must_add_line = compile(prg, &new_line, src_line, src_line_nr);
 		if (must_add_line) {
 			prg->lines.push_back(new_line);
 		}
@@ -17,14 +17,21 @@ void t_compiler::run(t_program* prg) {
 	}
 }
 bool t_compiler::compile(t_program* prg, t_program_line* new_line, string src_line, int src_line_nr) {
-	int line_ix = prg->lines.size();
+	if (String::StartsWith(src_line, ' ')) {
+		add_error(src_line_nr, src_line, "Leading whitespace is not allowed");
+		return false;
+	}
 	src_line = String::Trim(src_line);
 	if (String::StartsWith(src_line, ';')) {
 		return false;
 	}
 	if (String::StartsWith(src_line, ":")) {
 		string label = String::Trim(String::Skip(src_line, 1));
-		prg->labels[label] = line_ix;
+		prg->labels[label] = prg->lines.size();
+		return false;
+	}
+	if (!src_line.empty() && !String::StartsWithLetter(src_line)) {
+		add_error(src_line_nr, src_line, "Syntax error");
 		return false;
 	}
 	new_line->src = src_line;
@@ -118,6 +125,6 @@ bool t_compiler::compile(t_program* prg, t_program_line* new_line, string src_li
 	return true;
 }
 void t_compiler::add_error(int line, string src, string msg) {
-	errors.push_back(String::Format("At line %i:\n%s\n\n%s", 
+	errors.push_back(String::Format("COMPILATION ERROR\nAt line %i:\n%s\n\n%s", 
 		line, msg.c_str(), src.c_str()));
 }

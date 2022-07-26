@@ -390,9 +390,9 @@ void t_program_editor::compile_and_run() {
 void t_program_editor::print_errors(std::vector<string>& errors) {
 	snd->Beep(2500, 100);
 	string error = errors[0];
-	while (running) {
+	while (running || !cfg->autorun.empty()) {
 		draw_screen_base();
-		print_border_top("RUNTIME ERROR", 0);
+		print_border_top("PTM", 0);
 		if (cfg->autorun.empty()) {
 			print_border_bottom("Press ENTER to continue...", 0);
 		} else {
