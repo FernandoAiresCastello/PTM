@@ -18,6 +18,7 @@ private:
 		int char_ix = 0;
 	} prg_csr;
 	struct {
+		const int layer = 1;
 		int x = 1;
 		int y = 1;
 		TTileSeq tile;
@@ -27,6 +28,7 @@ private:
 		int first_char_ix = 0;
 		int max_lines = 0;
 		int max_chars = 0;
+		int layer = 0;
 	} prg_view;
 	int line_selection_start = -1;
 	std::vector<string> clipboard;
@@ -39,6 +41,7 @@ private:
 	void draw_program();
 	void apply_syntax_coloring();
 	void draw_cursor();
+	void hide_cursor();
 	string* get_current_line();
 	string* get_line_below();
 	int get_char_under_cursor();
@@ -74,5 +77,5 @@ private:
 	std::pair<int, int> get_line_selection_range();
 	bool is_selected(int line_ix);
 	bool has_selection();
-	void show_test_panel();
+	void show_help();
 };

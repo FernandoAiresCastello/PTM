@@ -1,5 +1,7 @@
 #include "t_panel.h"
 
+t_panel::t_panel(TTileBuffer* buf, int fgc, int bgc) : t_panel(buf, 0, 0, 0, 0, fgc, bgc) {
+}
 t_panel::t_panel(TTileBuffer* buf, int x, int y, int w, int h, int fgc, int bgc) {
 	this->buf = buf;
 	frame_x = x;
@@ -89,6 +91,12 @@ void t_panel::center_bottom_text() {
 		if (bottom_text_x < 0) bottom_text_x = 0;
 	}
 }
+void t_panel::maximize(int margin) {
+	frame_x = margin;
+	frame_y = margin;
+	frame_w = (buf->Cols - 1 - margin) - (margin);
+	frame_h = (buf->Rows - 1 - margin) - (margin);
+}
 void t_panel::put_tile(TTileSeq tile, int x, int y, bool transparent) {
 	const int layer = 0;
 	buf->SetTile(tile, layer, frame_x + x + 1, frame_y + y + 1, transparent);
@@ -98,12 +106,24 @@ void t_panel::erase_tile(int x, int y) {
 	buf->EraseTile(layer, frame_x + x + 1, frame_y + y + 1);
 }
 void t_panel::print(string text, int x, int y) {
+	print(text, x, y, fgc);
+}
+void t_panel::print(string text, int x, int y, int text_fgc) {
 	const int layer = 0;
+	const int px = x;
 	for (auto& ch : text) {
-		put_tile(TTileSeq(ch, fgc, bgc), x, y, false);
-		x++;
-		if (x >= frame_w - 1) {
-			break;
+		if (ch == '\n') {
+			x = px;
+			y++;
+			if (y >= frame_h - 1) {
+				break;
+			}
+		} else {
+			put_tile(TTileSeq(ch, text_fgc, bgc), x, y, false);
+			x++;
+			if (x >= frame_w - 1) {
+				break;
+			}
 		}
 	}
 }

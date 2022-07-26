@@ -50,7 +50,7 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 	} else if (ctrl && key == SDLK_q) {
 		running = false;
 	} else if (key == SDLK_F1) {
-		show_test_panel();
+		show_help();
 	} else if (key == SDLK_ESCAPE) {
 		cancel_line_selection();
 	} else if (key == SDLK_RIGHT) {
@@ -131,7 +131,7 @@ void t_program_editor::draw_program() {
 		auto& line = prg.src_lines[line_ix];
 		for (int char_ix = prg_view.first_char_ix; char_ix < prg_view.first_char_ix + prg_view.max_chars && char_ix < line.length(); char_ix++) {
 			TTileSeq tile(line[char_ix], color.fg, is_selected(line_ix) ? color.sel_bg : color.bg);
-			buf->SetTile(tile, 0, x, y, false);
+			buf->SetTile(tile, prg_view.layer, x, y, false);
 			if (++x > buf->LastCol - 1) break;
 		}
 		y++;
@@ -180,7 +180,10 @@ void t_program_editor::draw_cursor() {
 		tile.Add(0xfc, color.csr_fg, color.bg);
 	}
 	tile.Add(0x00, color.csr_fg, color.bg);
-	buf->SetTile(tile, 1, scr_csr.x, scr_csr.y, true);
+	buf->SetTile(tile, scr_csr.layer, scr_csr.x, scr_csr.y, true);
+}
+void t_program_editor::hide_cursor() {
+	buf->EraseTile(scr_csr.layer, scr_csr.x, scr_csr.y);
 }
 string* t_program_editor::get_current_line() {
 	if (prg_csr.line_ix >= 0 && prg_csr.line_ix < prg.src_lines.size()) {
@@ -390,7 +393,11 @@ void t_program_editor::print_errors(std::vector<string>& errors) {
 	while (running) {
 		draw_screen_base();
 		print_border_top("RUNTIME ERROR", 0);
-		print_border_bottom("Press ENTER to continue...", 0);
+		if (cfg->autorun.empty()) {
+			print_border_bottom("Press ENTER to continue...", 0);
+		} else {
+			print_border_bottom("Press ENTER to exit...", 0);
+		}
 		print(error, 0, 0);
 		wnd->Update();
 		SDL_Event e = { 0 };
@@ -416,7 +423,7 @@ void t_program_editor::print(string text, int x, int y) {
 			y++;
 		} else {
 			TTileSeq tile(ch, color.fg, color.bg);
-			buf->SetTile(tile, 0, x, y, false);
+			buf->SetTile(tile, prg_view.layer, x, y, false);
 			if (++x > buf->LastCol - 1) {
 				break;
 			}
@@ -499,26 +506,36 @@ bool t_program_editor::is_selected(int line_ix) {
 bool t_program_editor::has_selection() {
 	return line_selection_start >= 0;
 }
-void t_program_editor::show_test_panel() {
-	t_panel pnl(buf, 2, 2, 1, 1, color.fg, color.bdr_bg);
+void t_program_editor::show_help() {
+	hide_cursor();
+	t_panel pnl(buf, color.fg, color.bdr_bg);
+	pnl.title = "Help";
+	pnl.bottom_text = "2022.0 (pre-alpha)";
+	pnl.maximize();
+	pnl.center_title();
+	pnl.center_bottom_text();
+	
 	while (true) {
 		pnl.draw_frame();
-		pnl.print("Hello World!", 0, 0);
+		pnl.print("PTM\nProgrammable Tile Machine\nVersion 2022.0 (pre-alpha)", 1, 1, color.fg_bold);
+		pnl.print("Developed by Fernando Aires Castello", 1, 5, color.fg_bold);
+		pnl.print("https://github.com/FernandoAiresCastello", 1, 6, color.fg_bold);
+		int x = 1;
+		int y = 8;
+		pnl.print("F1         Help", x, y++);
+		pnl.print("F5         Run", x, y++);
+		pnl.print("CTRL+S     Save", x, y++);
+		pnl.print("CTRL+I     Info on/off", x, y++);
+		pnl.print("ALT+ENTER  Toggle fullscreen", x, y++);
+		pnl.print("ALT+Q      Quit", x, y++);
+
 		wnd->Update();
 		SDL_Event e = { 0 };
 		SDL_PollEvent(&e);
 		if (e.type == SDL_KEYDOWN) {
 			const auto key = e.key.keysym.sym;
-			if (key == SDLK_F1 || key == SDLK_ESCAPE) {
+			if (key == SDLK_F1 || key == SDLK_ESCAPE || key == SDLK_RETURN) {
 				break;
-			} else if (key == SDLK_RIGHT) {
-				pnl.frame_w++;
-			} else if (key == SDLK_LEFT) {
-				pnl.frame_w--;
-			} else if (key == SDLK_DOWN) {
-				pnl.frame_h++;
-			} else if (key == SDLK_UP) {
-				pnl.frame_h--;
 			}
 		}
 	}
