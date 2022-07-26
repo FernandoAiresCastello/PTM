@@ -118,21 +118,17 @@ void t_program_editor::draw_program() {
 		auto& line = prg.src_lines[line_ix];
 		for (int char_ix = prg_view.first_char_ix; char_ix < prg_view.first_char_ix + prg_view.max_chars && char_ix < line.length(); char_ix++) {
 			int ch = line[char_ix];
-			if (ch == ' ') {
-				is_cmd = false;
-			}
 			auto trim = String::Trim(line);
 			if (String::StartsWith(trim, ";")) {
 				fgc = color.comment_fg;
 			} else if (String::StartsWith(trim, ":")) {
 				fgc = color.label_fg;
-			} else {
-				if (is_cmd) {
-					ch = String::ToUpper(ch);
-					fgc = color.cmd_fg;
-				} else {
-					fgc = color.fg;
-				}
+			} else if (ch == ' ') {
+				fgc = color.fg;
+				is_cmd = false;
+			} else if (is_cmd) {
+				ch = String::ToUpper(ch);
+				fgc = color.cmd_fg;
 			}
 			TTileSeq tile(ch, fgc, is_selected(line_ix) ? color.sel_bg : color.bg);
 			buf->SetTile(tile, 0, x, y, false);

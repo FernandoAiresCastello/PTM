@@ -28,11 +28,12 @@ struct t_machine {
 	// Sound
 	TSound* snd = nullptr;
 	// Comparisons
-	int cmp_numeric_result = 0;
+	int cmp_result = 0;
 
 	t_machine(TBufferedWindow* wnd);
 	~t_machine();
 	void on_loop();
+	void init_system_vars();
 	void set_var(string id, int value);
 	void set_var(string id, string value);
 	void set_const(string id, int value);

@@ -77,5 +77,6 @@ private:
 	void set_array_element(t_params& arg);
 	void erase_array_element(t_params& arg);
 	void clear_array(t_params& arg);
+	void copy_array(t_params& arg);
 	void increment_variable(t_params& arg);
 };

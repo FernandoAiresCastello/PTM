@@ -19,10 +19,7 @@ t_machine::t_machine(TBufferedWindow* wnd) {
 
 	wnd->Update();
 
-	set_const("kb.right", 1073741903);
-	set_const("kb.left", 1073741904);
-	set_const("kb.down", 1073741905);
-	set_const("kb.up", 1073741906);
+	init_system_vars();
 }
 t_machine::~t_machine() {
 	wnd->SetCharset(original_chr);
@@ -33,6 +30,12 @@ t_machine::~t_machine() {
 	delete pal;
 }
 void t_machine::on_loop() {
+}
+void t_machine::init_system_vars() {
+	set_const("kb.right", 1073741903);
+	set_const("kb.left", 1073741904);
+	set_const("kb.down", 1073741905);
+	set_const("kb.up", 1073741906);
 }
 void t_machine::set_const(string id, int value) {
 	vars[id] = t_variable(value, true);

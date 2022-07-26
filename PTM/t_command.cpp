@@ -28,13 +28,10 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "ARR.SET")		set_array_element(args);
 	else if (cmd == "ARR.ERASE")	erase_array_element(args);
 	else if (cmd == "ARR.CLR")		clear_array(args);
+	else if (cmd == "ARR.COPY")		copy_array(args);
 	// Math
 	else if (cmd == "RND")			get_random_number(args);
 	else if (cmd == "INC")			increment_variable(args);
-	// Tile buffer cursor
-	else if (cmd == "CSR.LAYER")	select_layer(args);
-	else if (cmd == "CSR.SET")		set_cursor_pos(args);
-	else if (cmd == "CSR.MOV")		move_cursor(args);
 	// Current tile
 	else if (cmd == "TILE.NEW")		init_cur_tile(args);
 	else if (cmd == "TILE.ADD")		append_cur_tile(args);
@@ -46,6 +43,10 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "TILE.PSTORE")	parse_and_store_tile(args);
 	else if (cmd == "TILE.LOAD")	load_cur_tile(args);
 	else if (cmd == "TILE.TRA")		set_tile_transparency(args);
+	// Tile buffer cursor
+	else if (cmd == "CSR.LAYER")	select_layer(args);
+	else if (cmd == "CSR.SET")		set_cursor_pos(args);
+	else if (cmd == "CSR.MOV")		move_cursor(args);
 	// Tile buffer
 	else if (cmd == "BUF.PUT")		put_tile(args);
 	else if (cmd == "BUF.REP.R")	put_tile_repeat_right(args);
@@ -448,8 +449,12 @@ void t_command::print_text(t_params& arg, bool crlf) {
 			text += "\\n";
 		}
 		const int initial_x = machine->csr.x;
+		bool escape = false;
+		string escape_seq = "";
+		int fgc = machine->text_color.fg;
+		int bgc = machine->text_color.bg;
 		for (int i = 0; i < text.length(); i++) {
-			char ch = text[i];
+			int ch = text[i];
 			if (ch == '\\') {
 				i++;
 				if (i < text.length()) {
@@ -458,11 +463,46 @@ void t_command::print_text(t_params& arg, bool crlf) {
 						machine->csr.y++;
 					}
 				}
+			} else if (ch == '{') {
+				escape = true;
+				continue;
+			} else if (ch == '}') {
+				escape = false;
+				if (String::StartsWith(escape_seq, 'c')) {
+					string chstr = String::Skip(escape_seq, 1);
+					ch = String::ToInt(chstr);
+					machine->tilebuf->SetTile(TTileSeq(ch, fgc, bgc),
+						machine->csr.layer, machine->csr.x, machine->csr.y, machine->tile_transparency);
+					machine->csr.x++;
+					escape_seq = "";
+					continue;
+				} else if (String::StartsWith(escape_seq, 'f')) {
+					fgc = String::ToInt(String::Skip(escape_seq, 1));
+					escape_seq = "";
+					continue;
+				} else if (String::StartsWith(escape_seq, "/f")) {
+					fgc = machine->text_color.fg;
+					escape_seq = "";
+					continue;
+				} else if (String::StartsWith(escape_seq, 'b')) {
+					bgc = String::ToInt(String::Skip(escape_seq, 1));
+					escape_seq = "";
+					continue;
+				} else if (String::StartsWith(escape_seq, "/b")) {
+					bgc = machine->text_color.bg;
+					escape_seq = "";
+					continue;
+				} else {
+					intp->abort("Invalid escape sequence: " + escape_seq);
+				}
+			} else if (escape) {
+				escape_seq += ch;
+				continue;
 			} else {
-				machine->tilebuf->SetTile(
-					TTileSeq(ch, machine->text_color.fg, machine->text_color.bg),
+				machine->tilebuf->SetTile(TTileSeq(ch, fgc, bgc), 
 					machine->csr.layer, machine->csr.x, machine->csr.y, machine->tile_transparency);
 				machine->csr.x++;
+				escape_seq = "";
 			}
 		}
 	}
@@ -521,87 +561,87 @@ void t_command::compare_numbers(t_params& arg) {
 	ARGC(2);
 	int a = intp->require_number(arg[0]);
 	int b = intp->require_number(arg[1]);
-	machine->cmp_numeric_result = a - b;
+	machine->cmp_result = a - b;
 }
 void t_command::compare_strings(t_params& arg) {
 	ARGC(2);
 	string a = intp->require_string(arg[0]);
 	string b = intp->require_string(arg[1]);
 	if (a == b) {
-		machine->cmp_numeric_result = 0;
+		machine->cmp_result = 0;
 	} else {
-		machine->cmp_numeric_result = -1;
+		machine->cmp_result = -1;
 	}
 }
 void t_command::if_eq_call(t_params& arg) {
 	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_numeric_result == 0) {
+	if (!label.empty() && machine->cmp_result == 0) {
 		intp->call_label(label);
 	}
 }
 void t_command::if_neq_call(t_params& arg) {
 	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_numeric_result != 0) {
+	if (!label.empty() && machine->cmp_result != 0) {
 		intp->call_label(label);
 	}
 }
 void t_command::if_gt_call(t_params& arg) {
 	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_numeric_result > 0) {
+	if (!label.empty() && machine->cmp_result > 0) {
 		intp->call_label(label);
 	}
 }
 void t_command::if_gte_call(t_params& arg) {
 	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_numeric_result >= 0) {
+	if (!label.empty() && machine->cmp_result >= 0) {
 		intp->call_label(label);
 	}
 }
 void t_command::if_lt_call(t_params& arg) {
 	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_numeric_result < 0) {
+	if (!label.empty() && machine->cmp_result < 0) {
 		intp->call_label(label);
 	}
 }
 void t_command::if_lte_call(t_params& arg) {
 	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_numeric_result <= 0) {
+	if (!label.empty() && machine->cmp_result <= 0) {
 		intp->call_label(label);
 	}
 }
 void t_command::if_eq_goto(t_params& arg) {
 	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_numeric_result == 0) {
+	if (!label.empty() && machine->cmp_result == 0) {
 		intp->goto_label(label);
 	}
 }
 void t_command::if_neq_goto(t_params& arg) {
 	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_numeric_result != 0) {
+	if (!label.empty() && machine->cmp_result != 0) {
 		intp->goto_label(label);
 	}
 }
 void t_command::if_gt_goto(t_params& arg) {
 	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_numeric_result > 0) {
+	if (!label.empty() && machine->cmp_result > 0) {
 		intp->goto_label(label);
 	}
 }
 void t_command::if_gte_goto(t_params& arg) {
 	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_numeric_result >= 0) {
+	if (!label.empty() && machine->cmp_result >= 0) {
 		intp->goto_label(label);
 	}
 }
 void t_command::if_lt_goto(t_params& arg) {
 	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_numeric_result < 0) {
+	if (!label.empty() && machine->cmp_result < 0) {
 		intp->goto_label(label);
 	}
 }
 void t_command::if_lte_goto(t_params& arg) {
 	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_numeric_result <= 0) {
+	if (!label.empty() && machine->cmp_result <= 0) {
 		intp->goto_label(label);
 	}
 }
@@ -617,13 +657,13 @@ void t_command::loop_sound(t_params& arg) {
 }
 void t_command::create_array(t_params& arg) {
 	ARGCX(1, 2);
-	string id = intp->require_id(arg[0]);
-	if (id.empty()) return;
+	string arr_id = intp->require_id(arg[0]);
+	if (arr_id.empty()) return;
 	int len = arg.size() == 1 ? 0 : intp->require_number(arg[1]);
 	if (len >= 0) {
-		machine->arrays[id] = std::vector<string>();
+		machine->arrays[arr_id] = std::vector<string>();
 		for (int i = 0; i < len; i++) {
-			machine->arrays[id].push_back("");
+			machine->arrays[arr_id].push_back("");
 		}
 	} else {
 		intp->abort("Illegal array length");
@@ -631,9 +671,10 @@ void t_command::create_array(t_params& arg) {
 }
 void t_command::array_push(t_params& arg) {
 	ARGC(2);
-	string id = intp->require_existing_array(arg[0]);
-	if (id.empty()) return;
-	machine->arrays[id].push_back(arg[1].textual_value);
+	string arr_id = intp->require_existing_array(arg[0]);
+	if (arr_id.empty()) return;
+	string value = intp->require_string(arg[1]);
+	machine->arrays[arr_id].push_back(value);
 }
 void t_command::get_array_length(t_params& arg) {
 	ARGC(2);
@@ -667,14 +708,22 @@ void t_command::erase_array_element(t_params& arg) {
 }
 void t_command::clear_array(t_params& arg) {
 	ARGC(1);
-	string id = intp->require_existing_array(arg[0]);
-	if (id.empty()) return;
-	machine->arrays[id].clear();
+	string arr_id = intp->require_existing_array(arg[0]);
+	if (arr_id.empty()) return;
+	machine->arrays[arr_id].clear();
+}
+void t_command::copy_array(t_params& arg) {
+	ARGC(2);
+	string src_arr_id = intp->require_existing_array(arg[0]);
+	if (src_arr_id.empty()) return;
+	string dest_arr_id = intp->require_existing_array(arg[1]);
+	if (dest_arr_id.empty()) return;
+	machine->arrays[dest_arr_id] = machine->arrays[src_arr_id];
 }
 void t_command::increment_variable(t_params& arg) {
 	ARGC(1);
-	string id = intp->require_id(arg[0]);
-	if (id.empty()) return;
-	auto& var = machine->vars[id];
-	machine->vars[id] = String::ToString(String::ToInt(var.value) + 1);
+	string arr_id = intp->require_id(arg[0]);
+	if (arr_id.empty()) return;
+	auto& var = machine->vars[arr_id];
+	machine->vars[arr_id] = String::ToString(String::ToInt(var.value) + 1);
 }
