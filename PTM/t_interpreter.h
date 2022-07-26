@@ -11,7 +11,6 @@ struct t_interpreter {
 	std::vector<string> errors;
 	int pause_cycles = 0;
 	t_interpreter();
-	bool has_user_break();
 	void run(t_program* prg, t_machine* machine, TBufferedWindow* wnd);
 private:
 	friend struct t_command;
