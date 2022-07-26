@@ -4,6 +4,7 @@
 #include "t_default_gfx.h"
 
 t_ui_base::t_ui_base(t_globals* g) {
+	cfg = g->cfg;
 	wnd = g->wnd;
 	buf = g->wnd->GetBuffer();
 	snd = g->snd;

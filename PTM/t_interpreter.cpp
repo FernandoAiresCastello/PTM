@@ -8,7 +8,6 @@ t_interpreter::t_interpreter() {
 	wnd = nullptr;
 	wnd_buf = nullptr;
 	running = false;
-	user_break = false;
 	halted = false;
 	branched = false;
 	machine = nullptr;
@@ -16,9 +15,6 @@ t_interpreter::t_interpreter() {
 	cmd = nullptr;
 	cur_line = nullptr;
 	prg = nullptr;
-}
-bool t_interpreter::has_user_break() {
-	return user_break;
 }
 void t_interpreter::run(t_program* prg, t_machine* machine, TBufferedWindow* wnd) {
 	errors.clear();
@@ -28,7 +24,6 @@ void t_interpreter::run(t_program* prg, t_machine* machine, TBufferedWindow* wnd
 	running = true;
 	halted = false;
 	branched = false;
-	user_break = false;
 	cur_line_ix = 0;
 	cmd = new t_command(this);
 	callstack = std::stack<int>();
@@ -37,7 +32,10 @@ void t_interpreter::run(t_program* prg, t_machine* machine, TBufferedWindow* wnd
 		SDL_Event e = { 0 };
 		SDL_PollEvent(&e);
 
-		if (e.type == SDL_KEYDOWN) {
+		if (e.type == SDL_QUIT) {
+			running = false;
+			break;
+		} else if (e.type == SDL_KEYDOWN) {
 			on_keydown(e.key.keysym.sym, TKey::Ctrl(), TKey::Shift(), TKey::Alt());
 		}
 		if (halted || pause_cycles > 0) {
@@ -73,9 +71,6 @@ void t_interpreter::execute_current_line() {
 void t_interpreter::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt) {
 	if (key == SDLK_RETURN && TKey::Alt()) {
 		wnd->ToggleFullscreen();
-	} else if (key == SDLK_ESCAPE) {
-		user_break = true;
-		running = false;
 	} else {
 		machine->last_key_pressed = key;
 	}

@@ -13,7 +13,9 @@ int main(int argc, char* argv[]) {
 	g.wnd->Show();
 
 	t_program_editor* editor = new t_program_editor(&g);
-	editor->run();
+	if (g.cfg->autorun.empty()) {
+		editor->run();
+	}
 
 	delete editor;
 	return 0;

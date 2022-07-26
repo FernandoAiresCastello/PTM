@@ -12,7 +12,15 @@ t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
 	info_visible = true;
 	snd = g->snd;
 
-	if (!g->cfg->autoload.empty()) {
+	if (!g->cfg->autorun.empty()) {
+		if (File::Exists(g->cfg->autorun)) {
+			load_program(g->cfg->autorun);
+			if (prg.src_lines.empty()) {
+				add_empty_line();
+			}
+			compile_and_run();
+		}
+	} else if (!g->cfg->autoload.empty()) {
 		if (File::Exists(g->cfg->autoload)) {
 			load_program(g->cfg->autoload);
 			if (prg.src_lines.empty()) {

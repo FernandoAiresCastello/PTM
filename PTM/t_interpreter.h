@@ -17,7 +17,6 @@ private:
 	friend struct t_command;
 	bool running;
 	bool halted;
-	bool user_break;
 	int cur_line_ix;
 	bool branched;
 	TBufferedWindow* wnd;
