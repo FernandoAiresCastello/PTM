@@ -4,6 +4,7 @@
 #include "t_compiler.h"
 #include "t_interpreter.h"
 #include "t_machine.h"
+#include "t_panel.h"
 
 t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
 	csr_overwrite = false;
@@ -48,6 +49,8 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 		wnd->ToggleFullscreen();
 	} else if (ctrl && key == SDLK_q) {
 		running = false;
+	} else if (key == SDLK_F1) {
+		show_test_panel();
 	} else if (key == SDLK_ESCAPE) {
 		cancel_line_selection();
 	} else if (key == SDLK_RIGHT) {
@@ -495,4 +498,24 @@ bool t_program_editor::is_selected(int line_ix) {
 }
 bool t_program_editor::has_selection() {
 	return line_selection_start >= 0;
+}
+void t_program_editor::show_test_panel() {
+	t_panel pnl(buf, 2, 2, 20, 10, color.fg, color.bdr_bg);
+	while (true) {
+		pnl.draw_frame();
+		pnl.print("Hello World! Hello World! Hello World! Hello World!", 0, 0);
+		wnd->Update();
+		SDL_Event e = { 0 };
+		SDL_PollEvent(&e);
+		if (e.type == SDL_KEYDOWN) {
+			const auto key = e.key.keysym.sym;
+			if (key == SDLK_F1 || key == SDLK_ESCAPE) {
+				break;
+			} else if (key == SDLK_RIGHT) {
+			} else if (key == SDLK_LEFT) {
+			} else if (key == SDLK_DOWN) {
+			} else if (key == SDLK_UP) {
+			}
+		}
+	}
 }

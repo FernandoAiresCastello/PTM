@@ -17,9 +17,6 @@
     <ClCompile Include="t_param.cpp">
       <Filter>Program</Filter>
     </ClCompile>
-    <ClCompile Include="t_program_editor.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
     <ClCompile Include="t_machine.cpp">
       <Filter>Machine</Filter>
     </ClCompile>
@@ -32,9 +29,6 @@
     <ClCompile Include="t_default_gfx.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="t_ui_base.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
     <ClCompile Include="t_compiler.cpp">
       <Filter>Compiler / Interpreter</Filter>
     </ClCompile>
@@ -46,6 +40,15 @@
     </ClCompile>
     <ClCompile Include="t_variable.cpp">
       <Filter>Machine</Filter>
+    </ClCompile>
+    <ClCompile Include="t_panel.cpp">
+      <Filter>Editor\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="t_program_editor.cpp">
+      <Filter>Editor\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="t_ui_base.cpp">
+      <Filter>Editor\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -64,9 +67,6 @@
     <ClInclude Include="t_param.h">
       <Filter>Program</Filter>
     </ClInclude>
-    <ClInclude Include="t_program_editor.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
     <ClInclude Include="t_machine.h">
       <Filter>Machine</Filter>
     </ClInclude>
@@ -82,9 +82,6 @@
     <ClInclude Include="t_default_gfx.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="t_ui_base.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
     <ClInclude Include="t_compiler.h">
       <Filter>Compiler / Interpreter</Filter>
     </ClInclude>
@@ -96,6 +93,15 @@
     </ClInclude>
     <ClInclude Include="t_variable.h">
       <Filter>Machine</Filter>
+    </ClInclude>
+    <ClInclude Include="t_panel.h">
+      <Filter>Editor\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="t_program_editor.h">
+      <Filter>Editor\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="t_ui_base.h">
+      <Filter>Editor\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -116,6 +122,12 @@
     </Filter>
     <Filter Include="Cryptography">
       <UniqueIdentifier>{8b24975f-8788-4ddd-a53a-c1f96ededae2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\Widgets">
+      <UniqueIdentifier>{88d5c317-a2d0-4bdb-ab89-258fa4b43d9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\Core">
+      <UniqueIdentifier>{ae8e45bd-8eff-4cf5-a00f-a10db60dc012}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

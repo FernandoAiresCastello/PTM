@@ -74,4 +74,5 @@ private:
 	std::pair<int, int> get_line_selection_range();
 	bool is_selected(int line_ix);
 	bool has_selection();
+	void show_test_panel();
 };
