@@ -31,6 +31,7 @@ t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
 		}
 	} else {
 		add_empty_line();
+		unsaved = false;
 	}
 }
 t_program_editor::~t_program_editor() {
@@ -42,6 +43,14 @@ void t_program_editor::on_run_loop() {
 	apply_syntax_coloring();
 	draw_cursor();
 }
+bool t_program_editor::on_exit() {
+	if (unsaved) {
+		const auto confirm = confirm_save_program();
+		if (confirm == t_confirm_result::yes) save_program(prg_filename);
+		else if (confirm == t_confirm_result::cancel) return false;
+	}
+	return true;
+}
 void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt) {
 	if (!shift && !ctrl && key != SDLK_DELETE) {
 		cancel_line_selection();
@@ -49,7 +58,7 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 	if (TKey::Alt() && key == SDLK_RETURN) {
 		wnd->ToggleFullscreen();
 	} else if (ctrl && key == SDLK_q) {
-		running = false;
+		if (on_exit()) running = false;
 	} else if (key == SDLK_F1) {
 		show_help();
 	} else if (key == SDLK_ESCAPE) {
@@ -98,11 +107,14 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 	} else if (ctrl && key == SDLK_v) {
 		paste_lines();
 		unsaved = true;
+	} else if (ctrl && key == SDLK_l) {
+		load_program();
 	} else if (ctrl && key == SDLK_s) {
 		if (shift) save_program_as();
 		else save_program(prg_filename);
-		unsaved = false;
-	} else if (is_valid_prg_char(key)) {
+	} else if (ctrl && key == SDLK_n) {
+		new_file();
+	} else if (!ctrl && is_valid_prg_char(key)) {
 		type_char(key);
 		unsaved = true;
 	}
@@ -360,11 +372,42 @@ void t_program_editor::type_pgdn() {
 		move_prg_csr_down();
 	}
 }
+void t_program_editor::new_file() {
+	if (unsaved) {
+		const auto confirm = confirm_save_program();
+		if (confirm == t_confirm_result::yes) save_program(prg_filename);
+		else if (confirm == t_confirm_result::cancel) return;
+	}
+	prg_filename = "";
+	prg.src_lines = std::vector<string>();
+	add_empty_line();
+	unsaved = false;
+	move_prg_csr_home();
+	cancel_line_selection();
+}
+void t_program_editor::load_program() {
+	if (unsaved) {
+		const auto confirm = confirm_save_program();
+		if (confirm == t_confirm_result::yes) save_program(prg_filename);
+		else if (confirm == t_confirm_result::cancel) return;
+	}
+	hide_cursor();
+	t_input_widget* widget = new t_input_widget(globals, "Load program", color.fg, color.bdr_bg);
+	string file = widget->show();
+	delete widget;
+	if (file.empty()) return;
+	load_program(file);
+}
 void t_program_editor::load_program(string file) {
 	if (file.empty()) return;
+	if (!File::Exists(file)) {
+		return;
+	}
 	prg.load_encrypted(file);
 	move_prg_csr_home();
 	prg_filename = file;
+	unsaved = false;
+	cancel_line_selection();
 }
 void t_program_editor::save_program(string file) {
 	if (file.empty()) {
@@ -372,15 +415,17 @@ void t_program_editor::save_program(string file) {
 	} else {
 		prg.save_encrypted(file);
 		prg_filename = file;
+		unsaved = false;
 	}
 }
 void t_program_editor::save_program_as() {
-	t_input_widget* widget = new t_input_widget(globals);
+	hide_cursor();
+	t_input_widget* widget = new t_input_widget(
+		globals, "Save program", prg_filename, color.fg, color.bdr_bg);
 	string file = widget->show();
 	delete widget;
 	if (file.empty()) return;
-	prg.save_encrypted(file);
-	prg_filename = file;
+	save_program(file);
 }
 void t_program_editor::compile_and_run() {
 	t_compiler compiler;
@@ -533,12 +578,15 @@ void t_program_editor::show_help() {
 		pnl.print("https://github.com/FernandoAiresCastello", 1, 6, color.fg_bold);
 		int x = 1;
 		int y = 8;
-		pnl.print("F1         Help", x, y++);
-		pnl.print("F5         Run", x, y++);
-		pnl.print("CTRL+S     Save", x, y++);
-		pnl.print("CTRL+I     Info on/off", x, y++);
-		pnl.print("ALT+ENTER  Toggle fullscreen", x, y++);
-		pnl.print("ALT+Q      Quit", x, y++);
+		pnl.print("F1            Help", x, y++);
+		pnl.print("F5            Run program", x, y++);
+		pnl.print("CTRL+N        Create new program", x, y++);
+		pnl.print("CTRL+L        Load program", x, y++);
+		pnl.print("CTRL+S        Save program", x, y++);
+		pnl.print("CTRL+SHIFT+S  Save program as", x, y++);
+		pnl.print("CTRL+I        Info on/off", x, y++);
+		pnl.print("ALT+ENTER     Toggle fullscreen", x, y++);
+		pnl.print("ALT+Q         Quit", x, y++);
 
 		wnd->Update();
 		SDL_Event e = { 0 };
@@ -550,4 +598,30 @@ void t_program_editor::show_help() {
 			}
 		}
 	}
+}
+t_confirm_result t_program_editor::confirm_save_program() {
+	t_confirm_result result = t_confirm_result::cancel;
+	t_panel* pnl = new t_panel(buf, 2, (buf->Rows - 2) / 2, buf->Cols - 6, 1, color.fg, color.bdr_bg);
+	while (true) {
+		pnl->draw_frame();
+		pnl->print("There are unsaved changes. Save? (Y/N)", 0, 0);
+		wnd->Update();
+		SDL_Event e = { 0 };
+		SDL_PollEvent(&e);
+		if (e.type == SDL_KEYDOWN) {
+			const auto key = e.key.keysym.sym;
+			if (key == SDLK_ESCAPE) {
+				result = t_confirm_result::cancel;
+				break;
+			} else if (key == SDLK_n) {
+				result = t_confirm_result::no;
+				break;
+			} else if (key == SDLK_y) {
+				result = t_confirm_result::yes;
+				break;
+			}
+		}
+	}
+	delete pnl;
+	return result;
 }

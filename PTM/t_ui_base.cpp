@@ -38,7 +38,9 @@ void t_ui_base::poll_events() {
 	SDL_Event e = { 0 };
 	SDL_PollEvent(&e);
 	if (e.type == SDL_QUIT) {
-		running = false;
+		if (on_exit()) {
+			running = false;
+		}
 	} else if (e.type == SDL_KEYDOWN) {
 		auto key = e.key.keysym.sym;
 		if (TKey::Alt() && key == SDLK_RETURN) {

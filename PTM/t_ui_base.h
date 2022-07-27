@@ -8,6 +8,7 @@ struct t_ui_base {
 	t_ui_base(t_globals* g);
 	virtual ~t_ui_base();
 	void run();
+
 protected:
 	t_globals* globals;
 	t_config* cfg;
@@ -27,10 +28,13 @@ protected:
 		int sel_bg;
 		int fg_bold;
 	} color;
+	
 	virtual void on_run_loop() = 0;
-	void poll_events();
+	virtual bool on_exit() = 0;
 	virtual void on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt) = 0;
 	virtual void on_mouse_wheel(int dist_y) = 0;
+	
+	void poll_events();
 	void draw_screen_base();
 	void draw_border();
 	void print_border(string str, int top_or_bottom, int x);

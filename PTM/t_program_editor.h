@@ -5,6 +5,9 @@
 
 struct t_config;
 
+enum class t_confirm_result {
+	cancel = -1, no = 0, yes = 1
+};
 struct t_program_editor : public t_ui_base {
 	t_program_editor(t_globals* g);
 	~t_program_editor();
@@ -35,6 +38,7 @@ private:
 	bool unsaved = false;
 
 	void on_run_loop();
+	bool on_exit();
 	void on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt);
 	void on_mouse_wheel(int dist_y);
 	void draw_border_info();
@@ -61,6 +65,8 @@ private:
 	void type_delete();
 	void type_pgup();
 	void type_pgdn();
+	void new_file();
+	void load_program();
 	void load_program(string file);
 	void save_program(string file);
 	void save_program_as();
@@ -79,4 +85,5 @@ private:
 	bool is_selected(int line_ix);
 	bool has_selection();
 	void show_help();
+	t_confirm_result confirm_save_program();
 };
