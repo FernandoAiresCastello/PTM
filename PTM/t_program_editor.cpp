@@ -6,6 +6,7 @@
 #include "t_machine.h"
 #include "t_panel.h"
 #include "t_input_widget.h"
+#include "chars.h"
 
 t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
 	csr_overwrite = false;
@@ -37,11 +38,7 @@ t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
 t_program_editor::~t_program_editor() {
 }
 void t_program_editor::on_run_loop() {
-	draw_screen_base();
-	draw_border_info();
-	draw_program();
-	apply_syntax_coloring();
-	draw_cursor();
+	draw();
 }
 bool t_program_editor::on_exit() {
 	if (unsaved) {
@@ -128,6 +125,13 @@ void t_program_editor::on_mouse_wheel(int dist_y) {
 		}
 	}
 }
+void t_program_editor::draw() {
+	draw_screen_base();
+	draw_border_info();
+	draw_program();
+	apply_syntax_coloring();
+	draw_cursor();
+}
 void t_program_editor::draw_border_info() {
 	if (!info_visible) return;
 	print_border_top(prg_filename, 0);
@@ -189,11 +193,11 @@ void t_program_editor::apply_syntax_coloring() {
 void t_program_editor::draw_cursor() {
 	TTileSeq tile;
 	if (csr_overwrite) {
-		tile.Add(0xfb, color.csr_fg, color.bg);
+		tile.Add(chars::cursor_ovr, color.csr_fg, color.bg);
 	} else {
-		tile.Add(0xfc, color.csr_fg, color.bg);
+		tile.Add(chars::cursor_ins, color.csr_fg, color.bg);
 	}
-	tile.Add(0x00, color.csr_fg, color.bg);
+	tile.Add(chars::empty, color.csr_fg, color.bg);
 	buf->SetTile(tile, scr_csr.layer, scr_csr.x, scr_csr.y, true);
 }
 void t_program_editor::hide_cursor() {
@@ -595,6 +599,10 @@ void t_program_editor::show_help() {
 			const auto key = e.key.keysym.sym;
 			if (key == SDLK_F1 || key == SDLK_ESCAPE || key == SDLK_RETURN) {
 				break;
+			} else if (key == SDLK_t) {
+				pnl.erase_frame();
+				wnd->Update();
+				SDL_Delay(1000);
 			}
 		}
 	}

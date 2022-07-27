@@ -1,6 +1,7 @@
 #include "t_input_widget.h"
 #include "t_globals.h"
 #include "t_panel.h"
+#include "chars.h"
 
 t_input_widget::t_input_widget(t_globals* g, string title, int fgc, int bgc) : 
 	t_input_widget(g, title, "", fgc, bgc) {
@@ -24,8 +25,8 @@ t_input_widget::~t_input_widget() {
 }
 string t_input_widget::show() {
 	TTileSeq csr;
-	csr.Add(0xdb, pnl->bgc, pnl->fgc);
-	csr.Add(0xdb, pnl->fgc, pnl->bgc);
+	csr.Add(chars::cursor_full, pnl->bgc, pnl->fgc);
+	csr.Add(chars::cursor_full, pnl->fgc, pnl->bgc);
 
 	if (initial_str.length() > maxlen) {
 		initial_str = initial_str.substr(0, pnl->frame_w);

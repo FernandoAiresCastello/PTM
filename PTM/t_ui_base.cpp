@@ -2,6 +2,7 @@
 #include "t_globals.h"
 #include "t_config.h"
 #include "t_default_gfx.h"
+#include "chars.h"
 
 t_ui_base::t_ui_base(t_globals* g) {
 	globals = g;
@@ -58,7 +59,7 @@ void t_ui_base::draw_screen_base() {
 	draw_border();
 }
 void t_ui_base::draw_border() {
-	TTileSeq tile(0, color.bdr_bg, color.bdr_bg);
+	TTileSeq tile(chars::empty, color.bdr_bg, color.bdr_bg);
 	for (int y = 0; y < buf->Rows; y++) {
 		buf->SetTile(tile, 0, 0, y, false);
 		buf->SetTile(tile, 0, buf->LastCol, y, false);

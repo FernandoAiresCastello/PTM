@@ -15,7 +15,9 @@ struct t_panel {
 
 	t_panel(TTileBuffer* buf, int fgc, int bgc);
 	t_panel(TTileBuffer* buf, int x, int y, int w, int h, int fgc, int bgc);
+	void set_frame(int x, int y, int w, int h);
 	void draw_frame();
+	void erase_frame();
 	void center_title();
 	void center_bottom_text();
 	void maximize(int margin = 0);

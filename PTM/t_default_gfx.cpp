@@ -1,4 +1,5 @@
 #include "t_default_gfx.h"
+#include "chars.h"
 
 void t_default_gfx::init_palette(TPalette* pal) {
 	pal->DeleteAll();
@@ -19,8 +20,7 @@ void t_default_gfx::init_palette(TPalette* pal) {
 	pal->Set(246, 0xffffff); // fg_bold
 }
 void t_default_gfx::init_charset(TCharset* chr) {
-	// Cursor overwrite
-	chr->Set(0xfb, 
+	chr->Set(chars::cursor_ovr,
 		"00000000"
 		"00000000"
 		"00000000"
@@ -29,8 +29,7 @@ void t_default_gfx::init_charset(TCharset* chr) {
 		"00000000"
 		"11111111"
 		"11111111");
-	// Cursor insert
-	chr->Set(0xfc,
+	chr->Set(chars::cursor_ins,
 		"11000000"
 		"11000000"
 		"11000000"
@@ -39,8 +38,7 @@ void t_default_gfx::init_charset(TCharset* chr) {
 		"11000000"
 		"11000000"
 		"11000000");
-	// Underscore
-	chr->Set('_',
+	chr->Set(chars::underscore,
 		"00000000"
 		"00000000"
 		"00000000"
@@ -49,8 +47,7 @@ void t_default_gfx::init_charset(TCharset* chr) {
 		"00000000"
 		"01111100"
 		"00000000");
-	// Horizontal bar
-	chr->Set('~',
+	chr->Set(chars::horizontal_bar,
 		"00000000"
 		"00000000"
 		"00000000"
@@ -59,8 +56,7 @@ void t_default_gfx::init_charset(TCharset* chr) {
 		"00000000"
 		"00000000"
 		"00000000");
-	// Panel TL corner
-	chr->Set(0xda,
+	chr->Set(chars::pnl_corner_tl,
 		"00000000"
 		"00000000"
 		"00000000"
@@ -69,8 +65,7 @@ void t_default_gfx::init_charset(TCharset* chr) {
 		"00011000"
 		"00011000"
 		"00011000");
-	// Panel TR corner
-	chr->Set(0xbf,
+	chr->Set(chars::pnl_corner_tr,
 		"00000000"
 		"00000000"
 		"00000000"
@@ -79,8 +74,7 @@ void t_default_gfx::init_charset(TCharset* chr) {
 		"00011000"
 		"00011000"
 		"00011000");
-	// Panel BL corner
-	chr->Set(0xc0,
+	chr->Set(chars::pnl_corner_bl,
 		"00011000"
 		"00011000"
 		"00011000"
@@ -89,8 +83,7 @@ void t_default_gfx::init_charset(TCharset* chr) {
 		"00000000"
 		"00000000"
 		"00000000");
-	// Panel BR corner
-	chr->Set(0xd9,
+	chr->Set(chars::pnl_corner_br,
 		"00011000"
 		"00011000"
 		"00011000"

@@ -109,6 +109,9 @@
     <ClInclude Include="t_input_widget.h">
       <Filter>Editor\Widgets</Filter>
     </ClInclude>
+    <ClInclude Include="chars.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Editor">

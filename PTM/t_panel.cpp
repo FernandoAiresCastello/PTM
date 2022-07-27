@@ -1,19 +1,23 @@
 #include "t_panel.h"
+#include "chars.h"
 
 t_panel::t_panel(TTileBuffer* buf, int fgc, int bgc) : t_panel(buf, 0, 0, 0, 0, fgc, bgc) {
 }
 t_panel::t_panel(TTileBuffer* buf, int x, int y, int w, int h, int fgc, int bgc) {
 	this->buf = buf;
-	frame_x = x;
-	frame_y = y;
-	frame_w = w + 1;
-	frame_h = h + 1;
 	this->fgc = fgc;
 	this->bgc = bgc;
+	set_frame(x, y, w, h);
 	title = "";
 	bottom_text = "";
 	title_x = 0;
 	bottom_text_x = 0;
+}
+void t_panel::set_frame(int x, int y, int w, int h) {
+	frame_x = x;
+	frame_y = y;
+	frame_w = w + 1;
+	frame_h = h + 1;
 }
 void t_panel::draw_frame() {
 	const int x = frame_x;
@@ -21,13 +25,13 @@ void t_panel::draw_frame() {
 	const int w = frame_w;
 	const int h = frame_h;
 	const int layer = 0;
-	const int ch_back = 0x00;
-	const int ch_tl = 0xda;
-	const int ch_tr = 0xbf;
-	const int ch_bl = 0xc0;
-	const int ch_br = 0xd9;
-	const int ch_hbar = 0xc4;
-	const int ch_vbar = 0xb3;
+	const int ch_back = chars::empty;
+	const int ch_tl = chars::pnl_corner_tl;
+	const int ch_tr = chars::pnl_corner_tr;
+	const int ch_bl = chars::pnl_corner_bl;
+	const int ch_br = chars::pnl_corner_br;
+	const int ch_hbar = chars::pnl_edge_h;
+	const int ch_vbar = chars::pnl_edge_v;
 
 	TTileSeq tile(0, fgc, bgc);
 
@@ -79,6 +83,10 @@ void t_panel::draw_frame() {
 		buf->Print(visible_text, layer, frame_x + bottom_text_x + 1, frame_y + h, fgc, bgc, false);
 	}
 }
+void t_panel::erase_frame() {
+	const int layer = 0;
+	buf->ClearLayerRect(layer, frame_x, frame_y, frame_w, frame_h);
+}
 void t_panel::center_title() {
 	if (!title.empty()) {
 		title_x = ((frame_w / 2) - (title.length() / 2)) - 1;
@@ -109,6 +117,9 @@ void t_panel::print(string text, int x, int y) {
 	print(text, x, y, fgc);
 }
 void t_panel::print(string text, int x, int y, int text_fgc) {
+	if (y < 0 || y >= frame_h - 1 || x >= frame_w - 1) {
+		return;
+	}
 	const int layer = 0;
 	const int px = x;
 	for (auto& ch : text) {

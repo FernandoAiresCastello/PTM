@@ -166,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base64.h" />
+    <ClInclude Include="chars.h" />
     <ClInclude Include="t_command.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="t_config.h" />
