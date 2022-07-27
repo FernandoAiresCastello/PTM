@@ -50,10 +50,10 @@ void t_default_gfx::init_charset(TCharset* chr) {
 	chr->Set(chars::horizontal_bar,
 		"00000000"
 		"00000000"
-		"00000000"
 		"11111111"
 		"11111111"
-		"00000000"
+		"11111111"
+		"11111111"
 		"00000000"
 		"00000000");
 	chr->Set(chars::pnl_corner_tl,

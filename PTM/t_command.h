@@ -12,6 +12,7 @@ private:
 	t_interpreter* intp;
 	t_machine* machine;
 	std::vector<string> get_debug_info();
+	// Commands
 	void halt(t_params& arg);
 	void exit(t_params& arg);
 	void goto_label(t_params& arg);
@@ -80,4 +81,10 @@ private:
 	void copy_array(t_params& arg);
 	void increment_variable(t_params& arg);
 	void allow_exit_on_escape_key(t_params& arg, bool allow);
+	void assert_eq(t_params& arg);
+	void assert_neq(t_params& arg);
+	void assert_gt(t_params& arg);
+	void assert_gte(t_params& arg);
+	void assert_lt(t_params& arg);
+	void assert_lte(t_params& arg);
 };

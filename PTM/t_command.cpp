@@ -77,6 +77,12 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "KEY.ESC.OFF")	allow_exit_on_escape_key(args, false);
 	// Debug
 	else if (cmd == "DBG.FILE")		save_debug_file(args);
+	else if (cmd == "ASSERT.EQ")	assert_eq(args);
+	else if (cmd == "ASSERT.NEQ")	assert_neq(args);
+	else if (cmd == "ASSERT.GT")	assert_gt(args);
+	else if (cmd == "ASSERT.GTE")	assert_gte(args);
+	else if (cmd == "ASSERT.LT")	assert_lt(args);
+	else if (cmd == "ASSERT.LTE")	assert_lte(args);
 	// Conditionals
 	else if (cmd == "CMP")			compare_numbers(args);
 	else if (cmd == "CMPS")			compare_strings(args);
@@ -701,7 +707,9 @@ void t_command::set_array_element(t_params& arg) {
 	if (arr_id.empty()) return;
 	auto& arr = machine->arrays[arr_id];
 	int ix = intp->require_array_index(arr, arg[0]);
-	arr[ix] = intp->require_string(arg[1]);
+	if (ix >= 0) {
+		arr[ix] = intp->require_string(arg[1]);
+	}
 }
 void t_command::erase_array_element(t_params& arg) {
 	ARGC(1);
@@ -733,12 +741,62 @@ void t_command::copy_array(t_params& arg) {
 }
 void t_command::increment_variable(t_params& arg) {
 	ARGC(1);
-	string arr_id = intp->require_id(arg[0]);
-	if (arr_id.empty()) return;
-	auto& var = machine->vars[arr_id];
-	machine->vars[arr_id] = String::ToString(String::ToInt(var.value) + 1);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	auto& var = machine->vars[id];
+	machine->vars[id] = String::ToString(String::ToInt(var.value) + 1);
 }
 void t_command::allow_exit_on_escape_key(t_params& arg, bool allow) {
 	ARGC(0);
 	machine->exit_key = allow ? SDLK_ESCAPE : 0;
+}
+void t_command::assert_eq(t_params& arg) {
+	ARGC(2);
+	string id = intp->require_existing_varname(arg[0]);
+	if (id.empty()) return;
+	string expected_value = intp->require_string(arg[1]);
+	if (machine->vars[id].value != expected_value) {
+		intp->abort("Assertion error");
+	}
+}
+void t_command::assert_neq(t_params& arg) {
+	ARGC(2);
+	string id = intp->require_existing_varname(arg[0]);
+	if (id.empty()) return;
+	string expected_value = intp->require_string(arg[1]);
+	if (machine->vars[id].value == expected_value) {
+		intp->abort("Assertion error");
+	}
+}
+void t_command::assert_gt(t_params& arg) {
+	ARGC(2);
+	string id = intp->require_existing_varname(arg[0]);
+	if (id.empty()) return;
+	if (not(String::ToInt(machine->vars[id].value) > intp->require_number(arg[1]))) {
+		intp->abort("Assertion error");
+	}
+}
+void t_command::assert_gte(t_params& arg) {
+	ARGC(2);
+	string id = intp->require_existing_varname(arg[0]);
+	if (id.empty()) return;
+	if (not(String::ToInt(machine->vars[id].value) >= intp->require_number(arg[1]))) {
+		intp->abort("Assertion error");
+	}
+}
+void t_command::assert_lt(t_params& arg) {
+	ARGC(2);
+	string id = intp->require_existing_varname(arg[0]);
+	if (id.empty()) return;
+	if (not(String::ToInt(machine->vars[id].value) < intp->require_number(arg[1]))) {
+		intp->abort("Assertion error");
+	}
+}
+void t_command::assert_lte(t_params& arg) {
+	ARGC(2);
+	string id = intp->require_existing_varname(arg[0]);
+	if (id.empty()) return;
+	if (not(String::ToInt(machine->vars[id].value) <= intp->require_number(arg[1]))) {
+		intp->abort("Assertion error");
+	}
 }

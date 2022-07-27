@@ -42,9 +42,9 @@ void t_program_editor::on_run_loop() {
 }
 bool t_program_editor::on_exit() {
 	if (unsaved) {
-		const auto confirm = confirm_save_program();
-		if (confirm == t_confirm_result::yes) save_program(prg_filename);
-		else if (confirm == t_confirm_result::cancel) return false;
+		const auto result = confirm("There are unsaved changes. Save? (Y/N)");
+		if (result == t_confirm_result::yes) save_program(prg_filename);
+		else if (result == t_confirm_result::cancel) return false;
 	}
 	return true;
 }
@@ -111,6 +111,8 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 		else save_program(prg_filename);
 	} else if (ctrl && key == SDLK_n) {
 		new_file();
+	} else if (ctrl && key == SDLK_r) {
+		reload_file();
 	} else if (!ctrl && is_valid_prg_char(key)) {
 		type_char(key);
 		unsaved = true;
@@ -378,9 +380,9 @@ void t_program_editor::type_pgdn() {
 }
 void t_program_editor::new_file() {
 	if (unsaved) {
-		const auto confirm = confirm_save_program();
-		if (confirm == t_confirm_result::yes) save_program(prg_filename);
-		else if (confirm == t_confirm_result::cancel) return;
+		const auto result = confirm("There are unsaved changes.  Save? (Y/N)");
+		if (result == t_confirm_result::yes) save_program(prg_filename);
+		else if (result == t_confirm_result::cancel) return;
 	}
 	prg_filename = "";
 	prg.src_lines = std::vector<string>();
@@ -389,11 +391,16 @@ void t_program_editor::new_file() {
 	move_prg_csr_home();
 	cancel_line_selection();
 }
+void t_program_editor::reload_file() {
+	if (!unsaved) return;
+	const auto result = confirm("Reload program? (Y/N)");
+	if (result == t_confirm_result::yes) load_program(prg_filename);
+}
 void t_program_editor::load_program() {
 	if (unsaved) {
-		const auto confirm = confirm_save_program();
-		if (confirm == t_confirm_result::yes) save_program(prg_filename);
-		else if (confirm == t_confirm_result::cancel) return;
+		const auto result = confirm("There are unsaved changes.  Save? (Y/N)");
+		if (result == t_confirm_result::yes) save_program(prg_filename);
+		else if (result == t_confirm_result::cancel) return;
 	}
 	hide_cursor();
 	t_input_widget* widget = new t_input_widget(globals, "Load program", color.fg, color.bdr_bg);
@@ -607,12 +614,18 @@ void t_program_editor::show_help() {
 		}
 	}
 }
-t_confirm_result t_program_editor::confirm_save_program() {
+t_confirm_result t_program_editor::confirm(string msg) {
+	hide_cursor();
 	t_confirm_result result = t_confirm_result::cancel;
-	t_panel* pnl = new t_panel(buf, 2, (buf->Rows - 2) / 2, buf->Cols - 6, 1, color.fg, color.bdr_bg);
+	const int h = 1;
+	const int w = msg.length();
+	const int x = (buf->Cols / 2) - (w / 2) - 1;
+	const int y = (buf->Rows - 2) / 2;
+	t_panel* pnl = new t_panel(buf, x, y, w, h, color.fg, color.bdr_bg);
+
 	while (true) {
 		pnl->draw_frame();
-		pnl->print("There are unsaved changes. Save? (Y/N)", 0, 0);
+		pnl->print(msg, 0, 0);
 		wnd->Update();
 		SDL_Event e = { 0 };
 		SDL_PollEvent(&e);

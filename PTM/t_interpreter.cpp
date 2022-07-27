@@ -210,22 +210,24 @@ string t_interpreter::require_array_element(t_param& arg) {
 	return "";
 }
 int t_interpreter::require_array_index(std::vector<string>& arr, t_param& arg) {
+	int index = -1;
 	if (arg.type == t_param_type::arr_ix_literal) {
-		return arg.arr_ix_literal;
+		index = arg.arr_ix_literal;
 	} else if (arg.type == t_param_type::arr_ix_var) {
 		string ix_var_id = arg.arr_ix_var;
-		if (machine->vars.find(ix_var_id) == machine->vars.end()) {
+		if (machine->vars.find(ix_var_id) != machine->vars.end()) {
+			index = String::ToInt(machine->vars[ix_var_id].value);
+		} else {
 			abort("Variable not found: " + ix_var_id);
 		}
-		int ix = String::ToInt(machine->vars[ix_var_id].value);
-		if (ix >= 0 && ix < arr.size()) {
-			return ix;
-		} else {
-			abort(String::Format("Array index out of bounds: %i", ix));
-		}
+	} else {
+		abort("Array index expected");
 	}
-	abort("Array index expected");
-	return -1;
+	if (index < 0 || index >= arr.size()) {
+		abort(String::Format("Array index out of bounds: %i", index));
+		index = -1;
+	}
+	return index;
 }
 void t_interpreter::goto_label(string label) {
 	cur_line_ix = prg->labels[label];

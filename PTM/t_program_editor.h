@@ -67,6 +67,7 @@ private:
 	void type_pgup();
 	void type_pgdn();
 	void new_file();
+	void reload_file();
 	void load_program();
 	void load_program(string file);
 	void save_program(string file);
@@ -86,5 +87,5 @@ private:
 	bool is_selected(int line_ix);
 	bool has_selection();
 	void show_help();
-	t_confirm_result confirm_save_program();
+	t_confirm_result confirm(string msg);
 };
