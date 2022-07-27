@@ -258,7 +258,7 @@ void t_command::set_cur_tile_char(t_params& arg) {
 		int ch = intp->require_number(arg[1]);
 		machine->cur_tile.SetChar(frame, ch);
 	} else {
-		intp->abort("Invalid tile frame index");
+		intp->abort(String::Format("Tile frame index out of bounds: %i", frame));
 	}
 }
 void t_command::set_cur_tile_fgcolor(t_params& arg) {
@@ -268,7 +268,7 @@ void t_command::set_cur_tile_fgcolor(t_params& arg) {
 		int color = intp->require_number(arg[1]);
 		machine->cur_tile.SetForeColor(frame, color);
 	} else {
-		intp->abort("Invalid tile frame index");
+		intp->abort(String::Format("Tile frame index out of bounds: %i", frame));
 	}
 }
 void t_command::set_cur_tile_bgcolor(t_params& arg) {
@@ -278,7 +278,7 @@ void t_command::set_cur_tile_bgcolor(t_params& arg) {
 		int color = intp->require_number(arg[1]);
 		machine->cur_tile.SetBackColor(frame, color);
 	} else {
-		intp->abort("Invalid tile frame index");
+		intp->abort(String::Format("Tile frame index out of bounds: %i", frame));
 	}
 }
 void t_command::parse_cur_tile(t_params& arg) {
