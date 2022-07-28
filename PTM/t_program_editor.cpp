@@ -19,24 +19,20 @@ t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
 	info_visible = true;
 	snd = g->snd;
 
+	draw();
+
 	if (!g->cfg->autorun.empty()) {
 		if (File::Exists(g->cfg->autorun)) {
 			load_program(g->cfg->autorun);
-			if (prg.src_lines.empty()) {
-				add_empty_line();
-			}
 			compile_and_run();
 		}
 	} else if (!g->cfg->autoload.empty()) {
-		if (File::Exists(g->cfg->autoload)) {
-			load_program(g->cfg->autoload);
-			if (prg.src_lines.empty()) {
-				add_empty_line();
-			}
-		}
+		load_program(g->cfg->autoload);
 	} else {
-		add_empty_line();
 		unsaved = false;
+	}
+	if (prg.src_lines.empty()) {
+		add_empty_line();
 	}
 }
 t_program_editor::~t_program_editor() {
@@ -416,7 +412,7 @@ void t_program_editor::load_program() {
 void t_program_editor::load_program(string file) {
 	if (file.empty()) return;
 	if (!File::Exists(file)) {
-		alert_error("Load program", "File not found");
+		alert_error("Load program", "File not found: " + file);
 		return;
 	}
 	prg.load_encrypted(file);
@@ -654,6 +650,7 @@ t_confirm_result t_program_editor::confirm(string msg) {
 }
 void t_program_editor::alert_error(string title, string text) {
 	beep();
+	hide_cursor();
 	t_alert_widget* widget = new t_alert_widget(globals, title, text, color.fg, color.error_bg);
 	widget->show();
 	delete widget;

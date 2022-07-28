@@ -21,12 +21,12 @@ void t_program::load_encrypted(string path) {
 	src_lines.clear();
 	lines.clear();
 	auto file_lines = File::ReadLines(path, "\r\n");
-	t_obfuscator::decrypt(&file_lines, &src_lines);
+	t_obfuscator::xor_decrypt(&file_lines, &src_lines);
 	if (String::Trim(src_lines.back()).empty()) {
 		src_lines.pop_back();
 	}
 }
 void t_program::save_encrypted(string path) {
-	auto encrypted = t_obfuscator::encrypt(&src_lines);
+	auto encrypted = t_obfuscator::xor_encrypt(&src_lines);
 	File::WriteLines(path, encrypted);
 }

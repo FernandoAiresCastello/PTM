@@ -7,7 +7,6 @@ PTM is powered by the following libraries:
 - [TileGameLib](https://github.com/FernandoAiresCastello/TileGameToolkit/tree/master/TileGameLibC)
 - [CppUtils](https://github.com/FernandoAiresCastello/CppUtils)
 - [Microsoft Windows API](https://docs.microsoft.com/en-us/windows/win32/)
-- [Base64 by René Nyffenegger](https://renenyffenegger.ch/notes/development/Base64/Encoding-and-decoding-base-64-with-cpp)
 - [C/C++ Standard Library](https://en.cppreference.com/w/cpp)
 
 ---
