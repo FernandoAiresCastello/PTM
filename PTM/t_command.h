@@ -24,6 +24,11 @@ private:
 	void define_constant(t_params& arg);
 	void set_cursor_pos(t_params& arg);
 	void move_cursor(t_params& arg);
+	void move_cursor_right(t_params& arg);
+	void move_cursor_left(t_params& arg);
+	void move_cursor_up(t_params& arg);
+	void move_cursor_down(t_params& arg);
+	void set_cursor_visible(t_params& arg, bool visible);
 	void init_cur_tile(t_params& arg);
 	void append_cur_tile(t_params& arg);
 	void set_cur_tile_char(t_params& arg);
@@ -34,6 +39,7 @@ private:
 	void parse_and_store_tile(t_params& arg);
 	void load_cur_tile(t_params& arg);
 	void put_tile(t_params& arg);
+	void delete_tile(t_params& arg);
 	void put_tile_repeat_right(t_params& arg);
 	void put_tile_repeat_left(t_params& arg);
 	void put_tile_repeat_up(t_params& arg);
@@ -42,7 +48,7 @@ private:
 	void clear_all_layers(t_params& arg);
 	void clear_layer(t_params& arg);
 	void clear_rect(t_params& arg);
-	void set_wnd_bgcolor(t_params& arg);
+	void set_window_bgcolor(t_params& arg);
 	void set_tile_transparency(t_params& arg, bool transparent);
 	void select_layer(t_params& arg);
 	void define_char(t_params& arg);

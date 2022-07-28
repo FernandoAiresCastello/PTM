@@ -63,19 +63,19 @@ void t_ui_base::draw_screen_base() {
 void t_ui_base::draw_border() {
 	TTileSeq tile(chars::empty, color.bdr_bg, color.bdr_bg);
 	for (int y = 0; y < buf->Rows; y++) {
-		buf->SetTile(tile, 0, 0, y, false);
-		buf->SetTile(tile, 0, buf->LastCol, y, false);
+		buf->SetTile(tile, PTM_LAYER_BTM, 0, y, false);
+		buf->SetTile(tile, PTM_LAYER_BTM, buf->LastCol, y, false);
 	}
 	for (int x = 0; x < buf->Cols; x++) {
-		buf->SetTile(tile, 0, x, 0, false);
-		buf->SetTile(tile, 0, x, buf->LastRow, false);
+		buf->SetTile(tile, PTM_LAYER_BTM, x, 0, false);
+		buf->SetTile(tile, PTM_LAYER_BTM, x, buf->LastRow, false);
 	}
 }
 void t_ui_base::print_border(string str, int top_or_bottom, int x) {
 	int px = x + 1;
 	int y = top_or_bottom > 0 ? buf->LastRow : 0;
 	for (auto& ch : str) {
-		buf->SetTile(TTileSeq(ch, color.bdr_fg, color.bdr_bg), 0, px++, y, false);
+		buf->SetTile(TTileSeq(ch, color.bdr_fg, color.bdr_bg), PTM_LAYER_BTM, px++, y, false);
 	}
 }
 void t_ui_base::print_border_top(string str, int x) {

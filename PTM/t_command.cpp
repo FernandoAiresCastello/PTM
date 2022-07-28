@@ -42,30 +42,38 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "TILE.STORE")	store_cur_tile(args);
 	else if (cmd == "TILE.PSTORE")	parse_and_store_tile(args);
 	else if (cmd == "TILE.LOAD")	load_cur_tile(args);
-	else if (cmd == "TILE.TRA.ON")	set_tile_transparency(args, true);
-	else if (cmd == "TILE.TRA.OFF")	set_tile_transparency(args, false);
 	// Tile buffer cursor
 	else if (cmd == "CSR.LAYER")	select_layer(args);
 	else if (cmd == "CSR.SET")		set_cursor_pos(args);
 	else if (cmd == "CSR.MOV")		move_cursor(args);
+	else if (cmd == "CSR.R")		move_cursor_right(args);
+	else if (cmd == "CSR.L")		move_cursor_left(args);
+	else if (cmd == "CSR.U")		move_cursor_up(args);
+	else if (cmd == "CSR.D")		move_cursor_down(args);
+	else if (cmd == "CSR.ON")		set_cursor_visible(args, true);
+	else if (cmd == "CSR.OFF")		set_cursor_visible(args, false);
 	// Tile buffer
 	else if (cmd == "BUF.PUT")		put_tile(args);
-	else if (cmd == "BUF.REP.R")	put_tile_repeat_right(args);
-	else if (cmd == "BUF.REP.L")	put_tile_repeat_left(args);
-	else if (cmd == "BUF.REP.U")	put_tile_repeat_up(args);
-	else if (cmd == "BUF.REP.D")	put_tile_repeat_down(args);
+	else if (cmd == "BUF.DEL")		delete_tile(args);
+	else if (cmd == "BUF.REPR")		put_tile_repeat_right(args);
+	else if (cmd == "BUF.REPL")		put_tile_repeat_left(args);
+	else if (cmd == "BUF.REPU")		put_tile_repeat_up(args);
+	else if (cmd == "BUF.REPD")		put_tile_repeat_down(args);
 	else if (cmd == "BUF.FILL")		fill_rect(args);
 	else if (cmd == "BUF.CLS")		clear_all_layers(args);
 	else if (cmd == "BUF.CLL")		clear_layer(args);
 	else if (cmd == "BUF.CLR")		clear_rect(args);
-	// Graphics
+	// Graphics / Window
 	else if (cmd == "CHR")			define_char(args);
 	else if (cmd == "PAL")			define_color(args);
 	else if (cmd == "VSYNC")		update_screen(args);
-	else if (cmd == "SCR.BG")		set_wnd_bgcolor(args);
+	else if (cmd == "TITLE")		set_window_title(args);
+	else if (cmd == "GFX.BG")		set_window_bgcolor(args);
+	else if (cmd == "GFX.TRON")		set_tile_transparency(args, true);
+	else if (cmd == "GFX.TROFF")	set_tile_transparency(args, false);
 	// Text output
 	else if (cmd == "PRINT")		print_text(args, false);
-	else if (cmd == "PRINT.LN")		print_text(args, true);
+	else if (cmd == "PRINTL")		print_text(args, true);
 	else if (cmd == "TEXT.FG")		set_text_fgcolor(args);
 	else if (cmd == "TEXT.BG")		set_text_bgcolor(args);
 	else if (cmd == "TEXT.COL")		set_text_colors(args);
@@ -73,8 +81,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "KEY.GET")		get_key_pressed(args);
 	else if (cmd == "KEY.CALL")		call_if_key_pressed(args);
 	else if (cmd == "KEY.GOTO")		goto_if_key_pressed(args);
-	else if (cmd == "KEY.ESC.ON")	allow_exit_on_escape_key(args, true);
-	else if (cmd == "KEY.ESC.OFF")	allow_exit_on_escape_key(args, false);
+	else if (cmd == "ESCAPE.ON")	allow_exit_on_escape_key(args, true);
+	else if (cmd == "ESCAPE.OFF")	allow_exit_on_escape_key(args, false);
 	// Debug
 	else if (cmd == "DBG.FILE")		save_debug_file(args);
 	else if (cmd == "ASSERT.EQ")	assert_eq(args);
@@ -101,8 +109,6 @@ bool t_command::execute(string& cmd, t_params& args) {
 	// Sound
 	else if (cmd == "SND.PLAY")		play_sound(args);
 	else if (cmd == "SND.LOOP")		loop_sound(args);
-	// Window
-	else if (cmd == "TITLE")		set_window_title(args);
 
 	else return false;
 	return true;
@@ -242,6 +248,26 @@ void t_command::move_cursor(t_params& arg) {
 	machine->csr.x += intp->require_number(arg[0]);
 	machine->csr.y += intp->require_number(arg[1]);
 }
+void t_command::move_cursor_right(t_params& arg) {
+	ARGC_MIN_MAX(0, 1);
+	machine->csr.x += arg.empty() ? 1 : intp->require_number(arg[0]);
+}
+void t_command::move_cursor_left(t_params& arg) {
+	ARGC_MIN_MAX(0, 1);
+	machine->csr.x -= arg.empty() ? 1 : intp->require_number(arg[0]);
+}
+void t_command::move_cursor_up(t_params& arg) {
+	ARGC_MIN_MAX(0, 1);
+	machine->csr.y -= arg.empty() ? 1 : intp->require_number(arg[0]);
+}
+void t_command::move_cursor_down(t_params& arg) {
+	ARGC_MIN_MAX(0, 1);
+	machine->csr.y += arg.empty() ? 1 : intp->require_number(arg[0]);
+}
+void t_command::set_cursor_visible(t_params& arg, bool visible) {
+	ARGC(0);
+	machine->csr.visible = visible;
+}
 void t_command::init_cur_tile(t_params& arg) {
 	ARGC(3);
 	TTile tile;
@@ -335,6 +361,10 @@ void t_command::put_tile(t_params& arg) {
 	ARGC(0);
 	machine->put_cur_tile_at_cursor_pos();
 }
+void t_command::delete_tile(t_params& arg) {
+	ARGC(0);
+	machine->delete_tile_at_cursor_pos();
+}
 void t_command::put_tile_repeat_right(t_params& arg) {
 	ARGC(1);
 	int count = intp->require_number(arg[0]);
@@ -405,9 +435,9 @@ void t_command::clear_rect(t_params& arg) {
 		}
 	}
 }
-void t_command::set_wnd_bgcolor(t_params& arg) {
+void t_command::set_window_bgcolor(t_params& arg) {
 	ARGC(1);
-	machine->wnd->SetBackColor(machine->pal->GetColorRGB(intp->require_number(arg[0])));
+	machine->set_window_bgcolor(intp->require_number(arg[0]));
 }
 void t_command::set_tile_transparency(t_params& arg, bool transparent) {
 	ARGC(0);

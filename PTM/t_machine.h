@@ -11,7 +11,13 @@ struct t_machine {
 	TBufferedWindow* wnd;
 	TCharset* chr;
 	TPalette* pal;
+	static const int default_bgc = 0;
+	static const int default_fgc = 1;
+	int bgcolor_palette_ix = default_bgc;
 	struct {
+		bool visible = false;
+		TTileSeq tile;
+		int color = default_fgc;
 		int layer = 0;
 		int x = 0;
 		int y = 0;
@@ -34,12 +40,15 @@ struct t_machine {
 	t_machine(TBufferedWindow* wnd);
 	~t_machine();
 	void on_loop();
+	void on_screen_update();
 	void init_system_vars();
 	void set_var(string id, int value);
 	void set_var(string id, string value);
 	void set_const(string id, int value);
 	void set_const(string id, string value);
 	void put_cur_tile_at_cursor_pos();
+	void delete_tile_at_cursor_pos();
+	void set_window_bgcolor(int palette_ix);
 
 private:
 	TCharset* original_chr;

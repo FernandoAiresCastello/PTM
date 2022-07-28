@@ -31,7 +31,7 @@ private:
 		int first_char_ix = 0;
 		int max_lines = 0;
 		int max_chars = 0;
-		int layer = 0;
+		int layer = PTM_LAYER_BTM;
 	} prg_view;
 	int line_selection_start = -1;
 	std::vector<string> clipboard;
