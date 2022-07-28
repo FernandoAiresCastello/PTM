@@ -4,11 +4,15 @@
 #include "t_compiler.h"
 #include "t_interpreter.h"
 #include "t_machine.h"
+#include "chars.h"
 #include "t_panel.h"
 #include "t_input_widget.h"
-#include "chars.h"
+#include "t_alert_widget.h"
+
+#define PTM_EDITOR_WINDOW_TITLE		"PTM"
 
 t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
+	wnd->SetTitle(PTM_EDITOR_WINDOW_TITLE);
 	csr_overwrite = false;
 	prg_view.max_chars = wnd->Cols - 2;
 	prg_view.max_lines = wnd->Rows - 2;
@@ -110,9 +114,9 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 		if (shift) save_program_as();
 		else save_program(prg_filename);
 	} else if (ctrl && key == SDLK_n) {
-		new_file();
+		new_program();
 	} else if (ctrl && key == SDLK_r) {
-		reload_file();
+		reload_program();
 	} else if (!ctrl && is_valid_prg_char(key)) {
 		type_char(key);
 		unsaved = true;
@@ -378,7 +382,7 @@ void t_program_editor::type_pgdn() {
 		move_prg_csr_down();
 	}
 }
-void t_program_editor::new_file() {
+void t_program_editor::new_program() {
 	if (unsaved) {
 		const auto result = confirm("There are unsaved changes.  Save? (Y/N)");
 		if (result == t_confirm_result::yes) save_program(prg_filename);
@@ -391,7 +395,7 @@ void t_program_editor::new_file() {
 	move_prg_csr_home();
 	cancel_line_selection();
 }
-void t_program_editor::reload_file() {
+void t_program_editor::reload_program() {
 	if (!unsaved) return;
 	const auto result = confirm("Reload program? (Y/N)");
 	if (result == t_confirm_result::yes) load_program(prg_filename);
@@ -403,7 +407,7 @@ void t_program_editor::load_program() {
 		else if (result == t_confirm_result::cancel) return;
 	}
 	hide_cursor();
-	t_input_widget* widget = new t_input_widget(globals, "Load program", color.fg, color.bdr_bg);
+	t_input_widget* widget = new t_input_widget(globals, "Load program", color.fg, color.pnl_bg);
 	string file = widget->show();
 	delete widget;
 	if (file.empty()) return;
@@ -412,6 +416,7 @@ void t_program_editor::load_program() {
 void t_program_editor::load_program(string file) {
 	if (file.empty()) return;
 	if (!File::Exists(file)) {
+		alert_error("Load program", "File not found");
 		return;
 	}
 	prg.load_encrypted(file);
@@ -432,7 +437,7 @@ void t_program_editor::save_program(string file) {
 void t_program_editor::save_program_as() {
 	hide_cursor();
 	t_input_widget* widget = new t_input_widget(
-		globals, "Save program", prg_filename, color.fg, color.bdr_bg);
+		globals, "Save program", prg_filename, color.fg, color.pnl_bg);
 	string file = widget->show();
 	delete widget;
 	if (file.empty()) return;
@@ -452,12 +457,13 @@ void t_program_editor::compile_and_run() {
 		if (!errors.empty()) {
 			print_errors(errors);
 		}
+		wnd->SetTitle(PTM_EDITOR_WINDOW_TITLE);
 	} else {
 		print_errors(compiler.errors);
 	}
 }
 void t_program_editor::print_errors(std::vector<string>& errors) {
-	snd->Beep(2500, 100);
+	beep();
 	string error = errors[0];
 	while (running || !cfg->autorun.empty()) {
 		draw_screen_base();
@@ -577,7 +583,7 @@ bool t_program_editor::has_selection() {
 }
 void t_program_editor::show_help() {
 	hide_cursor();
-	t_panel pnl(buf, color.fg, color.bdr_bg);
+	t_panel pnl(buf, color.fg, color.pnl_bg);
 	pnl.title = "Help";
 	pnl.maximize();
 	pnl.center_title();
@@ -621,7 +627,7 @@ t_confirm_result t_program_editor::confirm(string msg) {
 	const int w = msg.length();
 	const int x = (buf->Cols / 2) - (w / 2) - 1;
 	const int y = (buf->Rows - 2) / 2;
-	t_panel* pnl = new t_panel(buf, x, y, w, h, color.fg, color.bdr_bg);
+	t_panel* pnl = new t_panel(buf, x, y, w, h, color.fg, color.pnl_bg);
 
 	while (true) {
 		pnl->draw_frame();
@@ -645,4 +651,13 @@ t_confirm_result t_program_editor::confirm(string msg) {
 	}
 	delete pnl;
 	return result;
+}
+void t_program_editor::alert_error(string title, string text) {
+	beep();
+	t_alert_widget* widget = new t_alert_widget(globals, title, text, color.fg, color.error_bg);
+	widget->show();
+	delete widget;
+}
+void t_program_editor::beep() {
+	snd->Beep(2500, 100);
 }

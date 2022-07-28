@@ -66,8 +66,8 @@ private:
 	void type_delete();
 	void type_pgup();
 	void type_pgdn();
-	void new_file();
-	void reload_file();
+	void new_program();
+	void reload_program();
 	void load_program();
 	void load_program(string file);
 	void save_program(string file);
@@ -88,4 +88,6 @@ private:
 	bool has_selection();
 	void show_help();
 	t_confirm_result confirm(string msg);
+	void alert_error(string title, string text);
+	void beep();
 };

@@ -17,4 +17,3 @@ using ixc = CharsetIndex;
 
 #define PTM_CONFIG_FILE		"PTM.cfg"
 #define PTM_DEBUG_FILE		"PTM.dbg"
-#define PTM_AUTOEXEC_FILE	"exec"

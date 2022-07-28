@@ -27,6 +27,8 @@ protected:
 		int comment_fg;
 		int sel_bg;
 		int fg_bold;
+		int error_bg;
+		int pnl_bg;
 	} color;
 	
 	virtual void on_run_loop() = 0;

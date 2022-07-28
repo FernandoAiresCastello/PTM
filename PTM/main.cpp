@@ -14,8 +14,6 @@ int main(int argc, char* argv[]) {
 	g.wnd->SetTitle("PTM");
 	g.wnd->Show();
 
-	g.cfg->check_for_autorunnable_file();
-
 	t_program_editor* editor = new t_program_editor(&g);
 	if (g.cfg->autorun.empty()) {
 		editor->run();

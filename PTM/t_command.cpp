@@ -101,6 +101,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	// Sound
 	else if (cmd == "SND.PLAY")		play_sound(args);
 	else if (cmd == "SND.LOOP")		loop_sound(args);
+	// Window
+	else if (cmd == "TITLE")		set_window_title(args);
 
 	else return false;
 	return true;
@@ -799,4 +801,8 @@ void t_command::assert_lte(t_params& arg) {
 	if (not(String::ToInt(machine->vars[id].value) <= intp->require_number(arg[1]))) {
 		intp->abort("Assertion error");
 	}
+}
+void t_command::set_window_title(t_params& arg) {
+	ARGC(1);
+	machine->wnd->SetTitle(intp->require_string(arg[0]));
 }

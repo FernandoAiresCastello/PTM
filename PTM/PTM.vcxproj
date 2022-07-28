@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="base64.cpp" />
+    <ClCompile Include="t_alert_widget.cpp" />
     <ClCompile Include="t_command.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="t_config.cpp" />
@@ -167,6 +168,7 @@
   <ItemGroup>
     <ClInclude Include="base64.h" />
     <ClInclude Include="chars.h" />
+    <ClInclude Include="t_alert_widget.h" />
     <ClInclude Include="t_command.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="t_config.h" />

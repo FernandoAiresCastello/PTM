@@ -4,7 +4,7 @@
 void t_default_gfx::init_palette(TPalette* pal) {
 	pal->DeleteAll();
 	pal->AddBlank(256);
-	// Runtime colors
+	// Basic runtime colors
 	pal->Set(0, 0x000000); // black
 	pal->Set(1, 0xffffff); // white
 	// Program editor colors
@@ -18,6 +18,8 @@ void t_default_gfx::init_palette(TPalette* pal) {
 	pal->Set(248, 0x808080); // comment_fg
 	pal->Set(247, 0x0000ff); // sel_bg
 	pal->Set(246, 0xffffff); // fg_bold
+	pal->Set(245, 0xd00000); // error_bg
+	pal->Set(244, 0x0000c0); // pnl_bg
 }
 void t_default_gfx::init_charset(TCharset* chr) {
 	chr->Set(chars::cursor_ovr,

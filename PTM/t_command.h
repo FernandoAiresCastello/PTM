@@ -8,10 +8,12 @@ struct t_machine;
 struct t_command {
 	t_command(t_interpreter* intp);
 	bool execute(string& cmd, t_params& args);
+
 private:
 	t_interpreter* intp;
 	t_machine* machine;
 	std::vector<string> get_debug_info();
+
 	// Commands
 	void halt(t_params& arg);
 	void exit(t_params& arg);
@@ -87,4 +89,5 @@ private:
 	void assert_gte(t_params& arg);
 	void assert_lt(t_params& arg);
 	void assert_lte(t_params& arg);
+	void set_window_title(t_params& arg);
 };
