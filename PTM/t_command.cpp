@@ -3,9 +3,6 @@
 #include "t_machine.h"
 #include "t_program.h"
 
-#define ARGC(x)				if (!intp->argc(arg, x)) return;
-#define ARGC_MIN_MAX(x, y)	if (!intp->argc(arg, x, y)) return;
-
 t_command::t_command(t_interpreter* intp) {
 	this->intp = intp;
 	machine = intp->machine;
@@ -52,6 +49,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "CSR.D")		move_cursor_down(args);
 	else if (cmd == "CSR.ON")		set_cursor_visible(args, true);
 	else if (cmd == "CSR.OFF")		set_cursor_visible(args, false);
+	else if (cmd == "CSR.COLOR")	set_cursor_color(args);
 	// Tile buffer
 	else if (cmd == "BUF.PUT")		put_tile(args);
 	else if (cmd == "BUF.DEL")		delete_tile(args);
@@ -66,6 +64,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	// Graphics / Window
 	else if (cmd == "CHR")			define_char(args);
 	else if (cmd == "PAL")			define_color(args);
+	else if (cmd == "CHR.SIZE")		get_charset_size(args);
+	else if (cmd == "PAL.SIZE")		get_palette_size(args);
 	else if (cmd == "VSYNC")		update_screen(args);
 	else if (cmd == "TITLE")		set_window_title(args);
 	else if (cmd == "GFX.BG")		set_window_bgcolor(args);
@@ -84,6 +84,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "ESCAPE.ON")	allow_exit_on_escape_key(args, true);
 	else if (cmd == "ESCAPE.OFF")	allow_exit_on_escape_key(args, false);
 	// Debug
+	else if (cmd == "BRK")			trigger_breakpoint(args);
 	else if (cmd == "DBG.FILE")		save_debug_file(args);
 	else if (cmd == "ASSERT.EQ")	assert_eq(args);
 	else if (cmd == "ASSERT.NEQ")	assert_neq(args);
@@ -268,60 +269,75 @@ void t_command::set_cursor_visible(t_params& arg, bool visible) {
 	ARGC(0);
 	machine->csr.visible = visible;
 }
+void t_command::set_cursor_color(t_params& arg) {
+	ARGC(1);
+	int color = intp->require_palette_ix(arg[0]);
+	if (color != PTM_INVALID_NUMBER) {
+		machine->csr.color = color;
+	}
+}
 void t_command::init_cur_tile(t_params& arg) {
-	ARGC(3);
-	TTile tile;
-	tile.Char = intp->require_number(arg[0]);
-	tile.ForeColor = intp->require_number(arg[1]);
-	tile.BackColor = intp->require_number(arg[2]);
-	machine->cur_tile.Clear();
-	machine->cur_tile.Add(tile);
+	ARGC_MIN_MAX(0, 3);
+	if (arg.empty()) {
+		machine->cur_tile.Clear();
+	} else if (arg.size() == 3) {
+		TTile tile;
+		tile.Char = intp->require_charset_ix(arg[0]);
+		tile.ForeColor = intp->require_palette_ix(arg[1]);
+		tile.BackColor = intp->require_palette_ix(arg[2]);
+		machine->cur_tile.Clear();
+		machine->cur_tile.Add(tile);
+	} else {
+		intp->abort("Invalid argument count");
+	}
 }
 void t_command::append_cur_tile(t_params& arg) {
 	ARGC(3);
 	TTile tile;
-	tile.Char = intp->require_number(arg[0]);
-	tile.ForeColor = intp->require_number(arg[1]);
-	tile.BackColor = intp->require_number(arg[2]);
+	tile.Char = intp->require_charset_ix(arg[0]);
+	tile.ForeColor = intp->require_palette_ix(arg[1]);
+	tile.BackColor = intp->require_palette_ix(arg[2]);
 	machine->cur_tile.Add(tile);
 }
 void t_command::set_cur_tile_char(t_params& arg) {
 	ARGC(2);
-	int frame = intp->require_number(arg[0]);
-	if (frame < machine->cur_tile.GetSize()) {
-		int ch = intp->require_number(arg[1]);
-		machine->cur_tile.SetChar(frame, ch);
-	} else {
-		intp->abort(String::Format("Tile frame index out of bounds: %i", frame));
+	int frame = intp->require_tile_frame_ix(machine->cur_tile, arg[0]);
+	if (frame != PTM_INVALID_NUMBER) {
+		int ch = intp->require_charset_ix(arg[1]);
+		if (ch != PTM_INVALID_NUMBER) {
+			machine->cur_tile.SetChar(frame, ch);
+		}
 	}
 }
 void t_command::set_cur_tile_fgcolor(t_params& arg) {
 	ARGC(2);
-	int frame = intp->require_number(arg[0]);
-	if (frame < machine->cur_tile.GetSize()) {
-		int color = intp->require_number(arg[1]);
-		machine->cur_tile.SetForeColor(frame, color);
-	} else {
-		intp->abort(String::Format("Tile frame index out of bounds: %i", frame));
+	int frame = intp->require_tile_frame_ix(machine->cur_tile, arg[0]);
+	if (frame != PTM_INVALID_NUMBER) {
+		int color = intp->require_palette_ix(arg[1]);
+		if (color != PTM_INVALID_NUMBER) {
+			machine->cur_tile.SetForeColor(frame, color);
+		}
 	}
 }
 void t_command::set_cur_tile_bgcolor(t_params& arg) {
 	ARGC(2);
-	int frame = intp->require_number(arg[0]);
-	if (frame < machine->cur_tile.GetSize()) {
-		int color = intp->require_number(arg[1]);
-		machine->cur_tile.SetBackColor(frame, color);
-	} else {
-		intp->abort(String::Format("Tile frame index out of bounds: %i", frame));
+	int frame = intp->require_tile_frame_ix(machine->cur_tile, arg[0]);
+	if (frame != PTM_INVALID_NUMBER) {
+		int color = intp->require_palette_ix(arg[1]);
+		if (color != PTM_INVALID_NUMBER) {
+			machine->cur_tile.SetBackColor(frame, color);
+		}
 	}
 }
 void t_command::parse_cur_tile(t_params& arg) {
 	ARGC(1);
 	string tile = intp->require_string(arg[0]);
 	if (!tile.empty()) {
-		bool ok = machine->cur_tile.Parse(tile);
-		if (!ok) {
+		bool parse_ok = machine->cur_tile.Parse(tile);
+		if (!parse_ok) {
 			intp->abort("Malformed tile definition");
+		} else if (!machine->is_valid_tileseq(machine->cur_tile)) {
+			intp->abort("Invalid tile definition");
 		}
 	}
 }
@@ -437,7 +453,10 @@ void t_command::clear_rect(t_params& arg) {
 }
 void t_command::set_window_bgcolor(t_params& arg) {
 	ARGC(1);
-	machine->set_window_bgcolor(intp->require_number(arg[0]));
+	int color = intp->require_palette_ix(arg[0]);
+	if (color != PTM_INVALID_NUMBER) {
+		machine->set_window_bgcolor(color);
+	}
 }
 void t_command::set_tile_transparency(t_params& arg, bool transparent) {
 	ARGC(0);
@@ -454,16 +473,28 @@ void t_command::select_layer(t_params& arg) {
 }
 void t_command::define_char(t_params& arg) {
 	ARGC(3);
-	int chr_ix = intp->require_number(arg[0]);
-	int row_ix = intp->require_number(arg[1]);
-	int data = intp->require_number(arg[2]);
-	machine->chr->Set(chr_ix, row_ix, data);
+	int chr_ix = intp->require_charset_ix(arg[0]);
+	if (chr_ix != PTM_INVALID_NUMBER) {
+		int row_ix = intp->require_number(arg[1]);
+		int data = intp->require_number(arg[2]);
+		if (machine->is_valid_char_def(row_ix, data)) {
+			machine->chr->Set(chr_ix, row_ix, data);
+		} else {
+			intp->abort("Invalid char definition");
+		}
+	}
 }
 void t_command::define_color(t_params& arg) {
 	ARGC(2);
-	int pal_ix = intp->require_number(arg[0]);
-	int rgb = intp->require_number(arg[1]);
-	machine->pal->Set(pal_ix, rgb);
+	int pal_ix = intp->require_palette_ix(arg[0]);
+	if (pal_ix != PTM_INVALID_NUMBER) {
+		int rgb = intp->require_number(arg[1]);
+		if (machine->is_valid_color_rgb(rgb)) {
+			machine->pal->Set(pal_ix, rgb);
+		} else {
+			intp->abort("Invalid color RGB definition");
+		}
+	}
 }
 void t_command::update_screen(t_params& arg) {
 	ARGC(0);
@@ -474,7 +505,7 @@ void t_command::get_random_number(t_params& arg) {
 	string var = intp->require_id(arg[0]);
 	int min = intp->require_number(arg[1]);
 	int max = intp->require_number(arg[2]);
-	machine->vars[var] = String::ToString(Util::Random(min, max));
+	machine->set_var(var, Util::Random(min, max));
 }
 void t_command::pause(t_params& arg) {
 	ARGC(1);
@@ -549,22 +580,33 @@ void t_command::print_text(t_params& arg, bool crlf) {
 }
 void t_command::set_text_fgcolor(t_params& arg) {
 	ARGC(1);
-	machine->text_color.fg = intp->require_number(arg[0]);
+	int color = intp->require_palette_ix(arg[0]);
+	if (color != PTM_INVALID_NUMBER) {
+		machine->text_color.fg = color;
+	}
 }
 void t_command::set_text_bgcolor(t_params& arg) {
-	ARGC(1);
-	machine->text_color.bg = intp->require_number(arg[0]);
+	int color = intp->require_palette_ix(arg[0]);
+	if (color != PTM_INVALID_NUMBER) {
+		machine->text_color.bg = color;
+	}
 }
 void t_command::set_text_colors(t_params& arg) {
 	ARGC(2);
-	machine->text_color.fg = intp->require_number(arg[0]);
-	machine->text_color.bg = intp->require_number(arg[1]);
+	int fg = intp->require_palette_ix(arg[0]);
+	if (fg != PTM_INVALID_NUMBER) {
+		machine->text_color.fg = fg;
+	}
+	int bg = intp->require_palette_ix(arg[1]);
+	if (bg != PTM_INVALID_NUMBER) {
+		machine->text_color.bg = bg;
+	}
 }
 void t_command::get_key_pressed(t_params& arg) {
 	ARGC(1);
 	string id = intp->require_id(arg[0]);
 	if (!id.empty()) {
-		machine->vars[id] = String::ToString(machine->last_key_pressed);
+		machine->set_var(id, machine->last_key_pressed);
 		machine->last_key_pressed = 0;
 	}
 }
@@ -731,7 +773,7 @@ void t_command::get_array_length(t_params& arg) {
 	if (arr_id.empty()) return;
 	string var_id = intp->require_id(arg[1]);
 	if (var_id.empty()) return;
-	machine->vars[var_id] = machine->arrays[arr_id].size();
+	machine->set_var(var_id, machine->arrays[arr_id].size());
 }
 void t_command::set_array_element(t_params& arg) {
 	ARGC(2);
@@ -739,7 +781,7 @@ void t_command::set_array_element(t_params& arg) {
 	if (arr_id.empty()) return;
 	auto& arr = machine->arrays[arr_id];
 	int ix = intp->require_array_index(arr, arg[0]);
-	if (ix >= 0) {
+	if (ix != PTM_INVALID_NUMBER) {
 		arr[ix] = intp->require_string(arg[1]);
 	}
 }
@@ -749,7 +791,7 @@ void t_command::erase_array_element(t_params& arg) {
 	if (arr_id.empty()) return;
 	auto& arr = machine->arrays[arr_id];
 	int ix = intp->require_array_index(arr, arg[0]);
-	if (ix >= 0) {
+	if (ix != PTM_INVALID_NUMBER) {
 		if (!arr.empty()) {
 			arr.erase(arr.begin() + ix);
 		} else {
@@ -776,7 +818,7 @@ void t_command::increment_variable(t_params& arg) {
 	string id = intp->require_id(arg[0]);
 	if (id.empty()) return;
 	auto& var = machine->vars[id];
-	machine->vars[id] = String::ToString(String::ToInt(var.value) + 1);
+	machine->set_var(id, String::ToInt(var.value) + 1);
 }
 void t_command::allow_exit_on_escape_key(t_params& arg, bool allow) {
 	ARGC(0);
@@ -835,4 +877,17 @@ void t_command::assert_lte(t_params& arg) {
 void t_command::set_window_title(t_params& arg) {
 	ARGC(1);
 	machine->wnd->SetTitle(intp->require_string(arg[0]));
+}
+void t_command::get_charset_size(t_params& arg) {
+	ARGC(1);
+	string var = intp->require_id(arg[0]);
+	machine->set_var(var, machine->chr->GetSize());
+}
+void t_command::get_palette_size(t_params& arg) {
+	ARGC(1);
+	string var = intp->require_id(arg[0]);
+	machine->set_var(var, machine->pal->GetSize());
+}
+void t_command::trigger_breakpoint(t_params& arg) {
+	debugger;
 }

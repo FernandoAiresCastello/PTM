@@ -76,3 +76,33 @@ void t_machine::draw_cursor() {
 	csr.tile.Add(chars::empty, csr.color, csr.color);
 	tilebuf->SetTile(csr.tile, t_layer::topmost, csr.x, csr.y, true);
 }
+bool t_machine::is_valid_tileseq(TTileSeq& tileseq) {
+	bool valid = true;
+	for (int i = 0; i < tileseq.GetSize(); i++) {
+		if (!is_valid_tile(tileseq.Get(i))) {
+			valid = false;
+			break;
+		}
+	}
+	return valid;
+}
+bool t_machine::is_valid_tile(const TTile& tile) {
+	return
+		tile.Char >= 0 && tile.Char < chr->GetSize() &&
+		tile.ForeColor >= 0 && tile.ForeColor < pal->GetSize() &&
+		tile.BackColor >= 0 && tile.BackColor < pal->GetSize();
+}
+bool t_machine::is_valid_charset_ix(int ix) {
+	return ix >= 0 && ix < chr->GetSize();
+}
+bool t_machine::is_valid_palette_ix(int ix) {
+	return ix >= 0 && ix < pal->GetSize();
+}
+bool t_machine::is_valid_char_def(int row_ix, int data) {
+	return
+		row_ix >= 0 && row_ix < TChar::Height &&
+		data >= 0 && data < 256;
+}
+bool t_machine::is_valid_color_rgb(int rgb) {
+	return rgb >= 0 && rgb <= 0xffffff;
+}

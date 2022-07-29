@@ -2,6 +2,9 @@
 #include "common.h"
 #include "t_param.h"
 
+#define ARGC(x)				if (!intp->argc(arg, x)) return;
+#define ARGC_MIN_MAX(x, y)	if (!intp->argc(arg, x, y)) return;
+
 struct t_program;
 struct t_program_line;
 struct t_machine;
@@ -42,4 +45,7 @@ private:
 	void goto_label(string label);
 	void call_label(string label);
 	void return_from_call();
+	int require_charset_ix(t_param& arg);
+	int require_palette_ix(t_param& arg);
+	int require_tile_frame_ix(TTileSeq& tile, t_param& arg);
 };

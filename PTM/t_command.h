@@ -29,6 +29,7 @@ private:
 	void move_cursor_up(t_params& arg);
 	void move_cursor_down(t_params& arg);
 	void set_cursor_visible(t_params& arg, bool visible);
+	void set_cursor_color(t_params& arg);
 	void init_cur_tile(t_params& arg);
 	void append_cur_tile(t_params& arg);
 	void set_cur_tile_char(t_params& arg);
@@ -96,4 +97,7 @@ private:
 	void assert_lt(t_params& arg);
 	void assert_lte(t_params& arg);
 	void set_window_title(t_params& arg);
+	void get_charset_size(t_params& arg);
+	void get_palette_size(t_params& arg);
+	void trigger_breakpoint(t_params& arg);
 };

@@ -135,23 +135,24 @@ string t_interpreter::require_existing_varname(t_param& arg) {
 	return arg.id;
 }
 int t_interpreter::require_number(t_param& arg) {
+	int number = PTM_INVALID_NUMBER;
 	if (arg.type == t_param_type::number || 
 		arg.type == t_param_type::string || 
 		arg.type == t_param_type::char_literal) {
-		return arg.numeric_value;
+		number = arg.numeric_value;
 	} else if (arg.type == t_param_type::id) {
 		if (machine->vars.find(arg.id) != machine->vars.end()) {
-			return String::ToInt(machine->vars[arg.id].value);
+			number = String::ToInt(machine->vars[arg.id].value);
 		} else {
 			abort("Variable not found: " + arg.id);
 		}
 	} else if (arg.is_array_element_ix()) {
 		string value = require_array_element(arg);
-		return String::ToInt(value);
+		number = String::ToInt(value);
 	} else {
 		abort("Syntax error");
 	}
-	return 0;
+	return number;
 }
 string t_interpreter::require_string(t_param& arg) {
 	if (arg.type == t_param_type::string || arg.type == t_param_type::number) {
@@ -210,7 +211,8 @@ string t_interpreter::require_array_element(t_param& arg) {
 	return "";
 }
 int t_interpreter::require_array_index(std::vector<string>& arr, t_param& arg) {
-	int index = -1;
+	int index = PTM_INVALID_NUMBER;
+
 	if (arg.type == t_param_type::arr_ix_literal) {
 		index = arg.arr_ix_literal;
 	} else if (arg.type == t_param_type::arr_ix_var) {
@@ -223,9 +225,10 @@ int t_interpreter::require_array_index(std::vector<string>& arr, t_param& arg) {
 	} else {
 		abort("Array index expected");
 	}
+
 	if (index < 0 || index >= arr.size()) {
 		abort(String::Format("Array index out of bounds: %i", index));
-		index = -1;
+		index = PTM_INVALID_NUMBER;
 	}
 	return index;
 }
@@ -246,4 +249,28 @@ void t_interpreter::return_from_call() {
 	} else {
 		abort("Call stack is empty");
 	}
+}
+int t_interpreter::require_charset_ix(t_param& arg) {
+	int ix = require_number(arg);
+	if (machine->is_valid_charset_ix(ix)) {
+		return ix;
+	}
+	abort(String::Format("Invalid charset index: %i", ix));
+	return PTM_INVALID_NUMBER;
+}
+int t_interpreter::require_palette_ix(t_param& arg) {
+	int ix = require_number(arg);
+	if (machine->is_valid_palette_ix(ix)) {
+		return ix;
+	}
+	abort(String::Format("Invalid palette index: %i", ix));
+	return PTM_INVALID_NUMBER;
+}
+int t_interpreter::require_tile_frame_ix(TTileSeq& tile, t_param& arg) {
+	int frame = require_number(arg);
+	if (frame >= 0 && frame < tile.GetSize()) {
+		return frame;
+	}
+	abort(String::Format("Tile frame index out of bounds: %i", frame));
+	return PTM_INVALID_NUMBER;
 }

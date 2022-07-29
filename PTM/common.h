@@ -15,3 +15,5 @@ using string = std::string;
 
 #define PTM_CONFIG_FILE		"PTM.cfg"
 #define PTM_DEBUG_FILE		"PTM.dbg"
+
+#define PTM_INVALID_NUMBER	INT_MIN

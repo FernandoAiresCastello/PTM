@@ -50,6 +50,12 @@ struct t_machine {
 	void delete_tile_at_cursor_pos();
 	void set_window_bgcolor(int palette_ix);
 	void draw_cursor();
+	bool is_valid_tileseq(TTileSeq& tileseq);
+	bool is_valid_tile(const TTile& tile);
+	bool is_valid_charset_ix(int ix);
+	bool is_valid_palette_ix(int ix);
+	bool is_valid_char_def(int row_ix, int data);
+	bool is_valid_color_rgb(int rgb);
 
 private:
 	TCharset* original_chr;
