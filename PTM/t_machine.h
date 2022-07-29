@@ -49,6 +49,7 @@ struct t_machine {
 	void put_cur_tile_at_cursor_pos();
 	void delete_tile_at_cursor_pos();
 	void set_window_bgcolor(int palette_ix);
+	void draw_cursor();
 
 private:
 	TCharset* original_chr;

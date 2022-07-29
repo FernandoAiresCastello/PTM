@@ -1,5 +1,6 @@
 #include "t_panel.h"
 #include "chars.h"
+#include "t_layer.h"
 
 t_panel::t_panel(TTileBuffer* buf, int fgc, int bgc) : t_panel(buf, 0, 0, 0, 0, fgc, bgc) {
 }
@@ -24,7 +25,7 @@ void t_panel::draw_frame() {
 	const int y = frame_y;
 	const int w = frame_w;
 	const int h = frame_h;
-	const int layer = PTM_PANEL_LAYER;
+	const int layer = t_layer::panel;
 	const int ch_back = chars::empty;
 	const int ch_tl = chars::pnl_corner_tl;
 	const int ch_tr = chars::pnl_corner_tr;
@@ -84,7 +85,7 @@ void t_panel::draw_frame() {
 	}
 }
 void t_panel::erase_frame() {
-	buf->ClearLayerRect(PTM_PANEL_LAYER, frame_x, frame_y, frame_w, frame_h);
+	buf->ClearLayerRect(t_layer::panel, frame_x, frame_y, frame_w, frame_h);
 }
 void t_panel::center_title() {
 	if (!title.empty()) {
@@ -105,10 +106,10 @@ void t_panel::maximize(int margin) {
 	frame_h = (buf->Rows - 1 - margin) - (margin);
 }
 void t_panel::put_tile(TTileSeq tile, int x, int y, bool transparent) {
-	buf->SetTile(tile, PTM_PANEL_LAYER, frame_x + x + 1, frame_y + y + 1, transparent);
+	buf->SetTile(tile, t_layer::panel, frame_x + x + 1, frame_y + y + 1, transparent);
 }
 void t_panel::erase_tile(int x, int y) {
-	buf->EraseTile(PTM_PANEL_LAYER, frame_x + x + 1, frame_y + y + 1);
+	buf->EraseTile(t_layer::panel, frame_x + x + 1, frame_y + y + 1);
 }
 void t_panel::print(string text, int x, int y) {
 	print(text, x, y, fgc);

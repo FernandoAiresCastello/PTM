@@ -1,6 +1,7 @@
 #include "t_machine.h"
 #include "t_default_gfx.h"
 #include "chars.h"
+#include "t_layer.h"
 
 t_machine::t_machine(TBufferedWindow* wnd) {
 	init_system_vars();
@@ -34,18 +35,14 @@ t_machine::~t_machine() {
 void t_machine::on_loop() {
 }
 void t_machine::on_screen_update() {
-	if (csr.visible) {
-		csr.tile.Add(chars::cursor_full, csr.color, csr.color);
-		csr.tile.Add(chars::empty, csr.color, csr.color);
-		tilebuf->SetTile(csr.tile, PTM_LAYER_TOPMOST, csr.x, csr.y, true);
-	}
+	draw_cursor();
 	wnd->Update();
 }
 void t_machine::init_system_vars() {
-	set_const("sys.layer.btm", PTM_LAYER_BTM);
-	set_const("sys.layer.top", PTM_LAYER_TOP);
-	set_const("sys.layer.topmost", PTM_LAYER_TOPMOST);
-	set_const("sys.panel.layer", PTM_PANEL_LAYER);
+	set_const("sys.layer.btm", t_layer::bottom);
+	set_const("sys.layer.top", t_layer::top);
+	set_const("sys.layer.topmost", t_layer::topmost);
+	set_const("sys.layer.panel", t_layer::panel);
 
 	set_const("sys.kb.right", 1073741903);
 	set_const("sys.kb.left", 1073741904);
@@ -72,4 +69,10 @@ void t_machine::delete_tile_at_cursor_pos() {
 }
 void t_machine::set_window_bgcolor(int palette_ix) {
 	wnd->SetBackColor(pal->GetColorRGB(palette_ix));
+}
+void t_machine::draw_cursor() {
+	if (!csr.visible) return;
+	csr.tile.Add(chars::cursor_full, csr.color, csr.color);
+	csr.tile.Add(chars::empty, csr.color, csr.color);
+	tilebuf->SetTile(csr.tile, t_layer::topmost, csr.x, csr.y, true);
 }

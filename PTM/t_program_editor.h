@@ -2,6 +2,7 @@
 #include "common.h"
 #include "t_program.h"
 #include "t_ui_base.h"
+#include "t_layer.h"
 
 struct t_config;
 
@@ -31,7 +32,7 @@ private:
 		int first_char_ix = 0;
 		int max_lines = 0;
 		int max_chars = 0;
-		int layer = PTM_LAYER_BTM;
+		int layer = t_layer::bottom;
 	} prg_view;
 	int line_selection_start = -1;
 	std::vector<string> clipboard;

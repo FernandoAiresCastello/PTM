@@ -4,13 +4,14 @@
 #include "t_program_editor.h"
 #include "t_globals.h"
 #include "t_machine.h"
+#include "t_layer.h"
 
 int main(int argc, char* argv[]) {
 	t_globals g;
 	g.cfg->load();
 	g.snd->SetVolume(TSound::MinVolume + 1000);
 	TWindowCreationFlags::RenderScaleQuality = "best";
-	g.wnd = new TBufferedWindow(PTM_MAX_LAYERS, 45, 25, 3, 3);
+	g.wnd = new TBufferedWindow(t_layer::max, 45, 25, 3, 3);
 	g.wnd->SetTitle("PTM");
 	g.wnd->Show();
 

@@ -173,6 +173,7 @@
     <ClInclude Include="t_compiler.h" />
     <ClInclude Include="t_default_gfx.h" />
     <ClInclude Include="t_input_widget.h" />
+    <ClInclude Include="t_layer.h" />
     <ClInclude Include="t_machine.h" />
     <ClInclude Include="t_globals.h" />
     <ClInclude Include="t_obfuscator.h" />
