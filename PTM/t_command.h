@@ -40,6 +40,7 @@ private:
 	void parse_and_store_tile(t_params& arg);
 	void load_cur_tile(t_params& arg);
 	void put_tile(t_params& arg);
+	void copy_tile(t_params& arg);
 	void delete_tile(t_params& arg);
 	void put_tile_repeat_right(t_params& arg);
 	void put_tile_repeat_left(t_params& arg);
@@ -58,6 +59,7 @@ private:
 	void get_random_number(t_params& arg);
 	void pause(t_params& arg);
 	void print_text(t_params& arg, bool crlf);
+	void print_text_char(t_params& arg);
 	void set_text_fgcolor(t_params& arg);
 	void set_text_bgcolor(t_params& arg);
 	void set_text_colors(t_params& arg);

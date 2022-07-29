@@ -47,6 +47,7 @@ struct t_machine {
 	void set_const(string id, int value);
 	void set_const(string id, string value);
 	void put_cur_tile_at_cursor_pos();
+	void copy_tile_at_cursor_pos();
 	void delete_tile_at_cursor_pos();
 	void set_window_bgcolor(int palette_ix);
 	void draw_cursor();

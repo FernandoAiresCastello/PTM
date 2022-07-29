@@ -52,6 +52,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "CSR.COLOR")	set_cursor_color(args);
 	// Tile buffer
 	else if (cmd == "BUF.PUT")		put_tile(args);
+	else if (cmd == "BUF.GET")		copy_tile(args);
 	else if (cmd == "BUF.DEL")		delete_tile(args);
 	else if (cmd == "BUF.REPR")		put_tile_repeat_right(args);
 	else if (cmd == "BUF.REPL")		put_tile_repeat_left(args);
@@ -73,6 +74,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "GFX.TROFF")	set_tile_transparency(args, false);
 	// Text output
 	else if (cmd == "PRINT")		print_text(args, false);
+	else if (cmd == "PUTCH")		print_text_char(args);
 	else if (cmd == "PRINTL")		print_text(args, true);
 	else if (cmd == "TEXT.FG")		set_text_fgcolor(args);
 	else if (cmd == "TEXT.BG")		set_text_bgcolor(args);
@@ -206,7 +208,7 @@ void t_command::set_variable(t_params& arg) {
 	string dst_var = intp->require_id(arg[0]);
 	if (!dst_var.empty()) {
 		if (machine->vars.find(dst_var) != machine->vars.end() && machine->vars[dst_var].is_const) {
-			intp->abort("Constant cannot be modified");
+			intp->abort("Constant cannot be modified: " + dst_var);
 			return;
 		}
 		if (arg[1].type == t_param_type::id) {
@@ -377,6 +379,10 @@ void t_command::put_tile(t_params& arg) {
 	ARGC(0);
 	machine->put_cur_tile_at_cursor_pos();
 }
+void t_command::copy_tile(t_params& arg) {
+	ARGC(0);
+	machine->copy_tile_at_cursor_pos();
+}
 void t_command::delete_tile(t_params& arg) {
 	ARGC(0);
 	machine->delete_tile_at_cursor_pos();
@@ -384,36 +390,52 @@ void t_command::delete_tile(t_params& arg) {
 void t_command::put_tile_repeat_right(t_params& arg) {
 	ARGC(1);
 	int count = intp->require_number(arg[0]);
-	for (int i = 0; i < count; i++) {
-		machine->put_cur_tile_at_cursor_pos();
-		machine->csr.x++;
+	if (count > 0) {
+		for (int i = 0; i < count; i++) {
+			machine->put_cur_tile_at_cursor_pos();
+			machine->csr.x++;
+			machine->put_cur_tile_at_cursor_pos();
+		}
+	} else {
 		machine->put_cur_tile_at_cursor_pos();
 	}
 }
 void t_command::put_tile_repeat_left(t_params& arg) {
 	ARGC(1);
 	int count = intp->require_number(arg[0]);
-	for (int i = 0; i < count; i++) {
-		machine->put_cur_tile_at_cursor_pos();
-		machine->csr.x--;
+	if (count > 0) {
+		for (int i = 0; i < count; i++) {
+			machine->put_cur_tile_at_cursor_pos();
+			machine->csr.x--;
+			machine->put_cur_tile_at_cursor_pos();
+		}
+	} else {
 		machine->put_cur_tile_at_cursor_pos();
 	}
 }
 void t_command::put_tile_repeat_up(t_params& arg) {
 	ARGC(1);
 	int count = intp->require_number(arg[0]);
-	for (int i = 0; i < count; i++) {
-		machine->put_cur_tile_at_cursor_pos();
-		machine->csr.y--;
+	if (count > 0) {
+		for (int i = 0; i < count; i++) {
+			machine->put_cur_tile_at_cursor_pos();
+			machine->csr.y--;
+			machine->put_cur_tile_at_cursor_pos();
+		}
+	} else {
 		machine->put_cur_tile_at_cursor_pos();
 	}
 }
 void t_command::put_tile_repeat_down(t_params& arg) {
 	ARGC(1);
 	int count = intp->require_number(arg[0]);
-	for (int i = 0; i < count; i++) {
-		machine->put_cur_tile_at_cursor_pos();
-		machine->csr.y++;
+	if (count > 0) {
+		for (int i = 0; i < count; i++) {
+			machine->put_cur_tile_at_cursor_pos();
+			machine->csr.y++;
+			machine->put_cur_tile_at_cursor_pos();
+		}
+	} else {
 		machine->put_cur_tile_at_cursor_pos();
 	}
 }
@@ -577,6 +599,15 @@ void t_command::print_text(t_params& arg, bool crlf) {
 			}
 		}
 	}
+}
+void t_command::print_text_char(t_params& arg) {
+	ARGC(1);
+	int ch = intp->require_number(arg[0]);
+	int fgc = machine->text_color.fg;
+	int bgc = machine->text_color.bg;
+	machine->tilebuf->SetTile(TTileSeq(ch, fgc, bgc),
+		machine->csr.layer, machine->csr.x, machine->csr.y, machine->tile_transparency);
+	machine->csr.x++;
 }
 void t_command::set_text_fgcolor(t_params& arg) {
 	ARGC(1);

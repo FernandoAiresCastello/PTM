@@ -64,6 +64,9 @@ void t_machine::set_const(string id, string value) {
 void t_machine::put_cur_tile_at_cursor_pos() {
 	tilebuf->SetTile(cur_tile, csr.layer, csr.x, csr.y, tile_transparency);
 }
+void t_machine::copy_tile_at_cursor_pos() {
+	cur_tile = tilebuf->GetTile(csr.layer, csr.x, csr.y);
+}
 void t_machine::delete_tile_at_cursor_pos() {
 	tilebuf->EraseTile(csr.layer, csr.x, csr.y);
 }
