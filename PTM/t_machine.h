@@ -51,6 +51,7 @@ struct t_machine {
 	void delete_tile_at_cursor_pos();
 	void set_window_bgcolor(int palette_ix);
 	void draw_cursor();
+	void erase_cursor();
 	bool is_valid_tileseq(TTileSeq& tileseq);
 	bool is_valid_tile(const TTile& tile);
 	bool is_valid_charset_ix(int ix);

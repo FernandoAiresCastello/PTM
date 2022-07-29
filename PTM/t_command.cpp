@@ -36,8 +36,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "TILE.FG")		set_cur_tile_fgcolor(args);
 	else if (cmd == "TILE.BG")		set_cur_tile_bgcolor(args);
 	else if (cmd == "TILE.PARSE")	parse_cur_tile(args);
-	else if (cmd == "TILE.STORE")	store_cur_tile(args);
-	else if (cmd == "TILE.PSTORE")	parse_and_store_tile(args);
+	else if (cmd == "TILE.STO")		store_cur_tile(args);
+	else if (cmd == "TILE.PSTO")	parse_and_store_tile(args);
 	else if (cmd == "TILE.LOAD")	load_cur_tile(args);
 	// Tile buffer cursor
 	else if (cmd == "CSR.LAYER")	select_layer(args);
@@ -47,6 +47,10 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "CSR.L")		move_cursor_left(args);
 	else if (cmd == "CSR.U")		move_cursor_up(args);
 	else if (cmd == "CSR.D")		move_cursor_down(args);
+	else if (cmd == "CSR.UR")		move_cursor_up_right(args);
+	else if (cmd == "CSR.UL")		move_cursor_up_left(args);
+	else if (cmd == "CSR.DR")		move_cursor_down_right(args);
+	else if (cmd == "CSR.DL")		move_cursor_down_left(args);
 	else if (cmd == "CSR.ON")		set_cursor_visible(args, true);
 	else if (cmd == "CSR.OFF")		set_cursor_visible(args, false);
 	else if (cmd == "CSR.COLOR")	set_cursor_color(args);
@@ -267,6 +271,34 @@ void t_command::move_cursor_down(t_params& arg) {
 	ARGC_MIN_MAX(0, 1);
 	machine->csr.y += arg.empty() ? 1 : intp->require_number(arg[0]);
 }
+void t_command::move_cursor_up_right(t_params& arg) {
+	ARGC_MIN_MAX(0, 1);
+	machine->erase_cursor();
+	int dist = arg.empty() ? 1 : intp->require_number(arg[0]);
+	machine->csr.y -= dist;
+	machine->csr.x += dist;
+}
+void t_command::move_cursor_up_left(t_params& arg) {
+	ARGC_MIN_MAX(0, 1);
+	machine->erase_cursor();
+	int dist = arg.empty() ? 1 : intp->require_number(arg[0]);
+	machine->csr.y -= dist;
+	machine->csr.x -= dist;
+}
+void t_command::move_cursor_down_right(t_params& arg) {
+	ARGC_MIN_MAX(0, 1);
+	machine->erase_cursor();
+	int dist = arg.empty() ? 1 : intp->require_number(arg[0]);
+	machine->csr.y += dist;
+	machine->csr.x += dist;
+}
+void t_command::move_cursor_down_left(t_params& arg) {
+	ARGC_MIN_MAX(0, 1);
+	machine->erase_cursor();
+	int dist = arg.empty() ? 1 : intp->require_number(arg[0]);
+	machine->csr.y += dist;
+	machine->csr.x -= dist;
+}
 void t_command::set_cursor_visible(t_params& arg, bool visible) {
 	ARGC(0);
 	machine->csr.visible = visible;
@@ -357,11 +389,15 @@ void t_command::parse_and_store_tile(t_params& arg) {
 		string tile_def = intp->require_string(arg[1]);
 		if (!tile_def.empty()) {
 			TTileSeq tile;
-			bool ok = tile.Parse(tile_def);
-			if (ok) {
+			bool parse_ok = tile.Parse(tile_def);
+			if (!parse_ok) {
+				intp->abort("Malformed tile definition");
+				return;
+			}
+			if (machine->is_valid_tileseq(tile)) {
 				machine->tilestore[id] = tile;
 			} else {
-				intp->abort("Malformed tile definition");
+				intp->abort("Invalid tile definition");
 			}
 		}
 	}

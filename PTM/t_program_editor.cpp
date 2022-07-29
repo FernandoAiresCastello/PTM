@@ -113,6 +113,8 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 		new_program();
 	} else if (ctrl && key == SDLK_r) {
 		reload_program();
+	} else if (shift && key == SDLK_a) {
+		select_entire_program();
 	} else if (!ctrl && is_valid_prg_char(key)) {
 		type_char(key);
 		unsaved = true;
@@ -554,6 +556,10 @@ void t_program_editor::start_line_selection() {
 }
 void t_program_editor::cancel_line_selection() {
 	line_selection_start = -1;
+}
+void t_program_editor::select_entire_program() {
+	line_selection_start = 0;
+	move_prg_csr_end();
 }
 std::pair<int, int> t_program_editor::get_line_selection_range() {
 	if (!has_selection()) { 

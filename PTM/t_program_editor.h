@@ -91,4 +91,5 @@ private:
 	t_confirm_result confirm(string msg);
 	void alert_error(string title, string text);
 	void beep();
+	void select_entire_program();
 };

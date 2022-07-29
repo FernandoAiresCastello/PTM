@@ -150,7 +150,7 @@ int t_interpreter::require_number(t_param& arg) {
 		string value = require_array_element(arg);
 		number = String::ToInt(value);
 	} else {
-		abort("Syntax error");
+		abort("Numeric value expected");
 	}
 	return number;
 }

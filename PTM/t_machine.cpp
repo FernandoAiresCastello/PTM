@@ -4,8 +4,6 @@
 #include "t_layer.h"
 
 t_machine::t_machine(TBufferedWindow* wnd) {
-	init_system_vars();
-
 	this->wnd = wnd;
 
 	tilebuf = wnd->GetBuffer();
@@ -23,6 +21,8 @@ t_machine::t_machine(TBufferedWindow* wnd) {
 
 	set_window_bgcolor(default_bgc);
 	wnd->Update();
+
+	init_system_vars();
 }
 t_machine::~t_machine() {
 	wnd->SetCharset(original_chr);
@@ -39,15 +39,19 @@ void t_machine::on_screen_update() {
 	wnd->Update();
 }
 void t_machine::init_system_vars() {
-	set_const("sys.layer.btm", t_layer::bottom);
-	set_const("sys.layer.top", t_layer::top);
-	set_const("sys.layer.topmost", t_layer::topmost);
-	set_const("sys.layer.panel", t_layer::panel);
-
-	set_const("sys.kb.right", 1073741903);
-	set_const("sys.kb.left", 1073741904);
-	set_const("sys.kb.down", 1073741905);
-	set_const("sys.kb.up", 1073741906);
+	// Tile buffer dimensions
+	set_const("$scr.cols", tilebuf->Cols);
+	set_const("$scr.rows", tilebuf->Rows);
+	// Tile buffer layers
+	set_const("$layer.btm", t_layer::bottom);
+	set_const("$layer.top", t_layer::top);
+	set_const("$layer.topmost", t_layer::topmost);
+	set_const("$layer.panel", t_layer::panel);
+	// Keyboard codes
+	set_const("$kb.right", 1073741903);
+	set_const("$kb.left", 1073741904);
+	set_const("$kb.down", 1073741905);
+	set_const("$kb.up", 1073741906);
 }
 void t_machine::set_var(string id, int value) {
 	vars[id] = t_variable(value);
@@ -78,6 +82,9 @@ void t_machine::draw_cursor() {
 	csr.tile.Add(chars::cursor_full, csr.color, csr.color);
 	csr.tile.Add(chars::empty, csr.color, csr.color);
 	tilebuf->SetTile(csr.tile, t_layer::topmost, csr.x, csr.y, true);
+}
+void t_machine::erase_cursor() {
+	tilebuf->EraseTile(t_layer::topmost, csr.x, csr.y);
 }
 bool t_machine::is_valid_tileseq(TTileSeq& tileseq) {
 	bool valid = true;

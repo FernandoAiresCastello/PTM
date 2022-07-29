@@ -28,6 +28,10 @@ private:
 	void move_cursor_left(t_params& arg);
 	void move_cursor_up(t_params& arg);
 	void move_cursor_down(t_params& arg);
+	void move_cursor_up_right(t_params& arg);
+	void move_cursor_up_left(t_params& arg);
+	void move_cursor_down_right(t_params& arg);
+	void move_cursor_down_left(t_params& arg);
 	void set_cursor_visible(t_params& arg, bool visible);
 	void set_cursor_color(t_params& arg);
 	void init_cur_tile(t_params& arg);
