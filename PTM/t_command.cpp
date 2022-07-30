@@ -169,7 +169,7 @@ std::vector<string> t_command::get_debug_info() {
 	// Tile buffer cursor
 	info.push_back("Tile buffer cursor");
 	info.push_back(String::Format("\tLayer=%i X=%i Y=%i", 
-		machine->csr.layer, machine->csr.x, machine->csr.y));
+		machine->get_csr_layer(), machine->get_csr_x(), machine->get_csr_y()));
 	info.push_back("");
 	// Callstack
 	info.push_back("Callstack");
@@ -247,67 +247,65 @@ void t_command::define_constant(t_params& arg) {
 }
 void t_command::set_cursor_pos(t_params& arg) {
 	ARGC(2);
-	machine->csr.x = intp->require_number(arg[0]);
-	machine->csr.y = intp->require_number(arg[1]);
+	int x = intp->require_number(arg[0]);
+	int y = intp->require_number(arg[1]);
+	machine->set_cursor_pos(x, y);
 }
 void t_command::move_cursor(t_params& arg) {
 	ARGC(2);
-	machine->csr.x += intp->require_number(arg[0]);
-	machine->csr.y += intp->require_number(arg[1]);
+	int dist_x = intp->require_number(arg[0]);
+	int dist_y = intp->require_number(arg[1]);
+	machine->move_cursor(dist_x, dist_y);
 }
 void t_command::move_cursor_right(t_params& arg) {
 	ARGC_MIN_MAX(0, 1);
-	machine->csr.x += arg.empty() ? 1 : intp->require_number(arg[0]);
+	int dist = arg.empty() ? 1 : intp->require_number(arg[0]);
+	machine->move_cursor(dist, 0);
 }
 void t_command::move_cursor_left(t_params& arg) {
 	ARGC_MIN_MAX(0, 1);
-	machine->csr.x -= arg.empty() ? 1 : intp->require_number(arg[0]);
+	int dist = arg.empty() ? 1 : intp->require_number(arg[0]);
+	machine->move_cursor(-dist, 0);
 }
 void t_command::move_cursor_up(t_params& arg) {
 	ARGC_MIN_MAX(0, 1);
-	machine->csr.y -= arg.empty() ? 1 : intp->require_number(arg[0]);
+	int dist = arg.empty() ? 1 : intp->require_number(arg[0]);
+	machine->move_cursor(0, -dist);
 }
 void t_command::move_cursor_down(t_params& arg) {
 	ARGC_MIN_MAX(0, 1);
-	machine->csr.y += arg.empty() ? 1 : intp->require_number(arg[0]);
+	int dist = arg.empty() ? 1 : intp->require_number(arg[0]);
+	machine->move_cursor(0, dist);
 }
 void t_command::move_cursor_up_right(t_params& arg) {
 	ARGC_MIN_MAX(0, 1);
-	machine->erase_cursor();
 	int dist = arg.empty() ? 1 : intp->require_number(arg[0]);
-	machine->csr.y -= dist;
-	machine->csr.x += dist;
+	machine->move_cursor(dist, -dist);
 }
 void t_command::move_cursor_up_left(t_params& arg) {
 	ARGC_MIN_MAX(0, 1);
-	machine->erase_cursor();
 	int dist = arg.empty() ? 1 : intp->require_number(arg[0]);
-	machine->csr.y -= dist;
-	machine->csr.x -= dist;
+	machine->move_cursor(-dist, -dist);
 }
 void t_command::move_cursor_down_right(t_params& arg) {
 	ARGC_MIN_MAX(0, 1);
-	machine->erase_cursor();
 	int dist = arg.empty() ? 1 : intp->require_number(arg[0]);
-	machine->csr.y += dist;
-	machine->csr.x += dist;
+	machine->move_cursor(dist, dist);
 }
 void t_command::move_cursor_down_left(t_params& arg) {
 	ARGC_MIN_MAX(0, 1);
-	machine->erase_cursor();
 	int dist = arg.empty() ? 1 : intp->require_number(arg[0]);
-	machine->csr.y += dist;
-	machine->csr.x -= dist;
+	machine->move_cursor(-dist, dist);
 }
 void t_command::set_cursor_visible(t_params& arg, bool visible) {
 	ARGC(0);
-	machine->csr.visible = visible;
+	machine->set_csr_visible(visible);
 }
 void t_command::set_cursor_color(t_params& arg) {
 	ARGC(1);
 	int color = intp->require_palette_ix(arg[0]);
 	if (color != PTM_INVALID_NUMBER) {
-		machine->csr.color = color;
+		machine->set_csr_color(color);
 	}
 }
 void t_command::init_cur_tile(t_params& arg) {
@@ -429,7 +427,7 @@ void t_command::put_tile_repeat_right(t_params& arg) {
 	if (count > 0) {
 		for (int i = 0; i < count; i++) {
 			machine->put_cur_tile_at_cursor_pos();
-			machine->csr.x++;
+			machine->move_cursor(1, 0);
 			machine->put_cur_tile_at_cursor_pos();
 		}
 	} else {
@@ -442,7 +440,7 @@ void t_command::put_tile_repeat_left(t_params& arg) {
 	if (count > 0) {
 		for (int i = 0; i < count; i++) {
 			machine->put_cur_tile_at_cursor_pos();
-			machine->csr.x--;
+			machine->move_cursor(-1, 0);
 			machine->put_cur_tile_at_cursor_pos();
 		}
 	} else {
@@ -455,7 +453,7 @@ void t_command::put_tile_repeat_up(t_params& arg) {
 	if (count > 0) {
 		for (int i = 0; i < count; i++) {
 			machine->put_cur_tile_at_cursor_pos();
-			machine->csr.y--;
+			machine->move_cursor(0, -1);
 			machine->put_cur_tile_at_cursor_pos();
 		}
 	} else {
@@ -468,7 +466,7 @@ void t_command::put_tile_repeat_down(t_params& arg) {
 	if (count > 0) {
 		for (int i = 0; i < count; i++) {
 			machine->put_cur_tile_at_cursor_pos();
-			machine->csr.y++;
+			machine->move_cursor(0, 1);
 			machine->put_cur_tile_at_cursor_pos();
 		}
 	} else {
@@ -484,7 +482,8 @@ void t_command::fill_rect(t_params& arg) {
 	for (int py = 0; py < h; py++) {
 		for (int px = 0; px < w; px++) {
 			machine->tilebuf->SetTile(
-				machine->cur_tile, machine->csr.layer, x + px, y + py, machine->tile_transparency);
+				machine->cur_tile, machine->get_csr_layer(), 
+				x + px, y + py, machine->tile_transparency);
 		}
 	}
 }
@@ -505,7 +504,7 @@ void t_command::clear_rect(t_params& arg) {
 	int h = intp->require_number(arg[3]);
 	for (int py = 0; py < h; py++) {
 		for (int px = 0; px < w; px++) {
-			machine->tilebuf->EraseTile(machine->csr.layer, x + px, y + py);
+			machine->tilebuf->EraseTile(machine->get_csr_layer(), x + px, y + py);
 		}
 	}
 }
@@ -524,7 +523,7 @@ void t_command::select_layer(t_params& arg) {
 	ARGC(1);
 	int layer = intp->require_number(arg[0]);
 	if (layer >= 0 && layer < machine->tilebuf->LayerCount) {
-		machine->csr.layer = layer;
+		machine->set_csr_layer(layer);
 	} else {
 		intp->abort("Invalid layer index");
 	}
@@ -577,7 +576,7 @@ void t_command::print_text(t_params& arg, bool crlf) {
 		if (crlf) {
 			text += "\\n";
 		}
-		const int initial_x = machine->csr.x;
+		const int initial_x = machine->get_csr_x();
 		bool escape = false;
 		string escape_seq = "";
 		int fgc = machine->text_color.fg;
@@ -588,8 +587,8 @@ void t_command::print_text(t_params& arg, bool crlf) {
 				i++;
 				if (i < text.length()) {
 					if (text[i] == 'n') {
-						machine->csr.x = initial_x;
-						machine->csr.y++;
+						machine->move_cursor(0, 1);
+						machine->set_cursor_pos(initial_x, machine->get_csr_y());
 					}
 				}
 			} else if (ch == '{') {
@@ -600,9 +599,8 @@ void t_command::print_text(t_params& arg, bool crlf) {
 				if (String::StartsWith(escape_seq, 'c')) {
 					string chstr = String::Skip(escape_seq, 1);
 					ch = String::ToInt(chstr);
-					machine->tilebuf->SetTile(TTileSeq(ch, fgc, bgc),
-						machine->csr.layer, machine->csr.x, machine->csr.y, machine->tile_transparency);
-					machine->csr.x++;
+					machine->put_tile_at_cursor_pos(TTileSeq(ch, fgc, bgc));
+					machine->move_cursor(1, 0);
 					escape_seq = "";
 					continue;
 				} else if (String::StartsWith(escape_seq, 'f')) {
@@ -628,9 +626,8 @@ void t_command::print_text(t_params& arg, bool crlf) {
 				escape_seq += ch;
 				continue;
 			} else {
-				machine->tilebuf->SetTile(TTileSeq(ch, fgc, bgc), 
-					machine->csr.layer, machine->csr.x, machine->csr.y, machine->tile_transparency);
-				machine->csr.x++;
+				machine->put_tile_at_cursor_pos(TTileSeq(ch, fgc, bgc));
+				machine->move_cursor(1, 0);
 				escape_seq = "";
 			}
 		}
@@ -641,9 +638,8 @@ void t_command::print_text_char(t_params& arg) {
 	int ch = intp->require_number(arg[0]);
 	int fgc = machine->text_color.fg;
 	int bgc = machine->text_color.bg;
-	machine->tilebuf->SetTile(TTileSeq(ch, fgc, bgc),
-		machine->csr.layer, machine->csr.x, machine->csr.y, machine->tile_transparency);
-	machine->csr.x++;
+	machine->put_tile_at_cursor_pos(TTileSeq(ch, fgc, bgc));
+	machine->move_cursor(1, 0);
 }
 void t_command::set_text_fgcolor(t_params& arg) {
 	ARGC(1);

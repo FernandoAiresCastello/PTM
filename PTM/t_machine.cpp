@@ -20,6 +20,8 @@ t_machine::t_machine(TBufferedWindow* wnd) {
 	t_default_gfx::init_palette(pal);
 	wnd->SetPalette(pal);
 
+	csr.tile.AddBlank(2);
+
 	set_window_bgcolor(default_bgc);
 	wnd->Update();
 
@@ -67,6 +69,9 @@ void t_machine::set_const(string id, int value) {
 void t_machine::set_const(string id, string value) {
 	vars[id] = t_variable(value, true);
 }
+void t_machine::put_tile_at_cursor_pos(const TTileSeq& tile) {
+	tilebuf->SetTile(tile, csr.layer, csr.x, csr.y, tile_transparency);
+}
 void t_machine::put_cur_tile_at_cursor_pos() {
 	tilebuf->SetTile(cur_tile, csr.layer, csr.x, csr.y, tile_transparency);
 }
@@ -79,14 +84,42 @@ void t_machine::delete_tile_at_cursor_pos() {
 void t_machine::set_window_bgcolor(int palette_ix) {
 	wnd->SetBackColor(pal->GetColorRGB(palette_ix));
 }
+void t_machine::set_cursor_pos(int x, int y) {
+	erase_cursor();
+	csr.x = x;
+	csr.y = y;
+}
+void t_machine::move_cursor(int dx, int dy) {
+	erase_cursor();
+	csr.x += dx;
+	csr.y += dy;
+}
 void t_machine::draw_cursor() {
 	if (!csr.visible) return;
-	csr.tile.Add(chars::cursor_full, csr.color, csr.color);
-	csr.tile.Add(chars::empty, csr.color, csr.color);
+	csr.tile.Set(0, chars::cursor_full, csr.color, csr.color);
+	csr.tile.Set(1, chars::empty, csr.color, csr.color);
 	tilebuf->SetTile(csr.tile, t_layer::topmost, csr.x, csr.y, true);
 }
 void t_machine::erase_cursor() {
 	tilebuf->EraseTile(t_layer::topmost, csr.x, csr.y);
+}
+int t_machine::get_csr_layer() {
+	return csr.layer;
+}
+int t_machine::get_csr_x() {
+	return csr.x;
+}
+int t_machine::get_csr_y() {
+	return csr.y;
+}
+void t_machine::set_csr_layer(int layer) {
+	csr.layer = layer;
+}
+void t_machine::set_csr_color(int color) {
+	csr.color = color;
+}
+void t_machine::set_csr_visible(bool visible) {
+	csr.visible = visible;
 }
 bool t_machine::is_valid_tileseq(TTileSeq& tileseq) {
 	bool valid = true;

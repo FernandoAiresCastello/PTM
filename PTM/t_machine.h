@@ -18,14 +18,6 @@ struct t_machine {
 	static const int default_bgc = 0;
 	static const int default_fgc = 1;
 	int bgcolor_palette_ix = default_bgc;
-	struct {
-		bool visible = false;
-		TTileSeq tile;
-		int color = default_fgc;
-		int layer = 0;
-		int x = 0;
-		int y = 0;
-	} csr;
 	TTileBuffer* tilebuf;
 	TTileSeq cur_tile;
 	bool tile_transparency = false;
@@ -50,12 +42,21 @@ struct t_machine {
 	void set_var(string id, string value);
 	void set_const(string id, int value);
 	void set_const(string id, string value);
+	void put_tile_at_cursor_pos(const TTileSeq& tile);
 	void put_cur_tile_at_cursor_pos();
 	void copy_tile_at_cursor_pos();
 	void delete_tile_at_cursor_pos();
 	void set_window_bgcolor(int palette_ix);
+	void set_cursor_pos(int x, int y);
+	void move_cursor(int dx, int dy);
 	void draw_cursor();
 	void erase_cursor();
+	int get_csr_layer();
+	int get_csr_x();
+	int get_csr_y();
+	void set_csr_layer(int layer);
+	void set_csr_color(int color);
+	void set_csr_visible(bool visible);
 	bool is_valid_tileseq(TTileSeq& tileseq);
 	bool is_valid_tile(const TTile& tile);
 	bool is_valid_charset_ix(int ix);
@@ -66,4 +67,12 @@ struct t_machine {
 private:
 	TCharset* original_chr;
 	TPalette* original_pal;
+	struct {
+		bool visible = false;
+		TTileSeq tile;
+		int color = default_fgc;
+		int layer = 0;
+		int x = 0;
+		int y = 0;
+	} csr;
 };
