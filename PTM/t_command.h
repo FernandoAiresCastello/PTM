@@ -95,6 +95,9 @@ private:
 	void clear_array(t_params& arg);
 	void copy_array(t_params& arg);
 	void increment_variable(t_params& arg);
+	void decrement_variable(t_params& arg);
+	void add_to_variable(t_params& arg);
+	void subtract_from_variable(t_params& arg);
 	void allow_exit_on_escape_key(t_params& arg, bool allow);
 	void assert_eq(t_params& arg);
 	void assert_neq(t_params& arg);
@@ -106,4 +109,5 @@ private:
 	void get_charset_size(t_params& arg);
 	void get_palette_size(t_params& arg);
 	void trigger_breakpoint(t_params& arg);
+	void play_sound_note(t_params& arg);
 };

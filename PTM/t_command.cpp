@@ -29,6 +29,9 @@ bool t_command::execute(string& cmd, t_params& args) {
 	// Math
 	else if (cmd == "RND")			get_random_number(args);
 	else if (cmd == "INC")			increment_variable(args);
+	else if (cmd == "DEC")			decrement_variable(args);
+	else if (cmd == "ADD")			add_to_variable(args);
+	else if (cmd == "SUB")			subtract_from_variable(args);
 	// Current tile
 	else if (cmd == "TILE.NEW")		init_cur_tile(args);
 	else if (cmd == "TILE.ADD")		append_cur_tile(args);
@@ -116,6 +119,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	// Sound
 	else if (cmd == "SND.PLAY")		play_sound(args);
 	else if (cmd == "SND.LOOP")		loop_sound(args);
+	else if (cmd == "SND.NOTE")		play_sound_note(args);
 
 	else return false;
 	return true;
@@ -883,6 +887,31 @@ void t_command::increment_variable(t_params& arg) {
 	auto& var = machine->vars[id];
 	machine->set_var(id, String::ToInt(var.value) + 1);
 }
+void t_command::decrement_variable(t_params& arg) {
+	ARGC(1);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	auto& var = machine->vars[id];
+	machine->set_var(id, String::ToInt(var.value) - 1);
+}
+void t_command::add_to_variable(t_params& arg) {
+	ARGC(2);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	int value = intp->require_number(arg[1]);
+	if (value == PTM_INVALID_NUMBER) return;
+	auto& var = machine->vars[id];
+	machine->set_var(id, String::ToInt(var.value) + value);
+}
+void t_command::subtract_from_variable(t_params& arg) {
+	ARGC(2);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	int value = intp->require_number(arg[1]);
+	if (value == PTM_INVALID_NUMBER) return;
+	auto& var = machine->vars[id];
+	machine->set_var(id, String::ToInt(var.value) - value);
+}
 void t_command::allow_exit_on_escape_key(t_params& arg, bool allow) {
 	ARGC(0);
 	machine->exit_key = allow ? SDLK_ESCAPE : 0;
@@ -953,4 +982,18 @@ void t_command::get_palette_size(t_params& arg) {
 }
 void t_command::trigger_breakpoint(t_params& arg) {
 	debugger;
+}
+void t_command::play_sound_note(t_params& arg) {
+	ARGC(2);
+	int freq = intp->require_number(arg[0]);
+	if (freq < 0) {
+		intp->abort(String::Format("Invalid note frequency: %i", freq));
+		return;
+	}
+	int len = intp->require_number(arg[1]);
+	if (len < 0) {
+		intp->abort(String::Format("Invalid note length: %i", len));
+		return;
+	}
+	machine->snd->Beep(freq, len);
 }
