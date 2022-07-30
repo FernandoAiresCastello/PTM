@@ -22,6 +22,8 @@ private:
 	void return_from_label(t_params& arg);
 	void set_variable(t_params& arg);
 	void define_constant(t_params& arg);
+	void set_cursor_x(t_params& arg);
+	void set_cursor_y(t_params& arg);
 	void set_cursor_pos(t_params& arg);
 	void move_cursor(t_params& arg);
 	void move_cursor_right(t_params& arg);
@@ -110,4 +112,7 @@ private:
 	void get_palette_size(t_params& arg);
 	void trigger_breakpoint(t_params& arg);
 	void play_sound_note(t_params& arg);
+	void read_file_into_string(t_params& arg);
+	void read_file_into_array(t_params& arg);
+	void format_number(t_params& arg);
 };

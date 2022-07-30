@@ -444,7 +444,7 @@ void t_program_editor::save_program(string file) {
 void t_program_editor::save_program_as() {
 	hide_cursor();
 	t_input_widget* widget = new t_input_widget(
-		globals, "Save program", prg_filename, color.fg, color.pnl_bg);
+		globals, "Save program", "", color.fg, color.pnl_bg);
 	string file = widget->show();
 	delete widget;
 	if (file.empty()) return;

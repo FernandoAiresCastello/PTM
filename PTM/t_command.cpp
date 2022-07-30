@@ -45,6 +45,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	// Tile buffer cursor
 	else if (cmd == "CSR.LAYER")	select_layer(args);
 	else if (cmd == "CSR.SET")		set_cursor_pos(args);
+	else if (cmd == "CSR.X")		set_cursor_x(args);
+	else if (cmd == "CSR.Y")		set_cursor_y(args);
 	else if (cmd == "CSR.MOV")		move_cursor(args);
 	else if (cmd == "CSR.R")		move_cursor_right(args);
 	else if (cmd == "CSR.L")		move_cursor_left(args);
@@ -120,6 +122,11 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "SND.PLAY")		play_sound(args);
 	else if (cmd == "SND.LOOP")		loop_sound(args);
 	else if (cmd == "SND.NOTE")		play_sound_note(args);
+	// Filesystem
+	else if (cmd == "FILE.CLOAD")	read_file_into_string(args);
+	else if (cmd == "FILE.BLOAD")	read_file_into_array(args);
+	// Strings
+	else if (cmd == "STR.FMT")	format_number(args);
 
 	else return false;
 	return true;
@@ -225,7 +232,7 @@ void t_command::set_variable(t_params& arg) {
 				machine->vars[dst_var] = machine->vars[src_var];
 				machine->vars[dst_var].is_const = false;
 			}
-		} if (arg[1].is_array_element_ix()) {
+		} else if (arg[1].is_array_element_ix()) {
 			string value = intp->require_array_element(arg[1]);
 			machine->vars[dst_var] = value;
 		} else {
@@ -248,6 +255,16 @@ void t_command::define_constant(t_params& arg) {
 			machine->vars[dst_var].is_const = true;
 		}
 	}
+}
+void t_command::set_cursor_x(t_params& arg) {
+	ARGC(1);
+	int x = intp->require_number(arg[0]);
+	machine->set_cursor_pos(x, machine->get_csr_y());
+}
+void t_command::set_cursor_y(t_params& arg) {
+	ARGC(1);
+	int y = intp->require_number(arg[0]);
+	machine->set_cursor_pos(machine->get_csr_x(), y);
 }
 void t_command::set_cursor_pos(t_params& arg) {
 	ARGC(2);
@@ -996,4 +1013,46 @@ void t_command::play_sound_note(t_params& arg) {
 		return;
 	}
 	machine->snd->Beep(freq, len);
+}
+void t_command::read_file_into_string(t_params& arg) {
+	ARGC(2);
+	string path = String::Trim(intp->require_string(arg[0]));
+	if (path.empty()) {
+		intp->abort("Pathname is empty");
+		return;
+	}
+	if (!File::Exists(path)) {
+		intp->abort("File not found: " + path);
+		return;
+	}
+	string var = intp->require_id(arg[1]);
+	string file = File::ReadText(path);
+	machine->set_var(var, file);
+}
+void t_command::read_file_into_array(t_params& arg) {
+	ARGC(2);
+	string path = String::Trim(intp->require_string(arg[0]));
+	if (path.empty()) {
+		intp->abort("Pathname is empty");
+		return;
+	}
+	if (!File::Exists(path)) {
+		intp->abort("File not found: " + path);
+		return;
+	}
+	auto file = File::ReadBytes(path);
+	string arr_id = intp->require_id(arg[1]);
+	auto& arr = machine->arrays[arr_id];
+	for (auto byte : file) {
+		arr.push_back(String::ToString(byte));
+	}
+}
+void t_command::format_number(t_params& arg) {
+	ARGC(3);
+	string dest_id = intp->require_id(arg[0]);
+	if (dest_id.empty()) return;
+	string fmt = intp->require_string(arg[1]);
+	int number = intp->require_number(arg[2]);
+	if (number == PTM_INVALID_NUMBER) return;
+	machine->vars[dest_id] = String::Format(fmt.c_str(), number);
 }
