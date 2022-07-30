@@ -53,6 +53,9 @@
     <ClCompile Include="t_alert_widget.cpp">
       <Filter>Editor\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="t_performance_monitor.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="t_program.h">
@@ -114,6 +117,9 @@
     </ClInclude>
     <ClInclude Include="t_layer.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="t_performance_monitor.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

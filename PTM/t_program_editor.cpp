@@ -1,4 +1,5 @@
 #include "t_program_editor.h"
+#include "t_performance_monitor.h"
 #include "t_globals.h"
 #include "t_config.h"
 #include "t_compiler.h"
@@ -12,6 +13,7 @@
 #define PTM_EDITOR_WINDOW_TITLE		"PTM"
 
 t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
+	perfmon = g->perfmon;
 	wnd->SetTitle(PTM_EDITOR_WINDOW_TITLE);
 	csr_overwrite = false;
 	prg_view.max_chars = wnd->Cols - 2;
@@ -19,7 +21,7 @@ t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
 	info_visible = true;
 	snd = g->snd;
 
-	draw();
+	draw_everything();
 
 	if (!g->cfg->autorun.empty()) {
 		if (File::Exists(g->cfg->autorun)) {
@@ -37,8 +39,9 @@ t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
 }
 t_program_editor::~t_program_editor() {
 }
-void t_program_editor::on_run_loop() {
-	draw();
+void t_program_editor::on_run_loop() { // This method needs to be fast!
+	if (wnd && perfmon) wnd->SetTitle(perfmon->format_info());
+	draw_only_whats_needed();
 }
 bool t_program_editor::on_exit() {
 	if (unsaved) {
@@ -129,12 +132,16 @@ void t_program_editor::on_mouse_wheel(int dist_y) {
 		}
 	}
 }
-void t_program_editor::draw() {
+void t_program_editor::draw_everything() {
 	draw_screen_base();
 	draw_border_info();
 	draw_program();
 	apply_syntax_coloring();
 	draw_cursor();
+}
+void t_program_editor::draw_only_whats_needed() {
+	//draw_cursor();
+	draw_everything();
 }
 void t_program_editor::draw_border_info() {
 	if (!info_visible) return;
@@ -164,10 +171,10 @@ void t_program_editor::apply_syntax_coloring() {
 	int char_ix = prg_view.first_char_ix;
 	int fgc = color.fg;
 	for (int y = 1; y < buf->LastRow; y++) {
-		for (int x = 1; x < buf->LastCol - 1; x++) {
+		for (int x = 1; x < buf->LastCol; x++) {
 			auto& tile = buf->GetTile(0, x, y);
 			if (!tile.IsEmpty()) {
-				const string line = prg.src_lines[line_ix];
+				const string& line = prg.src_lines[line_ix];
 				if (String::StartsWith(line, ';')) {
 					fgc = color.comment_fg;
 				} else if (String::StartsWith(line, ':')) {
@@ -446,6 +453,7 @@ void t_program_editor::compile_and_run() {
 	compiler.run(&prg);
 	if (compiler.errors.empty()) {
 		t_machine* machine = new t_machine(wnd);
+		machine->perfmon = perfmon;
 		machine->snd = snd;
 		t_interpreter* interpreter = new t_interpreter();
 		interpreter->run(&prg, machine, wnd);

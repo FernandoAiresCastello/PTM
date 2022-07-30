@@ -5,6 +5,7 @@
 #include "t_layer.h"
 
 struct t_config;
+struct t_performance_monitor;
 
 enum class t_confirm_result {
 	cancel = -1, no = 0, yes = 1
@@ -13,6 +14,7 @@ struct t_program_editor : public t_ui_base {
 	t_program_editor(t_globals* g);
 	~t_program_editor();
 private:
+	t_performance_monitor* perfmon;
 	t_program prg;
 	string prg_filename;
 	bool csr_overwrite;
@@ -42,7 +44,8 @@ private:
 	bool on_exit();
 	void on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt);
 	void on_mouse_wheel(int dist_y);
-	void draw();
+	void draw_everything();
+	void draw_only_whats_needed();
 	void draw_border_info();
 	void draw_program();
 	void apply_syntax_coloring();

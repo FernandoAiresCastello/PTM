@@ -1,4 +1,5 @@
 #include "t_machine.h"
+#include "t_performance_monitor.h"
 #include "t_default_gfx.h"
 #include "chars.h"
 #include "t_layer.h"
@@ -33,6 +34,7 @@ t_machine::~t_machine() {
 	delete pal;
 }
 void t_machine::on_loop() {
+	if (wnd && perfmon) wnd->SetTitle(perfmon->format_info());
 }
 void t_machine::on_screen_update() {
 	draw_cursor();

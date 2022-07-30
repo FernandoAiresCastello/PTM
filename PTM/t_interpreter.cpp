@@ -28,7 +28,7 @@ void t_interpreter::run(t_program* prg, t_machine* machine, TBufferedWindow* wnd
 	cmd = new t_command(this);
 	callstack = std::stack<int>();
 
-	while (running) {
+	while (running) { // This loop needs to be fast!
 		SDL_Event e = { 0 };
 		SDL_PollEvent(&e);
 

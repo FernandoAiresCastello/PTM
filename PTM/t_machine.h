@@ -2,7 +2,11 @@
 #include "common.h"
 #include "t_variable.h"
 
+struct t_performance_monitor;
+
 struct t_machine {
+	// Debugging
+	t_performance_monitor* perfmon = nullptr;
 	// Namespaces
 	std::map<string, t_variable> vars;
 	std::map<string, TTileSeq> tilestore;

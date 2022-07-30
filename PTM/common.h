@@ -13,6 +13,8 @@ using string = std::string;
 
 #define debugger __debugbreak()
 
+#define PTM_SHOW_PERFMON
+
 #define PTM_CONFIG_FILE		"PTM.cfg"
 #define PTM_DEBUG_FILE		"PTM.dbg"
 
