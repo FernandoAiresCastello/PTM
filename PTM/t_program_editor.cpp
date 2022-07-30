@@ -20,8 +20,7 @@ t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
 	prg_view.max_lines = wnd->Rows - 2;
 	info_visible = true;
 	snd = g->snd;
-
-	draw_everything();
+	scr_csr.tile.AddBlank(2);
 
 	if (!g->cfg->autorun.empty()) {
 		if (File::Exists(g->cfg->autorun)) {
@@ -36,12 +35,14 @@ t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
 	if (prg.src_lines.empty()) {
 		add_empty_line();
 	}
+
+	draw_everything();
 }
 t_program_editor::~t_program_editor() {
 }
 void t_program_editor::on_run_loop() { // This method needs to be fast!
 	if (wnd && perfmon) wnd->SetTitle(perfmon->format_info());
-	draw_only_whats_needed();
+	draw_only_whats_constantly_needed();
 }
 bool t_program_editor::on_exit() {
 	if (unsaved) {
@@ -122,6 +123,8 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 		type_char(key);
 		unsaved = true;
 	}
+
+	draw_everything();
 }
 void t_program_editor::on_mouse_wheel(int dist_y) {
 	for (int i = 0; i < abs(dist_y) * 3; i++) {
@@ -131,6 +134,7 @@ void t_program_editor::on_mouse_wheel(int dist_y) {
 			move_prg_csr_up();
 		}
 	}
+	draw_everything();
 }
 void t_program_editor::draw_everything() {
 	draw_screen_base();
@@ -139,9 +143,8 @@ void t_program_editor::draw_everything() {
 	apply_syntax_coloring();
 	draw_cursor();
 }
-void t_program_editor::draw_only_whats_needed() {
-	//draw_cursor();
-	draw_everything();
+void t_program_editor::draw_only_whats_constantly_needed() {
+	draw_cursor();
 }
 void t_program_editor::draw_border_info() {
 	if (!info_visible) return;
@@ -202,14 +205,13 @@ void t_program_editor::apply_syntax_coloring() {
 	}
 }
 void t_program_editor::draw_cursor() {
-	TTileSeq tile;
 	if (csr_overwrite) {
-		tile.Add(chars::cursor_ovr, color.csr_fg, color.bg);
+		scr_csr.tile.Set(0, chars::cursor_ovr, color.csr_fg, color.bg);
 	} else {
-		tile.Add(chars::cursor_ins, color.csr_fg, color.bg);
+		scr_csr.tile.Set(0, chars::cursor_ins, color.csr_fg, color.bg);
 	}
-	tile.Add(chars::empty, color.csr_fg, color.bg);
-	buf->SetTile(tile, scr_csr.layer, scr_csr.x, scr_csr.y, true);
+	scr_csr.tile.Set(1, chars::empty, color.csr_fg, color.bg);
+	buf->SetTile(scr_csr.tile, scr_csr.layer, scr_csr.x, scr_csr.y, true);
 }
 void t_program_editor::hide_cursor() {
 	buf->EraseTile(scr_csr.layer, scr_csr.x, scr_csr.y);
@@ -467,6 +469,7 @@ void t_program_editor::compile_and_run() {
 	} else {
 		print_errors(compiler.errors);
 	}
+	draw_everything();
 }
 void t_program_editor::print_errors(std::vector<string>& errors) {
 	beep();
