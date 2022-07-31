@@ -1,6 +1,7 @@
 #pragma once
 #include "common.h"
 #include "t_variable.h"
+#include "t_table.h"
 
 struct t_performance_monitor;
 
@@ -11,6 +12,7 @@ struct t_machine {
 	std::map<string, t_variable> vars;
 	std::map<string, TTileSeq> tilestore;
 	std::map<string, std::vector<string>> arrays;
+	std::map<string, t_table> tables;
 	// Graphics
 	TBufferedWindow* wnd;
 	TCharset* chr;

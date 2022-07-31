@@ -26,6 +26,10 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "ARR.ERASE")	erase_array_element(args);
 	else if (cmd == "ARR.CLR")		clear_array(args);
 	else if (cmd == "ARR.COPY")		copy_array(args);
+	// Tables
+	else if (cmd == "TBL.NEW")		create_table(args);
+	else if (cmd == "TBL.SET")		set_table_data(args);
+	else if (cmd == "TBL.GET")		get_table_data(args);
 	// Math
 	else if (cmd == "RND")			get_random_number(args);
 	else if (cmd == "INC")			increment_variable(args);
@@ -156,6 +160,18 @@ std::vector<string> t_command::get_debug_info() {
 		for (int i = 0; i < arr.size(); i++) {
 			info.push_back(String::Format("\t\t[%i] = %s", i, arr[i].c_str()));
 		}
+	}
+	info.push_back("");
+	// Tables
+	info.push_back("Tables");
+	if (machine->tables.empty()) {
+		info.push_back("\t(empty)");
+	}
+	for (auto& tbl_inst : machine->tables) {
+		string id = tbl_inst.first;
+		auto& tbl = tbl_inst.second;
+		info.push_back(String::Format("\t%s (cols=%i rows=%i)", 
+			id.c_str(), tbl.get_col_count(), tbl.get_row_count()));
 	}
 	info.push_back("");
 	// Tilestore
@@ -1055,4 +1071,43 @@ void t_command::format_number(t_params& arg) {
 	int number = intp->require_number(arg[2]);
 	if (number == PTM_INVALID_NUMBER) return;
 	machine->vars[dest_id] = String::Format(fmt.c_str(), number);
+}
+void t_command::create_table(t_params& arg) {
+	ARGC(3);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	int cols = intp->require_number(arg[1]);
+	if (cols == PTM_INVALID_NUMBER) return;
+	int rows = intp->require_number(arg[2]);
+	if (rows == PTM_INVALID_NUMBER) return;
+	machine->tables[id] = t_table(cols, rows);
+}
+void t_command::set_table_data(t_params& arg) {
+	ARGC(4);
+	string tbl_id = intp->require_existing_table(arg[0]);
+	if (tbl_id.empty()) return;
+	int col = intp->require_number(arg[1]);
+	if (col == PTM_INVALID_NUMBER) return;
+	int row = intp->require_number(arg[2]);
+	if (row == PTM_INVALID_NUMBER) return;
+	auto& tbl = machine->tables[tbl_id];
+	if (intp->assert_table_index(tbl, col, row)) {
+		string data = intp->require_string(arg[3]);
+		tbl.set_value(col, row, data);
+	}
+}
+void t_command::get_table_data(t_params& arg) {
+	ARGC(4);
+	string tbl_id = intp->require_existing_table(arg[0]);
+	if (tbl_id.empty()) return;
+	int col = intp->require_number(arg[1]);
+	if (col == PTM_INVALID_NUMBER) return;
+	int row = intp->require_number(arg[2]);
+	if (row == PTM_INVALID_NUMBER) return;
+	auto& tbl = machine->tables[tbl_id];
+	if (intp->assert_table_index(tbl, col, row)) {
+		string var_id = intp->require_id(arg[3]);
+		if (var_id.empty()) return;
+		machine->set_var(var_id, tbl.get_value_as_string(col, row));
+	}
 }

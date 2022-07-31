@@ -115,4 +115,7 @@ private:
 	void read_file_into_string(t_params& arg);
 	void read_file_into_array(t_params& arg);
 	void format_number(t_params& arg);
+	void create_table(t_params& arg);
+	void set_table_data(t_params& arg);
+	void get_table_data(t_params& arg);
 };
