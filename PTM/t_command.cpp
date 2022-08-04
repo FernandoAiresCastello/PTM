@@ -2,6 +2,7 @@
 #include "t_interpreter.h"
 #include "t_machine.h"
 #include "t_program.h"
+#include "t_layer.h"
 
 t_command::t_command(t_interpreter* intp) {
 	this->intp = intp;
@@ -46,6 +47,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "TILE.STO")		store_cur_tile(args);
 	else if (cmd == "TILE.PSTO")	parse_and_store_tile(args);
 	else if (cmd == "TILE.LOAD")	load_cur_tile(args);
+	else if (cmd == "TILE.PROP")	add_tile_property(args);
+	else if (cmd == "TILE.PGET")	get_tile_property(args);
 	// Tile buffer cursor
 	else if (cmd == "CSR.LAYER")	select_layer(args);
 	else if (cmd == "CSR.SET")		set_cursor_pos(args);
@@ -82,9 +85,9 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "PAL.SIZE")		get_palette_size(args);
 	else if (cmd == "VSYNC")		update_screen(args);
 	else if (cmd == "TITLE")		set_window_title(args);
-	else if (cmd == "GFX.BG")		set_window_bgcolor(args);
-	else if (cmd == "GFX.TRON")		set_tile_transparency(args, true);
-	else if (cmd == "GFX.TROFF")	set_tile_transparency(args, false);
+	else if (cmd == "BGCOL")		set_window_bgcolor(args);
+	else if (cmd == "TRON")			set_tile_transparency(args, true);
+	else if (cmd == "TROFF")		set_tile_transparency(args, false);
 	// Text output
 	else if (cmd == "PRINT")		print_text(args, false);
 	else if (cmd == "PUTCH")		print_text_char(args);
@@ -96,8 +99,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "KEY.GET")		get_key_pressed(args);
 	else if (cmd == "KEY.CALL")		call_if_key_pressed(args);
 	else if (cmd == "KEY.GOTO")		goto_if_key_pressed(args);
-	else if (cmd == "ESCAPE.ON")	allow_exit_on_escape_key(args, true);
-	else if (cmd == "ESCAPE.OFF")	allow_exit_on_escape_key(args, false);
+	else if (cmd == "ESC.ON")		allow_exit_on_escape_key(args, true);
+	else if (cmd == "ESC.OFF")		allow_exit_on_escape_key(args, false);
 	// Debug
 	else if (cmd == "BRK")			trigger_breakpoint(args);
 	else if (cmd == "DBG.FILE")		save_debug_file(args);
@@ -127,8 +130,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "SND.LOOP")		loop_sound(args);
 	else if (cmd == "SND.NOTE")		play_sound_note(args);
 	// Filesystem
-	else if (cmd == "FILE.CLOAD")	read_file_into_string(args);
-	else if (cmd == "FILE.BLOAD")	read_file_into_array(args);
+	else if (cmd == "CLOAD")	read_file_into_string(args);
+	else if (cmd == "BLOAD")	read_file_into_array(args);
 	// Strings
 	else if (cmd == "STR.FMT")	format_number(args);
 
@@ -446,6 +449,25 @@ void t_command::load_cur_tile(t_params& arg) {
 		intp->abort("Tile definition not found: " + id);
 	}
 }
+void t_command::add_tile_property(t_params& arg) {
+	ARGC(2);
+	string prop_id = intp->require_string(arg[0]);
+	if (prop_id.empty()) return;
+	string prop_value = intp->require_string(arg[1]);
+	machine->cur_tile.Prop.Set(prop_id, prop_value);
+}
+void t_command::get_tile_property(t_params& arg) {
+	ARGC(2);
+	string var_id = intp->require_id(arg[0]);
+	if (var_id.empty()) return;
+	string prop_id = intp->require_string(arg[1]);
+	if (prop_id.empty()) return;
+	if (machine->cur_tile.Prop.Has(prop_id)) {
+		machine->set_var(var_id, machine->cur_tile.Prop.GetString(prop_id));
+	} else {
+		machine->set_var(var_id, "");
+	}
+}
 void t_command::put_tile(t_params& arg) {
 	ARGC(0);
 	machine->put_cur_tile_at_cursor_pos();
@@ -559,7 +581,7 @@ void t_command::set_tile_transparency(t_params& arg, bool transparent) {
 void t_command::select_layer(t_params& arg) {
 	ARGC(1);
 	int layer = intp->require_number(arg[0]);
-	if (layer >= 0 && layer < machine->tilebuf->LayerCount) {
+	if (layer == t_layer::bottom || layer == t_layer::top) {
 		machine->set_csr_layer(layer);
 	} else {
 		intp->abort("Invalid layer index");
@@ -592,18 +614,22 @@ void t_command::define_color(t_params& arg) {
 }
 void t_command::update_screen(t_params& arg) {
 	ARGC(0);
-	machine->wnd->Update();
+	machine->on_screen_update();
 }
 void t_command::get_random_number(t_params& arg) {
 	ARGC(3);
 	string var = intp->require_id(arg[0]);
+	if (var.empty()) return;
 	int min = intp->require_number(arg[1]);
+	if (min == PTM_INVALID_NUMBER) return;
 	int max = intp->require_number(arg[2]);
+	if (max == PTM_INVALID_NUMBER) return;
 	machine->set_var(var, Util::Random(min, max));
 }
 void t_command::pause(t_params& arg) {
 	ARGC(1);
 	int cycles = intp->require_number(arg[0]);
+	if (cycles == PTM_INVALID_NUMBER) return;
 	intp->pause_cycles = cycles;
 }
 void t_command::print_text(t_params& arg, bool crlf) {
@@ -636,7 +662,8 @@ void t_command::print_text(t_params& arg, bool crlf) {
 				if (String::StartsWith(escape_seq, 'c')) {
 					string chstr = String::Skip(escape_seq, 1);
 					ch = String::ToInt(chstr);
-					machine->put_tile_at_cursor_pos(TTileSeq(ch, fgc, bgc));
+					auto tile = TTileSeq(ch, fgc, bgc);
+					machine->put_tile_at_cursor_pos(tile);
 					machine->move_cursor(1, 0);
 					escape_seq = "";
 					continue;
@@ -663,7 +690,8 @@ void t_command::print_text(t_params& arg, bool crlf) {
 				escape_seq += ch;
 				continue;
 			} else {
-				machine->put_tile_at_cursor_pos(TTileSeq(ch, fgc, bgc));
+				auto tile = TTileSeq(ch, fgc, bgc);
+				machine->put_tile_at_cursor_pos(tile);
 				machine->move_cursor(1, 0);
 				escape_seq = "";
 			}
@@ -675,7 +703,8 @@ void t_command::print_text_char(t_params& arg) {
 	int ch = intp->require_number(arg[0]);
 	int fgc = machine->text_color.fg;
 	int bgc = machine->text_color.bg;
-	machine->put_tile_at_cursor_pos(TTileSeq(ch, fgc, bgc));
+	auto tile = TTileSeq(ch, fgc, bgc);
+	machine->put_tile_at_cursor_pos(tile);
 	machine->move_cursor(1, 0);
 }
 void t_command::set_text_fgcolor(t_params& arg) {

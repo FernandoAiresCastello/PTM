@@ -24,7 +24,7 @@ private:
 		int char_ix = 0;
 	} prg_csr;
 	struct {
-		const int layer = 1;
+		const int layer = t_layer::top;
 		int x = 1;
 		int y = 1;
 		TTileSeq tile;

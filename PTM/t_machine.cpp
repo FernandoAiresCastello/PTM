@@ -52,10 +52,10 @@ void t_machine::init_system_vars() {
 	set_const("$layer.topmost", t_layer::topmost);
 	set_const("$layer.panel", t_layer::panel);
 	// Keyboard codes
-	set_const("$kb.right", 1073741903);
-	set_const("$kb.left", 1073741904);
-	set_const("$kb.down", 1073741905);
-	set_const("$kb.up", 1073741906);
+	set_const("$kb.right", SDLK_RIGHT);
+	set_const("$kb.left", SDLK_LEFT);
+	set_const("$kb.down", SDLK_DOWN);
+	set_const("$kb.up", SDLK_UP);
 }
 void t_machine::set_var(string id, int value) {
 	vars[id] = t_variable(value);
@@ -69,7 +69,7 @@ void t_machine::set_const(string id, int value) {
 void t_machine::set_const(string id, string value) {
 	vars[id] = t_variable(value, true);
 }
-void t_machine::put_tile_at_cursor_pos(const TTileSeq& tile) {
+void t_machine::put_tile_at_cursor_pos(TTileSeq& tile) {
 	tilebuf->SetTile(tile, csr.layer, csr.x, csr.y, tile_transparency);
 }
 void t_machine::put_cur_tile_at_cursor_pos() {
@@ -101,7 +101,8 @@ void t_machine::draw_cursor() {
 	tilebuf->SetTile(csr.tile, t_layer::topmost, csr.x, csr.y, true);
 }
 void t_machine::erase_cursor() {
-	tilebuf->EraseTile(t_layer::topmost, csr.x, csr.y);
+	if (!csr.visible) return;
+	tilebuf->ClearLayer(t_layer::topmost);
 }
 int t_machine::get_csr_layer() {
 	return csr.layer;

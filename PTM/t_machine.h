@@ -32,7 +32,7 @@ struct t_machine {
 	SDL_Keycode exit_key = SDLK_ESCAPE;
 	// Sound
 	TSound* snd = nullptr;
-	// Comparisons
+	// Latest comparison result
 	int cmp_result = 0;
 
 	t_machine(TBufferedWindow* wnd);
@@ -44,7 +44,7 @@ struct t_machine {
 	void set_var(string id, string value);
 	void set_const(string id, int value);
 	void set_const(string id, string value);
-	void put_tile_at_cursor_pos(const TTileSeq& tile);
+	void put_tile_at_cursor_pos(TTileSeq& tile);
 	void put_cur_tile_at_cursor_pos();
 	void copy_tile_at_cursor_pos();
 	void delete_tile_at_cursor_pos();

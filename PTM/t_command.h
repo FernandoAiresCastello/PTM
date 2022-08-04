@@ -45,6 +45,8 @@ private:
 	void store_cur_tile(t_params& arg);
 	void parse_and_store_tile(t_params& arg);
 	void load_cur_tile(t_params& arg);
+	void add_tile_property(t_params& arg);
+	void get_tile_property(t_params& arg);
 	void put_tile(t_params& arg);
 	void copy_tile(t_params& arg);
 	void delete_tile(t_params& arg);
