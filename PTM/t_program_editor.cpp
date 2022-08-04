@@ -29,6 +29,12 @@ t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
 		}
 	} else if (!g->cfg->autoload.empty()) {
 		load_program(g->cfg->autoload);
+	} else if (File::Exists("PTM.last")) {
+		auto file = String::Trim(File::ReadText("PTM.last"));
+		if (!file.empty()) {
+			load_program(file);
+		}
+		unsaved = false;
 	} else {
 		unsaved = false;
 	}
@@ -39,6 +45,7 @@ t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
 	draw_everything();
 }
 t_program_editor::~t_program_editor() {
+	File::WriteText("PTM.last", prg_filename);
 }
 void t_program_editor::on_run_loop() { // This method needs to be fast!
 	if (wnd && perfmon) wnd->SetTitle(perfmon->format_info());

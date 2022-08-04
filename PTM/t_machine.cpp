@@ -52,8 +52,6 @@ void t_machine::init_system_vars() {
 	// Tile buffer layers
 	set_const("$layer.btm", t_layer::bottom);
 	set_const("$layer.top", t_layer::top);
-	set_const("$layer.topmost", t_layer::topmost);
-	set_const("$layer.panel", t_layer::panel);
 	// Keyboard codes
 	set_const("$kb.right", SDL_SCANCODE_RIGHT);
 	set_const("$kb.left", SDL_SCANCODE_LEFT);

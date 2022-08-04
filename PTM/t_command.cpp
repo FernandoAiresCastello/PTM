@@ -90,7 +90,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "TROFF")		set_tile_transparency(args, false);
 	// Text output
 	else if (cmd == "PRINT")		print_text(args, false);
-	else if (cmd == "PUTCH")		print_text_char(args);
+	else if (cmd == "PUTC")			print_text_char(args);
 	else if (cmd == "PRINTL")		print_text(args, true);
 	else if (cmd == "TEXT.FG")		set_text_fgcolor(args);
 	else if (cmd == "TEXT.BG")		set_text_bgcolor(args);
