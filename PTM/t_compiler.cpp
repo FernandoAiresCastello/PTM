@@ -32,7 +32,11 @@ bool t_compiler::compile_line(
 	// Parse label
 	if (is_label(src_line)) {
 		string label = String::Trim(String::Skip(src_line, 1));
-		prg->labels[label] = prg->lines.size();
+		if (prg->labels.find(label) == prg->labels.end()) {
+			prg->labels[label] = prg->lines.size();
+		} else {
+			add_error(src_line_nr, src_line, "Duplicate label");
+		}
 		return false;
 	}
 	// Check for invalid line start

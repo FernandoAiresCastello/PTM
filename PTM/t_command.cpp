@@ -736,7 +736,6 @@ void t_command::get_key_pressed(t_params& arg) {
 	string id = intp->require_id(arg[0]);
 	if (!id.empty()) {
 		machine->set_var(id, machine->last_key_pressed);
-		machine->last_key_pressed = 0;
 	}
 }
 void t_command::call_if_key_pressed(t_params& arg) {
@@ -744,8 +743,7 @@ void t_command::call_if_key_pressed(t_params& arg) {
 	int key = intp->require_number(arg[0]);
 	if (key > 0) {
 		string label = intp->require_label(arg[1]);
-		if (key == machine->last_key_pressed) {
-			machine->last_key_pressed = 0;
+		if (TKey::IsPressed((SDL_Scancode)key)) {
 			intp->call_label(label);
 		}
 	}
@@ -755,8 +753,7 @@ void t_command::goto_if_key_pressed(t_params& arg) {
 	int key = intp->require_number(arg[0]);
 	if (key > 0) {
 		string label = intp->require_label(arg[1]);
-		if (key == machine->last_key_pressed) {
-			machine->last_key_pressed = 0;
+		if (TKey::IsPressed((SDL_Scancode)key)) {
 			intp->goto_label(label);
 		}
 	}

@@ -28,12 +28,14 @@ struct t_machine {
 		int bg = 0;
 	} text_color;
 	// Input
-	SDL_Keycode last_key_pressed = 0;
 	SDL_Keycode exit_key = SDLK_ESCAPE;
+	int last_key_pressed = 0;
 	// Sound
 	TSound* snd = nullptr;
 	// Latest comparison result
 	int cmp_result = 0;
+	// Timing
+	int clock = 0;
 
 	t_machine(TBufferedWindow* wnd);
 	~t_machine();

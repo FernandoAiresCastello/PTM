@@ -36,7 +36,10 @@ t_machine::~t_machine() {
 	delete pal;
 }
 void t_machine::on_loop() {
-	if (wnd && perfmon) wnd->SetTitle(perfmon->format_info());
+	if (wnd && perfmon) wnd->SetTitle(perfmon->format_info() + 
+		String::Format(" | Clock: %i", clock));
+
+	clock++;
 }
 void t_machine::on_screen_update() {
 	draw_cursor();
@@ -52,10 +55,11 @@ void t_machine::init_system_vars() {
 	set_const("$layer.topmost", t_layer::topmost);
 	set_const("$layer.panel", t_layer::panel);
 	// Keyboard codes
-	set_const("$kb.right", SDLK_RIGHT);
-	set_const("$kb.left", SDLK_LEFT);
-	set_const("$kb.down", SDLK_DOWN);
-	set_const("$kb.up", SDLK_UP);
+	set_const("$kb.right", SDL_SCANCODE_RIGHT);
+	set_const("$kb.left", SDL_SCANCODE_LEFT);
+	set_const("$kb.down", SDL_SCANCODE_DOWN);
+	set_const("$kb.up", SDL_SCANCODE_UP);
+	set_const("$kb.enter", SDL_SCANCODE_RETURN);
 }
 void t_machine::set_var(string id, int value) {
 	vars[id] = t_variable(value);
@@ -76,7 +80,9 @@ void t_machine::put_cur_tile_at_cursor_pos() {
 	tilebuf->SetTile(cur_tile, csr.layer, csr.x, csr.y, tile_transparency);
 }
 void t_machine::copy_tile_at_cursor_pos() {
-	cur_tile = tilebuf->GetTile(csr.layer, csr.x, csr.y);
+	if (csr.x >= 0 && csr.y >= 0 && csr.x < tilebuf->Cols && csr.y < tilebuf->Rows) {
+		cur_tile = tilebuf->GetTile(csr.layer, csr.x, csr.y);
+	}
 }
 void t_machine::delete_tile_at_cursor_pos() {
 	tilebuf->EraseTile(csr.layer, csr.x, csr.y);
