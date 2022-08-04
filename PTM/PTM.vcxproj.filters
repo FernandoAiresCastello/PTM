@@ -59,6 +59,12 @@
     <ClCompile Include="t_table.cpp">
       <Filter>Machine</Filter>
     </ClCompile>
+    <ClCompile Include="t_list_widget.cpp">
+      <Filter>Editor\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="t_filesystem_widget.cpp">
+      <Filter>Editor\Widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="t_program.h">
@@ -126,6 +132,12 @@
     </ClInclude>
     <ClInclude Include="t_table.h">
       <Filter>Machine</Filter>
+    </ClInclude>
+    <ClInclude Include="t_list_widget.h">
+      <Filter>Editor\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="t_filesystem_widget.h">
+      <Filter>Editor\Widgets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

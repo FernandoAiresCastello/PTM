@@ -13,4 +13,5 @@ enum chars {
 	pnl_edge_h = 0xc4,
 	pnl_edge_v = 0xb3,
 	cursor_full = 0xdb,
+	file_icon = 128
 };

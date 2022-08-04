@@ -112,9 +112,12 @@ void t_panel::erase_tile(int x, int y) {
 	buf->EraseTile(t_layer::panel, frame_x + x + 1, frame_y + y + 1);
 }
 void t_panel::print(string text, int x, int y) {
-	print(text, x, y, fgc);
+	print(text, x, y, fgc, bgc);
 }
 void t_panel::print(string text, int x, int y, int text_fgc) {
+	print(text, x, y, text_fgc, bgc);
+}
+void t_panel::print(string text, int x, int y, int text_fgc, int text_bgc) {
 	if (y < 0 || y >= frame_h - 1 || x >= frame_w - 1) {
 		return;
 	}
@@ -127,7 +130,7 @@ void t_panel::print(string text, int x, int y, int text_fgc) {
 				break;
 			}
 		} else {
-			put_tile(TTileSeq(ch, text_fgc, bgc), x, y, false);
+			put_tile(TTileSeq(ch, text_fgc, text_bgc), x, y, false);
 			x++;
 			if (x >= frame_w - 1) {
 				break;

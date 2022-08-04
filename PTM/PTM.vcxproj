@@ -151,7 +151,9 @@
     <ClCompile Include="t_config.cpp" />
     <ClCompile Include="t_compiler.cpp" />
     <ClCompile Include="t_default_gfx.cpp" />
+    <ClCompile Include="t_filesystem_widget.cpp" />
     <ClCompile Include="t_input_widget.cpp" />
+    <ClCompile Include="t_list_widget.cpp" />
     <ClCompile Include="t_machine.cpp" />
     <ClCompile Include="t_globals.cpp" />
     <ClCompile Include="t_obfuscator.cpp" />
@@ -174,8 +176,10 @@
     <ClInclude Include="t_config.h" />
     <ClInclude Include="t_compiler.h" />
     <ClInclude Include="t_default_gfx.h" />
+    <ClInclude Include="t_filesystem_widget.h" />
     <ClInclude Include="t_input_widget.h" />
     <ClInclude Include="t_layer.h" />
+    <ClInclude Include="t_list_widget.h" />
     <ClInclude Include="t_machine.h" />
     <ClInclude Include="t_globals.h" />
     <ClInclude Include="t_obfuscator.h" />

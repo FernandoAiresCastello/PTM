@@ -9,6 +9,8 @@
 #include "t_panel.h"
 #include "t_input_widget.h"
 #include "t_alert_widget.h"
+#include "t_list_widget.h"
+#include "t_filesystem_widget.h"
 
 #define PTM_EDITOR_WINDOW_TITLE		"PTM"
 
@@ -21,6 +23,8 @@ t_program_editor::t_program_editor(t_globals* g) : t_ui_base(g) {
 	info_visible = true;
 	snd = g->snd;
 	scr_csr.tile.AddBlank(2);
+
+	draw_everything();
 
 	if (!g->cfg->autorun.empty()) {
 		if (File::Exists(g->cfg->autorun)) {
@@ -130,7 +134,6 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 		type_char(key);
 		unsaved = true;
 	}
-
 	draw_everything();
 }
 void t_program_editor::on_mouse_wheel(int dist_y) {
@@ -421,11 +424,13 @@ void t_program_editor::load_program() {
 		else if (result == t_confirm_result::cancel) return;
 	}
 	hide_cursor();
-	t_input_widget* widget = new t_input_widget(globals, "Load program", color.fg, color.pnl_bg);
-	string file = widget->show();
+	t_filesystem_widget* widget = new t_filesystem_widget(
+		globals, "Load program", 2, 2, 20, 19, color.fg, color.pnl_bg, color.fg_bold, color.sel_bg);
+	string file = widget->select_file(cfg->programs_path);
 	delete widget;
-	if (file.empty()) return;
-	load_program(file);
+	if (!file.empty()) {
+		load_program(file);
+	}
 }
 void t_program_editor::load_program(string file) {
 	if (file.empty()) return;
@@ -443,7 +448,10 @@ void t_program_editor::save_program(string file) {
 	if (file.empty()) {
 		save_program_as();
 	} else {
-		prg.save_encrypted(file);
+		if (!String::EndsWith(file, ".ptm")) {
+			file += ".ptm";
+		}
+		prg.save_encrypted(cfg->programs_path + "\\" + file);
 		prg_filename = file;
 		unsaved = false;
 	}

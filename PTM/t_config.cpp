@@ -14,6 +14,8 @@ void t_config::load() {
 				autoload = value;
 			} else if (name == "autorun") {
 				autorun = value;
+			} else if (name == "programs_path") {
+				programs_path = value;
 			}
 		}
 	} else {

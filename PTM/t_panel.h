@@ -25,6 +25,7 @@ struct t_panel {
 	void erase_tile(int x, int y);
 	void print(string text, int x, int y);
 	void print(string text, int x, int y, int text_fgc);
+	void print(string text, int x, int y, int text_fgc, int text_bgc);
 
 private:
 	TTileBuffer* buf;
