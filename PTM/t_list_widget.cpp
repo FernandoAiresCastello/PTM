@@ -40,6 +40,7 @@ void t_list_widget::draw() {
 		const int bgc = i == ix_selected ? sel_bgc : pnl->bgc;
 		auto& item = items[i];
 		for (int i = 0; i < item.icon.GetSize(); i++) {
+			item.icon.SetForeColor(i, fgc);
 			item.icon.SetBackColor(i, bgc);
 		}
 		if (!item.icon.IsEmpty()) {
@@ -65,12 +66,47 @@ void t_list_widget::reset_selection() {
 	ix_selected = 0;
 	ix_first_item = 0;
 }
-t_list_widget_item& t_list_widget::get_selected_item() {
-	return items[ix_selected];
+t_list_widget_item* t_list_widget::get_selected_item() {
+	if (ix_selected < items.size()) {
+		return &items[ix_selected];
+	}
+	return nullptr;
 }
 int t_list_widget::get_selected_index() {
 	return ix_selected;
 }
 t_panel* t_list_widget::get_panel() {
 	return pnl;
+}
+void t_list_widget::sort_alphabetically() {
+	std::sort(items.begin(), items.end(), 
+		[](const t_list_widget_item& lhs, const t_list_widget_item& rhs) {
+			return lhs.text < rhs.text;
+	});
+}
+t_list_widget_item* t_list_widget::run_default_selection_loop(SDL_Keycode alt_confirm_key) {
+	t_list_widget_item* selected_item = nullptr;
+	while (true) {
+		draw();
+		wnd->Update();
+		SDL_Event e = { 0 };
+		SDL_PollEvent(&e);
+		if (e.type == SDL_QUIT) {
+			break;
+		} else if (e.type == SDL_KEYDOWN) {
+			auto key = e.key.keysym.sym;
+			if (key == SDLK_ESCAPE) {
+				selected_item = nullptr;
+				break;
+			} else if (key == SDLK_DOWN) {
+				select_next();
+			} else if (key == SDLK_UP) {
+				select_prev();
+			} else if (key == SDLK_RETURN || key == alt_confirm_key) {
+				selected_item = get_selected_item();
+				break;
+			}
+		}
+	}
+	return selected_item;
 }

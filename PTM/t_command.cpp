@@ -47,7 +47,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "TILE.STO")		store_cur_tile(args);
 	else if (cmd == "TILE.PSTO")	parse_and_store_tile(args);
 	else if (cmd == "TILE.LOAD")	load_cur_tile(args);
-	else if (cmd == "TILE.PROP")	add_tile_property(args);
+	else if (cmd == "TILE.PROP")	set_tile_property(args);
 	else if (cmd == "TILE.PGET")	get_tile_property(args);
 	// Tile buffer cursor
 	else if (cmd == "CSR.LAYER")	select_layer(args);
@@ -449,7 +449,7 @@ void t_command::load_cur_tile(t_params& arg) {
 		intp->abort("Tile definition not found: " + id);
 	}
 }
-void t_command::add_tile_property(t_params& arg) {
+void t_command::set_tile_property(t_params& arg) {
 	ARGC(2);
 	string prop_id = intp->require_string(arg[0]);
 	if (prop_id.empty()) return;

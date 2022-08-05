@@ -11,6 +11,7 @@
 #include "t_alert_widget.h"
 #include "t_list_widget.h"
 #include "t_filesystem_widget.h"
+#include "t_labels_widget.h"
 
 #define PTM_EDITOR_WINDOW_TITLE		"PTM"
 
@@ -130,6 +131,8 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 		reload_program();
 	} else if (shift && key == SDLK_a) {
 		select_entire_program();
+	} else if (key == SDLK_TAB) {
+		find_label();
 	} else if (!ctrl && is_valid_prg_char(key)) {
 		type_char(key);
 		unsaved = true;
@@ -625,6 +628,7 @@ void t_program_editor::show_help() {
 		int y = 8;
 		pnl.print("F1            Help", x, y++);
 		pnl.print("F5            Run program", x, y++);
+		pnl.print("TAB           Subroutine list", x, y++);
 		pnl.print("CTRL+N        Create new program", x, y++);
 		pnl.print("CTRL+L        Load program", x, y++);
 		pnl.print("CTRL+S        Save program", x, y++);
@@ -689,4 +693,28 @@ void t_program_editor::alert_error(string title, string text) {
 }
 void t_program_editor::beep() {
 	snd->Beep(2500, 100);
+}
+void t_program_editor::find_label() {
+	t_labels_widget* widget = new t_labels_widget(
+		globals, "Subroutines", 2, 2, 20, 19, color.fg, color.pnl_bg, color.fg_bold, color.sel_bg);
+	string label = widget->select_label(&prg);
+	delete widget;
+
+	if (label.empty()) return;
+
+	label = ":" + label;
+	bool found = false;
+	int src_line_ix = 0;
+	while (!found) {
+		string line = prg.src_lines[src_line_ix];
+		if (line == label) {
+			found = true;
+		} else {
+			src_line_ix++;
+		}
+	}
+	move_prg_csr_end();
+	while (prg_csr.line_ix != src_line_ix) {
+		move_prg_csr_up();
+	}
 }

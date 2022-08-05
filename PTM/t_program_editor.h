@@ -95,4 +95,5 @@ private:
 	void alert_error(string title, string text);
 	void beep();
 	void select_entire_program();
+	void find_label();
 };

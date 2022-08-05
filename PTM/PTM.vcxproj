@@ -153,6 +153,7 @@
     <ClCompile Include="t_default_gfx.cpp" />
     <ClCompile Include="t_filesystem_widget.cpp" />
     <ClCompile Include="t_input_widget.cpp" />
+    <ClCompile Include="t_labels_widget.cpp" />
     <ClCompile Include="t_list_widget.cpp" />
     <ClCompile Include="t_machine.cpp" />
     <ClCompile Include="t_globals.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="t_default_gfx.h" />
     <ClInclude Include="t_filesystem_widget.h" />
     <ClInclude Include="t_input_widget.h" />
+    <ClInclude Include="t_labels_widget.h" />
     <ClInclude Include="t_layer.h" />
     <ClInclude Include="t_list_widget.h" />
     <ClInclude Include="t_machine.h" />

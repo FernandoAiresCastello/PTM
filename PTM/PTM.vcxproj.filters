@@ -38,20 +38,11 @@
     <ClCompile Include="t_variable.cpp">
       <Filter>Machine</Filter>
     </ClCompile>
-    <ClCompile Include="t_panel.cpp">
-      <Filter>Editor\Widgets</Filter>
-    </ClCompile>
     <ClCompile Include="t_program_editor.cpp">
       <Filter>Editor\Core</Filter>
     </ClCompile>
     <ClCompile Include="t_ui_base.cpp">
       <Filter>Editor\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="t_input_widget.cpp">
-      <Filter>Editor\Widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="t_alert_widget.cpp">
-      <Filter>Editor\Widgets</Filter>
     </ClCompile>
     <ClCompile Include="t_performance_monitor.cpp">
       <Filter>Utils</Filter>
@@ -59,10 +50,22 @@
     <ClCompile Include="t_table.cpp">
       <Filter>Machine</Filter>
     </ClCompile>
+    <ClCompile Include="t_input_widget.cpp">
+      <Filter>Editor\Widgets</Filter>
+    </ClCompile>
     <ClCompile Include="t_list_widget.cpp">
       <Filter>Editor\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="t_panel.cpp">
+      <Filter>Editor\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="t_alert_widget.cpp">
+      <Filter>Editor\Widgets</Filter>
+    </ClCompile>
     <ClCompile Include="t_filesystem_widget.cpp">
+      <Filter>Editor\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="t_labels_widget.cpp">
       <Filter>Editor\Widgets</Filter>
     </ClCompile>
   </ItemGroup>
@@ -106,20 +109,11 @@
     <ClInclude Include="t_variable.h">
       <Filter>Machine</Filter>
     </ClInclude>
-    <ClInclude Include="t_panel.h">
-      <Filter>Editor\Widgets</Filter>
-    </ClInclude>
     <ClInclude Include="t_program_editor.h">
       <Filter>Editor\Core</Filter>
     </ClInclude>
     <ClInclude Include="t_ui_base.h">
       <Filter>Editor\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="t_input_widget.h">
-      <Filter>Editor\Widgets</Filter>
-    </ClInclude>
-    <ClInclude Include="t_alert_widget.h">
-      <Filter>Editor\Widgets</Filter>
     </ClInclude>
     <ClInclude Include="chars.h">
       <Filter>Common</Filter>
@@ -133,10 +127,22 @@
     <ClInclude Include="t_table.h">
       <Filter>Machine</Filter>
     </ClInclude>
+    <ClInclude Include="t_input_widget.h">
+      <Filter>Editor\Widgets</Filter>
+    </ClInclude>
     <ClInclude Include="t_list_widget.h">
       <Filter>Editor\Widgets</Filter>
     </ClInclude>
+    <ClInclude Include="t_panel.h">
+      <Filter>Editor\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="t_alert_widget.h">
+      <Filter>Editor\Widgets</Filter>
+    </ClInclude>
     <ClInclude Include="t_filesystem_widget.h">
+      <Filter>Editor\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="t_labels_widget.h">
       <Filter>Editor\Widgets</Filter>
     </ClInclude>
   </ItemGroup>

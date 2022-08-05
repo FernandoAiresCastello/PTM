@@ -6,6 +6,7 @@
 #include <vector>
 #include <stack>
 #include <map>
+#include <algorithm>
 
 using namespace CppUtils;
 using namespace TileGameLib;

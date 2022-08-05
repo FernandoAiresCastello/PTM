@@ -4,9 +4,13 @@
 
 t_program::t_program() {
 }
-void t_program::load_plain(string path) {
+void t_program::clear() {
 	src_lines.clear();
 	lines.clear();
+	labels.clear();
+}
+void t_program::load_plain(string path) {
+	clear();
 	for (auto& src : File::ReadLines(path, "\r\n")) {
 		src_lines.push_back(src);
 	}
@@ -18,8 +22,7 @@ void t_program::save_plain(string path) {
 	File::WriteLines(path, src_lines);
 }
 void t_program::load_encrypted(string path) {
-	src_lines.clear();
-	lines.clear();
+	clear();
 	auto file_lines = File::ReadLines(path, "\r\n");
 	t_obfuscator::xor_decrypt(&file_lines, &src_lines);
 	if (String::Trim(src_lines.back()).empty()) {

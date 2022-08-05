@@ -7,6 +7,7 @@ struct t_program {
 	std::vector<t_program_line> lines;
 	std::map<string, int> labels;
 	t_program();
+	void clear();
 	void load_plain(string path);
 	void save_plain(string path);
 	void load_encrypted(string path);

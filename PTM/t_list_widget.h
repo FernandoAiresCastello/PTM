@@ -21,9 +21,11 @@ struct t_list_widget {
 	void select_next();
 	void select_prev();
 	void reset_selection();
-	t_list_widget_item& get_selected_item();
+	t_list_widget_item* get_selected_item();
 	int get_selected_index();
 	t_panel* get_panel();
+	void sort_alphabetically();
+	t_list_widget_item* run_default_selection_loop(SDL_Keycode alt_confirm_key = SDLK_RETURN);
 private:
 	TBufferedWindow* wnd;
 	TTileBuffer* buf;
