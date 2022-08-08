@@ -68,6 +68,9 @@
     <ClCompile Include="t_labels_widget.cpp">
       <Filter>Editor\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="t_main_menu_widget.cpp">
+      <Filter>Editor\Widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="t_program.h">
@@ -143,6 +146,9 @@
       <Filter>Editor\Widgets</Filter>
     </ClInclude>
     <ClInclude Include="t_labels_widget.h">
+      <Filter>Editor\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="t_main_menu_widget.h">
       <Filter>Editor\Widgets</Filter>
     </ClInclude>
   </ItemGroup>

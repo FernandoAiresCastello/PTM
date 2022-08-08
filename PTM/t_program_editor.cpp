@@ -12,6 +12,7 @@
 #include "t_list_widget.h"
 #include "t_filesystem_widget.h"
 #include "t_labels_widget.h"
+#include "t_main_menu_widget.h"
 
 #define PTM_EDITOR_WINDOW_TITLE		"PTM"
 
@@ -71,9 +72,11 @@ void t_program_editor::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool a
 	if (TKey::Alt() && key == SDLK_RETURN) {
 		wnd->ToggleFullscreen();
 	} else if (ctrl && key == SDLK_q) {
-		if (on_exit()) running = false;
+		quit();
 	} else if (key == SDLK_F1) {
 		show_help();
+	} else if (key == SDLK_F2) {
+		show_main_menu();
 	} else if (key == SDLK_ESCAPE) {
 		cancel_line_selection();
 	} else if (key == SDLK_RIGHT) {
@@ -148,6 +151,11 @@ void t_program_editor::on_mouse_wheel(int dist_y) {
 		}
 	}
 	draw_everything();
+}
+void t_program_editor::quit() {
+	if (on_exit()) {
+		running = false;
+	}
 }
 void t_program_editor::draw_everything() {
 	draw_screen_base();
@@ -627,6 +635,7 @@ void t_program_editor::show_help() {
 		int x = 1;
 		int y = 8;
 		pnl.print("F1            Help", x, y++);
+		pnl.print("F2            Main menu", x, y++);
 		pnl.print("F5            Run program", x, y++);
 		pnl.print("TAB           Subroutine list", x, y++);
 		pnl.print("CTRL+N        Create new program", x, y++);
@@ -717,4 +726,9 @@ void t_program_editor::find_label() {
 	while (prg_csr.line_ix != src_line_ix) {
 		move_prg_csr_up();
 	}
+}
+void t_program_editor::show_main_menu() {
+	t_main_menu_widget* widget = new t_main_menu_widget(this);
+	widget->show();
+	delete widget;
 }

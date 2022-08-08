@@ -20,6 +20,10 @@ void t_panel::set_frame(int x, int y, int w, int h) {
 	frame_w = w + 1;
 	frame_h = h + 1;
 }
+void t_panel::resize(int w, int h) {
+	frame_w = w + 1;
+	frame_h = h + 1;
+}
 void t_panel::draw_frame() {
 	const int x = frame_x;
 	const int y = frame_y;

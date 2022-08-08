@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -157,6 +157,7 @@
     <ClCompile Include="t_list_widget.cpp" />
     <ClCompile Include="t_machine.cpp" />
     <ClCompile Include="t_globals.cpp" />
+    <ClCompile Include="t_main_menu_widget.cpp" />
     <ClCompile Include="t_obfuscator.cpp" />
     <ClCompile Include="t_panel.cpp" />
     <ClCompile Include="t_performance_monitor.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="t_list_widget.h" />
     <ClInclude Include="t_machine.h" />
     <ClInclude Include="t_globals.h" />
+    <ClInclude Include="t_main_menu_widget.h" />
     <ClInclude Include="t_obfuscator.h" />
     <ClInclude Include="t_panel.h" />
     <ClInclude Include="t_performance_monitor.h" />

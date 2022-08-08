@@ -110,3 +110,14 @@ t_list_widget_item* t_list_widget::run_default_selection_loop(SDL_Keycode alt_co
 	}
 	return selected_item;
 }
+void t_list_widget::auto_resize() {
+	int h = items.size();
+	int w = 0;
+	for (auto& item : items) {
+		if (item.text.length() > w) {
+			w = item.text.length() + 2;
+		}
+	}
+	pnl->resize(w, h);
+	max_visible_items = h;
+}

@@ -14,6 +14,7 @@ struct t_program_editor : public t_ui_base {
 	t_program_editor(t_globals* g);
 	~t_program_editor();
 private:
+	friend class t_main_menu_widget;
 	t_performance_monitor* perfmon;
 	t_program prg;
 	string prg_filename;
@@ -44,6 +45,7 @@ private:
 	bool on_exit();
 	void on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt);
 	void on_mouse_wheel(int dist_y);
+	void quit();
 	void draw_everything();
 	void draw_only_whats_constantly_needed();
 	void draw_border_info();
@@ -96,4 +98,5 @@ private:
 	void beep();
 	void select_entire_program();
 	void find_label();
+	void show_main_menu();
 };

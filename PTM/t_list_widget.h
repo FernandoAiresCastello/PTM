@@ -26,6 +26,7 @@ struct t_list_widget {
 	t_panel* get_panel();
 	void sort_alphabetically();
 	t_list_widget_item* run_default_selection_loop(SDL_Keycode alt_confirm_key = SDLK_RETURN);
+	void auto_resize();
 private:
 	TBufferedWindow* wnd;
 	TTileBuffer* buf;
