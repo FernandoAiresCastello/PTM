@@ -80,6 +80,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "BUF.CLR")		clear_rect(args);
 	// Graphics / Window
 	else if (cmd == "CHR")			define_char(args);
+	else if (cmd == "CHRL")			define_char_rows(args);
 	else if (cmd == "PAL")			define_color(args);
 	else if (cmd == "CHR.SIZE")		get_charset_size(args);
 	else if (cmd == "PAL.SIZE")		get_palette_size(args);
@@ -130,10 +131,10 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "SND.LOOP")		loop_sound(args);
 	else if (cmd == "SND.NOTE")		play_sound_note(args);
 	// Filesystem
-	else if (cmd == "CLOAD")	read_file_into_string(args);
-	else if (cmd == "BLOAD")	read_file_into_array(args);
+	else if (cmd == "CLOAD")		read_file_into_string(args);
+	else if (cmd == "BLOAD")		read_file_into_array(args);
 	// Strings
-	else if (cmd == "STR.FMT")	format_number(args);
+	else if (cmd == "STR.FMT")		format_number(args);
 
 	else return false;
 	return true;
@@ -588,6 +589,21 @@ void t_command::select_layer(t_params& arg) {
 	}
 }
 void t_command::define_char(t_params& arg) {
+	ARGC(9);
+	int chr_ix = intp->require_charset_ix(arg[0]);
+	if (chr_ix != PTM_INVALID_NUMBER) {
+		int row0 = intp->require_number(arg[1]);
+		int row1 = intp->require_number(arg[2]);
+		int row2 = intp->require_number(arg[3]);
+		int row3 = intp->require_number(arg[4]);
+		int row4 = intp->require_number(arg[5]);
+		int row5 = intp->require_number(arg[6]);
+		int row6 = intp->require_number(arg[7]);
+		int row7 = intp->require_number(arg[8]);
+		machine->chr->Set(chr_ix, row0, row1, row2, row3, row4, row5, row6, row7);
+	}
+}
+void t_command::define_char_rows(t_params& arg) {
 	ARGC(3);
 	int chr_ix = intp->require_charset_ix(arg[0]);
 	if (chr_ix != PTM_INVALID_NUMBER) {

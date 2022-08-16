@@ -62,6 +62,7 @@ private:
 	void set_tile_transparency(t_params& arg, bool transparent);
 	void select_layer(t_params& arg);
 	void define_char(t_params& arg);
+	void define_char_rows(t_params& arg);
 	void define_color(t_params& arg);
 	void update_screen(t_params& arg);
 	void get_random_number(t_params& arg);

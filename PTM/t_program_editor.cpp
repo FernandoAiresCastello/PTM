@@ -462,7 +462,10 @@ void t_program_editor::save_program(string file) {
 		if (!String::EndsWith(file, ".ptm")) {
 			file += ".ptm";
 		}
-		prg.save_encrypted(cfg->programs_path + "\\" + file);
+		if (prg_filename.empty()) {
+			file = cfg->programs_path + "\\" + file;
+		}
+		prg.save_encrypted(file);
 		prg_filename = file;
 		unsaved = false;
 	}

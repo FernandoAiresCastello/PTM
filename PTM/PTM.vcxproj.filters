@@ -156,9 +156,6 @@
     <Filter Include="Editor">
       <UniqueIdentifier>{0e280fbc-ee34-44a0-9078-8cfa322393c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Program">
-      <UniqueIdentifier>{0d95466d-6a97-4c32-983e-5b041b80109e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Common">
       <UniqueIdentifier>{5a78058d-4114-4c60-aae8-0ff9c987d499}</UniqueIdentifier>
     </Filter>
@@ -176,6 +173,9 @@
     </Filter>
     <Filter Include="Utils">
       <UniqueIdentifier>{8b24975f-8788-4ddd-a53a-c1f96ededae2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program">
+      <UniqueIdentifier>{0d95466d-6a97-4c32-983e-5b041b80109e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
