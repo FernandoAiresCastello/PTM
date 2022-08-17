@@ -10,7 +10,7 @@ t_command::t_command(t_interpreter* intp) {
 }
 bool t_command::execute(string& cmd, t_params& args) {
 	// Control flow
-	if (cmd == "HALT")				halt(args);
+		 if (cmd == "HALT")			halt(args);
 	else if (cmd == "EXIT")			exit(args);
 	else if (cmd == "GOTO")			goto_label(args);
 	else if (cmd == "CALL")			call_label(args);
@@ -45,13 +45,12 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "TILE.BG")		set_cur_tile_bgcolor(args);
 	else if (cmd == "TILE.PARSE")	parse_cur_tile(args);
 	else if (cmd == "TILE.STO")		store_cur_tile(args);
-	else if (cmd == "TILE.PSTO")	parse_and_store_tile(args);
 	else if (cmd == "TILE.LOAD")	load_cur_tile(args);
 	else if (cmd == "TILE.PROP")	set_tile_property(args);
 	else if (cmd == "TILE.PGET")	get_tile_property(args);
 	// Tile buffer cursor
-	else if (cmd == "CSR.LAYER")	select_layer(args);
-	else if (cmd == "CSR.SET")		set_cursor_pos(args);
+	else if (cmd == "LAYER")		select_layer(args);
+	else if (cmd == "LOCATE")		set_cursor_pos(args);
 	else if (cmd == "CSR.X")		set_cursor_x(args);
 	else if (cmd == "CSR.Y")		set_cursor_y(args);
 	else if (cmd == "CSR.MOV")		move_cursor(args);
@@ -63,9 +62,6 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "CSR.UL")		move_cursor_up_left(args);
 	else if (cmd == "CSR.DR")		move_cursor_down_right(args);
 	else if (cmd == "CSR.DL")		move_cursor_down_left(args);
-	else if (cmd == "CSR.ON")		set_cursor_visible(args, true);
-	else if (cmd == "CSR.OFF")		set_cursor_visible(args, false);
-	else if (cmd == "CSR.COLOR")	set_cursor_color(args);
 	// Tile buffer
 	else if (cmd == "BUF.PUT")		put_tile(args);
 	else if (cmd == "BUF.GET")		copy_tile(args);
@@ -74,10 +70,10 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "BUF.REPL")		put_tile_repeat_left(args);
 	else if (cmd == "BUF.REPU")		put_tile_repeat_up(args);
 	else if (cmd == "BUF.REPD")		put_tile_repeat_down(args);
-	else if (cmd == "BUF.FILL")		fill_rect(args);
-	else if (cmd == "BUF.CLS")		clear_all_layers(args);
-	else if (cmd == "BUF.CLL")		clear_layer(args);
-	else if (cmd == "BUF.CLR")		clear_rect(args);
+	else if (cmd == "RECT")			fill_rect(args);
+	else if (cmd == "CLS")			clear_all_layers(args);
+	else if (cmd == "CLL")			clear_layer(args);
+	else if (cmd == "CLR")			clear_rect(args);
 	// Graphics / Window
 	else if (cmd == "CHR")			define_char(args);
 	else if (cmd == "CHRL")			define_char_rows(args);
@@ -104,7 +100,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "ESC.OFF")		allow_exit_on_escape_key(args, false);
 	// Debug
 	else if (cmd == "BRK")			trigger_breakpoint(args);
-	else if (cmd == "DBG.FILE")		save_debug_file(args);
+	else if (cmd == "FDEBUG")		save_debug_file(args);
 	else if (cmd == "ASSERT.EQ")	assert_eq(args);
 	else if (cmd == "ASSERT.NEQ")	assert_neq(args);
 	else if (cmd == "ASSERT.GT")	assert_gt(args);
@@ -127,14 +123,14 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "IF.LT.GOTO")	if_lt_goto(args);
 	else if (cmd == "IF.LTE.GOTO")	if_lte_goto(args);
 	// Sound
-	else if (cmd == "SND.PLAY")		play_sound(args);
-	else if (cmd == "SND.LOOP")		loop_sound(args);
-	else if (cmd == "SND.NOTE")		play_sound_note(args);
+	else if (cmd == "PLAY")			play_sound(args);
+	else if (cmd == "LPLAY")		loop_sound(args);
+	else if (cmd == "SOUND")		play_sound_note(args);
 	// Filesystem
 	else if (cmd == "CLOAD")		read_file_into_string(args);
 	else if (cmd == "BLOAD")		read_file_into_array(args);
 	// Strings
-	else if (cmd == "STR.FMT")		format_number(args);
+	else if (cmd == "FMT")			format_number(args);
 
 	else return false;
 	return true;
@@ -338,17 +334,6 @@ void t_command::move_cursor_down_left(t_params& arg) {
 	int dist = arg.empty() ? 1 : intp->require_number(arg[0]);
 	machine->move_cursor(-dist, dist);
 }
-void t_command::set_cursor_visible(t_params& arg, bool visible) {
-	ARGC(0);
-	machine->set_csr_visible(visible);
-}
-void t_command::set_cursor_color(t_params& arg) {
-	ARGC(1);
-	int color = intp->require_palette_ix(arg[0]);
-	if (color != PTM_INVALID_NUMBER) {
-		machine->set_csr_color(color);
-	}
-}
 void t_command::init_cur_tile(t_params& arg) {
 	ARGC_MIN_MAX(0, 3);
 	if (arg.empty()) {
@@ -419,26 +404,6 @@ void t_command::store_cur_tile(t_params& arg) {
 	string id = intp->require_id(arg[0]);
 	if (!id.empty()) {
 		machine->tilestore[id] = machine->cur_tile;
-	}
-}
-void t_command::parse_and_store_tile(t_params& arg) {
-	ARGC(2);
-	string id = intp->require_id(arg[0]);
-	if (!id.empty()) {
-		string tile_def = intp->require_string(arg[1]);
-		if (!tile_def.empty()) {
-			TTileSeq tile;
-			bool parse_ok = tile.Parse(tile_def);
-			if (!parse_ok) {
-				intp->abort("Malformed tile definition");
-				return;
-			}
-			if (machine->is_valid_tileseq(tile)) {
-				machine->tilestore[id] = tile;
-			} else {
-				intp->abort("Invalid tile definition");
-			}
-		}
 	}
 }
 void t_command::load_cur_tile(t_params& arg) {
@@ -582,7 +547,7 @@ void t_command::set_tile_transparency(t_params& arg, bool transparent) {
 void t_command::select_layer(t_params& arg) {
 	ARGC(1);
 	int layer = intp->require_number(arg[0]);
-	if (layer == t_layer::bottom || layer == t_layer::top) {
+	if (layer == t_layer::bottom || layer == t_layer::top || layer == t_layer::topmost) {
 		machine->set_csr_layer(layer);
 	} else {
 		intp->abort("Invalid layer index");

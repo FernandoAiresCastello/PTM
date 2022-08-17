@@ -34,8 +34,6 @@ private:
 	void move_cursor_up_left(t_params& arg);
 	void move_cursor_down_right(t_params& arg);
 	void move_cursor_down_left(t_params& arg);
-	void set_cursor_visible(t_params& arg, bool visible);
-	void set_cursor_color(t_params& arg);
 	void init_cur_tile(t_params& arg);
 	void append_cur_tile(t_params& arg);
 	void set_cur_tile_char(t_params& arg);
@@ -43,7 +41,6 @@ private:
 	void set_cur_tile_bgcolor(t_params& arg);
 	void parse_cur_tile(t_params& arg);
 	void store_cur_tile(t_params& arg);
-	void parse_and_store_tile(t_params& arg);
 	void load_cur_tile(t_params& arg);
 	void set_tile_property(t_params& arg);
 	void get_tile_property(t_params& arg);

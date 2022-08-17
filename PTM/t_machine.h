@@ -53,14 +53,10 @@ struct t_machine {
 	void set_window_bgcolor(int palette_ix);
 	void set_cursor_pos(int x, int y);
 	void move_cursor(int dx, int dy);
-	void draw_cursor();
-	void erase_cursor();
 	int get_csr_layer();
 	int get_csr_x();
 	int get_csr_y();
 	void set_csr_layer(int layer);
-	void set_csr_color(int color);
-	void set_csr_visible(bool visible);
 	bool is_valid_tileseq(TTileSeq& tileseq);
 	bool is_valid_tile(const TTile& tile);
 	bool is_valid_charset_ix(int ix);

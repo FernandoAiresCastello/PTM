@@ -42,7 +42,6 @@ void t_machine::on_loop() {
 	clock++;
 }
 void t_machine::on_screen_update() {
-	draw_cursor();
 	wnd->Update();
 }
 void t_machine::init_system_vars() {
@@ -89,24 +88,12 @@ void t_machine::set_window_bgcolor(int palette_ix) {
 	wnd->SetBackColor(pal->GetColorRGB(palette_ix));
 }
 void t_machine::set_cursor_pos(int x, int y) {
-	erase_cursor();
 	csr.x = x;
 	csr.y = y;
 }
 void t_machine::move_cursor(int dx, int dy) {
-	erase_cursor();
 	csr.x += dx;
 	csr.y += dy;
-}
-void t_machine::draw_cursor() {
-	if (!csr.visible) return;
-	csr.tile.Set(0, chars::cursor_full, csr.color, csr.color);
-	csr.tile.Set(1, chars::empty, csr.color, csr.color);
-	tilebuf->SetTile(csr.tile, t_layer::topmost, csr.x, csr.y, true);
-}
-void t_machine::erase_cursor() {
-	if (!csr.visible) return;
-	tilebuf->ClearLayer(t_layer::topmost);
 }
 int t_machine::get_csr_layer() {
 	return csr.layer;
@@ -119,12 +106,6 @@ int t_machine::get_csr_y() {
 }
 void t_machine::set_csr_layer(int layer) {
 	csr.layer = layer;
-}
-void t_machine::set_csr_color(int color) {
-	csr.color = color;
-}
-void t_machine::set_csr_visible(bool visible) {
-	csr.visible = visible;
 }
 bool t_machine::is_valid_tileseq(TTileSeq& tileseq) {
 	bool valid = true;
