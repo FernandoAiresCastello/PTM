@@ -22,6 +22,7 @@ t_main_menu_widget::~t_main_menu_widget() {
 }
 void t_main_menu_widget::show(){
 	menu->auto_resize();
+	menu->stretch(1, 0);
 	t_list_widget_item* item = menu->run_default_selection_loop();
 	if (!item) return;
 	editor->buf->ClearLayer(t_layer::panel);

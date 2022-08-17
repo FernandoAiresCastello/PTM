@@ -115,9 +115,13 @@ void t_list_widget::auto_resize() {
 	int w = 0;
 	for (auto& item : items) {
 		if (item.text.length() > w) {
-			w = item.text.length() + 2;
+			w = item.text.length() + 1;
 		}
 	}
 	pnl->resize(w, h);
 	max_visible_items = h;
+}
+void t_list_widget::stretch(int dx, int dy) {
+	pnl->resize(pnl->frame_w + dx - 1, pnl->frame_h + dy - 1);
+	max_visible_items = pnl->frame_h + dy;
 }

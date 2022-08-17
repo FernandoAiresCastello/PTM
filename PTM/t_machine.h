@@ -63,6 +63,7 @@ struct t_machine {
 	bool is_valid_palette_ix(int ix);
 	bool is_valid_char_def(int row_ix, int data);
 	bool is_valid_color_rgb(int rgb);
+	string read_input_string(int maxlen);
 
 private:
 	TCharset* original_chr;

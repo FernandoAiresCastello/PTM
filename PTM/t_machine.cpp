@@ -51,6 +51,7 @@ void t_machine::init_system_vars() {
 	// Tile buffer layers
 	set_const("$layer.btm", t_layer::bottom);
 	set_const("$layer.top", t_layer::top);
+	set_const("$layer.topmost", t_layer::topmost);
 	// Keyboard codes
 	set_const("$kb.right", SDL_SCANCODE_RIGHT);
 	set_const("$kb.left", SDL_SCANCODE_LEFT);
@@ -136,4 +137,55 @@ bool t_machine::is_valid_char_def(int row_ix, int data) {
 }
 bool t_machine::is_valid_color_rgb(int rgb) {
 	return rgb >= 0 && rgb <= 0xffffff;
+}
+string t_machine::read_input_string(int maxlen) {
+	string str = "";
+	string empty_str = string(maxlen + 1, ' ');
+	const int initial_x = csr.x;
+	const int y = 0;
+	int ix = 0;
+	bool running = true;
+
+	TTileSeq input_csr;
+	input_csr.Add(chars::cursor_full, text_color.fg, text_color.bg);
+	input_csr.Add(chars::empty, text_color.fg, text_color.bg);
+
+	while (running) {
+		tilebuf->Print(empty_str, csr.layer, initial_x, csr.y, text_color.fg, text_color.bg, tile_transparency);
+		tilebuf->Print(str, csr.layer, initial_x, csr.y, text_color.fg, text_color.bg, tile_transparency);
+		tilebuf->SetTile(input_csr, csr.layer, csr.x, csr.y, tile_transparency);
+		wnd->Update();
+
+		SDL_Event e = { 0 };
+		SDL_PollEvent(&e);
+		if (e.type == SDL_KEYDOWN) {
+			auto key = e.key.keysym.sym;
+			if (key == SDLK_RETURN) {
+				if (TKey::Alt()) wnd->ToggleFullscreen();
+				else running = false;
+			} else if (key == SDLK_ESCAPE) {
+				str = "";
+				running = false;
+			} else if (key == SDLK_BACKSPACE && str.length() > 0) {
+				str.pop_back();
+				ix--;
+				csr.x--;
+			} else if (str.length() < maxlen) {
+				if (key >= 0x20 && key < 0x7f) {
+					if (TKey::CapsLock()) {
+						key = String::ToUpper(key);
+					}
+					if (TKey::Shift()) {
+						key = String::ToUpper(String::ShiftChar(key));
+					}
+					str.push_back((char)key);
+					ix++;
+					csr.x++;
+				}
+			}
+		}
+	}
+
+	tilebuf->PutChar(chars::empty, csr.layer, csr.x, csr.y, text_color.fg, text_color.bg, tile_transparency);
+	return str;
 }

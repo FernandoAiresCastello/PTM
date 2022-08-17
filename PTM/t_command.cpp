@@ -10,7 +10,7 @@ t_command::t_command(t_interpreter* intp) {
 }
 bool t_command::execute(string& cmd, t_params& args) {
 	// Control flow
-		 if (cmd == "HALT")			halt(args);
+	if (cmd == "HALT")			halt(args);
 	else if (cmd == "EXIT")			exit(args);
 	else if (cmd == "GOTO")			goto_label(args);
 	else if (cmd == "CALL")			call_label(args);
@@ -93,7 +93,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "TEXT.BG")		set_text_bgcolor(args);
 	else if (cmd == "TEXT.COL")		set_text_colors(args);
 	// Keyboard
-	else if (cmd == "KEY.GET")		get_key_pressed(args);
+	else if (cmd == "INPUT")		read_user_input_string(args);
+	else if (cmd == "INKEY")		get_key_pressed(args);
 	else if (cmd == "KEY.CALL")		call_if_key_pressed(args);
 	else if (cmd == "KEY.GOTO")		goto_if_key_pressed(args);
 	else if (cmd == "ESC.ON")		allow_exit_on_escape_key(args, true);
@@ -131,6 +132,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "BLOAD")		read_file_into_array(args);
 	// Strings
 	else if (cmd == "FMT")			format_number(args);
+	// Time
+	else if (cmd == "TIME")			get_cycles(args);
 
 	else return false;
 	return true;
@@ -1117,4 +1120,19 @@ void t_command::get_table_data(t_params& arg) {
 		if (var_id.empty()) return;
 		machine->set_var(var_id, tbl.get_value_as_string(col, row));
 	}
+}
+void t_command::get_cycles(t_params& arg) {
+	ARGC(1);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	machine->set_var(id, machine->clock);
+}
+void t_command::read_user_input_string(t_params& arg) {
+	ARGC(2);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	int maxlen = intp->require_number(arg[1]);
+	if (maxlen == PTM_INVALID_NUMBER) return;
+	string value = machine->read_input_string(maxlen);
+	machine->set_var(id, value);
 }

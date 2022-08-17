@@ -27,6 +27,7 @@ struct t_list_widget {
 	void sort_alphabetically();
 	t_list_widget_item* run_default_selection_loop(SDL_Keycode alt_confirm_key = SDLK_RETURN);
 	void auto_resize();
+	void stretch(int dx, int dy);
 private:
 	TBufferedWindow* wnd;
 	TTileBuffer* buf;

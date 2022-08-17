@@ -118,4 +118,6 @@ private:
 	void create_table(t_params& arg);
 	void set_table_data(t_params& arg);
 	void get_table_data(t_params& arg);
+	void get_cycles(t_params& arg);
+	void read_user_input_string(t_params& arg);
 };
