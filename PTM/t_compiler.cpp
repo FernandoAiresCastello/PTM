@@ -18,20 +18,15 @@ void t_compiler::run(t_program* prg) {
 }
 bool t_compiler::compile_line(
 	t_program* prg, t_program_line* new_line, string& src_line, int src_line_nr) {
-
-	// Forbid leading whitespace
-	if (has_leading_whitespace(src_line)) {
-		add_error(src_line_nr, src_line, "Leading whitespace is not allowed");
-		return false;
-	}
 	src_line = String::Trim(src_line);
+
 	// Ignore comment line
 	if (is_comment(src_line)) {
 		return false;
 	}
 	// Parse label
 	if (is_label(src_line)) {
-		string label = String::Trim(String::Skip(src_line, 1));
+		string label = String::Trim(String::RemoveLast(src_line));
 		if (prg->labels.find(label) == prg->labels.end()) {
 			prg->labels[label] = prg->lines.size();
 		} else {
@@ -130,7 +125,7 @@ bool t_compiler::is_comment(string& src_line) {
 	return String::StartsWith(src_line, ';');
 }
 bool t_compiler::is_label(string& src_line) {
-	return String::StartsWith(src_line, ":");
+	return String::EndsWith(src_line, ":");
 }
 std::vector<string> t_compiler::parse_args(string& raw_args) {
 	std::vector<string> args;
