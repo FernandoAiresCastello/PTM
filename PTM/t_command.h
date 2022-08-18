@@ -120,4 +120,6 @@ private:
 	void get_table_data(t_params& arg);
 	void get_cycles(t_params& arg);
 	void read_user_input_string(t_params& arg);
+	void move_tile(t_params& arg);
+	void move_tile_block(t_params& arg);
 };

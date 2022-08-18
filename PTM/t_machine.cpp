@@ -189,3 +189,29 @@ string t_machine::read_input_string(int maxlen) {
 	tilebuf->PutChar(chars::empty, csr.layer, csr.x, csr.y, text_color.fg, text_color.bg, tile_transparency);
 	return str;
 }
+void t_machine::move_tile_at_cursor_pos(int dx, int dy) {
+	TTileSeq tile = tilebuf->GetTile(csr.layer, csr.x, csr.y);
+	tilebuf->EraseTile(csr.layer, csr.x, csr.y);
+	tilebuf->SetTile(tile, csr.layer, csr.x + dx, csr.y + dy, tile_transparency);
+}
+void t_machine::move_tile_block(int x, int y, int w, int h, int dx, int dy) {
+	std::vector<TTileSeq> tiles;
+	for (int cy = y; cy < y + h; cy++) {
+		for (int cx = x; cx < x + w; cx++) {
+			if (cx >= 0 && cy >= 0 && cx < tilebuf->Cols && cy < tilebuf->Rows) {
+				tiles.push_back(tilebuf->GetTile(csr.layer, cx, cy));
+				tilebuf->EraseTile(csr.layer, cx, cy);
+			} else {
+				tiles.push_back(TTileSeq());
+			}
+		}
+	}
+	const int new_x = x + dx;
+	const int new_y = y + dy;
+	int i = 0;
+	for (int cy = new_y; cy < new_y + h; cy++) {
+		for (int cx = new_x; cx < new_x + w; cx++) {
+			tilebuf->SetTile(tiles[i++], csr.layer, cx, cy, tile_transparency);
+		}
+	}
+}

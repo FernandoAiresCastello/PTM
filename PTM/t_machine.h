@@ -64,6 +64,8 @@ struct t_machine {
 	bool is_valid_char_def(int row_ix, int data);
 	bool is_valid_color_rgb(int rgb);
 	string read_input_string(int maxlen);
+	void move_tile_at_cursor_pos(int dx, int dy);
+	void move_tile_block(int x, int y, int w, int h, int dx, int dy);
 
 private:
 	TCharset* original_chr;

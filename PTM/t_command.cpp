@@ -10,7 +10,7 @@ t_command::t_command(t_interpreter* intp) {
 }
 bool t_command::execute(string& cmd, t_params& args) {
 	// Control flow
-	if (cmd == "HALT")			halt(args);
+	if (cmd == "HALT")				halt(args);
 	else if (cmd == "EXIT")			exit(args);
 	else if (cmd == "GOTO")			goto_label(args);
 	else if (cmd == "CALL")			call_label(args);
@@ -74,6 +74,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "CLS")			clear_all_layers(args);
 	else if (cmd == "CLL")			clear_layer(args);
 	else if (cmd == "CLR")			clear_rect(args);
+	else if (cmd == "BUF.MOV")		move_tile(args);
+	else if (cmd == "BUF.MOVB")		move_tile_block(args);
 	// Graphics / Window
 	else if (cmd == "CHR")			define_char(args);
 	else if (cmd == "CHRL")			define_char_rows(args);
@@ -97,8 +99,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "INKEY")		get_key_pressed(args);
 	else if (cmd == "KEY.CALL")		call_if_key_pressed(args);
 	else if (cmd == "KEY.GOTO")		goto_if_key_pressed(args);
-	else if (cmd == "ESC.ON")		allow_exit_on_escape_key(args, true);
-	else if (cmd == "ESC.OFF")		allow_exit_on_escape_key(args, false);
+	else if (cmd == "XKON")			allow_exit_on_escape_key(args, true);
+	else if (cmd == "XKOFF")		allow_exit_on_escape_key(args, false);
 	// Debug
 	else if (cmd == "BRK")			trigger_breakpoint(args);
 	else if (cmd == "FDEBUG")		save_debug_file(args);
@@ -1135,4 +1137,26 @@ void t_command::read_user_input_string(t_params& arg) {
 	if (maxlen == PTM_INVALID_NUMBER) return;
 	string value = machine->read_input_string(maxlen);
 	machine->set_var(id, value);
+}
+void t_command::move_tile(t_params& arg) {
+	ARGC(2);
+	int dx = intp->require_number(arg[0]);
+	int dy = intp->require_number(arg[1]);
+	if (dx == PTM_INVALID_NUMBER || dy == PTM_INVALID_NUMBER) return;
+	machine->move_tile_at_cursor_pos(dx, dy);
+}
+void t_command::move_tile_block(t_params& arg) {
+	ARGC(6);
+	int x = intp->require_number(arg[0]);
+	int y = intp->require_number(arg[1]);
+	int w = intp->require_number(arg[2]);
+	int h = intp->require_number(arg[3]);
+	int dx = intp->require_number(arg[4]);
+	int dy = intp->require_number(arg[5]);
+	
+	if (x == PTM_INVALID_NUMBER || y == PTM_INVALID_NUMBER ||
+		w == PTM_INVALID_NUMBER || h == PTM_INVALID_NUMBER ||
+		dx == PTM_INVALID_NUMBER || dy == PTM_INVALID_NUMBER) return;
+
+	machine->move_tile_block(x, y, w, h, dx, dy);
 }
