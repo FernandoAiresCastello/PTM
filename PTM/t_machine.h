@@ -4,8 +4,10 @@
 #include "t_table.h"
 
 struct t_performance_monitor;
+struct t_interpreter;
 
 struct t_machine {
+	t_interpreter* intp = nullptr;
 	// Debugging
 	t_performance_monitor* perfmon = nullptr;
 	// Namespaces
@@ -41,6 +43,7 @@ struct t_machine {
 	void on_loop();
 	void on_screen_update();
 	void init_system_vars();
+	std::vector<string> get_debug_info();
 	void set_var(string id, int value);
 	void set_var(string id, string value);
 	void set_const(string id, int value);

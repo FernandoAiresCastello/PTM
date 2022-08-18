@@ -18,6 +18,7 @@ struct t_interpreter {
 	void run(t_program* prg, t_machine* machine, TBufferedWindow* wnd);
 private:
 	friend struct t_command;
+	friend struct t_machine;
 	bool running;
 	bool halted;
 	int cur_line_ix;

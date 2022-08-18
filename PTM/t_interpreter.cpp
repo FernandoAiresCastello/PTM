@@ -21,6 +21,7 @@ void t_interpreter::run(t_program* prg, t_machine* machine, TBufferedWindow* wnd
 	this->prg = prg;
 	this->machine = machine;
 	this->wnd = wnd;
+	machine->intp = this;
 	running = true;
 	halted = false;
 	branched = false;

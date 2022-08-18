@@ -3,6 +3,7 @@
 #include "t_default_gfx.h"
 #include "chars.h"
 #include "t_layer.h"
+#include "t_interpreter.h"
 
 t_machine::t_machine(TBufferedWindow* wnd) {
 	this->wnd = wnd;
@@ -58,6 +59,67 @@ void t_machine::init_system_vars() {
 	set_const("$kb.down", SDL_SCANCODE_DOWN);
 	set_const("$kb.up", SDL_SCANCODE_UP);
 	set_const("$kb.enter", SDL_SCANCODE_RETURN);
+}
+std::vector<string> t_machine::get_debug_info() {
+	std::vector<string> info;
+	// Variables
+	info.push_back("Variables");
+	if (vars.empty()) {
+		info.push_back("\t(empty)");
+	}
+	for (auto& var : vars) {
+		info.push_back(
+			(var.second.is_const ? "\tconst " : "\t") +
+			String::Format("%s = %s", var.first.c_str(), var.second.value.c_str()));
+	}
+	info.push_back("");
+	// Arrays
+	info.push_back("Arrays");
+	if (arrays.empty()) {
+		info.push_back("\t(empty)");
+	}
+	for (auto& arr_inst : arrays) {
+		string id = arr_inst.first;
+		auto& arr = arr_inst.second;
+		info.push_back(String::Format("\t%s (length=%i)", id.c_str(), arr.size()));
+		for (int i = 0; i < arr.size(); i++) {
+			info.push_back(String::Format("\t\t[%i] = %s", i, arr[i].c_str()));
+		}
+	}
+	info.push_back("");
+	// Tilestore
+	info.push_back("Tilestore");
+	if (tilestore.empty()) {
+		info.push_back("\t(empty)");
+	}
+	for (auto& saved_tile : tilestore) {
+		string id = saved_tile.first;
+		string tile = saved_tile.second.ToString();
+		info.push_back(String::Format("\t%s = %s", id.c_str(), tile.c_str()));
+	}
+	info.push_back("");
+	// Current tile
+	info.push_back("Current tile");
+	if (cur_tile.IsEmpty()) {
+		info.push_back("\t(empty)");
+	} else {
+		info.push_back(String::Format("\t%s", cur_tile.ToString().c_str()));
+	}
+	info.push_back("");
+	// Tile buffer cursor
+	info.push_back("Tile buffer cursor");
+	info.push_back(String::Format("\tLayer=%i X=%i Y=%i",
+		get_csr_layer(), get_csr_x(), get_csr_y()));
+	info.push_back("");
+	// Callstack
+	info.push_back("Callstack");
+	if (intp->callstack.empty()) {
+		info.push_back("\t(empty)");
+	}
+	for (auto& prg_ix : intp->callstack._Get_container()) {
+		info.push_back("\t" + String::ToString(prg_ix));
+	}
+	return info;
 }
 void t_machine::set_var(string id, int value) {
 	vars[id] = t_variable(value);

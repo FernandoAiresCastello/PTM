@@ -137,67 +137,6 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else return false;
 	return true;
 }
-std::vector<string> t_command::get_debug_info() {
-	std::vector<string> info;
-	// Variables
-	info.push_back("Variables");
-	if (machine->vars.empty()) {
-		info.push_back("\t(empty)");
-	}
-	for (auto& var : machine->vars) {
-		info.push_back(
-			(var.second.is_const ? "\tconst " : "\t") +
-			String::Format("%s = %s", var.first.c_str(), var.second.value.c_str()));
-	}
-	info.push_back("");
-	// Arrays
-	info.push_back("Arrays");
-	if (machine->arrays.empty()) {
-		info.push_back("\t(empty)");
-	}
-	for (auto& arr_inst : machine->arrays) {
-		string id = arr_inst.first;
-		auto& arr = arr_inst.second;
-		info.push_back(String::Format("\t%s (length=%i)", id.c_str(), arr.size()));
-		for (int i = 0; i < arr.size(); i++) {
-			info.push_back(String::Format("\t\t[%i] = %s", i, arr[i].c_str()));
-		}
-	}
-	info.push_back("");
-	// Tilestore
-	info.push_back("Tilestore");
-	if (machine->tilestore.empty()) {
-		info.push_back("\t(empty)");
-	}
-	for (auto& saved_tile : machine->tilestore) {
-		string id = saved_tile.first;
-		string tile = saved_tile.second.ToString();
-		info.push_back(String::Format("\t%s = %s", id.c_str(), tile.c_str()));
-	}
-	info.push_back("");
-	// Current tile
-	info.push_back("Current tile");
-	if (machine->cur_tile.IsEmpty()) {
-		info.push_back("\t(empty)");
-	} else {
-		info.push_back(String::Format("\t%s", machine->cur_tile.ToString().c_str()));
-	}
-	info.push_back("");
-	// Tile buffer cursor
-	info.push_back("Tile buffer cursor");
-	info.push_back(String::Format("\tLayer=%i X=%i Y=%i", 
-		machine->get_csr_layer(), machine->get_csr_x(), machine->get_csr_y()));
-	info.push_back("");
-	// Callstack
-	info.push_back("Callstack");
-	if (intp->callstack.empty()) {
-		info.push_back("\t(empty)");
-	}
-	for (auto& prg_ix : intp->callstack._Get_container()) {
-		info.push_back("\t" + String::ToString(prg_ix));
-	}
-	return info;
-}
 void t_command::halt(t_params& arg) {
 	ARGC(0);
 	intp->halted = true;
@@ -719,6 +658,7 @@ void t_command::get_key_pressed(t_params& arg) {
 	string id = intp->require_id(arg[0]);
 	if (!id.empty()) {
 		machine->set_var(id, machine->last_key_pressed);
+		machine->last_key_pressed = 0;
 	}
 }
 void t_command::call_if_key_pressed(t_params& arg) {
@@ -743,7 +683,7 @@ void t_command::goto_if_key_pressed(t_params& arg) {
 }
 void t_command::save_debug_file(t_params& arg) {
 	ARGC(0);
-	File::WriteLines(PTM_DEBUG_FILE, get_debug_info());
+	File::WriteLines(PTM_DEBUG_FILE, machine->get_debug_info());
 }
 void t_command::compare_numbers(t_params& arg) {
 	ARGC(2);

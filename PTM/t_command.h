@@ -12,7 +12,6 @@ struct t_command {
 private:
 	t_interpreter* intp;
 	t_machine* machine;
-	std::vector<string> get_debug_info();
 
 	// Commands
 	void halt(t_params& arg);
