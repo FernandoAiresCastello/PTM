@@ -43,7 +43,6 @@ private:
 	string require_existing_array(t_param& arg);
 	string require_array_element(t_param& arg);
 	int require_array_index(std::vector<string>& arr, t_param& arg);
-	string require_existing_table(t_param& arg);
 	bool assert_table_index(t_table& tbl, int col, int row);
 	void goto_label(string label);
 	void call_label(string label);

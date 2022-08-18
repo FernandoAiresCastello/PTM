@@ -39,6 +39,7 @@ private:
 	void set_cur_tile_char(t_params& arg);
 	void set_cur_tile_fgcolor(t_params& arg);
 	void set_cur_tile_bgcolor(t_params& arg);
+	void set_cur_tile_colors(t_params& arg);
 	void parse_cur_tile(t_params& arg);
 	void store_cur_tile(t_params& arg);
 	void load_cur_tile(t_params& arg);
@@ -115,9 +116,6 @@ private:
 	void read_file_into_string(t_params& arg);
 	void read_file_into_array(t_params& arg);
 	void format_number(t_params& arg);
-	void create_table(t_params& arg);
-	void set_table_data(t_params& arg);
-	void get_table_data(t_params& arg);
 	void get_cycles(t_params& arg);
 	void read_user_input_string(t_params& arg);
 	void move_tile(t_params& arg);

@@ -27,10 +27,6 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "ARR.ERASE")	erase_array_element(args);
 	else if (cmd == "ARR.CLR")		clear_array(args);
 	else if (cmd == "ARR.COPY")		copy_array(args);
-	// Tables
-	else if (cmd == "TBL.NEW")		create_table(args);
-	else if (cmd == "TBL.SET")		set_table_data(args);
-	else if (cmd == "TBL.GET")		get_table_data(args);
 	// Math
 	else if (cmd == "RND")			get_random_number(args);
 	else if (cmd == "INC")			increment_variable(args);
@@ -43,6 +39,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "TILE.CH")		set_cur_tile_char(args);
 	else if (cmd == "TILE.FG")		set_cur_tile_fgcolor(args);
 	else if (cmd == "TILE.BG")		set_cur_tile_bgcolor(args);
+	else if (cmd == "TILE.COL")		set_cur_tile_colors(args);
 	else if (cmd == "TILE.PARSE")	parse_cur_tile(args);
 	else if (cmd == "TILE.STO")		store_cur_tile(args);
 	else if (cmd == "TILE.LOAD")	load_cur_tile(args);
@@ -63,19 +60,19 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "CSR.DR")		move_cursor_down_right(args);
 	else if (cmd == "CSR.DL")		move_cursor_down_left(args);
 	// Tile buffer
-	else if (cmd == "BUF.PUT")		put_tile(args);
-	else if (cmd == "BUF.GET")		copy_tile(args);
-	else if (cmd == "BUF.DEL")		delete_tile(args);
-	else if (cmd == "BUF.REPR")		put_tile_repeat_right(args);
-	else if (cmd == "BUF.REPL")		put_tile_repeat_left(args);
-	else if (cmd == "BUF.REPU")		put_tile_repeat_up(args);
-	else if (cmd == "BUF.REPD")		put_tile_repeat_down(args);
+	else if (cmd == "TILE.PUT")		put_tile(args);
+	else if (cmd == "TILE.GET")		copy_tile(args);
+	else if (cmd == "TILE.DEL")		delete_tile(args);
+	else if (cmd == "REP.R")		put_tile_repeat_right(args);
+	else if (cmd == "REP.L")		put_tile_repeat_left(args);
+	else if (cmd == "REP.U")		put_tile_repeat_up(args);
+	else if (cmd == "REP.D")		put_tile_repeat_down(args);
 	else if (cmd == "RECT")			fill_rect(args);
 	else if (cmd == "CLS")			clear_all_layers(args);
 	else if (cmd == "CLL")			clear_layer(args);
 	else if (cmd == "CLR")			clear_rect(args);
-	else if (cmd == "BUF.MOV")		move_tile(args);
-	else if (cmd == "BUF.MOVB")		move_tile_block(args);
+	else if (cmd == "MOV")			move_tile(args);
+	else if (cmd == "MOVB")			move_tile_block(args);
 	// Graphics / Window
 	else if (cmd == "CHR")			define_char(args);
 	else if (cmd == "CHRL")			define_char_rows(args);
@@ -97,8 +94,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	// Keyboard
 	else if (cmd == "INPUT")		read_user_input_string(args);
 	else if (cmd == "INKEY")		get_key_pressed(args);
-	else if (cmd == "KEY.CALL")		call_if_key_pressed(args);
-	else if (cmd == "KEY.GOTO")		goto_if_key_pressed(args);
+	else if (cmd == "KCALL")		call_if_key_pressed(args);
+	else if (cmd == "KGOTO")		goto_if_key_pressed(args);
 	else if (cmd == "XKON")			allow_exit_on_escape_key(args, true);
 	else if (cmd == "XKOFF")		allow_exit_on_escape_key(args, false);
 	// Debug
@@ -165,18 +162,6 @@ std::vector<string> t_command::get_debug_info() {
 		for (int i = 0; i < arr.size(); i++) {
 			info.push_back(String::Format("\t\t[%i] = %s", i, arr[i].c_str()));
 		}
-	}
-	info.push_back("");
-	// Tables
-	info.push_back("Tables");
-	if (machine->tables.empty()) {
-		info.push_back("\t(empty)");
-	}
-	for (auto& tbl_inst : machine->tables) {
-		string id = tbl_inst.first;
-		auto& tbl = tbl_inst.second;
-		info.push_back(String::Format("\t%s (cols=%i rows=%i)", 
-			id.c_str(), tbl.get_col_count(), tbl.get_row_count()));
 	}
 	info.push_back("");
 	// Tilestore
@@ -389,6 +374,18 @@ void t_command::set_cur_tile_bgcolor(t_params& arg) {
 		int color = intp->require_palette_ix(arg[1]);
 		if (color != PTM_INVALID_NUMBER) {
 			machine->cur_tile.SetBackColor(frame, color);
+		}
+	}
+}
+void t_command::set_cur_tile_colors(t_params& arg) {
+	ARGC(3);
+	int frame = intp->require_tile_frame_ix(machine->cur_tile, arg[0]);
+	if (frame != PTM_INVALID_NUMBER) {
+		int fgc = intp->require_palette_ix(arg[1]);
+		int bgc = intp->require_palette_ix(arg[2]);
+		if (fgc != PTM_INVALID_NUMBER && bgc != PTM_INVALID_NUMBER) {
+			machine->cur_tile.SetForeColor(frame, fgc);
+			machine->cur_tile.SetBackColor(frame, bgc);
 		}
 	}
 }
@@ -1083,45 +1080,6 @@ void t_command::format_number(t_params& arg) {
 	int number = intp->require_number(arg[2]);
 	if (number == PTM_INVALID_NUMBER) return;
 	machine->vars[dest_id] = String::Format(fmt.c_str(), number);
-}
-void t_command::create_table(t_params& arg) {
-	ARGC(3);
-	string id = intp->require_id(arg[0]);
-	if (id.empty()) return;
-	int cols = intp->require_number(arg[1]);
-	if (cols == PTM_INVALID_NUMBER) return;
-	int rows = intp->require_number(arg[2]);
-	if (rows == PTM_INVALID_NUMBER) return;
-	machine->tables[id] = t_table(cols, rows);
-}
-void t_command::set_table_data(t_params& arg) {
-	ARGC(4);
-	string tbl_id = intp->require_existing_table(arg[0]);
-	if (tbl_id.empty()) return;
-	int col = intp->require_number(arg[1]);
-	if (col == PTM_INVALID_NUMBER) return;
-	int row = intp->require_number(arg[2]);
-	if (row == PTM_INVALID_NUMBER) return;
-	auto& tbl = machine->tables[tbl_id];
-	if (intp->assert_table_index(tbl, col, row)) {
-		string data = intp->require_string(arg[3]);
-		tbl.set_value(col, row, data);
-	}
-}
-void t_command::get_table_data(t_params& arg) {
-	ARGC(4);
-	string tbl_id = intp->require_existing_table(arg[0]);
-	if (tbl_id.empty()) return;
-	int col = intp->require_number(arg[1]);
-	if (col == PTM_INVALID_NUMBER) return;
-	int row = intp->require_number(arg[2]);
-	if (row == PTM_INVALID_NUMBER) return;
-	auto& tbl = machine->tables[tbl_id];
-	if (intp->assert_table_index(tbl, col, row)) {
-		string var_id = intp->require_id(arg[3]);
-		if (var_id.empty()) return;
-		machine->set_var(var_id, tbl.get_value_as_string(col, row));
-	}
 }
 void t_command::get_cycles(t_params& arg) {
 	ARGC(1);

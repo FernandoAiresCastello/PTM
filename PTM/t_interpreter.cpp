@@ -232,14 +232,6 @@ int t_interpreter::require_array_index(std::vector<string>& arr, t_param& arg) {
 	}
 	return index;
 }
-string t_interpreter::require_existing_table(t_param& arg) {
-	if (machine->tables.find(arg.id) != machine->tables.end()) {
-		return arg.id;
-	} else {
-		abort("Table not found: " + arg.id);
-	}
-	return "";
-}
 bool t_interpreter::assert_table_index(t_table& tbl, int col, int row) {
 	if (col < 0 || row < 0 || col >= tbl.get_col_count() || row >= tbl.get_row_count()) {
 		abort("Table index out of bounds");
