@@ -151,6 +151,9 @@
     <ClInclude Include="t_main_menu_widget.h">
       <Filter>Editor\Widgets</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Editor">
@@ -177,8 +180,21 @@
     <Filter Include="Program">
       <UniqueIdentifier>{0d95466d-6a97-4c32-983e-5b041b80109e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{5e723095-c5bc-4cac-b0cb-a3e7abe2197b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="PTM.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Images\Icons\Random\app.ico">
+      <Filter>Resources</Filter>
+    </Image>
   </ItemGroup>
 </Project>

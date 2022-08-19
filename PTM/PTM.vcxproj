@@ -172,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="chars.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="t_alert_widget.h" />
     <ClInclude Include="t_command.h" />
     <ClInclude Include="common.h" />
@@ -200,6 +201,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="PTM.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Images\Icons\Random\app.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
