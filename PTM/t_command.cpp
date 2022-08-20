@@ -128,6 +128,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "PLAY")			play_sound(args);
 	else if (cmd == "LPLAY")		loop_sound(args);
 	else if (cmd == "SOUND")		play_sound_note(args);
+	else if (cmd == "VOL")			set_sound_volume(args);
+	else if (cmd == "QUIET")		stop_sound(args);
 	// Filesystem
 	else if (cmd == "CLOAD")		read_file_into_string(args);
 	else if (cmd == "BLOAD")		read_file_into_array(args);
@@ -799,6 +801,16 @@ void t_command::loop_sound(t_params& arg) {
 	ARGC(1);
 	string notes = intp->require_string(arg[0]);
 	machine->snd->PlayMainSound(notes);
+}
+void t_command::set_sound_volume(t_params& arg) {
+	ARGC(1);
+	int volume = intp->require_number(arg[0]);
+	machine->snd->SetVolume(volume);
+}
+void t_command::stop_sound(t_params& arg) {
+	ARGC(0);
+	machine->snd->StopMainSound();
+	machine->snd->StopSubSound();
 }
 void t_command::create_array(t_params& arg) {
 	ARGC_MIN_MAX(1, 2);

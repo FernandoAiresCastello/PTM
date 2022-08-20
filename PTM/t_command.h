@@ -91,6 +91,8 @@ private:
 	void if_lte_goto(t_params& arg);
 	void play_sound(t_params& arg);
 	void loop_sound(t_params& arg);
+	void set_sound_volume(t_params& arg);
+	void stop_sound(t_params& arg);
 	void create_array(t_params& arg);
 	void array_push(t_params& arg);
 	void get_array_length(t_params& arg);
