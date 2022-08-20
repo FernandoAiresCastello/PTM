@@ -1,6 +1,7 @@
 #pragma once
 #include "common.h"
 #include "t_param.h"
+#include "t_layer.h"
 
 struct t_interpreter;
 struct t_machine;
@@ -58,6 +59,7 @@ private:
 	void set_window_bgcolor(t_params& arg);
 	void set_tile_transparency(t_params& arg, bool transparent);
 	void select_layer(t_params& arg);
+	void select_layer(t_params& arg, int layer);
 	void define_char(t_params& arg);
 	void define_char_rows(t_params& arg);
 	void define_color(t_params& arg);

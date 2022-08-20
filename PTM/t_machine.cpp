@@ -49,11 +49,7 @@ void t_machine::init_system_vars() {
 	// Tile buffer dimensions
 	set_const("$scr.cols", tilebuf->Cols);
 	set_const("$scr.rows", tilebuf->Rows);
-	// Tile buffer layers
-	set_const("$layer.btm", t_layer::bottom);
-	set_const("$layer.top", t_layer::top);
-	set_const("$layer.topmost", t_layer::topmost);
-	// Keyboard codes
+	// Keyboard scancodes
 	set_const("$kb.right", SDL_SCANCODE_RIGHT);
 	set_const("$kb.left", SDL_SCANCODE_LEFT);
 	set_const("$kb.down", SDL_SCANCODE_DOWN);

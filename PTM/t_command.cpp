@@ -41,12 +41,14 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "TILE.BG")		set_cur_tile_bgcolor(args);
 	else if (cmd == "TILE.COL")		set_cur_tile_colors(args);
 	else if (cmd == "TILE.PARSE")	parse_cur_tile(args);
-	else if (cmd == "TILE.STO")		store_cur_tile(args);
+	else if (cmd == "TILE.STORE")	store_cur_tile(args);
 	else if (cmd == "TILE.LOAD")	load_cur_tile(args);
 	else if (cmd == "TILE.PROP")	set_tile_property(args);
 	else if (cmd == "TILE.PGET")	get_tile_property(args);
 	// Tile buffer cursor
-	else if (cmd == "LAYER")		select_layer(args);
+	else if (cmd == "LAYER.BTM")	select_layer(args, t_layer::bottom);
+	else if (cmd == "LAYER.TOP")	select_layer(args, t_layer::top);
+	else if (cmd == "LAYER.OVR")	select_layer(args, t_layer::overlay);
 	else if (cmd == "LOCATE")		set_cursor_pos(args);
 	else if (cmd == "CSR.X")		set_cursor_x(args);
 	else if (cmd == "CSR.Y")		set_cursor_y(args);
@@ -60,13 +62,13 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "CSR.DR")		move_cursor_down_right(args);
 	else if (cmd == "CSR.DL")		move_cursor_down_left(args);
 	// Tile buffer
-	else if (cmd == "TILE.PUT")		put_tile(args);
-	else if (cmd == "TILE.GET")		copy_tile(args);
-	else if (cmd == "TILE.DEL")		delete_tile(args);
-	else if (cmd == "REP.R")		put_tile_repeat_right(args);
-	else if (cmd == "REP.L")		put_tile_repeat_left(args);
-	else if (cmd == "REP.U")		put_tile_repeat_up(args);
-	else if (cmd == "REP.D")		put_tile_repeat_down(args);
+	else if (cmd == "PUT")			put_tile(args);
+	else if (cmd == "GET")			copy_tile(args);
+	else if (cmd == "DEL")			delete_tile(args);
+	else if (cmd == "REPR")			put_tile_repeat_right(args);
+	else if (cmd == "REPL")			put_tile_repeat_left(args);
+	else if (cmd == "REPU")			put_tile_repeat_up(args);
+	else if (cmd == "REPD")			put_tile_repeat_down(args);
 	else if (cmd == "RECT")			fill_rect(args);
 	else if (cmd == "CLS")			clear_all_layers(args);
 	else if (cmd == "CLL")			clear_layer(args);
@@ -88,16 +90,16 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "PRINT")		print_text(args, false);
 	else if (cmd == "PUTC")			print_text_char(args);
 	else if (cmd == "PRINTL")		print_text(args, true);
-	else if (cmd == "TEXT.FG")		set_text_fgcolor(args);
-	else if (cmd == "TEXT.BG")		set_text_bgcolor(args);
-	else if (cmd == "TEXT.COL")		set_text_colors(args);
+	else if (cmd == "INK")			set_text_fgcolor(args);
+	else if (cmd == "PAPER")		set_text_bgcolor(args);
+	else if (cmd == "COLOR")		set_text_colors(args);
 	// Keyboard
 	else if (cmd == "INPUT")		read_user_input_string(args);
 	else if (cmd == "INKEY")		get_key_pressed(args);
 	else if (cmd == "KCALL")		call_if_key_pressed(args);
 	else if (cmd == "KGOTO")		goto_if_key_pressed(args);
-	else if (cmd == "XKON")			allow_exit_on_escape_key(args, true);
-	else if (cmd == "XKOFF")		allow_exit_on_escape_key(args, false);
+	else if (cmd == "XON")			allow_exit_on_escape_key(args, true);
+	else if (cmd == "XOFF")			allow_exit_on_escape_key(args, false);
 	// Debug
 	else if (cmd == "BRK")			trigger_breakpoint(args);
 	else if (cmd == "FDEBUG")		save_debug_file(args);
@@ -129,7 +131,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	// Filesystem
 	else if (cmd == "CLOAD")		read_file_into_string(args);
 	else if (cmd == "BLOAD")		read_file_into_array(args);
-	// Strings
+	// String manipulation
 	else if (cmd == "FMT")			format_number(args);
 	// Time
 	else if (cmd == "TIME")			get_cycles(args);
@@ -458,9 +460,8 @@ void t_command::clear_all_layers(t_params& arg) {
 	machine->tilebuf->ClearAllLayers();
 }
 void t_command::clear_layer(t_params& arg) {
-	ARGC(1);
-	int layer = intp->require_number(arg[0]);
-	machine->tilebuf->ClearLayer(layer);
+	ARGC(0);
+	machine->tilebuf->ClearLayer(machine->get_csr_layer());
 }
 void t_command::clear_rect(t_params& arg) {
 	ARGC(4);
@@ -488,11 +489,15 @@ void t_command::set_tile_transparency(t_params& arg, bool transparent) {
 void t_command::select_layer(t_params& arg) {
 	ARGC(1);
 	int layer = intp->require_number(arg[0]);
-	if (layer == t_layer::bottom || layer == t_layer::top || layer == t_layer::topmost) {
+	if (layer == t_layer::bottom || layer == t_layer::top || layer == t_layer::overlay) {
 		machine->set_csr_layer(layer);
 	} else {
 		intp->abort("Invalid layer index");
 	}
+}
+void t_command::select_layer(t_params& arg, int layer) {
+	ARGC(0);
+	machine->set_csr_layer(layer);
 }
 void t_command::define_char(t_params& arg) {
 	ARGC(9);

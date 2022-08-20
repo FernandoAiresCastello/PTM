@@ -1,5 +1,22 @@
-main:
-  LOCATE 1,1
-  PRINT "Hello World!"
-  VSYNC
-  GOTO main
+PAL 2,0xff0000
+PAL 3,0x00ff00
+PAL 4,0x0000ff
+
+TRON
+
+LAYER.BTM
+LOCATE 1,1
+INK 2
+PRINT "Bottom"
+
+LAYER.TOP
+LOCATE 1,1
+INK 3
+PRINT "Top"
+
+LAYER.OVR
+LOCATE 1,1
+INK 4
+PRINT "Overlay"
+
+HALT

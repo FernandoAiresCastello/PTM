@@ -15,13 +15,15 @@ int main(int argc, char* argv[]) {
 	g.wnd = new TBufferedWindow(t_layer::max, 45, 25, 3, 3);
 	g.wnd->Show();
 
-	if (!File::Exists(PTM_MAIN_PROG_FILE)) {
-		MsgBox::Error("PTM", "Main program file " PTM_MAIN_PROG_FILE " not found");
+	string prg_file = argc > 1 ? argv[1] : PTM_MAIN_PROG_FILE;
+
+	if (!File::Exists(prg_file)) {
+		MsgBox::Error("PTM", "Main program file " + prg_file + " not found");
 		return 0;
 	}
 
 	t_program* prg = new t_program();
-	prg->load_plain(PTM_MAIN_PROG_FILE);
+	prg->load_plain(prg_file);
 	t_compiler compiler;
 	compiler.run(prg);
 	if (compiler.errors.empty()) {
