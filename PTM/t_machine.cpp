@@ -8,8 +8,9 @@
 t_machine::t_machine(TBufferedWindow* wnd) {
 	this->wnd = wnd;
 
-	tilebuf = wnd->GetBuffer(0);
-	tilebuf->ClearAllLayers();
+	tilebufs["default"] = wnd->GetBuffer(0);
+	cur_buf = tilebufs["default"];
+	cur_buf->ClearAllLayers();
 
 	original_chr = wnd->GetCharset();
 	chr = new TCharset();
@@ -46,9 +47,6 @@ void t_machine::on_screen_update() {
 	wnd->Update();
 }
 void t_machine::init_system_vars() {
-	// Tile buffer dimensions
-	set_const("$scr.cols", tilebuf->Cols);
-	set_const("$scr.rows", tilebuf->Rows);
 	// Keyboard scancodes
 	set_const("$kb.right", SDL_SCANCODE_RIGHT);
 	set_const("$kb.left", SDL_SCANCODE_LEFT);
@@ -130,18 +128,18 @@ void t_machine::set_const(string id, string value) {
 	vars[id] = t_variable(value, true);
 }
 void t_machine::put_tile_at_cursor_pos(TTileSeq& tile) {
-	tilebuf->SetTile(tile, csr.layer, csr.x, csr.y, tile_transparency);
+	cur_buf->SetTile(tile, csr.layer, csr.x, csr.y, tile_transparency);
 }
 void t_machine::put_cur_tile_at_cursor_pos() {
-	tilebuf->SetTile(cur_tile, csr.layer, csr.x, csr.y, tile_transparency);
+	cur_buf->SetTile(cur_tile, csr.layer, csr.x, csr.y, tile_transparency);
 }
 void t_machine::copy_tile_at_cursor_pos() {
-	if (csr.x >= 0 && csr.y >= 0 && csr.x < tilebuf->Cols && csr.y < tilebuf->Rows) {
-		cur_tile = tilebuf->GetTile(csr.layer, csr.x, csr.y);
+	if (csr.x >= 0 && csr.y >= 0 && csr.x < cur_buf->Cols && csr.y < cur_buf->Rows) {
+		cur_tile = cur_buf->GetTile(csr.layer, csr.x, csr.y);
 	}
 }
 void t_machine::delete_tile_at_cursor_pos() {
-	tilebuf->EraseTile(csr.layer, csr.x, csr.y);
+	cur_buf->EraseTile(csr.layer, csr.x, csr.y);
 }
 void t_machine::set_window_bgcolor(int palette_ix) {
 	wnd->SetBackColor(pal->GetColorRGB(palette_ix));
@@ -209,9 +207,9 @@ string t_machine::read_input_string(int maxlen) {
 	input_csr.Add(chars::empty, text_color.fg, text_color.bg);
 
 	while (running) {
-		tilebuf->Print(empty_str, csr.layer, initial_x, csr.y, text_color.fg, text_color.bg, tile_transparency);
-		tilebuf->Print(str, csr.layer, initial_x, csr.y, text_color.fg, text_color.bg, tile_transparency);
-		tilebuf->SetTile(input_csr, csr.layer, csr.x, csr.y, tile_transparency);
+		cur_buf->Print(empty_str, csr.layer, initial_x, csr.y, text_color.fg, text_color.bg, tile_transparency);
+		cur_buf->Print(str, csr.layer, initial_x, csr.y, text_color.fg, text_color.bg, tile_transparency);
+		cur_buf->SetTile(input_csr, csr.layer, csr.x, csr.y, tile_transparency);
 		wnd->Update();
 
 		SDL_Event e = { 0 };
@@ -244,21 +242,21 @@ string t_machine::read_input_string(int maxlen) {
 		}
 	}
 
-	tilebuf->PutChar(chars::empty, csr.layer, csr.x, csr.y, text_color.fg, text_color.bg, tile_transparency);
+	cur_buf->PutChar(chars::empty, csr.layer, csr.x, csr.y, text_color.fg, text_color.bg, tile_transparency);
 	return str;
 }
 void t_machine::move_tile_at_cursor_pos(int dx, int dy) {
-	TTileSeq tile = tilebuf->GetTile(csr.layer, csr.x, csr.y);
-	tilebuf->EraseTile(csr.layer, csr.x, csr.y);
-	tilebuf->SetTile(tile, csr.layer, csr.x + dx, csr.y + dy, tile_transparency);
+	TTileSeq tile = cur_buf->GetTile(csr.layer, csr.x, csr.y);
+	cur_buf->EraseTile(csr.layer, csr.x, csr.y);
+	cur_buf->SetTile(tile, csr.layer, csr.x + dx, csr.y + dy, tile_transparency);
 }
 void t_machine::move_tile_block(int x, int y, int w, int h, int dx, int dy) {
 	std::vector<TTileSeq> tiles;
 	for (int cy = y; cy < y + h; cy++) {
 		for (int cx = x; cx < x + w; cx++) {
-			if (cx >= 0 && cy >= 0 && cx < tilebuf->Cols && cy < tilebuf->Rows) {
-				tiles.push_back(tilebuf->GetTile(csr.layer, cx, cy));
-				tilebuf->EraseTile(csr.layer, cx, cy);
+			if (cx >= 0 && cy >= 0 && cx < cur_buf->Cols && cy < cur_buf->Rows) {
+				tiles.push_back(cur_buf->GetTile(csr.layer, cx, cy));
+				cur_buf->EraseTile(csr.layer, cx, cy);
 			} else {
 				tiles.push_back(TTileSeq());
 			}
@@ -269,7 +267,7 @@ void t_machine::move_tile_block(int x, int y, int w, int h, int dx, int dy) {
 	int i = 0;
 	for (int cy = new_y; cy < new_y + h; cy++) {
 		for (int cx = new_x; cx < new_x + w; cx++) {
-			tilebuf->SetTile(tiles[i++], csr.layer, cx, cy, tile_transparency);
+			cur_buf->SetTile(tiles[i++], csr.layer, cx, cy, tile_transparency);
 		}
 	}
 }

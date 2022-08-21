@@ -62,6 +62,10 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "CSR.DR")		move_cursor_down_right(args);
 	else if (cmd == "CSR.DL")		move_cursor_down_left(args);
 	// Tile buffer
+	else if (cmd == "BUF.NEW")		add_tile_buffer(args);
+	else if (cmd == "BUF.SHOW")		show_tile_buffer(args, true);
+	else if (cmd == "BUF.HIDE")		show_tile_buffer(args, false);
+	else if (cmd == "BUF.SEL")		select_tile_buffer(args);
 	else if (cmd == "PUT")			put_tile(args);
 	else if (cmd == "GET")			copy_tile(args);
 	else if (cmd == "DEL")			delete_tile(args);
@@ -70,11 +74,15 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "REPU")			put_tile_repeat_up(args);
 	else if (cmd == "REPD")			put_tile_repeat_down(args);
 	else if (cmd == "RECT")			fill_rect(args);
+	else if (cmd == "FILL")			fill_layer(args);
 	else if (cmd == "CLS")			clear_all_layers(args);
 	else if (cmd == "CLL")			clear_layer(args);
 	else if (cmd == "CLR")			clear_rect(args);
 	else if (cmd == "MOV")			move_tile(args);
 	else if (cmd == "MOVB")			move_tile_block(args);
+	// Tile buffer viewport
+	else if (cmd == "VIEW")			set_viewport(args);
+	else if (cmd == "SCRL")			scroll_viewport(args);
 	// Graphics / Window
 	else if (cmd == "CHR")			define_char(args);
 	else if (cmd == "CHRL")			define_char_rows(args);
@@ -451,19 +459,23 @@ void t_command::fill_rect(t_params& arg) {
 	int h = intp->require_number(arg[3]);
 	for (int py = 0; py < h; py++) {
 		for (int px = 0; px < w; px++) {
-			machine->tilebuf->SetTile(
+			machine->cur_buf->SetTile(
 				machine->cur_tile, machine->get_csr_layer(), 
 				x + px, y + py, machine->tile_transparency);
 		}
 	}
 }
+void t_command::fill_layer(t_params& arg) {
+	ARGC(0);
+	machine->cur_buf->FillLayer(machine->get_csr_layer(), machine->cur_tile, machine->tile_transparency);
+}
 void t_command::clear_all_layers(t_params& arg) {
 	ARGC(0);
-	machine->tilebuf->ClearAllLayers();
+	machine->cur_buf->ClearAllLayers();
 }
 void t_command::clear_layer(t_params& arg) {
 	ARGC(0);
-	machine->tilebuf->ClearLayer(machine->get_csr_layer());
+	machine->cur_buf->ClearLayer(machine->get_csr_layer());
 }
 void t_command::clear_rect(t_params& arg) {
 	ARGC(4);
@@ -473,7 +485,7 @@ void t_command::clear_rect(t_params& arg) {
 	int h = intp->require_number(arg[3]);
 	for (int py = 0; py < h; py++) {
 		for (int px = 0; px < w; px++) {
-			machine->tilebuf->EraseTile(machine->get_csr_layer(), x + px, y + py);
+			machine->cur_buf->EraseTile(machine->get_csr_layer(), x + px, y + py);
 		}
 	}
 }
@@ -1074,4 +1086,50 @@ void t_command::move_tile_block(t_params& arg) {
 		dx == PTM_INVALID_NUMBER || dy == PTM_INVALID_NUMBER) return;
 
 	machine->move_tile_block(x, y, w, h, dx, dy);
+}
+void t_command::set_viewport(t_params& arg) {
+	ARGC(4);
+	int x = intp->require_number(arg[0]);
+	int y = intp->require_number(arg[1]);
+	int cols = intp->require_number(arg[2]);
+	int rows = intp->require_number(arg[3]);
+	if (x == PTM_INVALID_NUMBER || y == PTM_INVALID_NUMBER ||
+		cols == PTM_INVALID_NUMBER || rows == PTM_INVALID_NUMBER) return;
+
+	machine->cur_buf->SetView(x, y, cols, rows);
+}
+void t_command::scroll_viewport(t_params& arg) {
+	ARGC(2);
+	int dx = intp->require_number(arg[0]);
+	int dy = intp->require_number(arg[1]);
+	
+	if (dx == PTM_INVALID_NUMBER || dy == PTM_INVALID_NUMBER || dx < 0 || dy < 0) return;
+
+	machine->cur_buf->View.ScrollX += dx;
+	machine->cur_buf->View.ScrollY += dy;
+}
+void t_command::add_tile_buffer(t_params& arg) {
+	ARGC(4);
+	string id = intp->require_id(arg[0]);
+	int cols = intp->require_number(arg[1]);
+	int rows = intp->require_number(arg[2]);
+	int layers = intp->require_number(arg[3]);
+	if (id.empty() || cols == PTM_INVALID_NUMBER || rows == PTM_INVALID_NUMBER || 
+		layers == PTM_INVALID_NUMBER) return;
+
+	machine->tilebufs[id] = machine->wnd->AddBuffer(layers, cols, rows);
+}
+void t_command::show_tile_buffer(t_params& arg, bool visible) {
+	ARGC(0);
+	machine->cur_buf->View.Visible = visible;
+}
+void t_command::select_tile_buffer(t_params& arg) {
+	ARGC(1);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	if (machine->tilebufs.find(id) == machine->tilebufs.end()) {
+		intp->abort("Tile buffer not found: " + id);
+		return;
+	}
+	machine->cur_buf = machine->tilebufs[id];
 }

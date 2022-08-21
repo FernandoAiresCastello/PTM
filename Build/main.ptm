@@ -1,22 +1,36 @@
 PAL 2,0xff0000
 PAL 3,0x00ff00
 PAL 4,0x0000ff
+PAL 5,0xff00ff
 
-TRON
+TILE.NEW '*',4,5
+TILE.ADD '*',5,4
+FILL
+VSYNC
 
-LAYER.BTM
-LOCATE 1,1
-INK 2
-PRINT "Bottom"
+BUF.NEW buf2,100,100,2
+BUF.SEL buf2
+VAR buf2_vw,32
+VAR buf2_vh,24
+TILE.NEW '-',2,3
+TILE.ADD '+',2,3
+FILL
+VSYNC
 
-LAYER.TOP
-LOCATE 1,1
-INK 3
-PRINT "Top"
+loop:
+	VIEW 0,0,buf2_vw,buf2_vh
+	VSYNC
+	KCALL $kb.right,kb_right
+	KCALL $kb.left,kb_left
+	KCALL $kb.enter,kb_enter
+	GOTO loop
 
-LAYER.OVR
-LOCATE 1,1
-INK 4
-PRINT "Overlay"
-
-HALT
+kb_right:
+	INC buf2_vw
+	RET
+kb_left:
+	DEC buf2_vw
+	RET
+kb_enter:
+	BUF.SEL default
+	RET

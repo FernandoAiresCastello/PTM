@@ -14,6 +14,7 @@ struct t_machine {
 	std::map<string, t_variable> vars;
 	std::map<string, TTileSeq> tilestore;
 	std::map<string, std::vector<string>> arrays;
+	std::map<string, TTileBuffer*> tilebufs;
 	// Graphics
 	TBufferedWindow* wnd;
 	TCharset* chr;
@@ -21,7 +22,7 @@ struct t_machine {
 	static const int default_bgc = 0;
 	static const int default_fgc = 1;
 	int bgcolor_palette_ix = default_bgc;
-	TTileBuffer* tilebuf;
+	TTileBuffer* cur_buf;
 	TTileSeq cur_tile;
 	bool tile_transparency = false;
 	struct {

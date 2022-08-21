@@ -53,6 +53,7 @@ private:
 	void put_tile_repeat_up(t_params& arg);
 	void put_tile_repeat_down(t_params& arg);
 	void fill_rect(t_params& arg);
+	void fill_layer(t_params& arg);
 	void clear_all_layers(t_params& arg);
 	void clear_layer(t_params& arg);
 	void clear_rect(t_params& arg);
@@ -123,4 +124,9 @@ private:
 	void read_user_input_string(t_params& arg);
 	void move_tile(t_params& arg);
 	void move_tile_block(t_params& arg);
+	void set_viewport(t_params& arg);
+	void scroll_viewport(t_params& arg);
+	void add_tile_buffer(t_params& arg);
+	void show_tile_buffer(t_params& arg, bool visible);
+	void select_tile_buffer(t_params& arg);
 };
