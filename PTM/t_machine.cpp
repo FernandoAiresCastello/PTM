@@ -8,7 +8,7 @@
 t_machine::t_machine(TBufferedWindow* wnd) {
 	this->wnd = wnd;
 
-	tilebuf = wnd->GetBuffer();
+	tilebuf = wnd->GetBuffer(0);
 	tilebuf->ClearAllLayers();
 
 	original_chr = wnd->GetCharset();

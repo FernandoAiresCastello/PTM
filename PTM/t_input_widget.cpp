@@ -8,13 +8,13 @@ t_input_widget::t_input_widget(t_globals* g, string title, int fgc, int bgc) :
 }
 t_input_widget::t_input_widget(t_globals* g, string title, string text, int fgc, int bgc) :
 	t_input_widget(g, title, text, 
-		g->wnd->GetBuffer()->Cols - 7, fgc, bgc, 2, (g->wnd->GetBuffer()->Rows - 2) / 2) {
+		g->wnd->GetBuffer(0)->Cols - 7, fgc, bgc, 2, (g->wnd->GetBuffer(0)->Rows - 2) / 2) {
 }
 t_input_widget::t_input_widget(
 	t_globals* g, string title, string text, int maxlen, int fgc, int bgc, int x, int y) {
 
 	wnd = g->wnd;
-	buf = g->wnd->GetBuffer();
+	buf = g->wnd->GetBuffer(0);
 	this->maxlen = maxlen;
 	pnl = new t_panel(buf, x, y, maxlen + 1, 1, fgc, bgc);
 	pnl->title = title;

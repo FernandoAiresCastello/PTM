@@ -7,7 +7,7 @@ t_list_widget::t_list_widget(
 	int fgc, int bgc, int sel_fgc, int sel_bgc) {
 
 	wnd = g->wnd;
-	buf = g->wnd->GetBuffer();
+	buf = g->wnd->GetBuffer(0);
 	pnl = new t_panel(buf, x, y, w, h, fgc, bgc);
 	pnl->title = title;
 	max_visible_items = h;

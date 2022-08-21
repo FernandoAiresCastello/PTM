@@ -9,7 +9,7 @@ t_ui_base::t_ui_base(t_globals* g) {
 	globals = g;
 	cfg = g->cfg;
 	wnd = g->wnd;
-	buf = g->wnd->GetBuffer();
+	buf = g->wnd->GetBuffer(0);
 	snd = g->snd;
 	running = false;
 	t_default_gfx::init_palette(wnd->GetPalette());

@@ -4,12 +4,12 @@
 
 t_alert_widget::t_alert_widget(t_globals* g, string title, string text, int fgc, int bgc) {
 	wnd = g->wnd;
-	buf = g->wnd->GetBuffer();
+	buf = g->wnd->GetBuffer(0);
 	this->text = text;
 	int h = 1;
-	int w = g->wnd->GetBuffer()->Cols - 6;
+	int w = g->wnd->GetBuffer(0)->Cols - 6;
 	int x = 2;
-	int y = (g->wnd->GetBuffer()->Rows - 2) / 2;
+	int y = (g->wnd->GetBuffer(0)->Rows - 2) / 2;
 	pnl = new t_panel(buf, x, y, w, h, fgc, bgc);
 	pnl->title = title;
 }
