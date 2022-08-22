@@ -1,7 +1,6 @@
 #pragma once
 #include "common.h"
 #include "t_param.h"
-#include "t_table.h"
 
 #define ARGC(x)				if (!intp->argc(arg, x)) return;
 #define ARGC_MIN_MAX(x, y)	if (!intp->argc(arg, x, y)) return;
@@ -44,7 +43,6 @@ private:
 	string require_existing_array(t_param& arg);
 	string require_array_element(t_param& arg);
 	int require_array_index(std::vector<string>& arr, t_param& arg);
-	bool assert_table_index(t_table& tbl, int col, int row);
 	void goto_label(string label);
 	void call_label(string label);
 	void return_from_call();

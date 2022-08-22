@@ -1,7 +1,6 @@
 #pragma once
 #include "common.h"
 #include "t_variable.h"
-#include "t_table.h"
 
 struct t_performance_monitor;
 struct t_interpreter;

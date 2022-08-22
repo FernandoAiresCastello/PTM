@@ -166,7 +166,6 @@
     <ClCompile Include="t_param.cpp" />
     <ClCompile Include="t_program.cpp" />
     <ClCompile Include="t_program_line.cpp" />
-    <ClCompile Include="t_table.cpp" />
     <ClCompile Include="t_ui_base.cpp" />
     <ClCompile Include="t_variable.cpp" />
   </ItemGroup>
@@ -195,7 +194,6 @@
     <ClInclude Include="t_param.h" />
     <ClInclude Include="t_program.h" />
     <ClInclude Include="t_program_line.h" />
-    <ClInclude Include="t_table.h" />
     <ClInclude Include="t_ui_base.h" />
     <ClInclude Include="t_variable.h" />
   </ItemGroup>

@@ -47,9 +47,6 @@
     <ClCompile Include="t_performance_monitor.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="t_table.cpp">
-      <Filter>Machine</Filter>
-    </ClCompile>
     <ClCompile Include="t_input_widget.cpp">
       <Filter>Editor\Widgets</Filter>
     </ClCompile>
@@ -126,9 +123,6 @@
     </ClInclude>
     <ClInclude Include="t_performance_monitor.h">
       <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="t_table.h">
-      <Filter>Machine</Filter>
     </ClInclude>
     <ClInclude Include="t_input_widget.h">
       <Filter>Editor\Widgets</Filter>

@@ -233,13 +233,6 @@ int t_interpreter::require_array_index(std::vector<string>& arr, t_param& arg) {
 	}
 	return index;
 }
-bool t_interpreter::assert_table_index(t_table& tbl, int col, int row) {
-	if (col < 0 || row < 0 || col >= tbl.get_col_count() || row >= tbl.get_row_count()) {
-		abort("Table index out of bounds");
-		return false;
-	}
-	return true;
-}
 void t_interpreter::goto_label(string label) {
 	cur_line_ix = prg->labels[label];
 	branched = true;
