@@ -37,18 +37,16 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "TILE.NEW")		init_cur_tile(args);
 	else if (cmd == "TILE.ADD")		append_cur_tile(args);
 	else if (cmd == "TILE.CH")		set_cur_tile_char(args);
-	else if (cmd == "TILE.FG")		set_cur_tile_fgcolor(args);
-	else if (cmd == "TILE.BG")		set_cur_tile_bgcolor(args);
-	else if (cmd == "TILE.COL")		set_cur_tile_colors(args);
+	else if (cmd == "TILE.INK")		set_cur_tile_fgcolor(args);
+	else if (cmd == "TILE.PAPER")	set_cur_tile_bgcolor(args);
+	else if (cmd == "TILE.COLOR")	set_cur_tile_colors(args);
 	else if (cmd == "TILE.PARSE")	parse_cur_tile(args);
 	else if (cmd == "TILE.STORE")	store_cur_tile(args);
 	else if (cmd == "TILE.LOAD")	load_cur_tile(args);
 	else if (cmd == "TILE.PROP")	set_tile_property(args);
 	else if (cmd == "TILE.PGET")	get_tile_property(args);
 	// Tile buffer cursor
-	else if (cmd == "LAYER.BTM")	select_layer(args, t_layer::bottom);
-	else if (cmd == "LAYER.TOP")	select_layer(args, t_layer::top);
-	else if (cmd == "LAYER.OVR")	select_layer(args, t_layer::overlay);
+	else if (cmd == "LAYER")		select_layer(args);
 	else if (cmd == "LOCATE")		set_cursor_pos(args);
 	else if (cmd == "CSR.X")		set_cursor_x(args);
 	else if (cmd == "CSR.Y")		set_cursor_y(args);
@@ -65,7 +63,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "BUF.NEW")		add_tile_buffer(args);
 	else if (cmd == "BUF.SHOW")		show_tile_buffer(args, true);
 	else if (cmd == "BUF.HIDE")		show_tile_buffer(args, false);
-	else if (cmd == "BUF.SEL")		select_tile_buffer(args);
+	else if (cmd == "BUF")			select_tile_buffer(args);
 	else if (cmd == "PUT")			put_tile(args);
 	else if (cmd == "GET")			copy_tile(args);
 	else if (cmd == "DEL")			delete_tile(args);
@@ -87,8 +85,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "CHR")			define_char(args);
 	else if (cmd == "CHRL")			define_char_rows(args);
 	else if (cmd == "PAL")			define_color(args);
-	else if (cmd == "CHR.SIZE")		get_charset_size(args);
-	else if (cmd == "PAL.SIZE")		get_palette_size(args);
+	else if (cmd == "CHR.LEN")		get_charset_size(args);
+	else if (cmd == "PAL.LEN")		get_palette_size(args);
 	else if (cmd == "VSYNC")		update_screen(args);
 	else if (cmd == "TITLE")		set_window_title(args);
 	else if (cmd == "BGCOL")		set_window_bgcolor(args);
@@ -108,7 +106,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "KGOTO")		goto_if_key_pressed(args);
 	else if (cmd == "XON")			allow_exit_on_escape_key(args, true);
 	else if (cmd == "XOFF")			allow_exit_on_escape_key(args, false);
-	// Debug
+	// Debugging
 	else if (cmd == "BRK")			trigger_breakpoint(args);
 	else if (cmd == "FDEBUG")		save_debug_file(args);
 	else if (cmd == "ASSERT.EQ")	assert_eq(args);
@@ -646,7 +644,6 @@ void t_command::print_text_char(t_params& arg) {
 	int bgc = machine->text_color.bg;
 	auto tile = TTileSeq(ch, fgc, bgc);
 	machine->put_tile_at_cursor_pos(tile);
-	machine->move_cursor(1, 0);
 }
 void t_command::set_text_fgcolor(t_params& arg) {
 	ARGC(1);

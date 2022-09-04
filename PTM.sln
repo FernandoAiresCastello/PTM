@@ -5,11 +5,6 @@ VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PTM", "PTM\PTM.vcxproj", "{9D4A9687-865C-4DDC-B72A-E33593FB1CE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTM-Edit", "PTM-Edit\PTM-Edit.csproj", "{0205DE7E-C4E1-452A-87BC-37BE0EFD3F93}"
-	ProjectSection(ProjectDependencies) = postProject
-		{9D4A9687-865C-4DDC-B72A-E33593FB1CE0} = {9D4A9687-865C-4DDC-B72A-E33593FB1CE0}
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,18 +25,6 @@ Global
 		{9D4A9687-865C-4DDC-B72A-E33593FB1CE0}.Release|x64.Build.0 = Release|x64
 		{9D4A9687-865C-4DDC-B72A-E33593FB1CE0}.Release|x86.ActiveCfg = Release|Win32
 		{9D4A9687-865C-4DDC-B72A-E33593FB1CE0}.Release|x86.Build.0 = Release|Win32
-		{0205DE7E-C4E1-452A-87BC-37BE0EFD3F93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0205DE7E-C4E1-452A-87BC-37BE0EFD3F93}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0205DE7E-C4E1-452A-87BC-37BE0EFD3F93}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{0205DE7E-C4E1-452A-87BC-37BE0EFD3F93}.Debug|x64.Build.0 = Debug|Any CPU
-		{0205DE7E-C4E1-452A-87BC-37BE0EFD3F93}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{0205DE7E-C4E1-452A-87BC-37BE0EFD3F93}.Debug|x86.Build.0 = Debug|Any CPU
-		{0205DE7E-C4E1-452A-87BC-37BE0EFD3F93}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0205DE7E-C4E1-452A-87BC-37BE0EFD3F93}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0205DE7E-C4E1-452A-87BC-37BE0EFD3F93}.Release|x64.ActiveCfg = Release|Any CPU
-		{0205DE7E-C4E1-452A-87BC-37BE0EFD3F93}.Release|x64.Build.0 = Release|Any CPU
-		{0205DE7E-C4E1-452A-87BC-37BE0EFD3F93}.Release|x86.ActiveCfg = Release|Any CPU
-		{0205DE7E-C4E1-452A-87BC-37BE0EFD3F93}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

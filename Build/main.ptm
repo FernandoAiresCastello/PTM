@@ -9,7 +9,7 @@ FILL
 VSYNC
 
 BUF.NEW buf2,100,100,2
-BUF.SEL buf2
+BUF buf2
 VAR buf2_vw,32
 VAR buf2_vh,24
 TILE.NEW '-',2,3
@@ -20,9 +20,12 @@ VSYNC
 loop:
 	VIEW 0,0,buf2_vw,buf2_vh
 	VSYNC
-	KCALL $kb.right,kb_right
-	KCALL $kb.left,kb_left
-	KCALL $kb.enter,kb_enter
+	;KCALL $kb.right,kb_right
+	;KCALL $kb.left,kb_left
+	;KCALL $kb.enter,kb_enter
+    INKEY key
+    CMP key,'x'
+    IF.EQ.CALL kb_right
 	GOTO loop
 
 kb_right:
