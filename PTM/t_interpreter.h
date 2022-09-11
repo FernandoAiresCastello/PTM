@@ -1,6 +1,7 @@
 #pragma once
 #include "common.h"
 #include "t_param.h"
+#include "t_loop.h"
 
 #define ARGC(x)				if (!intp->argc(arg, x)) return;
 #define ARGC_MIN_MAX(x, y)	if (!intp->argc(arg, x, y)) return;
@@ -29,6 +30,7 @@ private:
 	t_program_line* cur_line;
 	t_command* cmd;
 	std::stack<int> callstack;
+	std::stack<t_loop> loopstack;
 	
 	void execute_current_line();
 	void on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt);
@@ -49,4 +51,6 @@ private:
 	int require_charset_ix(t_param& arg);
 	int require_palette_ix(t_param& arg);
 	int require_tile_frame_ix(TTileSeq& tile, t_param& arg);
+	void loop_start(string var, int first, int last, int step);
+	void loop_end();
 };

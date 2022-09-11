@@ -130,4 +130,6 @@ private:
 	void show_tile_buffer(t_params& arg, bool visible);
 	void select_tile_buffer(t_params& arg);
 	void enable_perfmon(t_params& arg);
+	void loop_start(t_params& arg);
+	void loop_end(t_params& arg);
 };

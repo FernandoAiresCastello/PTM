@@ -16,6 +16,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "CALL")			call_label(args);
 	else if (cmd == "RET")			return_from_label(args);
 	else if (cmd == "PAUSE")		pause(args);
+	else if (cmd == "LOOP")			loop_start(args);
+	else if (cmd == "NEXT")			loop_end(args);
 	// Variables
 	else if (cmd == "VAR")			set_variable(args);
 	else if (cmd == "CONST")		define_constant(args);
@@ -1076,4 +1078,21 @@ void t_command::select_tile_buffer(t_params& arg) {
 void t_command::enable_perfmon(t_params& arg) {
 	ARGC(0);
 	machine->show_perfmon = true;
+}
+
+void t_command::loop_start(t_params& arg) {
+	ARGC_MIN_MAX(3,4);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	int first = intp->require_number(arg[1]);
+	if (first == PTM_INVALID_NUMBER) return;
+	int last = intp->require_number(arg[2]);
+	if (last == PTM_INVALID_NUMBER) return;
+	int step = arg.size() == 4 ? intp->require_number(arg[3]) : 1;
+	if (step == PTM_INVALID_NUMBER) return;
+	intp->loop_start(id, first, last, step);
+}
+void t_command::loop_end(t_params& arg) {
+	ARGC(0);
+	intp->loop_end();
 }

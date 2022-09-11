@@ -274,3 +274,31 @@ int t_interpreter::require_tile_frame_ix(TTileSeq& tile, t_param& arg) {
 	abort(String::Format("Tile frame index out of bounds: %i", frame));
 	return PTM_INVALID_NUMBER;
 }
+void t_interpreter::loop_start(string var, int first, int last, int step) {
+	machine->set_var(var, first);
+	t_loop loop;
+	loop.line_ix_begin = cur_line_ix + 1;
+	loop.var = var;
+	loop.current = first;
+	loop.first = first;
+	loop.last = last;
+	loop.step = step;
+	loopstack.push(loop);
+}
+void t_interpreter::loop_end() {
+	if (loopstack.empty()) {
+		abort("Loop stack is empty");
+		return;
+	}
+	t_loop& loop = loopstack.top();
+	int next_value = loop.current + loop.step;
+	if (next_value >= loop.last) { // Loop ended
+		loopstack.pop();
+		return;
+	}
+	// Next iteration
+	loop.current = next_value;
+	machine->vars[loop.var].value = String::ToString(next_value);
+	cur_line_ix = loop.line_ix_begin;
+	branched = true;
+}

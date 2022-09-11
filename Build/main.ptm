@@ -2,10 +2,19 @@ main:
 	TITLE "TEST"
 	BGCOL 1
 	COLOR 0,1
-loop:
 	CLS
-	INKEY key
-	LOCATE 10,10
-	PRINT key
+	VAR i,0
+	LOOP y,1,16
+		LOOP x,1,16
+			CALL print_ch
+		NEXT
+	NEXT
 	VSYNC
-	GOTO loop
+
+HALT
+
+print_ch:
+	LOCATE x,y
+	PUTC i
+	INC i
+	RET
