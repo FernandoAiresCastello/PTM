@@ -38,9 +38,9 @@ t_machine::~t_machine() {
 	delete pal;
 }
 void t_machine::on_loop() {
-	if (wnd && perfmon) wnd->SetTitle(perfmon->format_info() + 
-		String::Format(" | Clock: %i", clock));
-
+	if (show_perfmon && perfmon && wnd) {
+		wnd->SetTitle(perfmon->format_info() + String::Format(" | Clock: %i", clock));
+	}
 	clock++;
 }
 void t_machine::on_screen_update() {
@@ -52,7 +52,6 @@ void t_machine::init_system_vars() {
 	set_const("$kb.left", SDL_SCANCODE_LEFT);
 	set_const("$kb.down", SDL_SCANCODE_DOWN);
 	set_const("$kb.up", SDL_SCANCODE_UP);
-	set_const("$kb.enter", SDL_SCANCODE_RETURN);
 }
 std::vector<string> t_machine::get_debug_info() {
 	std::vector<string> info;
@@ -268,6 +267,68 @@ void t_machine::move_tile_block(int x, int y, int w, int h, int dx, int dy) {
 	for (int cy = new_y; cy < new_y + h; cy++) {
 		for (int cx = new_x; cx < new_x + w; cx++) {
 			cur_buf->SetTile(tiles[i++], csr.layer, cx, cy, tile_transparency);
+		}
+	}
+}
+void t_machine::print_text(string text, bool crlf) {
+	if (crlf) {
+		text += "\\n";
+	}
+	const int initial_x = get_csr_x();
+	bool escape = false;
+	string escape_seq = "";
+	int fgc = text_color.fg;
+	int bgc = text_color.bg;
+	for (int i = 0; i < text.length(); i++) {
+		int ch = text[i];
+		if (ch == '\\') {
+			i++;
+			if (i < text.length()) {
+				if (text[i] == 'n') {
+					move_cursor(0, 1);
+					set_cursor_pos(initial_x, get_csr_y());
+				}
+			}
+		} else if (ch == '{') {
+			escape = true;
+			continue;
+		} else if (ch == '}') {
+			escape = false;
+			if (String::StartsWith(escape_seq, 'c')) {
+				string chstr = String::Skip(escape_seq, 1);
+				ch = String::ToInt(chstr);
+				auto tile = TTileSeq(ch, fgc, bgc);
+				put_tile_at_cursor_pos(tile);
+				move_cursor(1, 0);
+				escape_seq = "";
+				continue;
+			} else if (String::StartsWith(escape_seq, 'f')) {
+				fgc = String::ToInt(String::Skip(escape_seq, 1));
+				escape_seq = "";
+				continue;
+			} else if (String::StartsWith(escape_seq, "/f")) {
+				fgc = text_color.fg;
+				escape_seq = "";
+				continue;
+			} else if (String::StartsWith(escape_seq, 'b')) {
+				bgc = String::ToInt(String::Skip(escape_seq, 1));
+				escape_seq = "";
+				continue;
+			} else if (String::StartsWith(escape_seq, "/b")) {
+				bgc = text_color.bg;
+				escape_seq = "";
+				continue;
+			} else {
+				intp->abort("Invalid escape sequence: " + escape_seq);
+			}
+		} else if (escape) {
+			escape_seq += ch;
+			continue;
+		} else {
+			auto tile = TTileSeq(ch, fgc, bgc);
+			put_tile_at_cursor_pos(tile);
+			move_cursor(1, 0);
+			escape_seq = "";
 		}
 	}
 }

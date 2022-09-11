@@ -9,6 +9,7 @@ struct t_machine {
 	t_interpreter* intp = nullptr;
 	// Debugging
 	t_performance_monitor* perfmon = nullptr;
+	bool show_perfmon = false;
 	// Namespaces
 	std::map<string, t_variable> vars;
 	std::map<string, TTileSeq> tilestore;
@@ -68,6 +69,7 @@ struct t_machine {
 	string read_input_string(int maxlen);
 	void move_tile_at_cursor_pos(int dx, int dy);
 	void move_tile_block(int x, int y, int w, int h, int dx, int dy);
+	void print_text(string text, bool crlf);
 
 private:
 	TCharset* original_chr;

@@ -102,22 +102,24 @@ bool t_command::execute(string& cmd, t_params& args) {
 	// Keyboard
 	else if (cmd == "INPUT")		read_user_input_string(args);
 	else if (cmd == "INKEY")		get_key_pressed(args);
-	else if (cmd == "KCALL")		call_if_key_pressed(args);
-	else if (cmd == "KGOTO")		goto_if_key_pressed(args);
+	else if (cmd == "IF.KEY.CALL")	call_if_key_pressed(args);
+	else if (cmd == "IF.KEY.GOTO")	goto_if_key_pressed(args);
 	else if (cmd == "XON")			allow_exit_on_escape_key(args, true);
 	else if (cmd == "XOFF")			allow_exit_on_escape_key(args, false);
 	// Debugging
 	else if (cmd == "BRK")			trigger_breakpoint(args);
 	else if (cmd == "FDEBUG")		save_debug_file(args);
+	else if (cmd == "PERFMON")		enable_perfmon(args);
 	else if (cmd == "ASSERT.EQ")	assert_eq(args);
 	else if (cmd == "ASSERT.NEQ")	assert_neq(args);
 	else if (cmd == "ASSERT.GT")	assert_gt(args);
 	else if (cmd == "ASSERT.GTE")	assert_gte(args);
 	else if (cmd == "ASSERT.LT")	assert_lt(args);
 	else if (cmd == "ASSERT.LTE")	assert_lte(args);
-	// Conditionals
+	// Comparison
 	else if (cmd == "CMP")			compare_numbers(args);
 	else if (cmd == "CMPS")			compare_strings(args);
+	// Conditional branching
 	else if (cmd == "IF.EQ.CALL")	if_eq_call(args);
 	else if (cmd == "IF.NEQ.CALL")	if_neq_call(args);
 	else if (cmd == "IF.GT.CALL")	if_gt_call(args);
@@ -575,66 +577,7 @@ void t_command::print_text(t_params& arg, bool crlf) {
 	ARGC(1);
 	string text = intp->require_string(arg[0]);
 	if (!text.empty()) {
-		if (crlf) {
-			text += "\\n";
-		}
-		const int initial_x = machine->get_csr_x();
-		bool escape = false;
-		string escape_seq = "";
-		int fgc = machine->text_color.fg;
-		int bgc = machine->text_color.bg;
-		for (int i = 0; i < text.length(); i++) {
-			int ch = text[i];
-			if (ch == '\\') {
-				i++;
-				if (i < text.length()) {
-					if (text[i] == 'n') {
-						machine->move_cursor(0, 1);
-						machine->set_cursor_pos(initial_x, machine->get_csr_y());
-					}
-				}
-			} else if (ch == '{') {
-				escape = true;
-				continue;
-			} else if (ch == '}') {
-				escape = false;
-				if (String::StartsWith(escape_seq, 'c')) {
-					string chstr = String::Skip(escape_seq, 1);
-					ch = String::ToInt(chstr);
-					auto tile = TTileSeq(ch, fgc, bgc);
-					machine->put_tile_at_cursor_pos(tile);
-					machine->move_cursor(1, 0);
-					escape_seq = "";
-					continue;
-				} else if (String::StartsWith(escape_seq, 'f')) {
-					fgc = String::ToInt(String::Skip(escape_seq, 1));
-					escape_seq = "";
-					continue;
-				} else if (String::StartsWith(escape_seq, "/f")) {
-					fgc = machine->text_color.fg;
-					escape_seq = "";
-					continue;
-				} else if (String::StartsWith(escape_seq, 'b')) {
-					bgc = String::ToInt(String::Skip(escape_seq, 1));
-					escape_seq = "";
-					continue;
-				} else if (String::StartsWith(escape_seq, "/b")) {
-					bgc = machine->text_color.bg;
-					escape_seq = "";
-					continue;
-				} else {
-					intp->abort("Invalid escape sequence: " + escape_seq);
-				}
-			} else if (escape) {
-				escape_seq += ch;
-				continue;
-			} else {
-				auto tile = TTileSeq(ch, fgc, bgc);
-				machine->put_tile_at_cursor_pos(tile);
-				machine->move_cursor(1, 0);
-				escape_seq = "";
-			}
-		}
+		machine->print_text(text, crlf);
 	}
 }
 void t_command::print_text_char(t_params& arg) {
@@ -1129,4 +1072,8 @@ void t_command::select_tile_buffer(t_params& arg) {
 		return;
 	}
 	machine->cur_buf = machine->tilebufs[id];
+}
+void t_command::enable_perfmon(t_params& arg) {
+	ARGC(0);
+	machine->show_perfmon = true;
 }

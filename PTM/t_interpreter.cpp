@@ -54,8 +54,7 @@ void t_interpreter::run(t_program* prg, t_machine* machine, TBufferedWindow* wnd
 				cur_line_ix++;
 			}
 		} else {
-			cur_line = nullptr;
-			running = false;
+			halted = true;
 		}
 	}
 
