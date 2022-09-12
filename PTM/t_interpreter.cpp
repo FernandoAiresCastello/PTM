@@ -277,6 +277,7 @@ int t_interpreter::require_tile_frame_ix(TTileSeq& tile, t_param& arg) {
 void t_interpreter::loop_start(string var, int first, int last, int step) {
 	machine->set_var(var, first);
 	t_loop loop;
+	loop.is_array = false;
 	loop.line_ix_begin = cur_line_ix + 1;
 	loop.var = var;
 	loop.current = first;
@@ -285,20 +286,48 @@ void t_interpreter::loop_start(string var, int first, int last, int step) {
 	loop.step = step;
 	loopstack.push(loop);
 }
+void t_interpreter::array_loop_start(string arr_id, string iter_var) {
+	auto& arr = machine->arrays[arr_id];
+	machine->set_var(iter_var, arr[0]);
+	t_loop loop;
+	loop.is_array = true;
+	loop.line_ix_begin = cur_line_ix + 1;
+	loop.arr_id = arr_id;
+	loop.iter_var = iter_var;
+	loop.current = 0;
+	loop.first = 0;
+	loop.last = arr.size() - 1;
+	loop.step = 1;
+	loopstack.push(loop);
+}
 void t_interpreter::loop_end() {
 	if (loopstack.empty()) {
 		abort("Loop stack is empty");
 		return;
 	}
 	t_loop& loop = loopstack.top();
-	int next_value = loop.current + loop.step;
-	if (next_value >= loop.last) { // Loop ended
-		loopstack.pop();
-		return;
+
+	if (loop.is_array) {
+		if (loop.current >= loop.last) { // Array loop ended
+			loopstack.pop();
+			return;
+		}
+		// Next array element
+		loop.current++;
+		auto& arr = machine->arrays[loop.arr_id];
+		machine->vars[loop.iter_var].value = arr[loop.current];
+
+	} else {
+		int next_value = loop.current + loop.step;
+		if (next_value >= loop.last) { // Loop ended
+			loopstack.pop();
+			return;
+		}
+		// Next iteration
+		loop.current = next_value;
+		machine->vars[loop.var].value = String::ToString(next_value);
 	}
-	// Next iteration
-	loop.current = next_value;
-	machine->vars[loop.var].value = String::ToString(next_value);
+
 	cur_line_ix = loop.line_ix_begin;
 	branched = true;
 }

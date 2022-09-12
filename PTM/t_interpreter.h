@@ -52,5 +52,6 @@ private:
 	int require_palette_ix(t_param& arg);
 	int require_tile_frame_ix(TTileSeq& tile, t_param& arg);
 	void loop_start(string var, int first, int last, int step);
+	void array_loop_start(string arr_id, string iter_var);
 	void loop_end();
 };

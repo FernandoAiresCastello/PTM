@@ -3,18 +3,47 @@ main:
 	BGCOL 1
 	COLOR 0,1
 	CLS
-	VAR i,0
-	LOOP y,1,16
-		LOOP x,1,16
-			CALL print_ch
-		NEXT
-	NEXT
+	LOCATE 1,1
+	CALL print_num_arr
 	VSYNC
+	HALT
 
-HALT
+print_num_arr:
+	ARR.NEW numbers
+	ARR.PUSH numbers,1
+	ARR.PUSH numbers,2
+	ARR.PUSH numbers,3
+	ARR.PUSH numbers,4
+	FOREACH numbers,num
+		PRINTL num
+	NEXT
+	RET
 
+print_str_arr:
+	ARR.NEW fruits
+	ARR.PUSH fruits,"Apple"
+	ARR.PUSH fruits,"Banana"
+	ARR.PUSH fruits,"Orange"
+	ARR.PUSH fruits,"Pineapple"
+	FOREACH fruits,fruit
+		PRINTL fruit
+	NEXT
+	RET
+
+print_ch_arr:
+	ARR.NEW chars
+	ARR.PUSH chars,'H'
+	ARR.PUSH chars,'e'
+	ARR.PUSH chars,'l'
+	ARR.PUSH chars,'l'
+	ARR.PUSH chars,'o'
+	ARR.PUSH chars,'!'
+	FOREACH chars,ch
+		CALL print_ch
+	NEXT
+	RET
+	
 print_ch:
-	LOCATE x,y
-	PUTC i
-	INC i
+	PUTC ch
+	CSR.R
 	RET

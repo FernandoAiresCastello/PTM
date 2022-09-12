@@ -18,6 +18,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	else if (cmd == "PAUSE")		pause(args);
 	else if (cmd == "LOOP")			loop_start(args);
 	else if (cmd == "NEXT")			loop_end(args);
+	else if (cmd == "FOREACH")		array_loop_start(args);
 	// Variables
 	else if (cmd == "VAR")			set_variable(args);
 	else if (cmd == "CONST")		define_constant(args);
@@ -784,8 +785,13 @@ void t_command::array_push(t_params& arg) {
 	ARGC(2);
 	string arr_id = intp->require_existing_array(arg[0]);
 	if (arr_id.empty()) return;
-	string value = intp->require_string(arg[1]);
-	machine->arrays[arr_id].push_back(value);
+	if (arg[1].type == t_param_type::char_literal) {
+		string value = String::ToString(arg[1].numeric_value);
+		machine->arrays[arr_id].push_back(value);
+	} else {
+		string value = arg[1].textual_value;
+		machine->arrays[arr_id].push_back(value);
+	}
 }
 void t_command::get_array_length(t_params& arg) {
 	ARGC(2);
@@ -1091,6 +1097,14 @@ void t_command::loop_start(t_params& arg) {
 	int step = arg.size() == 4 ? intp->require_number(arg[3]) : 1;
 	if (step == PTM_INVALID_NUMBER) return;
 	intp->loop_start(id, first, last, step);
+}
+void t_command::array_loop_start(t_params& arg) {
+	ARGC(2);
+	string arr_id = intp->require_existing_array(arg[0]);
+	if (arr_id.empty()) return;
+	string iter_var = intp->require_id(arg[1]);
+	if (iter_var.empty()) return;
+	intp->array_loop_start(arr_id, iter_var);
 }
 void t_command::loop_end(t_params& arg) {
 	ARGC(0);
