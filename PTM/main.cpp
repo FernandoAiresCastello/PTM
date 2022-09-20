@@ -21,23 +21,25 @@ int main(int argc, char* argv[]) {
 	}
 
 	t_program* prg = new t_program();
-	prg->load_plain(prg_file);
-	t_compiler compiler;
-	compiler.run(prg);
-	if (compiler.errors.empty()) {
-		t_machine* machine = new t_machine(g.wnd);
-		machine->perfmon = g.perfmon;
-		machine->snd = g.snd;
-		t_interpreter* interpreter = new t_interpreter();
-		interpreter->run(prg, machine, g.wnd);
-		auto errors = interpreter->errors;
-		delete interpreter;
-		delete machine;
-		if (!errors.empty()) {
-			MsgBox::Error("PTM", errors[0]);
+	bool load_ok = prg->load_plain(prg_file);
+	if (load_ok) {
+		t_compiler compiler;
+		compiler.run(prg);
+		if (compiler.errors.empty()) {
+			t_machine* machine = new t_machine(g.wnd);
+			machine->perfmon = g.perfmon;
+			machine->snd = g.snd;
+			t_interpreter* interpreter = new t_interpreter();
+			interpreter->run(prg, machine, g.wnd);
+			auto errors = interpreter->errors;
+			delete interpreter;
+			delete machine;
+			if (!errors.empty()) {
+				MsgBox::Error("PTM", errors[0]);
+			}
+		} else {
+			MsgBox::Error("PTM", compiler.errors[0]);
 		}
-	} else {
-		MsgBox::Error("PTM", compiler.errors[0]);
 	}
 	delete prg;
 	return 0;

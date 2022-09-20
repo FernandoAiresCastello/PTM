@@ -8,7 +8,7 @@ struct t_program {
 	std::map<string, int> labels;
 	t_program();
 	void clear();
-	void load_plain(string path);
+	bool load_plain(string path);
 	void save_plain(string path);
 	void load_encrypted(string path);
 	void save_encrypted(string path);
