@@ -1,12 +1,28 @@
 main:
 	TITLE "TEST"
-	BGCOL 1
-	COLOR 0,1
-	CLS
-	LOCATE 1,1
-	CALL print_num_arr
-	VSYNC
+	BGCOL 0
+	COLOR 1,0
+	CALL print_str_arr
 	HALT
+	
+loop:
+	VAR x,"abcb"
+	IF.EQ x,"abc"
+		BGCOL 1
+		COLOR 0,1
+		CLS
+		LOCATE 1,1
+		PRINT "Vars are equal!"
+	ENDIF
+	IF.NEQ x,"abc"
+		BGCOL 0
+		COLOR 1,0
+		CLS
+		LOCATE 1,1
+		PRINT "Vars are different"
+	ENDIF
+	VSYNC
+	GOTO loop
 
 print_num_arr:
 	ARR.NEW numbers
@@ -26,7 +42,9 @@ print_str_arr:
 	ARR.PUSH fruits,"Orange"
 	ARR.PUSH fruits,"Pineapple"
 	FOREACH fruits,fruit
-		PRINTL fruit
+		IF.STR.NEQ fruit,"Orange"
+			PRINTL fruit
+		ENDIF
 	NEXT
 	RET
 

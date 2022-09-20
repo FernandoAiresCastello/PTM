@@ -48,6 +48,12 @@ bool t_compiler::compile_line(
 	new_line->cmd = ixSpace != string::npos ? String::Trim(src_line.substr(0, ixSpace)) : src_line;
 	new_line->cmd = String::ToUpper(new_line->cmd);
 
+	// Check for ENDIF
+	if (is_endif(new_line->cmd)) {
+		new_line->is_endif = true;
+		return true;
+	}
+
 	// Parse raw command argument list
 	auto raw_args = ixSpace != string::npos ? String::Trim(src_line.substr(ixSpace)) : "";
 	auto args = parse_args(raw_args);
@@ -178,4 +184,7 @@ bool t_compiler::is_array_identifier(string& arg) {
 	return 
 		String::Contains(arg, '[') || 
 		String::Contains(arg, ']');
+}
+bool t_compiler::is_endif(string& arg) {
+	return arg == "ENDIF";
 }

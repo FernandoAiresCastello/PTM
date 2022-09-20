@@ -15,6 +15,7 @@ private:
 	t_machine* machine;
 
 	// Commands
+	void nop(t_params& arg);
 	void halt(t_params& arg);
 	void exit(t_params& arg);
 	void goto_label(t_params& arg);
@@ -76,20 +77,6 @@ private:
 	void call_if_key_pressed(t_params& arg);
 	void goto_if_key_pressed(t_params& arg);
 	void save_debug_file(t_params& arg);
-	void compare_numbers(t_params& arg);
-	void compare_strings(t_params& arg);
-	void if_eq_call(t_params& arg);
-	void if_neq_call(t_params& arg);
-	void if_gt_call(t_params& arg);
-	void if_gte_call(t_params& arg);
-	void if_lt_call(t_params& arg);
-	void if_lte_call(t_params& arg);
-	void if_eq_goto(t_params& arg);
-	void if_neq_goto(t_params& arg);
-	void if_gt_goto(t_params& arg);
-	void if_gte_goto(t_params& arg);
-	void if_lt_goto(t_params& arg);
-	void if_lte_goto(t_params& arg);
 	void play_sound(t_params& arg);
 	void loop_sound(t_params& arg);
 	void set_sound_volume(t_params& arg);
@@ -133,4 +120,6 @@ private:
 	void loop_start(t_params& arg);
 	void array_loop_start(t_params& arg);
 	void loop_end(t_params& arg);
+	void if_block_start(t_params& arg, int cmp_mode);
+	void if_block_end(t_params& arg);
 };

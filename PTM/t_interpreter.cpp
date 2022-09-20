@@ -331,3 +331,18 @@ void t_interpreter::loop_end() {
 	cur_line_ix = loop.line_ix_begin;
 	branched = true;
 }
+void t_interpreter::goto_next_nearest_endif() {
+	int endif_ix = -1;
+	for (int i = cur_line_ix; i < prg->lines.size(); i++) {
+		if (prg->lines[i].is_endif) {
+			endif_ix = i;
+			break;
+		}
+	}
+	if (endif_ix >= 0) {
+		cur_line_ix = endif_ix + 1;
+		branched = true;
+	} else {
+		abort("Missing ENDIF command");
+	}
+}

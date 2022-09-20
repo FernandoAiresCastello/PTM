@@ -54,4 +54,5 @@ private:
 	void loop_start(string var, int first, int last, int step);
 	void array_loop_start(string arr_id, string iter_var);
 	void loop_end();
+	void goto_next_nearest_endif();
 };

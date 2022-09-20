@@ -4,153 +4,156 @@
 #include "t_program.h"
 #include "t_layer.h"
 
+enum {
+	CMP_MODE_EQ, CMP_MODE_NEQ,
+	CMP_MODE_GT, CMP_MODE_GTE,
+	CMP_MODE_LT, CMP_MODE_LTE,
+	CMP_MODE_STR_EQ, CMP_MODE_STR_NEQ
+};
+
 t_command::t_command(t_interpreter* intp) {
 	this->intp = intp;
 	machine = intp->machine;
 }
 bool t_command::execute(string& cmd, t_params& args) {
 	// Control flow
-	if (cmd == "HALT")				halt(args);
-	else if (cmd == "EXIT")			exit(args);
-	else if (cmd == "GOTO")			goto_label(args);
-	else if (cmd == "CALL")			call_label(args);
-	else if (cmd == "RET")			return_from_label(args);
-	else if (cmd == "PAUSE")		pause(args);
-	else if (cmd == "LOOP")			loop_start(args);
-	else if (cmd == "NEXT")			loop_end(args);
-	else if (cmd == "FOREACH")		array_loop_start(args);
+	if (cmd == "HALT") { halt(args); return true; }
+	if (cmd == "EXIT") { exit(args); return true; }
+	if (cmd == "GOTO") { goto_label(args); return true; }
+	if (cmd == "CALL") { call_label(args); return true; }
+	if (cmd == "RET") { return_from_label(args); return true; }
+	if (cmd == "PAUSE") { pause(args); return true; }
+	if (cmd == "FOR") { loop_start(args); return true; }
+	if (cmd == "NEXT") { loop_end(args); return true; }
+	if (cmd == "FOREACH") { array_loop_start(args); return true; }
 	// Variables
-	else if (cmd == "VAR")			set_variable(args);
-	else if (cmd == "CONST")		define_constant(args);
+	if (cmd == "VAR") { set_variable(args); return true; }
+	if (cmd == "CONST") { define_constant(args); return true; }
 	// Arrays
-	else if (cmd == "ARR.NEW")		create_array(args);
-	else if (cmd == "ARR.PUSH")		array_push(args);
-	else if (cmd == "ARR.LEN")		get_array_length(args);
-	else if (cmd == "ARR.SET")		set_array_element(args);
-	else if (cmd == "ARR.ERASE")	erase_array_element(args);
-	else if (cmd == "ARR.CLR")		clear_array(args);
-	else if (cmd == "ARR.COPY")		copy_array(args);
+	if (cmd == "ARR.NEW") { create_array(args); return true; }
+	if (cmd == "ARR.PUSH") { array_push(args); return true; }
+	if (cmd == "ARR.LEN") { get_array_length(args); return true; }
+	if (cmd == "ARR.SET") { set_array_element(args); return true; }
+	if (cmd == "ARR.ERASE") { erase_array_element(args); return true; }
+	if (cmd == "ARR.CLR") { clear_array(args); return true; }
+	if (cmd == "ARR.COPY") { copy_array(args); return true; }
 	// Math
-	else if (cmd == "RND")			get_random_number(args);
-	else if (cmd == "INC")			increment_variable(args);
-	else if (cmd == "DEC")			decrement_variable(args);
-	else if (cmd == "ADD")			add_to_variable(args);
-	else if (cmd == "SUB")			subtract_from_variable(args);
+	if (cmd == "RND") { get_random_number(args); return true; }
+	if (cmd == "INC") { increment_variable(args); return true; }
+	if (cmd == "DEC") { decrement_variable(args); return true; }
+	if (cmd == "ADD") { add_to_variable(args); return true; }
+	if (cmd == "SUB") { subtract_from_variable(args); return true; }
 	// Current tile
-	else if (cmd == "TILE.NEW")		init_cur_tile(args);
-	else if (cmd == "TILE.ADD")		append_cur_tile(args);
-	else if (cmd == "TILE.CH")		set_cur_tile_char(args);
-	else if (cmd == "TILE.INK")		set_cur_tile_fgcolor(args);
-	else if (cmd == "TILE.PAPER")	set_cur_tile_bgcolor(args);
-	else if (cmd == "TILE.COLOR")	set_cur_tile_colors(args);
-	else if (cmd == "TILE.PARSE")	parse_cur_tile(args);
-	else if (cmd == "TILE.STORE")	store_cur_tile(args);
-	else if (cmd == "TILE.LOAD")	load_cur_tile(args);
-	else if (cmd == "TILE.PROP")	set_tile_property(args);
-	else if (cmd == "TILE.PGET")	get_tile_property(args);
+	if (cmd == "TILE.NEW") { init_cur_tile(args); return true; }
+	if (cmd == "TILE.ADD") { append_cur_tile(args); return true; }
+	if (cmd == "TILE.CH") { set_cur_tile_char(args); return true; }
+	if (cmd == "TILE.INK") { set_cur_tile_fgcolor(args); return true; }
+	if (cmd == "TILE.PAPER") { set_cur_tile_bgcolor(args); return true; }
+	if (cmd == "TILE.COLOR") { set_cur_tile_colors(args); return true; }
+	if (cmd == "TILE.PARSE") { parse_cur_tile(args); return true; }
+	if (cmd == "TILE.STORE") { store_cur_tile(args); return true; }
+	if (cmd == "TILE.LOAD") { load_cur_tile(args); return true; }
+	if (cmd == "TILE.PROP") { set_tile_property(args); return true; }
+	if (cmd == "TILE.PGET") { get_tile_property(args); return true; }
 	// Tile buffer cursor
-	else if (cmd == "LAYER")		select_layer(args);
-	else if (cmd == "LOCATE")		set_cursor_pos(args);
-	else if (cmd == "CSR.X")		set_cursor_x(args);
-	else if (cmd == "CSR.Y")		set_cursor_y(args);
-	else if (cmd == "CSR.MOV")		move_cursor(args);
-	else if (cmd == "CSR.R")		move_cursor_right(args);
-	else if (cmd == "CSR.L")		move_cursor_left(args);
-	else if (cmd == "CSR.U")		move_cursor_up(args);
-	else if (cmd == "CSR.D")		move_cursor_down(args);
-	else if (cmd == "CSR.UR")		move_cursor_up_right(args);
-	else if (cmd == "CSR.UL")		move_cursor_up_left(args);
-	else if (cmd == "CSR.DR")		move_cursor_down_right(args);
-	else if (cmd == "CSR.DL")		move_cursor_down_left(args);
+	if (cmd == "LAYER") { select_layer(args); return true; }
+	if (cmd == "LOCATE") { set_cursor_pos(args); return true; }
+	if (cmd == "CSR.X") { set_cursor_x(args); return true; }
+	if (cmd == "CSR.Y") { set_cursor_y(args); return true; }
+	if (cmd == "CSR.MOV") { move_cursor(args); return true; }
+	if (cmd == "CSR.R") { move_cursor_right(args); return true; }
+	if (cmd == "CSR.L") { move_cursor_left(args); return true; }
+	if (cmd == "CSR.U") { move_cursor_up(args); return true; }
+	if (cmd == "CSR.D") { move_cursor_down(args); return true; }
+	if (cmd == "CSR.UR") { move_cursor_up_right(args); return true; }
+	if (cmd == "CSR.UL") { move_cursor_up_left(args); return true; }
+	if (cmd == "CSR.DR") { move_cursor_down_right(args); return true; }
+	if (cmd == "CSR.DL") { move_cursor_down_left(args); return true; }
 	// Tile buffer
-	else if (cmd == "BUF.NEW")		add_tile_buffer(args);
-	else if (cmd == "BUF.SHOW")		show_tile_buffer(args, true);
-	else if (cmd == "BUF.HIDE")		show_tile_buffer(args, false);
-	else if (cmd == "BUF")			select_tile_buffer(args);
-	else if (cmd == "PUT")			put_tile(args);
-	else if (cmd == "GET")			copy_tile(args);
-	else if (cmd == "DEL")			delete_tile(args);
-	else if (cmd == "REPR")			put_tile_repeat_right(args);
-	else if (cmd == "REPL")			put_tile_repeat_left(args);
-	else if (cmd == "REPU")			put_tile_repeat_up(args);
-	else if (cmd == "REPD")			put_tile_repeat_down(args);
-	else if (cmd == "RECT")			fill_rect(args);
-	else if (cmd == "FILL")			fill_layer(args);
-	else if (cmd == "CLS")			clear_all_layers(args);
-	else if (cmd == "CLL")			clear_layer(args);
-	else if (cmd == "CLR")			clear_rect(args);
-	else if (cmd == "MOV")			move_tile(args);
-	else if (cmd == "MOVB")			move_tile_block(args);
+	if (cmd == "BUF.NEW") { add_tile_buffer(args); return true; }
+	if (cmd == "BUF.SHOW") { show_tile_buffer(args, true); return true; }
+	if (cmd == "BUF.HIDE") { show_tile_buffer(args, false); return true; }
+	if (cmd == "BUF") { select_tile_buffer(args); return true; }
+	if (cmd == "PUT") { put_tile(args); return true; }
+	if (cmd == "GET") { copy_tile(args); return true; }
+	if (cmd == "DEL") { delete_tile(args); return true; }
+	if (cmd == "REPR") { put_tile_repeat_right(args); return true; }
+	if (cmd == "REPL") { put_tile_repeat_left(args); return true; }
+	if (cmd == "REPU") { put_tile_repeat_up(args); return true; }
+	if (cmd == "REPD") { put_tile_repeat_down(args); return true; }
+	if (cmd == "RECT") { fill_rect(args); return true; }
+	if (cmd == "FILL") { fill_layer(args); return true; }
+	if (cmd == "CLS") { clear_all_layers(args); return true; }
+	if (cmd == "CLL") { clear_layer(args); return true; }
+	if (cmd == "CLR") { clear_rect(args); return true; }
+	if (cmd == "MOV") { move_tile(args); return true; }
+	if (cmd == "MOVB") { move_tile_block(args); return true; }
 	// Tile buffer viewport
-	else if (cmd == "VIEW")			set_viewport(args);
-	else if (cmd == "SCRL")			scroll_viewport(args);
+	if (cmd == "VIEW") { set_viewport(args); return true; }
+	if (cmd == "SCRL") { scroll_viewport(args); return true; }
 	// Graphics / Window
-	else if (cmd == "CHR")			define_char(args);
-	else if (cmd == "CHRL")			define_char_rows(args);
-	else if (cmd == "PAL")			define_color(args);
-	else if (cmd == "CHR.LEN")		get_charset_size(args);
-	else if (cmd == "PAL.LEN")		get_palette_size(args);
-	else if (cmd == "VSYNC")		update_screen(args);
-	else if (cmd == "TITLE")		set_window_title(args);
-	else if (cmd == "BGCOL")		set_window_bgcolor(args);
-	else if (cmd == "TRON")			set_tile_transparency(args, true);
-	else if (cmd == "TROFF")		set_tile_transparency(args, false);
+	if (cmd == "CHR") { define_char(args); return true; }
+	if (cmd == "CHRL") { define_char_rows(args); return true; }
+	if (cmd == "PAL") { define_color(args); return true; }
+	if (cmd == "CHR.LEN") { get_charset_size(args); return true; }
+	if (cmd == "PAL.LEN") { get_palette_size(args); return true; }
+	if (cmd == "VSYNC") { update_screen(args); return true; }
+	if (cmd == "TITLE") { set_window_title(args); return true; }
+	if (cmd == "BGCOL") { set_window_bgcolor(args); return true; }
+	if (cmd == "TRON") { set_tile_transparency(args, true); return true; }
+	if (cmd == "TROFF") { set_tile_transparency(args, false); return true; }
 	// Text output
-	else if (cmd == "PRINT")		print_text(args, false);
-	else if (cmd == "PUTC")			print_text_char(args);
-	else if (cmd == "PRINTL")		print_text(args, true);
-	else if (cmd == "INK")			set_text_fgcolor(args);
-	else if (cmd == "PAPER")		set_text_bgcolor(args);
-	else if (cmd == "COLOR")		set_text_colors(args);
+	if (cmd == "PRINT") { print_text(args, false); return true; }
+	if (cmd == "PUTC") { print_text_char(args); return true; }
+	if (cmd == "PRINTL") { print_text(args, true); return true; }
+	if (cmd == "INK") { set_text_fgcolor(args); return true; }
+	if (cmd == "PAPER") { set_text_bgcolor(args); return true; }
+	if (cmd == "COLOR") { set_text_colors(args); return true; }
 	// Keyboard
-	else if (cmd == "INPUT")		read_user_input_string(args);
-	else if (cmd == "INKEY")		get_key_pressed(args);
-	else if (cmd == "IF.KEY.CALL")	call_if_key_pressed(args);
-	else if (cmd == "IF.KEY.GOTO")	goto_if_key_pressed(args);
-	else if (cmd == "XON")			allow_exit_on_escape_key(args, true);
-	else if (cmd == "XOFF")			allow_exit_on_escape_key(args, false);
+	if (cmd == "INPUT") { read_user_input_string(args); return true; }
+	if (cmd == "INKEY") { get_key_pressed(args); return true; }
+	if (cmd == "IF.KEY.CALL") { call_if_key_pressed(args); return true; }
+	if (cmd == "IF.KEY.GOTO") { goto_if_key_pressed(args); return true; }
+	if (cmd == "XON") { allow_exit_on_escape_key(args, true); return true; }
+	if (cmd == "XOFF") { allow_exit_on_escape_key(args, false); return true; }
 	// Debugging
-	else if (cmd == "BRK")			trigger_breakpoint(args);
-	else if (cmd == "FDEBUG")		save_debug_file(args);
-	else if (cmd == "PERFMON")		enable_perfmon(args);
-	else if (cmd == "ASSERT.EQ")	assert_eq(args);
-	else if (cmd == "ASSERT.NEQ")	assert_neq(args);
-	else if (cmd == "ASSERT.GT")	assert_gt(args);
-	else if (cmd == "ASSERT.GTE")	assert_gte(args);
-	else if (cmd == "ASSERT.LT")	assert_lt(args);
-	else if (cmd == "ASSERT.LTE")	assert_lte(args);
-	// Comparison
-	else if (cmd == "CMP")			compare_numbers(args);
-	else if (cmd == "CMPS")			compare_strings(args);
-	// Conditional branching
-	else if (cmd == "IF.EQ.CALL")	if_eq_call(args);
-	else if (cmd == "IF.NEQ.CALL")	if_neq_call(args);
-	else if (cmd == "IF.GT.CALL")	if_gt_call(args);
-	else if (cmd == "IF.GTE.CALL")	if_gte_call(args);
-	else if (cmd == "IF.LT.CALL")	if_lt_call(args);
-	else if (cmd == "IF.LTE.CALL")	if_lte_call(args);
-	else if (cmd == "IF.EQ.GOTO")	if_eq_goto(args);
-	else if (cmd == "IF.NEQ.GOTO")	if_neq_goto(args);
-	else if (cmd == "IF.GT.GOTO")	if_gt_goto(args);
-	else if (cmd == "IF.GTE.GOTO")	if_gte_goto(args);
-	else if (cmd == "IF.LT.GOTO")	if_lt_goto(args);
-	else if (cmd == "IF.LTE.GOTO")	if_lte_goto(args);
+	if (cmd == "BRK") { trigger_breakpoint(args); return true; }
+	if (cmd == "FDEBUG") { save_debug_file(args); return true; }
+	if (cmd == "PERFMON") { enable_perfmon(args); return true; }
+	if (cmd == "ASSERT.EQ") { assert_eq(args); return true; }
+	if (cmd == "ASSERT.NEQ") { assert_neq(args); return true; }
+	if (cmd == "ASSERT.GT") { assert_gt(args); return true; }
+	if (cmd == "ASSERT.GTE") { assert_gte(args); return true; }
+	if (cmd == "ASSERT.LT") { assert_lt(args); return true; }
+	if (cmd == "ASSERT.LTE") { assert_lte(args); return true; }
+	// If / then / else
+	if (cmd == "IF.EQ") { if_block_start(args, CMP_MODE_EQ); return true; }
+	if (cmd == "IF.NEQ") { if_block_start(args, CMP_MODE_NEQ); return true; }
+	if (cmd == "IF.GT") { if_block_start(args, CMP_MODE_GT); return true; }
+	if (cmd == "IF.GTE") { if_block_start(args, CMP_MODE_GTE); return true; }
+	if (cmd == "IF.LT") { if_block_start(args, CMP_MODE_LT); return true; }
+	if (cmd == "IF.LTE") { if_block_start(args, CMP_MODE_LTE); return true; }
+	if (cmd == "IF.STR.EQ") { if_block_start(args, CMP_MODE_STR_EQ); return true; }
+	if (cmd == "IF.STR.NEQ") { if_block_start(args, CMP_MODE_STR_NEQ); return true; }
+	if (cmd == "ENDIF") { if_block_end(args); return true; }
 	// Sound
-	else if (cmd == "PLAY")			play_sound(args);
-	else if (cmd == "LPLAY")		loop_sound(args);
-	else if (cmd == "SOUND")		play_sound_note(args);
-	else if (cmd == "VOL")			set_sound_volume(args);
-	else if (cmd == "QUIET")		stop_sound(args);
+	if (cmd == "PLAY") { play_sound(args); return true; }
+	if (cmd == "LPLAY") { loop_sound(args); return true; }
+	if (cmd == "SOUND") { play_sound_note(args); return true; }
+	if (cmd == "VOL") { set_sound_volume(args); return true; }
+	if (cmd == "QUIET") { stop_sound(args); return true; }
 	// Filesystem
-	else if (cmd == "CLOAD")		read_file_into_string(args);
-	else if (cmd == "BLOAD")		read_file_into_array(args);
+	if (cmd == "CLOAD") { read_file_into_string(args); return true; }
+	if (cmd == "BLOAD") { read_file_into_array(args); return true; }
 	// String manipulation
-	else if (cmd == "FMT")			format_number(args);
+	if (cmd == "FMT") { format_number(args); return true; }
 	// Time
-	else if (cmd == "TIME")			get_cycles(args);
+	if (cmd == "TIME") { get_cycles(args); return true; }
 
-	else return false;
-	return true;
+	return false;
+}
+void t_command::nop(t_params& arg) {
+	ARGC(0);
 }
 void t_command::halt(t_params& arg) {
 	ARGC(0);
@@ -647,106 +650,6 @@ void t_command::save_debug_file(t_params& arg) {
 	ARGC(0);
 	File::WriteLines(PTM_DEBUG_FILE, machine->get_debug_info());
 }
-void t_command::compare_numbers(t_params& arg) {
-	ARGC(2);
-	int a = intp->require_number(arg[0]);
-	int b = intp->require_number(arg[1]);
-	machine->cmp_result = a - b;
-}
-void t_command::compare_strings(t_params& arg) {
-	ARGC(2);
-	string a = intp->require_string(arg[0]);
-	string b = intp->require_string(arg[1]);
-	if (a == b) {
-		machine->cmp_result = 0;
-	} else {
-		machine->cmp_result = -1;
-	}
-}
-void t_command::if_eq_call(t_params& arg) {
-	ARGC(1);
-	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_result == 0) {
-		intp->call_label(label);
-	}
-}
-void t_command::if_neq_call(t_params& arg) {
-	ARGC(1);
-	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_result != 0) {
-		intp->call_label(label);
-	}
-}
-void t_command::if_gt_call(t_params& arg) {
-	ARGC(1);
-	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_result > 0) {
-		intp->call_label(label);
-	}
-}
-void t_command::if_gte_call(t_params& arg) {
-	ARGC(1);
-	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_result >= 0) {
-		intp->call_label(label);
-	}
-}
-void t_command::if_lt_call(t_params& arg) {
-	ARGC(1);
-	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_result < 0) {
-		intp->call_label(label);
-	}
-}
-void t_command::if_lte_call(t_params& arg) {
-	ARGC(1);
-	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_result <= 0) {
-		intp->call_label(label);
-	}
-}
-void t_command::if_eq_goto(t_params& arg) {
-	ARGC(1);
-	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_result == 0) {
-		intp->goto_label(label);
-	}
-}
-void t_command::if_neq_goto(t_params& arg) {
-	ARGC(1);
-	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_result != 0) {
-		intp->goto_label(label);
-	}
-}
-void t_command::if_gt_goto(t_params& arg) {
-	ARGC(1);
-	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_result > 0) {
-		intp->goto_label(label);
-	}
-}
-void t_command::if_gte_goto(t_params& arg) {
-	ARGC(1);
-	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_result >= 0) {
-		intp->goto_label(label);
-	}
-}
-void t_command::if_lt_goto(t_params& arg) {
-	ARGC(1);
-	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_result < 0) {
-		intp->goto_label(label);
-	}
-}
-void t_command::if_lte_goto(t_params& arg) {
-	ARGC(1);
-	string label = intp->require_label(arg[0]);
-	if (!label.empty() && machine->cmp_result <= 0) {
-		intp->goto_label(label);
-	}
-}
 void t_command::play_sound(t_params& arg) {
 	ARGC(1);
 	string notes = intp->require_string(arg[0]);
@@ -1109,4 +1012,38 @@ void t_command::array_loop_start(t_params& arg) {
 void t_command::loop_end(t_params& arg) {
 	ARGC(0);
 	intp->loop_end();
+}
+void t_command::if_block_start(t_params& arg, int cmp_mode) {
+	ARGC(2);
+	if (cmp_mode == CMP_MODE_STR_EQ || cmp_mode == CMP_MODE_STR_NEQ) {
+		string a = intp->require_string(arg[0]);
+		string b = intp->require_string(arg[1]);
+		if (cmp_mode == CMP_MODE_STR_EQ) {
+			if (a == b) { return; } else { intp->goto_next_nearest_endif(); }
+		} else {
+			if (a != b) { return; } else { intp->goto_next_nearest_endif(); }
+		}
+	} else {
+		int a = intp->require_number(arg[0]);
+		if (a == PTM_INVALID_NUMBER) return;
+		int b = intp->require_number(arg[1]);
+		if (b == PTM_INVALID_NUMBER) return;
+
+		if (cmp_mode == CMP_MODE_EQ) {
+			if (a == b) { return; } else { intp->goto_next_nearest_endif(); }
+		} else if (cmp_mode == CMP_MODE_NEQ) {
+			if (a != b) { return; } else { intp->goto_next_nearest_endif(); }
+		} else if (cmp_mode == CMP_MODE_GT) {
+			if (a > b) { return; } else { intp->goto_next_nearest_endif(); }
+		} else if (cmp_mode == CMP_MODE_GTE) {
+			if (a >= b) { return; } else { intp->goto_next_nearest_endif(); }
+		} else if (cmp_mode == CMP_MODE_LT) {
+			if (a < b) { return; } else { intp->goto_next_nearest_endif(); }
+		} else if (cmp_mode == CMP_MODE_LTE) {
+			if (a <= b) { return; } else { intp->goto_next_nearest_endif(); }
+		}
+	}
+}
+void t_command::if_block_end(t_params& arg) {
+	ARGC(0);
 }

@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
 	string prg_file = argc > 1 ? argv[1] : PTM_MAIN_PROG_FILE;
 
 	if (!File::Exists(prg_file)) {
-		MsgBox::Error("PTM", "Main program file " + prg_file + " not found");
+		MsgBox::Error("PTM", "Program file \"" + prg_file + "\" not found");
 		return 0;
 	}
 

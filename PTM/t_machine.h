@@ -34,8 +34,6 @@ struct t_machine {
 	int last_key_pressed = 0;
 	// Sound
 	TSound* snd = nullptr;
-	// Latest comparison result
-	int cmp_result = 0;
 	// Timing
 	int clock = 0;
 
