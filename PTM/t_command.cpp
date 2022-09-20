@@ -111,9 +111,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "COLOR") { set_text_colors(args); return true; }
 	// Keyboard
 	if (cmd == "INPUT") { read_user_input_string(args); return true; }
-	if (cmd == "INKEY") { get_key_pressed(args); return true; }
-	if (cmd == "IF.KEY.CALL") { call_if_key_pressed(args); return true; }
-	if (cmd == "IF.KEY.GOTO") { goto_if_key_pressed(args); return true; }
+	if (cmd == "INKEY") { get_keycode_pressed(args); return true; }
 	if (cmd == "XON") { allow_exit_on_escape_key(args, true); return true; }
 	if (cmd == "XOFF") { allow_exit_on_escape_key(args, false); return true; }
 	// Debugging
@@ -618,33 +616,12 @@ void t_command::set_text_colors(t_params& arg) {
 		machine->text_color.bg = bg;
 	}
 }
-void t_command::get_key_pressed(t_params& arg) {
+void t_command::get_keycode_pressed(t_params& arg) {
 	ARGC(1);
 	string id = intp->require_id(arg[0]);
-	if (!id.empty()) {
-		machine->set_var(id, machine->last_key_pressed);
-		machine->last_key_pressed = 0;
-	}
-}
-void t_command::call_if_key_pressed(t_params& arg) {
-	ARGC(2);
-	int key = intp->require_number(arg[0]);
-	if (key > 0) {
-		string label = intp->require_label(arg[1]);
-		if (TKey::IsPressed((SDL_Scancode)key)) {
-			intp->call_label(label);
-		}
-	}
-}
-void t_command::goto_if_key_pressed(t_params& arg) {
-	ARGC(2);
-	int key = intp->require_number(arg[0]);
-	if (key > 0) {
-		string label = intp->require_label(arg[1]);
-		if (TKey::IsPressed((SDL_Scancode)key)) {
-			intp->goto_label(label);
-		}
-	}
+	if (id.empty()) return;
+	machine->set_var(id, machine->last_keycode_pressed);
+	machine->last_keycode_pressed = 0;
 }
 void t_command::save_debug_file(t_params& arg) {
 	ARGC(0);

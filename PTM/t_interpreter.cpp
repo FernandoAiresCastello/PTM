@@ -74,7 +74,7 @@ void t_interpreter::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt)
 	} else if (machine->exit_key != 0 && key == machine->exit_key) {
 		running = false;
 	} else {
-		machine->last_key_pressed = key;
+		machine->last_keycode_pressed = key;
 	}
 }
 void t_interpreter::abort(string error) {

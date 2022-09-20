@@ -2,8 +2,16 @@ main:
 	TITLE "TEST"
 	BGCOL 0
 	COLOR 1,0
-	CALL print_str_arr
-	HALT
+	
+loop2:
+	INKEY key
+	IF.NEQ key,0
+		CLS
+		LOCATE 1,1
+		PRINT key
+	ENDIF
+	VSYNC
+	GOTO loop2
 	
 loop:
 	VAR x,"abcb"

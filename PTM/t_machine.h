@@ -31,7 +31,7 @@ struct t_machine {
 	} text_color;
 	// Input
 	SDL_Keycode exit_key = SDLK_ESCAPE;
-	int last_key_pressed = 0;
+	int last_keycode_pressed = 0;
 	// Sound
 	TSound* snd = nullptr;
 	// Timing
