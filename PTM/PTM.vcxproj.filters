@@ -11,9 +11,6 @@
     <ClCompile Include="t_interpreter.cpp">
       <Filter>Compiler / Interpreter</Filter>
     </ClCompile>
-    <ClCompile Include="t_config.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="t_param.cpp">
       <Filter>Program</Filter>
     </ClCompile>
@@ -26,9 +23,6 @@
     <ClCompile Include="t_globals.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="t_default_gfx.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="t_compiler.cpp">
       <Filter>Compiler / Interpreter</Filter>
     </ClCompile>
@@ -38,35 +32,11 @@
     <ClCompile Include="t_variable.cpp">
       <Filter>Machine</Filter>
     </ClCompile>
-    <ClCompile Include="t_program_editor.cpp">
-      <Filter>Editor\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="t_ui_base.cpp">
-      <Filter>Editor\Core</Filter>
-    </ClCompile>
     <ClCompile Include="t_performance_monitor.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="t_input_widget.cpp">
-      <Filter>Editor\Widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="t_list_widget.cpp">
-      <Filter>Editor\Widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="t_panel.cpp">
-      <Filter>Editor\Widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="t_alert_widget.cpp">
-      <Filter>Editor\Widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="t_filesystem_widget.cpp">
-      <Filter>Editor\Widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="t_labels_widget.cpp">
-      <Filter>Editor\Widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="t_main_menu_widget.cpp">
-      <Filter>Editor\Widgets</Filter>
+    <ClCompile Include="t_default_gfx.cpp">
+      <Filter>Machine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,9 +47,6 @@
       <Filter>Program</Filter>
     </ClInclude>
     <ClInclude Include="common.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="t_config.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="t_param.h">
@@ -97,9 +64,6 @@
     <ClInclude Include="t_globals.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="t_default_gfx.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="t_compiler.h">
       <Filter>Compiler / Interpreter</Filter>
     </ClInclude>
@@ -108,12 +72,6 @@
     </ClInclude>
     <ClInclude Include="t_variable.h">
       <Filter>Machine</Filter>
-    </ClInclude>
-    <ClInclude Include="t_program_editor.h">
-      <Filter>Editor\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="t_ui_base.h">
-      <Filter>Editor\Core</Filter>
     </ClInclude>
     <ClInclude Include="chars.h">
       <Filter>Common</Filter>
@@ -124,38 +82,17 @@
     <ClInclude Include="t_performance_monitor.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="t_input_widget.h">
-      <Filter>Editor\Widgets</Filter>
-    </ClInclude>
-    <ClInclude Include="t_list_widget.h">
-      <Filter>Editor\Widgets</Filter>
-    </ClInclude>
-    <ClInclude Include="t_panel.h">
-      <Filter>Editor\Widgets</Filter>
-    </ClInclude>
-    <ClInclude Include="t_alert_widget.h">
-      <Filter>Editor\Widgets</Filter>
-    </ClInclude>
-    <ClInclude Include="t_filesystem_widget.h">
-      <Filter>Editor\Widgets</Filter>
-    </ClInclude>
-    <ClInclude Include="t_labels_widget.h">
-      <Filter>Editor\Widgets</Filter>
-    </ClInclude>
-    <ClInclude Include="t_main_menu_widget.h">
-      <Filter>Editor\Widgets</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="t_loop.h">
       <Filter>Compiler / Interpreter</Filter>
     </ClInclude>
+    <ClInclude Include="t_default_gfx.h">
+      <Filter>Machine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Editor">
-      <UniqueIdentifier>{0e280fbc-ee34-44a0-9078-8cfa322393c0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Common">
       <UniqueIdentifier>{5a78058d-4114-4c60-aae8-0ff9c987d499}</UniqueIdentifier>
     </Filter>
@@ -164,12 +101,6 @@
     </Filter>
     <Filter Include="Compiler / Interpreter">
       <UniqueIdentifier>{db1a3207-4ac7-42c4-b654-6d79873c80e1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Editor\Widgets">
-      <UniqueIdentifier>{88d5c317-a2d0-4bdb-ab89-258fa4b43d9d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Editor\Core">
-      <UniqueIdentifier>{ae8e45bd-8eff-4cf5-a00f-a10db60dc012}</UniqueIdentifier>
     </Filter>
     <Filter Include="Utils">
       <UniqueIdentifier>{8b24975f-8788-4ddd-a53a-c1f96ededae2}</UniqueIdentifier>

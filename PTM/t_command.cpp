@@ -16,6 +16,8 @@ t_command::t_command(t_interpreter* intp) {
 	machine = intp->machine;
 }
 bool t_command::execute(string& cmd, t_params& args) {
+	// System
+	if (cmd == "TITLE") { set_window_title(args); return true; }
 	// Control flow
 	if (cmd == "HALT") { halt(args); return true; }
 	if (cmd == "EXIT") { exit(args); return true; }
@@ -28,7 +30,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "FOREACH") { array_loop_start(args); return true; }
 	// Variables
 	if (cmd == "VAR") { set_variable(args); return true; }
-	if (cmd == "CONST") { define_constant(args); return true; }
+	if (cmd == "DEF") { define_constant(args); return true; }
 	// Arrays
 	if (cmd == "ARR.NEW") { create_array(args); return true; }
 	if (cmd == "ARR.PUSH") { array_push(args); return true; }
@@ -77,10 +79,10 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "PUT") { put_tile(args); return true; }
 	if (cmd == "GET") { copy_tile(args); return true; }
 	if (cmd == "DEL") { delete_tile(args); return true; }
-	if (cmd == "REPR") { put_tile_repeat_right(args); return true; }
-	if (cmd == "REPL") { put_tile_repeat_left(args); return true; }
-	if (cmd == "REPU") { put_tile_repeat_up(args); return true; }
-	if (cmd == "REPD") { put_tile_repeat_down(args); return true; }
+	if (cmd == "PUT.R") { put_tile_repeat_right(args); return true; }
+	if (cmd == "PUT.L") { put_tile_repeat_left(args); return true; }
+	if (cmd == "PUT.U") { put_tile_repeat_up(args); return true; }
+	if (cmd == "PUT.D") { put_tile_repeat_down(args); return true; }
 	if (cmd == "RECT") { fill_rect(args); return true; }
 	if (cmd == "FILL") { fill_layer(args); return true; }
 	if (cmd == "CLS") { clear_all_layers(args); return true; }
@@ -91,14 +93,13 @@ bool t_command::execute(string& cmd, t_params& args) {
 	// Tile buffer viewport
 	if (cmd == "VIEW") { set_viewport(args); return true; }
 	if (cmd == "SCRL") { scroll_viewport(args); return true; }
-	// Graphics / Window
+	// Graphics
 	if (cmd == "CHR") { define_char(args); return true; }
 	if (cmd == "CHRL") { define_char_rows(args); return true; }
 	if (cmd == "PAL") { define_color(args); return true; }
 	if (cmd == "CHR.LEN") { get_charset_size(args); return true; }
 	if (cmd == "PAL.LEN") { get_palette_size(args); return true; }
 	if (cmd == "VSYNC") { update_screen(args); return true; }
-	if (cmd == "TITLE") { set_window_title(args); return true; }
 	if (cmd == "BGCOL") { set_window_bgcolor(args); return true; }
 	if (cmd == "TRON") { set_tile_transparency(args, true); return true; }
 	if (cmd == "TROFF") { set_tile_transparency(args, false); return true; }
@@ -118,13 +119,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "BRK") { trigger_breakpoint(args); return true; }
 	if (cmd == "FDEBUG") { save_debug_file(args); return true; }
 	if (cmd == "PERFMON") { enable_perfmon(args); return true; }
-	if (cmd == "ASSERT.EQ") { assert_eq(args); return true; }
-	if (cmd == "ASSERT.NEQ") { assert_neq(args); return true; }
-	if (cmd == "ASSERT.GT") { assert_gt(args); return true; }
-	if (cmd == "ASSERT.GTE") { assert_gte(args); return true; }
-	if (cmd == "ASSERT.LT") { assert_lt(args); return true; }
-	if (cmd == "ASSERT.LTE") { assert_lte(args); return true; }
-	// If / then / else
+	// Conditionals
 	if (cmd == "IF.EQ") { if_block_start(args, CMP_MODE_EQ); return true; }
 	if (cmd == "IF.NEQ") { if_block_start(args, CMP_MODE_NEQ); return true; }
 	if (cmd == "IF.GT") { if_block_start(args, CMP_MODE_GT); return true; }
@@ -559,7 +554,7 @@ void t_command::define_color(t_params& arg) {
 }
 void t_command::update_screen(t_params& arg) {
 	ARGC(0);
-	machine->on_screen_update();
+	machine->wnd->Update();
 }
 void t_command::get_random_number(t_params& arg) {
 	ARGC(3);
@@ -755,56 +750,6 @@ void t_command::allow_exit_on_escape_key(t_params& arg, bool allow) {
 	ARGC(0);
 	machine->exit_key = allow ? SDLK_ESCAPE : 0;
 }
-void t_command::assert_eq(t_params& arg) {
-	ARGC(2);
-	string id = intp->require_existing_varname(arg[0]);
-	if (id.empty()) return;
-	string expected_value = intp->require_string(arg[1]);
-	if (machine->vars[id].value != expected_value) {
-		intp->abort("Assertion error");
-	}
-}
-void t_command::assert_neq(t_params& arg) {
-	ARGC(2);
-	string id = intp->require_existing_varname(arg[0]);
-	if (id.empty()) return;
-	string expected_value = intp->require_string(arg[1]);
-	if (machine->vars[id].value == expected_value) {
-		intp->abort("Assertion error");
-	}
-}
-void t_command::assert_gt(t_params& arg) {
-	ARGC(2);
-	string id = intp->require_existing_varname(arg[0]);
-	if (id.empty()) return;
-	if (not(String::ToInt(machine->vars[id].value) > intp->require_number(arg[1]))) {
-		intp->abort("Assertion error");
-	}
-}
-void t_command::assert_gte(t_params& arg) {
-	ARGC(2);
-	string id = intp->require_existing_varname(arg[0]);
-	if (id.empty()) return;
-	if (not(String::ToInt(machine->vars[id].value) >= intp->require_number(arg[1]))) {
-		intp->abort("Assertion error");
-	}
-}
-void t_command::assert_lt(t_params& arg) {
-	ARGC(2);
-	string id = intp->require_existing_varname(arg[0]);
-	if (id.empty()) return;
-	if (not(String::ToInt(machine->vars[id].value) < intp->require_number(arg[1]))) {
-		intp->abort("Assertion error");
-	}
-}
-void t_command::assert_lte(t_params& arg) {
-	ARGC(2);
-	string id = intp->require_existing_varname(arg[0]);
-	if (id.empty()) return;
-	if (not(String::ToInt(machine->vars[id].value) <= intp->require_number(arg[1]))) {
-		intp->abort("Assertion error");
-	}
-}
 void t_command::set_window_title(t_params& arg) {
 	ARGC(1);
 	machine->wnd->SetTitle(intp->require_string(arg[0]));
@@ -965,7 +910,6 @@ void t_command::enable_perfmon(t_params& arg) {
 	ARGC(0);
 	machine->show_perfmon = true;
 }
-
 void t_command::loop_start(t_params& arg) {
 	ARGC_MIN_MAX(3,4);
 	string id = intp->require_id(arg[0]);

@@ -41,7 +41,6 @@ void t_interpreter::run(t_program* prg, t_machine* machine, TBufferedWindow* wnd
 		}
 		if (halted || pause_cycles > 0) {
 			pause_cycles--;
-			machine->on_screen_update();
 			continue;
 		}
 		machine->on_loop();

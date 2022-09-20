@@ -40,7 +40,6 @@ struct t_machine {
 	t_machine(TBufferedWindow* wnd);
 	~t_machine();
 	void on_loop();
-	void on_screen_update();
 	void init_system_vars();
 	std::vector<string> get_debug_info();
 	void set_var(string id, int value);

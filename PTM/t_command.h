@@ -91,12 +91,6 @@ private:
 	void add_to_variable(t_params& arg);
 	void subtract_from_variable(t_params& arg);
 	void allow_exit_on_escape_key(t_params& arg, bool allow);
-	void assert_eq(t_params& arg);
-	void assert_neq(t_params& arg);
-	void assert_gt(t_params& arg);
-	void assert_gte(t_params& arg);
-	void assert_lt(t_params& arg);
-	void assert_lte(t_params& arg);
 	void set_window_title(t_params& arg);
 	void get_charset_size(t_params& arg);
 	void get_palette_size(t_params& arg);

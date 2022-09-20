@@ -1,8 +1,6 @@
-#include <TWindowCreationFlags.h>
 #include "common.h"
-#include "t_config.h"
-#include "t_program_editor.h"
 #include "t_globals.h"
+#include "t_program.h"
 #include "t_machine.h"
 #include "t_layer.h"
 #include "t_compiler.h"

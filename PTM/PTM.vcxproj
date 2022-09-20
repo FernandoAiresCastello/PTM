@@ -145,57 +145,37 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="t_alert_widget.cpp" />
     <ClCompile Include="t_command.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="t_config.cpp" />
     <ClCompile Include="t_compiler.cpp" />
     <ClCompile Include="t_default_gfx.cpp" />
-    <ClCompile Include="t_filesystem_widget.cpp" />
-    <ClCompile Include="t_input_widget.cpp" />
-    <ClCompile Include="t_labels_widget.cpp" />
-    <ClCompile Include="t_list_widget.cpp" />
     <ClCompile Include="t_machine.cpp" />
     <ClCompile Include="t_globals.cpp" />
-    <ClCompile Include="t_main_menu_widget.cpp" />
     <ClCompile Include="t_obfuscator.cpp" />
-    <ClCompile Include="t_panel.cpp" />
     <ClCompile Include="t_performance_monitor.cpp" />
-    <ClCompile Include="t_program_editor.cpp" />
     <ClCompile Include="t_interpreter.cpp" />
     <ClCompile Include="t_param.cpp" />
     <ClCompile Include="t_program.cpp" />
     <ClCompile Include="t_program_line.cpp" />
-    <ClCompile Include="t_ui_base.cpp" />
     <ClCompile Include="t_variable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="chars.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="t_alert_widget.h" />
     <ClInclude Include="t_command.h" />
     <ClInclude Include="common.h" />
-    <ClInclude Include="t_config.h" />
     <ClInclude Include="t_compiler.h" />
     <ClInclude Include="t_default_gfx.h" />
-    <ClInclude Include="t_filesystem_widget.h" />
-    <ClInclude Include="t_input_widget.h" />
-    <ClInclude Include="t_labels_widget.h" />
     <ClInclude Include="t_layer.h" />
-    <ClInclude Include="t_list_widget.h" />
     <ClInclude Include="t_loop.h" />
     <ClInclude Include="t_machine.h" />
     <ClInclude Include="t_globals.h" />
-    <ClInclude Include="t_main_menu_widget.h" />
     <ClInclude Include="t_obfuscator.h" />
-    <ClInclude Include="t_panel.h" />
     <ClInclude Include="t_performance_monitor.h" />
-    <ClInclude Include="t_program_editor.h" />
     <ClInclude Include="t_interpreter.h" />
     <ClInclude Include="t_param.h" />
     <ClInclude Include="t_program.h" />
     <ClInclude Include="t_program_line.h" />
-    <ClInclude Include="t_ui_base.h" />
     <ClInclude Include="t_variable.h" />
   </ItemGroup>
   <ItemGroup>

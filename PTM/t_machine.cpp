@@ -43,15 +43,15 @@ void t_machine::on_loop() {
 	}
 	clock++;
 }
-void t_machine::on_screen_update() {
-	wnd->Update();
-}
 void t_machine::init_system_vars() {
-	// Keyboard scancodes
-	set_const("$kb.right", SDL_SCANCODE_RIGHT);
-	set_const("$kb.left", SDL_SCANCODE_LEFT);
-	set_const("$kb.down", SDL_SCANCODE_DOWN);
-	set_const("$kb.up", SDL_SCANCODE_UP);
+	// Keyboard key codes
+	set_const("$kb.right", SDLK_RIGHT);
+	set_const("$kb.left", SDLK_LEFT);
+	set_const("$kb.down", SDLK_DOWN);
+	set_const("$kb.up", SDLK_UP);
+	set_const("$kb.space", SDLK_SPACE);
+	set_const("$kb.enter", SDLK_RETURN);
+	set_const("$kb.esc", SDLK_ESCAPE);
 }
 std::vector<string> t_machine::get_debug_info() {
 	std::vector<string> info;

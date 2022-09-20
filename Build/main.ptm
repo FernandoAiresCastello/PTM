@@ -1,75 +1,30 @@
-main:
-	TITLE "TEST"
-	BGCOL 0
-	COLOR 1,0
-	
-loop2:
-	INKEY key
-	IF.NEQ key,0
-		CLS
-		LOCATE 1,1
-		PRINT key
-	ENDIF
-	VSYNC
-	GOTO loop2
-	
-loop:
-	VAR x,"abcb"
-	IF.EQ x,"abc"
-		BGCOL 1
-		COLOR 0,1
-		CLS
-		LOCATE 1,1
-		PRINT "Vars are equal!"
-	ENDIF
-	IF.NEQ x,"abc"
-		BGCOL 0
-		COLOR 1,0
-		CLS
-		LOCATE 1,1
-		PRINT "Vars are different"
-	ENDIF
-	VSYNC
-	GOTO loop
-
-print_num_arr:
-	ARR.NEW numbers
-	ARR.PUSH numbers,1
-	ARR.PUSH numbers,2
-	ARR.PUSH numbers,3
-	ARR.PUSH numbers,4
-	FOREACH numbers,num
-		PRINTL num
+BGCOL 0x78
+COLOR 15,0
+TRON
+; === Horizontal ruler ===
+VAR ind_x,2
+FOR i,0,16
+	LOCATE ind_x,1
+	FMT ind,"%X",i
+	PRINT ind
+	INC ind_x
+NEXT
+; === Vertical ruler ===
+VAR ind_y,2
+FOR i,0,16
+	LOCATE 1,ind_y
+	FMT ind,"%X",i
+	PRINT ind
+	INC ind_y
+NEXT
+; === Colors ===
+VAR color,0
+FOR y,2,18
+	FOR x,2,18
+		TILE.NEW 0xdb,color,0
+		LOCATE x,y
+		PUT
+		INC color
 	NEXT
-	RET
-
-print_str_arr:
-	ARR.NEW fruits
-	ARR.PUSH fruits,"Apple"
-	ARR.PUSH fruits,"Banana"
-	ARR.PUSH fruits,"Orange"
-	ARR.PUSH fruits,"Pineapple"
-	FOREACH fruits,fruit
-		IF.STR.NEQ fruit,"Orange"
-			PRINTL fruit
-		ENDIF
-	NEXT
-	RET
-
-print_ch_arr:
-	ARR.NEW chars
-	ARR.PUSH chars,'H'
-	ARR.PUSH chars,'e'
-	ARR.PUSH chars,'l'
-	ARR.PUSH chars,'l'
-	ARR.PUSH chars,'o'
-	ARR.PUSH chars,'!'
-	FOREACH chars,ch
-		CALL print_ch
-	NEXT
-	RET
-	
-print_ch:
-	PUTC ch
-	CSR.R
-	RET
+NEXT
+VSYNC
