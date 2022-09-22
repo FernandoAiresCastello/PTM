@@ -30,7 +30,7 @@ bool t_compiler::compile_line(
 		if (prg->labels.find(label) == prg->labels.end()) {
 			prg->labels[label] = prg->lines.size();
 		} else {
-			add_error(src_line_nr, src_line, "Duplicate label");
+			add_error(src_line_nr, src_line, "Duplicated label");
 		}
 		return false;
 	}

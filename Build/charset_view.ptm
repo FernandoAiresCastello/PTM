@@ -1,4 +1,4 @@
-run_palette_view:
+run_charset_view:
 
 BGCOL 0x74
 COLOR 15,0
@@ -22,14 +22,14 @@ FOR i,0,16
 	INC ind_y
 NEXT
 
-; === Colors ===
-VAR color,0
+; === Chars ===
+VAR char,0
 FOR y,2,18
 	FOR x,2,18
-		TILE.NEW 0xdb,color,0
+		TILE.NEW char,0,0
 		LOCATE x,y
 		PUT
-		INC color
+		INC char
 	NEXT
 NEXT
 

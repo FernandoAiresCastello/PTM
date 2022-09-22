@@ -27,7 +27,6 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "PAUSE") { pause(args); return true; }
 	if (cmd == "FOR") { loop_start(args); return true; }
 	if (cmd == "NEXT") { loop_end(args); return true; }
-	if (cmd == "FOREACH") { array_loop_start(args); return true; }
 	// Variables
 	if (cmd == "VAR") { set_variable(args); return true; }
 	if (cmd == "DEF") { define_constant(args); return true; }
@@ -39,6 +38,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "ARR.ERASE") { erase_array_element(args); return true; }
 	if (cmd == "ARR.CLR") { clear_array(args); return true; }
 	if (cmd == "ARR.COPY") { copy_array(args); return true; }
+	if (cmd == "ARR.FOR") { array_loop_start(args); return true; }
 	// Math
 	if (cmd == "RND") { get_random_number(args); return true; }
 	if (cmd == "INC") { increment_variable(args); return true; }
@@ -200,6 +200,10 @@ void t_command::define_constant(t_params& arg) {
 	ARGC(2);
 	string dst_var = intp->require_id(arg[0]);
 	if (!dst_var.empty()) {
+		if (machine->vars.find(dst_var) != machine->vars.end()) {
+			intp->abort("Duplicated constant: " + dst_var);
+			return;
+		}
 		if (arg[1].type == t_param_type::id) {
 			string src_var = intp->require_existing_varname(arg[1]);
 			if (!src_var.empty()) {

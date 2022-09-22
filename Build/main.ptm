@@ -1,2 +1,6 @@
 
+;GOTO run_charset_view
+GOTO run_palette_view
+
 # palette_view.ptm
+# charset_view.ptm
