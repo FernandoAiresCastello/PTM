@@ -9,7 +9,7 @@ void t_compiler::run(t_program* prg) {
 	int src_line_nr = 1;
 	for (auto& src_line : prg->src_lines) {
 		t_program_line new_line;
-		bool must_add_line = compile_line(prg, &new_line, src_line, src_line_nr);
+		bool must_add_line = compile_line(prg, &new_line, &src_line);
 		if (must_add_line) {
 			prg->lines.push_back(new_line);
 		}
@@ -17,8 +17,9 @@ void t_compiler::run(t_program* prg) {
 	}
 }
 bool t_compiler::compile_line(
-	t_program* prg, t_program_line* new_line, string& src_line, int src_line_nr) {
-	src_line = String::Trim(src_line);
+	t_program* prg, t_program_line* new_line, t_source_line* src_line_ptr) {
+	string src_line = String::Trim(src_line_ptr->text);
+	int src_line_nr = src_line_ptr->line_nr;
 
 	// Ignore comment line
 	if (is_comment(src_line)) {
@@ -30,16 +31,17 @@ bool t_compiler::compile_line(
 		if (prg->labels.find(label) == prg->labels.end()) {
 			prg->labels[label] = prg->lines.size();
 		} else {
-			add_error(src_line_nr, src_line, "Duplicated label");
+			add_error(src_line_ptr, "Duplicated label");
 		}
 		return false;
 	}
 	// Check for invalid line start
 	if (is_invalid_line_start(src_line)) {
-		add_syntax_error(src_line_nr, src_line);
+		add_syntax_error(src_line_ptr);
 		return false;
 	}
 	// Store source line info
+	new_line->file = src_line_ptr->file;
 	new_line->src = src_line;
 	new_line->src_line_nr = src_line_nr;
 
@@ -75,7 +77,7 @@ bool t_compiler::compile_line(
 			param.type = t_param_type::char_literal;
 			string raw = String::RemoveFirstAndLast(arg);
 			if (raw.length() != 1) {
-				add_syntax_error(src_line_nr, src_line);
+				add_syntax_error(src_line_ptr);
 			} else {
 				param.textual_value = raw;
 				param.numeric_value = raw[0];
@@ -85,7 +87,7 @@ bool t_compiler::compile_line(
 			auto begin = String::IndexOf(arg, '[');
 			auto end = String::IndexOf(arg, ']');
 			if (begin == string::npos || end == string::npos || begin >= end) {
-				add_syntax_error(src_line_nr, src_line);
+				add_syntax_error(src_line_ptr);
 			} else {
 				param.id = String::Substring(arg, 0, begin);
 				string ix = String::Substring(arg, begin + 1, end);
@@ -98,7 +100,7 @@ bool t_compiler::compile_line(
 					param.type = t_param_type::arr_ix_var;
 					param.arr_ix_var = ix;
 				} else {
-					add_syntax_error(src_line_nr, src_line);
+					add_syntax_error(src_line_ptr);
 				}
 			}
 
@@ -106,7 +108,7 @@ bool t_compiler::compile_line(
 			param.type = t_param_type::id;
 			param.id = arg;
 		} else {
-			add_syntax_error(src_line_nr, src_line);
+			add_syntax_error(src_line_ptr);
 		}
 		param.src = arg;
 		new_line->params.push_back(param);
@@ -114,12 +116,12 @@ bool t_compiler::compile_line(
 
 	return true;
 }
-void t_compiler::add_error(int line, string src, string msg) {
-	errors.push_back(String::Format("COMPILE ERROR\nAt line %i:\n%s\n\n%s", 
-		line, msg.c_str(), src.c_str()));
+void t_compiler::add_error(t_source_line* line, string msg) {
+	errors.push_back(String::Format("%s\n\nFile: %s\nLine: %i\nSource:\n\n%s", 
+		msg.c_str(), line->file.c_str(), line->line_nr, line->text.c_str()));
 }
-void t_compiler::add_syntax_error(int src_line_nr, string src) {
-	add_error(src_line_nr, src, "Syntax error");
+void t_compiler::add_syntax_error(t_source_line* line) {
+	add_error(line, "Syntax error");
 }
 bool t_compiler::is_invalid_line_start(string& src_line) {
 	return !src_line.empty() && !String::StartsWithLetter(src_line);

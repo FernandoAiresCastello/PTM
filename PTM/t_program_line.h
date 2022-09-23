@@ -3,6 +3,7 @@
 #include "t_param.h"
 
 struct t_program_line {
+	string file;
 	string src;
 	int src_line_nr = 0;
 	string cmd;

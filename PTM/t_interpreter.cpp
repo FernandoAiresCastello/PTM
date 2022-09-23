@@ -79,8 +79,8 @@ void t_interpreter::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt)
 void t_interpreter::abort(string error) {
 	running = false;
 	if (cur_line) {
-		errors.push_back(String::Format("RUNTIME ERROR\nAt line %i:\n%s\n\n%s",
-			cur_line->src_line_nr, error.c_str(), cur_line->src.c_str()));
+		errors.push_back(String::Format("%s\n\nFile: %s\nLine: %i\nSource:\n\n%s",
+			error.c_str(), cur_line->file.c_str(), cur_line->src_line_nr, cur_line->src.c_str()));
 	} else {
 		errors.push_back(error);
 	}

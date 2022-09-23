@@ -38,6 +38,9 @@
     <ClCompile Include="t_default_gfx.cpp">
       <Filter>Machine</Filter>
     </ClCompile>
+    <ClCompile Include="t_source_line.cpp">
+      <Filter>Program</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="t_program.h">
@@ -90,6 +93,9 @@
     </ClInclude>
     <ClInclude Include="t_default_gfx.h">
       <Filter>Machine</Filter>
+    </ClInclude>
+    <ClInclude Include="t_source_line.h">
+      <Filter>Program</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
