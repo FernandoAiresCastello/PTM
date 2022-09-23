@@ -72,10 +72,12 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "CSR.DR") { move_cursor_down_right(args); return true; }
 	if (cmd == "CSR.DL") { move_cursor_down_left(args); return true; }
 	// Tile buffer
+	if (cmd == "BUF.SEL") { select_tile_buffer(args); return true; }
 	if (cmd == "BUF.NEW") { add_tile_buffer(args); return true; }
 	if (cmd == "BUF.SHOW") { show_tile_buffer(args, true); return true; }
 	if (cmd == "BUF.HIDE") { show_tile_buffer(args, false); return true; }
-	if (cmd == "BUF") { select_tile_buffer(args); return true; }
+	if (cmd == "BUF.VIEW") { set_viewport(args); return true; }
+	if (cmd == "BUF.SCRL") { scroll_viewport(args); return true; }
 	if (cmd == "PUT") { put_tile(args); return true; }
 	if (cmd == "GET") { copy_tile(args); return true; }
 	if (cmd == "DEL") { delete_tile(args); return true; }
@@ -90,9 +92,6 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "CLR") { clear_rect(args); return true; }
 	if (cmd == "MOV") { move_tile(args); return true; }
 	if (cmd == "MOVB") { move_tile_block(args); return true; }
-	// Tile buffer viewport
-	if (cmd == "VIEW") { set_viewport(args); return true; }
-	if (cmd == "SCRL") { scroll_viewport(args); return true; }
 	// Graphics
 	if (cmd == "CHR") { define_char(args); return true; }
 	if (cmd == "CHRL") { define_char_rows(args); return true; }

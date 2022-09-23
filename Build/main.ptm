@@ -1,6 +1,4 @@
 
-GOTO run_palette_view
-GOTO run_charset_view
+GOTO view_default_gfx
 
-# palette_view.ptm
-# charset_view.ptm
+# view_default_gfx.ptm
