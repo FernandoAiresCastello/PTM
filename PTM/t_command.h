@@ -117,6 +117,8 @@ private:
 	void if_block_end(t_params& arg);
 	void clear_palette(t_params& arg);
 	void get_palette_color(t_params& arg);
+	void get_palette_color_comp(t_params& arg, int comp);
+	void set_palette_color_comp(t_params& arg, int comp);
 	void get_charset_binary_string(t_params& arg);
 	void set_charset_binary_string(t_params& arg);
 };

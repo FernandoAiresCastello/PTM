@@ -20,14 +20,14 @@ struct t_machine {
 	TCharset* chr;
 	TPalette* pal;
 	static const int default_bgc = 0;
-	static const int default_fgc = 1;
+	static const int default_fgc = 15;
 	int bgcolor_palette_ix = default_bgc;
 	TTileBuffer* cur_buf;
 	TTileSeq cur_tile;
 	bool tile_transparency = false;
 	struct {
-		int fg = 15;
-		int bg = 0;
+		int fg = default_fgc;
+		int bg = default_bgc;
 	} text_color;
 	// Input
 	SDL_Keycode exit_key = SDLK_ESCAPE;

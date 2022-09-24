@@ -10,6 +10,9 @@ enum {
 	CMP_MODE_LT, CMP_MODE_LTE,
 	CMP_MODE_STR_EQ, CMP_MODE_STR_NEQ
 };
+enum {
+	COLOR_R, COLOR_G, COLOR_B
+};
 
 t_command::t_command(t_interpreter* intp) {
 	this->intp = intp;
@@ -102,14 +105,20 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "PAL.LEN") { get_palette_size(args); return true; }
 	if (cmd == "PAL.CLR") { clear_palette(args); return true; }
 	if (cmd == "PAL.GET") { get_palette_color(args); return true; }
+	if (cmd == "PAL.GETR") { get_palette_color_comp(args, COLOR_R); return true; }
+	if (cmd == "PAL.GETG") { get_palette_color_comp(args, COLOR_G); return true; }
+	if (cmd == "PAL.GETB") { get_palette_color_comp(args, COLOR_B); return true; }
+	if (cmd == "PAL.SETR") { set_palette_color_comp(args, COLOR_R); return true; }
+	if (cmd == "PAL.SETG") { set_palette_color_comp(args, COLOR_G); return true; }
+	if (cmd == "PAL.SETB") { set_palette_color_comp(args, COLOR_B); return true; }
 	if (cmd == "VSYNC") { update_screen(args); return true; }
 	if (cmd == "BGCOL") { set_window_bgcolor(args); return true; }
 	if (cmd == "TRON") { set_tile_transparency(args, true); return true; }
 	if (cmd == "TROFF") { set_tile_transparency(args, false); return true; }
 	// Text output
 	if (cmd == "PRINT") { print_text(args, false); return true; }
-	if (cmd == "PUTC") { print_text_char(args); return true; }
 	if (cmd == "PRINTL") { print_text(args, true); return true; }
+	if (cmd == "PUTC") { print_text_char(args); return true; }
 	if (cmd == "INK") { set_text_fgcolor(args); return true; }
 	if (cmd == "PAPER") { set_text_bgcolor(args); return true; }
 	if (cmd == "COLOR") { set_text_colors(args); return true; }
@@ -992,6 +1001,32 @@ void t_command::get_palette_color(t_params& arg) {
 	int pal_ix = intp->require_palette_ix(arg[1]);
 	if (pal_ix == PTM_INVALID_NUMBER) return;
 	machine->set_var(id, machine->pal->GetColorRGB(pal_ix));
+}
+void t_command::get_palette_color_comp(t_params& arg, int comp) {
+	ARGC(2);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	int pal_ix = intp->require_palette_ix(arg[1]);
+	if (pal_ix == PTM_INVALID_NUMBER) return;
+	int value = PTM_INVALID_NUMBER;
+	if (comp == COLOR_R) value = machine->pal->Get(pal_ix).R;
+	else if (comp == COLOR_G) value = machine->pal->Get(pal_ix).G;
+	else if (comp == COLOR_B) value = machine->pal->Get(pal_ix).B;
+	machine->set_var(id, value);
+}
+void t_command::set_palette_color_comp(t_params& arg, int comp) {
+	ARGC(2);
+	int pal_ix = intp->require_palette_ix(arg[0]);
+	if (pal_ix == PTM_INVALID_NUMBER) return;
+	int value = intp->require_number(arg[1]);
+	if (value == PTM_INVALID_NUMBER) return;
+	
+	if (value < 0) value = 0;
+	else if (value > 255) value = 255;
+	
+	if (comp == COLOR_R) machine->pal->Get(pal_ix).R = value;
+	else if (comp == COLOR_G) machine->pal->Get(pal_ix).G = value;
+	else if (comp == COLOR_B) machine->pal->Get(pal_ix).B = value;
 }
 void t_command::get_charset_binary_string(t_params& arg) {
 	ARGC(2);
