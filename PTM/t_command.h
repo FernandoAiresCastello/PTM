@@ -75,6 +75,7 @@ private:
 	void set_text_colors(t_params& arg);
 	void get_keycode_pressed(t_params& arg);
 	void save_debug_file(t_params& arg);
+	void show_msgbox(t_params& arg);
 	void play_sound(t_params& arg);
 	void loop_sound(t_params& arg);
 	void set_sound_volume(t_params& arg);
@@ -114,4 +115,8 @@ private:
 	void loop_end(t_params& arg);
 	void if_block_start(t_params& arg, int cmp_mode);
 	void if_block_end(t_params& arg);
+	void clear_palette(t_params& arg);
+	void get_palette_color(t_params& arg);
+	void get_charset_binary_string(t_params& arg);
+	void set_charset_binary_string(t_params& arg);
 };

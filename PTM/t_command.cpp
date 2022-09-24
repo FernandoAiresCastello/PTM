@@ -95,9 +95,13 @@ bool t_command::execute(string& cmd, t_params& args) {
 	// Graphics
 	if (cmd == "CHR") { define_char(args); return true; }
 	if (cmd == "CHRL") { define_char_rows(args); return true; }
-	if (cmd == "PAL") { define_color(args); return true; }
 	if (cmd == "CHR.LEN") { get_charset_size(args); return true; }
+	if (cmd == "CHR.GETB") { get_charset_binary_string(args); return true; }
+	if (cmd == "CHR.SETB") { set_charset_binary_string(args); return true; }
+	if (cmd == "PAL") { define_color(args); return true; }
 	if (cmd == "PAL.LEN") { get_palette_size(args); return true; }
+	if (cmd == "PAL.CLR") { clear_palette(args); return true; }
+	if (cmd == "PAL.GET") { get_palette_color(args); return true; }
 	if (cmd == "VSYNC") { update_screen(args); return true; }
 	if (cmd == "BGCOL") { set_window_bgcolor(args); return true; }
 	if (cmd == "TRON") { set_tile_transparency(args, true); return true; }
@@ -118,6 +122,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "BRK") { trigger_breakpoint(args); return true; }
 	if (cmd == "FDEBUG") { save_debug_file(args); return true; }
 	if (cmd == "PERFMON") { enable_perfmon(args); return true; }
+	if (cmd == "MSG") { show_msgbox(args); return true; }
 	// Conditionals
 	if (cmd == "IF.EQ") { if_block_start(args, CMP_MODE_EQ); return true; }
 	if (cmd == "IF.NEQ") { if_block_start(args, CMP_MODE_NEQ); return true; }
@@ -625,6 +630,11 @@ void t_command::save_debug_file(t_params& arg) {
 	ARGC(0);
 	machine->save_debug_file();
 }
+void t_command::show_msgbox(t_params& arg) {
+	ARGC(1);
+	string msg = intp->require_string(arg[0]);
+	MsgBox::Info("PTM", msg);
+}
 void t_command::play_sound(t_params& arg) {
 	ARGC(1);
 	string notes = intp->require_string(arg[0]);
@@ -970,4 +980,32 @@ void t_command::if_block_start(t_params& arg, int cmp_mode) {
 }
 void t_command::if_block_end(t_params& arg) {
 	ARGC(0);
+}
+void t_command::clear_palette(t_params& arg) {
+	ARGC(0);
+	machine->pal->Clear();
+}
+void t_command::get_palette_color(t_params& arg) {
+	ARGC(2);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	int pal_ix = intp->require_palette_ix(arg[1]);
+	if (pal_ix == PTM_INVALID_NUMBER) return;
+	machine->set_var(id, machine->pal->GetColorRGB(pal_ix));
+}
+void t_command::get_charset_binary_string(t_params& arg) {
+	ARGC(2);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	int chr_ix = intp->require_charset_ix(arg[1]);
+	if (chr_ix == PTM_INVALID_NUMBER) return;
+	machine->set_var(id, machine->chr->Get(chr_ix).ToBinaryString());
+}
+void t_command::set_charset_binary_string(t_params& arg) {
+	ARGC(2);
+	int chr_ix = intp->require_charset_ix(arg[0]);
+	if (chr_ix == PTM_INVALID_NUMBER) return;
+	string bin = intp->require_string(arg[1]);
+	if (bin.empty()) return;
+	machine->chr->Set(chr_ix, bin);
 }

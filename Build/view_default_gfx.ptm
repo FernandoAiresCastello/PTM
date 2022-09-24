@@ -2,6 +2,9 @@ view_default_gfx:
 
 TITLE "Default PTM Graphics Demo"
 
+CHR.GETB a,3
+CHR.SETB 0xff,a
+
 BGCOL 0x87
 COLOR 15,0
 TRON
