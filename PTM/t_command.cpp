@@ -623,7 +623,7 @@ void t_command::get_keycode_pressed(t_params& arg) {
 }
 void t_command::save_debug_file(t_params& arg) {
 	ARGC(0);
-	File::WriteLines(PTM_DEBUG_FILE, machine->get_debug_info());
+	machine->save_debug_file();
 }
 void t_command::play_sound(t_params& arg) {
 	ARGC(1);

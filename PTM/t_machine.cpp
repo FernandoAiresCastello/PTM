@@ -99,10 +99,14 @@ std::vector<string> t_machine::get_debug_info() {
 		info.push_back(String::Format("\t%s", cur_tile.ToString().c_str()));
 	}
 	info.push_back("");
-	// Tile buffer cursor
-	info.push_back("Tile buffer cursor");
-	info.push_back(String::Format("\tLayer=%i X=%i Y=%i",
+	// Tile buffers
+	info.push_back("Tile buffers");
+	info.push_back(String::Format("\tCursor: Layer=%i X=%i Y=%i",
 		get_csr_layer(), get_csr_x(), get_csr_y()));
+	for (auto& buf : tilebufs) {
+		info.push_back(String::Format("\t%s (w=%i h=%i layers=%i)", 
+			buf.first.c_str(), buf.second->Cols, buf.second->Rows, buf.second->LayerCount));
+	}
 	info.push_back("");
 	// Callstack
 	info.push_back("Callstack");
@@ -113,6 +117,9 @@ std::vector<string> t_machine::get_debug_info() {
 		info.push_back("\t" + String::ToString(prg_ix));
 	}
 	return info;
+}
+void t_machine::save_debug_file() {
+	File::WriteLines(PTM_DEBUG_FILE, get_debug_info());
 }
 void t_machine::set_var(string id, int value) {
 	vars[id] = t_variable(value);

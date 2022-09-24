@@ -12,9 +12,9 @@ CALL draw_charset
 HALT
 
 draw_palette:
-	BUF.NEW buf_pal,16,16,1
+	BUF.NEW buf_pal,18,18,1
 	BUF.SEL buf_pal
-	BUF.VIEW 0,0,16,16
+	BUF.VIEW 0,0,18,18
 	; === Horizontal ruler ===
 	VAR ind_x,2
 	FOR i,0,16
@@ -44,9 +44,9 @@ draw_palette:
 	RET
 	
 draw_charset:
-	BUF.NEW buf_chr,16,16,1
+	BUF.NEW buf_chr,18,18,1
 	BUF.SEL buf_chr
-	BUF.VIEW 16,0,16,16
+	BUF.VIEW 18,0,18,18
 	; === Horizontal ruler ===
 	VAR ind_x,2
 	FOR i,0,16

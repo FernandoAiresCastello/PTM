@@ -26,7 +26,7 @@ struct t_machine {
 	TTileSeq cur_tile;
 	bool tile_transparency = false;
 	struct {
-		int fg = 1;
+		int fg = 15;
 		int bg = 0;
 	} text_color;
 	// Input
@@ -42,6 +42,7 @@ struct t_machine {
 	void on_loop();
 	void init_system_vars();
 	std::vector<string> get_debug_info();
+	void save_debug_file();
 	void set_var(string id, int value);
 	void set_var(string id, string value);
 	void set_const(string id, int value);
