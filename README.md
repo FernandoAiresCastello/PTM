@@ -8,3 +8,5 @@ PTM is powered by the following libraries:
 - [CppUtils](https://github.com/FernandoAiresCastello/CppUtils)
 - [Microsoft Windows API](https://docs.microsoft.com/en-us/windows/win32/)
 - [C/C++ Standard Library](https://en.cppreference.com/w/cpp)
+
+![PTM default graphics](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/default_gfx.png?raw=true)

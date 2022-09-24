@@ -20,5 +20,6 @@ using string = std::string;
 #define PTM_DEBUG_FILE		"PTM.dbg"
 #define PTM_LAST_FILE		"PTM.last"
 #define PTM_MAIN_PROG_FILE	"main.ptm"
+#define PTM_SCRSHOT_FILE	"PTM.bmp"
 
 #define PTM_INVALID_NUMBER	INT_MIN

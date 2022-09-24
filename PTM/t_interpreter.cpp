@@ -74,6 +74,9 @@ void t_interpreter::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt)
 	} else if (key == SDLK_F12) {
 		machine->save_debug_file();
 		MsgBox::Info("PTM", "Debug file saved: " PTM_DEBUG_FILE);
+	} else if (key == SDLK_PRINTSCREEN) {
+		machine->wnd->SaveScreenshot(PTM_SCRSHOT_FILE);
+		MsgBox::Info("PTM", "Screenshot saved: " PTM_SCRSHOT_FILE);
 	} else if (machine->exit_key != 0 && key == machine->exit_key) {
 		running = false;
 	} else {
