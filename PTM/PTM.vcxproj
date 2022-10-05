@@ -181,6 +181,7 @@
     <ClInclude Include="t_variable.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Build\main.ptm" />
     <None Include="..\README.md" />
   </ItemGroup>
   <ItemGroup>

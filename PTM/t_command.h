@@ -14,6 +14,16 @@ private:
 	t_interpreter* intp;
 	t_machine* machine;
 
+	enum {
+		CMP_MODE_EQ, CMP_MODE_NEQ,
+		CMP_MODE_GT, CMP_MODE_GTE,
+		CMP_MODE_LT, CMP_MODE_LTE,
+		CMP_MODE_STR_EQ, CMP_MODE_STR_NEQ
+	};
+	enum {
+		COLOR_R, COLOR_G, COLOR_B
+	};
+
 	// Commands
 	void nop(t_params& arg);
 	void halt(t_params& arg);

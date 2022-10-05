@@ -1,4 +1,3 @@
 
-GOTO view_default_gfx
-
-# view_default_gfx.ptm
+LOCATE 1,1
+PRINT "Hello world!"

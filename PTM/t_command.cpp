@@ -4,33 +4,33 @@
 #include "t_program.h"
 #include "t_layer.h"
 
-enum {
-	CMP_MODE_EQ, CMP_MODE_NEQ,
-	CMP_MODE_GT, CMP_MODE_GTE,
-	CMP_MODE_LT, CMP_MODE_LTE,
-	CMP_MODE_STR_EQ, CMP_MODE_STR_NEQ
-};
-enum {
-	COLOR_R, COLOR_G, COLOR_B
-};
-
 t_command::t_command(t_interpreter* intp) {
 	this->intp = intp;
 	machine = intp->machine;
 }
 bool t_command::execute(string& cmd, t_params& args) {
 	// System
-	if (cmd == "TITLE") { set_window_title(args); return true; }
-	// Control flow
-	if (cmd == "HALT") { halt(args); return true; }
 	if (cmd == "EXIT") { exit(args); return true; }
+	if (cmd == "TITLE") { set_window_title(args); return true; }
+	// Execution flow control
+	if (cmd == "HALT") { halt(args); return true; }
 	if (cmd == "GOTO") { goto_label(args); return true; }
 	if (cmd == "CALL") { call_label(args); return true; }
 	if (cmd == "RET") { return_from_label(args); return true; }
 	if (cmd == "PAUSE") { pause(args); return true; }
 	if (cmd == "FOR") { loop_start(args); return true; }
 	if (cmd == "NEXT") { loop_end(args); return true; }
-	// Variables
+	// Conditional blocks
+	if (cmd == "IF.EQ") { if_block_start(args, CMP_MODE_EQ); return true; }
+	if (cmd == "IF.NEQ") { if_block_start(args, CMP_MODE_NEQ); return true; }
+	if (cmd == "IF.GT") { if_block_start(args, CMP_MODE_GT); return true; }
+	if (cmd == "IF.GTE") { if_block_start(args, CMP_MODE_GTE); return true; }
+	if (cmd == "IF.LT") { if_block_start(args, CMP_MODE_LT); return true; }
+	if (cmd == "IF.LTE") { if_block_start(args, CMP_MODE_LTE); return true; }
+	if (cmd == "IF.STR.EQ") { if_block_start(args, CMP_MODE_STR_EQ); return true; }
+	if (cmd == "IF.STR.NEQ") { if_block_start(args, CMP_MODE_STR_NEQ); return true; }
+	if (cmd == "ENDIF") { if_block_end(args); return true; }
+	// Variables & Constants
 	if (cmd == "VAR") { set_variable(args); return true; }
 	if (cmd == "DEF") { define_constant(args); return true; }
 	// Arrays
@@ -48,7 +48,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "DEC") { decrement_variable(args); return true; }
 	if (cmd == "ADD") { add_to_variable(args); return true; }
 	if (cmd == "SUB") { subtract_from_variable(args); return true; }
-	// Current tile
+	// Current tile manipulation
 	if (cmd == "TILE.NEW") { init_cur_tile(args); return true; }
 	if (cmd == "TILE.ADD") { append_cur_tile(args); return true; }
 	if (cmd == "TILE.CH") { set_cur_tile_char(args); return true; }
@@ -60,7 +60,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "TILE.LOAD") { load_cur_tile(args); return true; }
 	if (cmd == "TILE.PROP") { set_tile_property(args); return true; }
 	if (cmd == "TILE.PGET") { get_tile_property(args); return true; }
-	// Tile buffer cursor
+	// Cursor
 	if (cmd == "LAYER") { select_layer(args); return true; }
 	if (cmd == "LOCATE") { set_cursor_pos(args); return true; }
 	if (cmd == "CSR.X") { set_cursor_x(args); return true; }
@@ -75,12 +75,13 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "CSR.DR") { move_cursor_down_right(args); return true; }
 	if (cmd == "CSR.DL") { move_cursor_down_left(args); return true; }
 	// Tile buffer
-	if (cmd == "BUF.SEL") { select_tile_buffer(args); return true; }
 	if (cmd == "BUF.NEW") { add_tile_buffer(args); return true; }
+	if (cmd == "BUF.SEL") { select_tile_buffer(args); return true; }
 	if (cmd == "BUF.SHOW") { show_tile_buffer(args, true); return true; }
 	if (cmd == "BUF.HIDE") { show_tile_buffer(args, false); return true; }
 	if (cmd == "BUF.VIEW") { set_viewport(args); return true; }
 	if (cmd == "BUF.SCRL") { scroll_viewport(args); return true; }
+	// Tile output
 	if (cmd == "PUT") { put_tile(args); return true; }
 	if (cmd == "GET") { copy_tile(args); return true; }
 	if (cmd == "DEL") { delete_tile(args); return true; }
@@ -95,12 +96,25 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "CLR") { clear_rect(args); return true; }
 	if (cmd == "MOV") { move_tile(args); return true; }
 	if (cmd == "MOVB") { move_tile_block(args); return true; }
-	// Graphics
+	// Text output
+	if (cmd == "PRINT") { print_text(args, false); return true; }
+	if (cmd == "PRINTL") { print_text(args, true); return true; }
+	if (cmd == "PUTC") { print_text_char(args); return true; }
+	if (cmd == "INK") { set_text_fgcolor(args); return true; }
+	if (cmd == "PAPER") { set_text_bgcolor(args); return true; }
+	if (cmd == "COLOR") { set_text_colors(args); return true; }
+	// Display management
+	if (cmd == "VSYNC") { update_screen(args); return true; }
+	if (cmd == "BGCOL") { set_window_bgcolor(args); return true; }
+	if (cmd == "TRON") { set_tile_transparency(args, true); return true; }
+	if (cmd == "TROFF") { set_tile_transparency(args, false); return true; }
+	// Character set management
 	if (cmd == "CHR") { define_char(args); return true; }
 	if (cmd == "CHRL") { define_char_rows(args); return true; }
 	if (cmd == "CHR.LEN") { get_charset_size(args); return true; }
 	if (cmd == "CHR.GETB") { get_charset_binary_string(args); return true; }
 	if (cmd == "CHR.SETB") { set_charset_binary_string(args); return true; }
+	// Color palette management
 	if (cmd == "PAL") { define_color(args); return true; }
 	if (cmd == "PAL.LEN") { get_palette_size(args); return true; }
 	if (cmd == "PAL.CLR") { clear_palette(args); return true; }
@@ -111,37 +125,16 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "PAL.SETR") { set_palette_color_comp(args, COLOR_R); return true; }
 	if (cmd == "PAL.SETG") { set_palette_color_comp(args, COLOR_G); return true; }
 	if (cmd == "PAL.SETB") { set_palette_color_comp(args, COLOR_B); return true; }
-	if (cmd == "VSYNC") { update_screen(args); return true; }
-	if (cmd == "BGCOL") { set_window_bgcolor(args); return true; }
-	if (cmd == "TRON") { set_tile_transparency(args, true); return true; }
-	if (cmd == "TROFF") { set_tile_transparency(args, false); return true; }
-	// Text output
-	if (cmd == "PRINT") { print_text(args, false); return true; }
-	if (cmd == "PRINTL") { print_text(args, true); return true; }
-	if (cmd == "PUTC") { print_text_char(args); return true; }
-	if (cmd == "INK") { set_text_fgcolor(args); return true; }
-	if (cmd == "PAPER") { set_text_bgcolor(args); return true; }
-	if (cmd == "COLOR") { set_text_colors(args); return true; }
-	// Keyboard
+	// User input
 	if (cmd == "INPUT") { read_user_input_string(args); return true; }
 	if (cmd == "INKEY") { get_keycode_pressed(args); return true; }
 	if (cmd == "XON") { allow_exit_on_escape_key(args, true); return true; }
 	if (cmd == "XOFF") { allow_exit_on_escape_key(args, false); return true; }
 	// Debugging
-	if (cmd == "BRK") { trigger_breakpoint(args); return true; }
-	if (cmd == "FDEBUG") { save_debug_file(args); return true; }
-	if (cmd == "PERFMON") { enable_perfmon(args); return true; }
-	if (cmd == "MSG") { show_msgbox(args); return true; }
-	// Conditionals
-	if (cmd == "IF.EQ") { if_block_start(args, CMP_MODE_EQ); return true; }
-	if (cmd == "IF.NEQ") { if_block_start(args, CMP_MODE_NEQ); return true; }
-	if (cmd == "IF.GT") { if_block_start(args, CMP_MODE_GT); return true; }
-	if (cmd == "IF.GTE") { if_block_start(args, CMP_MODE_GTE); return true; }
-	if (cmd == "IF.LT") { if_block_start(args, CMP_MODE_LT); return true; }
-	if (cmd == "IF.LTE") { if_block_start(args, CMP_MODE_LTE); return true; }
-	if (cmd == "IF.STR.EQ") { if_block_start(args, CMP_MODE_STR_EQ); return true; }
-	if (cmd == "IF.STR.NEQ") { if_block_start(args, CMP_MODE_STR_NEQ); return true; }
-	if (cmd == "ENDIF") { if_block_end(args); return true; }
+	if (cmd == "DBG.BRK") { trigger_breakpoint(args); return true; }
+	if (cmd == "DBG.DUMP") { save_debug_file(args); return true; }
+	if (cmd == "DBG.PERFMON") { enable_perfmon(args); return true; }
+	if (cmd == "DBG.MSG") { show_msgbox(args); return true; }
 	// Sound
 	if (cmd == "PLAY") { play_sound(args); return true; }
 	if (cmd == "LPLAY") { loop_sound(args); return true; }
@@ -153,7 +146,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "BLOAD") { read_file_into_array(args); return true; }
 	// String manipulation
 	if (cmd == "FMT") { format_number(args); return true; }
-	// Time
+	// Timing
 	if (cmd == "TIME") { get_cycles(args); return true; }
 
 	return false;
