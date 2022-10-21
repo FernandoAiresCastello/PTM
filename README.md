@@ -1,5 +1,5 @@
 # PTM - Programmable Tile Machine
-This is a desktop application for Microsoft Windows which emulates a fantasy computer that deals primarily with 8-bit-style graphical tiles. It also features an embedded IDE that allows developing and executing programs for this machine using a low-level programming language called PTML.
+This is a desktop application for Microsoft Windows which emulates a fantasy computer that works primarily with 8-bit-style graphical tiles. It also features an embedded programming language interpreter called PTML that allows developing and executing programs for this machine.
 
 PTM is powered by the following libraries:
 
