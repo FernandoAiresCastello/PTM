@@ -14,8 +14,9 @@ bool t_program::load_plain(string path) {
 	int line_nr = 0;
 	for (auto& src : File::ReadLines(path, "\r\n")) {
 		line_nr++;
-		if (src[0] == '#') {
-			string incl_filename = String::Trim(String::Skip(src, 1));
+		string trim_line = String::Trim(src);
+		if (String::StartsWith(String::ToUpper(trim_line), "INCL")) {
+			string incl_filename = String::Trim(String::Skip(trim_line, 4));
 			if (File::Exists(incl_filename)) {
 				int incl_line_nr = 0;
 				for (auto& incl_line_text : File::ReadLines(incl_filename, "\r\n")) {

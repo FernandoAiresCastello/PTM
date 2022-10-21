@@ -40,6 +40,7 @@ void t_interpreter::run(t_program* prg, t_machine* machine, TBufferedWindow* wnd
 			on_keydown(e.key.keysym.sym, TKey::Ctrl(), TKey::Shift(), TKey::Alt());
 		}
 		if (halted || pause_cycles > 0) {
+			machine->last_keycode_pressed = 0;
 			pause_cycles--;
 			wnd->Update();
 			continue;

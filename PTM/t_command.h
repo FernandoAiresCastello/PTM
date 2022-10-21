@@ -63,6 +63,10 @@ private:
 	void put_tile_repeat_left(t_params& arg);
 	void put_tile_repeat_up(t_params& arg);
 	void put_tile_repeat_down(t_params& arg);
+	void put_tile_repeat_up_left(t_params& arg);
+	void put_tile_repeat_up_right(t_params& arg);
+	void put_tile_repeat_down_left(t_params& arg);
+	void put_tile_repeat_down_right(t_params& arg);
 	void fill_rect(t_params& arg);
 	void fill_layer(t_params& arg);
 	void clear_all_layers(t_params& arg);
@@ -73,12 +77,12 @@ private:
 	void select_layer(t_params& arg);
 	void select_layer(t_params& arg, int layer);
 	void define_char(t_params& arg);
-	void define_char_rows(t_params& arg);
+	void define_char_byte(t_params& arg);
 	void define_color(t_params& arg);
 	void update_screen(t_params& arg);
 	void get_random_number(t_params& arg);
 	void pause(t_params& arg);
-	void print_text(t_params& arg, bool crlf);
+	void print_text(t_params& arg, bool crlf, bool add_frames);
 	void print_text_char(t_params& arg);
 	void set_text_fgcolor(t_params& arg);
 	void set_text_bgcolor(t_params& arg);
@@ -99,8 +103,9 @@ private:
 	void copy_array(t_params& arg);
 	void increment_variable(t_params& arg);
 	void decrement_variable(t_params& arg);
-	void add_to_variable(t_params& arg);
-	void subtract_from_variable(t_params& arg);
+	void math_add(t_params& arg);
+	void math_subtract(t_params& arg);
+	void math_multiply(t_params& arg);
 	void allow_exit_on_escape_key(t_params& arg, bool allow);
 	void set_window_title(t_params& arg);
 	void get_charset_size(t_params& arg);
@@ -108,7 +113,9 @@ private:
 	void trigger_breakpoint(t_params& arg);
 	void play_sound_note(t_params& arg);
 	void read_file_into_string(t_params& arg);
-	void read_file_into_array(t_params& arg);
+	void read_file_into_byte_array(t_params& arg);
+	void write_string_to_file(t_params& arg);
+	void write_byte_array_to_file(t_params& arg);
 	void format_number(t_params& arg);
 	void get_cycles(t_params& arg);
 	void read_user_input_string(t_params& arg);
@@ -131,4 +138,9 @@ private:
 	void set_palette_color_comp(t_params& arg, int comp);
 	void get_charset_binary_string(t_params& arg);
 	void set_charset_binary_string(t_params& arg);
+	void get_substring(t_params& arg);
+	void get_string_length(t_params& arg);
+	void repeat_string(t_params& arg);
+	void concatenate_strings(t_params& arg);
+	void draw_tile_sequence(t_params& arg);
 };

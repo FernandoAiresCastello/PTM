@@ -48,6 +48,7 @@ struct t_machine {
 	void set_const(string id, int value);
 	void set_const(string id, string value);
 	void put_tile_at_cursor_pos(TTileSeq& tile);
+	void add_tile_frame_at_cursor_pos(TTile& tile);
 	void put_cur_tile_at_cursor_pos();
 	void copy_tile_at_cursor_pos();
 	void delete_tile_at_cursor_pos();
@@ -67,7 +68,9 @@ struct t_machine {
 	string read_input_string(int maxlen);
 	void move_tile_at_cursor_pos(int dx, int dy);
 	void move_tile_block(int x, int y, int w, int h, int dx, int dy);
-	void print_text(string text, bool crlf);
+	void print_text(string text, bool crlf, bool add_frames);
+	void draw_tile_sequence(string seq);
+	std::vector<string> split_tile_sequence(std::string& seq);
 
 private:
 	TCharset* original_chr;

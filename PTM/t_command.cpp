@@ -46,8 +46,9 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "RND") { get_random_number(args); return true; }
 	if (cmd == "INC") { increment_variable(args); return true; }
 	if (cmd == "DEC") { decrement_variable(args); return true; }
-	if (cmd == "ADD") { add_to_variable(args); return true; }
-	if (cmd == "SUB") { subtract_from_variable(args); return true; }
+	if (cmd == "ADD") { math_add(args); return true; }
+	if (cmd == "SUB") { math_subtract(args); return true; }
+	if (cmd == "MUL") { math_multiply(args); return true; }
 	// Current tile manipulation
 	if (cmd == "TILE.NEW") { init_cur_tile(args); return true; }
 	if (cmd == "TILE.ADD") { append_cur_tile(args); return true; }
@@ -89,6 +90,10 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "PUT.L") { put_tile_repeat_left(args); return true; }
 	if (cmd == "PUT.U") { put_tile_repeat_up(args); return true; }
 	if (cmd == "PUT.D") { put_tile_repeat_down(args); return true; }
+	if (cmd == "PUT.UR") { put_tile_repeat_up_right(args); return true; }
+	if (cmd == "PUT.UL") { put_tile_repeat_up_left(args); return true; }
+	if (cmd == "PUT.DR") { put_tile_repeat_down_right(args); return true; }
+	if (cmd == "PUT.DL") { put_tile_repeat_down_left(args); return true; }
 	if (cmd == "RECT") { fill_rect(args); return true; }
 	if (cmd == "FILL") { fill_layer(args); return true; }
 	if (cmd == "CLS") { clear_all_layers(args); return true; }
@@ -97,20 +102,21 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "MOV") { move_tile(args); return true; }
 	if (cmd == "MOVB") { move_tile_block(args); return true; }
 	// Text output
-	if (cmd == "PRINT") { print_text(args, false); return true; }
-	if (cmd == "PRINTL") { print_text(args, true); return true; }
+	if (cmd == "PRINT") { print_text(args, false, false); return true; }
+	if (cmd == "PRINT.ADD") { print_text(args, false, true); return true; }
+	if (cmd == "PRINTL") { print_text(args, true, false); return true; }
 	if (cmd == "PUTC") { print_text_char(args); return true; }
 	if (cmd == "INK") { set_text_fgcolor(args); return true; }
 	if (cmd == "PAPER") { set_text_bgcolor(args); return true; }
 	if (cmd == "COLOR") { set_text_colors(args); return true; }
-	// Display management
+	// Screen
 	if (cmd == "VSYNC") { update_screen(args); return true; }
 	if (cmd == "BGCOL") { set_window_bgcolor(args); return true; }
 	if (cmd == "TRON") { set_tile_transparency(args, true); return true; }
 	if (cmd == "TROFF") { set_tile_transparency(args, false); return true; }
 	// Character set management
-	if (cmd == "CHR") { define_char(args); return true; }
-	if (cmd == "CHRL") { define_char_rows(args); return true; }
+	if (cmd == "CHR") { define_char_byte(args); return true; }
+	if (cmd == "CHRB") { define_char(args); return true; }
 	if (cmd == "CHR.LEN") { get_charset_size(args); return true; }
 	if (cmd == "CHR.GETB") { get_charset_binary_string(args); return true; }
 	if (cmd == "CHR.SETB") { set_charset_binary_string(args); return true; }
@@ -143,9 +149,15 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "QUIET") { stop_sound(args); return true; }
 	// Filesystem
 	if (cmd == "CLOAD") { read_file_into_string(args); return true; }
-	if (cmd == "BLOAD") { read_file_into_array(args); return true; }
+	if (cmd == "BLOAD") { read_file_into_byte_array(args); return true; }
+	if (cmd == "CLOAD") { write_string_to_file(args); return true; }
+	if (cmd == "BLOAD") { write_byte_array_to_file(args); return true; }
 	// String manipulation
 	if (cmd == "FMT") { format_number(args); return true; }
+	if (cmd == "SUBSTR") { get_substring(args); return true; }
+	if (cmd == "STRLEN") { get_string_length(args); return true; }
+	if (cmd == "STRREP") { repeat_string(args); return true; }
+	if (cmd == "STRCAT") { concatenate_strings(args); return true; }
 	// Timing
 	if (cmd == "TIME") { get_cycles(args); return true; }
 
@@ -460,6 +472,58 @@ void t_command::put_tile_repeat_down(t_params& arg) {
 		machine->put_cur_tile_at_cursor_pos();
 	}
 }
+void t_command::put_tile_repeat_up_left(t_params& arg) {
+	ARGC(1);
+	int count = intp->require_number(arg[0]);
+	if (count > 0) {
+		for (int i = 0; i < count; i++) {
+			machine->put_cur_tile_at_cursor_pos();
+			machine->move_cursor(-1, -1);
+			machine->put_cur_tile_at_cursor_pos();
+		}
+	} else {
+		machine->put_cur_tile_at_cursor_pos();
+	}
+}
+void t_command::put_tile_repeat_up_right(t_params& arg) {
+	ARGC(1);
+	int count = intp->require_number(arg[0]);
+	if (count > 0) {
+		for (int i = 0; i < count; i++) {
+			machine->put_cur_tile_at_cursor_pos();
+			machine->move_cursor(1, -1);
+			machine->put_cur_tile_at_cursor_pos();
+		}
+	} else {
+		machine->put_cur_tile_at_cursor_pos();
+	}
+}
+void t_command::put_tile_repeat_down_left(t_params& arg) {
+	ARGC(1);
+	int count = intp->require_number(arg[0]);
+	if (count > 0) {
+		for (int i = 0; i < count; i++) {
+			machine->put_cur_tile_at_cursor_pos();
+			machine->move_cursor(-1, 1);
+			machine->put_cur_tile_at_cursor_pos();
+		}
+	} else {
+		machine->put_cur_tile_at_cursor_pos();
+	}
+}
+void t_command::put_tile_repeat_down_right(t_params& arg) {
+	ARGC(1);
+	int count = intp->require_number(arg[0]);
+	if (count > 0) {
+		for (int i = 0; i < count; i++) {
+			machine->put_cur_tile_at_cursor_pos();
+			machine->move_cursor(1, 1);
+			machine->put_cur_tile_at_cursor_pos();
+		}
+	} else {
+		machine->put_cur_tile_at_cursor_pos();
+	}
+}
 void t_command::fill_rect(t_params& arg) {
 	ARGC(4);
 	int x = intp->require_number(arg[0]);
@@ -537,7 +601,7 @@ void t_command::define_char(t_params& arg) {
 		machine->chr->Set(chr_ix, row0, row1, row2, row3, row4, row5, row6, row7);
 	}
 }
-void t_command::define_char_rows(t_params& arg) {
+void t_command::define_char_byte(t_params& arg) {
 	ARGC(3);
 	int chr_ix = intp->require_charset_ix(arg[0]);
 	if (chr_ix != PTM_INVALID_NUMBER) {
@@ -582,12 +646,10 @@ void t_command::pause(t_params& arg) {
 	if (cycles == PTM_INVALID_NUMBER) return;
 	intp->pause_cycles = cycles;
 }
-void t_command::print_text(t_params& arg, bool crlf) {
+void t_command::print_text(t_params& arg, bool crlf, bool add_frames) {
 	ARGC(1);
 	string text = intp->require_string(arg[0]);
-	if (!text.empty()) {
-		machine->print_text(text, crlf);
-	}
+	machine->print_text(text, crlf, add_frames);
 }
 void t_command::print_text_char(t_params& arg) {
 	ARGC(1);
@@ -650,7 +712,8 @@ void t_command::loop_sound(t_params& arg) {
 void t_command::set_sound_volume(t_params& arg) {
 	ARGC(1);
 	int volume = intp->require_number(arg[0]);
-	machine->snd->SetVolume(volume);
+	if (volume == PTM_INVALID_NUMBER) return;
+	machine->snd->SetVolume(volume * 100);
 }
 void t_command::stop_sound(t_params& arg) {
 	ARGC(0);
@@ -743,23 +806,38 @@ void t_command::decrement_variable(t_params& arg) {
 	auto& var = machine->vars[id];
 	machine->set_var(id, String::ToInt(var.value) - 1);
 }
-void t_command::add_to_variable(t_params& arg) {
-	ARGC(2);
+void t_command::math_add(t_params& arg) {
+	ARGC(3);
 	string id = intp->require_id(arg[0]);
 	if (id.empty()) return;
-	int value = intp->require_number(arg[1]);
-	if (value == PTM_INVALID_NUMBER) return;
+	int a = intp->require_number(arg[1]);
+	if (a == PTM_INVALID_NUMBER) return;
+	int b = intp->require_number(arg[2]);
+	if (b == PTM_INVALID_NUMBER) return;
 	auto& var = machine->vars[id];
-	machine->set_var(id, String::ToInt(var.value) + value);
+	machine->set_var(id, a + b);
 }
-void t_command::subtract_from_variable(t_params& arg) {
-	ARGC(2);
+void t_command::math_subtract(t_params& arg) {
+	ARGC(3);
 	string id = intp->require_id(arg[0]);
 	if (id.empty()) return;
-	int value = intp->require_number(arg[1]);
-	if (value == PTM_INVALID_NUMBER) return;
+	int a = intp->require_number(arg[1]);
+	if (a == PTM_INVALID_NUMBER) return;
+	int b = intp->require_number(arg[2]);
+	if (b == PTM_INVALID_NUMBER) return;
 	auto& var = machine->vars[id];
-	machine->set_var(id, String::ToInt(var.value) - value);
+	machine->set_var(id, a - b);
+}
+void t_command::math_multiply(t_params& arg) {
+	ARGC(3);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	int a = intp->require_number(arg[1]);
+	if (a == PTM_INVALID_NUMBER) return;
+	int b = intp->require_number(arg[2]);
+	if (b == PTM_INVALID_NUMBER) return;
+	auto& var = machine->vars[id];
+	machine->set_var(id, a * b);
 }
 void t_command::allow_exit_on_escape_key(t_params& arg, bool allow) {
 	ARGC(0);
@@ -811,7 +889,7 @@ void t_command::read_file_into_string(t_params& arg) {
 	string file = File::ReadText(path);
 	machine->set_var(var, file);
 }
-void t_command::read_file_into_array(t_params& arg) {
+void t_command::read_file_into_byte_array(t_params& arg) {
 	ARGC(2);
 	string path = String::Trim(intp->require_string(arg[0]));
 	if (path.empty()) {
@@ -827,6 +905,31 @@ void t_command::read_file_into_array(t_params& arg) {
 	auto& arr = machine->arrays[arr_id];
 	for (auto byte : file) {
 		arr.push_back(String::ToString(byte));
+	}
+}
+void t_command::write_string_to_file(t_params& arg) {
+	ARGC(2);
+	string path = String::Trim(intp->require_string(arg[0]));
+	if (path.empty()) {
+		intp->abort("Pathname is empty");
+		return;
+	}
+	string str = intp->require_string(arg[1]);
+	File::WriteText(path, str);
+}
+void t_command::write_byte_array_to_file(t_params& arg) {
+	ARGC(2);
+	string path = String::Trim(intp->require_string(arg[0]));
+	if (path.empty()) {
+		intp->abort("Pathname is empty");
+		return;
+	}
+	File file(path, File::Mode::WriteBinary);
+	string arr_id = intp->require_existing_array(arg[1]);
+	if (arr_id.empty()) return;
+	auto& arr = machine->arrays[arr_id];
+	for (auto value : arr) {
+		file.WriteByte((byte)String::ToInt(value));
 	}
 }
 void t_command::format_number(t_params& arg) {
@@ -1036,4 +1139,49 @@ void t_command::set_charset_binary_string(t_params& arg) {
 	string bin = intp->require_string(arg[1]);
 	if (bin.empty()) return;
 	machine->chr->Set(chr_ix, bin);
+}
+void t_command::get_substring(t_params& arg) {
+	ARGC(4);
+	string dest = intp->require_id(arg[0]);
+	if (dest.empty()) return;
+	string src = intp->require_string(arg[1]);
+	int begin = intp->require_number(arg[2]);
+	if (begin == PTM_INVALID_NUMBER) return;
+	int end = intp->require_number(arg[3]);
+	if (begin == PTM_INVALID_NUMBER) return;
+	machine->set_var(dest, String::Substring(src, begin, end));
+}
+void t_command::get_string_length(t_params& arg) {
+	ARGC(2);
+	string var = intp->require_id(arg[0]);
+	if (var.empty()) return;
+	string str = intp->require_string(arg[1]);
+	machine->set_var(var, str.size());
+}
+void t_command::repeat_string(t_params& arg) {
+	ARGC(3);
+	string dest = intp->require_id(arg[0]);
+	if (dest.empty()) return;
+	int count = intp->require_number(arg[1]);
+	if (count == PTM_INVALID_NUMBER) return;
+	string src = intp->require_string(arg[2]);
+	string str = "";
+	for (int i = 0; i < count; i++) {
+		str += src;
+	}
+	machine->set_var(dest, str);
+}
+void t_command::concatenate_strings(t_params& arg) {
+	ARGC(3);
+	string dest = intp->require_id(arg[0]);
+	if (dest.empty()) return;
+	string src1 = intp->require_string(arg[1]);
+	string src2 = intp->require_string(arg[2]);
+	machine->set_var(dest, src1 + src2);
+}
+void t_command::draw_tile_sequence(t_params& arg) {
+	ARGC(1);
+	string seq = intp->require_string(arg[0]);
+	if (seq.empty()) return;
+	machine->draw_tile_sequence(seq);
 }

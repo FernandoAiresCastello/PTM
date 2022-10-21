@@ -136,6 +136,11 @@ void t_machine::set_const(string id, string value) {
 void t_machine::put_tile_at_cursor_pos(TTileSeq& tile) {
 	cur_buf->SetTile(tile, csr.layer, csr.x, csr.y, tile_transparency);
 }
+void t_machine::add_tile_frame_at_cursor_pos(TTile& tile) {
+	if (csr.x >= 0 && csr.y >= 0 && csr.x < cur_buf->Cols && csr.y < cur_buf->Rows) {
+		cur_buf->GetTile(csr.layer, csr.x, csr.y).Add(tile);
+	}
+}
 void t_machine::put_cur_tile_at_cursor_pos() {
 	cur_buf->SetTile(cur_tile, csr.layer, csr.x, csr.y, tile_transparency);
 }
@@ -277,8 +282,10 @@ void t_machine::move_tile_block(int x, int y, int w, int h, int dx, int dy) {
 		}
 	}
 }
-void t_machine::print_text(string text, bool crlf) {
-	if (crlf) {
+void t_machine::print_text(string text, bool crlf, bool add_frames) {
+	if (text.empty() && crlf) {
+		text = "\\n";
+	} else if (crlf) {
 		text += "\\n";
 	}
 	const int initial_x = get_csr_x();
@@ -305,7 +312,11 @@ void t_machine::print_text(string text, bool crlf) {
 				string chstr = String::Skip(escape_seq, 1);
 				ch = String::ToInt(chstr);
 				auto tile = TTileSeq(ch, fgc, bgc);
-				put_tile_at_cursor_pos(tile);
+				if (add_frames) {
+					add_tile_frame_at_cursor_pos(tile.Get(0));
+				} else {
+					put_tile_at_cursor_pos(tile);
+				}
 				move_cursor(1, 0);
 				escape_seq = "";
 				continue;
@@ -333,9 +344,60 @@ void t_machine::print_text(string text, bool crlf) {
 			continue;
 		} else {
 			auto tile = TTileSeq(ch, fgc, bgc);
-			put_tile_at_cursor_pos(tile);
+			if (add_frames) {
+				add_tile_frame_at_cursor_pos(tile.Get(0));
+			} else {
+				put_tile_at_cursor_pos(tile);
+			}
 			move_cursor(1, 0);
 			escape_seq = "";
 		}
 	}
+}
+void t_machine::draw_tile_sequence(string seq) {
+	cur_tile.Clear();
+	cur_tile.AddBlank();
+
+	auto cmd = split_tile_sequence(seq);
+	for (int i = 0; i < cmd.size(); i++) {
+		auto value = String::ToUpper(cmd[i]);
+		if (String::StartsWith(value, 'F')) {
+			cur_tile.SetForeColor(0, String::ToInt(String::Skip(value, 1)));
+		} else if (String::StartsWith(value, 'B')) {
+			cur_tile.SetBackColor(0, String::ToInt(String::Skip(value, 1)));
+		} else if (String::StartsWith(value, 'C')) {
+			cur_tile.SetChar(0, String::ToInt(String::Skip(value, 1)));
+		} else if (String::StartsWith(value, 'X')) {
+			csr.x = String::ToInt(String::Skip(value, 1));
+		} else if (String::StartsWith(value, 'Y')) {
+			csr.y = String::ToInt(String::Skip(value, 1));
+		} else if (String::StartsWith(value, 'P')) {
+			put_cur_tile_at_cursor_pos();
+		}
+	}
+}
+std::vector<string> t_machine::split_tile_sequence(std::string& seq) {
+	seq = String::Trim(seq);
+	std::vector<std::string> tones;
+	std::string tone;
+
+	for (int i = 0; i < seq.size(); i++) {
+		char ch = toupper(seq[i]);
+		if (isalpha(ch)) {
+			if (tone != "") {
+				tones.push_back(tone);
+				tone = "";
+				i--;
+			} else {
+				tone += ch;
+			}
+		} else if (isdigit(ch)) {
+			tone += ch;
+		}
+	}
+	if (tone != "") {
+		tones.push_back(tone);
+	}
+
+	return tones;
 }
