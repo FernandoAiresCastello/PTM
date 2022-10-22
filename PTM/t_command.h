@@ -143,5 +143,11 @@ private:
 	void repeat_string(t_params& arg);
 	void concatenate_strings(t_params& arg);
 	void split_string(t_params& arg);
+	void trim_string(t_params& arg);
+	void uppercase_string(t_params& arg);
+	void lowercase_string(t_params& arg);
+	void replace_string(t_params& arg);
+	void get_string_char_at(t_params& arg);
+	void get_string_index_of(t_params& arg);
 	void draw_tile_sequence(t_params& arg);
 };

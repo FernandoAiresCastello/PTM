@@ -154,12 +154,18 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "CSAVE") { write_string_to_file(args); return true; }
 	if (cmd == "BSAVE") { write_byte_array_to_file(args); return true; }
 	// String manipulation
-	if (cmd == "FMT") { format_number(args); return true; }
-	if (cmd == "SUBSTR") { get_substring(args); return true; }
-	if (cmd == "STRLEN") { get_string_length(args); return true; }
-	if (cmd == "STRREP") { repeat_string(args); return true; }
-	if (cmd == "STRCAT") { concatenate_strings(args); return true; }
-	if (cmd == "SPLIT") { split_string(args); return true; }
+	if (cmd == "STR.FMT") { format_number(args); return true; }
+	if (cmd == "STR.SUBST") { get_substring(args); return true; }
+	if (cmd == "STR.LEN") { get_string_length(args); return true; }
+	if (cmd == "STR.REPT") { repeat_string(args); return true; }
+	if (cmd == "STR.CAT") { concatenate_strings(args); return true; }
+	if (cmd == "STR.SPLIT") { split_string(args); return true; }
+	if (cmd == "STR.TRIM") { trim_string(args); return true; }
+	if (cmd == "STR.UCASE") { uppercase_string(args); return true; }
+	if (cmd == "STR.LCASE") { lowercase_string(args); return true; }
+	if (cmd == "STR.REPL") { replace_string(args); return true; }
+	if (cmd == "STR.AT") { get_string_char_at(args); return true; }
+	if (cmd == "STR.IX") { get_string_index_of(args); return true; }
 	// Timing
 	if (cmd == "TIME") { get_cycles(args); return true; }
 
@@ -1191,6 +1197,55 @@ void t_command::split_string(t_params& arg) {
 	int separator = intp->require_number(arg[2]);
 	if (separator == PTM_INVALID_NUMBER) return;
 	machine->arrays[arr_id] = String::Split(src, separator, false);
+}
+void t_command::trim_string(t_params& arg) {
+	ARGC(2);
+	string dest = intp->require_id(arg[0]);
+	if (dest.empty()) return;
+	string src = intp->require_string(arg[1]);
+	machine->set_var(dest, String::Trim(src));
+}
+void t_command::uppercase_string(t_params& arg) {
+	ARGC(2);
+	string dest = intp->require_id(arg[0]);
+	if (dest.empty()) return;
+	string src = intp->require_string(arg[1]);
+	machine->set_var(dest, String::ToUpper(src));
+}
+void t_command::lowercase_string(t_params& arg) {
+	ARGC(2);
+	string dest = intp->require_id(arg[0]);
+	if (dest.empty()) return;
+	string src = intp->require_string(arg[1]);
+	machine->set_var(dest, String::ToLower(src));
+}
+void t_command::replace_string(t_params& arg) {
+	ARGC(4);
+	string dest = intp->require_id(arg[0]);
+	if (dest.empty()) return;
+	string src = intp->require_string(arg[1]);
+	string old_str = intp->require_string(arg[2]);
+	string new_str = intp->require_string(arg[3]);
+	machine->set_var(dest, String::Replace(src, old_str, new_str));
+}
+void t_command::get_string_char_at(t_params& arg) {
+	ARGC(3);
+	string dest = intp->require_id(arg[0]);
+	if (dest.empty()) return;
+	string str = intp->require_string(arg[1]);
+	int index = intp->require_number(arg[2]);
+	if (index == PTM_INVALID_NUMBER) return;
+	machine->set_var(dest, str.at(index));
+}
+void t_command::get_string_index_of(t_params& arg) {
+	ARGC(3);
+	string dest = intp->require_id(arg[0]);
+	if (dest.empty()) return;
+	string str = intp->require_string(arg[1]);
+	int ch = intp->require_number(arg[2]);
+	if (ch == PTM_INVALID_NUMBER) return;
+	int ix = String::IndexOf(str, ch);
+	machine->set_var(dest, ix);
 }
 void t_command::draw_tile_sequence(t_params& arg) {
 	ARGC(1);
