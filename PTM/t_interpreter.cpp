@@ -338,18 +338,24 @@ void t_interpreter::loop_end() {
 	cur_line_ix = loop.line_ix_begin;
 	branched = true;
 }
-void t_interpreter::goto_next_nearest_endif() {
+void t_interpreter::goto_matching_endif() {
 	int endif_ix = -1;
 	for (int i = cur_line_ix; i < prg->lines.size(); i++) {
-		if (prg->lines[i].is_endif) {
-			endif_ix = i;
-			break;
+		if (prg->lines[i].is_if) {
+			ifstack.push(i);
+		} else if (prg->lines[i].is_endif) {
+			if (ifstack.empty()) {
+				endif_ix = i;
+				break;
+			} else {
+				ifstack.pop();
+				if (ifstack.empty()) {
+					endif_ix = i;
+					break;
+				}
+			}
 		}
 	}
-	if (endif_ix >= 0) {
-		cur_line_ix = endif_ix + 1;
-		branched = true;
-	} else {
-		abort("Missing ENDIF command");
-	}
+	cur_line_ix = endif_ix + 1;
+	branched = true;
 }

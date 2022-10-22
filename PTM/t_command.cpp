@@ -101,6 +101,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "CLR") { clear_rect(args); return true; }
 	if (cmd == "MOV") { move_tile(args); return true; }
 	if (cmd == "MOVB") { move_tile_block(args); return true; }
+	if (cmd == "DRAW") { draw_tile_sequence(args); return true; }
 	// Text output
 	if (cmd == "PRINT") { print_text(args, false, false); return true; }
 	if (cmd == "PRINT.ADD") { print_text(args, false, true); return true; }
@@ -150,14 +151,15 @@ bool t_command::execute(string& cmd, t_params& args) {
 	// Filesystem
 	if (cmd == "CLOAD") { read_file_into_string(args); return true; }
 	if (cmd == "BLOAD") { read_file_into_byte_array(args); return true; }
-	if (cmd == "CLOAD") { write_string_to_file(args); return true; }
-	if (cmd == "BLOAD") { write_byte_array_to_file(args); return true; }
+	if (cmd == "CSAVE") { write_string_to_file(args); return true; }
+	if (cmd == "BSAVE") { write_byte_array_to_file(args); return true; }
 	// String manipulation
 	if (cmd == "FMT") { format_number(args); return true; }
 	if (cmd == "SUBSTR") { get_substring(args); return true; }
 	if (cmd == "STRLEN") { get_string_length(args); return true; }
 	if (cmd == "STRREP") { repeat_string(args); return true; }
 	if (cmd == "STRCAT") { concatenate_strings(args); return true; }
+	if (cmd == "SPLIT") { split_string(args); return true; }
 	// Timing
 	if (cmd == "TIME") { get_cycles(args); return true; }
 
@@ -209,6 +211,8 @@ void t_command::set_variable(t_params& arg) {
 		} else if (arg[1].is_array_element_ix()) {
 			string value = intp->require_array_element(arg[1]);
 			machine->vars[dst_var] = value;
+		} else if (arg[1].type == t_param_type::char_literal) {
+			machine->vars[dst_var] = arg[1].numeric_value;
 		} else {
 			machine->vars[dst_var] = arg[1].textual_value;
 		}
@@ -1058,9 +1062,9 @@ void t_command::if_block_start(t_params& arg, int cmp_mode) {
 		string a = intp->require_string(arg[0]);
 		string b = intp->require_string(arg[1]);
 		if (cmp_mode == CMP_MODE_STR_EQ) {
-			if (a == b) { return; } else { intp->goto_next_nearest_endif(); }
+			if (a == b) { return; } else { intp->goto_matching_endif(); }
 		} else {
-			if (a != b) { return; } else { intp->goto_next_nearest_endif(); }
+			if (a != b) { return; } else { intp->goto_matching_endif(); }
 		}
 	} else {
 		int a = intp->require_number(arg[0]);
@@ -1069,17 +1073,17 @@ void t_command::if_block_start(t_params& arg, int cmp_mode) {
 		if (b == PTM_INVALID_NUMBER) return;
 
 		if (cmp_mode == CMP_MODE_EQ) {
-			if (a == b) { return; } else { intp->goto_next_nearest_endif(); }
+			if (a == b) { return; } else { intp->goto_matching_endif(); }
 		} else if (cmp_mode == CMP_MODE_NEQ) {
-			if (a != b) { return; } else { intp->goto_next_nearest_endif(); }
+			if (a != b) { return; } else { intp->goto_matching_endif(); }
 		} else if (cmp_mode == CMP_MODE_GT) {
-			if (a > b) { return; } else { intp->goto_next_nearest_endif(); }
+			if (a > b) { return; } else { intp->goto_matching_endif(); }
 		} else if (cmp_mode == CMP_MODE_GTE) {
-			if (a >= b) { return; } else { intp->goto_next_nearest_endif(); }
+			if (a >= b) { return; } else { intp->goto_matching_endif(); }
 		} else if (cmp_mode == CMP_MODE_LT) {
-			if (a < b) { return; } else { intp->goto_next_nearest_endif(); }
+			if (a < b) { return; } else { intp->goto_matching_endif(); }
 		} else if (cmp_mode == CMP_MODE_LTE) {
-			if (a <= b) { return; } else { intp->goto_next_nearest_endif(); }
+			if (a <= b) { return; } else { intp->goto_matching_endif(); }
 		}
 	}
 }
@@ -1178,6 +1182,15 @@ void t_command::concatenate_strings(t_params& arg) {
 	string src1 = intp->require_string(arg[1]);
 	string src2 = intp->require_string(arg[2]);
 	machine->set_var(dest, src1 + src2);
+}
+void t_command::split_string(t_params& arg) {
+	ARGC(3);
+	string arr_id = intp->require_id(arg[0]);
+	if (arr_id.empty()) return;
+	string src = intp->require_string(arg[1]);
+	int separator = intp->require_number(arg[2]);
+	if (separator == PTM_INVALID_NUMBER) return;
+	machine->arrays[arr_id] = String::Split(src, separator, false);
 }
 void t_command::draw_tile_sequence(t_params& arg) {
 	ARGC(1);

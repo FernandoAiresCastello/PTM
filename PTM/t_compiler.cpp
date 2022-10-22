@@ -50,6 +50,10 @@ bool t_compiler::compile_line(
 	new_line->cmd = ixSpace != string::npos ? String::Trim(src_line.substr(0, ixSpace)) : src_line;
 	new_line->cmd = String::ToUpper(new_line->cmd);
 
+	// Check for IF
+	if (is_if(new_line->cmd)) {
+		new_line->is_if = true;
+	}
 	// Check for ENDIF
 	if (is_endif(new_line->cmd)) {
 		new_line->is_endif = true;
@@ -186,6 +190,9 @@ bool t_compiler::is_array_identifier(string& arg) {
 	return 
 		String::Contains(arg, '[') || 
 		String::Contains(arg, ']');
+}
+bool t_compiler::is_if(string& arg) {
+	return String::StartsWith(arg, "IF.");
 }
 bool t_compiler::is_endif(string& arg) {
 	return arg == "ENDIF";

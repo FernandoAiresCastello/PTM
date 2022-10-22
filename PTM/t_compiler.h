@@ -22,5 +22,6 @@ private:
 	bool is_char_literal(string& arg);
 	bool is_variable_identifier(string& arg);
 	bool is_array_identifier(string& arg);
+	bool is_if(string& arg);
 	bool is_endif(string& arg);
 };

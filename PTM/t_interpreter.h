@@ -31,6 +31,7 @@ private:
 	t_command* cmd;
 	std::stack<int> callstack;
 	std::stack<t_loop> loopstack;
+	std::stack<int> ifstack;
 	
 	void execute_current_line();
 	void on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt);
@@ -54,5 +55,5 @@ private:
 	void loop_start(string var, int first, int last, int step);
 	void array_loop_start(string arr_id, string iter_var);
 	void loop_end();
-	void goto_next_nearest_endif();
+	void goto_matching_endif();
 };

@@ -142,5 +142,6 @@ private:
 	void get_string_length(t_params& arg);
 	void repeat_string(t_params& arg);
 	void concatenate_strings(t_params& arg);
+	void split_string(t_params& arg);
 	void draw_tile_sequence(t_params& arg);
 };
