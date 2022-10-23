@@ -145,4 +145,5 @@ private:
 	void string_starts_with(t_params& arg);
 	void string_ends_with(t_params& arg);
 	void string_contains(t_params& arg);
+	void add_charset_pages(t_params& arg);
 };

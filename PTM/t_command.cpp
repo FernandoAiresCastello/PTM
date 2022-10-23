@@ -129,6 +129,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "CHR.LEN") { get_charset_size(args); return true; }
 	if (cmd == "CHR.GETBS") { get_charset_binary_string(args); return true; }
 	if (cmd == "CHR.SETBS") { set_charset_binary_string(args); return true; }
+	if (cmd == "CHR.NEWPG") { add_charset_pages(args); return true; }
 	// Color palette management
 	if (cmd == "PAL") { define_color(args); return true; }
 	if (cmd == "PAL.LEN") { get_palette_size(args); return true; }
@@ -1196,4 +1197,19 @@ void t_command::string_contains(t_params& arg) {
 	string str = intp->require_string(arg[1]);
 	string sub = intp->require_string(arg[2]);
 	machine->set_var(dest, String::Contains(str, sub) ? 1 : 0);
+}
+void t_command::add_charset_pages(t_params& arg) {
+	ARGC(1);
+	int pages = intp->require_number(arg[0]);
+	if (pages == PTM_INVALID_NUMBER) return;
+	const int page_size = 256;
+	const int max_pages = 256;
+	int new_size = machine->chr->GetSize() + (pages * page_size);
+	if (new_size <= page_size || new_size >= page_size * max_pages) {
+		intp->abort("Illegal charset size");
+		return;
+	}
+	for (int i = 0; i < pages; i++) {
+		machine->chr->AddBlank(page_size);
+	}
 }
