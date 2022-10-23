@@ -22,7 +22,7 @@ BUF.VIEW 0,0,18,18
 VAR ind_x,2
 FOR i,0,16
 	LOCATE ind_x,1
-	FMT ind,"%X",i
+	STR.FMT ind,"%X",i
 	PRINT ind
 	INC ind_x
 NEXT
@@ -30,7 +30,7 @@ NEXT
 VAR ind_y,2
 FOR i,0,16
 	LOCATE 1,ind_y
-	FMT ind,"%X",i
+	STR.FMT ind,"%X",i
 	PRINT ind
 	INC ind_y
 NEXT
@@ -56,7 +56,7 @@ BUF.VIEW 18,0,18,18
 VAR ind_x,2
 FOR i,0,16
 	LOCATE ind_x,1
-	FMT ind,"%X",i
+	STR.FMT ind,"%X",i
 	PRINT ind
 	INC ind_x
 NEXT
@@ -64,7 +64,7 @@ NEXT
 VAR ind_y,2
 FOR i,0,16
 	LOCATE 1,ind_y
-	FMT ind,"%X",i
+	STR.FMT ind,"%X",i
 	PRINT ind
 	INC ind_y
 NEXT

@@ -355,6 +355,10 @@ void t_machine::print_text(string text, bool crlf, bool add_frames) {
 	}
 }
 void t_machine::draw_tile_sequence(string seq) {
+	if (cur_tile.IsEmpty()) {
+		cur_tile.AddBlank();
+	}
+	bool draw = false;
 	auto cmd = split_tile_sequence(seq);
 	for (int i = 0; i < cmd.size(); i++) {
 		auto value = String::ToUpper(cmd[i]);
@@ -369,35 +373,39 @@ void t_machine::draw_tile_sequence(string seq) {
 		} else if (String::StartsWith(value, 'Y')) {
 			csr.y = String::ToInt(String::Skip(value, 1));
 		} else if (String::StartsWith(value, 'P')) {
+			draw = true;
+			put_cur_tile_at_cursor_pos();
+		} else if (String::StartsWith(value, 'M')) {
+			draw = false;
 			put_cur_tile_at_cursor_pos();
 		} else if (String::StartsWith(value, 'R')) {
 			int count = String::ToInt(String::Skip(value, 1));
 			for (int i = 0; i < count; i++) {
-				put_cur_tile_at_cursor_pos();
+				if (draw) put_cur_tile_at_cursor_pos();
 				csr.x++;
 			}
-			put_cur_tile_at_cursor_pos();
+			if (draw) put_cur_tile_at_cursor_pos();
 		} else if (String::StartsWith(value, 'L')) {
 			int count = String::ToInt(String::Skip(value, 1));
 			for (int i = 0; i < count; i++) {
-				put_cur_tile_at_cursor_pos();
+				if (draw) put_cur_tile_at_cursor_pos();
 				csr.x--;
 			}
-			put_cur_tile_at_cursor_pos();
+			if (draw) put_cur_tile_at_cursor_pos();
 		} else if (String::StartsWith(value, 'U')) {
 			int count = String::ToInt(String::Skip(value, 1));
 			for (int i = 0; i < count; i++) {
-				put_cur_tile_at_cursor_pos();
+				if (draw) put_cur_tile_at_cursor_pos();
 				csr.y--;
 			}
-			put_cur_tile_at_cursor_pos();
+			if (draw) put_cur_tile_at_cursor_pos();
 		} else if (String::StartsWith(value, 'D')) {
 			int count = String::ToInt(String::Skip(value, 1));
 			for (int i = 0; i < count; i++) {
-				put_cur_tile_at_cursor_pos();
+				if (draw) put_cur_tile_at_cursor_pos();
 				csr.y++;
 			}
-			put_cur_tile_at_cursor_pos();
+			if (draw) put_cur_tile_at_cursor_pos();
 		}
 	}
 }

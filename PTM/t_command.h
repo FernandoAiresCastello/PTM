@@ -29,6 +29,7 @@ private:
 	void halt(t_params& arg);
 	void exit(t_params& arg);
 	void reset(t_params& arg);
+	void include_file(t_params& arg);
 	void goto_label(t_params& arg);
 	void call_label(t_params& arg);
 	void return_from_label(t_params& arg);

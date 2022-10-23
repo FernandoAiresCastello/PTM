@@ -10,6 +10,8 @@ t_command::t_command(t_interpreter* intp) {
 }
 bool t_command::execute(string& cmd, t_params& args) {
 	// System
+	if (cmd == "NOP") { nop(args); return true; }
+	if (cmd == "INCL") { include_file(args); return true; }
 	if (cmd == "EXIT") { exit(args); return true; }
 	if (cmd == "RESET") { reset(args); return true; }
 	if (cmd == "TITLE") { set_window_title(args); return true; }
@@ -193,6 +195,9 @@ void t_command::reset(t_params& arg) {
 	ARGC(0);
 	intp->running = false;
 	intp->reset_requested = true;
+}
+void t_command::include_file(t_params& arg) {
+	intp->abort("INCL is only valid in " PTM_MAIN_PROG_FILE);
 }
 void t_command::goto_label(t_params& arg) {
 	ARGC(1);

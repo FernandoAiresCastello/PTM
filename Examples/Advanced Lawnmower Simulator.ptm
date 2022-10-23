@@ -236,14 +236,14 @@ end_game:
 	LOCATE 11,22
 	PRINT "Hold any key to restart"
 	VAR msg,"WELL DONE. YOU'VE EARNED YOURSELF A CORNED BEEF SANDWICH! "
-	STRREP spaces,34," "
-	STRCAT msg,spaces,msg
+	STR.REPT spaces,34," "
+	STR.CAT msg,spaces,msg
 	VAR ix_begin,0
 	VAR ix_end,33
-	STRLEN ix_begin_max,msg
+	STR.LEN ix_begin_max,msg
 		
 ending_loop:
-	SUBSTR msg_part,msg,ix_begin,ix_end
+	STR.SUBST msg_part,msg,ix_begin,ix_end
 	LOCATE 6,11
 	PRINT msg_part
 	VSYNC
