@@ -11,7 +11,9 @@ t_command::t_command(t_interpreter* intp) {
 bool t_command::execute(string& cmd, t_params& args) {
 	// System
 	if (cmd == "EXIT") { exit(args); return true; }
+	if (cmd == "RESET") { reset(args); return true; }
 	if (cmd == "TITLE") { set_window_title(args); return true; }
+	if (cmd == "CYCLES") { get_cycles(args); return true; }
 	// Execution flow control
 	if (cmd == "HALT") { halt(args); return true; }
 	if (cmd == "GOTO") { goto_label(args); return true; }
@@ -120,11 +122,11 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "TRON") { set_tile_transparency(args, true); return true; }
 	if (cmd == "TROFF") { set_tile_transparency(args, false); return true; }
 	// Character set management
-	if (cmd == "CHR") { define_char_byte(args); return true; }
-	if (cmd == "CHRB") { define_char(args); return true; }
+	if (cmd == "CHR") { define_char_single_byte(args); return true; }
+	if (cmd == "CHRS") { define_char_all_bytes(args); return true; }
 	if (cmd == "CHR.LEN") { get_charset_size(args); return true; }
-	if (cmd == "CHR.GETB") { get_charset_binary_string(args); return true; }
-	if (cmd == "CHR.SETB") { set_charset_binary_string(args); return true; }
+	if (cmd == "CHR.GETBS") { get_charset_binary_string(args); return true; }
+	if (cmd == "CHR.SETBS") { set_charset_binary_string(args); return true; }
 	// Color palette management
 	if (cmd == "PAL") { define_color(args); return true; }
 	if (cmd == "PAL.LEN") { get_palette_size(args); return true; }
@@ -144,7 +146,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	// Debugging
 	if (cmd == "DBG.BRK") { trigger_breakpoint(args); return true; }
 	if (cmd == "DBG.DUMP") { save_debug_file(args); return true; }
-	if (cmd == "DBG.PERFMON") { enable_perfmon(args); return true; }
+	if (cmd == "DBG.PERF") { enable_perfmon(args); return true; }
 	if (cmd == "DBG.MSG") { show_msgbox(args); return true; }
 	// Sound
 	if (cmd == "PLAY") { play_sound(args); return true; }
@@ -157,7 +159,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "BLOAD") { read_file_into_byte_array(args); return true; }
 	if (cmd == "CSAVE") { write_string_to_file(args); return true; }
 	if (cmd == "BSAVE") { write_byte_array_to_file(args); return true; }
-	// String manipulation
+	// String functions
 	if (cmd == "STR.FMT") { format_number(args); return true; }
 	if (cmd == "STR.SUBST") { get_substring(args); return true; }
 	if (cmd == "STR.LEN") { get_string_length(args); return true; }
@@ -169,9 +171,10 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "STR.LCASE") { lowercase_string(args); return true; }
 	if (cmd == "STR.REPL") { replace_string(args); return true; }
 	if (cmd == "STR.AT") { get_string_char_at(args); return true; }
-	if (cmd == "STR.IX") { get_string_index_of(args); return true; }
-	// Timing
-	if (cmd == "TIME") { get_cycles(args); return true; }
+	if (cmd == "STR.IX") { get_string_index_of_char(args); return true; }
+	if (cmd == "STR.START") { string_starts_with(args); return true; }
+	if (cmd == "STR.END") { string_ends_with(args); return true; }
+	if (cmd == "STR.HAS") { string_contains(args); return true; }
 
 	return false;
 }
@@ -185,6 +188,11 @@ void t_command::halt(t_params& arg) {
 void t_command::exit(t_params& arg) {
 	ARGC(0);
 	intp->running = false;
+}
+void t_command::reset(t_params& arg) {
+	ARGC(0);
+	intp->running = false;
+	intp->reset_requested = true;
 }
 void t_command::goto_label(t_params& arg) {
 	ARGC(1);
@@ -452,6 +460,12 @@ void t_command::clear_rect(t_params& arg) {
 		}
 	}
 }
+void t_command::draw_tile_sequence(t_params& arg) {
+	ARGC(1);
+	string seq = intp->require_string(arg[0]);
+	if (seq.empty()) return;
+	machine->draw_tile_sequence(seq);
+}
 void t_command::set_window_bgcolor(t_params& arg) {
 	ARGC(1);
 	int color = intp->require_palette_ix(arg[0]);
@@ -476,7 +490,7 @@ void t_command::select_layer(t_params& arg, int layer) {
 	ARGC(0);
 	machine->set_csr_layer(layer);
 }
-void t_command::define_char(t_params& arg) {
+void t_command::define_char_all_bytes(t_params& arg) {
 	ARGC(9);
 	int chr_ix = intp->require_charset_ix(arg[0]);
 	if (chr_ix != PTM_INVALID_NUMBER) {
@@ -491,7 +505,7 @@ void t_command::define_char(t_params& arg) {
 		machine->chr->Set(chr_ix, row0, row1, row2, row3, row4, row5, row6, row7);
 	}
 }
-void t_command::define_char_byte(t_params& arg) {
+void t_command::define_char_single_byte(t_params& arg) {
 	ARGC(3);
 	int chr_ix = intp->require_charset_ix(arg[0]);
 	if (chr_ix != PTM_INVALID_NUMBER) {
@@ -1144,7 +1158,7 @@ void t_command::get_string_char_at(t_params& arg) {
 	if (index == PTM_INVALID_NUMBER) return;
 	machine->set_var(dest, str.at(index));
 }
-void t_command::get_string_index_of(t_params& arg) {
+void t_command::get_string_index_of_char(t_params& arg) {
 	ARGC(3);
 	string dest = intp->require_id(arg[0]);
 	if (dest.empty()) return;
@@ -1154,9 +1168,27 @@ void t_command::get_string_index_of(t_params& arg) {
 	int ix = String::IndexOf(str, ch);
 	machine->set_var(dest, ix);
 }
-void t_command::draw_tile_sequence(t_params& arg) {
-	ARGC(1);
-	string seq = intp->require_string(arg[0]);
-	if (seq.empty()) return;
-	machine->draw_tile_sequence(seq);
+void t_command::string_starts_with(t_params& arg) {
+	ARGC(3);
+	string dest = intp->require_id(arg[0]);
+	if (dest.empty()) return;
+	string str = intp->require_string(arg[1]);
+	string prefix = intp->require_string(arg[2]);
+	machine->set_var(dest, String::StartsWith(str, prefix) ? 1 : 0);
+}
+void t_command::string_ends_with(t_params& arg) {
+	ARGC(3);
+	string dest = intp->require_id(arg[0]);
+	if (dest.empty()) return;
+	string str = intp->require_string(arg[1]);
+	string suffix = intp->require_string(arg[2]);
+	machine->set_var(dest, String::EndsWith(str, suffix) ? 1 : 0);
+}
+void t_command::string_contains(t_params& arg) {
+	ARGC(3);
+	string dest = intp->require_id(arg[0]);
+	if (dest.empty()) return;
+	string str = intp->require_string(arg[1]);
+	string sub = intp->require_string(arg[2]);
+	machine->set_var(dest, String::Contains(str, sub) ? 1 : 0);
 }

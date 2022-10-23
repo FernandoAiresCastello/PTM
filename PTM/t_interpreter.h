@@ -13,6 +13,7 @@ struct t_command;
 
 struct t_interpreter {
 	std::vector<string> errors;
+	bool reset_requested = false;
 	int pause_cycles = 0;
 	t_interpreter();
 	void run(t_program* prg, t_machine* machine, TBufferedWindow* wnd);

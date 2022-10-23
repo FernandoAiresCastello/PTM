@@ -28,6 +28,7 @@ private:
 	void nop(t_params& arg);
 	void halt(t_params& arg);
 	void exit(t_params& arg);
+	void reset(t_params& arg);
 	void goto_label(t_params& arg);
 	void call_label(t_params& arg);
 	void return_from_label(t_params& arg);
@@ -58,12 +59,13 @@ private:
 	void clear_all_layers(t_params& arg);
 	void clear_layer(t_params& arg);
 	void clear_rect(t_params& arg);
+	void draw_tile_sequence(t_params& arg);
 	void set_window_bgcolor(t_params& arg);
 	void set_tile_transparency(t_params& arg, bool transparent);
 	void select_layer(t_params& arg);
 	void select_layer(t_params& arg, int layer);
-	void define_char(t_params& arg);
-	void define_char_byte(t_params& arg);
+	void define_char_all_bytes(t_params& arg);
+	void define_char_single_byte(t_params& arg);
 	void define_color(t_params& arg);
 	void update_screen(t_params& arg);
 	void get_random_number(t_params& arg);
@@ -138,6 +140,8 @@ private:
 	void lowercase_string(t_params& arg);
 	void replace_string(t_params& arg);
 	void get_string_char_at(t_params& arg);
-	void get_string_index_of(t_params& arg);
-	void draw_tile_sequence(t_params& arg);
+	void get_string_index_of_char(t_params& arg);
+	void string_starts_with(t_params& arg);
+	void string_ends_with(t_params& arg);
+	void string_contains(t_params& arg);
 };

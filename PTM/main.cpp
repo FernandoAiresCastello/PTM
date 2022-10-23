@@ -14,32 +14,39 @@ int main(int argc, char* argv[]) {
 	g.wnd->Show();
 
 	string prg_file = argc > 1 ? argv[1] : PTM_MAIN_PROG_FILE;
-	if (!File::Exists(prg_file)) {
-		MsgBox::Error("PTM", "Program file \"" + prg_file + "\" not found");
-		return 0;
-	}
+	t_interpreter* interpreter = nullptr;
 
-	t_program* prg = new t_program();
-	bool load_ok = prg->load_plain(prg_file);
-	if (load_ok) {
-		t_compiler compiler;
-		compiler.run(prg);
-		if (compiler.errors.empty()) {
-			t_machine* machine = new t_machine(g.wnd);
-			machine->perfmon = g.perfmon;
-			machine->snd = g.snd;
-			t_interpreter* interpreter = new t_interpreter();
-			interpreter->run(prg, machine, g.wnd);
-			auto errors = interpreter->errors;
-			delete interpreter;
-			delete machine;
-			if (!errors.empty()) {
-				MsgBox::Error("PTM", errors[0]);
-			}
-		} else {
-			MsgBox::Error("PTM", compiler.errors[0]);
+	do {
+		if (!File::Exists(prg_file)) {
+			MsgBox::Error("PTM", "Program file \"" + prg_file + "\" not found");
+			return 0;
 		}
-	}
-	delete prg;
+		t_program* prg = new t_program();
+		bool load_ok = prg->load_plain(prg_file);
+		if (load_ok) {
+			t_compiler compiler;
+			compiler.run(prg);
+			if (compiler.errors.empty()) {
+				t_machine* machine = new t_machine(g.wnd);
+				machine->perfmon = g.perfmon;
+				machine->snd = g.snd;
+				if (interpreter) {
+					delete interpreter;
+				}
+				interpreter = new t_interpreter();
+				interpreter->run(prg, machine, g.wnd);
+				auto errors = interpreter->errors;
+				delete machine;
+				if (!errors.empty()) {
+					MsgBox::Error("PTM", errors[0]);
+				}
+			} else {
+				MsgBox::Error("PTM", compiler.errors[0]);
+			}
+		}
+		delete prg;
+
+	} while (interpreter && interpreter->reset_requested);
+
 	return 0;
 }

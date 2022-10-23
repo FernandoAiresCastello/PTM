@@ -62,7 +62,7 @@ std::vector<string> t_machine::get_debug_info() {
 	}
 	for (auto& var : vars) {
 		info.push_back(
-			(var.second.is_const ? "\tconst " : "\t") +
+			(var.second.is_const ? "\tdef " : "\t") +
 			String::Format("%s = %s", var.first.c_str(), var.second.value.c_str()));
 	}
 	info.push_back("");
