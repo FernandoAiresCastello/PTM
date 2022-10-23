@@ -20,6 +20,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "PAUSE") { pause(args); return true; }
 	if (cmd == "FOR") { loop_start(args); return true; }
 	if (cmd == "NEXT") { loop_end(args); return true; }
+	if (cmd == "BRK") { loop_break(args); return true; }
 	// Conditional blocks
 	if (cmd == "IF.EQ") { if_block_start(args, CMP_MODE_EQ); return true; }
 	if (cmd == "IF.NEQ") { if_block_start(args, CMP_MODE_NEQ); return true; }
@@ -67,14 +68,14 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "CSR.X") { set_cursor_x(args); return true; }
 	if (cmd == "CSR.Y") { set_cursor_y(args); return true; }
 	if (cmd == "CSR.MOV") { move_cursor(args); return true; }
-	if (cmd == "CSR.R") { move_cursor_right(args); return true; }
-	if (cmd == "CSR.L") { move_cursor_left(args); return true; }
-	if (cmd == "CSR.U") { move_cursor_up(args); return true; }
-	if (cmd == "CSR.D") { move_cursor_down(args); return true; }
-	if (cmd == "CSR.UR") { move_cursor_up_right(args); return true; }
-	if (cmd == "CSR.UL") { move_cursor_up_left(args); return true; }
-	if (cmd == "CSR.DR") { move_cursor_down_right(args); return true; }
-	if (cmd == "CSR.DL") { move_cursor_down_left(args); return true; }
+	if (cmd == "CSR.R") { move_cursor(args, 1, 0); return true; }
+	if (cmd == "CSR.L") { move_cursor(args, -1, 0); return true; }
+	if (cmd == "CSR.U") { move_cursor(args, 0, -1); return true; }
+	if (cmd == "CSR.D") { move_cursor(args, 0, 1); return true; }
+	if (cmd == "CSR.UR") { move_cursor(args, 1, -1); return true; }
+	if (cmd == "CSR.UL") { move_cursor(args, -1, -1); return true; }
+	if (cmd == "CSR.DR") { move_cursor(args, 1, 1); return true; }
+	if (cmd == "CSR.DL") { move_cursor(args, -1, 1); return true; }
 	// Tile buffer
 	if (cmd == "BUF.NEW") { add_tile_buffer(args); return true; }
 	if (cmd == "BUF.SEL") { select_tile_buffer(args); return true; }
@@ -82,18 +83,20 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "BUF.HIDE") { show_tile_buffer(args, false); return true; }
 	if (cmd == "BUF.VIEW") { set_viewport(args); return true; }
 	if (cmd == "BUF.SCRL") { scroll_viewport(args); return true; }
+	if (cmd == "BUF.W") { get_buffer_width(args); return true; }
+	if (cmd == "BUF.H") { get_buffer_height(args); return true; }
 	// Tile output
 	if (cmd == "PUT") { put_tile(args); return true; }
 	if (cmd == "GET") { copy_tile(args); return true; }
 	if (cmd == "DEL") { delete_tile(args); return true; }
-	if (cmd == "PUT.R") { put_tile_repeat_right(args); return true; }
-	if (cmd == "PUT.L") { put_tile_repeat_left(args); return true; }
-	if (cmd == "PUT.U") { put_tile_repeat_up(args); return true; }
-	if (cmd == "PUT.D") { put_tile_repeat_down(args); return true; }
-	if (cmd == "PUT.UR") { put_tile_repeat_up_right(args); return true; }
-	if (cmd == "PUT.UL") { put_tile_repeat_up_left(args); return true; }
-	if (cmd == "PUT.DR") { put_tile_repeat_down_right(args); return true; }
-	if (cmd == "PUT.DL") { put_tile_repeat_down_left(args); return true; }
+	if (cmd == "PUT.R") { put_tile_move_repeat(args, 1, 0); return true; }
+	if (cmd == "PUT.L") { put_tile_move_repeat(args, -1, 0); return true; }
+	if (cmd == "PUT.U") { put_tile_move_repeat(args, 0, -1); return true; }
+	if (cmd == "PUT.D") { put_tile_move_repeat(args, 0, 1); return true; }
+	if (cmd == "PUT.UR") { put_tile_move_repeat(args, 1, -1); return true; }
+	if (cmd == "PUT.UL") { put_tile_move_repeat(args, -1, -1); return true; }
+	if (cmd == "PUT.DR") { put_tile_move_repeat(args, 1, 1); return true; }
+	if (cmd == "PUT.DL") { put_tile_move_repeat(args, -1, 1); return true; }
 	if (cmd == "RECT") { fill_rect(args); return true; }
 	if (cmd == "FILL") { fill_layer(args); return true; }
 	if (cmd == "CLS") { clear_all_layers(args); return true; }
@@ -260,51 +263,18 @@ void t_command::set_cursor_pos(t_params& arg) {
 	int y = intp->require_number(arg[1]);
 	machine->set_cursor_pos(x, y);
 }
+void t_command::move_cursor(t_params& arg, int dx, int dy) {
+	ARGC_MIN_MAX(0, 1);
+	int dist = arg.empty() ? 1 : intp->require_number(arg[0]);
+	for (int i = 0; i < dist; i++) {
+		machine->move_cursor(dx, dy);
+	}
+}
 void t_command::move_cursor(t_params& arg) {
 	ARGC(2);
 	int dist_x = intp->require_number(arg[0]);
 	int dist_y = intp->require_number(arg[1]);
 	machine->move_cursor(dist_x, dist_y);
-}
-void t_command::move_cursor_right(t_params& arg) {
-	ARGC_MIN_MAX(0, 1);
-	int dist = arg.empty() ? 1 : intp->require_number(arg[0]);
-	machine->move_cursor(dist, 0);
-}
-void t_command::move_cursor_left(t_params& arg) {
-	ARGC_MIN_MAX(0, 1);
-	int dist = arg.empty() ? 1 : intp->require_number(arg[0]);
-	machine->move_cursor(-dist, 0);
-}
-void t_command::move_cursor_up(t_params& arg) {
-	ARGC_MIN_MAX(0, 1);
-	int dist = arg.empty() ? 1 : intp->require_number(arg[0]);
-	machine->move_cursor(0, -dist);
-}
-void t_command::move_cursor_down(t_params& arg) {
-	ARGC_MIN_MAX(0, 1);
-	int dist = arg.empty() ? 1 : intp->require_number(arg[0]);
-	machine->move_cursor(0, dist);
-}
-void t_command::move_cursor_up_right(t_params& arg) {
-	ARGC_MIN_MAX(0, 1);
-	int dist = arg.empty() ? 1 : intp->require_number(arg[0]);
-	machine->move_cursor(dist, -dist);
-}
-void t_command::move_cursor_up_left(t_params& arg) {
-	ARGC_MIN_MAX(0, 1);
-	int dist = arg.empty() ? 1 : intp->require_number(arg[0]);
-	machine->move_cursor(-dist, -dist);
-}
-void t_command::move_cursor_down_right(t_params& arg) {
-	ARGC_MIN_MAX(0, 1);
-	int dist = arg.empty() ? 1 : intp->require_number(arg[0]);
-	machine->move_cursor(dist, dist);
-}
-void t_command::move_cursor_down_left(t_params& arg) {
-	ARGC_MIN_MAX(0, 1);
-	int dist = arg.empty() ? 1 : intp->require_number(arg[0]);
-	machine->move_cursor(-dist, dist);
 }
 void t_command::init_cur_tile(t_params& arg) {
 	ARGC_MIN_MAX(0, 3);
@@ -430,104 +400,13 @@ void t_command::delete_tile(t_params& arg) {
 	ARGC(0);
 	machine->delete_tile_at_cursor_pos();
 }
-void t_command::put_tile_repeat_right(t_params& arg) {
-	ARGC(1);
-	int count = intp->require_number(arg[0]);
+void t_command::put_tile_move_repeat(t_params& arg, int dx, int dy) {
+	ARGC_MIN_MAX(0, 1);
+	int count = arg.empty() ? 1 : intp->require_number(arg[0]);
 	if (count > 0) {
 		for (int i = 0; i < count; i++) {
 			machine->put_cur_tile_at_cursor_pos();
-			machine->move_cursor(1, 0);
-			machine->put_cur_tile_at_cursor_pos();
-		}
-	} else {
-		machine->put_cur_tile_at_cursor_pos();
-	}
-}
-void t_command::put_tile_repeat_left(t_params& arg) {
-	ARGC(1);
-	int count = intp->require_number(arg[0]);
-	if (count > 0) {
-		for (int i = 0; i < count; i++) {
-			machine->put_cur_tile_at_cursor_pos();
-			machine->move_cursor(-1, 0);
-			machine->put_cur_tile_at_cursor_pos();
-		}
-	} else {
-		machine->put_cur_tile_at_cursor_pos();
-	}
-}
-void t_command::put_tile_repeat_up(t_params& arg) {
-	ARGC(1);
-	int count = intp->require_number(arg[0]);
-	if (count > 0) {
-		for (int i = 0; i < count; i++) {
-			machine->put_cur_tile_at_cursor_pos();
-			machine->move_cursor(0, -1);
-			machine->put_cur_tile_at_cursor_pos();
-		}
-	} else {
-		machine->put_cur_tile_at_cursor_pos();
-	}
-}
-void t_command::put_tile_repeat_down(t_params& arg) {
-	ARGC(1);
-	int count = intp->require_number(arg[0]);
-	if (count > 0) {
-		for (int i = 0; i < count; i++) {
-			machine->put_cur_tile_at_cursor_pos();
-			machine->move_cursor(0, 1);
-			machine->put_cur_tile_at_cursor_pos();
-		}
-	} else {
-		machine->put_cur_tile_at_cursor_pos();
-	}
-}
-void t_command::put_tile_repeat_up_left(t_params& arg) {
-	ARGC(1);
-	int count = intp->require_number(arg[0]);
-	if (count > 0) {
-		for (int i = 0; i < count; i++) {
-			machine->put_cur_tile_at_cursor_pos();
-			machine->move_cursor(-1, -1);
-			machine->put_cur_tile_at_cursor_pos();
-		}
-	} else {
-		machine->put_cur_tile_at_cursor_pos();
-	}
-}
-void t_command::put_tile_repeat_up_right(t_params& arg) {
-	ARGC(1);
-	int count = intp->require_number(arg[0]);
-	if (count > 0) {
-		for (int i = 0; i < count; i++) {
-			machine->put_cur_tile_at_cursor_pos();
-			machine->move_cursor(1, -1);
-			machine->put_cur_tile_at_cursor_pos();
-		}
-	} else {
-		machine->put_cur_tile_at_cursor_pos();
-	}
-}
-void t_command::put_tile_repeat_down_left(t_params& arg) {
-	ARGC(1);
-	int count = intp->require_number(arg[0]);
-	if (count > 0) {
-		for (int i = 0; i < count; i++) {
-			machine->put_cur_tile_at_cursor_pos();
-			machine->move_cursor(-1, 1);
-			machine->put_cur_tile_at_cursor_pos();
-		}
-	} else {
-		machine->put_cur_tile_at_cursor_pos();
-	}
-}
-void t_command::put_tile_repeat_down_right(t_params& arg) {
-	ARGC(1);
-	int count = intp->require_number(arg[0]);
-	if (count > 0) {
-		for (int i = 0; i < count; i++) {
-			machine->put_cur_tile_at_cursor_pos();
-			machine->move_cursor(1, 1);
+			machine->move_cursor(dx, dy);
 			machine->put_cur_tile_at_cursor_pos();
 		}
 	} else {
@@ -994,6 +873,7 @@ void t_command::set_viewport(t_params& arg) {
 	int y = intp->require_number(arg[1]);
 	int cols = intp->require_number(arg[2]);
 	int rows = intp->require_number(arg[3]);
+
 	if (x == PTM_INVALID_NUMBER || y == PTM_INVALID_NUMBER ||
 		cols == PTM_INVALID_NUMBER || rows == PTM_INVALID_NUMBER) return;
 
@@ -1015,6 +895,7 @@ void t_command::add_tile_buffer(t_params& arg) {
 	int cols = intp->require_number(arg[1]);
 	int rows = intp->require_number(arg[2]);
 	int layers = intp->require_number(arg[3]);
+
 	if (id.empty() || cols == PTM_INVALID_NUMBER || rows == PTM_INVALID_NUMBER || 
 		layers == PTM_INVALID_NUMBER) return;
 
@@ -1033,6 +914,18 @@ void t_command::select_tile_buffer(t_params& arg) {
 		return;
 	}
 	machine->cur_buf = machine->tilebufs[id];
+}
+void t_command::get_buffer_width(t_params& arg) {
+	ARGC(1);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	machine->set_var(id, machine->cur_buf->Cols);
+}
+void t_command::get_buffer_height(t_params& arg) {
+	ARGC(1);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	machine->set_var(id, machine->cur_buf->Rows);
 }
 void t_command::enable_perfmon(t_params& arg) {
 	ARGC(0);
@@ -1061,6 +954,10 @@ void t_command::array_loop_start(t_params& arg) {
 void t_command::loop_end(t_params& arg) {
 	ARGC(0);
 	intp->loop_end();
+}
+void t_command::loop_break(t_params& arg) {
+	ARGC(0);
+	intp->loop_break();
 }
 void t_command::if_block_start(t_params& arg, int cmp_mode) {
 	ARGC(2);

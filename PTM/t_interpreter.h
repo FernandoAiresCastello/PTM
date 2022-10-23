@@ -55,5 +55,6 @@ private:
 	void loop_start(string var, int first, int last, int step);
 	void array_loop_start(string arr_id, string iter_var);
 	void loop_end();
+	void loop_break();
 	void goto_matching_endif();
 };

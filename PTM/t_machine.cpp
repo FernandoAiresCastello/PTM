@@ -403,26 +403,26 @@ void t_machine::draw_tile_sequence(string seq) {
 }
 std::vector<string> t_machine::split_tile_sequence(std::string& seq) {
 	seq = String::Trim(seq);
-	std::vector<std::string> tones;
-	std::string tone;
+	std::vector<std::string> cmds;
+	std::string cmd;
 
 	for (int i = 0; i < seq.size(); i++) {
 		char ch = toupper(seq[i]);
 		if (isalpha(ch)) {
-			if (tone != "") {
-				tones.push_back(tone);
-				tone = "";
+			if (cmd != "") {
+				cmds.push_back(cmd);
+				cmd = "";
 				i--;
 			} else {
-				tone += ch;
+				cmd += ch;
 			}
 		} else if (isdigit(ch)) {
-			tone += ch;
+			cmd += ch;
 		}
 	}
-	if (tone != "") {
-		tones.push_back(tone);
+	if (cmd != "") {
+		cmds.push_back(cmd);
 	}
 
-	return tones;
+	return cmds;
 }

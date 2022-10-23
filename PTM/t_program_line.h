@@ -10,5 +10,6 @@ struct t_program_line {
 	t_params params;
 	bool is_if = false;
 	bool is_endif = false;
+	bool is_endfor = false;
 	t_program_line();
 };

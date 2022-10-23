@@ -59,6 +59,10 @@ bool t_compiler::compile_line(
 		new_line->is_endif = true;
 		return true;
 	}
+	// Check for NEXT
+	if (is_endfor(new_line->cmd)) {
+		new_line->is_endfor = true;
+	}
 
 	// Parse raw command argument list
 	auto raw_args = ixSpace != string::npos ? String::Trim(src_line.substr(ixSpace)) : "";
@@ -196,4 +200,7 @@ bool t_compiler::is_if(string& arg) {
 }
 bool t_compiler::is_endif(string& arg) {
 	return arg == "ENDIF";
+}
+bool t_compiler::is_endfor(string& arg) {
+	return arg == "NEXT";
 }

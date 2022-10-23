@@ -282,6 +282,10 @@ int t_interpreter::require_tile_frame_ix(TTileSeq& tile, t_param& arg) {
 	return PTM_INVALID_NUMBER;
 }
 void t_interpreter::loop_start(string var, int first, int last, int step) {
+	if (step == 0) {
+		abort("Invalid FOR increment");
+		return;
+	}
 	machine->set_var(var, first);
 	t_loop loop;
 	loop.is_array = false;
@@ -326,9 +330,16 @@ void t_interpreter::loop_end() {
 
 	} else {
 		int next_value = loop.current + loop.step;
-		if (next_value >= loop.last) { // Loop ended
-			loopstack.pop();
-			return;
+		if (loop.step > 0) {
+			if (next_value >= loop.last) { // Loop ended
+				loopstack.pop();
+				return;
+			}
+		} else if (loop.step < 0) {
+			if (next_value <= loop.last) { // Loop ended
+				loopstack.pop();
+				return;
+			}
 		}
 		// Next iteration
 		loop.current = next_value;
@@ -336,6 +347,24 @@ void t_interpreter::loop_end() {
 	}
 
 	cur_line_ix = loop.line_ix_begin;
+	branched = true;
+}
+void t_interpreter::loop_break() {
+	if (loopstack.empty()) {
+		abort("Loop stack is empty");
+		return;
+	}
+	t_loop& loop = loopstack.top();
+	loopstack.pop();
+	
+	int next_ix = -1;
+	for (int i = cur_line_ix; i < prg->lines.size(); i++) {
+		if (prg->lines[i].is_endfor) {
+			next_ix = i;
+			break;
+		}
+	}
+	cur_line_ix = next_ix + 1;
 	branched = true;
 }
 void t_interpreter::goto_matching_endif() {

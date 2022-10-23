@@ -24,4 +24,5 @@ private:
 	bool is_array_identifier(string& arg);
 	bool is_if(string& arg);
 	bool is_endif(string& arg);
+	bool is_endfor(string& arg);
 };
