@@ -313,7 +313,6 @@ void t_interpreter::array_loop_start(string arr_id, string iter_var) {
 }
 void t_interpreter::loop_end() {
 	if (loopstack.empty()) {
-		abort("Loop stack is empty");
 		return;
 	}
 	t_loop& loop = loopstack.top();
@@ -351,7 +350,6 @@ void t_interpreter::loop_end() {
 }
 void t_interpreter::loop_break() {
 	if (loopstack.empty()) {
-		abort("Loop stack is empty");
 		return;
 	}
 	t_loop& loop = loopstack.top();
@@ -366,6 +364,9 @@ void t_interpreter::loop_break() {
 	}
 	cur_line_ix = next_ix + 1;
 	branched = true;
+}
+void t_interpreter::loop_continue() {
+	loop_end();
 }
 void t_interpreter::goto_matching_endif() {
 	int endif_ix = -1;

@@ -119,6 +119,7 @@ private:
 	void array_loop_start(t_params& arg);
 	void loop_end(t_params& arg);
 	void loop_break(t_params& arg);
+	void loop_continue(t_params& arg);
 	void if_block_start(t_params& arg, int cmp_mode);
 	void if_block_end(t_params& arg);
 	void clear_palette(t_params& arg);

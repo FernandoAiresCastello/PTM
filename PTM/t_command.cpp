@@ -21,6 +21,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "FOR") { loop_start(args); return true; }
 	if (cmd == "NEXT") { loop_end(args); return true; }
 	if (cmd == "BRK") { loop_break(args); return true; }
+	if (cmd == "CONT") { loop_continue(args); return true; }
 	// Conditional blocks
 	if (cmd == "IF.EQ") { if_block_start(args, CMP_MODE_EQ); return true; }
 	if (cmd == "IF.NEQ") { if_block_start(args, CMP_MODE_NEQ); return true; }
@@ -959,6 +960,10 @@ void t_command::loop_break(t_params& arg) {
 	ARGC(0);
 	intp->loop_break();
 }
+void t_command::loop_continue(t_params& arg) {
+	ARGC(0);
+	intp->loop_continue();
+}
 void t_command::if_block_start(t_params& arg, int cmp_mode) {
 	ARGC(2);
 	if (cmp_mode == CMP_MODE_STR_EQ || cmp_mode == CMP_MODE_STR_NEQ) {
@@ -1091,7 +1096,12 @@ void t_command::split_string(t_params& arg) {
 	string arr_id = intp->require_id(arg[0]);
 	if (arr_id.empty()) return;
 	string src = intp->require_string(arg[1]);
-	int separator = intp->require_number(arg[2]);
+	int separator = PTM_INVALID_NUMBER;
+	if (arg[2].type == t_param_type::string) {
+		separator = arg[2].textual_value[0];
+	} else {
+		separator = intp->require_number(arg[2]);
+	}
 	if (separator == PTM_INVALID_NUMBER) return;
 	machine->arrays[arr_id] = String::Split(src, separator, false);
 }
