@@ -3,10 +3,15 @@
 ;================================================
 TITLE "Default PTM Graphics Demo"
 
-BGCOL 0x87
+DEF buf_y,4
+DEF buf_chr_x,3
+DEF buf_pal_x,23
+
+BGCOL 0x72
 COLOR 15,0
 TRON
-
+LOCATE 10,2
+PRINT "Default PTM Graphics Demo"
 CALL draw_palette
 CALL draw_charset
 
@@ -17,7 +22,7 @@ HALT
 ;================================================
 BUF.NEW buf_pal,18,18,1
 BUF.SEL buf_pal
-BUF.VIEW 0,0,18,18
+BUF.VIEW buf_chr_x,buf_y,18,18
 ; Horizontal ruler
 VAR ind_x,2
 FOR i,0,16
@@ -51,7 +56,7 @@ RET
 ;================================================
 BUF.NEW buf_chr,18,18,1
 BUF.SEL buf_chr
-BUF.VIEW 18,0,18,18
+BUF.VIEW buf_pal_x,buf_y,18,18
 ; Horizontal ruler
 VAR ind_x,2
 FOR i,0,16
