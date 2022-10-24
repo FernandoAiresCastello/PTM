@@ -1,9 +1,9 @@
-# PTM - Programmable Tile Machine
+# PTM (Programmable Tile Machine)
 PTM is an interpreter and runtime environment for a low-level imperative programming language called PTML. It aims to be similar in style to many BASIC interpreters for early 8-bit computer systems such as the MSX, ZX Spectrum and Atari 800.
 
 It features tile-based graphics in a resolution of 360x200 pixels (divided into 45 columns by 25 rows of tiles) with an indexed color palette (2 colors per tile), simple square wave audio, file I/O, keyboard input, one-dimensional arrays, string manipulation and debugging functions. The environment comes with a default character set with 256 predefined tiles based on ASCII and a default color palette (see screenshots below for a demo). The tileset is fully editable and can be expanded in pages of 256 tiles each, for a total of 65536 possible tiles. The color palette is also fully editable but is limited to 256 colors.
 
-The output of this project is a standard Windows desktop executable application called PTM.exe. Upon execution, it looks for a file called "main.ptm" in the same directory. This file must contain PTML source code in plain text which will be interpreted at runtime.
+The output of this project is a standard Windows desktop executable application called PTM.exe. Upon execution, it looks for a file called "main.ptm" in the same directory. This file must contain PTML source code in plain text which will be interpreted at runtime. See the "Examples" folder for some PTML demo programs.
 
 This project is powered by the following libraries:
 
