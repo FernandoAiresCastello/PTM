@@ -72,6 +72,7 @@ Conditional Flow
 - IF.LTE - if lesser or equal to
 - IF.STR.EQ - if strings equal
 - IF.STR.NEQ - if strings not equal
+- ENDIF - terminate if block
 
 Math
 
