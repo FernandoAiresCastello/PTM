@@ -1,17 +1,58 @@
 # PTM (Programmable Tile Machine)
-PTM is an interpreter and runtime environment for a low-level imperative programming language called PTML. It aims to be similar in style to many BASIC interpreters for early 8-bit computer systems such as the MSX, ZX Spectrum and Atari 800. See PTML command list below for an overview.
-
-It features tile-based graphics in a resolution of 360x200 pixels (divided into 45 columns by 25 rows of tiles) with an indexed color palette (2 colors per tile), simple square wave audio, file I/O, keyboard input, one-dimensional arrays, string manipulation and debugging functions. The environment comes with a default character set with 256 predefined tiles based on ASCII and a default color palette (see screenshots below for a demo). The tileset is fully editable and can be expanded in pages of 256 tiles each, for a total of 65536 possible tiles. The color palette is also fully editable but is limited to 256 colors. The display engine also supports multiple overlapping and movable tile buffers of arbitrary size, with multiple layers and individually scrollable viewports. Tiles can contain multiple frames of animation and the system uses a separate thread to automatically cycle through all frames for all tiles on the screen. Tiles can also contain arbitrary data in the form of property-values.
+PTM is an interpreter and runtime environment for a low-level imperative programming language called PTML. It aims to be similar in style to many BASIC interpreters for early 8-bit computer systems such as the MSX, ZX Spectrum and Atari 800.
 
 The output of this project is a standard Windows desktop executable application called PTM.exe. Upon execution, it looks for a file called "main.ptm" in the same directory. This file must contain PTML source code in plain text which will be interpreted at runtime. See the "Examples" folder for some PTML demo programs.
 
-PTM is powered by the following libraries:
+## Features
 
-- [SDL2](https://www.libsdl.org/)
+- Strictly tile-based display engine
+  - Tiles are the most basic unit for drawing anything on the screen
+  - Screen resolution of 360x200 pixels, divided into 45 columns by 25 rows of tiles
+  - Automatic animation of tile sequences in an independent thread
+    
+- Tiles
+  - 8x8 pixel squares
+  - Support for multiple animation frames (tile sequences)
+  - Each tile frame contains an index into the global tileset
+  - Each tile frame contains two color indexes (foreground and background) into the global palette
+  - Can be "transparent" (meaning the background color is not drawn)
+  - Can contain arbitrary data in the form of property-value mappings
+
+- Color palette
+  - Fully editable
+  - RGB format (0xRRGGBB)
+  - Includes 256 default colors (see screenshot below for a demo)
+  
+- Tileset (aka character set)
+  - Fully editable
+  - Binary format (8 bytes for each tile)
+  - Includes 256 default characters based on ASCII (see screenshot below for a demo)
+  - Expandable, up to 256 pages of 256 tiles each, for a total of 65536 possible tiles
+  
+- Tile buffers
+  - Support for multiple buffers of arbitrary size and position
+  - Includes a default buffer covering the entire screen at startup
+  - Multiple layers
+  - Scrollable viewport
+  - Hide or show buffers individually
+  - Functions for moving tiles and tile blocks around
+
+- Asynchronous sound playback (single-channel, square wave only)
+- File I/O
+- Keyboard input
+- Variables and constants
+- Two basic data types: integers and strings (weakly typed)
+- Arrays and basic array functions
+- Common string manipulation functions
+- Debugging support functions
+
+## External dependencies
+
+- [SDL 2](https://www.libsdl.org/)
 - [TileGameLib](https://github.com/FernandoAiresCastello/TileGameToolkit/tree/master/TileGameLibC)
 - [CppUtils](https://github.com/FernandoAiresCastello/CppUtils)
 
-And is inspired by:
+## Inspired by
 
 - [MSX-BASIC](https://en.wikipedia.org/wiki/MSX)
 - [ZX Spectrum](https://en.wikipedia.org/wiki/ZX_Spectrum)
@@ -19,13 +60,13 @@ And is inspired by:
 - [PICO-8](https://www.lexaloffle.com/pico-8.php)
 - [Bitsy](https://github.com/le-doux/bitsy)
 
-### Screenshots:
+## Screenshots
 
 ![PTM default graphics](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/default_gfx.png?raw=true)
 
 ![Advanced Lawnmower Simulator](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/adv_lawn_sim.png?raw=true)
 
-### List of PTML commands (may be outdated):
+## List of PTML commands (may be outdated)
 
 Variables and Arrays
 
