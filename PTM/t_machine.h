@@ -23,6 +23,7 @@ struct t_machine {
 	static const int default_fgc = 15;
 	int bgcolor_palette_ix = default_bgc;
 	TTileBuffer* cur_buf;
+	string cur_buf_id;
 	TTileSeq cur_tile;
 	bool tile_transparency = false;
 	struct {
@@ -76,9 +77,6 @@ private:
 	TCharset* original_chr;
 	TPalette* original_pal;
 	struct {
-		bool visible = false;
-		TTileSeq tile;
-		int color = default_fgc;
 		int layer = 0;
 		int x = 0;
 		int y = 0;

@@ -2,7 +2,6 @@
 #include "t_globals.h"
 #include "t_program.h"
 #include "t_machine.h"
-#include "t_layer.h"
 #include "t_compiler.h"
 #include "t_interpreter.h"
 
@@ -10,7 +9,7 @@ int main(int argc, char* argv[]) {
 	t_globals g;
 	g.snd->SetVolume(TSound::MinVolume + 1000);
 	TWindowCreationFlags::RenderScaleQuality = "best";
-	g.wnd = new TBufferedWindow(t_layer::max, 45, 25, 3, 3);
+	g.wnd = new TBufferedWindow(1, 45, 25, 3, 3);
 	g.wnd->Show();
 
 	string prg_file = argc > 1 ? argv[1] : PTM_MAIN_PROG_FILE;

@@ -1,5 +1,4 @@
 #include "t_default_gfx.h"
-#include "chars.h"
 
 void t_default_gfx::init_palette(TPalette* pal) {
 	//pal->DeleteAll();
@@ -8,7 +7,16 @@ void t_default_gfx::init_palette(TPalette* pal) {
 	//pal->Set(1, 0xffffff); // white
 }
 void t_default_gfx::init_charset(TCharset* chr) {
-	chr->Set(chars::underscore,
+	chr->Set(0x00,
+		"00000000"
+		"00000000"
+		"00000000"
+		"00000000"
+		"00000000"
+		"00000000"
+		"00000000"
+		"00000000");
+	chr->Set('_',
 		"00000000"
 		"00000000"
 		"00000000"
@@ -17,7 +25,7 @@ void t_default_gfx::init_charset(TCharset* chr) {
 		"00000000"
 		"01111100"
 		"00000000");
-	chr->Set(chars::pnl_corner_tl,
+	chr->Set(0xda,
 		"00000000"
 		"00000000"
 		"00000000"
@@ -26,7 +34,7 @@ void t_default_gfx::init_charset(TCharset* chr) {
 		"00011000"
 		"00011000"
 		"00011000");
-	chr->Set(chars::pnl_corner_tr,
+	chr->Set(0xbf,
 		"00000000"
 		"00000000"
 		"00000000"
@@ -35,7 +43,7 @@ void t_default_gfx::init_charset(TCharset* chr) {
 		"00011000"
 		"00011000"
 		"00011000");
-	chr->Set(chars::pnl_corner_bl,
+	chr->Set(0xc0,
 		"00011000"
 		"00011000"
 		"00011000"
@@ -44,7 +52,7 @@ void t_default_gfx::init_charset(TCharset* chr) {
 		"00000000"
 		"00000000"
 		"00000000");
-	chr->Set(chars::pnl_corner_br,
+	chr->Set(0xd9,
 		"00011000"
 		"00011000"
 		"00011000"
@@ -53,4 +61,14 @@ void t_default_gfx::init_charset(TCharset* chr) {
 		"00000000"
 		"00000000"
 		"00000000");
+	chr->Set(0xdb,
+		"11111111"
+		"11111111"
+		"11111111"
+		"11111111"
+		"11111111"
+		"11111111"
+		"11111111"
+		"11111111"
+	);
 }

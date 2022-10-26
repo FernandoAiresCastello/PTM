@@ -76,12 +76,6 @@
     <ClInclude Include="t_variable.h">
       <Filter>Machine</Filter>
     </ClInclude>
-    <ClInclude Include="chars.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="t_layer.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="t_performance_monitor.h">
       <Filter>Utils</Filter>
     </ClInclude>

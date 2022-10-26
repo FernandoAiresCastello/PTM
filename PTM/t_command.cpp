@@ -2,7 +2,6 @@
 #include "t_interpreter.h"
 #include "t_machine.h"
 #include "t_program.h"
-#include "t_layer.h"
 
 t_command::t_command(t_interpreter* intp) {
 	this->intp = intp;
@@ -486,15 +485,13 @@ void t_command::set_tile_transparency(t_params& arg, bool transparent) {
 void t_command::select_layer(t_params& arg) {
 	ARGC(1);
 	int layer = intp->require_number(arg[0]);
-	if (layer == t_layer::bottom || layer == t_layer::top || layer == t_layer::overlay) {
+	if (layer >= 0 && layer < machine->cur_buf->LayerCount) {
 		machine->set_csr_layer(layer);
 	} else {
-		intp->abort("Invalid layer index");
+		intp->abort(String::Format(
+			"Invalid layer index for buffer \"%s\"", 
+			machine->cur_buf_id.c_str()));
 	}
-}
-void t_command::select_layer(t_params& arg, int layer) {
-	ARGC(0);
-	machine->set_csr_layer(layer);
 }
 void t_command::define_char_all_bytes(t_params& arg) {
 	ARGC(9);
@@ -935,6 +932,7 @@ void t_command::select_tile_buffer(t_params& arg) {
 		return;
 	}
 	machine->cur_buf = machine->tilebufs[id];
+	machine->cur_buf_id = id;
 }
 void t_command::get_buffer_width(t_params& arg) {
 	ARGC(1);

@@ -1,15 +1,14 @@
 #include "t_machine.h"
 #include "t_performance_monitor.h"
 #include "t_default_gfx.h"
-#include "chars.h"
-#include "t_layer.h"
 #include "t_interpreter.h"
 
 t_machine::t_machine(TBufferedWindow* wnd) {
 	this->wnd = wnd;
 
-	tilebufs["default"] = wnd->GetBuffer(0);
-	cur_buf = tilebufs["default"];
+	cur_buf_id = "default";
+	tilebufs[cur_buf_id] = wnd->GetBuffer(0);
+	cur_buf = tilebufs[cur_buf_id];
 	cur_buf->ClearAllLayers();
 
 	original_chr = wnd->GetCharset();
@@ -21,8 +20,6 @@ t_machine::t_machine(TBufferedWindow* wnd) {
 	pal = new TPalette();
 	t_default_gfx::init_palette(pal);
 	wnd->SetPalette(pal);
-
-	csr.tile.AddBlank(2);
 
 	set_window_bgcolor(default_bgc);
 	wnd->Update();
@@ -214,8 +211,8 @@ string t_machine::read_input_string(int maxlen) {
 	bool running = true;
 
 	TTileSeq input_csr;
-	input_csr.Add(chars::cursor_full, text_color.fg, text_color.bg);
-	input_csr.Add(chars::empty, text_color.fg, text_color.bg);
+	input_csr.Add(0xdb, text_color.fg, text_color.bg);
+	input_csr.Add(0x00, text_color.fg, text_color.bg);
 
 	while (running) {
 		cur_buf->Print(empty_str, csr.layer, initial_x, csr.y, text_color.fg, text_color.bg, tile_transparency);
@@ -253,7 +250,7 @@ string t_machine::read_input_string(int maxlen) {
 		}
 	}
 
-	cur_buf->PutChar(chars::empty, csr.layer, csr.x, csr.y, text_color.fg, text_color.bg, tile_transparency);
+	cur_buf->PutChar(0x00, csr.layer, csr.x, csr.y, text_color.fg, text_color.bg, tile_transparency);
 	return str;
 }
 void t_machine::move_tile_at_cursor_pos(int dx, int dy) {

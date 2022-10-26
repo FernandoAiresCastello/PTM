@@ -7,7 +7,7 @@ DEF buf_y,4
 DEF buf_chr_x,3
 DEF buf_pal_x,23
 
-BGCOL 0x72
+BGCOL 0x84
 COLOR 15,0
 TRON
 LOCATE 10,2
