@@ -11,7 +11,7 @@ PTM is powered by the following libraries:
 - [TileGameLib](https://github.com/FernandoAiresCastello/TileGameToolkit/tree/master/TileGameLibC)
 - [CppUtils](https://github.com/FernandoAiresCastello/CppUtils)
 
-Inspired by:
+And is inspired by:
 
 - [MSX-BASIC](https://en.wikipedia.org/wiki/MSX)
 - [ZX Spectrum](https://en.wikipedia.org/wiki/ZX_Spectrum)
@@ -40,7 +40,7 @@ Variables and Arrays
 
 System
 
-- NOP - do nothing
+- NOP - do nothing (used for testing)
 - INCL - include a PTML source file
 - EXIT - exit and close window
 - RESET - restart machine
