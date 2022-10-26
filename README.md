@@ -63,9 +63,9 @@ The project is developed in old-fashioned C++ and compiled using Microsoft Visua
 
 ## Screenshots
 
-![PTM default graphics](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/default_gfx.png?raw=true)
+![PTM default graphics](https://raw.githubusercontent.com/FernandoAiresCastello/PTM/master/Images/default_gfx.png)
 
-![Advanced Lawnmower Simulator](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/adv_lawn_sim.png?raw=true)
+![Advanced Lawnmower Simulator](https://raw.githubusercontent.com/FernandoAiresCastello/PTM/master/Images/adv_lawn_sim.png)
 
 ## List of PTML commands (may be outdated)
 
