@@ -25,7 +25,7 @@ And is inspired by:
 
 "Advanced Lawnmower Simulator" game included in the examples
 
-![Advanced Lawnmower Simulator](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/adv_lawn_sim.jpg?raw=true)
+![Advanced Lawnmower Simulator](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/adv_lawn_sim.png?raw=true)
 
 ### List of PTML commands (may be outdated):
 
