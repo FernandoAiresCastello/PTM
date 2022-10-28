@@ -1,7 +1,7 @@
 # PTM (Programmable Tile Machine)
-PTM is an interpreter and runtime environment for a low-level imperative programming language called PTML. It aims to be similar in style to many BASIC interpreters for early 8-bit computer systems such as the MSX, ZX Spectrum and Atari 800.
+PTM is an interpreter and runtime environment for an imperative semi-structured programming language called PTML. The runtime aims to be similar in look-and-feel to many BASIC interpreters for early 8-bit computer systems such as the MSX, ZX Spectrum and Atari 800, although the language itself bears more resemblance to a macro-assembler for the Zilog Z80 microprocessor than to BASIC.
 
-The output of this project is a standard Windows desktop executable application called PTM.exe. Upon execution, it looks for a file called "main.ptm" in the same directory. This file must contain PTML source code in plain text which will be interpreted at runtime. See the "Examples" folder for some PTML demo programs.
+The project is developed in old-fashioned C++ and compiled using Microsoft Visual Studio 2019. The target output is a standard Windows desktop executable application called PTM.exe. Upon execution, it looks for a file called "main.ptm" in the same directory. This file must contain PTML source code in plain text which will be interpreted at runtime. See the "Examples" folder for some PTML demo programs.
 
 ## Features
 
@@ -55,6 +55,7 @@ The output of this project is a standard Windows desktop executable application 
 ## Inspired by
 
 - [MSX-BASIC](https://en.wikipedia.org/wiki/MSX)
+- [Zilog Z80 Assembler](https://en.wikipedia.org/wiki/Zilog_Z80)
 - [ZX Spectrum](https://en.wikipedia.org/wiki/ZX_Spectrum)
 - [Atari 800](https://en.wikipedia.org/wiki/Atari_8-bit_family)
 - [ZZT](https://en.wikipedia.org/wiki/ZZT)
@@ -63,9 +64,9 @@ The output of this project is a standard Windows desktop executable application 
 
 ## Screenshots
 
-![PTM default graphics](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/default_gfx.png?raw=true)
+![PTM default graphics](https://raw.githubusercontent.com/FernandoAiresCastello/PTM/master/Images/default_gfx.png)
 
-![Advanced Lawnmower Simulator](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/adv_lawn_sim.png?raw=true)
+![Advanced Lawnmower Simulator](https://raw.githubusercontent.com/FernandoAiresCastello/PTM/master/Images/adv_lawn_sim.png)
 
 ## List of PTML commands (may be outdated)
 
