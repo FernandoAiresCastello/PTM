@@ -57,6 +57,7 @@ The output of this project is a standard Windows desktop executable application 
 - [MSX-BASIC](https://en.wikipedia.org/wiki/MSX)
 - [ZX Spectrum](https://en.wikipedia.org/wiki/ZX_Spectrum)
 - [Atari 800](https://en.wikipedia.org/wiki/Atari_8-bit_family)
+- [ZZT](https://en.wikipedia.org/wiki/ZZT)
 - [PICO-8](https://www.lexaloffle.com/pico-8.php)
 - [Bitsy](https://github.com/le-doux/bitsy)
 
