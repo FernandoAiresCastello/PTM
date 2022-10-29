@@ -10,6 +10,7 @@ struct t_compiler {
 	void run(t_program* prg);
 private:
 	bool compile_line(t_program* prg, t_program_line* new_line, t_source_line* src_line_ptr);
+	int parse_number(string arg);
 	void add_error(t_source_line* line, string msg);
 	void add_syntax_error(t_source_line* line);
 	bool is_invalid_line_start(string& src_line);

@@ -73,13 +73,13 @@ bool t_compiler::compile_line(
 
 		if (is_number(arg)) { // Number
 			param.type = t_param_type::number;
-			param.numeric_value = String::ToInt(arg);
-			param.textual_value = arg;
+			param.numeric_value = parse_number(arg);
+			param.textual_value = String::ToString(param.numeric_value);
 
 		} else if (is_string_literal(arg)) { // String literal
 			param.type = t_param_type::string;
 			param.textual_value = String::RemoveFirstAndLast(arg);
-			param.numeric_value = String::ToInt(param.textual_value);
+			param.numeric_value = parse_number(param.textual_value);
 
 		} else if (is_char_literal(arg)) { // Character literal
 			param.type = t_param_type::char_literal;
@@ -102,7 +102,7 @@ bool t_compiler::compile_line(
 
 				if (String::StartsWithNumber(ix)) { // Literal array index
 					param.type = t_param_type::arr_ix_literal;
-					param.arr_ix_literal = String::ToInt(ix);
+					param.arr_ix_literal = parse_number(ix);
 
 				} else if (String::StartsWithLetter(ix)) { // Variable array index
 					param.type = t_param_type::arr_ix_var;
@@ -124,9 +124,18 @@ bool t_compiler::compile_line(
 
 	return true;
 }
+int t_compiler::parse_number(string arg) {
+	arg = String::ToLower(arg);
+	if (String::StartsWith(arg, "&h")) {
+		arg = String::Replace(arg, "&h", "0x");
+	} else if (String::StartsWith(arg, "&b")) {
+		arg = String::Replace(arg, "&b", "0b");
+	}
+	return String::ToInt(arg);
+}
 void t_compiler::add_error(t_source_line* line, string msg) {
 	errors.push_back(String::Format("%s\n\nFile: %s\nLine: %i\nSource:\n\n%s", 
-		msg.c_str(), line->file.c_str(), line->line_nr, line->text.c_str()));
+		msg.c_str(), line->file.c_str(), line->line_nr, String::Trim(line->text).c_str()));
 }
 void t_compiler::add_syntax_error(t_source_line* line) {
 	add_error(line, "Syntax error");
@@ -168,9 +177,12 @@ std::vector<string> t_compiler::parse_args(string& raw_args) {
 }
 bool t_compiler::is_number(string& arg) {
 	return
-		String::StartsWithNumber(arg) ||
-		String::StartsWith(arg, '-') ||
-		String::StartsWith(arg, '+');
+		!String::StartsWith(arg, "0x") &&
+		!String::StartsWith(arg, "0b") &&
+		(String::StartsWithNumber(arg) ||
+			String::StartsWith(arg, '&') ||
+			String::StartsWith(arg, '-') ||
+			String::StartsWith(arg, '+'));
 }
 bool t_compiler::is_string_literal(string& arg) {
 	return String::StartsAndEndsWith(arg, '"');

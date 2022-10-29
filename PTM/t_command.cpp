@@ -32,8 +32,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "IF.GTE") { if_block_start(args, CMP_MODE_GTE); return true; }
 	if (cmd == "IF.LT") { if_block_start(args, CMP_MODE_LT); return true; }
 	if (cmd == "IF.LTE") { if_block_start(args, CMP_MODE_LTE); return true; }
-	if (cmd == "IF.STR.EQ") { if_block_start(args, CMP_MODE_STR_EQ); return true; }
-	if (cmd == "IF.STR.NEQ") { if_block_start(args, CMP_MODE_STR_NEQ); return true; }
+	if (cmd == "IF.EQS") { if_block_start(args, CMP_MODE_STR_EQ); return true; }
+	if (cmd == "IF.NEQS") { if_block_start(args, CMP_MODE_STR_NEQ); return true; }
 	if (cmd == "ENDIF") { if_block_end(args); return true; }
 	// Variables & Constants
 	if (cmd == "VAR") { set_variable(args); return true; }
@@ -163,7 +163,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "BSAVE") { write_byte_array_to_file(args); return true; }
 	// String functions
 	if (cmd == "STR.FMT") { format_number(args); return true; }
-	if (cmd == "STR.SUBST") { get_substring(args); return true; }
+	if (cmd == "STR.SUB") { get_substring(args); return true; }
 	if (cmd == "STR.LEN") { get_string_length(args); return true; }
 	if (cmd == "STR.REPT") { repeat_string(args); return true; }
 	if (cmd == "STR.CAT") { concatenate_strings(args); return true; }

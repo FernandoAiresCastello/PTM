@@ -7,7 +7,7 @@ DEF buf_y,4
 DEF buf_chr_x,3
 DEF buf_pal_x,23
 
-BGCOL 0x85
+BGCOL &h85
 COLOR 15,0
 TRON
 LOCATE 10,2
@@ -43,7 +43,7 @@ NEXT
 VAR color,0
 FOR y,2,18
 	FOR x,2,18
-		TILE.NEW 0xdb,color,0
+		TILE.NEW &hdb,color,0
 		LOCATE x,y
 		PUT
 		INC color
