@@ -64,7 +64,11 @@ The project is developed in old-fashioned C++ and compiled using Microsoft Visua
 
 ## Screenshots
 
+*Default graphics demo*
+
 ![PTM default graphics](https://raw.githubusercontent.com/FernandoAiresCastello/PTM/master/Images/default_gfx.png)
+
+*Example game "Advanced Lawnmower Simulator"*
 
 ![Advanced Lawnmower Simulator](https://raw.githubusercontent.com/FernandoAiresCastello/PTM/master/Images/advanced_lawnmower_simulator.png)
 
