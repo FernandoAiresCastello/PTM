@@ -554,8 +554,8 @@ void t_command::pause(t_params& arg) {
 	intp->pause_cycles = cycles;
 }
 void t_command::print_text(t_params& arg, bool crlf, bool add_frames) {
-	ARGC(1);
-	string text = intp->require_string(arg[0]);
+	ARGC_MIN_MAX(0,1);
+	string text = arg.empty() ? "" : intp->require_string(arg[0]);
 	machine->print_text(text, crlf, add_frames);
 }
 void t_command::print_text_char(t_params& arg) {
