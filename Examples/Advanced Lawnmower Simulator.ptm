@@ -10,7 +10,7 @@ show_title_screen:
 	CLS
 	TROFF
 
-	; Draw title banner
+	# Draw title banner
 	TILE.NEW '*',col.white,col.black
 	TILE.ADD '*',col.black,col.white
 	LOCATE 10,3
@@ -25,7 +25,7 @@ show_title_screen:
 	COLOR col.black,col.white
 	PRINT.ADD " LAWN MOWER SIMULATOR "
 
-	; Draw intro text
+	# Draw intro text
 	LOCATE 6,8
 	INK col.black
 	TRON
@@ -34,7 +34,7 @@ show_title_screen:
 	PRINTL "FROM SEVERAL DIFFERENT MACHINES"
 	PRINTL "AND 'GO GET THAT GRASS'"
 
-	; Draw options
+	# Draw options
 	PRINTL "\n\nPress relevant number:\n"
 	PRINTL "{f15}1{/f} CAMPARI GRASSMASTER"
 	PRINTL "{f15}2{/f} DAF TURFOMATIC"
@@ -112,13 +112,13 @@ start:
 	BGCOL col.green
 	CLS
 	TROFF
-	; Draw sky
+	# Draw sky
 	TILE.NEW chr.sky, col.black, col.cyan
 	RECT 7,2,31,21
-	; Draw grass
+	# Draw grass
 	TILE.NEW chr.grass, col.black, col.dkgreen
 	RECT 7,13,31,10
-	; Draw shed
+	# Draw shed
 	LOCATE 18,12
 	TILE.NEW chr.shed_vl, col.black, col.cyan
 	PUT.U 3
@@ -131,7 +131,7 @@ start:
 	CSR.R
 	TILE.NEW chr.shed_dr, col.black, col.cyan
 	PUT.DR 2
-	; Draw sun
+	# Draw sun
 	LOCATE 27,5
 	TILE.NEW chr.sun_1, col.yellow, col.cyan
 	TILE.ADD chr.sun_2, col.yellow, col.cyan

@@ -147,7 +147,7 @@ bool t_compiler::has_leading_whitespace(string& src_line) {
 	return String::StartsWith(src_line, ' ');
 }
 bool t_compiler::is_comment(string& src_line) {
-	return String::StartsWith(src_line, ';');
+	return String::StartsWith(src_line, '#');
 }
 bool t_compiler::is_label(string& src_line) {
 	return String::EndsWith(src_line, ":");

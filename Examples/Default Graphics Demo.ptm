@@ -1,6 +1,6 @@
-;================================================
+#================================================
 	view_default_gfx:
-;================================================
+#================================================
 TITLE "Default PTM Graphics Demo"
 
 DEF buf_y,4
@@ -17,13 +17,13 @@ CALL draw_charset
 
 HALT
 
-;================================================
+#================================================
 	draw_palette:
-;================================================
+#================================================
 BUF.NEW buf_pal,18,18,1
 BUF.SEL buf_pal
 BUF.VIEW buf_chr_x,buf_y,18,18
-; Horizontal ruler
+# Horizontal ruler
 VAR ind_x,2
 FOR i,0,16
 	LOCATE ind_x,1
@@ -31,7 +31,7 @@ FOR i,0,16
 	PRINT ind
 	INC ind_x
 NEXT
-; Vertical ruler
+# Vertical ruler
 VAR ind_y,2
 FOR i,0,16
 	LOCATE 1,ind_y
@@ -39,7 +39,7 @@ FOR i,0,16
 	PRINT ind
 	INC ind_y
 NEXT
-; Colors
+# Colors
 VAR color,0
 FOR y,2,18
 	FOR x,2,18
@@ -51,13 +51,13 @@ FOR y,2,18
 NEXT
 RET
 
-;================================================	
+#================================================	
 	draw_charset:
-;================================================
+#================================================
 BUF.NEW buf_chr,18,18,1
 BUF.SEL buf_chr
 BUF.VIEW buf_pal_x,buf_y,18,18
-; Horizontal ruler
+# Horizontal ruler
 VAR ind_x,2
 FOR i,0,16
 	LOCATE ind_x,1
@@ -65,7 +65,7 @@ FOR i,0,16
 	PRINT ind
 	INC ind_x
 NEXT
-; Vertical ruler
+# Vertical ruler
 VAR ind_y,2
 FOR i,0,16
 	LOCATE 1,ind_y
@@ -73,7 +73,7 @@ FOR i,0,16
 	PRINT ind
 	INC ind_y
 NEXT
-; Chars
+# Chars
 VAR char,0
 FOR y,2,18
 	FOR x,2,18
