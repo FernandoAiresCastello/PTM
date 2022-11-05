@@ -121,6 +121,7 @@ Conditional Flow
 - IF.LTE - if lesser or equal to
 - IF.STR.EQ - if strings equal
 - IF.STR.NEQ - if strings not equal
+- IF.KEY - if key is pressed
 - ENDIF - terminate if block
 
 Math
@@ -222,9 +223,7 @@ Palette Management
 Keyboard Input
 
 - INPUT - read text input from keyboard
-- INKEY - get key pressed
-- XON - enable exit with ESC key
-- XOFF - disable exit with ESC key
+- INKEY - get keycode pressed
 
 Sound
 

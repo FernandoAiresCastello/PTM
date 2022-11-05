@@ -93,7 +93,6 @@ private:
 	void math_add(t_params& arg);
 	void math_subtract(t_params& arg);
 	void math_multiply(t_params& arg);
-	void allow_exit_on_escape_key(t_params& arg, bool allow);
 	void set_window_title(t_params& arg);
 	void get_charset_size(t_params& arg);
 	void get_palette_size(t_params& arg);
@@ -122,6 +121,7 @@ private:
 	void loop_break(t_params& arg);
 	void loop_continue(t_params& arg);
 	void if_block_start(t_params& arg, int cmp_mode);
+	void if_kb_block_start(t_params& arg);
 	void if_block_end(t_params& arg);
 	void clear_palette(t_params& arg);
 	void get_palette_color(t_params& arg);

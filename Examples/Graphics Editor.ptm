@@ -8,7 +8,6 @@ init:
 	CALL csr.init
 
 main_loop:
-	CLS
 	CALL csr.draw
 	VSYNC
 	CALL process_input
@@ -16,18 +15,38 @@ main_loop:
 
 process_input:
 	INKEY key
-	IF.EQ key,$kb.right
+	IF.EQ key,'d'
 		CALL csr.move_r
 	ENDIF
-	IF.EQ key,$kb.left
+	IF.EQ key,'a'
 		CALL csr.move_l
 	ENDIF
-	IF.EQ key,$kb.up
+	IF.EQ key,'w'
 		CALL csr.move_u
 	ENDIF
-	IF.EQ key,$kb.down
+	IF.EQ key,'s'
 		CALL csr.move_d
 	ENDIF
+	IF.KEY SPACE
+		CALL put_current_tile
+	ENDIF
+	IF.KEY DEL
+		CALL del_tile
+	ENDIF
+	RET
+
+del_tile:
+	LAYER 0
+	LOCATE csr.x,csr.y
+	DEL
+	RET
+
+put_current_tile:
+	LAYER 0
+	TILE.NEW 2,0,0
+	LOCATE csr.x,csr.y
+	TRON
+	PUT
 	RET
 
 csr.init:
@@ -38,6 +57,8 @@ csr.init:
 	RET
 
 csr.draw:
+	LAYER 1
+	CLL
 	TILE.NEW 1,csr.fgc1,0
 	TILE.ADD 1,csr.fgc2,0
 	LOCATE csr.x,csr.y
@@ -46,6 +67,10 @@ csr.draw:
 	RET
 
 csr.move_r:
+	IF.KEY CTRL
+		ADD csr.x,csr.x,5
+		RET
+	ENDIF
 	INC csr.x
 	RET
 csr.move_l:
@@ -67,4 +92,14 @@ charset.init:
 	CHR 1,5,&b10000001
 	CHR 1,6,&b10000001
 	CHR 1,7,&b11111111
+	
+	CHR 2,0,&b11111110
+	CHR 2,1,&b11111110
+	CHR 2,2,&b11111110
+	CHR 2,3,&b11111110
+	CHR 2,4,&b11111110
+	CHR 2,5,&b11111110
+	CHR 2,6,&b11111110
+	CHR 2,7,&b00000000
+
 	RET

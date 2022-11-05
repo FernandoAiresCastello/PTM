@@ -31,7 +31,7 @@ struct t_machine {
 		int bg = default_bgc;
 	} text_color;
 	// Input
-	SDL_Keycode exit_key = SDLK_ESCAPE;
+	SDL_Keycode exit_key = SDLK_PAUSE;
 	int last_keycode_pressed = 0;
 	// Sound
 	TSound* snd = nullptr;
@@ -42,6 +42,7 @@ struct t_machine {
 	~t_machine();
 	void on_loop();
 	void init_system_vars();
+	void init_keyboard_map();
 	std::vector<string> get_debug_info();
 	void save_debug_file();
 	void set_var(string id, int value);
@@ -72,6 +73,8 @@ struct t_machine {
 	void print_text(string text, bool crlf, bool add_frames);
 	void draw_tile_sequence(string seq);
 	std::vector<string> split_tile_sequence(std::string& seq);
+	bool is_key_pressed(string keyname);
+	void on_key_pressed(SDL_Keycode key);
 
 private:
 	TCharset* original_chr;
@@ -81,4 +84,5 @@ private:
 		int x = 0;
 		int y = 0;
 	} csr;
+	std::map<string, SDL_Scancode> kbmap;
 };

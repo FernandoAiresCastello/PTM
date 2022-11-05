@@ -72,7 +72,7 @@ void t_interpreter::execute_current_line() {
 void t_interpreter::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt) {
 	if (key == SDLK_RETURN && TKey::Alt()) {
 		wnd->ToggleFullscreen();
-	} else if (key == SDLK_F12) {
+	} else if (key == SDLK_PAUSE && TKey::Alt()) {
 		machine->save_debug_file();
 		MsgBox::Info("PTM", "Debug file saved: " PTM_DEBUG_FILE);
 	} else if (key == SDLK_PRINTSCREEN) {
@@ -81,7 +81,7 @@ void t_interpreter::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt)
 	} else if (machine->exit_key != 0 && key == machine->exit_key) {
 		running = false;
 	} else {
-		machine->last_keycode_pressed = key;
+		machine->on_key_pressed(key);
 	}
 }
 void t_interpreter::abort(string error) {

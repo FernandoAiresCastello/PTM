@@ -34,6 +34,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "IF.LTE") { if_block_start(args, CMP_MODE_LTE); return true; }
 	if (cmd == "IF.EQS") { if_block_start(args, CMP_MODE_STR_EQ); return true; }
 	if (cmd == "IF.NEQS") { if_block_start(args, CMP_MODE_STR_NEQ); return true; }
+	if (cmd == "IF.KEY") { if_kb_block_start(args); return true; }
 	if (cmd == "ENDIF") { if_block_end(args); return true; }
 	// Variables & Constants
 	if (cmd == "VAR") { set_variable(args); return true; }
@@ -143,8 +144,6 @@ bool t_command::execute(string& cmd, t_params& args) {
 	// User input
 	if (cmd == "INPUT") { read_user_input_string(args); return true; }
 	if (cmd == "INKEY") { get_keycode_pressed(args); return true; }
-	if (cmd == "XON") { allow_exit_on_escape_key(args, true); return true; }
-	if (cmd == "XOFF") { allow_exit_on_escape_key(args, false); return true; }
 	// Debugging
 	if (cmd == "DBG.BRK") { trigger_breakpoint(args); return true; }
 	if (cmd == "DBG.DUMP") { save_debug_file(args); return true; }
@@ -746,10 +745,6 @@ void t_command::math_multiply(t_params& arg) {
 	auto& var = machine->vars[id];
 	machine->set_var(id, a * b);
 }
-void t_command::allow_exit_on_escape_key(t_params& arg, bool allow) {
-	ARGC(0);
-	machine->exit_key = allow ? SDLK_ESCAPE : 0;
-}
 void t_command::set_window_title(t_params& arg) {
 	ARGC(1);
 	machine->wnd->SetTitle(intp->require_string(arg[0]));
@@ -1011,6 +1006,14 @@ void t_command::if_block_start(t_params& arg, int cmp_mode) {
 		} else if (cmp_mode == CMP_MODE_LTE) {
 			if (a <= b) { return; } else { intp->goto_matching_endif(); }
 		}
+	}
+}
+void t_command::if_kb_block_start(t_params& arg) {
+	ARGC(1);
+	string keyname = intp->require_id(arg[0]);
+	if (keyname.empty()) return;
+	if (!machine->is_key_pressed(keyname)) {
+		intp->goto_matching_endif();
 	}
 }
 void t_command::if_block_end(t_params& arg) {
