@@ -119,8 +119,8 @@ Conditional Flow
 - IF.GTE - if greater or equal to
 - IF.LT - if lesser than
 - IF.LTE - if lesser or equal to
-- IF.STR.EQ - if strings equal
-- IF.STR.NEQ - if strings not equal
+- IF.EQS - if strings equal
+- IF.NEQS - if strings not equal
 - IF.KEY - if key is pressed
 - ENDIF - terminate if block
 
@@ -145,15 +145,15 @@ Graphics
 - BUF.H - get buffer height in rows
 - TILE.NEW - begin new tile
 - TILE.ADD - add character to tile
-- TILE.CH - set character
-- TILE.INK - set foreground color
-- TILE.PAPER - set background color
+- TILE.SETC - set character
+- TILE.SETF - set foreground color
+- TILE.SETB - set background color
 - TILE.COLOR - set fore/back colors
 - TILE.PARSE - parse tile from string
 - TILE.STORE - store tile in memory
 - TILE.LOAD - load tile from memory
-- TILE.PROP - set property
-- TILE.PGET - get property
+- TILE.SETP - set property
+- TILE.GETP - get property
 - LAYER - select buffer layer
 - LOCATE - set cursor column and row
 - CSR.X - set cursor column

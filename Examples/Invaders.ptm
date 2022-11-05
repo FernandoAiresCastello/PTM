@@ -1,0 +1,145 @@
+
+DEF enemy_layer,0
+DEF player_layer,1
+
+init:
+	VAR player_x,			20
+	VAR player_y,			23
+	VAR player_is_shooting,	0
+	VAR player_missile_x,	0
+	VAR player_missile_y,	0
+	VAR player_mv_ctr,		0
+	VAR player_mv_ctr_max,	4
+	VAR player_missile_mv_ctr,		0
+	VAR player_missile_mv_ctr_max,	3
+	
+	CALL init_charset
+
+	VOL 15
+	BGCOL &h00
+	TRON
+
+put_enemies:
+	LAYER enemy_layer
+	TILE.NEW 2,&hc3,0
+	TILE.ADD 3,&hc3,0
+	TILE.SETP "type","enemy"
+	FOR i,0,100
+		RND x,10,32
+		RND y,0,20
+		LOCATE x,y
+		PUT
+	NEXT
+
+gameplay_loop:
+	LAYER player_layer
+	CLL
+	CALL draw_player
+	IF.EQ player_is_shooting,1
+		CALL draw_player_missile
+		CALL move_player_missile
+		CALL check_player_missile_collision
+	ENDIF
+	VSYNC
+	IF.KEY RIGHT
+		VAR player_dx,1
+		CALL move_player
+	ENDIF
+	IF.KEY LEFT
+		VAR player_dx,-1
+		CALL move_player
+	ENDIF
+	IF.KEY SPACE
+		CALL player_shoot
+	ENDIF
+	GOTO gameplay_loop
+
+draw_player:
+	LAYER player_layer
+	TILE.NEW 6,&h0c,0
+	LOCATE player_x,player_y
+	PUT
+	RET
+
+move_player:
+	IF.EQ player_mv_ctr,0
+		ADD player_x,player_x,player_dx
+		IF.LT player_x,0
+			VAR player_x,0
+		ENDIF
+		IF.GT player_x,44
+			VAR player_x,44
+		ENDIF
+	ENDIF
+	INC player_mv_ctr
+	IF.GT player_mv_ctr,player_mv_ctr_max
+		VAR player_mv_ctr,0
+	ENDIF
+	RET
+
+player_shoot:
+	IF.EQ player_is_shooting,1
+		RET
+	ENDIF
+	PLAY "L10O4CDF"
+	VAR player_is_shooting,1
+	VAR player_missile_x,player_x
+	VAR player_missile_y,player_y
+	DEC player_missile_y
+	RET
+
+draw_player_missile:
+	LAYER player_layer
+	TILE.NEW '|',&hfc,0
+	LOCATE player_missile_x,player_missile_y
+	PUT
+	RET
+
+move_player_missile:
+	IF.EQ player_missile_mv_ctr,0
+		DEC player_missile_y
+		IF.LT player_missile_y,0
+			VAR player_is_shooting,0
+		ENDIF
+	ENDIF
+	INC player_missile_mv_ctr
+	IF.GT player_missile_mv_ctr,player_missile_mv_ctr_max
+		VAR player_missile_mv_ctr,0
+	ENDIF
+	RET
+
+check_player_missile_collision:
+	LAYER enemy_layer
+	LOCATE player_missile_x,player_missile_y
+	GET
+	TILE.GETP prop,"type"
+	IF.EQS prop,"enemy"
+		DEL
+		VSYNC
+		PLAY "L10O6ECD"
+		VAR player_is_shooting,0
+	ENDIF
+	RET
+
+init_charset:
+
+	CHR 2,0,&b00000000
+	CHR 2,1,&b00111000
+	CHR 2,2,&b01111100
+	CHR 2,3,&b10101010
+	CHR 2,4,&b01111100
+	CHR 2,5,&b10000010
+	CHR 2,6,&b01000100
+	CHR 2,7,&b00000000
+
+	CHR 3,0,&b00111000
+	CHR 3,1,&b01111100
+	CHR 3,2,&b11010110
+	CHR 3,3,&b01111100
+	CHR 3,4,&b10000010
+	CHR 3,5,&b10000010
+	CHR 3,6,&b00000000
+	CHR 3,7,&b00000000
+
+	RET
+	

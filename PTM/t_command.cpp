@@ -58,15 +58,15 @@ bool t_command::execute(string& cmd, t_params& args) {
 	// Current tile manipulation
 	if (cmd == "TILE.NEW") { init_cur_tile(args); return true; }
 	if (cmd == "TILE.ADD") { append_cur_tile(args); return true; }
-	if (cmd == "TILE.CH") { set_cur_tile_char(args); return true; }
-	if (cmd == "TILE.INK") { set_cur_tile_fgcolor(args); return true; }
-	if (cmd == "TILE.PAPER") { set_cur_tile_bgcolor(args); return true; }
+	if (cmd == "TILE.SETC") { set_cur_tile_char(args); return true; }
+	if (cmd == "TILE.SETF") { set_cur_tile_fgcolor(args); return true; }
+	if (cmd == "TILE.SETB") { set_cur_tile_bgcolor(args); return true; }
 	if (cmd == "TILE.COLOR") { set_cur_tile_colors(args); return true; }
 	if (cmd == "TILE.PARSE") { parse_cur_tile(args); return true; }
 	if (cmd == "TILE.STORE") { store_cur_tile(args); return true; }
 	if (cmd == "TILE.LOAD") { load_cur_tile(args); return true; }
-	if (cmd == "TILE.PROP") { set_tile_property(args); return true; }
-	if (cmd == "TILE.PGET") { get_tile_property(args); return true; }
+	if (cmd == "TILE.SETP") { set_tile_property(args); return true; }
+	if (cmd == "TILE.GETP") { get_tile_property(args); return true; }
 	// Cursor
 	if (cmd == "LAYER") { select_layer(args); return true; }
 	if (cmd == "LOCATE") { set_cursor_pos(args); return true; }
