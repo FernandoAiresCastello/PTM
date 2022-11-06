@@ -160,6 +160,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "BLOAD") { read_file_into_byte_array(args); return true; }
 	if (cmd == "CSAVE") { write_string_to_file(args); return true; }
 	if (cmd == "BSAVE") { write_byte_array_to_file(args); return true; }
+	if (cmd == "FILE.CHK") { check_file_exists(args); return true; }
 	// String functions
 	if (cmd == "STR.FMT") { format_number(args); return true; }
 	if (cmd == "STR.SUB") { get_substring(args); return true; }
@@ -1213,4 +1214,12 @@ void t_command::add_charset_pages(t_params& arg) {
 	for (int i = 0; i < pages; i++) {
 		machine->chr->AddBlank(page_size);
 	}
+}
+void t_command::check_file_exists(t_params& arg) {
+	ARGC(2);
+	string path = intp->require_string(arg[0]);
+	if (path.empty()) return;
+	string var = intp->require_id(arg[1]);
+	if (var.empty()) return;
+	machine->set_var(var, File::Exists(path) ? 1 : 0);
 }

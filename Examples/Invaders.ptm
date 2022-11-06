@@ -3,6 +3,7 @@ TITLE "Invaders"
 
 DEF enemy_layer,	0
 DEF player_layer,	1
+DEF hiscore_file,	"hiscore.dat"
 
 #================================================
 	init:
@@ -17,6 +18,7 @@ VAR player_mv_ctr_max,			5
 VAR player_missile_mv_ctr,		0
 VAR player_missile_mv_ctr_max,	3
 VAR score, 0
+VAR hiscore, 0
 
 VAR enemy_mv_ctr,		0
 VAR enemy_mv_ctr_max,	100
@@ -25,6 +27,11 @@ CALL init_charset
 VOL 15
 BGCOL &h90
 TRON
+
+FILE.CHK hiscore_file,has_hiscore
+IF.EQ has_hiscore,1
+	CLOAD hiscore_file,hiscore
+ENDIF
 
 #================================================
 	gameplay_loop:
@@ -49,6 +56,9 @@ IF.KEY LEFT
 ENDIF
 IF.KEY SPACE
 	CALL player_shoot
+ENDIF
+IF.KEY UP
+	ADD enemy_mv_ctr,enemy_mv_ctr,10
 ENDIF
 
 INC enemy_mv_ctr
@@ -76,10 +86,14 @@ FOR x,0,44
 	ENDIF
 NEXT
 IF.EQ is_defeat,1
-	LOCATE 33,23
-	PRINT "-Game Over-"
+	LOCATE 35,23
+	INK &h35
+	PRINT "GAME OVER"
+	LOCATE 35,23
+	PRINT.ADD "         "
 	VSYNC
 	PLAY "O2L80BAGFEDCCC"
+	CSAVE hiscore_file,hiscore
 	PAUSE 400
 	RESET
 ENDIF
@@ -120,10 +134,16 @@ RET
 #================================================
 LAYER player_layer
 LOCATE 1,23
+INK &h03
+PRINT "score "
 INK &h08
-PRINT "score: "
-STR.FMT score_fmt,"%07i",score
+STR.FMT score_fmt,"%07i  ",score
 PRINT score_fmt
+INK &h03
+PRINT "hi-score "
+INK &h08
+STR.FMT hiscore_fmt,"%07i",hiscore
+PRINT hiscore_fmt
 RET
 
 #================================================
@@ -205,6 +225,9 @@ IF.EQS prop,"enemy"
 	PLAY "L10O6ECD"
 	VAR player_is_shooting,0
 	ADD score,score,10
+	IF.GT score,hiscore
+		VAR hiscore,score
+	ENDIF
 ENDIF
 RET
 
