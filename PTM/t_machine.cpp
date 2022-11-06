@@ -118,9 +118,9 @@ std::vector<string> t_machine::get_debug_info() {
 		info.push_back("\t(empty)");
 	}
 	for (auto& var : vars) {
-		info.push_back(
-			(var.second.is_const ? "\tdef " : "\t") +
-			String::Format("%s = %s", var.first.c_str(), var.second.value.c_str()));
+		if (!var.second.is_const) {
+			info.push_back(String::Format("\t%s = %s", var.first.c_str(), var.second.value.c_str()));
+		}
 	}
 	info.push_back("");
 	// Arrays

@@ -31,7 +31,6 @@ struct t_machine {
 		int bg = default_bgc;
 	} text_color;
 	// Input
-	SDL_Keycode exit_key = SDLK_PAUSE;
 	int last_keycode_pressed = 0;
 	// Sound
 	TSound* snd = nullptr;

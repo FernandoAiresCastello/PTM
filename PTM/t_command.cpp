@@ -88,8 +88,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "BUF.HIDE") { show_tile_buffer(args, false); return true; }
 	if (cmd == "BUF.VIEW") { set_viewport(args); return true; }
 	if (cmd == "BUF.SCRL") { scroll_viewport(args); return true; }
-	if (cmd == "BUF.W") { get_buffer_width(args); return true; }
-	if (cmd == "BUF.H") { get_buffer_height(args); return true; }
+	if (cmd == "BUF.COLS") { get_buffer_width(args); return true; }
+	if (cmd == "BUF.ROWS") { get_buffer_height(args); return true; }
 	// Tile output
 	if (cmd == "PUT") { put_tile(args); return true; }
 	if (cmd == "GET") { copy_tile(args); return true; }
