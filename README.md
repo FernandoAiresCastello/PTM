@@ -72,6 +72,10 @@ The project is developed in old-fashioned C++ and compiled using Microsoft Visua
 
 ![Advanced Lawnmower Simulator](https://raw.githubusercontent.com/FernandoAiresCastello/PTM/master/Images/advanced_lawnmower_simulator.png)
 
+*Example game "Invaders"*
+
+![Invaders](https://raw.githubusercontent.com/FernandoAiresCastello/PTM/master/Images/invaders.png)
+
 ## List of PTML commands (may be outdated)
 
 Variables and Arrays
@@ -239,6 +243,7 @@ File I/O
 - BLOAD - read file into byte array
 - CSAVE - write string to file
 - BSAVE - write byte array to file
+- FILE.CHK - check if file exists
 
 String Functions
 

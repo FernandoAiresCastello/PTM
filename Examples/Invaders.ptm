@@ -86,11 +86,12 @@ FOR x,0,44
 	ENDIF
 NEXT
 IF.EQ is_defeat,1
-	LOCATE 35,23
+	LAYER player_layer
 	INK &h35
-	PRINT "GAME OVER"
-	LOCATE 35,23
-	PRINT.ADD "         "
+	LOCATE 16,23
+	PRINT     "GAME  OVER"
+	LOCATE 16,23
+	PRINT.ADD "          "
 	VSYNC
 	PLAY "O2L80BAGFEDCCC"
 	CSAVE hiscore_file,hiscore
@@ -133,12 +134,15 @@ RET
 	draw_info:
 #================================================
 LAYER player_layer
+
 LOCATE 1,23
 INK &h03
 PRINT "score "
 INK &h08
-STR.FMT score_fmt,"%07i  ",score
+STR.FMT score_fmt,"%07i",score
 PRINT score_fmt
+
+LOCATE 28,23
 INK &h03
 PRINT "hi-score "
 INK &h08
