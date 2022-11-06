@@ -1,8 +1,10 @@
 
 TITLE "Invaders"
 
-DEF enemy_layer,	0
-DEF player_layer,	1
+DEF bg_layer,		0
+DEF enemy_layer,	1
+DEF player_layer,	2
+
 DEF hiscore_file,	"hiscore.dat"
 
 #================================================
@@ -21,11 +23,20 @@ VAR score, 0
 VAR hiscore, 0
 
 VAR enemy_mv_ctr,		0
-VAR enemy_mv_ctr_max,	100
+VAR enemy_mv_ctr_max,	150
 
 CALL init_charset
 VOL 15
-BGCOL &h90
+BGCOL &h00
+
+LAYER bg_layer
+TILE.NEW 0,0,&h90
+RECT 0,0,45,5
+TILE.NEW 0,0,&h91
+RECT 0,5,45,8
+TILE.NEW 0,0,&h92
+RECT 0,13,45,10
+
 TRON
 
 FILE.CHK hiscore_file,has_hiscore
@@ -108,24 +119,9 @@ MOVB 0,0,44,22,0,1
 TILE.NEW ch_enemy_1,&hc6,0
 TILE.ADD ch_enemy_2,&hc7,0
 TILE.SETP "type","enemy"
-FOR i,0,5
-	RND x,10,33
+FOR i,0,10
+	RND x,13,30
 	LOCATE x,0
-	PUT
-NEXT
-RET
-
-#================================================
-	spawn_enemies:
-#================================================
-LAYER enemy_layer
-TILE.NEW ch_enemy_1,&hc6,0
-TILE.ADD ch_enemy_2,&hc7,0
-TILE.SETP "type","enemy"
-FOR i,0,200
-	RND x,10,33
-	RND y,0,20
-	LOCATE x,y
 	PUT
 NEXT
 RET

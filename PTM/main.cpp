@@ -9,7 +9,7 @@ int main(int argc, char* argv[]) {
 	t_globals g;
 	g.snd->SetVolume(TSound::MinVolume + 1000);
 	TWindowCreationFlags::RenderScaleQuality = "best";
-	g.wnd = new TBufferedWindow(2, 45, 25, 3, 3);
+	g.wnd = new TBufferedWindow(3, 45, 25, 3, 3);
 	g.wnd->Show();
 
 	string prg_file = argc > 1 ? argv[1] : PTM_MAIN_PROG_FILE;
