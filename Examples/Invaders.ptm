@@ -18,25 +18,13 @@ VAR player_missile_mv_ctr,		0
 VAR player_missile_mv_ctr_max,	3
 VAR score, 0
 
-CALL init_charset
+VAR enemy_mv_ctr,		0
+VAR enemy_mv_ctr_max,	100
 
+CALL init_charset
 VOL 15
 BGCOL &h90
 TRON
-
-#================================================
-	put_enemies:
-#================================================
-LAYER enemy_layer
-TILE.NEW ch_enemy_1,&hc6,0
-TILE.ADD ch_enemy_2,&hc7,0
-TILE.SETP "type","enemy"
-FOR i,0,200
-	RND x,10,33
-	RND y,1,20
-	LOCATE x,y
-	PUT
-NEXT
 
 #================================================
 	gameplay_loop:
@@ -50,7 +38,7 @@ IF.EQ player_is_shooting,1
 	CALL move_player_missile
 	CALL check_player_missile_collision
 ENDIF
-VSYNC
+
 IF.KEY RIGHT
 	VAR player_dx,1
 	CALL move_player
@@ -62,11 +50,75 @@ ENDIF
 IF.KEY SPACE
 	CALL player_shoot
 ENDIF
+
+INC enemy_mv_ctr
+IF.GT enemy_mv_ctr,enemy_mv_ctr_max
+	VAR enemy_mv_ctr,0
+	CALL spawn_enemy_row
+ENDIF
+
+CALL check_for_defeat
+
+VSYNC
 GOTO gameplay_loop
+
+#================================================
+	check_for_defeat:
+#================================================
+VAR is_defeat,0
+LAYER enemy_layer
+FOR x,0,44
+	LOCATE x,player_y
+	GET
+	TILE.GETP prop,"type"
+	IF.EQS prop,"enemy"
+		VAR is_defeat,1
+	ENDIF
+NEXT
+IF.EQ is_defeat,1
+	LOCATE 33,23
+	PRINT "-Game Over-"
+	VSYNC
+	PLAY "O2L80BAGFEDCCC"
+	PAUSE 400
+	RESET
+ENDIF
+RET
+
+#================================================
+	spawn_enemy_row:
+#================================================
+LAYER enemy_layer
+MOVB 0,0,44,22,0,1
+TILE.NEW ch_enemy_1,&hc6,0
+TILE.ADD ch_enemy_2,&hc7,0
+TILE.SETP "type","enemy"
+FOR i,0,5
+	RND x,10,33
+	LOCATE x,0
+	PUT
+NEXT
+RET
+
+#================================================
+	spawn_enemies:
+#================================================
+LAYER enemy_layer
+TILE.NEW ch_enemy_1,&hc6,0
+TILE.ADD ch_enemy_2,&hc7,0
+TILE.SETP "type","enemy"
+FOR i,0,200
+	RND x,10,33
+	RND y,0,20
+	LOCATE x,y
+	PUT
+NEXT
+RET
 
 #================================================
 	draw_info:
 #================================================
+LAYER player_layer
 LOCATE 1,23
 INK &h08
 PRINT "score: "
