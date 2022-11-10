@@ -71,7 +71,6 @@ struct t_machine {
 	void move_tile_block(int x, int y, int w, int h, int dx, int dy);
 	void print_text(string text, bool crlf, bool add_frames);
 	void draw_tile_sequence(string seq);
-	std::vector<string> split_tile_sequence(std::string& seq);
 	bool is_key_pressed(string keyname);
 	void on_key_pressed(SDL_Keycode key);
 

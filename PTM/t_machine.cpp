@@ -416,9 +416,10 @@ void t_machine::draw_tile_sequence(string seq) {
 		cur_tile.AddBlank();
 	}
 	bool draw = false;
-	auto cmd = split_tile_sequence(seq);
+	auto cmd = String::Split(seq, ' ', true);
 	for (int i = 0; i < cmd.size(); i++) {
 		auto value = String::ToUpper(cmd[i]);
+		value = String::Replace(value, "&H", "0x");
 		if (String::StartsWith(value, 'F')) {
 			cur_tile.SetForeColor(0, String::ToInt(String::Skip(value, 1)));
 		} else if (String::StartsWith(value, 'B')) {
@@ -465,31 +466,6 @@ void t_machine::draw_tile_sequence(string seq) {
 			if (draw) put_cur_tile_at_cursor_pos();
 		}
 	}
-}
-std::vector<string> t_machine::split_tile_sequence(std::string& seq) {
-	seq = String::Trim(seq);
-	std::vector<std::string> cmds;
-	std::string cmd;
-
-	for (int i = 0; i < seq.size(); i++) {
-		char ch = toupper(seq[i]);
-		if (isalpha(ch)) {
-			if (cmd != "") {
-				cmds.push_back(cmd);
-				cmd = "";
-				i--;
-			} else {
-				cmd += ch;
-			}
-		} else if (isdigit(ch)) {
-			cmd += ch;
-		}
-	}
-	if (cmd != "") {
-		cmds.push_back(cmd);
-	}
-
-	return cmds;
 }
 bool t_machine::is_key_pressed(string keyname) {
 	keyname = String::ToUpper(keyname);
