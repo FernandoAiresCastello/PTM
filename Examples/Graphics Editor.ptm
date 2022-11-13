@@ -15,22 +15,22 @@ main_loop:
 
 process_input:
 	INKEY key
-	IF.EQ key,'d'
+	IF.EQS key,"RIGHT"
 		CALL csr.move_r
 	ENDIF
-	IF.EQ key,'a'
+	IF.EQS key,"LEFT"
 		CALL csr.move_l
 	ENDIF
-	IF.EQ key,'w'
+	IF.EQS key,"UP"
 		CALL csr.move_u
 	ENDIF
-	IF.EQ key,'s'
+	IF.EQS key,"DOWN"
 		CALL csr.move_d
 	ENDIF
-	IF.KEY SPACE
+	IF.KEY "SPACE"
 		CALL put_current_tile
 	ENDIF
-	IF.KEY DEL
+	IF.KEY "DEL"
 		CALL del_tile
 	ENDIF
 	RET
@@ -67,7 +67,7 @@ csr.draw:
 	RET
 
 csr.move_r:
-	IF.KEY CTRL
+	IF.KEY "CTRL"
 		ADD csr.x,csr.x,5
 		RET
 	ENDIF

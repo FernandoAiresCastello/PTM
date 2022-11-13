@@ -73,6 +73,7 @@ struct t_machine {
 	void draw_tile_sequence(string seq);
 	bool is_key_pressed(string keyname);
 	void on_key_pressed(SDL_Keycode key);
+	string get_keyname(SDL_Keycode key);
 
 private:
 	TCharset* original_chr;

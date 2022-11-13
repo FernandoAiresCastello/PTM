@@ -143,7 +143,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "PAL.SETB") { set_palette_color_comp(args, COLOR_B); return true; }
 	// User input
 	if (cmd == "INPUT") { read_user_input_string(args); return true; }
-	if (cmd == "INKEY") { get_keycode_pressed(args); return true; }
+	if (cmd == "INKEY") { get_keyname_pressed(args); return true; }
+	if (cmd == "KCODE") { get_keycode_pressed(args); return true; }
 	// Debugging
 	if (cmd == "DBG.BRK") { trigger_breakpoint(args); return true; }
 	if (cmd == "DBG.DUMP") { save_debug_file(args); return true; }
@@ -448,6 +449,7 @@ void t_command::fill_layer(t_params& arg) {
 void t_command::clear_all_layers(t_params& arg) {
 	ARGC(0);
 	machine->cur_buf->ClearAllLayers();
+	machine->set_cursor_pos(0, 0);
 }
 void t_command::clear_layer(t_params& arg) {
 	ARGC(0);
@@ -595,6 +597,13 @@ void t_command::get_keycode_pressed(t_params& arg) {
 	string id = intp->require_id(arg[0]);
 	if (id.empty()) return;
 	machine->set_var(id, machine->last_keycode_pressed);
+	machine->last_keycode_pressed = 0;
+}
+void t_command::get_keyname_pressed(t_params& arg) {
+	ARGC(1);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	machine->set_var(id, machine->get_keyname(machine->last_keycode_pressed));
 	machine->last_keycode_pressed = 0;
 }
 void t_command::save_debug_file(t_params& arg) {
@@ -1011,7 +1020,7 @@ void t_command::if_block_start(t_params& arg, int cmp_mode) {
 }
 void t_command::if_kb_block_start(t_params& arg) {
 	ARGC(1);
-	string keyname = intp->require_id(arg[0]);
+	string keyname = intp->require_string(arg[0]);
 	if (keyname.empty()) return;
 	if (!machine->is_key_pressed(keyname)) {
 		intp->goto_matching_endif();

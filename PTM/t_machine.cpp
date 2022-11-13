@@ -110,6 +110,77 @@ void t_machine::init_keyboard_map() {
 	KBMAP("8", SDL_SCANCODE_8);
 	KBMAP("9", SDL_SCANCODE_9);
 }
+string t_machine::get_keyname(SDL_Keycode key) {
+	if (key == 0) return "NONE";
+	if (key == SDLK_RIGHT) return "RIGHT";
+	if (key == SDLK_LEFT) return "LEFT";
+	if (key == SDLK_UP) return "UP";
+	if (key == SDLK_DOWN) return "DOWN";
+	if (key == SDLK_SPACE) return "SPACE";
+	if (key == SDLK_RETURN) return "ENTER";
+	if (key == SDLK_ESCAPE) return "ESC";
+	if (key == SDLK_TAB) return "TAB";
+	if (key == SDLK_BACKSPACE) return "BS";
+	if (key == SDLK_INSERT) return "INS";
+	if (key == SDLK_DELETE) return "DEL";
+	if (key == SDLK_HOME) return "HOME";
+	if (key == SDLK_END) return "END";
+	if (key == SDLK_PAGEUP) return "PGUP";
+	if (key == SDLK_PAGEDOWN) return "PGDN";
+	if (key == SDLK_CAPSLOCK) return "CAPS";
+	if (key == SDLK_LSHIFT || key == SDLK_RSHIFT) return "SHIFT";
+	if (key == SDLK_LCTRL || key == SDLK_RCTRL) return "CTRL";
+	if (key == SDLK_RALT || key == SDLK_LALT) return "ALT";
+	if (key == SDLK_F1) return "F1";
+	if (key == SDLK_F2) return "F2";
+	if (key == SDLK_F3) return "F3";
+	if (key == SDLK_F4) return "F4";
+	if (key == SDLK_F5) return "F5";
+	if (key == SDLK_F6) return "F6";
+	if (key == SDLK_F7) return "F7";
+	if (key == SDLK_F8) return "F8";
+	if (key == SDLK_F9) return "F9";
+	if (key == SDLK_F10) return "F10";
+	if (key == SDLK_F11) return "F11";
+	if (key == SDLK_F12) return "F12";
+	if (key == SDLK_a) return "A";
+	if (key == SDLK_b) return "B";
+	if (key == SDLK_c) return "C";
+	if (key == SDLK_d) return "D";
+	if (key == SDLK_e) return "E";
+	if (key == SDLK_f) return "F";
+	if (key == SDLK_g) return "G";
+	if (key == SDLK_h) return "H";
+	if (key == SDLK_i) return "I";
+	if (key == SDLK_j) return "J";
+	if (key == SDLK_k) return "K";
+	if (key == SDLK_l) return "L";
+	if (key == SDLK_m) return "M";
+	if (key == SDLK_n) return "N";
+	if (key == SDLK_o) return "O";
+	if (key == SDLK_p) return "P";
+	if (key == SDLK_q) return "Q";
+	if (key == SDLK_r) return "R";
+	if (key == SDLK_s) return "S";
+	if (key == SDLK_t) return "T";
+	if (key == SDLK_u) return "U";
+	if (key == SDLK_v) return "V";
+	if (key == SDLK_w) return "W";
+	if (key == SDLK_x) return "X";
+	if (key == SDLK_y) return "Y";
+	if (key == SDLK_z) return "Z";
+	if (key == SDLK_0) return "0";
+	if (key == SDLK_1) return "1";
+	if (key == SDLK_2) return "2";
+	if (key == SDLK_3) return "3";
+	if (key == SDLK_4) return "4";
+	if (key == SDLK_5) return "5";
+	if (key == SDLK_6) return "6";
+	if (key == SDLK_7) return "7";
+	if (key == SDLK_8) return "8";
+	if (key == SDLK_9) return "9";
+	return String::ToString(key);
+}
 std::vector<string> t_machine::get_debug_info() {
 	std::vector<string> info;
 	// Variables
@@ -478,10 +549,5 @@ bool t_machine::is_key_pressed(string keyname) {
 	return TKey::IsPressed(kbmap[keyname]);
 }
 void t_machine::on_key_pressed(SDL_Keycode key) {
-	if (key == SDLK_UP) key = 'w';
-	else if (key == SDLK_LEFT) key = 'a';
-	else if (key == SDLK_DOWN) key = 's';
-	else if (key == SDLK_RIGHT) key = 'd';
-
 	last_keycode_pressed = key;
 }

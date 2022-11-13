@@ -57,18 +57,18 @@ IF.EQ player_is_shooting,1
 	CALL check_player_missile_collision
 ENDIF
 
-IF.KEY RIGHT
+IF.KEY "RIGHT"
 	VAR player_dx,1
 	CALL move_player
 ENDIF
-IF.KEY LEFT
+IF.KEY "LEFT"
 	VAR player_dx,-1
 	CALL move_player
 ENDIF
-IF.KEY SPACE
+IF.KEY "SPACE"
 	CALL player_shoot
 ENDIF
-IF.KEY UP
+IF.KEY "UP"
 	ADD enemy_mv_ctr,enemy_mv_ctr,10
 ENDIF
 

@@ -75,6 +75,7 @@ private:
 	void set_text_bgcolor(t_params& arg);
 	void set_text_colors(t_params& arg);
 	void get_keycode_pressed(t_params& arg);
+	void get_keyname_pressed(t_params& arg);
 	void save_debug_file(t_params& arg);
 	void show_msgbox(t_params& arg);
 	void play_sound(t_params& arg);

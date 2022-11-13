@@ -46,27 +46,27 @@ show_title_screen:
 options_loop:
 	VSYNC
 	INKEY opt
-	IF.EQ opt,'1'
+	IF.EQS opt,"1"
 		VAR opt_sel,"CAMPARI GRASSMASTER"
 		GOTO print_option
 	ENDIF
-	IF.EQ opt,'2'
+	IF.EQS opt,"2"
 		VAR opt_sel,"DAF TURFOMATIC"
 		GOTO print_option
 	ENDIF
-	IF.EQ opt,'3'
+	IF.EQS opt,"3"
 		VAR opt_sel,"ACME MEGA-CUT 3000"
 		GOTO print_option
 	ENDIF
-	IF.EQ opt,'4'
+	IF.EQS opt,"4"
 		VAR opt_sel,"ACME LAWN-ACE"
 		GOTO print_option
 	ENDIF
-	IF.EQ opt,'5'
+	IF.EQS opt,"5"
 		VAR opt_sel,"FLYMO GRASSCHUM"
 		GOTO print_option
 	ENDIF
-	IF.EQ opt,'6'
+	IF.EQS opt,"6"
 		GOTO print_working_option
 	ENDIF
 	GOTO options_loop
@@ -94,10 +94,9 @@ print_working_option:
 await_keypress_to_start:
 	VSYNC
 	INKEY key
-	IF.NEQ key,0
-		GOTO start
+	IF.EQS key,"NONE"
+		GOTO await_keypress_to_start
 	ENDIF
-	GOTO await_keypress_to_start
 
 start:
 	VAR man.x,37
@@ -144,11 +143,11 @@ main_loop:
 	CALL print_score
 	VSYNC
 	INKEY key
-	IF.EQ key,'m'
+	IF.EQS key,"M"
 		VAR speed,1
 		CALL cut_grass
 	ENDIF
-	IF.EQ key,'z'
+	IF.EQS key,"Z"
 		VAR speed,10
 		CALL cut_grass
 	ENDIF
@@ -254,7 +253,7 @@ ending_loop:
 		VAR ix_end,33
 	ENDIF
 	INKEY key
-	IF.EQ key,0
+	IF.EQS key,"NONE"
 		PAUSE 5
 		GOTO ending_loop
 	ENDIF
@@ -264,55 +263,55 @@ ending_loop:
 draw_endgame_window_frame:
 	TILE.NEW 0,col.white,col.black
 	LOCATE 0,0
-	TILE.CH 0,&hda
+	TILE.SETC 0,&hda
 	PUT
 	LOCATE 44,0
-	TILE.CH 0,&hbf
+	TILE.SETC 0,&hbf
 	PUT
 	LOCATE 0,24
-	TILE.CH 0,&hc0
+	TILE.SETC 0,&hc0
 	PUT
 	LOCATE 44,24
-	TILE.CH 0,&hd9
+	TILE.SETC 0,&hd9
 	PUT
 	LOCATE 1,0
-	TILE.CH 0,&hc4
+	TILE.SETC 0,&hc4
 	PUT.R 42
 	LOCATE 1,24
-	TILE.CH 0,&hc4
+	TILE.SETC 0,&hc4
 	PUT.R 42
 	LOCATE 0,1
-	TILE.CH 0,&hb3
+	TILE.SETC 0,&hb3
 	PUT.D 22
 	LOCATE 44,1
-	TILE.CH 0,&hb3
+	TILE.SETC 0,&hb3
 	PUT.D 22
 	RET
 
 draw_endgame_msg_frame:
 	LOCATE 5,10
-	TILE.CH 0,&hda
+	TILE.SETC 0,&hda
 	PUT
 	LOCATE 39,10
-	TILE.CH 0,&hbf
+	TILE.SETC 0,&hbf
 	PUT
 	LOCATE 5,12
-	TILE.CH 0,&hc0
+	TILE.SETC 0,&hc0
 	PUT
 	LOCATE 39,12
-	TILE.CH 0,&hd9
+	TILE.SETC 0,&hd9
 	PUT
 	LOCATE 6,10
-	TILE.CH 0,&hc4
+	TILE.SETC 0,&hc4
 	PUT.R 32
 	LOCATE 6,12
-	TILE.CH 0,&hc4
+	TILE.SETC 0,&hc4
 	PUT.R 32
 	LOCATE 5,11
-	TILE.CH 0,&hb3
+	TILE.SETC 0,&hb3
 	PUT
 	LOCATE 39,11
-	TILE.CH 0,&hb3
+	TILE.SETC 0,&hb3
 	PUT
 	RET
 
