@@ -69,7 +69,8 @@ struct t_machine {
 	string read_input_string(int maxlen);
 	void move_tile_at_cursor_pos(int dx, int dy);
 	void move_tile_block(int x, int y, int w, int h, int dx, int dy);
-	void print_text(string text, bool crlf, bool add_frames);
+	void print_text(string text, bool crlf, bool add_frames, bool raw);
+	void print_text(string text, bool crlf, bool add_frames, int fgc, int bgc, bool raw);
 	void draw_tile_sequence(string seq);
 	bool is_key_pressed(string keyname);
 	void on_key_pressed(SDL_Keycode key);

@@ -93,7 +93,7 @@ Variables and Arrays
 
 System
 
-- NOP - do nothing (used for testing)
+- NOP - do nothing (used for internal testing)
 - INCL - include a PTML source file
 - EXIT - exit and close window
 - RESET - restart machine
@@ -113,7 +113,7 @@ Loops
 - FOR - start a loop
 - NEXT - end a loop
 - BRK - break from loop
-- CONT - skip loop iteration
+- SKIP - skip rest of loop iteration
 
 Conditional Flow
 
@@ -125,7 +125,7 @@ Conditional Flow
 - IF.LTE - if lesser or equal to
 - IF.EQS - if strings equal
 - IF.NEQS - if strings not equal
-- IF.KEY - if key is pressed
+- IF.KEY - if named key is pressed
 - ENDIF - terminate if block
 
 Math
@@ -145,8 +145,8 @@ Graphics
 - BUF.HIDE - hide current buffer
 - BUF.VIEW - set viewport
 - BUF.SCRL - scroll viewport
-- BUF.W - get buffer width in columns
-- BUF.H - get buffer height in rows
+- BUF.COLS - get buffer width in columns
+- BUF.ROWS - get buffer height in rows
 - TILE.NEW - begin new tile
 - TILE.ADD - add character to tile
 - TILE.SETC - set character
@@ -191,8 +191,9 @@ Graphics
 - MOVB - move block of tiles
 - DRAW - draw tiles on a path
 - PRINT - print text
-- PRINT.ADD - add tiles to text
+- PRINT.ADD - add tile frames to text
 - PRINTL - print text then new line
+- PRINTR - print raw text (ignore escape sequences)
 - PUTC - print a text character
 - INK - set text foreground color
 - PAPER - set text background color
@@ -227,7 +228,8 @@ Palette Management
 Keyboard Input
 
 - INPUT - read text input from keyboard
-- INKEY - get keycode pressed
+- INKEY - get name of key pressed
+- KCODE - get numerical code of key pressed
 
 Sound
 
@@ -248,7 +250,7 @@ File I/O
 String Functions
 
 - STR.FMT - get formatted string
-- STR.SUBST - get substring
+- STR.SUB - get substring
 - STR.LEN - get string length
 - STR.REPT - get repeated string
 - STR.CAT - get concatenated strings

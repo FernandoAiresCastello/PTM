@@ -410,7 +410,10 @@ void t_machine::move_tile_block(int x, int y, int w, int h, int dx, int dy) {
 		}
 	}
 }
-void t_machine::print_text(string text, bool crlf, bool add_frames) {
+void t_machine::print_text(string text, bool crlf, bool add_frames, bool raw) {
+	print_text(text, crlf, add_frames, text_color.fg, text_color.bg, raw);
+}
+void t_machine::print_text(string text, bool crlf, bool add_frames, int fgc, int bgc, bool raw) {
 	if (text.empty() && crlf) {
 		text = "\\n";
 	} else if (crlf) {
@@ -419,8 +422,6 @@ void t_machine::print_text(string text, bool crlf, bool add_frames) {
 	const int initial_x = get_csr_x();
 	bool escape = false;
 	string escape_seq = "";
-	int fgc = text_color.fg;
-	int bgc = text_color.bg;
 	for (int i = 0; i < text.length(); i++) {
 		int ch = text[i];
 		if (ch == '\\') {
@@ -431,14 +432,14 @@ void t_machine::print_text(string text, bool crlf, bool add_frames) {
 					set_cursor_pos(initial_x, get_csr_y());
 				}
 			}
-		} else if (ch == '{') {
+		} else if (!raw && ch == '{') {
 			escape = true;
 			continue;
-		} else if (ch == '}') {
+		} else if (!raw && ch == '}') {
 			escape = false;
-			if (String::StartsWith(escape_seq, 'c')) {
-				string chstr = String::Skip(escape_seq, 1);
-				ch = String::ToInt(chstr);
+			const string upper_escape_seq = String::ToUpper(escape_seq);
+			if (String::StartsWith(upper_escape_seq, 'C')) {
+				ch = String::ToInt(String::Skip(String::Replace(upper_escape_seq, "&H", "0x"), 1));
 				auto tile = TTileSeq(ch, fgc, bgc);
 				if (add_frames) {
 					add_tile_frame_at_cursor_pos(tile.Get(0));
@@ -448,21 +449,26 @@ void t_machine::print_text(string text, bool crlf, bool add_frames) {
 				move_cursor(1, 0);
 				escape_seq = "";
 				continue;
-			} else if (String::StartsWith(escape_seq, 'f')) {
-				fgc = String::ToInt(String::Skip(escape_seq, 1));
+			} else if (String::StartsWith(upper_escape_seq, 'F')) {
+				fgc = String::ToInt(String::Skip(String::Replace(upper_escape_seq, "&H", "0x"), 1));
 				escape_seq = "";
 				continue;
-			} else if (String::StartsWith(escape_seq, "/f")) {
+			} else if (String::StartsWith(upper_escape_seq, "/F")) {
 				fgc = text_color.fg;
 				escape_seq = "";
 				continue;
-			} else if (String::StartsWith(escape_seq, 'b')) {
-				bgc = String::ToInt(String::Skip(escape_seq, 1));
+			} else if (String::StartsWith(upper_escape_seq, 'B')) {
+				bgc = String::ToInt(String::Skip(String::Replace(upper_escape_seq, "&H", "0x"), 1));
 				escape_seq = "";
 				continue;
-			} else if (String::StartsWith(escape_seq, "/b")) {
+			} else if (String::StartsWith(upper_escape_seq, "/B")) {
 				bgc = text_color.bg;
 				escape_seq = "";
+				continue;
+			} else if (String::StartsWith(escape_seq, '%')) {
+				string var = String::Skip(escape_seq, 1);
+				escape_seq = "";
+				print_text(vars[var].value, false, false, fgc, bgc, true);
 				continue;
 			} else {
 				intp->abort("Invalid escape sequence: " + escape_seq);

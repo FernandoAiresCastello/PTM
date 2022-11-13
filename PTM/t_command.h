@@ -69,7 +69,7 @@ private:
 	void update_screen(t_params& arg);
 	void get_random_number(t_params& arg);
 	void pause(t_params& arg);
-	void print_text(t_params& arg, bool crlf, bool add_frames);
+	void print_text(t_params& arg, bool crlf, bool add_frames, bool raw);
 	void print_text_char(t_params& arg);
 	void set_text_fgcolor(t_params& arg);
 	void set_text_bgcolor(t_params& arg);

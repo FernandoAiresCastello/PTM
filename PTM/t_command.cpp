@@ -24,7 +24,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "FOR") { loop_start(args); return true; }
 	if (cmd == "NEXT") { loop_end(args); return true; }
 	if (cmd == "BRK") { loop_break(args); return true; }
-	if (cmd == "CONT") { loop_continue(args); return true; }
+	if (cmd == "SKIP") { loop_continue(args); return true; }
 	// Conditional blocks
 	if (cmd == "IF.EQ") { if_block_start(args, CMP_MODE_EQ); return true; }
 	if (cmd == "IF.NEQ") { if_block_start(args, CMP_MODE_NEQ); return true; }
@@ -111,9 +111,10 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "MOVB") { move_tile_block(args); return true; }
 	if (cmd == "DRAW") { draw_tile_sequence(args); return true; }
 	// Text output
-	if (cmd == "PRINT") { print_text(args, false, false); return true; }
-	if (cmd == "PRINT.ADD") { print_text(args, false, true); return true; }
-	if (cmd == "PRINTL") { print_text(args, true, false); return true; }
+	if (cmd == "PRINT") { print_text(args, false, false, false); return true; }
+	if (cmd == "PRINT.ADD") { print_text(args, false, true, false); return true; }
+	if (cmd == "PRINTL") { print_text(args, true, false, false); return true; }
+	if (cmd == "PRINTR") { print_text(args, false, false, true); return true; }
 	if (cmd == "PUTC") { print_text_char(args); return true; }
 	if (cmd == "INK") { set_text_fgcolor(args); return true; }
 	if (cmd == "PAPER") { set_text_bgcolor(args); return true; }
@@ -555,10 +556,10 @@ void t_command::pause(t_params& arg) {
 	if (cycles == PTM_INVALID_NUMBER) return;
 	intp->pause_cycles = cycles;
 }
-void t_command::print_text(t_params& arg, bool crlf, bool add_frames) {
+void t_command::print_text(t_params& arg, bool crlf, bool add_frames, bool raw) {
 	ARGC_MIN_MAX(0,1);
 	string text = arg.empty() ? "" : intp->require_string(arg[0]);
-	machine->print_text(text, crlf, add_frames);
+	machine->print_text(text, crlf, add_frames, raw);
 }
 void t_command::print_text_char(t_params& arg) {
 	ARGC(1);
