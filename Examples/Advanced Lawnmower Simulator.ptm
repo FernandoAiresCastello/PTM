@@ -46,27 +46,27 @@ show_title_screen:
 options_loop:
 	VSYNC
 	INKEY opt
-	IF.EQS opt,"1"
+	IF.EQ opt,"1"
 		VAR opt_sel,"CAMPARI GRASSMASTER"
 		GOTO print_option
 	ENDIF
-	IF.EQS opt,"2"
+	IF.EQ opt,"2"
 		VAR opt_sel,"DAF TURFOMATIC"
 		GOTO print_option
 	ENDIF
-	IF.EQS opt,"3"
+	IF.EQ opt,"3"
 		VAR opt_sel,"ACME MEGA-CUT 3000"
 		GOTO print_option
 	ENDIF
-	IF.EQS opt,"4"
+	IF.EQ opt,"4"
 		VAR opt_sel,"ACME LAWN-ACE"
 		GOTO print_option
 	ENDIF
-	IF.EQS opt,"5"
+	IF.EQ opt,"5"
 		VAR opt_sel,"FLYMO GRASSCHUM"
 		GOTO print_option
 	ENDIF
-	IF.EQS opt,"6"
+	IF.EQ opt,"6"
 		GOTO print_working_option
 	ENDIF
 	GOTO options_loop
@@ -94,7 +94,7 @@ print_working_option:
 await_keypress_to_start:
 	VSYNC
 	INKEY key
-	IF.EQS key,"NONE"
+	IF.EQ key,"NONE"
 		GOTO await_keypress_to_start
 	ENDIF
 
@@ -143,11 +143,11 @@ main_loop:
 	CALL print_score
 	VSYNC
 	INKEY key
-	IF.EQS key,"M"
+	IF.EQ key,"M"
 		VAR speed,1
 		CALL cut_grass
 	ENDIF
-	IF.EQS key,"Z"
+	IF.EQ key,"Z"
 		VAR speed,10
 		CALL cut_grass
 	ENDIF
@@ -253,7 +253,7 @@ ending_loop:
 		VAR ix_end,33
 	ENDIF
 	INKEY key
-	IF.EQS key,"NONE"
+	IF.EQ key,"NONE"
 		PAUSE 5
 		GOTO ending_loop
 	ENDIF

@@ -32,8 +32,6 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "IF.GTE") { if_block_start(args, CMP_MODE_GTE); return true; }
 	if (cmd == "IF.LT") { if_block_start(args, CMP_MODE_LT); return true; }
 	if (cmd == "IF.LTE") { if_block_start(args, CMP_MODE_LTE); return true; }
-	if (cmd == "IF.EQS") { if_block_start(args, CMP_MODE_STR_EQ); return true; }
-	if (cmd == "IF.NEQS") { if_block_start(args, CMP_MODE_STR_NEQ); return true; }
 	if (cmd == "IF.KEY") { if_kb_block_start(args); return true; }
 	if (cmd == "ENDIF") { if_block_end(args); return true; }
 	// Variables & Constants
@@ -990,12 +988,12 @@ void t_command::loop_continue(t_params& arg) {
 }
 void t_command::if_block_start(t_params& arg, int cmp_mode) {
 	ARGC(2);
-	if (cmp_mode == CMP_MODE_STR_EQ || cmp_mode == CMP_MODE_STR_NEQ) {
+	if (cmp_mode == CMP_MODE_EQ || cmp_mode == CMP_MODE_NEQ) {
 		string a = intp->require_string(arg[0]);
 		string b = intp->require_string(arg[1]);
-		if (cmp_mode == CMP_MODE_STR_EQ) {
+		if (cmp_mode == CMP_MODE_EQ) {
 			if (a == b) { return; } else { intp->goto_matching_endif(); }
-		} else {
+		} else if (cmp_mode == CMP_MODE_NEQ) {
 			if (a != b) { return; } else { intp->goto_matching_endif(); }
 		}
 	} else {
@@ -1004,11 +1002,7 @@ void t_command::if_block_start(t_params& arg, int cmp_mode) {
 		int b = intp->require_number(arg[1]);
 		if (b == PTM_INVALID_NUMBER) return;
 
-		if (cmp_mode == CMP_MODE_EQ) {
-			if (a == b) { return; } else { intp->goto_matching_endif(); }
-		} else if (cmp_mode == CMP_MODE_NEQ) {
-			if (a != b) { return; } else { intp->goto_matching_endif(); }
-		} else if (cmp_mode == CMP_MODE_GT) {
+		if (cmp_mode == CMP_MODE_GT) {
 			if (a > b) { return; } else { intp->goto_matching_endif(); }
 		} else if (cmp_mode == CMP_MODE_GTE) {
 			if (a >= b) { return; } else { intp->goto_matching_endif(); }

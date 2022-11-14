@@ -92,7 +92,7 @@ FOR x,0,44
 	LOCATE x,player_y
 	GET
 	TILE.GETP prop,"type"
-	IF.EQS prop,"enemy"
+	IF.EQ prop,"enemy"
 		VAR is_defeat,1
 	ENDIF
 NEXT
@@ -217,7 +217,7 @@ LAYER enemy_layer
 LOCATE player_missile_x,player_missile_y
 GET
 TILE.GETP prop,"type"
-IF.EQS prop,"enemy"
+IF.EQ prop,"enemy"
 	TILE.NEW ch_enemy_dead,&h34,0
 	TILE.SETP "type","enemy_dead"
 	PUT

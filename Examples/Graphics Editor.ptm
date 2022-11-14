@@ -15,16 +15,16 @@ main_loop:
 
 process_input:
 	INKEY key
-	IF.EQS key,"RIGHT"
+	IF.EQ key,"RIGHT"
 		CALL csr.move_r
 	ENDIF
-	IF.EQS key,"LEFT"
+	IF.EQ key,"LEFT"
 		CALL csr.move_l
 	ENDIF
-	IF.EQS key,"UP"
+	IF.EQ key,"UP"
 		CALL csr.move_u
 	ENDIF
-	IF.EQS key,"DOWN"
+	IF.EQ key,"DOWN"
 		CALL csr.move_d
 	ENDIF
 	IF.KEY "SPACE"
