@@ -123,8 +123,6 @@ Conditional Flow
 - IF.GTE - if greater or equal to
 - IF.LT - if lesser than
 - IF.LTE - if lesser or equal to
-- IF.EQS - if strings equal
-- IF.NEQS - if strings not equal
 - IF.KEY - if named key is pressed
 - ENDIF - terminate if block
 
