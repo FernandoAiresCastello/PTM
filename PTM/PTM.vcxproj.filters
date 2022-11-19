@@ -114,7 +114,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
-    <None Include="..\Build\main.ptm" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PTM.rc">
