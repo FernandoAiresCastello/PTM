@@ -19,9 +19,10 @@ The project is developed in old-fashioned C++ and compiled using Microsoft Visua
   - Can contain arbitrary data in the form of property-value mappings
 
 - Color palette
-  - 256 colors
+  - Can store up to 256 colors
   - Fully editable
   - RGB format (0xRRGGBB)
+  - Includes 2 default colors (black and white)
   
 - Tileset (aka character set)
   - Fully editable
@@ -64,7 +65,7 @@ The project is developed in old-fashioned C++ and compiled using Microsoft Visua
 
 ## Screenshots
 
-*Default graphics demo*
+*Default graphics demo (left: color palette; right: tileset)*
 
 ![PTM default graphics](https://raw.githubusercontent.com/FernandoAiresCastello/PTM/master/Images/default_gfx.png)
 
