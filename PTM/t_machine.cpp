@@ -7,6 +7,7 @@
 
 t_machine::t_machine(TBufferedWindow* wnd) {
 	this->wnd = wnd;
+	wnd->RemoveAllBuffersExceptDefault();
 
 	cur_buf_id = "default";
 	tilebufs[cur_buf_id] = wnd->GetBuffer(0);

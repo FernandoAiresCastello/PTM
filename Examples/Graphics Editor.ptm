@@ -2,7 +2,7 @@
 TITLE "Graphics Editor"
 
 init:
-	VAR main_bgc,15
+	VAR main_bgc,1
 	BGCOL main_bgc
 	CALL charset.init
 	CALL csr.init
@@ -50,8 +50,8 @@ put_current_tile:
 	RET
 
 csr.init:
-	VAR csr.fgc1,13
-	VAR csr.fgc2,7
+	VAR csr.fgc1,0
+	VAR csr.fgc2,1
 	VAR csr.x,22
 	VAR csr.y,12
 	RET
