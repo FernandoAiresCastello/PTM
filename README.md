@@ -19,14 +19,14 @@ The project is developed in old-fashioned C++ and compiled using Microsoft Visua
   - Can contain arbitrary data in the form of property-value mappings
 
 - Color palette
+  - 256 colors
   - Fully editable
   - RGB format (0xRRGGBB)
-  - Includes 256 default colors (see screenshot below for a demo)
   
 - Tileset (aka character set)
   - Fully editable
   - Binary format (8 bytes for each tile)
-  - Includes 256 default characters based on ASCII (see screenshot below for a demo)
+  - Includes 256 default characters partially based on ASCII (see screenshot below for a demo)
   - Expandable, up to 256 pages of 256 tiles each, for a total of 65536 possible tiles
   
 - Tile buffers

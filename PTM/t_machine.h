@@ -20,7 +20,7 @@ struct t_machine {
 	TCharset* chr;
 	TPalette* pal;
 	static const int default_bgc = 0;
-	static const int default_fgc = 15;
+	static const int default_fgc = 1;
 	int bgcolor_palette_ix = default_bgc;
 	TTileBuffer* cur_buf;
 	string cur_buf_id;

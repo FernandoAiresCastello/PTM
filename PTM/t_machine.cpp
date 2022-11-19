@@ -343,7 +343,7 @@ string t_machine::read_input_string(int maxlen) {
 	bool running = true;
 
 	TTileSeq input_csr;
-	input_csr.Add(0xdb, text_color.fg, text_color.bg);
+	input_csr.Add(0x01, text_color.fg, text_color.bg);
 	input_csr.Add(0x00, text_color.fg, text_color.bg);
 
 	while (running) {

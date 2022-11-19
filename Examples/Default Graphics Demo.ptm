@@ -7,10 +7,11 @@ DEF buf_y,4
 DEF buf_chr_x,3
 DEF buf_pal_x,23
 DEF ch_color_swatch,&h01
-DEF bgcol,2
+DEF bgcol,1
+DEF fgcol,0
 
 BGCOL bgcol
-COLOR 15,0
+COLOR fgcol,bgcol
 TRON
 LOCATE 10,2
 PRINT "Default PTM Graphics Demo"
@@ -45,7 +46,7 @@ NEXT
 VAR color,0
 FOR y,2,18
 	FOR x,2,18
-		TILE.NEW ch_color_swatch,color,0
+		TILE.NEW ch_color_swatch,color,bgcol
 		LOCATE x,y
 		PUT
 		INC color
@@ -79,7 +80,7 @@ NEXT
 VAR char,0
 FOR y,2,18
 	FOR x,2,18
-		TILE.NEW char,0,0
+		TILE.NEW char,fgcol,bgcol
 		LOCATE x,y
 		PUT
 		INC char
