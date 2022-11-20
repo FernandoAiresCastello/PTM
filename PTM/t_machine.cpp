@@ -343,13 +343,13 @@ string t_machine::read_input_string(int maxlen) {
 	bool running = true;
 
 	TTileSeq input_csr;
-	input_csr.Add(0x01, text_color.fg, text_color.bg);
+	input_csr.Add(0x00, text_color.bg, text_color.fg);
 	input_csr.Add(0x00, text_color.fg, text_color.bg);
 
-	while (running) {
+	while (running && intp->running) {
 		cur_buf->Print(empty_str, csr.layer, initial_x, csr.y, text_color.fg, text_color.bg, tile_transparency);
 		cur_buf->Print(str, csr.layer, initial_x, csr.y, text_color.fg, text_color.bg, tile_transparency);
-		cur_buf->SetTile(input_csr, csr.layer, csr.x, csr.y, tile_transparency);
+		cur_buf->SetTile(input_csr, csr.layer, csr.x, csr.y, false);
 		wnd->Update();
 
 		SDL_Event e = { 0 };
@@ -357,8 +357,11 @@ string t_machine::read_input_string(int maxlen) {
 		if (e.type == SDL_KEYDOWN) {
 			auto key = e.key.keysym.sym;
 			if (key == SDLK_RETURN) {
-				if (TKey::Alt()) wnd->ToggleFullscreen();
-				else running = false;
+				if (TKey::Alt() || TKey::Shift() || TKey::Ctrl()) {
+					intp->process_global_keypress(key);
+				} else {
+					running = false;
+				}
 			} else if (key == SDLK_ESCAPE) {
 				str = "";
 				running = false;
@@ -366,6 +369,8 @@ string t_machine::read_input_string(int maxlen) {
 				str.pop_back();
 				ix--;
 				csr.x--;
+			} else if (key == SDLK_PAUSE || key == SDLK_PRINTSCREEN) {
+				intp->process_global_keypress(key);
 			} else if (str.length() < maxlen) {
 				if (key >= 0x20 && key < 0x7f) {
 					if (TKey::CapsLock()) {

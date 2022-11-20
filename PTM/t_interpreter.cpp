@@ -69,6 +69,9 @@ void t_interpreter::execute_current_line() {
 		abort("Invalid command: " + c);
 	}
 }
+void t_interpreter::process_global_keypress(SDL_Keycode key) {
+	on_keydown(key, TKey::Ctrl(), TKey::Shift(), TKey::Alt());
+}
 void t_interpreter::on_keydown(SDL_Keycode key, bool ctrl, bool shift, bool alt) {
 	if (key == SDLK_RETURN && TKey::Alt()) {
 		wnd->ToggleFullscreen();

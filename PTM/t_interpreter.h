@@ -17,6 +17,7 @@ struct t_interpreter {
 	int pause_cycles = 0;
 	t_interpreter();
 	void run(t_program* prg, t_machine* machine, TBufferedWindow* wnd);
+	void process_global_keypress(SDL_Keycode key);
 private:
 	friend struct t_command;
 	friend struct t_machine;

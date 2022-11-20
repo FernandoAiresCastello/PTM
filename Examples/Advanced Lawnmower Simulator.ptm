@@ -341,14 +341,73 @@ init_colors:
 	RET
 
 init_chars:
-	DEF chr.hline,2
-	DEF chr.vline,3
-	DEF chr.tl,4
-	DEF chr.tr,5
-	DEF chr.bl,6
-	DEF chr.br,7
+	VAR i,1
+	
+	DEF chr.hline,i
+	CHR i,0,&b00000000
+	CHR i,1,&b00000000
+	CHR i,2,&b00000000
+	CHR i,3,&b11111111
+	CHR i,4,&b11111111
+	CHR i,5,&b00000000
+	CHR i,6,&b00000000
+	CHR i,7,&b00000000
+	INC i
+	
+	DEF chr.vline,i
+	CHR i,0,&b00011000
+	CHR i,1,&b00011000
+	CHR i,2,&b00011000
+	CHR i,3,&b00011000
+	CHR i,4,&b00011000
+	CHR i,5,&b00011000
+	CHR i,6,&b00011000
+	CHR i,7,&b00011000
+	INC i
 
-	VAR i,128
+	DEF chr.tl,i
+	CHR i,0,&b00000000
+	CHR i,1,&b00000000
+	CHR i,2,&b00000000
+	CHR i,3,&b00011111
+	CHR i,4,&b00011111
+	CHR i,5,&b00011000
+	CHR i,6,&b00011000
+	CHR i,7,&b00011000
+	INC i
+
+	DEF chr.tr,i
+	CHR i,0,&b00000000
+	CHR i,1,&b00000000
+	CHR i,2,&b00000000
+	CHR i,3,&b11111000
+	CHR i,4,&b11111000
+	CHR i,5,&b00011000
+	CHR i,6,&b00011000
+	CHR i,7,&b00011000
+	INC i
+
+	DEF chr.bl,i
+	CHR i,0,&b00011000
+	CHR i,1,&b00011000
+	CHR i,2,&b00011000
+	CHR i,3,&b00011111
+	CHR i,4,&b00011111
+	CHR i,5,&b00000000
+	CHR i,6,&b00000000
+	CHR i,7,&b00000000
+	INC i
+
+	DEF chr.br,i
+	CHR i,0,&b00011000
+	CHR i,1,&b00011000
+	CHR i,2,&b00011000
+	CHR i,3,&b11111000
+	CHR i,4,&b11111000
+	CHR i,5,&b00000000
+	CHR i,6,&b00000000
+	CHR i,7,&b00000000
+	INC i
 
 	DEF chr.sky,i
 	CHR i,0,&b00000000
@@ -359,8 +418,8 @@ init_chars:
 	CHR i,5,&b00000000
 	CHR i,6,&b00000000
 	CHR i,7,&b00000000
-
 	INC i
+	
 	DEF chr.grass,i
 	CHR i,0,&b01000100
 	CHR i,1,&b01010101
@@ -370,8 +429,8 @@ init_chars:
 	CHR i,5,&b10101010
 	CHR i,6,&b00101010
 	CHR i,7,&b00001000
-	
 	INC i
+
 	DEF chr.man,i
 	CHR i,0,&b00001100
 	CHR i,1,&b00001110
@@ -381,8 +440,8 @@ init_chars:
 	CHR i,5,&b00001010
 	CHR i,6,&b00010010
 	CHR i,7,&b00110110
-
 	INC i
+
 	DEF chr.machine,i
 	CHR i,0,&b00000000
 	CHR i,1,&b00000000
@@ -392,8 +451,8 @@ init_chars:
 	CHR i,5,&b01111111
 	CHR i,6,&b11011111
 	CHR i,7,&b11001110
-	
 	INC i
+	
 	DEF chr.empty,i
 	CHR i,0,&b01010101
 	CHR i,1,&b10101010
@@ -403,8 +462,8 @@ init_chars:
 	CHR i,5,&b10101010
 	CHR i,6,&b01010101
 	CHR i,7,&b10101010
-
 	INC i
+
 	DEF chr.shed_vl,i
 	CHR i,0,&b00000001
 	CHR i,1,&b00000001
@@ -414,8 +473,8 @@ init_chars:
 	CHR i,5,&b00000001
 	CHR i,6,&b00000001
 	CHR i,7,&b00000001
-
 	INC i
+
 	DEF chr.shed_vr,i
 	CHR i,0,&b10000000
 	CHR i,1,&b10000000
@@ -425,8 +484,8 @@ init_chars:
 	CHR i,5,&b10000000
 	CHR i,6,&b10000000
 	CHR i,7,&b10000000
-
 	INC i
+
 	DEF chr.shed_dl,i
 	CHR i,0,&b00000001
 	CHR i,1,&b00000010
@@ -436,8 +495,8 @@ init_chars:
 	CHR i,5,&b00100000
 	CHR i,6,&b01000000
 	CHR i,7,&b10000000
-
 	INC i
+
 	DEF chr.shed_dr,i
 	CHR i,0,&b10000000
 	CHR i,1,&b01000000
@@ -447,8 +506,8 @@ init_chars:
 	CHR i,5,&b00000100
 	CHR i,6,&b00000010
 	CHR i,7,&b00000001
-
 	INC i
+
 	DEF chr.sun_1,i
 	CHR i,0,&b00111100
 	CHR i,1,&b01111110
@@ -458,8 +517,8 @@ init_chars:
 	CHR i,5,&b11100111
 	CHR i,6,&b01111110
 	CHR i,7,&b00111100
-
 	INC i
+
 	DEF chr.sun_2,i
 	CHR i,0,&b00111100
 	CHR i,1,&b01000010
@@ -469,5 +528,6 @@ init_chars:
 	CHR i,5,&b10011001
 	CHR i,6,&b01000010
 	CHR i,7,&b00111100
-
+	INC i
+	
 	RET
