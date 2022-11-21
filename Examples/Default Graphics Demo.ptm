@@ -1,5 +1,5 @@
 #================================================
-	view_default_gfx:
+    view_default_gfx:
 #================================================
 TITLE "Default PTM Graphics Demo"
 
@@ -21,7 +21,7 @@ CALL draw_charset
 HALT
 
 #================================================
-	draw_palette:
+    draw_palette:
 #================================================
 BUF.NEW buf_pal,18,18,1
 BUF.SEL buf_pal
@@ -30,33 +30,33 @@ TROFF
 # Horizontal ruler
 VAR ind_x,2
 FOR i,0,16
-	LOCATE ind_x,1
-	STR.FMT ind,"%X",i
-	PRINT ind
-	INC ind_x
+    LOCATE ind_x,1
+    STR.FMT ind,"%X",i
+    PRINT ind
+    INC ind_x
 NEXT
 # Vertical ruler
 VAR ind_y,2
 FOR i,0,16
-	LOCATE 1,ind_y
-	STR.FMT ind,"%X",i
-	PRINT ind
-	INC ind_y
+    LOCATE 1,ind_y
+    STR.FMT ind,"%X",i
+    PRINT ind
+    INC ind_y
 NEXT
 # Colors
 VAR color,0
 FOR y,2,18
-	FOR x,2,18
-		TILE.NEW ch_color_swatch,color,color
-		LOCATE x,y
-		PUT
-		INC color
-	NEXT
+    FOR x,2,18
+        TILE.NEW ch_color_swatch,color,color
+        LOCATE x,y
+        PUT
+        INC color
+    NEXT
 NEXT
 RET
 
-#================================================	
-	draw_charset:
+#================================================    
+    draw_charset:
 #================================================
 BUF.NEW buf_chr,18,18,1
 BUF.SEL buf_chr
@@ -64,27 +64,27 @@ BUF.VIEW buf_pal_x,buf_y,18,18
 # Horizontal ruler
 VAR ind_x,2
 FOR i,0,16
-	LOCATE ind_x,1
-	STR.FMT ind,"%X",i
-	PRINT ind
-	INC ind_x
+    LOCATE ind_x,1
+    STR.FMT ind,"%X",i
+    PRINT ind
+    INC ind_x
 NEXT
 # Vertical ruler
 VAR ind_y,2
 FOR i,0,16
-	LOCATE 1,ind_y
-	STR.FMT ind,"%X",i
-	PRINT ind
-	INC ind_y
+    LOCATE 1,ind_y
+    STR.FMT ind,"%X",i
+    PRINT ind
+    INC ind_y
 NEXT
 # Chars
 VAR char,0
 FOR y,2,18
-	FOR x,2,18
-		TILE.NEW char,fgcol,bgcol
-		LOCATE x,y
-		PUT
-		INC char
-	NEXT
+    FOR x,2,18
+        TILE.NEW char,fgcol,bgcol
+        LOCATE x,y
+        PUT
+        INC char
+    NEXT
 NEXT
 RET

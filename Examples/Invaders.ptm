@@ -1,29 +1,29 @@
 
 TITLE "Invaders"
 
-DEF bg_layer,		0
-DEF enemy_layer,	1
-DEF player_layer,	2
+DEF bg_layer,        0
+DEF enemy_layer,    1
+DEF player_layer,    2
 
-DEF hiscore_file,	"hiscore.dat"
+DEF hiscore_file,    "hiscore.dat"
 
 #================================================
-	init:
+    init:
 #================================================
-VAR player_x,					20
-VAR player_y,					22
-VAR player_is_shooting,			0
-VAR player_missile_x,			0
-VAR player_missile_y,			0
-VAR player_mv_ctr,				0
-VAR player_mv_ctr_max,			5
-VAR player_missile_mv_ctr,		0
-VAR player_missile_mv_ctr_max,	3
+VAR player_x,                    20
+VAR player_y,                    22
+VAR player_is_shooting,          0
+VAR player_missile_x,            0
+VAR player_missile_y,            0
+VAR player_mv_ctr,               0
+VAR player_mv_ctr_max,           5
+VAR player_missile_mv_ctr,       0
+VAR player_missile_mv_ctr_max,   3
 VAR score, 0
 VAR hiscore, 0
 
-VAR enemy_mv_ctr,		0
-VAR enemy_mv_ctr_max,	150
+VAR enemy_mv_ctr,        0
+VAR enemy_mv_ctr_max,    150
 
 CALL init_palette
 CALL init_charset
@@ -42,41 +42,41 @@ TRON
 
 FILE.CHK hiscore_file,has_hiscore
 IF.EQ has_hiscore,1
-	CLOAD hiscore_file,hiscore
+    CLOAD hiscore_file,hiscore
 ENDIF
 
 #================================================
-	gameplay_loop:
+    gameplay_loop:
 #================================================
 LAYER player_layer
 CLL
 CALL draw_info
 CALL draw_player
 IF.EQ player_is_shooting,1
-	CALL draw_player_missile
-	CALL move_player_missile
-	CALL check_player_missile_collision
+    CALL draw_player_missile
+    CALL move_player_missile
+    CALL check_player_missile_collision
 ENDIF
 
 IF.KEY "RIGHT"
-	VAR player_dx,1
-	CALL move_player
+    VAR player_dx,1
+    CALL move_player
 ENDIF
 IF.KEY "LEFT"
-	VAR player_dx,-1
-	CALL move_player
+    VAR player_dx,-1
+    CALL move_player
 ENDIF
 IF.KEY "SPACE"
-	CALL player_shoot
+    CALL player_shoot
 ENDIF
 IF.KEY "UP"
-	ADD enemy_mv_ctr,enemy_mv_ctr,10
+    ADD enemy_mv_ctr,enemy_mv_ctr,10
 ENDIF
 
 INC enemy_mv_ctr
 IF.GT enemy_mv_ctr,enemy_mv_ctr_max
-	VAR enemy_mv_ctr,0
-	CALL spawn_enemy_row
+    VAR enemy_mv_ctr,0
+    CALL spawn_enemy_row
 ENDIF
 
 CALL check_for_defeat
@@ -85,35 +85,35 @@ VSYNC
 GOTO gameplay_loop
 
 #================================================
-	check_for_defeat:
+    check_for_defeat:
 #================================================
 VAR is_defeat,0
 LAYER enemy_layer
 FOR x,0,44
-	LOCATE x,player_y
-	GET
-	TILE.GETP prop,"type"
-	IF.EQ prop,"enemy"
-		VAR is_defeat,1
-	ENDIF
+    LOCATE x,player_y
+    GET
+    TILE.GETP prop,"type"
+    IF.EQ prop,"enemy"
+        VAR is_defeat,1
+    ENDIF
 NEXT
 IF.EQ is_defeat,1
-	LAYER player_layer
-	INK col_orange
-	LOCATE 16,23
-	PRINT     "GAME  OVER"
-	LOCATE 16,23
-	PRINT.ADD "          "
-	VSYNC
-	PLAY "O2L80BAGFEDCCC"
-	CSAVE hiscore_file,hiscore
-	PAUSE 400
-	RESET
+    LAYER player_layer
+    INK col_orange
+    LOCATE 16,23
+    PRINT     "GAME  OVER"
+    LOCATE 16,23
+    PRINT.ADD "          "
+    VSYNC
+    PLAY "O2L80BAGFEDCCC"
+    CSAVE hiscore_file,hiscore
+    PAUSE 400
+    RESET
 ENDIF
 RET
 
 #================================================
-	spawn_enemy_row:
+    spawn_enemy_row:
 #================================================
 LAYER enemy_layer
 MOVB 0,0,44,22,0,1
@@ -121,14 +121,14 @@ TILE.NEW ch_enemy_1,col_green,0
 TILE.ADD ch_enemy_2,col_green,0
 TILE.SETP "type","enemy"
 FOR i,0,10
-	RND x,13,30
-	LOCATE x,0
-	PUT
+    RND x,13,30
+    LOCATE x,0
+    PUT
 NEXT
 RET
 
 #================================================
-	draw_info:
+    draw_info:
 #================================================
 LAYER player_layer
 
@@ -148,7 +148,7 @@ PRINT hiscore_fmt
 RET
 
 #================================================
-	draw_player:
+    draw_player:
 #================================================
 LAYER player_layer
 TILE.NEW ch_player,col_white,0
@@ -157,28 +157,28 @@ PUT
 RET
 
 #================================================
-	move_player:
+    move_player:
 #================================================
 IF.EQ player_mv_ctr,0
-	ADD player_x,player_x,player_dx
-	IF.LT player_x,0
-		VAR player_x,0
-	ENDIF
-	IF.GT player_x,44
-		VAR player_x,44
-	ENDIF
+    ADD player_x,player_x,player_dx
+    IF.LT player_x,0
+        VAR player_x,0
+    ENDIF
+    IF.GT player_x,44
+        VAR player_x,44
+    ENDIF
 ENDIF
 INC player_mv_ctr
 IF.GT player_mv_ctr,player_mv_ctr_max
-	VAR player_mv_ctr,0
+    VAR player_mv_ctr,0
 ENDIF
 RET
 
 #================================================
-	player_shoot:
+    player_shoot:
 #================================================
 IF.EQ player_is_shooting,1
-	RET
+    RET
 ENDIF
 PLAY "L10O4CDF"
 VAR player_is_shooting,1
@@ -188,7 +188,7 @@ DEC player_missile_y
 RET
 
 #================================================
-	draw_player_missile:
+    draw_player_missile:
 #================================================
 LAYER player_layer
 TILE.NEW ch_missile,col_yellow,0
@@ -197,43 +197,43 @@ PUT
 RET
 
 #================================================
-	move_player_missile:
+    move_player_missile:
 #================================================
 IF.EQ player_missile_mv_ctr,0
-	DEC player_missile_y
-	IF.LT player_missile_y,0
-		VAR player_is_shooting,0
-	ENDIF
+    DEC player_missile_y
+    IF.LT player_missile_y,0
+        VAR player_is_shooting,0
+    ENDIF
 ENDIF
 INC player_missile_mv_ctr
 IF.GT player_missile_mv_ctr,player_missile_mv_ctr_max
-	VAR player_missile_mv_ctr,0
+    VAR player_missile_mv_ctr,0
 ENDIF
 RET
 
 #================================================
-	check_player_missile_collision:
+    check_player_missile_collision:
 #================================================
 LAYER enemy_layer
 LOCATE player_missile_x,player_missile_y
 GET
 TILE.GETP prop,"type"
 IF.EQ prop,"enemy"
-	TILE.NEW ch_enemy_dead,col_red,0
-	TILE.SETP "type","enemy_dead"
-	PUT
-	VSYNC
-	PLAY "L10O6ECD"
-	VAR player_is_shooting,0
-	ADD score,score,10
-	IF.GT score,hiscore
-		VAR hiscore,score
-	ENDIF
+    TILE.NEW ch_enemy_dead,col_red,0
+    TILE.SETP "type","enemy_dead"
+    PUT
+    VSYNC
+    PLAY "L10O6ECD"
+    VAR player_is_shooting,0
+    ADD score,score,10
+    IF.GT score,hiscore
+        VAR hiscore,score
+    ENDIF
 ENDIF
 RET
 
 #================================================
-	init_palette:
+    init_palette:
 #================================================
 VAR i,0
 DEF col_black,i
@@ -272,7 +272,7 @@ INC i
 RET
 
 #================================================
-	init_charset:
+    init_charset:
 #================================================
 VAR i,1
 DEF ch_player,i
