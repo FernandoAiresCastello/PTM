@@ -473,8 +473,42 @@ void t_machine::print_text(string text, bool crlf, bool add_frames, int fgc, int
 				continue;
 			} else if (String::StartsWith(escape_seq, '%')) {
 				string var = String::Skip(escape_seq, 1);
+				if (String::Contains(var, '[') || String::Contains(var, ']')) {
+					auto begin = String::IndexOf(var, '[');
+					auto end = String::IndexOf(var, ']');
+					if (begin != string::npos && end != string::npos && begin < end) {
+						string arr_id = String::Substring(var, 0, begin);
+						if (arrays.find(arr_id) != arrays.end()) {
+							string ixs = String::Substring(var, begin + 1, end);
+							int ix = -1;
+							if (String::IsNumber(ixs)) {
+								ix = String::ToInt(ixs);
+							} else {
+								if (vars.find(ixs) != vars.end()) {
+									ix = String::ToInt(vars[ixs].value);
+								} else {
+									intp->abort("Variable not found: " + ixs);
+								}
+							}
+							if (ix >= 0 && ix < arrays[arr_id].size()) {
+								string str = arrays[arr_id].at(ix);
+								print_text(str, false, false, fgc, bgc, true);
+							}
+							else {
+								intp->abort(String::Format("Array index out of bounds: %s[%i]", arr_id.c_str(), ix));
+							}
+						} else {
+							intp->abort("Array not found: " + arr_id);
+						}
+					}
+				} else {
+					if (vars.find(var) != vars.end()) {
+						print_text(vars[var].value, false, false, fgc, bgc, true);
+					} else {
+						intp->abort("Variable not found: " + var);
+					}
+				}
 				escape_seq = "";
-				print_text(vars[var].value, false, false, fgc, bgc, true);
 				continue;
 			} else {
 				intp->abort("Invalid escape sequence: " + escape_seq);

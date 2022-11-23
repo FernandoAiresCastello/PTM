@@ -47,7 +47,7 @@ private:
 	string require_string(t_param& arg);
 	string require_existing_array(t_param& arg);
 	string require_array_element(t_param& arg);
-	int require_array_index(std::vector<string>& arr, t_param& arg);
+	int require_array_index(std::vector<string>& arr, string arr_id, t_param& arg);
 	void goto_label(string label);
 	void call_label(string label);
 	void return_from_call();

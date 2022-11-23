@@ -676,7 +676,7 @@ void t_command::set_array_element(t_params& arg) {
 	string arr_id = intp->require_existing_array(arg[0]);
 	if (arr_id.empty()) return;
 	auto& arr = machine->arrays[arr_id];
-	int ix = intp->require_array_index(arr, arg[0]);
+	int ix = intp->require_array_index(arr, arr_id, arg[0]);
 	if (ix != PTM_INVALID_NUMBER) {
 		arr[ix] = intp->require_string(arg[1]);
 	}
@@ -686,7 +686,7 @@ void t_command::erase_array_element(t_params& arg) {
 	string arr_id = intp->require_existing_array(arg[0]);
 	if (arr_id.empty()) return;
 	auto& arr = machine->arrays[arr_id];
-	int ix = intp->require_array_index(arr, arg[0]);
+	int ix = intp->require_array_index(arr, arr_id, arg[0]);
 	if (ix != PTM_INVALID_NUMBER) {
 		if (!arr.empty()) {
 			arr.erase(arr.begin() + ix);

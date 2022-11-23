@@ -208,7 +208,7 @@ string t_interpreter::require_array_element(t_param& arg) {
 		if (ix >= 0 && ix < src_arr.size()) {
 			return src_arr[ix];
 		} else {
-			abort(String::Format("Array index out of bounds: %i", ix));
+			abort(String::Format("Array index out of bounds: %s[%i]", arg.id.c_str(), ix));
 		}
 	} else if (arg.type == t_param_type::arr_ix_var) {
 		string ix_var_id = arg.arr_ix_var;
@@ -220,12 +220,12 @@ string t_interpreter::require_array_element(t_param& arg) {
 		if (ix >= 0 && ix < src_arr.size()) {
 			return src_arr[ix];
 		} else {
-			abort(String::Format("Array index out of bounds: %i", ix));
+			abort(String::Format("Array index out of bounds: %s[%i]", arg.id.c_str(), ix));
 		}
 	}
 	return "";
 }
-int t_interpreter::require_array_index(std::vector<string>& arr, t_param& arg) {
+int t_interpreter::require_array_index(std::vector<string>& arr, string arr_id, t_param& arg) {
 	int index = PTM_INVALID_NUMBER;
 
 	if (arg.type == t_param_type::arr_ix_literal) {
@@ -242,7 +242,7 @@ int t_interpreter::require_array_index(std::vector<string>& arr, t_param& arg) {
 	}
 
 	if (index < 0 || index >= arr.size()) {
-		abort(String::Format("Array index out of bounds: %i", index));
+		abort(String::Format("Array index out of bounds: %s[%i]", arr_id.c_str(), index));
 		index = PTM_INVALID_NUMBER;
 	}
 	return index;
