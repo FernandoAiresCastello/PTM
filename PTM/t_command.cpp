@@ -581,14 +581,16 @@ void t_command::set_text_bgcolor(t_params& arg) {
 	}
 }
 void t_command::set_text_colors(t_params& arg) {
-	ARGC(2);
+	ARGC_MIN_MAX(1, 2);
 	int fg = intp->require_palette_ix(arg[0]);
 	if (fg != PTM_INVALID_NUMBER) {
 		machine->text_color.fg = fg;
 	}
-	int bg = intp->require_palette_ix(arg[1]);
-	if (bg != PTM_INVALID_NUMBER) {
-		machine->text_color.bg = bg;
+	if (arg.size() > 1) {
+		int bg = intp->require_palette_ix(arg[1]);
+		if (bg != PTM_INVALID_NUMBER) {
+			machine->text_color.bg = bg;
+		}
 	}
 }
 void t_command::get_keycode_pressed(t_params& arg) {
