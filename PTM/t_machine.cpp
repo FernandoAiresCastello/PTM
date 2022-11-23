@@ -209,8 +209,8 @@ std::vector<string> t_machine::get_debug_info() {
 		}
 	}
 	info.push_back("");
-	// Tilestore
-	info.push_back("Tilestore");
+	// Tile collection
+	info.push_back("Tile collection");
 	if (tilestore.empty()) {
 		info.push_back("\t(empty)");
 	}

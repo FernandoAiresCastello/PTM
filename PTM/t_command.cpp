@@ -60,6 +60,9 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "TILE.SETF") { set_cur_tile_fgcolor(args); return true; }
 	if (cmd == "TILE.SETB") { set_cur_tile_bgcolor(args); return true; }
 	if (cmd == "TILE.COLOR") { set_cur_tile_colors(args); return true; }
+	if (cmd == "TILE.GETC") { get_cur_tile_char(args); return true; }
+	if (cmd == "TILE.GETF") { get_cur_tile_fgcolor(args); return true; }
+	if (cmd == "TILE.GETB") { get_cur_tile_bgcolor(args); return true; }
 	if (cmd == "TILE.PARSE") { parse_cur_tile(args); return true; }
 	if (cmd == "TILE.STORE") { store_cur_tile(args); return true; }
 	if (cmd == "TILE.LOAD") { load_cur_tile(args); return true; }
@@ -354,6 +357,30 @@ void t_command::set_cur_tile_colors(t_params& arg) {
 			machine->cur_tile.SetBackColor(frame, bgc);
 		}
 	}
+}
+void t_command::get_cur_tile_char(t_params& arg) {
+	ARGC(2);
+	string var = intp->require_id(arg[0]);
+	if (var.empty()) return;
+	int frame = intp->require_tile_frame_ix(machine->cur_tile, arg[1]);
+	if (frame == PTM_INVALID_NUMBER) return;
+	machine->set_var(var, machine->cur_tile.GetChar(frame));
+}
+void t_command::get_cur_tile_fgcolor(t_params& arg) {
+	ARGC(2);
+	string var = intp->require_id(arg[0]);
+	if (var.empty()) return;
+	int frame = intp->require_tile_frame_ix(machine->cur_tile, arg[1]);
+	if (frame == PTM_INVALID_NUMBER) return;
+	machine->set_var(var, machine->cur_tile.GetForeColor(frame));
+}
+void t_command::get_cur_tile_bgcolor(t_params& arg) {
+	ARGC(2);
+	string var = intp->require_id(arg[0]);
+	if (var.empty()) return;
+	int frame = intp->require_tile_frame_ix(machine->cur_tile, arg[1]);
+	if (frame == PTM_INVALID_NUMBER) return;
+	machine->set_var(var, machine->cur_tile.GetBackColor(frame));
 }
 void t_command::parse_cur_tile(t_params& arg) {
 	ARGC(1);
