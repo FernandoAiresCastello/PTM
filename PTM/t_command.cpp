@@ -709,14 +709,18 @@ void t_command::set_array_element(t_params& arg) {
 	}
 }
 void t_command::erase_array_element(t_params& arg) {
-	ARGC(1);
+	ARGC(2);
 	string arr_id = intp->require_existing_array(arg[0]);
 	if (arr_id.empty()) return;
 	auto& arr = machine->arrays[arr_id];
-	int ix = intp->require_array_index(arr, arr_id, arg[0]);
+	int ix = intp->require_number(arg[1]);
 	if (ix != PTM_INVALID_NUMBER) {
 		if (!arr.empty()) {
-			arr.erase(arr.begin() + ix);
+			if (ix < 0 || ix >= arr.size()) {
+				intp->abort(String::Format("Array index out of bounds: %s[%i]", arr_id.c_str(), ix));
+			} else {
+				arr.erase(arr.begin() + ix);
+			}
 		} else {
 			intp->abort("Array is empty: " + arr_id);
 		}
