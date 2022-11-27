@@ -8,6 +8,14 @@ struct t_source_line;
 struct t_compiler {
 	std::vector<string> errors;
 	void run(t_program* prg);
+	bool has_window_def;
+	struct {
+		int layers = 0;
+		int cols = 0;
+		int rows = 0;
+		int pixel_w = 0;
+		int pixel_h = 0;
+	} window_def;
 private:
 	bool compile_line(t_program* prg, t_program_line* new_line, t_source_line* src_line_ptr);
 	int parse_number(string arg);
@@ -26,4 +34,5 @@ private:
 	bool is_if(string& arg);
 	bool is_endif(string& arg);
 	bool is_endfor(string& arg);
+	bool is_window_def(string& arg);
 };

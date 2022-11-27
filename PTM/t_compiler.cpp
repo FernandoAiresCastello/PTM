@@ -6,7 +6,9 @@ void t_compiler::run(t_program* prg) {
 	errors.clear();
 	prg->lines.clear();
 	prg->labels.clear();
+	has_window_def = false;
 	int src_line_nr = 1;
+
 	for (auto& src_line : prg->src_lines) {
 		t_program_line new_line;
 		bool must_add_line = compile_line(prg, &new_line, &src_line);
@@ -122,6 +124,24 @@ bool t_compiler::compile_line(
 		new_line->params.push_back(param);
 	}
 
+	if (is_window_def(new_line->cmd)) {
+		if (has_window_def) {
+			add_error(src_line_ptr, "Duplicate window definition");
+		} else {
+			has_window_def = true;
+			window_def.layers = new_line->params[0].numeric_value;
+			window_def.cols = new_line->params[1].numeric_value;
+			window_def.rows = new_line->params[2].numeric_value;
+			window_def.pixel_w = new_line->params[3].numeric_value;
+			window_def.pixel_h = new_line->params[4].numeric_value;
+			if (window_def.layers < 1 || window_def.cols < 1 || window_def.rows < 1 || 
+				window_def.pixel_w < 1 || window_def.pixel_h < 1) {
+				add_error(src_line_ptr, "Invalid window definition");
+			}
+		}
+		return false;
+	}
+
 	return true;
 }
 int t_compiler::parse_number(string arg) {
@@ -215,4 +235,7 @@ bool t_compiler::is_endif(string& arg) {
 }
 bool t_compiler::is_endfor(string& arg) {
 	return arg == "NEXT";
+}
+bool t_compiler::is_window_def(string& arg) {
+	return arg == "WINDOW";
 }

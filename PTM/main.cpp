@@ -9,8 +9,6 @@ int main(int argc, char* argv[]) {
 	t_globals g;
 	g.snd->SetVolume(TSound::MinVolume + 1000);
 	TWindowCreationFlags::RenderScaleQuality = "best";
-	g.wnd = new TBufferedWindow(3, 45, 25, 3, 3);
-	g.wnd->Show();
 
 	string prg_file = argc > 1 ? argv[1] : PTM_MAIN_PROG_FILE;
 	t_interpreter* interpreter = nullptr;
@@ -26,6 +24,15 @@ int main(int argc, char* argv[]) {
 			t_compiler compiler;
 			compiler.run(prg);
 			if (compiler.errors.empty()) {
+				if (!g.wnd) {
+					if (compiler.has_window_def) {
+						auto& def = compiler.window_def;
+						g.wnd = new TBufferedWindow(def.layers, def.cols, def.rows, def.pixel_w, def.pixel_h);
+					} else {
+						g.wnd = new TBufferedWindow(3, 45, 25, 3, 3);
+					}
+					g.wnd->Show();
+				}
 				t_machine* machine = new t_machine(g.wnd);
 				machine->perfmon = g.perfmon;
 				machine->snd = g.snd;

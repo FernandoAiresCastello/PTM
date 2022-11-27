@@ -73,6 +73,8 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "LOCATE") { set_cursor_pos(args); return true; }
 	if (cmd == "CSR.X") { set_cursor_x(args); return true; }
 	if (cmd == "CSR.Y") { set_cursor_y(args); return true; }
+	if (cmd == "CSR.GETX") { get_cursor_x(args); return true; }
+	if (cmd == "CSR.GETY") { get_cursor_y(args); return true; }
 	if (cmd == "CSR.MOV") { move_cursor(args); return true; }
 	if (cmd == "CSR.R") { move_cursor(args, 1, 0); return true; }
 	if (cmd == "CSR.L") { move_cursor(args, -1, 0); return true; }
@@ -267,18 +269,33 @@ void t_command::define_constant(t_params& arg) {
 void t_command::set_cursor_x(t_params& arg) {
 	ARGC(1);
 	int x = intp->require_number(arg[0]);
+	if (x == PTM_INVALID_NUMBER) return;
 	machine->set_cursor_pos(x, machine->get_csr_y());
 }
 void t_command::set_cursor_y(t_params& arg) {
 	ARGC(1);
 	int y = intp->require_number(arg[0]);
+	if (y == PTM_INVALID_NUMBER) return;
 	machine->set_cursor_pos(machine->get_csr_x(), y);
 }
 void t_command::set_cursor_pos(t_params& arg) {
 	ARGC(2);
 	int x = intp->require_number(arg[0]);
 	int y = intp->require_number(arg[1]);
+	if (x == PTM_INVALID_NUMBER || y == PTM_INVALID_NUMBER) return;
 	machine->set_cursor_pos(x, y);
+}
+void t_command::get_cursor_x(t_params& arg) {
+	ARGC(1);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	machine->set_var(id, machine->get_csr_x());
+}
+void t_command::get_cursor_y(t_params& arg) {
+	ARGC(1);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	machine->set_var(id, machine->get_csr_y());
 }
 void t_command::move_cursor(t_params& arg, int dx, int dy) {
 	ARGC_MIN_MAX(0, 1);

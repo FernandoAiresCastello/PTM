@@ -35,6 +35,8 @@ private:
 	void define_constant(t_params& arg);
 	void set_cursor_x(t_params& arg);
 	void set_cursor_y(t_params& arg);
+	void get_cursor_x(t_params& arg);
+	void get_cursor_y(t_params& arg);
 	void set_cursor_pos(t_params& arg);
 	void move_cursor(t_params& arg);
 	void move_cursor(t_params& arg, int dx, int dy);
