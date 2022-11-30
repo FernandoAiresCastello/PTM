@@ -3,6 +3,8 @@ PTM is an interpreter and runtime environment for an imperative semi-structured 
 
 The project is developed in old-fashioned C++ and compiled using Microsoft Visual Studio 2019. The target output is a standard Windows desktop executable application called PTM.exe. Upon execution, it looks for a file called "main.ptm" in the same directory. This file must contain PTML source code in plain text which will be interpreted at runtime. See the "Examples" folder for some PTML demo programs.
 
+**DISCLAIMER: This is a work in progress, anything can change at any moment without prior notice, so use at your own risk!**
+
 ## Features
 
 - Strictly tile-based display engine
