@@ -152,6 +152,9 @@ Graphics
 - TILE.SETF - set foreground color
 - TILE.SETB - set background color
 - TILE.COLOR - set fore/back colors
+- TILE.GETC - get character
+- TILE.GETF - get foreground color
+- TILE.GETB - get background color
 - TILE.PARSE - parse tile from string
 - TILE.STORE - store tile in memory
 - TILE.LOAD - load tile from memory
@@ -201,6 +204,7 @@ Graphics
 - BGCOL - set window background color
 - TRON - enable tile transparency
 - TROFF - disable tile transparency
+- WINDOW - override default buffer and window size
 
 Tileset Management
 

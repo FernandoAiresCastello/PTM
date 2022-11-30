@@ -128,15 +128,19 @@ bool t_compiler::compile_line(
 		if (has_window_def) {
 			add_error(src_line_ptr, "Duplicate window definition");
 		} else {
-			has_window_def = true;
-			window_def.layers = new_line->params[0].numeric_value;
-			window_def.cols = new_line->params[1].numeric_value;
-			window_def.rows = new_line->params[2].numeric_value;
-			window_def.pixel_w = new_line->params[3].numeric_value;
-			window_def.pixel_h = new_line->params[4].numeric_value;
-			if (window_def.layers < 1 || window_def.cols < 1 || window_def.rows < 1 || 
-				window_def.pixel_w < 1 || window_def.pixel_h < 1) {
-				add_error(src_line_ptr, "Invalid window definition");
+			if (new_line->params.size() == 4) {
+				has_window_def = true;
+				window_def.cols = new_line->params[0].numeric_value;
+				window_def.rows = new_line->params[1].numeric_value;
+				window_def.layers = new_line->params[2].numeric_value;
+				window_def.pixel_w = new_line->params[3].numeric_value;
+				window_def.pixel_h = new_line->params[3].numeric_value;
+				if (window_def.layers < 1 || window_def.cols < 1 || window_def.rows < 1 ||
+					window_def.pixel_w < 1 || window_def.pixel_h < 1) {
+					add_error(src_line_ptr, "Invalid window definition");
+				}
+			} else {
+				add_error(src_line_ptr, "Invalid argument count");
 			}
 		}
 		return false;
