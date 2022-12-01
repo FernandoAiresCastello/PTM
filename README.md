@@ -1,7 +1,9 @@
 # PTM (Programmable Tile Machine)
-PTM is an interpreter and runtime environment for an imperative semi-structured programming language called PTML. The runtime aims to be similar in look-and-feel to many BASIC interpreters for early 8-bit computer systems such as the MSX, ZX Spectrum and Atari 800, although the language itself bears more resemblance to a macro-assembler for the Zilog Z80 microprocessor than to BASIC.
+PTM is an interpreter and runtime environment for an imperative semi-structured programming language called PTML. The runtime aims to be similar in look-and-feel to many BASIC interpreters for early 8-bit computer systems such as the MSX, ZX Spectrum and Atari 800.
 
 The project is developed in old-fashioned C++ and compiled using Microsoft Visual Studio 2019. The target output is a standard Windows desktop executable application called PTM.exe. Upon execution, it looks for a file called "main.ptm" in the same directory. This file must contain PTML source code in plain text which will be interpreted at runtime. See the "Examples" folder for some PTML demo programs.
+
+To write programs for the PTM you only need a plain-text editor, like Notepad++ or Visual Studio Code, or you can also use [PTMEdit](https://github.com/FernandoAiresCastello/PTMEdit), which is a simple IDE that integrates with the PTM interpreter.
 
 **DISCLAIMER: This is a work in progress, anything can change at any moment without prior notice, so use at your own risk!**
 
