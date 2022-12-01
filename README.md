@@ -134,11 +134,15 @@ Conditional Flow
 Math
 
 - RND - get random number
-- INC - increment number
-- DEC - decrement number
+- INC - increment variable
+- DEC - decrement variable
 - ADD - add to number
 - SUB - subtract from number
-- MUL - multiply number
+- MUL - multiply numbers
+- DIV - divide numbers
+- DIVR - get remainder of division
+- POW - raise number to power
+- SQRT - get square root of number
 
 Graphics
 

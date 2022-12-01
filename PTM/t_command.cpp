@@ -53,6 +53,10 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "ADD") { math_add(args); return true; }
 	if (cmd == "SUB") { math_subtract(args); return true; }
 	if (cmd == "MUL") { math_multiply(args); return true; }
+	if (cmd == "DIV") { math_divide(args); return true; }
+	if (cmd == "DIVR") { math_division_remainder(args); return true; }
+	if (cmd == "POW") { math_power(args); return true; }
+	if (cmd == "SQRT") { math_sqrt(args); return true; }
 	// Current tile manipulation
 	if (cmd == "TILE.NEW") { init_cur_tile(args); return true; }
 	if (cmd == "TILE.ADD") { append_cur_tile(args); return true; }
@@ -803,6 +807,48 @@ void t_command::math_multiply(t_params& arg) {
 	if (b == PTM_INVALID_NUMBER) return;
 	auto& var = machine->vars[id];
 	machine->set_var(id, a * b);
+}
+void t_command::math_divide(t_params& arg) {
+	ARGC(3);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	int a = intp->require_number(arg[1]);
+	if (a == PTM_INVALID_NUMBER) return;
+	int b = intp->require_number(arg[2]);
+	if (b == PTM_INVALID_NUMBER) return;
+	auto& var = machine->vars[id];
+	machine->set_var(id, a / b);
+}
+void t_command::math_division_remainder(t_params& arg) {
+	ARGC(3);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	int a = intp->require_number(arg[1]);
+	if (a == PTM_INVALID_NUMBER) return;
+	int b = intp->require_number(arg[2]);
+	if (b == PTM_INVALID_NUMBER) return;
+	auto& var = machine->vars[id];
+	machine->set_var(id, a % b);
+}
+void t_command::math_power(t_params& arg) {
+	ARGC(3);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	int a = intp->require_number(arg[1]);
+	if (a == PTM_INVALID_NUMBER) return;
+	int b = intp->require_number(arg[2]);
+	if (b == PTM_INVALID_NUMBER) return;
+	auto& var = machine->vars[id];
+	machine->set_var(id, pow(a, b));
+}
+void t_command::math_sqrt(t_params& arg) {
+	ARGC(2);
+	string id = intp->require_id(arg[0]);
+	if (id.empty()) return;
+	int a = intp->require_number(arg[1]);
+	if (a == PTM_INVALID_NUMBER) return;
+	auto& var = machine->vars[id];
+	machine->set_var(id, sqrt(a));
 }
 void t_command::set_window_title(t_params& arg) {
 	ARGC(1);

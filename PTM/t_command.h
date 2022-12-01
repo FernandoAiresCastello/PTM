@@ -98,6 +98,10 @@ private:
 	void math_add(t_params& arg);
 	void math_subtract(t_params& arg);
 	void math_multiply(t_params& arg);
+	void math_divide(t_params& arg);
+	void math_division_remainder(t_params& arg);
+	void math_power(t_params& arg);
+	void math_sqrt(t_params& arg);
 	void set_window_title(t_params& arg);
 	void get_charset_size(t_params& arg);
 	void get_palette_size(t_params& arg);
