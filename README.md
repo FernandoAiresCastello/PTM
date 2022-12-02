@@ -276,6 +276,12 @@ String Functions
 - STR.END - check if string ends with
 - STR.HAS - check if string contains
 
+Raw Data
+
+- DATA - insert raw data
+- DATA.RST - reset data pointer
+- READ - read data
+
 Debugging Support
 
 - DBG.BRK - for PTM developers only

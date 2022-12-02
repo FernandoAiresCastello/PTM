@@ -36,6 +36,8 @@ struct t_machine {
 	TSound* snd = nullptr;
 	// Timing
 	int clock = 0;
+	// Data
+	int data_ptr = 0;
 
 	t_machine(TBufferedWindow* wnd);
 	~t_machine();

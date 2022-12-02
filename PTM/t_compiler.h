@@ -35,4 +35,5 @@ private:
 	bool is_endif(string& arg);
 	bool is_endfor(string& arg);
 	bool is_window_def(string& arg);
+	bool is_data(string& arg);
 };

@@ -27,6 +27,7 @@ t_machine::t_machine(TBufferedWindow* wnd) {
 	set_window_bgcolor(default_bgc);
 	wnd->Update();
 
+	data_ptr = 0;
 	init_system_vars();
 	init_keyboard_map();
 }

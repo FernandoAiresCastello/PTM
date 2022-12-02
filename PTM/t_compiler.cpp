@@ -6,6 +6,7 @@ void t_compiler::run(t_program* prg) {
 	errors.clear();
 	prg->lines.clear();
 	prg->labels.clear();
+	prg->data.clear();
 	has_window_def = false;
 	int src_line_nr = 1;
 
@@ -23,6 +24,10 @@ bool t_compiler::compile_line(
 	string src_line = String::Trim(src_line_ptr->text);
 	int src_line_nr = src_line_ptr->line_nr;
 
+	// Ignore blank line
+	if (src_line == "") {
+		return false;
+	}
 	// Ignore comment line
 	if (is_comment(src_line)) {
 		return false;
@@ -146,6 +151,13 @@ bool t_compiler::compile_line(
 		return false;
 	}
 
+	if (is_data(new_line->cmd)) {
+		for (auto& param : new_line->params) {
+			prg->data.push_back(param.textual_value);
+		}
+		return false;
+	}
+
 	return true;
 }
 int t_compiler::parse_number(string arg) {
@@ -242,4 +254,7 @@ bool t_compiler::is_endfor(string& arg) {
 }
 bool t_compiler::is_window_def(string& arg) {
 	return arg == "WINDOW";
+}
+bool t_compiler::is_data(string& arg) {
+	return arg == "DATA";
 }

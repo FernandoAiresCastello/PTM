@@ -8,6 +8,7 @@ void t_program::clear() {
 	src_lines.clear();
 	lines.clear();
 	labels.clear();
+	data.clear();
 }
 bool t_program::load_plain(string path) {
 	clear();

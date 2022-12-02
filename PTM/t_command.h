@@ -154,4 +154,6 @@ private:
 	void string_contains(t_params& arg);
 	void add_charset_pages(t_params& arg);
 	void check_file_exists(t_params& arg);
+	void read_data(t_params& arg);
+	void reset_data_ptr(t_params& arg);
 };

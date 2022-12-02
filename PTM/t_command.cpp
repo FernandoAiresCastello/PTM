@@ -186,6 +186,9 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "STR.START") { string_starts_with(args); return true; }
 	if (cmd == "STR.END") { string_ends_with(args); return true; }
 	if (cmd == "STR.HAS") { string_contains(args); return true; }
+	// Data
+	if (cmd == "READ") { read_data(args); return true; }
+	if (cmd == "DATA.RST") { reset_data_ptr(args); return true; }
 
 	return false;
 }
@@ -1322,4 +1325,20 @@ void t_command::check_file_exists(t_params& arg) {
 	string var = intp->require_id(arg[1]);
 	if (var.empty()) return;
 	machine->set_var(var, File::Exists(path) ? 1 : 0);
+}
+void t_command::read_data(t_params& arg) {
+	ARGC(1);
+	string var = intp->require_id(arg[0]);
+	if (var.empty()) return;
+	if (machine->data_ptr < 0 || machine->data_ptr >= intp->prg->data.size()) {
+		intp->abort(String::Format("Invalid data pointer (length: %i / pos: %i)", 
+			intp->prg->data.size(), machine->data_ptr));
+		return;
+	}
+	string data = intp->prg->data[machine->data_ptr++];
+	machine->set_var(var, data);
+}
+void t_command::reset_data_ptr(t_params& arg) {
+	ARGC(0);
+	machine->data_ptr = 0;
 }
