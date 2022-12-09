@@ -3,7 +3,7 @@ TITLE "Graphics Editor"
 
 init:
     VAR main_bgc,1
-    BGCOL main_bgc
+    WCOL main_bgc
     CALL charset.init
     CALL csr.init
 
@@ -68,7 +68,12 @@ csr.draw:
 
 csr.move_r:
     IF.KEY "CTRL"
-        ADD csr.x,csr.x,5
+        FOR i,0,5
+            IF.KEY "SPACE"
+                CALL put_current_tile
+            ENDIF
+            INC csr.x
+        NEXT
         RET
     ENDIF
     INC csr.x

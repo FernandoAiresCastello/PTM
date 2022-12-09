@@ -123,12 +123,12 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "PRINTL") { print_text(args, true, false, false); return true; }
 	if (cmd == "PRINTR") { print_text(args, false, false, true); return true; }
 	if (cmd == "PUTC") { print_text_char(args); return true; }
-	if (cmd == "INK") { set_text_fgcolor(args); return true; }
-	if (cmd == "PAPER") { set_text_bgcolor(args); return true; }
+	if (cmd == "FCOL") { set_text_fgcolor(args); return true; }
+	if (cmd == "BCOL") { set_text_bgcolor(args); return true; }
 	if (cmd == "COLOR") { set_text_colors(args); return true; }
 	// Screen
 	if (cmd == "VSYNC") { update_screen(args); return true; }
-	if (cmd == "BGCOL") { set_window_bgcolor(args); return true; }
+	if (cmd == "WCOL") { set_window_bgcolor(args); return true; }
 	if (cmd == "TRON") { set_tile_transparency(args, true); return true; }
 	if (cmd == "TROFF") { set_tile_transparency(args, false); return true; }
 	// Character set management
@@ -188,7 +188,7 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "STR.HAS") { string_contains(args); return true; }
 	// Data
 	if (cmd == "READ") { read_data(args); return true; }
-	if (cmd == "DATA.RST") { reset_data_ptr(args); return true; }
+	if (cmd == "RESTORE") { reset_data_ptr(args); return true; }
 
 	return false;
 }

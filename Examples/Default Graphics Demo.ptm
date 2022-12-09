@@ -10,7 +10,7 @@ DEF ch_color_swatch,0
 DEF bgcol,1
 DEF fgcol,0
 
-BGCOL bgcol
+WCOL bgcol
 COLOR fgcol,bgcol
 TRON
 LOCATE 10,2

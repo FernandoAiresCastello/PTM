@@ -6,7 +6,7 @@ CALL init_colors
 CALL init_chars
 
 show_title_screen:
-    BGCOL col.green
+    WCOL col.green
     CLS
     TROFF
 
@@ -27,7 +27,7 @@ show_title_screen:
 
     # Draw intro text
     LOCATE 6,8
-    INK col.black
+    FCOL col.black
     TRON
     PRINTL "THIS IS A POWERFUL AND ACCURATE"
     PRINTL "LAWN MOWING SIMULATION. CHOOSE"
@@ -108,7 +108,7 @@ start:
     VAR current_row,0
     VAR score,0
 
-    BGCOL col.green
+    WCOL col.green
     CLS
     TROFF
     # Draw sky
@@ -159,7 +159,7 @@ main_loop:
 print_score:
     LOCATE 1,1
     TRON
-    INK col.white
+    FCOL col.white
     PRINT score
     TROFF
     RET
@@ -227,7 +227,7 @@ well_mown:
     PAUSE 200
 
 end_game:
-    BGCOL col.black
+    WCOL col.black
     COLOR col.white,col.black
     CLS
     CALL draw_endgame_window_frame

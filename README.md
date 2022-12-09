@@ -279,8 +279,8 @@ String Functions
 Raw Data
 
 - DATA - insert raw data
-- DATA.RST - reset data pointer
 - READ - read data
+- RESTORE - reset data pointer
 
 Debugging Support
 

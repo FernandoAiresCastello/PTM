@@ -2,7 +2,7 @@
 TITLE "Invaders"
 
 DEF bg_layer,        0
-DEF enemy_layer,    1
+DEF enemy_layer,     1
 DEF player_layer,    2
 
 DEF hiscore_file,    "hiscore.dat"
@@ -28,7 +28,7 @@ VAR enemy_mv_ctr_max,    150
 CALL init_palette
 CALL init_charset
 VOL 15
-BGCOL &h00
+WCOL &h00
 
 LAYER bg_layer
 TILE.NEW 0,0,col_blue1
@@ -99,7 +99,7 @@ FOR x,0,44
 NEXT
 IF.EQ is_defeat,1
     LAYER player_layer
-    INK col_orange
+    FCOL col_orange
     LOCATE 16,23
     PRINT     "GAME  OVER"
     LOCATE 16,23
@@ -133,16 +133,16 @@ RET
 LAYER player_layer
 
 LOCATE 1,23
-INK col_gray
+FCOL col_gray
 PRINT "score "
-INK col_ltgray
+FCOL col_ltgray
 STR.FMT score_fmt,"%07i",score
 PRINT score_fmt
 
 LOCATE 28,23
-INK col_gray
+FCOL col_gray
 PRINT "hi-score "
-INK col_ltgray
+FCOL col_ltgray
 STR.FMT hiscore_fmt,"%07i",hiscore
 PRINT hiscore_fmt
 RET
