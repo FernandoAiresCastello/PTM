@@ -132,6 +132,8 @@ private:
 	void if_block_start(t_params& arg, int cmp_mode);
 	void if_kb_block_start(t_params& arg);
 	void if_block_end(t_params& arg);
+	void if_eq_goto(t_params& arg);
+	void if_eq_call(t_params& arg);
 	void clear_palette(t_params& arg);
 	void get_palette_color(t_params& arg);
 	void get_palette_color_comp(t_params& arg, int comp);

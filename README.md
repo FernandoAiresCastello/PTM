@@ -112,6 +112,8 @@ Branching
 - GOTO - branch to label
 - CALL - call label
 - RET - return from label
+- IF.GOTO - branch to label if equals
+- IF.CALL - call label if equals
 
 Loops
 

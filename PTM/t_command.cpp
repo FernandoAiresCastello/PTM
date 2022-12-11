@@ -34,6 +34,9 @@ bool t_command::execute(string& cmd, t_params& args) {
 	if (cmd == "IF.LTE") { if_block_start(args, CMP_MODE_LTE); return true; }
 	if (cmd == "IF.KEY") { if_kb_block_start(args); return true; }
 	if (cmd == "ENDIF") { if_block_end(args); return true; }
+	// Conditional branching
+	if (cmd == "IF.GOTO") { if_eq_goto(args); return true; }
+	if (cmd == "IF.CALL") { if_eq_call(args); return true; }
 	// Variables & Constants
 	if (cmd == "VAR") { set_variable(args); return true; }
 	if (cmd == "DEF") { define_constant(args); return true; }
@@ -1122,6 +1125,26 @@ void t_command::if_kb_block_start(t_params& arg) {
 }
 void t_command::if_block_end(t_params& arg) {
 	ARGC(0);
+}
+void t_command::if_eq_goto(t_params& arg) {
+	ARGC(3);
+	string a = intp->require_string(arg[0]);
+	string b = intp->require_string(arg[1]);
+	string label = intp->require_label(arg[2]);
+	if (label.empty()) return;
+	if (a == b) {
+		intp->goto_label(label);
+	}
+}
+void t_command::if_eq_call(t_params& arg) {
+	ARGC(3);
+	string a = intp->require_string(arg[0]);
+	string b = intp->require_string(arg[1]);
+	string label = intp->require_label(arg[2]);
+	if (label.empty()) return;
+	if (a == b) {
+		intp->call_label(label);
+	}
 }
 void t_command::clear_palette(t_params& arg) {
 	ARGC(0);
