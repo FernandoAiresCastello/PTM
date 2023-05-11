@@ -2,12 +2,10 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.c" />
-    <ClCompile Include="api_public.cpp" />
-    <ClCompile Include="api_private.cpp" />
+    <ClCompile Include="ptm.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="api_public.h" />
-    <ClInclude Include="api_private.h" />
-    <ClInclude Include="common.h" />
+    <ClInclude Include="ptm.h" />
+    <ClInclude Include="includes.h" />
   </ItemGroup>
 </Project>

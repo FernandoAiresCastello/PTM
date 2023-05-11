@@ -1,6 +1,7 @@
 .vs
 bin
 obj
+x64
 *.ini
 *.pro
 *.user
@@ -23,3 +24,4 @@ PTM.cfg
 PTM.last
 main.ptm
 temp.ptm
+*.odt#
