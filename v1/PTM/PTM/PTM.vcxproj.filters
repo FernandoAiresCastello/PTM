@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="t_program.cpp">
+      <Filter>Program</Filter>
+    </ClCompile>
+    <ClCompile Include="t_program_line.cpp">
+      <Filter>Program</Filter>
+    </ClCompile>
+    <ClCompile Include="t_interpreter.cpp">
+      <Filter>Compiler / Interpreter</Filter>
+    </ClCompile>
+    <ClCompile Include="t_param.cpp">
+      <Filter>Program</Filter>
+    </ClCompile>
+    <ClCompile Include="t_machine.cpp">
+      <Filter>Machine</Filter>
+    </ClCompile>
+    <ClCompile Include="t_command.cpp">
+      <Filter>Compiler / Interpreter</Filter>
+    </ClCompile>
+    <ClCompile Include="t_globals.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="t_compiler.cpp">
+      <Filter>Compiler / Interpreter</Filter>
+    </ClCompile>
+    <ClCompile Include="t_obfuscator.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="t_variable.cpp">
+      <Filter>Machine</Filter>
+    </ClCompile>
+    <ClCompile Include="t_performance_monitor.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="t_default_gfx.cpp">
+      <Filter>Machine</Filter>
+    </ClCompile>
+    <ClCompile Include="t_source_line.cpp">
+      <Filter>Program</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="t_program.h">
+      <Filter>Program</Filter>
+    </ClInclude>
+    <ClInclude Include="t_program_line.h">
+      <Filter>Program</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="t_param.h">
+      <Filter>Program</Filter>
+    </ClInclude>
+    <ClInclude Include="t_machine.h">
+      <Filter>Machine</Filter>
+    </ClInclude>
+    <ClInclude Include="t_command.h">
+      <Filter>Compiler / Interpreter</Filter>
+    </ClInclude>
+    <ClInclude Include="t_interpreter.h">
+      <Filter>Compiler / Interpreter</Filter>
+    </ClInclude>
+    <ClInclude Include="t_globals.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="t_compiler.h">
+      <Filter>Compiler / Interpreter</Filter>
+    </ClInclude>
+    <ClInclude Include="t_obfuscator.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="t_variable.h">
+      <Filter>Machine</Filter>
+    </ClInclude>
+    <ClInclude Include="t_performance_monitor.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="t_loop.h">
+      <Filter>Compiler / Interpreter</Filter>
+    </ClInclude>
+    <ClInclude Include="t_default_gfx.h">
+      <Filter>Machine</Filter>
+    </ClInclude>
+    <ClInclude Include="t_source_line.h">
+      <Filter>Program</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>{5a78058d-4114-4c60-aae8-0ff9c987d499}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Machine">
+      <UniqueIdentifier>{1227c78f-5b40-4025-9929-bbe7dfde9f31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compiler / Interpreter">
+      <UniqueIdentifier>{db1a3207-4ac7-42c4-b654-6d79873c80e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{8b24975f-8788-4ddd-a53a-c1f96ededae2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program">
+      <UniqueIdentifier>{0d95466d-6a97-4c32-983e-5b041b80109e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{5e723095-c5bc-4cac-b0cb-a3e7abe2197b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="PTM.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Images\Icons\Random\app.ico">
+      <Filter>Resources</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
