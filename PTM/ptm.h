@@ -10,9 +10,10 @@ void ptm_halt();
 void ptm_abort(string msg);
 void ptm_update();
 void ptm_proc_events();
-void ptm_poke(int address, int value);
+void ptm_poke(addr address, int value);
 void ptm_clear_screen();
 void ptm_wnd_bgcol(rgb color);
+void ptm_toggle_fullscreen();
 
 //=============================================================================
 //      PRIVATE API

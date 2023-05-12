@@ -9,9 +9,10 @@ struct {
     vector<int> data;
 
     struct {
-        int pixelbuf_begin = 0;
-        int pixelbuf_end = 0;
-        int bgcol = 0;
+        addr pixelbuf_begin = 0;
+        addr pixelbuf_end = 0;
+        addr bgcol = 0;
+        addr fullscreen = 0;
     } mmap;
 
     struct {
@@ -22,13 +23,11 @@ struct {
         const int buf_h = 192;
         const int buf_len = buf_w * buf_h;
         const int wnd_size = 4;
-        const int pixel_w = 2;
-        const int pixel_h = 2;
     } scr;
 
 } ptm;
 
-#define MMAP(mmap_id_) ptm.mmap.mmap_id_
+#define ADDR(mmap_id_) ptm.mmap.mmap_id_
 #define MEM(mmap_id_) ptm.data[ptm.mmap.mmap_id_]
 
 //=============================================================================
@@ -89,24 +88,35 @@ void ptm_proc_events()
                 return;
             }
             else if (key == SDLK_RETURN && (SDL_GetModState() & KMOD_ALT)) {
-                //ptm_toggle_fullscreen();
+                ptm_toggle_fullscreen();
+                return;
             }
         }
     }
 }
-void ptm_poke(int address, int value)
+void ptm_poke(addr address, int value)
 {
     ptm.data[address] = value;
 }
 void ptm_clear_screen()
 {
-    for (int i = MMAP(pixelbuf_begin); i <= MMAP(pixelbuf_end); i++) {
+    for (addr i = ADDR(pixelbuf_begin); i <= ADDR(pixelbuf_end); i++) {
         ptm_poke(i, MEM(bgcol));
     }
 }
 void ptm_wnd_bgcol(rgb color)
 {
     MEM(bgcol) = color;
+}
+void ptm_toggle_fullscreen()
+{
+    Uint32 flag = SDL_WINDOW_FULLSCREEN_DESKTOP;
+    Uint32 is_full = SDL_GetWindowFlags(ptm.scr.wnd) & flag;
+    SDL_SetWindowFullscreen(ptm.scr.wnd, is_full ? 0 : flag);
+
+    MEM(fullscreen) = is_full;
+
+    ptm_update();
 }
 
 //=============================================================================
@@ -150,17 +160,23 @@ void ptm_free_window()
     SDL_DestroyRenderer(ptm.scr.rend);   ptm.scr.rend = NULL;
     SDL_DestroyWindow(ptm.scr.wnd);      ptm.scr.wnd = NULL;
 }
+
+#define MMAP(mmap_id_) ADDR(mmap_id_) = ptm.data.size() - 1;
+
 void ptm_init_memory()
 {
     ptm.data.clear();
 
     // VRAM - Pixel Buffer
-    MMAP(pixelbuf_begin) = 0;
+    ADDR(pixelbuf_begin) = 0;
     for (int i = 0; i < ptm.scr.buf_len; i++) {
         ptm.data.push_back(0x101010);
     }
-    MMAP(pixelbuf_end) = ptm.data.size() - 1;
+    MMAP(pixelbuf_end);
     // VRAM - Background Color
     ptm.data.push_back(0);
-    MMAP(bgcol) = ptm.data.size() - 1;
+    MMAP(bgcol);
+    // VRAM - Fullscreen Flag
+    ptm.data.push_back(0);
+    MMAP(fullscreen);
 }

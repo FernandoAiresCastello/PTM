@@ -11,3 +11,4 @@ using namespace std;
 
 typedef unsigned int rgb;
 typedef unsigned char byte;
+typedef size_t addr;
