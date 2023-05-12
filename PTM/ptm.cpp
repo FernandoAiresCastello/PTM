@@ -1,44 +1,28 @@
 #include "ptm.h"
-
-//=============================================================================
-//      PTM
-//=============================================================================
+#include "Compiler/t_program.h"
+#include "Compiler/t_compiler.h"
+#include "Compiler/t_interpreter.h"
 
 struct {
-    vector<int> code;
-    vector<int> data;
-
-    struct {
-        addr pixelbuf_begin = 0;
-        addr pixelbuf_end = 0;
-        addr bgcol = 0;
-        addr fullscreen = 0;
-    } mmap;
-
     struct {
         SDL_Window* wnd = nullptr;
         SDL_Renderer* rend = nullptr;
         SDL_Texture* tx = nullptr;
+        rgb* pixel_buf = nullptr;
         const int buf_w = 256;
         const int buf_h = 192;
         const int buf_len = buf_w * buf_h;
         const int wnd_size = 4;
+        rgb bgcol = 0x101010;
     } scr;
 
 } ptm;
 
-#define ADDR(mmap_id_) ptm.mmap.mmap_id_
-#define MEM(mmap_id_) ptm.data[ptm.mmap.mmap_id_]
-
-//=============================================================================
-//      PUBLIC API
-//=============================================================================
 void ptm_init(string program_file)
 {
     SDL_Init(SDL_INIT_EVERYTHING);
 
     ptm_load_program(program_file);
-    ptm_init_memory();
     ptm_init_window();
 }
 void ptm_exit()
@@ -55,17 +39,18 @@ void ptm_halt()
 }
 void ptm_abort(string msg)
 {
-    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "PTM Fatal Error", msg.c_str(), ptm.scr.wnd);
+    if (!msg.empty()) {
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "PTM Fatal Error", msg.c_str(), ptm.scr.wnd);
+    }
     ptm_exit();
 }
 void ptm_update()
 {
     static int pitch;
     static void* pixels;
-    int* pixel_buf = &MEM(pixelbuf_begin);
 
     SDL_LockTexture(ptm.scr.tx, NULL, &pixels, &pitch);
-    SDL_memcpy(pixels, pixel_buf, ptm.scr.buf_len * sizeof(rgb));
+    SDL_memcpy(pixels, ptm.scr.pixel_buf, ptm.scr.buf_len * sizeof(rgb));
     SDL_UnlockTexture(ptm.scr.tx);
     SDL_RenderClear(ptm.scr.rend);
     SDL_RenderCopy(ptm.scr.rend, ptm.scr.tx, NULL, NULL);
@@ -94,53 +79,48 @@ void ptm_proc_events()
         }
     }
 }
-void ptm_poke(addr address, int value)
-{
-    ptm.data[address] = value;
-}
 void ptm_clear_screen()
 {
-    for (addr i = ADDR(pixelbuf_begin); i <= ADDR(pixelbuf_end); i++) {
-        ptm_poke(i, MEM(bgcol));
-    }
+    SDL_memset4(ptm.scr.pixel_buf, ptm.scr.bgcol, ptm.scr.buf_len);
 }
 void ptm_wnd_bgcol(rgb color)
 {
-    MEM(bgcol) = color;
+    ptm.scr.bgcol = color;
 }
 void ptm_toggle_fullscreen()
 {
     Uint32 flag = SDL_WINDOW_FULLSCREEN_DESKTOP;
     Uint32 is_full = SDL_GetWindowFlags(ptm.scr.wnd) & flag;
     SDL_SetWindowFullscreen(ptm.scr.wnd, is_full ? 0 : flag);
-
-    MEM(fullscreen) = is_full;
-
     ptm_update();
 }
-
-//=============================================================================
-//      PRIVATE API
-//=============================================================================
-
 void ptm_load_program(string path)
 {
-    ifstream file(path, ios::binary | ios::ate);
-    streamsize size = file.tellg();
-    string buffer(size, ' ');
-    file.seekg(0, ios::beg);
-    file.read(&buffer[0], size);
-
-    std::istringstream iss(buffer);
-    int value;
-    while (iss >> value) {
-        ptm.code.push_back(value);
+    t_program* prg = new t_program();
+    if (!prg->load_plain(path)) {
+        delete prg;     prg = nullptr;
+        ptm_abort();
+        return;
     }
+    t_compiler* compiler = new t_compiler();
+    compiler->run(prg);
+    delete compiler;    compiler = nullptr;
+
+    t_interpreter* intp = new t_interpreter();
+    intp->on_loop = ptm_on_loop;
+    intp->on_loop_idle = ptm_on_loop_idle;
+    intp->on_exec_line = ptm_on_exec_line;
+    intp->on_keydown = ptm_on_keydown;
+    intp->run(prg);
+
+    delete intp;    intp = nullptr;
+    delete prg;     prg = nullptr;
 }
 void ptm_init_window()
 {
     SDL_SetHint(SDL_HINT_RENDER_DRIVER, "direct3d");
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
+    ptm.scr.pixel_buf = new rgb[ptm.scr.buf_len];
     ptm.scr.wnd = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
         ptm.scr.wnd_size * ptm.scr.buf_w, ptm.scr.wnd_size * ptm.scr.buf_h, 0);
     ptm.scr.rend = SDL_CreateRenderer(ptm.scr.wnd, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
@@ -156,27 +136,20 @@ void ptm_init_window()
 }
 void ptm_free_window()
 {
-    SDL_DestroyTexture(ptm.scr.tx);      ptm.scr.tx = NULL;
-    SDL_DestroyRenderer(ptm.scr.rend);   ptm.scr.rend = NULL;
-    SDL_DestroyWindow(ptm.scr.wnd);      ptm.scr.wnd = NULL;
+    delete ptm.scr.pixel_buf;           ptm.scr.pixel_buf = nullptr;
+    SDL_DestroyTexture(ptm.scr.tx);     ptm.scr.tx = nullptr;
+    SDL_DestroyRenderer(ptm.scr.rend);  ptm.scr.rend = nullptr;
+    SDL_DestroyWindow(ptm.scr.wnd);     ptm.scr.wnd = nullptr;
 }
-
-#define MMAP(mmap_id_) ADDR(mmap_id_) = ptm.data.size() - 1;
-
-void ptm_init_memory()
+void ptm_on_loop()
 {
-    ptm.data.clear();
-
-    // VRAM - Pixel Buffer
-    ADDR(pixelbuf_begin) = 0;
-    for (int i = 0; i < ptm.scr.buf_len; i++) {
-        ptm.data.push_back(0x101010);
-    }
-    MMAP(pixelbuf_end);
-    // VRAM - Background Color
-    ptm.data.push_back(0);
-    MMAP(bgcol);
-    // VRAM - Fullscreen Flag
-    ptm.data.push_back(0);
-    MMAP(fullscreen);
+}
+void ptm_on_loop_idle()
+{
+}
+void ptm_on_keydown(SDL_Keycode key)
+{
+}
+void ptm_on_exec_line(string& cmd, t_params& params)
+{
 }

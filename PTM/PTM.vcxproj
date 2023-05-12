@@ -43,7 +43,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -102,13 +102,13 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;_HAS_AUTO_PTR_ETC;_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard_C>Default</LanguageStandard_C>
       <CompileAs>CompileAsCpp</CompileAs>
       <AdditionalIncludeDirectories>C:\Lib\SDL2-2.26.5\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerOutput>NoListing</AssemblerOutput>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -138,11 +138,37 @@ copy "$(TargetPath)" "$(SolutionDir)Build\$(TargetFileName)"</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Compiler\t_compiler.cpp" />
+    <ClCompile Include="Compiler\t_interpreter.cpp" />
+    <ClCompile Include="Compiler\t_param.cpp" />
+    <ClCompile Include="Compiler\t_program.cpp" />
+    <ClCompile Include="Compiler\t_source_line.cpp" />
+    <ClCompile Include="Compiler\t_variable.cpp" />
+    <ClCompile Include="CppUtils\CppFile.cpp" />
+    <ClCompile Include="CppUtils\CppMsgBox.cpp" />
+    <ClCompile Include="CppUtils\CppProperties.cpp" />
+    <ClCompile Include="CppUtils\CppString.cpp" />
+    <ClCompile Include="CppUtils\CppUtil.cpp" />
     <ClCompile Include="ptm.cpp" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="includes.h" />
+    <ClInclude Include="Compiler\t_compiler.h" />
+    <ClInclude Include="Compiler\t_interpreter.h" />
+    <ClInclude Include="Compiler\t_loop.h" />
+    <ClInclude Include="Compiler\t_param.h" />
+    <ClInclude Include="Compiler\t_program.h" />
+    <ClInclude Include="Compiler\t_program_line.h" />
+    <ClInclude Include="Compiler\t_source_line.h" />
+    <ClInclude Include="Compiler\t_variable.h" />
+    <ClInclude Include="CppUtils\CppFile.h" />
+    <ClInclude Include="CppUtils\CppGlobal.h" />
+    <ClInclude Include="CppUtils\CppMsgBox.h" />
+    <ClInclude Include="CppUtils\CppProperties.h" />
+    <ClInclude Include="CppUtils\CppString.h" />
+    <ClInclude Include="CppUtils\CppUtil.h" />
+    <ClInclude Include="CppUtils\CppUtils.h" />
+    <ClInclude Include="common.h" />
     <ClInclude Include="ptm.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

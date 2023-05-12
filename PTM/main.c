@@ -2,7 +2,7 @@
 
 int main(int argc, char* argv[])
 {
-	ptm_init("test.ptm");
+	ptm_init("test_programs/Invaders.ptm");
 	int ixcol = 0;
 
 	while (true) {

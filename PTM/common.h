@@ -1,13 +1,20 @@
 #pragma once
+
 #include <SDL.h>
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <stack>
 #include <vector>
+#include <unordered_map>
 using namespace std;
 
-#define debugger    __debugbreak()
+#include "CppUtils/CppUtils.h"
+using namespace CppUtils;
+
+#define debugger			__debugbreak()
+#define PTM_INVALID_NUMBER	INT_MIN
 
 typedef unsigned int rgb;
 typedef unsigned char byte;
