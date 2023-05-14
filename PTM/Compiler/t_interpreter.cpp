@@ -27,15 +27,19 @@ void t_interpreter::run(t_program* prg) {
 			running = false;
 			break;
 		} else if (e.type == SDL_KEYDOWN) {
-			if (on_keydown) on_keydown(e.key.keysym.sym); // callback
+			if (on_keydown) 
+				on_keydown(e.key.keysym.sym); // callback
 		}
 		if (halted || pause_cycles > 0) {
 			last_keycode_pressed = 0;
 			pause_cycles--;
-			if (on_loop_idle) on_loop_idle(); // callback
+			if (on_loop_idle) 
+				on_loop_idle(); // callback
 			continue;
 		}
-		if (on_loop) on_loop(); // callback
+		if (on_loop) 
+			on_loop(); // callback
+
 		if (cur_line_ix >= 0 && cur_line_ix < prg->lines.size()) {
 			cur_line = &prg->lines[cur_line_ix];
 			execute_current_line();

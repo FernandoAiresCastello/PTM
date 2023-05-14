@@ -18,22 +18,22 @@
       <Filter>CppUtils</Filter>
     </ClCompile>
     <ClCompile Include="Compiler\t_compiler.cpp">
-      <Filter>Compiler</Filter>
+      <Filter>PTML</Filter>
     </ClCompile>
     <ClCompile Include="Compiler\t_interpreter.cpp">
-      <Filter>Compiler</Filter>
+      <Filter>PTML</Filter>
     </ClCompile>
     <ClCompile Include="Compiler\t_param.cpp">
-      <Filter>Compiler</Filter>
+      <Filter>PTML</Filter>
     </ClCompile>
     <ClCompile Include="Compiler\t_program.cpp">
-      <Filter>Compiler</Filter>
+      <Filter>PTML</Filter>
     </ClCompile>
     <ClCompile Include="Compiler\t_source_line.cpp">
-      <Filter>Compiler</Filter>
+      <Filter>PTML</Filter>
     </ClCompile>
     <ClCompile Include="Compiler\t_variable.cpp">
-      <Filter>Compiler</Filter>
+      <Filter>PTML</Filter>
     </ClCompile>
     <ClCompile Include="ptm.cpp">
       <Filter>PTM</Filter>
@@ -65,28 +65,28 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Compiler\t_compiler.h">
-      <Filter>Compiler</Filter>
+      <Filter>PTML</Filter>
     </ClInclude>
     <ClInclude Include="Compiler\t_interpreter.h">
-      <Filter>Compiler</Filter>
+      <Filter>PTML</Filter>
     </ClInclude>
     <ClInclude Include="Compiler\t_loop.h">
-      <Filter>Compiler</Filter>
+      <Filter>PTML</Filter>
     </ClInclude>
     <ClInclude Include="Compiler\t_param.h">
-      <Filter>Compiler</Filter>
+      <Filter>PTML</Filter>
     </ClInclude>
     <ClInclude Include="Compiler\t_program.h">
-      <Filter>Compiler</Filter>
+      <Filter>PTML</Filter>
     </ClInclude>
     <ClInclude Include="Compiler\t_program_line.h">
-      <Filter>Compiler</Filter>
+      <Filter>PTML</Filter>
     </ClInclude>
     <ClInclude Include="Compiler\t_source_line.h">
-      <Filter>Compiler</Filter>
+      <Filter>PTML</Filter>
     </ClInclude>
     <ClInclude Include="Compiler\t_variable.h">
-      <Filter>Compiler</Filter>
+      <Filter>PTML</Filter>
     </ClInclude>
     <ClInclude Include="ptm.h">
       <Filter>PTM</Filter>
@@ -99,11 +99,11 @@
     <Filter Include="Common">
       <UniqueIdentifier>{b2d6124d-8ef1-4199-a412-1b23250adda5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Compiler">
-      <UniqueIdentifier>{07126054-de90-45e3-a422-ba77e9f1affc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="PTM">
       <UniqueIdentifier>{0d454045-cb6f-47a7-b930-da49672a80d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PTML">
+      <UniqueIdentifier>{07126054-de90-45e3-a422-ba77e9f1affc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
