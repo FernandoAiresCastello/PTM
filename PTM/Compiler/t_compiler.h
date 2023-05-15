@@ -10,11 +10,10 @@ struct t_compiler {
 	void run(t_program* prg);
 	bool has_window_def;
 	struct {
-		int layers = 0;
-		int cols = 0;
-		int rows = 0;
-		int pixel_w = 0;
-		int pixel_h = 0;
+		int width = 0;
+		int height = 0;
+		int size = 0;
+		rgb bgcol = 0x101010;
 	} window_def;
 private:
 	bool compile_line(t_program* prg, t_program_line* new_line, t_source_line* src_line_ptr);

@@ -1,1 +1,2 @@
-WINDOW 256, 192, 4, &hff0000
+TITLE "Hello World!"
+WINDOW 360, 200, 4, &h101010

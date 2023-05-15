@@ -36,12 +36,19 @@ void ptm_run(string program_file)
 	}
 	t_compiler* compiler = new t_compiler();
 	compiler->run(prg);
+	if (!compiler->errors.empty()) {
+		ptm_abort(compiler->errors[0]);
+	}
+	if (compiler->has_window_def) {
+		auto& wnd = compiler->window_def;
+		ptm_init_window(wnd.width, wnd.height, wnd.size, wnd.bgcol);
+	}
 	delete compiler;    compiler = nullptr;
 
 	intp = new t_interpreter();
 	intp->on_exec_line = ptm_on_exec_line;
 	intp->on_keydown = ptm_on_keydown;
-	intp->on_idle_loop = ptm_on_idle_loop;
+	intp->on_idle_loop = ptm_idle_frame;
 	intp->run(prg);
 
 	delete intp;    intp = nullptr;
@@ -104,13 +111,13 @@ void ptm_proc_events()
 		}
 	}
 }
+void ptm_idle_frame()
+{
+	ptm_update();
+}
 void ptm_clear_screen()
 {
 	SDL_memset4(ptm.scr.pixel_buf, ptm.scr.bgcol, ptm.scr.buf_len);
-}
-void ptm_wnd_bgcol(rgb color)
-{
-	ptm.scr.bgcol = color;
 }
 void ptm_toggle_fullscreen()
 {
@@ -153,16 +160,29 @@ void ptm_free_window()
 	SDL_DestroyRenderer(ptm.scr.rend);  ptm.scr.rend = nullptr;
 	SDL_DestroyWindow(ptm.scr.wnd);     ptm.scr.wnd = nullptr;
 }
+void ptm_set_window_title(string title)
+{
+	SDL_SetWindowTitle(ptm.scr.wnd, title.c_str());
+}
 void ptm_on_exec_line(t_program_line* line, string& cmd, t_params& params)
 {
-	if (cmap.find(cmd) != cmap.end())
-		cmap[cmd](params);
-	else
+	try {
+		ptm_commands[cmd](params);
+	}
+	catch (bad_function_call ex) {
 		ptm_abort(String::Format("Invalid command at line %i:\n\n%s", line->src_line_nr, line->src.c_str()));
+	}
+
+	if (!intp->errors.empty()) {
+		ptm_abort(intp->errors[0]);
+	}
 }
 void ptm_on_keydown(SDL_Keycode key)
 {
-}
-void ptm_on_idle_loop()
-{
+	if (key == SDLK_RETURN && (SDL_GetModState() & KMOD_ALT)) {
+		ptm_toggle_fullscreen();
+	}
+	else if (key == SDLK_ESCAPE) {
+		ptm_exit();
+	}
 }

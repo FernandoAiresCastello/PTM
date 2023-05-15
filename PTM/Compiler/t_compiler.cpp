@@ -135,13 +135,11 @@ bool t_compiler::compile_line(
 		} else {
 			if (new_line->params.size() == 4) {
 				has_window_def = true;
-				window_def.cols = new_line->params[0].numeric_value;
-				window_def.rows = new_line->params[1].numeric_value;
-				window_def.layers = new_line->params[2].numeric_value;
-				window_def.pixel_w = new_line->params[3].numeric_value;
-				window_def.pixel_h = new_line->params[3].numeric_value;
-				if (window_def.layers < 1 || window_def.cols < 1 || window_def.rows < 1 ||
-					window_def.pixel_w < 1 || window_def.pixel_h < 1) {
+				window_def.width = new_line->params[0].numeric_value;
+				window_def.height = new_line->params[1].numeric_value;
+				window_def.size = new_line->params[2].numeric_value;
+				window_def.bgcol = new_line->params[3].numeric_value;
+				if (window_def.width < 8 || window_def.height < 8 || window_def.size < 1) {
 					add_error(src_line_ptr, "Invalid window definition");
 				}
 			} else {
