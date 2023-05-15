@@ -1,5 +1,4 @@
-# PTM
-**Programmable Tile Machine**
+# PTM - Programmable Tile Machine
 
 ## About
 	
