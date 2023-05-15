@@ -35,7 +35,10 @@
     <ClCompile Include="Compiler\t_variable.cpp">
       <Filter>PTML</Filter>
     </ClCompile>
-    <ClCompile Include="ptm.cpp">
+    <ClCompile Include="ptm_core.cpp">
+      <Filter>PTM</Filter>
+    </ClCompile>
+    <ClCompile Include="ptm_commands.cpp">
       <Filter>PTM</Filter>
     </ClCompile>
   </ItemGroup>
@@ -88,7 +91,10 @@
     <ClInclude Include="Compiler\t_variable.h">
       <Filter>PTML</Filter>
     </ClInclude>
-    <ClInclude Include="ptm.h">
+    <ClInclude Include="ptm_core.h">
+      <Filter>PTM</Filter>
+    </ClInclude>
+    <ClInclude Include="ptm_commands.h">
       <Filter>PTM</Filter>
     </ClInclude>
   </ItemGroup>

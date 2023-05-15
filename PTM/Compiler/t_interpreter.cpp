@@ -33,13 +33,10 @@ void t_interpreter::run(t_program* prg) {
 		if (halted || pause_cycles > 0) {
 			last_keycode_pressed = 0;
 			pause_cycles--;
-			if (on_loop_idle) 
-				on_loop_idle(); // callback
+			if (on_idle_loop)
+				on_idle_loop(); // callback
 			continue;
 		}
-		if (on_loop) 
-			on_loop(); // callback
-
 		if (cur_line_ix >= 0 && cur_line_ix < prg->lines.size()) {
 			cur_line = &prg->lines[cur_line_ix];
 			execute_current_line();
@@ -258,7 +255,7 @@ void t_interpreter::array_loop_start(string arr_id, string iter_var) {
 	loop.iter_var = iter_var;
 	loop.current = 0;
 	loop.first = 0;
-	loop.last = arr.size() - 1;
+	loop.last = (int)arr.size() - 1;
 	loop.step = 1;
 	loopstack.push(loop);
 }

@@ -149,7 +149,8 @@ copy "$(TargetPath)" "$(SolutionDir)Build\$(TargetFileName)"</Command>
     <ClCompile Include="CppUtils\CppProperties.cpp" />
     <ClCompile Include="CppUtils\CppString.cpp" />
     <ClCompile Include="CppUtils\CppUtil.cpp" />
-    <ClCompile Include="ptm.cpp" />
+    <ClCompile Include="ptm_commands.cpp" />
+    <ClCompile Include="ptm_core.cpp" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
@@ -169,7 +170,8 @@ copy "$(TargetPath)" "$(SolutionDir)Build\$(TargetFileName)"</Command>
     <ClInclude Include="CppUtils\CppUtil.h" />
     <ClInclude Include="CppUtils\CppUtils.h" />
     <ClInclude Include="common.h" />
-    <ClInclude Include="ptm.h" />
+    <ClInclude Include="ptm_commands.h" />
+    <ClInclude Include="ptm_core.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

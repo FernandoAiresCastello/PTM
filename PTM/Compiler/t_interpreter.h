@@ -11,8 +11,7 @@ struct t_program;
 struct t_program_line;
 
 struct t_interpreter {
-	void (*on_loop)() = nullptr;
-	void (*on_loop_idle)() = nullptr;
+	void (*on_idle_loop)() = nullptr;
 	void (*on_keydown)(SDL_Keycode) = nullptr;
 	void (*on_exec_line)(string&, t_params&) = nullptr;
 	std::vector<string> errors;
