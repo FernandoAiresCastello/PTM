@@ -1,1 +1,1 @@
-PRINT "Hello World!"
+WINDOW 256, 192, 4, &hff0000

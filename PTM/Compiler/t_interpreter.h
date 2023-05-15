@@ -11,15 +11,16 @@ struct t_program;
 struct t_program_line;
 
 struct t_interpreter {
+
 	void (*on_idle_loop)() = nullptr;
 	void (*on_keydown)(SDL_Keycode) = nullptr;
-	void (*on_exec_line)(string&, t_params&) = nullptr;
+	void (*on_exec_line)(t_program_line*, string&, t_params&) = nullptr;
 	std::vector<string> errors;
 	t_interpreter();
 	void run(t_program* prg);
+
 private:
-	friend struct t_command;
-	friend struct t_machine;
+
 	bool running;
 	bool halted;
 	bool reset_requested = false;

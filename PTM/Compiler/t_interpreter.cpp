@@ -54,7 +54,7 @@ void t_interpreter::execute_current_line() {
 	string& c = cur_line->cmd;
 	if (c.empty()) return;
 	auto& args = cur_line->params;
-	if (on_exec_line) on_exec_line(c, args); // callback
+	if (on_exec_line) on_exec_line(cur_line, c, args); // callback
 }
 void t_interpreter::abort(string error) {
 	running = false;

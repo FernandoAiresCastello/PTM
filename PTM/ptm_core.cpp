@@ -4,8 +4,11 @@
 #include "Compiler/t_compiler.h"
 #include "Compiler/t_interpreter.h"
 
+t_interpreter* intp = nullptr;
+
 struct {
 	struct {
+		bool initialized = false;
 		SDL_Window* wnd = nullptr;
 		SDL_Renderer* rend = nullptr;
 		SDL_Texture* tx = nullptr;
@@ -22,6 +25,8 @@ struct {
 void ptm_run(string program_file)
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
+	ptm_init_commands();
+	ptm.scr.initialized = false;
 
 	t_program* prg = new t_program();
 	if (!prg->load_plain(program_file)) {
@@ -33,7 +38,7 @@ void ptm_run(string program_file)
 	compiler->run(prg);
 	delete compiler;    compiler = nullptr;
 
-	t_interpreter* intp = new t_interpreter();
+	intp = new t_interpreter();
 	intp->on_exec_line = ptm_on_exec_line;
 	intp->on_keydown = ptm_on_keydown;
 	intp->on_idle_loop = ptm_on_idle_loop;
@@ -63,6 +68,9 @@ void ptm_abort(string msg)
 }
 void ptm_update()
 {
+	if (!ptm.scr.initialized)
+		return;
+
 	static int pitch;
 	static void* pixels;
 
@@ -113,6 +121,7 @@ void ptm_toggle_fullscreen()
 }
 void ptm_init_window(int buf_w, int buf_h, int size, rgb bgcol)
 {
+	ptm.scr.initialized = true;
 	ptm.scr.buf_w = buf_w;
 	ptm.scr.buf_h = buf_h;
 	ptm.scr.buf_len = buf_w * buf_h;
@@ -144,8 +153,12 @@ void ptm_free_window()
 	SDL_DestroyRenderer(ptm.scr.rend);  ptm.scr.rend = nullptr;
 	SDL_DestroyWindow(ptm.scr.wnd);     ptm.scr.wnd = nullptr;
 }
-void ptm_on_exec_line(string& cmd, t_params& params)
+void ptm_on_exec_line(t_program_line* line, string& cmd, t_params& params)
 {
+	if (cmap.find(cmd) != cmap.end())
+		cmap[cmd](params);
+	else
+		ptm_abort(String::Format("Invalid command at line %i:\n\n%s", line->src_line_nr, line->src.c_str()));
 }
 void ptm_on_keydown(SDL_Keycode key)
 {
