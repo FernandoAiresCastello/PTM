@@ -1,5 +1,6 @@
 #include "ptm_core.h"
 #include "ptm_commands.h"
+#include "ptm_utils.h"
 #include "Compiler/t_program.h"
 #include "Compiler/t_compiler.h"
 #include "Compiler/t_interpreter.h"
@@ -18,6 +19,7 @@ struct {
 		int buf_len = buf_w * buf_h;
 		int wnd_size = 4;
 		rgb bgcol = 0x101010;
+		int frame_counter = 0;
 	} scr;
 
 } ptm;
@@ -80,7 +82,7 @@ void ptm_update()
 
 	static int pitch;
 	static void* pixels;
-
+	
 	SDL_LockTexture(ptm.scr.tx, NULL, &pixels, &pitch);
 	SDL_memcpy(pixels, ptm.scr.pixel_buf, ptm.scr.buf_len * sizeof(rgb));
 	SDL_UnlockTexture(ptm.scr.tx);
@@ -88,6 +90,7 @@ void ptm_update()
 	SDL_RenderCopy(ptm.scr.rend, ptm.scr.tx, NULL, NULL);
 	SDL_RenderPresent(ptm.scr.rend);
 
+	ptm.scr.frame_counter++;
 	ptm_proc_events();
 }
 void ptm_proc_events()
@@ -163,6 +166,14 @@ void ptm_free_window()
 void ptm_set_window_title(string title)
 {
 	SDL_SetWindowTitle(ptm.scr.wnd, title.c_str());
+}
+void ptm_set_window_bgcol(rgb bgcol)
+{
+	ptm.scr.bgcol = bgcol;
+}
+void ptm_show_message_box(string msg)
+{
+	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "PTM", msg.c_str(), ptm.scr.wnd);
 }
 void ptm_on_exec_line(t_program_line* line, string& cmd, t_params& params)
 {

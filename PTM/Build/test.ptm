@@ -1,2 +1,3 @@
 TITLE "Hello World!"
 WINDOW 360, 200, 4, &h101010
+CLS

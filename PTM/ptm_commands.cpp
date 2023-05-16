@@ -35,4 +35,22 @@ void ptm_init_commands()
 		string title = intp->require_string(arg[0]);
 		ptm_set_window_title(title);
 	};
+	CMD("CLS") {
+		ARGC(0);
+		ptm_clear_screen();
+	};
+	CMD("WCOL") {
+		ARGC(1);
+		rgb bgcol = intp->require_number(arg[0]);
+		ptm_set_window_bgcol(bgcol);
+	};
+	CMD("DBG.BRK") {
+		ARGC(0);
+		debugger;
+	};
+	CMD("DBG.MSG") {
+		ARGC(1);
+		string msg = intp->require_string(arg[0]);
+		ptm_show_message_box(msg);
+	};
 }

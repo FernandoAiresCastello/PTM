@@ -41,6 +41,9 @@
     <ClCompile Include="ptm_commands.cpp">
       <Filter>PTM</Filter>
     </ClCompile>
+    <ClCompile Include="ptm_utils.cpp">
+      <Filter>PTM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CppUtils\CppFile.h">
@@ -95,6 +98,9 @@
       <Filter>PTM</Filter>
     </ClInclude>
     <ClInclude Include="ptm_commands.h">
+      <Filter>PTM</Filter>
+    </ClInclude>
+    <ClInclude Include="ptm_utils.h">
       <Filter>PTM</Filter>
     </ClInclude>
   </ItemGroup>
