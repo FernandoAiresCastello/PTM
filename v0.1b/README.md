@@ -1,4 +1,4 @@
-# PTM - Programmable Tile Machine
+# PTM - Programmable Tile Machine (version 0.1b)
 
 ## About
 	
