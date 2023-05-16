@@ -44,6 +44,9 @@
     <ClCompile Include="Src\PTML\t_variable.cpp">
       <Filter>PTML</Filter>
     </ClCompile>
+    <ClCompile Include="Src\PTM\ptm_graphics.cpp">
+      <Filter>PTM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Common\common.h">
@@ -105,6 +108,9 @@
     </ClInclude>
     <ClInclude Include="Src\PTML\t_variable.h">
       <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTM\ptm_graphics.h">
+      <Filter>PTM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
