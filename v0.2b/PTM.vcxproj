@@ -171,7 +171,7 @@ copy "$(TargetPath)" "$(SolutionDir)Build\$(TargetFileName)"</Command>
     <ClCompile Include="Src\CppUtils\CppProperties.cpp" />
     <ClCompile Include="Src\CppUtils\CppString.cpp" />
     <ClCompile Include="Src\CppUtils\CppUtil.cpp" />
-    <ClCompile Include="Src\main.c" />
+    <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\PTML\t_compiler.cpp" />
     <ClCompile Include="Src\PTML\t_interpreter.cpp" />
     <ClCompile Include="Src\PTML\t_param.cpp" />
