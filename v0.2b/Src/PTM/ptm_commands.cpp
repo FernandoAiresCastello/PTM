@@ -14,13 +14,6 @@ void ptm_init_commands()
 
 	// Run-time commands
 
-	CMD("PAUSE") {
-		ARGC(1);
-		int frames = intp->require_number(arg[0]);
-		for (int i = 0; i <= frames; i++) {
-			ptm_idle_frame();
-		}
-	};
 	CMD("EXIT") {
 		ARGC(0);
 		ptm_exit();
@@ -55,6 +48,13 @@ void ptm_init_commands()
 		ARGC(1);
 		string msg = intp->require_string(arg[0]);
 		ptm_show_message_box(msg);
+	};
+	CMD("PAUSE") {
+		ARGC(1);
+		int frames = intp->require_number(arg[0]);
+		for (int i = 0; i <= frames; i++) {
+			ptm_idle_frame();
+		}
 	};
 	CMD("GOTO") {
 		ARGC(1);

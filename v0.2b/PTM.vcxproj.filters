@@ -1,110 +1,110 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="main.c" />
-    <ClCompile Include="CppUtils\CppFile.cpp">
+    <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\CppUtils\CppFile.cpp">
       <Filter>CppUtils</Filter>
     </ClCompile>
-    <ClCompile Include="CppUtils\CppMsgBox.cpp">
+    <ClCompile Include="Src\CppUtils\CppMsgBox.cpp">
       <Filter>CppUtils</Filter>
     </ClCompile>
-    <ClCompile Include="CppUtils\CppProperties.cpp">
+    <ClCompile Include="Src\CppUtils\CppProperties.cpp">
       <Filter>CppUtils</Filter>
     </ClCompile>
-    <ClCompile Include="CppUtils\CppString.cpp">
+    <ClCompile Include="Src\CppUtils\CppString.cpp">
       <Filter>CppUtils</Filter>
     </ClCompile>
-    <ClCompile Include="CppUtils\CppUtil.cpp">
+    <ClCompile Include="Src\CppUtils\CppUtil.cpp">
       <Filter>CppUtils</Filter>
     </ClCompile>
-    <ClCompile Include="Compiler\t_compiler.cpp">
-      <Filter>PTML</Filter>
-    </ClCompile>
-    <ClCompile Include="Compiler\t_interpreter.cpp">
-      <Filter>PTML</Filter>
-    </ClCompile>
-    <ClCompile Include="Compiler\t_param.cpp">
-      <Filter>PTML</Filter>
-    </ClCompile>
-    <ClCompile Include="Compiler\t_program.cpp">
-      <Filter>PTML</Filter>
-    </ClCompile>
-    <ClCompile Include="Compiler\t_source_line.cpp">
-      <Filter>PTML</Filter>
-    </ClCompile>
-    <ClCompile Include="Compiler\t_variable.cpp">
-      <Filter>PTML</Filter>
-    </ClCompile>
-    <ClCompile Include="ptm_core.cpp">
+    <ClCompile Include="Src\PTM\ptm_commands.cpp">
       <Filter>PTM</Filter>
     </ClCompile>
-    <ClCompile Include="ptm_commands.cpp">
+    <ClCompile Include="Src\PTM\ptm_core.cpp">
       <Filter>PTM</Filter>
     </ClCompile>
-    <ClCompile Include="ptm_utils.cpp">
+    <ClCompile Include="Src\PTM\ptm_utils.cpp">
       <Filter>PTM</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTML\t_compiler.cpp">
+      <Filter>PTML</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTML\t_interpreter.cpp">
+      <Filter>PTML</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTML\t_param.cpp">
+      <Filter>PTML</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTML\t_program.cpp">
+      <Filter>PTML</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTML\t_source_line.cpp">
+      <Filter>PTML</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTML\t_variable.cpp">
+      <Filter>PTML</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CppUtils\CppFile.h">
-      <Filter>CppUtils</Filter>
-    </ClInclude>
-    <ClInclude Include="CppUtils\CppGlobal.h">
-      <Filter>CppUtils</Filter>
-    </ClInclude>
-    <ClInclude Include="CppUtils\CppMsgBox.h">
-      <Filter>CppUtils</Filter>
-    </ClInclude>
-    <ClInclude Include="CppUtils\CppProperties.h">
-      <Filter>CppUtils</Filter>
-    </ClInclude>
-    <ClInclude Include="CppUtils\CppString.h">
-      <Filter>CppUtils</Filter>
-    </ClInclude>
-    <ClInclude Include="CppUtils\CppUtil.h">
-      <Filter>CppUtils</Filter>
-    </ClInclude>
-    <ClInclude Include="CppUtils\CppUtils.h">
-      <Filter>CppUtils</Filter>
-    </ClInclude>
-    <ClInclude Include="common.h">
+    <ClInclude Include="Src\Common\common.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Compiler\t_compiler.h">
-      <Filter>PTML</Filter>
+    <ClInclude Include="Src\CppUtils\CppFile.h">
+      <Filter>CppUtils</Filter>
     </ClInclude>
-    <ClInclude Include="Compiler\t_interpreter.h">
-      <Filter>PTML</Filter>
+    <ClInclude Include="Src\CppUtils\CppGlobal.h">
+      <Filter>CppUtils</Filter>
     </ClInclude>
-    <ClInclude Include="Compiler\t_loop.h">
-      <Filter>PTML</Filter>
+    <ClInclude Include="Src\CppUtils\CppMsgBox.h">
+      <Filter>CppUtils</Filter>
     </ClInclude>
-    <ClInclude Include="Compiler\t_param.h">
-      <Filter>PTML</Filter>
+    <ClInclude Include="Src\CppUtils\CppProperties.h">
+      <Filter>CppUtils</Filter>
     </ClInclude>
-    <ClInclude Include="Compiler\t_program.h">
-      <Filter>PTML</Filter>
+    <ClInclude Include="Src\CppUtils\CppString.h">
+      <Filter>CppUtils</Filter>
     </ClInclude>
-    <ClInclude Include="Compiler\t_program_line.h">
-      <Filter>PTML</Filter>
+    <ClInclude Include="Src\CppUtils\CppUtil.h">
+      <Filter>CppUtils</Filter>
     </ClInclude>
-    <ClInclude Include="Compiler\t_source_line.h">
-      <Filter>PTML</Filter>
+    <ClInclude Include="Src\CppUtils\CppUtils.h">
+      <Filter>CppUtils</Filter>
     </ClInclude>
-    <ClInclude Include="Compiler\t_variable.h">
-      <Filter>PTML</Filter>
-    </ClInclude>
-    <ClInclude Include="ptm_core.h">
-      <Filter>PTM</Filter>
-    </ClInclude>
-    <ClInclude Include="ptm_commands.h">
-      <Filter>PTM</Filter>
-    </ClInclude>
-    <ClInclude Include="ptm_utils.h">
-      <Filter>PTM</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
+    <ClInclude Include="Resources\resource.h">
       <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTM\ptm_commands.h">
+      <Filter>PTM</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTM\ptm_core.h">
+      <Filter>PTM</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTM\ptm_utils.h">
+      <Filter>PTM</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTML\t_compiler.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTML\t_interpreter.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTML\t_loop.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTML\t_param.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTML\t_program.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTML\t_program_line.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTML\t_source_line.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTML\t_variable.h">
+      <Filter>PTML</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -130,13 +130,11 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="PTM.rc">
-      <Filter>Resources</Filter>
-    </ResourceCompile>
+    <None Include="Build\test.ptm" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\PTM.APS">
+    <ResourceCompile Include="Resources\PTM.rc">
       <Filter>Resources</Filter>
-    </None>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

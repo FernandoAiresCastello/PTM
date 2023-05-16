@@ -21,7 +21,6 @@ struct {
 		rgb bgcol = 0x101010;
 		int frame_counter = 0;
 	} scr;
-
 } ptm;
 
 void ptm_run(string program_file)

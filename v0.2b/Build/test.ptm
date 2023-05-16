@@ -12,5 +12,4 @@ loop:
 init:
 	TITLE "Hello World!"
 	WINDOW 360, 200, 4, &H101010
-	CLS
 	RET
