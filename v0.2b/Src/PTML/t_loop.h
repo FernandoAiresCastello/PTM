@@ -1,5 +1,5 @@
 #pragma once
-#include "../common.h"
+#include "../Common/common.h"
 
 struct t_loop {
 	int line_ix_begin = 0;

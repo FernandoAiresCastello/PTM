@@ -1,5 +1,5 @@
 #pragma once
-#include "common.h"
+#include "../Common/common.h"
 
 int get_color_r(rgb color);
 int get_color_g(rgb color);

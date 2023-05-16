@@ -1,5 +1,5 @@
 #pragma once
-#include "../common.h"
+#include "../Common/common.h"
 #include "t_param.h"
 #include "t_loop.h"
 #include "t_variable.h"
@@ -19,6 +19,7 @@ struct t_interpreter {
 
 	t_interpreter();
 	void run(t_program* prg);
+	void abort(string error);
 	bool argc(t_params& arg, int expected);
 	bool argc(t_params& arg, int min, int max);
 	int require_number(t_param& arg);
@@ -57,5 +58,4 @@ private:
 	unordered_map<string, vector<string>> arrays;
 
 	void execute_current_line();
-	void abort(string error);
 };

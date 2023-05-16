@@ -10,11 +10,12 @@
 #include <unordered_map>
 using namespace std;
 
-#include "CppUtils/CppUtils.h"
+#include "../CppUtils/CppUtils.h"
 using namespace CppUtils;
 
 #define debugger			__debugbreak()
 #define PTM_INVALID_NUMBER	INT_MIN
+#define PTM_MSGBOX_TITLE	"PTM"
 
 typedef unsigned int rgb;
 typedef unsigned char byte;

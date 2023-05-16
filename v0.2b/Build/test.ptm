@@ -1,3 +1,16 @@
-TITLE "Hello World!"
-WINDOW 360, 200, 4, &h101010
-CLS
+CALL init
+
+loop:
+	PAUSE 10
+	WCOL &H800000
+	CLS
+	PAUSE 10
+	WCOL &H008000
+	CLS
+	GOTO loop
+
+init:
+	TITLE "Hello World!"
+	WINDOW 360, 200, 4, &H101010
+	CLS
+	RET

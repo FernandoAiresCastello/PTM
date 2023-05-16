@@ -12,11 +12,14 @@ void ptm_init_commands()
 	CMD("DATA") {};
 	CMD("WINDOW") {};
 
-	// Runtime commands
+	// Run-time commands
 
-	CMD("NOP") {
-		ARGC(0);
-		ptm_idle_frame();
+	CMD("PAUSE") {
+		ARGC(1);
+		int frames = intp->require_number(arg[0]);
+		for (int i = 0; i <= frames; i++) {
+			ptm_idle_frame();
+		}
 	};
 	CMD("EXIT") {
 		ARGC(0);
@@ -52,5 +55,23 @@ void ptm_init_commands()
 		ARGC(1);
 		string msg = intp->require_string(arg[0]);
 		ptm_show_message_box(msg);
+	};
+	CMD("GOTO") {
+		ARGC(1);
+		string label = intp->require_label(arg[0]);
+		if (!label.empty()) {
+			intp->goto_label(label);
+		}
+	};
+	CMD("CALL") {
+		ARGC(1);
+		string label = intp->require_label(arg[0]);
+		if (!label.empty()) {
+			intp->call_label(label);
+		}
+	};
+	CMD("RET") {
+		ARGC(0);
+		intp->return_from_call();
 	};
 }

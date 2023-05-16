@@ -1,5 +1,5 @@
 #pragma once
-#include "../common.h"
+#include "../Common/common.h"
 
 enum class t_param_type {
 	undefined, number, char_literal, string, id, arr_ix_literal, arr_ix_var

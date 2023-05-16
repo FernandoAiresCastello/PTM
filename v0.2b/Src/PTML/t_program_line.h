@@ -1,5 +1,5 @@
 #pragma once
-#include "../common.h"
+#include "../Common/common.h"
 #include "t_param.h"
 
 struct t_program_line {

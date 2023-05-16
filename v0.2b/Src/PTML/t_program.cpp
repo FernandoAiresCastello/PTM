@@ -11,7 +11,7 @@ void t_program::clear() {
 }
 bool t_program::load_plain(string path) {
 	if (!File::Exists(path)) {
-		MsgBox::Error("PTM", String::Format("Program file not found:\n\n%s", path.c_str()));
+		MsgBox::Error(PTM_MSGBOX_TITLE, String::Format("Program file not found:\n\n%s", path.c_str()));
 		return false;
 	}
 	clear();
@@ -28,7 +28,7 @@ bool t_program::load_plain(string path) {
 					src_lines.push_back(t_source_line(incl_filename, incl_line_nr, incl_line_text));
 				}
 			} else {
-				MsgBox::Error("PTM", String::Format("Included file not found:\n\n%s", incl_filename.c_str()));
+				MsgBox::Error(PTM_MSGBOX_TITLE, String::Format("Included file not found:\n\n%s", incl_filename.c_str()));
 				return false;
 			}
 		} else {

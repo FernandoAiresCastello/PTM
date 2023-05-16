@@ -1,5 +1,5 @@
 #pragma once
-#include "../common.h"
+#include "../Common/common.h"
 
 struct t_source_line {
 	string file;

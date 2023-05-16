@@ -1,9 +1,9 @@
 #include "ptm_core.h"
 #include "ptm_commands.h"
 #include "ptm_utils.h"
-#include "Compiler/t_program.h"
-#include "Compiler/t_compiler.h"
-#include "Compiler/t_interpreter.h"
+#include "../PTML/t_program.h"
+#include "../PTML/t_compiler.h"
+#include "../PTML/t_interpreter.h"
 
 t_interpreter* intp = nullptr;
 
@@ -33,7 +33,6 @@ void ptm_run(string program_file)
 	t_program* prg = new t_program();
 	if (!prg->load_plain(program_file)) {
 		delete prg;     prg = nullptr;
-		ptm_abort();
 		return;
 	}
 	t_compiler* compiler = new t_compiler();
@@ -44,6 +43,9 @@ void ptm_run(string program_file)
 	if (compiler->has_window_def) {
 		auto& wnd = compiler->window_def;
 		ptm_init_window(wnd.width, wnd.height, wnd.size, wnd.bgcol);
+	}
+	else {
+		ptm_init_window(360, 200, 3, 0x101010);
 	}
 	delete compiler;    compiler = nullptr;
 
@@ -70,8 +72,12 @@ void ptm_halt()
 }
 void ptm_abort(string msg)
 {
-	if (!msg.empty()) {
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "PTM Fatal Error", msg.c_str(), ptm.scr.wnd);
+	if (intp) {
+		intp->abort(msg.c_str());
+		MsgBox::Error(PTM_MSGBOX_TITLE, intp->errors[0]);
+	}
+	else {
+		MsgBox::Error(PTM_MSGBOX_TITLE, msg);
 	}
 	ptm_exit();
 }
@@ -173,7 +179,7 @@ void ptm_set_window_bgcol(rgb bgcol)
 }
 void ptm_show_message_box(string msg)
 {
-	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "PTM", msg.c_str(), ptm.scr.wnd);
+	MsgBox::Info(PTM_MSGBOX_TITLE, msg);
 }
 void ptm_on_exec_line(t_program_line* line, string& cmd, t_params& params)
 {
@@ -181,7 +187,7 @@ void ptm_on_exec_line(t_program_line* line, string& cmd, t_params& params)
 		ptm_commands[cmd](params);
 	}
 	catch (bad_function_call ex) {
-		ptm_abort(String::Format("Invalid command at line %i:\n\n%s", line->src_line_nr, line->src.c_str()));
+		ptm_abort("Invalid command");
 	}
 
 	if (!intp->errors.empty()) {

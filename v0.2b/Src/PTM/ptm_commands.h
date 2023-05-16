@@ -1,6 +1,6 @@
 #pragma once
 #include <functional>
-#include "Compiler/t_param.h"
+#include "../PTML/t_param.h"
 
 extern unordered_map<string, function<void(t_params&)>> ptm_commands;
 

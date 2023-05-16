@@ -103,6 +103,9 @@
     <ClInclude Include="ptm_utils.h">
       <Filter>PTM</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CppUtils">
@@ -117,5 +120,23 @@
     <Filter Include="PTML">
       <UniqueIdentifier>{07126054-de90-45e3-a422-ba77e9f1affc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{874d3363-3914-4234-8308-467ca70c840d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\app_icon.ico">
+      <Filter>Resources</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="PTM.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PTM.APS">
+      <Filter>Resources</Filter>
+    </None>
   </ItemGroup>
 </Project>
