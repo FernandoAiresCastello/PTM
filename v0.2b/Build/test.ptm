@@ -1,28 +1,2 @@
 TITLE "Hello World!"
 WINDOW 360, 200, 4, &H101010
-
-VAR x, 0
-
-loop:
-	IF.KEY "LEFT"
-		CALL color0
-	ENDIF
-	IF.KEY "RIGHT"
-		CALL color1
-	ENDIF
-	CLS
-	UPDATE
-	TITLE x
-	GOTO loop
-
-color0:
-	WCOL &Hff0000
-	DEC x
-	RET
-
-color1:
-	WCOL &H0000ff
-	INC x
-	RET
-
-EXIT

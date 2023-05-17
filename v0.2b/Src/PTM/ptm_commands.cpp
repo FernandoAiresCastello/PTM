@@ -301,4 +301,10 @@ void ptm_init_commands()
 		auto& var = ptm_get_var(id);
 		ptm_set_var(id, String::ToInt(var.value) - 1);
 	};
+	CMD("FRAMES") {
+		ARGC(1);
+		string id = ARG_IDENT(0);
+		if (id.empty()) return;
+		ptm_set_var(id, scr.frame_counter);
+	};
 }
