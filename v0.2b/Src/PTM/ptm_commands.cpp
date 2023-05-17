@@ -307,4 +307,30 @@ void ptm_init_commands()
 		if (id.empty()) return;
 		ptm_set_var(id, scr.frame_counter);
 	};
+	CMD("PSET") {
+		ARGC(3);
+		int x = ARG_NUM(0);
+		int y = ARG_NUM(1);
+		rgb color = ARG_NUM(2);
+		ptm_pset(x, y, color);
+	};
+	CMD("CLIP.SET") {
+		ARGC(4);
+		int x1 = ARG_NUM(0);
+		int y1 = ARG_NUM(1);
+		int x2 = ARG_NUM(2);
+		int y2 = ARG_NUM(3);
+		ptm_clip(x1, y1, x2, y2);
+	};
+	CMD("CLIP.SCRL") {
+		ARGC(2);
+		int dx = ARG_NUM(0);
+		int dy = ARG_NUM(1);
+		ptm_clip_scroll(dx, dy);
+	};
+	CMD("CLIP.CLR") {
+		ARGC(1);
+		rgb color = ARG_NUM(0);
+		ptm_fill_clip(color);
+	};
 }

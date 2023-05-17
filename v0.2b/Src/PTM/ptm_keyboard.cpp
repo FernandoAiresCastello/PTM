@@ -2,6 +2,7 @@
 
 #define KBMAP(x, y) kbmap[x] = y;
 std::map<string, SDL_Scancode> kbmap;
+int last_key = 0;
 
 void ptm_init_keyboard()
 {

@@ -12,8 +12,6 @@ t_compiler* compiler = nullptr;
 void ptm_abort_from_compiler();
 void ptm_abort_from_interpreter();
 
-int last_key = 0;
-
 void ptm_run(string program_file)
 {
 	SDL_Init(SDL_INIT_EVERYTHING);

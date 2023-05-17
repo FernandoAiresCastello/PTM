@@ -1,5 +1,7 @@
 #include "ptm_tile_system.h"
 
+t_tileset tileset;
+
 t_tile::t_tile()
 {
 	this->ch = 0;

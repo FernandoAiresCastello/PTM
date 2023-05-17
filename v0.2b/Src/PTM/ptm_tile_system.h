@@ -55,3 +55,5 @@ private:
 	int width = 0;
 	int height = 0;
 };
+
+extern t_tileset tileset;

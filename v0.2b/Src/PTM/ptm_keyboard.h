@@ -2,6 +2,7 @@
 #include "../Common/common.h"
 
 extern std::map<string, SDL_Scancode> kbmap;
+extern int last_key;
 
 void ptm_init_keyboard();
 bool ptm_kb_pressed(SDL_Scancode key);
