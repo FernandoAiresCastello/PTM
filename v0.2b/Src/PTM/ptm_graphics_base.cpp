@@ -1,4 +1,4 @@
-#include "ptm_graphics.h"
+#include "ptm_graphics_base.h"
 #include "ptm_core.h"
 
 t_ptm_screen scr;
@@ -75,5 +75,41 @@ void ptm_clear_screen()
 }
 void ptm_pset(int x, int y, rgb color)
 {
-	scr.pixel_buf[y * scr.buf_w + x] = color;
+	if (x >= 0 && y >= 0 && x < scr.buf_w && y < scr.buf_h) {
+		scr.pixel_buf[y * scr.buf_w + x] = color;
+	}
+}
+void ptm_draw_tile_bin(binary str, int x, int y, rgb fgc, rgb bgc, bool transparent)
+{
+	const int px = x;
+	for (auto& ch : str) {
+		if (transparent) {
+			if (ch == '1') {
+				ptm_pset(x, y, fgc);
+			}
+		}
+		else {
+			ptm_pset(x, y, ch == '1' ? fgc : bgc);
+		}
+		x++;
+		if (x >= px + 8) {
+			x = px;
+			y++;
+		}
+	}
+}
+void ptm_draw_tile_rgb(rgb colors[64], int x, int y, rgb transparency_key)
+{
+	const int px = x;
+	for (int i = 0; i < 64; i++) {
+		rgb& color = colors[i];
+		if (color != transparency_key) {
+			ptm_pset(x, y, color);
+		}
+		x++;
+		if (x >= px + 8) {
+			x = px;
+			y++;
+		}
+	}
 }

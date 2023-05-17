@@ -14,7 +14,6 @@ struct t_ptm_screen {
 	rgb bgcol = 0;
 	int frame_counter = 0;
 };
-
 extern t_ptm_screen scr;
 
 void ptm_init_window(int buf_w, int buf_h, int size, rgb bgcol);
@@ -25,3 +24,5 @@ void ptm_set_window_title(string title);
 void ptm_set_window_bgcol(rgb bgcol);
 void ptm_clear_screen();
 void ptm_pset(int x, int y, rgb color);
+void ptm_draw_tile_bin(binary str, int x, int y, rgb fgc, rgb bgc, bool transparent);
+void ptm_draw_tile_rgb(rgb colors[64], int x, int y, rgb transparency_key);

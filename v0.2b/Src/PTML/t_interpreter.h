@@ -16,6 +16,8 @@ struct t_interpreter {
 	void (*on_keydown)(SDL_Keycode) = nullptr;
 	void (*on_exec_line)(t_program_line*, string&, t_params&) = nullptr;
 	std::vector<string> errors;
+	unordered_map<string, t_variable> vars;
+	unordered_map<string, vector<string>> arrays;
 
 	t_interpreter();
 	void run(t_program* prg);
@@ -54,8 +56,6 @@ private:
 	stack<t_loop> loopstack;
 	stack<int> ifstack;
 	SDL_Keycode last_keycode_pressed = 0;
-	unordered_map<string, t_variable> vars;
-	unordered_map<string, vector<string>> arrays;
 
 	void execute_current_line();
 };

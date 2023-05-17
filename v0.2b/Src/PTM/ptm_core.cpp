@@ -1,6 +1,6 @@
 #include "ptm_core.h"
 #include "ptm_commands.h"
-#include "ptm_graphics.h"
+#include "ptm_graphics_base.h"
 #include "../PTML/t_program.h"
 #include "../PTML/t_compiler.h"
 #include "../PTML/t_interpreter.h"
@@ -118,4 +118,38 @@ void ptm_on_keydown(SDL_Keycode key)
 	else if (key == SDLK_ESCAPE) {
 		ptm_exit();
 	}
+}
+bool ptm_has_var(string name)
+{
+	return intp->vars.find(name) != intp->vars.end();
+}
+void ptm_set_var(string name, string value)
+{
+	intp->vars[name] = t_variable(value, false);
+}
+void ptm_set_var(string name, int value)
+{
+	intp->vars[name] = t_variable(value, false);
+}
+t_variable& ptm_get_var(string name)
+{
+	return intp->vars[name];
+}
+void ptm_copy_var(string dst, string src)
+{
+	intp->vars[dst] = intp->vars[src];
+	intp->vars[dst].is_const = false;
+}
+void ptm_copy_var_to_const(string dst, string src)
+{
+	intp->vars[dst] = intp->vars[src];
+	intp->vars[dst].is_const = true;
+}
+void ptm_def_const(string name, string value)
+{
+	intp->vars[name] = t_variable(value, true);
+}
+void ptm_def_const(string name, int value)
+{
+	intp->vars[name] = t_variable(value, true);
 }

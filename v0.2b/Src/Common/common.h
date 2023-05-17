@@ -17,6 +17,7 @@ using namespace CppUtils;
 #define PTM_INVALID_NUMBER	INT_MIN
 #define PTM_MSGBOX_TITLE	"PTM"
 
-typedef unsigned int rgb;
-typedef unsigned char byte;
-typedef size_t addr;
+typedef unsigned int	rgb;
+typedef unsigned char	byte;
+typedef size_t			addr;
+typedef string			binary;
