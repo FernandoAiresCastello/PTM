@@ -1,9 +1,15 @@
 TITLE "Hello World!"
 WINDOW 360, 200, 4, &H101010
-VAR var_1, 123
-VAR var_2, 345
-VAR var_3, var_1
-DEF constant, "this is const"
-DEF constant_2, constant
-DBG.MSG constant_2
+
+ARR.NEW list
+ARR.PUSH list, "First"
+ARR.PUSH list, &hff
+
+FOR x, 10, 20
+	IF.EQ x, 15
+		SKIP
+	ENDIF
+	DBG.MSG x
+NEXT
+
 EXIT

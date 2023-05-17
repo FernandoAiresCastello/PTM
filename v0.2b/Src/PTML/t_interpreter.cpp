@@ -64,6 +64,8 @@ void t_interpreter::abort(string error) {
 	} else {
 		errors.push_back(error);
 	}
+	if (on_abort)
+		on_abort();
 }
 bool t_interpreter::argc(t_params& arg, int expected) {
 	if (arg.size() != expected) {

@@ -6,6 +6,10 @@
 #include "../PTML/t_interpreter.h"
 
 t_interpreter* intp = nullptr;
+t_compiler* compiler = nullptr;
+
+void ptm_abort_from_compiler();
+void ptm_abort_from_interpreter();
 
 void ptm_run(string program_file)
 {
@@ -17,10 +21,10 @@ void ptm_run(string program_file)
 		delete prg;     prg = nullptr;
 		return;
 	}
-	t_compiler* compiler = new t_compiler();
+	compiler = new t_compiler();
 	compiler->run(prg);
 	if (!compiler->errors.empty()) {
-		ptm_abort(compiler->errors[0]);
+		ptm_abort_from_compiler();
 	}
 	if (compiler->has_window_def) {
 		auto& wnd = compiler->window_def;
@@ -35,10 +39,15 @@ void ptm_run(string program_file)
 	intp->on_exec_line = ptm_on_exec_line;
 	intp->on_keydown = ptm_on_keydown;
 	intp->on_idle_loop = ptm_idle_frame;
+	intp->on_abort = ptm_abort_from_interpreter;
 	intp->run(prg);
 
 	delete intp;    intp = nullptr;
 	delete prg;     prg = nullptr;
+}
+void ptm_abort(string msg)
+{
+	intp->abort(msg);
 }
 void ptm_exit()
 {
@@ -52,15 +61,14 @@ void ptm_halt()
 		ptm_update();
 	}
 }
-void ptm_abort(string msg)
+void ptm_abort_from_compiler()
 {
-	if (intp) {
-		intp->abort(msg.c_str());
-		MsgBox::Error(PTM_MSGBOX_TITLE, intp->errors[0]);
-	}
-	else {
-		MsgBox::Error(PTM_MSGBOX_TITLE, msg);
-	}
+	MsgBox::Error(PTM_MSGBOX_TITLE, compiler->errors[0]);
+	ptm_exit();
+}
+void ptm_abort_from_interpreter()
+{
+	MsgBox::Error(PTM_MSGBOX_TITLE, intp->errors[0]);
 	ptm_exit();
 }
 void ptm_update()
@@ -103,11 +111,7 @@ void ptm_on_exec_line(t_program_line* line, string& cmd, t_params& params)
 		ptm_commands[cmd](params);
 	}
 	catch (bad_function_call ex) {
-		ptm_abort("Invalid command");
-	}
-
-	if (!intp->errors.empty()) {
-		ptm_abort(intp->errors[0]);
+		intp->abort("Command not found");
 	}
 }
 void ptm_on_keydown(SDL_Keycode key)
@@ -152,4 +156,78 @@ void ptm_def_const(string name, string value)
 void ptm_def_const(string name, int value)
 {
 	intp->vars[name] = t_variable(value, true);
+}
+void ptm_new_array(string name, int size)
+{
+	if (size >= 0) {
+		intp->arrays[name] = std::vector<string>();
+		for (int i = 0; i < size; i++) {
+			intp->arrays[name].push_back("");
+		}
+	}
+	else {
+		intp->abort("Illegal array length");
+	}
+}
+void ptm_array_push(string name, string value)
+{
+	intp->arrays[name].push_back(value);
+}
+void ptm_array_push(string name, int value)
+{
+	intp->arrays[name].push_back(String::ToString(value));
+}
+int ptm_array_size(string name)
+{
+	return intp->arrays[name].size();
+}
+vector<string>& ptm_get_array(string name)
+{
+	return intp->arrays[name];
+}
+void ptm_copy_array(string dst, string src)
+{
+	intp->arrays[dst] = intp->arrays[src];
+}
+void ptm_if_block_start(t_params& arg, int cmp_mode)
+{
+	if (cmp_mode == CMP_MODE_EQ || cmp_mode == CMP_MODE_NEQ) {
+		string a = intp->require_string(arg[0]);
+		string b = intp->require_string(arg[1]);
+		if (cmp_mode == CMP_MODE_EQ) {
+			if (a == b) { return; }
+			else { intp->goto_matching_endif(); }
+		}
+		else if (cmp_mode == CMP_MODE_NEQ) {
+			if (a != b) { return; }
+			else { intp->goto_matching_endif(); }
+		}
+	}
+	else {
+		int a = intp->require_number(arg[0]);
+		if (a == PTM_INVALID_NUMBER) return;
+		int b = intp->require_number(arg[1]);
+		if (b == PTM_INVALID_NUMBER) return;
+
+		if (cmp_mode == CMP_MODE_GT) {
+			if (a > b) { return; }
+			else { intp->goto_matching_endif(); }
+		}
+		else if (cmp_mode == CMP_MODE_GTE) {
+			if (a >= b) { return; }
+			else { intp->goto_matching_endif(); }
+		}
+		else if (cmp_mode == CMP_MODE_LT) {
+			if (a < b) { return; }
+			else { intp->goto_matching_endif(); }
+		}
+		else if (cmp_mode == CMP_MODE_LTE) {
+			if (a <= b) { return; }
+			else { intp->goto_matching_endif(); }
+		}
+	}
+}
+void ptm_if_block_end()
+{
+	// No operation
 }

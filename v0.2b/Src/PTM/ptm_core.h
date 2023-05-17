@@ -7,9 +7,9 @@
 extern t_interpreter* intp;
 
 void ptm_run(string program_file);
+void ptm_abort(string msg);
 void ptm_exit();
 void ptm_halt();
-void ptm_abort(string msg);
 void ptm_update();
 void ptm_proc_events();
 void ptm_idle_frame();
@@ -24,3 +24,11 @@ void ptm_copy_var(string dst, string src);
 void ptm_copy_var_to_const(string dst, string src);
 void ptm_def_const(string name, string value);
 void ptm_def_const(string name, int value);
+void ptm_new_array(string name, int size);
+void ptm_array_push(string name, string value);
+void ptm_array_push(string name, int value);
+int ptm_array_size(string name);
+vector<string>& ptm_get_array(string name);
+void ptm_copy_array(string dst, string src);
+void ptm_if_block_start(t_params& arg, int cmp_mode);
+void ptm_if_block_end();

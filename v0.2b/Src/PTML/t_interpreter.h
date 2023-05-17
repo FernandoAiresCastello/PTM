@@ -15,6 +15,7 @@ struct t_interpreter {
 	void (*on_idle_loop)() = nullptr;
 	void (*on_keydown)(SDL_Keycode) = nullptr;
 	void (*on_exec_line)(t_program_line*, string&, t_params&) = nullptr;
+	void (*on_abort)() = nullptr;
 	std::vector<string> errors;
 	unordered_map<string, t_variable> vars;
 	unordered_map<string, vector<string>> arrays;
