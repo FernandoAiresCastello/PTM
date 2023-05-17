@@ -1,6 +1,7 @@
 #include "ptm_core.h"
 #include "ptm_commands.h"
 #include "ptm_graphics_base.h"
+#include "ptm_keyboard.h"
 #include "../PTML/t_program.h"
 #include "../PTML/t_compiler.h"
 #include "../PTML/t_interpreter.h"
@@ -11,10 +12,13 @@ t_compiler* compiler = nullptr;
 void ptm_abort_from_compiler();
 void ptm_abort_from_interpreter();
 
+int last_key = 0;
+
 void ptm_run(string program_file)
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	ptm_init_commands();
+	ptm_init_keyboard();
 
 	t_program* prg = new t_program();
 	if (!prg->load_plain(program_file)) {
@@ -86,6 +90,7 @@ void ptm_proc_events()
 		}
 		else if (e.type == SDL_KEYDOWN) {
 			const SDL_Keycode key = e.key.keysym.sym;
+			last_key = key;
 			if (key == SDLK_ESCAPE) {
 				ptm_exit();
 				return;
@@ -227,7 +232,14 @@ void ptm_if_block_start(t_params& arg, int cmp_mode)
 		}
 	}
 }
-void ptm_if_block_end()
+bool ptm_last_key(string keyname)
 {
-	// No operation
+	keyname = String::ToUpper(keyname);
+
+	if (keyname == "SHIFT") return ptm_kb_shift();
+	if (keyname == "CTRL") return ptm_kb_ctrl();
+	if (keyname == "ALT") return ptm_kb_alt();
+	if (keyname == "CAPS") return ptm_kb_caps();
+
+	return ptm_kb_pressed(keyname);
 }

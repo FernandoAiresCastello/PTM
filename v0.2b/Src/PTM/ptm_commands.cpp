@@ -2,6 +2,8 @@
 #include "ptm_core.h"
 #include "ptm_graphics_base.h"
 
+unordered_map<string, function<void(t_params&)>> ptm_commands;
+
 #define CMD(x) ptm_commands[x] = [](t_params& arg)
 #define ARG_STR(x) intp->require_string(arg[x])
 #define ARG_NUM(x) intp->require_number(arg[x])
@@ -10,8 +12,6 @@
 #define ARG_EXISTING_IDENT(x) intp->require_existing_varname(arg[x])
 #define ARG_EXISTING_ARR(x) intp->require_existing_array(arg[x])
 #define ARG_ARR_ELEMENT(x) intp->require_array_element(arg[x])
-
-unordered_map<string, function<void(t_params&)>> ptm_commands;
 
 void ptm_init_commands()
 {
@@ -258,6 +258,47 @@ void ptm_init_commands()
 	};
 	CMD("ENDIF") {
 		ARGC(0);
-		ptm_if_block_end();
+	};
+	CMD("IF.GOTO") {
+		ARGC(3);
+		string a = ARG_STR(0);
+		string b = ARG_STR(1);
+		string label = ARG_LABEL(2);
+		if (label.empty()) return;
+		if (a == b) {
+			intp->goto_label(label);
+		}
+	};
+	CMD("IF.CALL") {
+		ARGC(3);
+		string a = ARG_STR(0);
+		string b = ARG_STR(1);
+		string label = ARG_LABEL(2);
+		if (label.empty()) return;
+		if (a == b) {
+			intp->call_label(label);
+		}
+	};
+	CMD("IF.KEY") {
+		ARGC(1);
+		string keyname = intp->require_string(arg[0]);
+		if (keyname.empty()) return;
+		if (!ptm_last_key(keyname)) {
+			intp->goto_matching_endif();
+		}
+	};
+	CMD("INC") {
+		ARGC(1);
+		string id = ARG_IDENT(0);
+		if (id.empty()) return;
+		auto& var = ptm_get_var(id);
+		ptm_set_var(id, String::ToInt(var.value) + 1);
+	};
+	CMD("DEC") {
+		ARGC(1);
+		string id = ARG_IDENT(0);
+		if (id.empty()) return;
+		auto& var = ptm_get_var(id);
+		ptm_set_var(id, String::ToInt(var.value) - 1);
 	};
 }

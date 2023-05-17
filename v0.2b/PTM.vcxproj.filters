@@ -47,6 +47,9 @@
     <ClCompile Include="Src\PTM\ptm_graphics_base.cpp">
       <Filter>PTM</Filter>
     </ClCompile>
+    <ClCompile Include="Src\PTM\ptm_keyboard.cpp">
+      <Filter>PTM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Common\common.h">
@@ -110,6 +113,9 @@
       <Filter>PTML</Filter>
     </ClInclude>
     <ClInclude Include="Src\PTM\ptm_graphics_base.h">
+      <Filter>PTM</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTM\ptm_keyboard.h">
       <Filter>PTM</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,15 +1,28 @@
 TITLE "Hello World!"
 WINDOW 360, 200, 4, &H101010
 
-ARR.NEW list
-ARR.PUSH list, "First"
-ARR.PUSH list, &hff
+VAR x, 0
 
-FOR x, 10, 20
-	IF.EQ x, 15
-		SKIP
+loop:
+	IF.KEY "LEFT"
+		CALL color0
 	ENDIF
-	DBG.MSG x
-NEXT
+	IF.KEY "RIGHT"
+		CALL color1
+	ENDIF
+	CLS
+	UPDATE
+	TITLE x
+	GOTO loop
+
+color0:
+	WCOL &Hff0000
+	DEC x
+	RET
+
+color1:
+	WCOL &H0000ff
+	INC x
+	RET
 
 EXIT
