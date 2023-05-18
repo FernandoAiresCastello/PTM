@@ -6,6 +6,7 @@
 #include "../PTML/t_compiler.h"
 #include "../PTML/t_interpreter.h"
 
+string main_program_file;
 t_interpreter* intp = nullptr;
 t_compiler* compiler = nullptr;
 
@@ -23,6 +24,8 @@ int ptm_run(string program_file)
 		delete prg;     prg = nullptr;
 		return 1;
 	}
+	main_program_file = program_file;
+
 	compiler = new t_compiler();
 	compiler->run(prg);
 	if (!compiler->errors.empty()) {

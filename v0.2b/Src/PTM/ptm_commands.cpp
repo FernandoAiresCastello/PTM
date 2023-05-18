@@ -3,6 +3,7 @@
 #include "ptm_graphics_base.h"
 #include "ptm_tile_system.h"
 #include "ptm_color_palette.h"
+#include "ptm_sound_system.h"
 
 unordered_map<string, function<void(t_params&)>> ptm_commands;
 
@@ -492,5 +493,20 @@ void ptm_init_commands()
 		int bgc = ARG_NUM(1);
 		scr.text_style.fgc = fgc;
 		scr.text_style.bgc = bgc;
+	};
+	CMD("SND.LOAD") {
+		ARGC(2);
+		string id = ARG_STR(0);
+		string file = ARG_STR(1);
+		ptm_load_sound_wav(id, file);
+	};
+	CMD("SND.PLAY") {
+		ARGC(1);
+		string id = ARG_STR(0);
+		ptm_play_sound_wav(id);
+	};
+	CMD("SND.STOP") {
+		ARGC(0);
+		ptm_stop_all_sounds();
 	};
 }

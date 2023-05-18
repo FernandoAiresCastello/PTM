@@ -25,6 +25,9 @@ CALL draw_stuff
 BUF.SEL "buf_2"
 CALL draw_stuff
 
+SND.LOAD "intro", "test/intro.wav"
+SND.PLAY "intro"
+
 loop:
 	IF.KEY "RIGHT"
 		BUF.SCRL "buf_1", 1, 0
@@ -38,13 +41,16 @@ loop:
 	IF.KEY "DOWN"
 		BUF.SCRL "buf_1", 0, 1
 	ENDIF
+	IF.KEY "M"
+		SND.STOP
+	ENDIF
 	UPDATE
 	GOTO loop
 
 draw_stuff:
 	LOCATE 0, 0
-	TILE.NEW 1, 2, 3
-	TILE.ADD 1, 3, 2
+	TILE.NEW 'a', 2, 3
+	TILE.ADD 'b', 3, 2
 	PUT
 	LOCATE 1, 0
 	TILE.NEW 1, 3, 2
