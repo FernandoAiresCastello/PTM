@@ -44,6 +44,11 @@ loop:
 	IF.KEY "M"
 		SND.STOP
 	ENDIF
+	IF.KEY "DEL"
+		BUF.SEL "buf_1"
+		LOCATE 0, 0
+		DEL
+	ENDIF
 	UPDATE
 	GOTO loop
 

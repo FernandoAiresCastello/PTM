@@ -43,6 +43,7 @@ struct t_tilebuf_layer {
 	void put(int x, int y, int ch, int fgc, int bgc);
 	void add(int x, int y, t_tile& tile);
 	void add(int x, int y, int ch, int fgc, int bgc);
+	void fill(t_tileseq& tileseq);
 	t_tileseq& get(int x, int y);
 	t_tileseq get_copy(int x, int y);
 	void del(int x, int y);

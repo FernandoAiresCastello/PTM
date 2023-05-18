@@ -172,6 +172,12 @@ void t_tilebuf_layer::add(int x, int y, int ch, int fgc, int bgc)
 		get(x, y).add(ch, fgc, bgc);
 	}
 }
+void t_tilebuf_layer::fill(t_tileseq& tileseq)
+{
+	for (int i = 0; i < width * height; i++) {
+		tiles[i].set_equal(tileseq);
+	}
+}
 t_tileseq& t_tilebuf_layer::get(int x, int y)
 {
 	const int ix = y * width + x;
