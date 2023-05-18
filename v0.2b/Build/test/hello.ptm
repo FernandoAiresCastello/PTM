@@ -1,0 +1,3 @@
+TITLE "PTM - Hello World!"
+MSGBOX "Hello World!"
+EXIT

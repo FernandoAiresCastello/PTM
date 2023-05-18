@@ -21,7 +21,7 @@ void ptm_init_commands()
 	
 	CMD("INCL") {};
 	CMD("DATA") {};
-	CMD("WINDOW") {};
+	CMD("WINDOW") {}; // t_compiler.cpp
 
 	// Run-time commands
 
@@ -63,6 +63,11 @@ void ptm_init_commands()
 	CMD("CLS") {
 		ARGC(0);
 		ptm_clear_screen();
+	};
+	CMD("ANIM") {
+		ARGC(1);
+		int speed = ARG_NUM(0);
+		ptm_set_tile_animation_speed(speed);
 	};
 	CMD("DEBUG") {
 		ARGC(0);
@@ -441,6 +446,14 @@ void ptm_init_commands()
 	};
 	CMD("TILE.GETP") {
 		ARGC(2);
+	};
+	CMD("LAYER") {
+		ARGC(1);
+		int layer = ARG_NUM(0);
+		if (layer < 0 || layer >= tilebufs.selected()->get_layer_count()) {
+			ptm_abort("Invalid layer for selected buffer: " + tilebufs.selected_id());
+		}
+		tilebuf_csr.layer = layer;
 	};
 	CMD("LOCATE") {
 		ARGC(2);

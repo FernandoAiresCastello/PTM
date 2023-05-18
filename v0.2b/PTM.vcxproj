@@ -190,9 +190,6 @@ copy "$(TargetPath)" "$(SolutionDir)Build\$(TargetFileName)"</Command>
     <ClCompile Include="Src\PTM\ptm_utils.cpp" />
     <ClCompile Include="Src\PTM\ptm_tile_system.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Build\test.ptm" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

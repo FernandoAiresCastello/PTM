@@ -154,9 +154,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Build\test.ptm" />
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="Resources\PTM.rc">
       <Filter>Resources</Filter>
     </ResourceCompile>

@@ -1,10 +1,19 @@
 #include "ptm_tile_system.h"
 #include "ptm_color_palette.h"
 
+#define DEFAULT_TILEBUF_ID "default"
+
 t_tileset tileset;
 t_tilebuf_collection tilebufs;
 t_tileseq working_tile;
 t_tilebuf_cursor tilebuf_csr;
+
+struct {
+	int frame = 0;
+	int ctr_next_frame = 0;
+	int ctr_next_frame_max = 20;
+	int enabled = true;
+} animation;
 
 t_tile::t_tile()
 {
@@ -221,6 +230,10 @@ t_tilebuf_layer& t_tilebuf::layer(int index)
 {
 	return layers[index];
 }
+int t_tilebuf::get_layer_count()
+{
+	return layers.size();
+}
 void t_tilebuf::clear_all_layers()
 {
 	for (auto& layer : layers) {
@@ -275,35 +288,80 @@ bool t_tilebuf_collection::has(string id)
 void t_tilebuf_collection::select(string id)
 {
 	selected_buf = &tilebufs[id];
+	selected_buf_id = id;
 }
 t_tilebuf* t_tilebuf_collection::selected()
 {
 	return selected_buf;
 }
+string t_tilebuf_collection::selected_id()
+{
+	return selected_buf_id;
+}
+void ptm_create_default_tilebuffer(int layers)
+{
+	tilebufs.new_tilebuf(DEFAULT_TILEBUF_ID, layers, scr.cols, scr.rows);
+	tilebufs.select(DEFAULT_TILEBUF_ID);
+	tilebufs.get(DEFAULT_TILEBUF_ID).view(0, 0, scr.buf_w - 1, scr.buf_h - 1);
+	tilebufs.get(DEFAULT_TILEBUF_ID).set_bgcol(0);
+	tilebufs.get(DEFAULT_TILEBUF_ID).show();
+}
 void ptm_draw_visible_buffers()
 {
+	ptm_draw_buffer(tilebufs.get(DEFAULT_TILEBUF_ID));
+
 	for (auto& entry : tilebufs.tilebufs) {
-		t_tilebuf& buf = entry.second;
-		if (!buf.visible())
-			continue;
+		if (entry.first != DEFAULT_TILEBUF_ID) {
+			t_tilebuf& buf = entry.second;
+			ptm_draw_buffer(buf);
+		}
+	}
+}
+void ptm_draw_buffer(t_tilebuf& buf)
+{
+	if (!buf.visible())
+		return;
 
-		ptm_clip(buf.get_viewport());
-		ptm_fill_clip(palette.get(buf.get_bgcol()));
+	ptm_clip(buf.get_viewport());
+	ptm_fill_clip(palette.get(buf.get_bgcol()));
 
-		for (auto& layer : buf.get_layers()) {
-			for (int y = 0; y < buf.get_height(); y++) {
-				for (int x = 0; x < buf.get_width(); x++) {
-					t_tileseq& tile = layer.get(x, y);
-					if (tile.empty()) {
-						continue;
-					}
-					t_tile& frame = tile.frames[0];
-					binary& bin = tileset.get(frame.ch);
-					rgb fgc = palette.get(frame.fgc);
-					rgb bgc = palette.get(frame.bgc);
-					ptm_draw_tile_bin(bin, x * 8, y * 8, fgc, bgc, false);
+	for (auto& layer : buf.get_layers()) {
+		for (int y = 0; y < buf.get_height(); y++) {
+			for (int x = 0; x < buf.get_width(); x++) {
+				t_tileseq& tile = layer.get(x, y);
+				if (tile.empty()) {
+					continue;
 				}
+				t_tile& frame = tile.frames[animation.frame % tile.length()];
+				binary& bin = tileset.get(frame.ch);
+				rgb fgc = palette.get(frame.fgc);
+				rgb bgc = palette.get(frame.bgc);
+				ptm_draw_tile_bin(bin, x * 8, y * 8, fgc, bgc, false);
 			}
 		}
 	}
+}
+void ptm_update_tile_animation()
+{
+	if (!animation.enabled)
+		return;
+
+	animation.ctr_next_frame++;
+	if (animation.ctr_next_frame >= animation.ctr_next_frame_max) {
+		animation.ctr_next_frame = 0;
+		animation.frame++;
+	}
+}
+void ptm_set_tile_animation_speed(int speed)
+{
+	if (speed <= 0) {
+		animation.enabled = false;
+		return;
+	}
+	if (speed > 100) {
+		speed = 100;
+	}
+	animation.enabled = true;
+	animation.ctr_next_frame = 0;
+	animation.ctr_next_frame_max = 100 - speed;
 }

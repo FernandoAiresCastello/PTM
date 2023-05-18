@@ -61,6 +61,7 @@ struct t_tilebuf {
 	void scroll_view(int dx, int dy);
 	t_clip& get_viewport();
 	t_tilebuf_layer& layer(int index);
+	int get_layer_count();
 	void clear_all_layers();
 	void show();
 	void hide();
@@ -85,8 +86,10 @@ struct t_tilebuf_collection {
 	bool has(string id);
 	void select(string id);
 	t_tilebuf* selected();
+	string selected_id();
 private:
 	t_tilebuf* selected_buf = nullptr;
+	string selected_buf_id;
 };
 struct t_tilebuf_cursor {
 	int layer = 0;
@@ -99,4 +102,8 @@ extern t_tilebuf_collection tilebufs;
 extern t_tileseq working_tile;
 extern t_tilebuf_cursor tilebuf_csr;
 
+void ptm_create_default_tilebuffer(int layers);
 void ptm_draw_visible_buffers();
+void ptm_draw_buffer(t_tilebuf& buf);
+void ptm_update_tile_animation();
+void ptm_set_tile_animation_speed(int speed);

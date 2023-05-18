@@ -12,7 +12,7 @@ t_compiler* compiler = nullptr;
 void ptm_abort_from_compiler();
 void ptm_abort_from_interpreter();
 
-void ptm_run(string program_file)
+int ptm_run(string program_file)
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	ptm_init_commands();
@@ -21,7 +21,7 @@ void ptm_run(string program_file)
 	t_program* prg = new t_program();
 	if (!prg->load_plain(program_file)) {
 		delete prg;     prg = nullptr;
-		return;
+		return 1;
 	}
 	compiler = new t_compiler();
 	compiler->run(prg);
@@ -46,6 +46,8 @@ void ptm_run(string program_file)
 
 	delete intp;    intp = nullptr;
 	delete prg;     prg = nullptr;
+
+	return 0;
 }
 void ptm_abort(string msg)
 {

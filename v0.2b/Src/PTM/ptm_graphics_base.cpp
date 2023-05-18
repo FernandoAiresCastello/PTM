@@ -33,11 +33,8 @@ void ptm_init_window(int buf_w, int buf_h, int size, rgb bgcol, int default_buf_
 	SDL_SetWindowPosition(scr.wnd, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 	SDL_RaiseWindow(scr.wnd);
 
-	tilebufs.new_tilebuf("default", default_buf_layer_count, scr.cols, scr.rows);
-	tilebufs.select("default");
-	tilebufs.get("default").view(0, 0, buf_w - 1, buf_h - 1);
-	tilebufs.get("default").set_bgcol(0);
-	tilebufs.get("default").show();
+	ptm_set_tile_animation_speed(80);
+	ptm_create_default_tilebuffer(default_buf_layer_count);
 }
 void ptm_free_window()
 {
@@ -52,6 +49,7 @@ void ptm_refresh_window()
 		return;
 
 	ptm_draw_visible_buffers();
+	ptm_update_tile_animation();
 
 	static int pitch;
 	static void* pixels;

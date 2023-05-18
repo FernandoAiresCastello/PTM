@@ -2,6 +2,8 @@
 
 int main(int argc, char* argv[])
 {
-	ptm_run("test.ptm");
-	return 0;
+	if (argc > 1) {
+		return ptm_run(argv[1]);
+	}
+	return ptm_run("main.ptm");
 }

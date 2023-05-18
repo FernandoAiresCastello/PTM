@@ -6,7 +6,7 @@
 
 extern t_interpreter* intp;
 
-void ptm_run(string program_file);
+int ptm_run(string program_file);
 void ptm_abort(string msg);
 void ptm_exit();
 void ptm_halt();
