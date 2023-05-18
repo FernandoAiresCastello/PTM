@@ -13,7 +13,6 @@ struct t_compiler {
 		int width = 0;
 		int height = 0;
 		int size = 0;
-		rgb bgcol = 0x101010;
 		int default_buf_layer_count = 1;
 	} window_def;
 private:

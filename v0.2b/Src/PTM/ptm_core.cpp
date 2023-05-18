@@ -30,10 +30,10 @@ void ptm_run(string program_file)
 	}
 	if (compiler->has_window_def) {
 		auto& wnd = compiler->window_def;
-		ptm_init_window(wnd.width, wnd.height, wnd.size, wnd.bgcol, wnd.default_buf_layer_count);
+		ptm_init_window(wnd.width, wnd.height, wnd.size, 0x000000, wnd.default_buf_layer_count);
 	}
 	else {
-		ptm_init_window(360, 200, 3, 0x101010, 1);
+		ptm_init_window(360, 200, 3, 0x000000, 1);
 	}
 	delete compiler;    compiler = nullptr;
 

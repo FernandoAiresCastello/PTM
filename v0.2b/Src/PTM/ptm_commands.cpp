@@ -55,14 +55,14 @@ void ptm_init_commands()
 		string title = ARG_STR(0);
 		ptm_set_window_title(title);
 	};
+	CMD("WCOL") {
+		ARGC(1);
+		int palette_ix = ARG_NUM(0);
+		ptm_set_window_bgcol(palette.get(palette_ix));
+	};
 	CMD("CLS") {
 		ARGC(0);
 		ptm_clear_screen();
-	};
-	CMD("WCOL") {
-		ARGC(1);
-		rgb bgcol = ARG_NUM(0);
-		ptm_set_window_bgcol(bgcol);
 	};
 	CMD("DEBUG") {
 		ARGC(0);
@@ -304,7 +304,44 @@ void ptm_init_commands()
 		int layers = ARG_NUM(1);
 		int width = ARG_NUM(2);
 		int height = ARG_NUM(3);
-		tilebufs.new_tilebuf(id, layers, width, height);
+		if (tilebufs.has(id)) {
+			ptm_abort("Duplicate buffer id: " + id);
+		}
+		else {
+			tilebufs.new_tilebuf(id, layers, width, height);
+		}
+	};
+	CMD("BUF.VIEW") {
+		ARGC(5);
+		string id = ARG_STR(0);
+		int x1 = ARG_NUM(1);
+		int y1 = ARG_NUM(2);
+		int x2 = ARG_NUM(3);
+		int y2 = ARG_NUM(4);
+		tilebufs.get(id).view(x1, y1, x2, y2);
+	};
+	CMD("BUF.SCRL") {
+		ARGC(3);
+		string id = ARG_STR(0);
+		int dx = ARG_NUM(1);
+		int dy = ARG_NUM(2);
+		tilebufs.get(id).scroll_view(dx, dy);
+	};
+	CMD("BUF.SHOW") {
+		ARGC(1);
+		string id = ARG_STR(0);
+		tilebufs.get(id).show();
+	};
+	CMD("BUF.HIDE") {
+		ARGC(1);
+		string id = ARG_STR(0);
+		tilebufs.get(id).hide();
+	};
+	CMD("BUF.BCOL") {
+		ARGC(2);
+		string id = ARG_STR(0);
+		int palette_ix = ARG_NUM(1);
+		tilebufs.get(id).set_bgcol(palette_ix);
 	};
 	CMD("BUF.SEL") {
 		ARGC(1);
@@ -404,6 +441,13 @@ void ptm_init_commands()
 	};
 	CMD("TILE.GETP") {
 		ARGC(2);
+	};
+	CMD("LOCATE") {
+		ARGC(2);
+		int x = ARG_NUM(0);
+		int y = ARG_NUM(1);
+		tilebuf_csr.x = x;
+		tilebuf_csr.y = y;
 	};
 	CMD("PUT") {
 		ARGC(0);

@@ -1,4 +1,5 @@
 #include "ptm_tile_system.h"
+#include "ptm_color_palette.h"
 
 t_tileset tileset;
 t_tilebuf_collection tilebufs;
@@ -138,8 +139,10 @@ void t_tilebuf_layer::init(int width, int height)
 }
 void t_tilebuf_layer::put(int x, int y, t_tileseq& tileseq)
 {
-	const int ix = y * width + x;
-	tiles[ix] = tileseq;
+	if (x >= 0 && y >= 0 && x < width && y < width) {
+		const int ix = y * width + x;
+		tiles[ix] = tileseq;
+	}
 }
 void t_tilebuf_layer::put(int x, int y, int ch, int fgc, int bgc)
 {
@@ -148,11 +151,15 @@ void t_tilebuf_layer::put(int x, int y, int ch, int fgc, int bgc)
 }
 void t_tilebuf_layer::add(int x, int y, t_tile& tile)
 {
-	get(x, y).add(tile);
+	if (x >= 0 && y >= 0 && x < width && y < width) {
+		get(x, y).add(tile);
+	}
 }
 void t_tilebuf_layer::add(int x, int y, int ch, int fgc, int bgc)
 {
-	get(x, y).add(ch, fgc, bgc);
+	if (x >= 0 && y >= 0 && x < width && y < width) {
+		get(x, y).add(ch, fgc, bgc);
+	}
 }
 t_tileseq& t_tilebuf_layer::get(int x, int y)
 {
@@ -165,7 +172,9 @@ t_tileseq t_tilebuf_layer::get_copy(int x, int y)
 }
 void t_tilebuf_layer::del(int x, int y)
 {
-	get(x, y).clear();
+	if (x >= 0 && y >= 0 && x < width && y < width) {
+		get(x, y).clear();
+	}
 }
 bool t_tilebuf_layer::empty(int x, int y)
 {
@@ -192,6 +201,22 @@ void t_tilebuf::init(int layer_count, int width, int height)
 		layers.push_back(t_tilebuf_layer(width, height));
 	}
 }
+void t_tilebuf::view(int x1, int y1, int x2, int y2)
+{
+	viewport.x1 = x1;
+	viewport.y1 = y1;
+	viewport.x2 = x2;
+	viewport.y2 = y2;
+}
+void t_tilebuf::scroll_view(int dx, int dy)
+{
+	viewport.x_offset -= dx;
+	viewport.y_offset -= dy;
+}
+t_clip& t_tilebuf::get_viewport()
+{
+	return viewport;
+}
 t_tilebuf_layer& t_tilebuf::layer(int index)
 {
 	return layers[index];
@@ -201,6 +226,38 @@ void t_tilebuf::clear_all_layers()
 	for (auto& layer : layers) {
 		layer.clear();
 	}
+}
+void t_tilebuf::show()
+{
+	is_visible = true;
+}
+void t_tilebuf::hide()
+{
+	is_visible = false;
+}
+bool t_tilebuf::visible()
+{
+	return is_visible;
+}
+vector<t_tilebuf_layer>& t_tilebuf::get_layers()
+{
+	return layers;
+}
+int t_tilebuf::get_bgcol()
+{
+	return bgcol_palette_ix;
+}
+void t_tilebuf::set_bgcol(int palette_ix)
+{
+	bgcol_palette_ix = palette_ix;
+}
+int t_tilebuf::get_width()
+{
+	return width;
+}
+int t_tilebuf::get_height()
+{
+	return height;
 }
 void t_tilebuf_collection::new_tilebuf(string id, int layer_count, int width, int height)
 {
@@ -222,4 +279,31 @@ void t_tilebuf_collection::select(string id)
 t_tilebuf* t_tilebuf_collection::selected()
 {
 	return selected_buf;
+}
+void ptm_draw_visible_buffers()
+{
+	for (auto& entry : tilebufs.tilebufs) {
+		t_tilebuf& buf = entry.second;
+		if (!buf.visible())
+			continue;
+
+		ptm_clip(buf.get_viewport());
+		ptm_fill_clip(palette.get(buf.get_bgcol()));
+
+		for (auto& layer : buf.get_layers()) {
+			for (int y = 0; y < buf.get_height(); y++) {
+				for (int x = 0; x < buf.get_width(); x++) {
+					t_tileseq& tile = layer.get(x, y);
+					if (tile.empty()) {
+						continue;
+					}
+					t_tile& frame = tile.frames[0];
+					binary& bin = tileset.get(frame.ch);
+					rgb fgc = palette.get(frame.fgc);
+					rgb bgc = palette.get(frame.bgc);
+					ptm_draw_tile_bin(bin, x * 8, y * 8, fgc, bgc, false);
+				}
+			}
+		}
+	}
 }

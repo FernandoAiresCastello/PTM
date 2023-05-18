@@ -35,6 +35,7 @@ void ptm_toggle_fullscreen();
 void ptm_set_window_title(string title);
 void ptm_set_window_bgcol(rgb bgcol);
 void ptm_clear_screen();
+void ptm_clip(t_clip& clip);
 void ptm_clip(int x1, int y1, int x2, int y2, int x_off, int y_off);
 void ptm_clip(int x1, int y1, int x2, int y2);
 void ptm_clip_scroll(int dx, int dy);

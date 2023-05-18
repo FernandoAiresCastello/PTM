@@ -1,5 +1,6 @@
 #pragma once
 #include "../Common/common.h"
+#include "ptm_graphics_base.h"
 
 struct t_tile {
 	int ch = 0;
@@ -56,15 +57,29 @@ struct t_tilebuf {
 	t_tilebuf();
 	t_tilebuf(int layer_count, int width, int height);
 	void init(int layer_count, int width, int height);
+	void view(int x1, int y1, int x2, int y2);
+	void scroll_view(int dx, int dy);
+	t_clip& get_viewport();
 	t_tilebuf_layer& layer(int index);
 	void clear_all_layers();
+	void show();
+	void hide();
+	bool visible();
+	vector<t_tilebuf_layer>& get_layers();
+	int get_bgcol();
+	void set_bgcol(int palette_ix);
+	int get_width();
+	int get_height();
 private:
 	vector<t_tilebuf_layer> layers;
 	int width = 0;
 	int height = 0;
+	t_clip viewport;
+	int bgcol_palette_ix = 0;
+	bool is_visible = false;
 };
 struct t_tilebuf_collection {
-	unordered_map<string, t_tilebuf> tilebufs;
+	map<string, t_tilebuf> tilebufs;
 	void new_tilebuf(string id, int layer_count, int width, int height);
 	t_tilebuf& get(string id);
 	bool has(string id);
@@ -83,3 +98,5 @@ extern t_tileset tileset;
 extern t_tilebuf_collection tilebufs;
 extern t_tileseq working_tile;
 extern t_tilebuf_cursor tilebuf_csr;
+
+void ptm_draw_visible_buffers();

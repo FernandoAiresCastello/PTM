@@ -35,6 +35,9 @@ void ptm_init_window(int buf_w, int buf_h, int size, rgb bgcol, int default_buf_
 
 	tilebufs.new_tilebuf("default", default_buf_layer_count, scr.cols, scr.rows);
 	tilebufs.select("default");
+	tilebufs.get("default").view(0, 0, buf_w - 1, buf_h - 1);
+	tilebufs.get("default").set_bgcol(0);
+	tilebufs.get("default").show();
 }
 void ptm_free_window()
 {
@@ -47,6 +50,8 @@ void ptm_refresh_window()
 {
 	if (!scr.initialized)
 		return;
+
+	ptm_draw_visible_buffers();
 
 	static int pitch;
 	static void* pixels;
@@ -78,6 +83,11 @@ void ptm_set_window_bgcol(rgb bgcol)
 void ptm_clear_screen()
 {
 	SDL_memset4(scr.pixel_buf, scr.bgcol, scr.buf_len);
+}
+void ptm_clip(t_clip& clip)
+{
+	scr.clip = clip;
+	scr.clip.enabled = true;
 }
 void ptm_clip(int x1, int y1, int x2, int y2, int x_off, int y_off)
 {
