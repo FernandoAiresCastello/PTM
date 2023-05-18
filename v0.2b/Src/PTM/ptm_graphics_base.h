@@ -23,10 +23,12 @@ struct t_screen {
 	rgb bgcol = 0;
 	int frame_counter = 0;
 	t_clip clip;
+	int cols = 0;
+	int rows = 0;
 };
 extern t_screen scr;
 
-void ptm_init_window(int buf_w, int buf_h, int size, rgb bgcol);
+void ptm_init_window(int buf_w, int buf_h, int size, rgb bgcol, int default_buf_layer_count);
 void ptm_free_window();
 void ptm_refresh_window();
 void ptm_toggle_fullscreen();

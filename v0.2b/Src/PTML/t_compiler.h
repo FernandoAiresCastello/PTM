@@ -14,6 +14,7 @@ struct t_compiler {
 		int height = 0;
 		int size = 0;
 		rgb bgcol = 0x101010;
+		int default_buf_layer_count = 1;
 	} window_def;
 private:
 	bool compile_line(t_program* prg, t_program_line* new_line, t_source_line* src_line_ptr);

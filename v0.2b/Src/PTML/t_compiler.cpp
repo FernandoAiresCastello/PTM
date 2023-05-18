@@ -133,12 +133,13 @@ bool t_compiler::compile_line(
 		if (has_window_def) {
 			add_error(src_line_ptr, "Duplicate window definition");
 		} else {
-			if (new_line->params.size() == 4) {
+			if (new_line->params.size() == 5) {
 				has_window_def = true;
 				window_def.width = new_line->params[0].numeric_value;
 				window_def.height = new_line->params[1].numeric_value;
 				window_def.size = new_line->params[2].numeric_value;
 				window_def.bgcol = new_line->params[3].numeric_value;
+				window_def.default_buf_layer_count = new_line->params[4].numeric_value;
 				if (window_def.width < 8 || window_def.height < 8 || window_def.size < 1) {
 					add_error(src_line_ptr, "Invalid window definition");
 				}

@@ -19,9 +19,15 @@ struct t_tileseq {
 	void add(int ch, int fgc, int bgc);
 	bool empty();
 	int length();
+	void set_ch(int frame, int ch);
+	void set_fgc(int frame, int fgc);
+	void set_bgc(int frame, int bgc);
+	bool parse(string str);
+	string to_str();
 };
 struct t_tileset {
 	vector<binary> tiles;
+	t_tileset();
 	binary blank_tile();
 	void add_blank(int count = 1);
 	void add(binary tile);
@@ -47,6 +53,8 @@ private:
 	int height = 0;
 };
 struct t_tilebuf {
+	t_tilebuf();
+	t_tilebuf(int layer_count, int width, int height);
 	void init(int layer_count, int width, int height);
 	t_tilebuf_layer& layer(int index);
 	void clear_all_layers();
@@ -55,5 +63,23 @@ private:
 	int width = 0;
 	int height = 0;
 };
+struct t_tilebuf_collection {
+	unordered_map<string, t_tilebuf> tilebufs;
+	void new_tilebuf(string id, int layer_count, int width, int height);
+	t_tilebuf& get(string id);
+	bool has(string id);
+	void select(string id);
+	t_tilebuf* selected();
+private:
+	t_tilebuf* selected_buf = nullptr;
+};
+struct t_tilebuf_cursor {
+	int layer = 0;
+	int x = 0;
+	int y = 0;
+};
 
 extern t_tileset tileset;
+extern t_tilebuf_collection tilebufs;
+extern t_tileseq working_tile;
+extern t_tilebuf_cursor tilebuf_csr;

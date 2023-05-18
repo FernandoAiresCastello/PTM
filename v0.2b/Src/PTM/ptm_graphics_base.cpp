@@ -1,9 +1,10 @@
 #include "ptm_graphics_base.h"
+#include "ptm_tile_system.h"
 #include "ptm_core.h"
 
 t_screen scr;
 
-void ptm_init_window(int buf_w, int buf_h, int size, rgb bgcol)
+void ptm_init_window(int buf_w, int buf_h, int size, rgb bgcol, int default_buf_layer_count)
 {
 	scr.initialized = true;
 	scr.buf_w = buf_w;
@@ -11,6 +12,8 @@ void ptm_init_window(int buf_w, int buf_h, int size, rgb bgcol)
 	scr.buf_len = buf_w * buf_h;
 	scr.wnd_size = size;
 	scr.bgcol = bgcol;
+	scr.cols = buf_w / 8;
+	scr.rows = buf_h / 8;
 
 	SDL_SetHint(SDL_HINT_RENDER_DRIVER, "direct3d");
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
@@ -29,6 +32,9 @@ void ptm_init_window(int buf_w, int buf_h, int size, rgb bgcol)
 	ptm_update();
 	SDL_SetWindowPosition(scr.wnd, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 	SDL_RaiseWindow(scr.wnd);
+
+	tilebufs.new_tilebuf("default", default_buf_layer_count, scr.cols, scr.rows);
+	tilebufs.select("default");
 }
 void ptm_free_window()
 {

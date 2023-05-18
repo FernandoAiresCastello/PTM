@@ -155,6 +155,7 @@ copy "$(TargetPath)" "$(SolutionDir)Build\$(TargetFileName)"</Command>
     <ClInclude Include="Src\PTML\t_program_line.h" />
     <ClInclude Include="Src\PTML\t_source_line.h" />
     <ClInclude Include="Src\PTML\t_variable.h" />
+    <ClInclude Include="Src\PTM\ptm_color_palette.h" />
     <ClInclude Include="Src\PTM\ptm_commands.h" />
     <ClInclude Include="Src\PTM\ptm_core.h" />
     <ClInclude Include="Src\PTM\ptm_graphics_base.h" />
@@ -181,6 +182,7 @@ copy "$(TargetPath)" "$(SolutionDir)Build\$(TargetFileName)"</Command>
     <ClCompile Include="Src\PTML\t_program.cpp" />
     <ClCompile Include="Src\PTML\t_source_line.cpp" />
     <ClCompile Include="Src\PTML\t_variable.cpp" />
+    <ClCompile Include="Src\PTM\ptm_color_palette.cpp" />
     <ClCompile Include="Src\PTM\ptm_commands.cpp" />
     <ClCompile Include="Src\PTM\ptm_core.cpp" />
     <ClCompile Include="Src\PTM\ptm_graphics_base.cpp" />

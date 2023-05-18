@@ -1,6 +1,9 @@
 #include "ptm_tile_system.h"
 
 t_tileset tileset;
+t_tilebuf_collection tilebufs;
+t_tileseq working_tile;
+t_tilebuf_cursor tilebuf_csr;
 
 t_tile::t_tile()
 {
@@ -53,6 +56,46 @@ bool t_tileseq::empty()
 int t_tileseq::length()
 {
 	return frames.size();
+}
+void t_tileseq::set_ch(int frame, int ch)
+{
+	frames[frame].ch = ch;
+}
+void t_tileseq::set_fgc(int frame, int fgc)
+{
+	frames[frame].fgc = fgc;
+}
+void t_tileseq::set_bgc(int frame, int bgc)
+{
+	frames[frame].bgc = bgc;
+}
+bool t_tileseq::parse(string str)
+{
+	clear();
+	auto tiles = String::Split(str, ';', true);
+	for (auto& tile : tiles) {
+		auto data = String::Split(tile, ',', true);
+		if (data.size() != 3) {
+			return false;
+		}
+		int ch = String::ToInt(data[0]);
+		int fgc = String::ToInt(data[1]);
+		int bgc = String::ToInt(data[2]);
+		add(ch, fgc, bgc);
+	}
+	return true;
+}
+string t_tileseq::to_str()
+{
+	string str;
+	for (auto& tile : frames) {
+		str += String::Format("%i,%i,%i;", tile.ch, tile.fgc, tile.bgc);
+	}
+	return str;
+}
+t_tileset::t_tileset()
+{
+	add_blank(256);
 }
 binary t_tileset::blank_tile()
 {
@@ -134,6 +177,13 @@ void t_tilebuf_layer::clear()
 		tileseq.clear();
 	}
 }
+t_tilebuf::t_tilebuf()
+{
+}
+t_tilebuf::t_tilebuf(int layer_count, int width, int height)
+{
+	init(layer_count, width, height);
+}
 void t_tilebuf::init(int layer_count, int width, int height)
 {
 	this->width = width;
@@ -151,4 +201,25 @@ void t_tilebuf::clear_all_layers()
 	for (auto& layer : layers) {
 		layer.clear();
 	}
+}
+void t_tilebuf_collection::new_tilebuf(string id, int layer_count, int width, int height)
+{
+	t_tilebuf tilebuf(layer_count, width, height);
+	tilebufs[id] = tilebuf;
+}
+t_tilebuf& t_tilebuf_collection::get(string id)
+{
+	return tilebufs[id];
+}
+bool t_tilebuf_collection::has(string id)
+{
+	return tilebufs.find(id) != tilebufs.end();
+}
+void t_tilebuf_collection::select(string id)
+{
+	selected_buf = &tilebufs[id];
+}
+t_tilebuf* t_tilebuf_collection::selected()
+{
+	return selected_buf;
 }

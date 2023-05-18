@@ -30,10 +30,10 @@ void ptm_run(string program_file)
 	}
 	if (compiler->has_window_def) {
 		auto& wnd = compiler->window_def;
-		ptm_init_window(wnd.width, wnd.height, wnd.size, wnd.bgcol);
+		ptm_init_window(wnd.width, wnd.height, wnd.size, wnd.bgcol, wnd.default_buf_layer_count);
 	}
 	else {
-		ptm_init_window(360, 200, 3, 0x101010);
+		ptm_init_window(360, 200, 3, 0x101010, 1);
 	}
 	delete compiler;    compiler = nullptr;
 
@@ -140,6 +140,9 @@ void ptm_set_var(string name, int value)
 }
 t_variable& ptm_get_var(string name)
 {
+	if (!ptm_has_var(name)) {
+		intp->abort("Variable not found: " + name);
+	}
 	return intp->vars[name];
 }
 void ptm_copy_var(string dst, string src)
