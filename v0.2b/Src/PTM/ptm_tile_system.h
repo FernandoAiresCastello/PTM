@@ -107,3 +107,5 @@ void ptm_draw_visible_buffers();
 void ptm_draw_buffer(t_tilebuf& buf);
 void ptm_update_tile_animation();
 void ptm_set_tile_animation_speed(int speed);
+t_tilebuf_layer& ptm_get_selected_tilebuf_layer();
+void ptm_print_tile_string(string str);

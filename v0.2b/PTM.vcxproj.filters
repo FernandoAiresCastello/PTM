@@ -56,6 +56,9 @@
     <ClCompile Include="Src\PTM\ptm_color_palette.cpp">
       <Filter>PTM</Filter>
     </ClCompile>
+    <ClCompile Include="Src\PTM\ptm_text_font.cpp">
+      <Filter>PTM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Common\common.h">
@@ -128,6 +131,9 @@
       <Filter>PTM</Filter>
     </ClInclude>
     <ClInclude Include="Src\PTM\ptm_color_palette.h">
+      <Filter>PTM</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTM\ptm_text_font.h">
       <Filter>PTM</Filter>
     </ClInclude>
   </ItemGroup>

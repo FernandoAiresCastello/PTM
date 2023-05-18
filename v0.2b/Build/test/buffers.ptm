@@ -6,26 +6,24 @@ CHR 1, "1111111110000001101001011000000110100101100110011000000111111111"
 PAL 2, &hff0000
 PAL 3, &h00ff00
 PAL 4, &h0000ff
+PAL 5, &h00ffff
+PAL 6, &hff00ff
+PAL 7, &hffff00
 
 BUF.NEW "buf_1", 1, 20, 20
 BUF.VIEW "buf_1", 10, 10, 100, 100
 BUF.BCOL "buf_1", 4
 BUF.SHOW "buf_1"
-BUF.SEL "buf_1"
 
-LOCATE 0, 0
-TILE.NEW 1, 2, 3
-TILE.ADD 1, 3, 2
-PUT
-LOCATE 1, 0
-TILE.NEW 1, 3, 2
-PUT
-LOCATE 0, 1
-TILE.NEW 1, 3, 2
-PUT
-LOCATE 11, 11
-TILE.NEW 1, 2, 3
-PUT
+BUF.NEW "buf_2", 1, 20, 20
+BUF.VIEW "buf_2", 110, 10, 210, 100
+BUF.BCOL "buf_2", 5
+BUF.SHOW "buf_2"
+
+BUF.SEL "buf_1"
+CALL draw_stuff
+BUF.SEL "buf_2"
+CALL draw_stuff
 
 loop:
 	IF.KEY "RIGHT"
@@ -42,3 +40,28 @@ loop:
 	ENDIF
 	UPDATE
 	GOTO loop
+
+draw_stuff:
+	LOCATE 0, 0
+	TILE.NEW 1, 2, 3
+	TILE.ADD 1, 3, 2
+	PUT
+	LOCATE 1, 0
+	TILE.NEW 1, 3, 2
+	PUT
+	LOCATE 0, 1
+	TILE.NEW 1, 3, 2
+	PUT
+	LOCATE 11, 11
+	TILE.NEW 1, 2, 3
+	PUT
+	LOCATE 2, 5
+	COLOR 6, 7
+	PRINT "Hello World!"
+	LOCATE 2, 6
+	FCOL 0
+	PRINT "Hello World!"
+	LOCATE 2, 7
+	BCOL 2
+	PRINT "Hello World!"
+	RET

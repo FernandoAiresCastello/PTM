@@ -1,4 +1,5 @@
 #include "ptm_tile_system.h"
+#include "ptm_text_font.h"
 #include "ptm_color_palette.h"
 
 #define DEFAULT_TILEBUF_ID "default"
@@ -106,6 +107,7 @@ string t_tileseq::to_str()
 t_tileset::t_tileset()
 {
 	add_blank(256);
+	ptm_init_text_font();
 }
 binary t_tileset::blank_tile()
 {
@@ -364,4 +366,19 @@ void ptm_set_tile_animation_speed(int speed)
 	animation.enabled = true;
 	animation.ctr_next_frame = 0;
 	animation.ctr_next_frame_max = 100 - speed;
+}
+t_tilebuf_layer& ptm_get_selected_tilebuf_layer()
+{
+	return tilebufs.selected()->layer(tilebuf_csr.layer);
+}
+void ptm_print_tile_string(string str)
+{
+	t_tilebuf_layer& layer = ptm_get_selected_tilebuf_layer();
+	int x = tilebuf_csr.x;
+	int y = tilebuf_csr.y;
+
+	for (auto& ch : str) {
+		layer.put(x, y, ch, scr.text_style.fgc, scr.text_style.bgc);
+		x++;
+	}
 }

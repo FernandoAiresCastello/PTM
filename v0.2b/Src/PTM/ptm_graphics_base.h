@@ -25,7 +25,13 @@ struct t_screen {
 	t_clip clip;
 	int cols = 0;
 	int rows = 0;
+
+	struct {
+		int fgc = 1;
+		int bgc = 0;
+	} text_style;
 };
+
 extern t_screen scr;
 
 void ptm_init_window(int buf_w, int buf_h, int size, rgb bgcol, int default_buf_layer_count);

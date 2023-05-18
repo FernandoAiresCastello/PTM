@@ -17,15 +17,16 @@ unordered_map<string, function<void(t_params&)>> ptm_commands;
 
 void ptm_init_commands()
 {
-	// Compile-time commands
-	
-	CMD("INCL") {};
-	CMD("DATA") {};
-	CMD("WINDOW") {}; // t_compiler.cpp
-
-	// Run-time commands
-
 	CMD("TEST") {
+	};
+	CMD("INCL") {
+		// t_program.cpp
+	};
+	CMD("DATA") {
+		// t_compiler.cpp
+	};
+	CMD("WINDOW") {
+		// t_compiler.cpp
 	};
 	CMD("ASSERT") {
 		ARGC(2);
@@ -55,13 +56,10 @@ void ptm_init_commands()
 		string title = ARG_STR(0);
 		ptm_set_window_title(title);
 	};
-	CMD("WCOL") {
+	CMD("CLS") {
 		ARGC(1);
 		int palette_ix = ARG_NUM(0);
 		ptm_set_window_bgcol(palette.get(palette_ix));
-	};
-	CMD("CLS") {
-		ARGC(0);
 		ptm_clear_screen();
 	};
 	CMD("ANIM") {
@@ -464,13 +462,35 @@ void ptm_init_commands()
 	};
 	CMD("PUT") {
 		ARGC(0);
-		tilebufs.selected()->layer(tilebuf_csr.layer)
+		ptm_get_selected_tilebuf_layer()
 			.put(tilebuf_csr.x, tilebuf_csr.y, working_tile);
 	};
 	CMD("GET") {
 		ARGC(0);
 		working_tile.set_equal(
-			tilebufs.selected()->layer(tilebuf_csr.layer)
+			ptm_get_selected_tilebuf_layer()
 			.get(tilebuf_csr.x, tilebuf_csr.y));
+	};
+	CMD("PRINT") {
+		ARGC(1);
+		string str = ARG_STR(0);
+		ptm_print_tile_string(str);
+	};
+	CMD("FCOL") {
+		ARGC(1);
+		int fgc = ARG_NUM(0);
+		scr.text_style.fgc = fgc;
+	};
+	CMD("BCOL") {
+		ARGC(1);
+		int bgc = ARG_NUM(0);
+		scr.text_style.bgc = bgc;
+	};
+	CMD("COLOR") {
+		ARGC(2);
+		int fgc = ARG_NUM(0);
+		int bgc = ARG_NUM(1);
+		scr.text_style.fgc = fgc;
+		scr.text_style.bgc = bgc;
 	};
 }
