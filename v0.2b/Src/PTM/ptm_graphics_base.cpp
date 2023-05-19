@@ -1,6 +1,7 @@
 #include "ptm_graphics_base.h"
-#include "ptm_tile_system.h"
 #include "ptm_core.h"
+#include "ptm_tile_system.h"
+#include "ptm_sprites.h"
 
 t_screen scr;
 
@@ -49,6 +50,7 @@ void ptm_refresh_window()
 		return;
 
 	ptm_draw_visible_buffers();
+	ptm_draw_visible_sprites();
 	ptm_update_tile_animation();
 
 	static int pitch;

@@ -4,6 +4,7 @@
 #include "ptm_tile_system.h"
 #include "ptm_color_palette.h"
 #include "ptm_sound_system.h"
+#include "ptm_sprites.h"
 
 unordered_map<string, function<void(t_params&)>> ptm_commands;
 
@@ -304,7 +305,7 @@ void ptm_init_commands()
 	};
 	CMD("BUF.NEW") {
 		ARGC(4);
-		string id = ARG_STR(0);
+		string id = ARG_IDENT(0);
 		int layers = ARG_NUM(1);
 		int width = ARG_NUM(2);
 		int height = ARG_NUM(3);
@@ -317,7 +318,7 @@ void ptm_init_commands()
 	};
 	CMD("BUF.VIEW") {
 		ARGC(5);
-		string id = ARG_STR(0);
+		string id = ARG_IDENT(0);
 		int x1 = ARG_NUM(1);
 		int y1 = ARG_NUM(2);
 		int x2 = ARG_NUM(3);
@@ -326,30 +327,30 @@ void ptm_init_commands()
 	};
 	CMD("BUF.SCRL") {
 		ARGC(3);
-		string id = ARG_STR(0);
+		string id = ARG_IDENT(0);
 		int dx = ARG_NUM(1);
 		int dy = ARG_NUM(2);
 		tilebufs.get(id).scroll_view(dx, dy);
 	};
 	CMD("BUF.SHOW") {
 		ARGC(1);
-		string id = ARG_STR(0);
+		string id = ARG_IDENT(0);
 		tilebufs.get(id).show();
 	};
 	CMD("BUF.HIDE") {
 		ARGC(1);
-		string id = ARG_STR(0);
+		string id = ARG_IDENT(0);
 		tilebufs.get(id).hide();
 	};
 	CMD("BUF.BCOL") {
 		ARGC(2);
-		string id = ARG_STR(0);
+		string id = ARG_IDENT(0);
 		int palette_ix = ARG_NUM(1);
 		tilebufs.get(id).set_bgcol(palette_ix);
 	};
 	CMD("BUF.SEL") {
 		ARGC(1);
-		string id = ARG_STR(0);
+		string id = ARG_IDENT(0);
 		if (tilebufs.has(id)) {
 			tilebufs.select(id);
 		}
@@ -528,17 +529,83 @@ void ptm_init_commands()
 	};
 	CMD("SND.LOAD") {
 		ARGC(2);
-		string id = ARG_STR(0);
+		string id = ARG_IDENT(0);
 		string file = ARG_STR(1);
 		ptm_load_sound_wav(id, file);
 	};
 	CMD("SND.PLAY") {
 		ARGC(1);
-		string id = ARG_STR(0);
+		string id = ARG_IDENT(0);
 		ptm_play_sound_wav(id);
 	};
 	CMD("SND.STOP") {
 		ARGC(0);
 		ptm_stop_all_sounds();
+	};
+	CMD("SPR.NEW") {
+		ARGC(4);
+		string id = ARG_STR(0);
+		int ch = ARG_NUM(1);
+		int fgc = ARG_NUM(2);
+		int bgc = ARG_NUM(3);
+		t_sprite& spr = sprites.new_sprite(id);
+		spr.tile = t_tileseq(ch, fgc, bgc);
+	};
+	CMD("SPR.X") {
+		ARGC(2);
+		string id = ARG_STR(0);
+		int x = ARG_NUM(1);
+		t_sprite& spr = sprites.get_sprite(id);
+		spr.x = x;
+	};
+	CMD("SPR.Y") {
+		ARGC(2);
+		string id = ARG_STR(0);
+		int y = ARG_NUM(1);
+		t_sprite& spr = sprites.get_sprite(id);
+		spr.y = y;
+	};
+	CMD("SPR.POS") {
+		ARGC(3);
+		string id = ARG_STR(0);
+		int x = ARG_NUM(1);
+		int y = ARG_NUM(2);
+		t_sprite& spr = sprites.get_sprite(id);
+		spr.x = x;
+		spr.y = y;
+	};
+	CMD("SPR.MOVE") {
+		ARGC(3);
+		string id = ARG_STR(0);
+		int dx = ARG_NUM(1);
+		int dy = ARG_NUM(2);
+		t_sprite& spr = sprites.get_sprite(id);
+		spr.move(dx, dy);
+	};
+	CMD("SPR.BUF") {
+		ARGC(2);
+		string id = ARG_STR(0);
+		string buf_id = ARG_IDENT(1);
+		t_sprite& spr = sprites.get_sprite(id);
+		t_tilebuf& buf = tilebufs.get(buf_id);
+		spr.buf = &buf;
+	};
+	CMD("SPR.SHOW") {
+		ARGC(1);
+		string id = ARG_STR(0);
+		t_sprite& spr = sprites.get_sprite(id);
+		spr.visible = true;
+	};
+	CMD("SPR.HIDE") {
+		ARGC(1);
+		string id = ARG_STR(0);
+		t_sprite& spr = sprites.get_sprite(id);
+		spr.visible = false;
+	};
+	CMD("SPR.DEL") {
+		ARGC(1);
+		string id = ARG_STR(0);
+		t_sprite& spr = sprites.get_sprite(id);
+		sprites.remove(id);
 	};
 }

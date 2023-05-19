@@ -161,6 +161,7 @@ copy "$(TargetPath)" "$(SolutionDir)Build\$(TargetFileName)"</Command>
     <ClInclude Include="Src\PTM\ptm_graphics_base.h" />
     <ClInclude Include="Src\PTM\ptm_keyboard.h" />
     <ClInclude Include="Src\PTM\ptm_sound_system.h" />
+    <ClInclude Include="Src\PTM\ptm_sprites.h" />
     <ClInclude Include="Src\PTM\ptm_text_font.h" />
     <ClInclude Include="Src\PTM\ptm_utils.h" />
     <ClInclude Include="Src\PTM\ptm_tile_system.h" />
@@ -190,6 +191,7 @@ copy "$(TargetPath)" "$(SolutionDir)Build\$(TargetFileName)"</Command>
     <ClCompile Include="Src\PTM\ptm_graphics_base.cpp" />
     <ClCompile Include="Src\PTM\ptm_keyboard.cpp" />
     <ClCompile Include="Src\PTM\ptm_sound_system.cpp" />
+    <ClCompile Include="Src\PTM\ptm_sprites.cpp" />
     <ClCompile Include="Src\PTM\ptm_text_font.cpp" />
     <ClCompile Include="Src\PTM\ptm_utils.cpp" />
     <ClCompile Include="Src\PTM\ptm_tile_system.cpp" />
