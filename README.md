@@ -1,6 +1,6 @@
-# PTM - Programmable Tile Machine
-
 ![PTM Logo](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/logo.fw.png?raw=true)
+
+# PTM - Programmable Tile Machine
 
 ## About
 	
