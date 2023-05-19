@@ -339,3 +339,17 @@ void t_interpreter::goto_matching_endif() {
 	cur_line_ix = endif_ix + 1;
 	branched = true;
 }
+string t_interpreter::read_data_s() {
+	return prg->data[data_ptr++];
+}
+int t_interpreter::read_data_i() {
+	return String::ToInt(prg->data[data_ptr++]);
+}
+void t_interpreter::reset_data_pointer() {
+	data_ptr = 0;
+}
+bool t_interpreter::has_more_data() {
+	int size = prg->data.size();
+	bool has = data_ptr < size;
+	return has;
+}

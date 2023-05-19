@@ -608,4 +608,18 @@ void ptm_init_commands()
 		t_sprite& spr = sprites.get_sprite(id);
 		sprites.remove(id);
 	};
+	CMD("READ") {
+		ARGC(1);
+		string var = ARG_IDENT(0);
+		if (intp->has_more_data()) {
+			ptm_set_var(var, intp->read_data_s());
+		}
+		else {
+			ptm_abort("Out of data");
+		}
+	};
+	CMD("RESTORE") {
+		ARGC(0);
+		intp->reset_data_pointer();
+	};
 }
