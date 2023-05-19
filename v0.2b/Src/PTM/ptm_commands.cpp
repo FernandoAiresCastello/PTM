@@ -436,15 +436,36 @@ void ptm_init_commands()
 	};
 	CMD("TILE.STORE") {
 		ARGC(1);
+		string id = ARG_IDENT(0);
+		ptm_store_tile(id, working_tile);
 	};
 	CMD("TILE.LOAD") {
 		ARGC(1);
+		string id = ARG_IDENT(0);
+		if (ptm_has_stored_tile(id)) {
+			t_tileseq tile = ptm_load_tile(id);
+			working_tile.set_equal(tile);
+		}
+		else {
+			ptm_abort("Tile not found in store with id: " + id);
+		}
 	};
 	CMD("TILE.SETP") {
 		ARGC(2);
+		string prop = ARG_STR(0);
+		string value = ARG_STR(1);
+		working_tile.data.set(prop, value);
 	};
 	CMD("TILE.GETP") {
 		ARGC(2);
+		string var = ARG_IDENT(0);
+		string prop = ARG_STR(1);
+		if (working_tile.data.has(prop)) {
+			ptm_set_var(var, working_tile.data.get_s(prop));
+		}
+		else {
+			ptm_set_var(var, "");
+		}
 	};
 	CMD("LAYER") {
 		ARGC(1);
@@ -482,6 +503,11 @@ void ptm_init_commands()
 		ARGC(1);
 		string str = ARG_STR(0);
 		ptm_print_tile_string(str);
+	};
+	CMD("PUTC") {
+		ARGC(1);
+		int ch = ARG_NUM(0);
+		ptm_print_tile_char(ch);
 	};
 	CMD("FCOL") {
 		ARGC(1);

@@ -10,8 +10,20 @@ struct t_tile {
 	t_tile(int ch, int fgc, int bgc);
 	void set_equal(t_tile& other);
 };
+struct t_tiledata {
+	void set(string name, string value);
+	void set(string name, int value);
+	string get_s(string name);
+	int get_i(string name);
+	bool has(string name);
+	bool has(string name, string value);
+	bool has(string name, int value);
+private:
+	unordered_map<string, string> data;
+};
 struct t_tileseq {
 	vector<t_tile> frames;
+	t_tiledata data;
 	t_tileseq();
 	t_tileseq(int ch, int fgc, int bgc);
 	void clear();
@@ -110,3 +122,7 @@ void ptm_update_tile_animation();
 void ptm_set_tile_animation_speed(int speed);
 t_tilebuf_layer& ptm_get_selected_tilebuf_layer();
 void ptm_print_tile_string(string str);
+void ptm_print_tile_char(int ch);
+void ptm_store_tile(string id, t_tileseq& tile);
+t_tileseq ptm_load_tile(string id);
+bool ptm_has_stored_tile(string id);

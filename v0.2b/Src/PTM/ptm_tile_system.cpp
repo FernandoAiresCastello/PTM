@@ -8,6 +8,7 @@ t_tileset tileset;
 t_tilebuf_collection tilebufs;
 t_tileseq working_tile;
 t_tilebuf_cursor tilebuf_csr;
+unordered_map<string, t_tileseq> tilestore;
 
 struct {
 	int frame = 0;
@@ -33,6 +34,34 @@ void t_tile::set_equal(t_tile& other)
 	ch = other.ch;
 	fgc = other.fgc;
 	bgc = other.bgc;
+}
+void t_tiledata::set(string name, string value)
+{
+	data[name] = value;
+}
+void t_tiledata::set(string name, int value)
+{
+	data[name] = String::ToString(value);
+}
+string t_tiledata::get_s(string name)
+{
+	return data[name];
+}
+int t_tiledata::get_i(string name)
+{
+	return String::ToInt(data[name]);
+}
+bool t_tiledata::has(string name)
+{
+	return data.find(name) != data.end();
+}
+bool t_tiledata::has(string name, string value)
+{
+	return has(name) && get_s(name) == value;
+}
+bool t_tiledata::has(string name, int value)
+{
+	return has(name) && get_i(name) == value;
 }
 t_tileseq::t_tileseq()
 {
@@ -382,9 +411,29 @@ void ptm_print_tile_string(string str)
 	t_tilebuf_layer& layer = ptm_get_selected_tilebuf_layer();
 	int x = tilebuf_csr.x;
 	int y = tilebuf_csr.y;
+	tilebuf_csr.x += str.length();
 
 	for (auto& ch : str) {
 		layer.put(x, y, ch, scr.text_style.fgc, scr.text_style.bgc);
 		x++;
 	}
+}
+void ptm_print_tile_char(int ch)
+{
+	ptm_get_selected_tilebuf_layer()
+		.put(tilebuf_csr.x, tilebuf_csr.y, ch, scr.text_style.fgc, scr.text_style.bgc);
+
+	tilebuf_csr.x++;
+}
+void ptm_store_tile(string id, t_tileseq& tile)
+{
+	tilestore[id] = tile;
+}
+t_tileseq ptm_load_tile(string id)
+{
+	return tilestore[id];
+}
+bool ptm_has_stored_tile(string id)
+{
+	return tilestore.find(id) != tilestore.end();
 }

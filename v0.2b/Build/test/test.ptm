@@ -69,6 +69,7 @@ draw_stuff:
 	LOCATE 2, 5
 	COLOR 6, 7
 	PRINT "Hello World!"
+	PUTC '@'
 	LOCATE 2, 6
 	FCOL 0
 	PRINT "Hello World!"
