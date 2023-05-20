@@ -1,0 +1,3 @@
+#INCL test/hello.ptm
+INCL test/test_1.ptm
+#INCL test/test_2.ptm
