@@ -15,6 +15,9 @@
 	- CYCLES became FRAMES
 	- DBG.BRK became DEBUG
 	- DBG.MSG became MSGBOX
+	- STR.IX became STR.FIND
+	- STR.START became STR.PFX
+	- STR.END became STR.SFX
 - Implemented sprites (SPR.*)
 - Implemented loading and playing external WAV sound files (SND.*)
 - Implemented assertions for debugging purposes (ASSERT)

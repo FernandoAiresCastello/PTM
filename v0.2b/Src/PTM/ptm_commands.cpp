@@ -731,18 +731,45 @@ void ptm_init_commands()
 		ptm_set_var(var, str.length());
 	};
 	CMD("STR.AT") {
+		ARGC(3);
+		string var = ARG_IDENT(0);
+		string str = ARG_STR(1);
+		int ix = ARG_NUM(2);
+		ptm_set_var(var, str[ix]);
 	};
 	CMD("STR.FIND") {
+		ARGC(4);
+		string var = ARG_IDENT(0);
+		string str = ARG_STR(1);
+		string substr = ARG_STR(2);
+		int offset = ARG_NUM(3);
+		int first = String::FindFirst(str, substr, offset);
+		ptm_set_var(var, first);
 	};
 	CMD("STR.REPL") {
 	};
 	CMD("STR.REPT") {
 	};
 	CMD("STR.PFX") {
+		ARGC(3);
+		string var = ARG_IDENT(0);
+		string str = ARG_STR(1);
+		string prefix = ARG_STR(2);
+		ptm_set_var(var, String::StartsWith(str, prefix));
 	};
 	CMD("STR.SFX") {
+		ARGC(3);
+		string var = ARG_IDENT(0);
+		string str = ARG_STR(1);
+		string prefix = ARG_STR(2);
+		ptm_set_var(var, String::EndsWith(str, prefix));
 	};
 	CMD("STR.HAS") {
+		ARGC(3);
+		string var = ARG_IDENT(0);
+		string str = ARG_STR(1);
+		string substr = ARG_STR(2);
+		ptm_set_var(var, String::Contains(str, substr));
 	};
 	CMD("STR.FMT") {
 	};

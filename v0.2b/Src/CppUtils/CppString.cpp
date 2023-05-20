@@ -416,12 +416,12 @@ namespace CppUtils
 
 	size_t String::FindFirst(std::string text, char ch, size_t offset)
 	{
-		return text.find_first_of(ch, offset);
+		return text.find(ch, offset);
 	}
 
 	size_t String::FindFirst(std::string text, std::string substring, size_t offset)
 	{
-		return text.find_first_of(substring, offset);
+		return text.find(substring, offset);
 	}
 
 	size_t String::FindLast(std::string text, char ch, size_t offset)
