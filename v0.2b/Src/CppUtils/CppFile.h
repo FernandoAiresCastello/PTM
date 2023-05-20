@@ -37,10 +37,12 @@ namespace CppUtils
 		static std::string ReadText(std::string filename);
 		static std::vector<std::string> ReadLines(std::string filename, std::string lineDelimiter);
 		static std::vector<byte> ReadBytes(std::string filename);
+		static std::vector<int> ReadBytesAsIntegers(std::string filename);
 		static std::vector<char> ReadChars(std::string filename);
 		static void WriteText(std::string filename, std::string text);
 		static void WriteLines(std::string filename, std::vector<std::string> lines, std::string lineDelimiter);
 		static void WriteBytes(std::string filename, std::vector<byte>& bytes);
+		static void WriteIntegersAsBytes(std::string filename, std::vector<int>& bytes);
 		static void Duplicate(std::string orig, std::string dupl);
 		static std::string GetParentDirectory(std::string file);
 		static std::string GetName(std::string fullPath);

@@ -185,6 +185,16 @@ namespace CppUtils
 		return bytes;
 	}
 
+	std::vector<int> File::ReadBytesAsIntegers(std::string filename)
+	{
+		auto chars = ReadChars(filename);
+		std::vector<int> ints;
+		for (auto& ch : chars)
+			ints.push_back((int)ch);
+
+		return ints;
+	}
+
 	std::vector<char> File::ReadChars(std::string filename)
 	{
 		if (!File::Exists(filename)) {
@@ -208,9 +218,6 @@ namespace CppUtils
 
 	void File::WriteText(std::string filename, std::string text)
 	{
-		if (!File::Exists(filename))
-			File::Create(filename);
-
 		std::ofstream ofs(filename);
 
 		if (ofs.good())
@@ -243,6 +250,13 @@ namespace CppUtils
 		File file(filename, Mode::WriteBinary);
 		for (auto& byte : bytes)
 			file.WriteByte(byte);
+	}
+
+	void File::WriteIntegersAsBytes(std::string filename, std::vector<int>& bytes)
+	{
+		File file(filename, Mode::WriteBinary);
+		for (auto& byte : bytes)
+			file.WriteByte(byte % 256);
 	}
 
 	void File::Duplicate(std::string orig, std::string dupl)

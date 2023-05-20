@@ -5,6 +5,7 @@
 #include "ptm_color_palette.h"
 #include "ptm_sound_system.h"
 #include "ptm_sprites.h"
+#include "ptm_filesystem.h"
 
 unordered_map<string, function<void(t_params&)>> ptm_commands;
 
@@ -621,5 +622,47 @@ void ptm_init_commands()
 	CMD("RESTORE") {
 		ARGC(0);
 		intp->reset_data_pointer();
+	};
+	CMD("CLOAD") {
+		ARGC(2);
+		string path = ARG_STR(0);
+		string var = ARG_IDENT(1);
+		string file = ptm_read_text_file(path);
+		ptm_set_var(var, file);
+	};
+	CMD("LLOAD") {
+		ARGC(2);
+		string path = ARG_STR(0);
+		string arr_id = ARG_IDENT(1);
+		auto lines = ptm_read_text_file_lines(path);
+		ptm_new_array(arr_id, 0);
+		auto arr = ptm_get_array(arr_id);
+		for (auto& line : lines) {
+			arr.push_back(line);
+		}
+	};
+	CMD("BLOAD") {
+		ARGC(2);
+		string path = ARG_STR(0);
+		string arr_id = ARG_IDENT(1);
+		auto data = ptm_read_binary_file(path);
+		ptm_new_array(arr_id, 0);
+		auto arr = ptm_get_array(arr_id);
+		for (auto& value : data) {
+			arr.push_back(String::ToString(value));
+		}
+	};
+	CMD("CSAVE") {
+		ARGC(2);
+		string path = ARG_STR(0);
+		string text = ARG_STR(1);
+		ptm_write_text_file(path, text);
+	};
+	CMD("BSAVE") {
+		ARGC(2);
+		string path = ARG_STR(0);
+		string arr_id = ARG_EXISTING_ARR(1);
+		auto arr = ptm_get_array(arr_id);
+		ptm_write_binary_file(path, arr);
 	};
 }
