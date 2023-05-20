@@ -549,8 +549,13 @@ void ptm_init_commands()
 		int ch = ARG_NUM(1);
 		int fgc = ARG_NUM(2);
 		int bgc = ARG_NUM(3);
-		t_sprite& spr = sprites.new_sprite(id);
-		spr.tile = t_tileseq(ch, fgc, bgc);
+		if (!sprites.has(id)) {
+			t_sprite& spr = sprites.new_sprite(id);
+			spr.tile = t_tileseq(ch, fgc, bgc);
+		}
+		else {
+			ptm_abort("Duplicate sprite id: " + id);
+		}
 	};
 	CMD("SPR.X") {
 		ARGC(2);
@@ -664,5 +669,13 @@ void ptm_init_commands()
 		string arr_id = ARG_EXISTING_ARR(1);
 		auto arr = ptm_get_array(arr_id);
 		ptm_write_binary_file(path, arr);
+	};
+	CMD("RND") {
+		ARGC(3);
+		string var = ARG_IDENT(0);
+		int min = ARG_NUM(1);
+		int max = ARG_NUM(2);
+		int rnd = ptm_get_random_number(min, max);
+		ptm_set_var(var, rnd);
 	};
 }

@@ -249,3 +249,7 @@ bool ptm_last_key(string keyname)
 
 	return ptm_kb_pressed(keyname);
 }
+int ptm_get_random_number(int min, int max)
+{
+	return Util::Random(min, max);
+}

@@ -18,6 +18,7 @@ struct t_sprite_list {
 	t_sprite& get_sprite(string id);
 	unordered_map<string, t_sprite>& get_sprites();
 	void remove(string id);
+	bool has(string id);
 private:
 	unordered_map<string, t_sprite> sprites;
 };

@@ -31,6 +31,10 @@ void t_sprite_list::remove(string id)
 {
 	sprites.erase(id);
 }
+bool t_sprite_list::has(string id)
+{
+	return sprites.find(id) != sprites.end();
+}
 void ptm_draw_visible_sprites()
 {
 	for (auto& entry : sprites.get_sprites()) {
