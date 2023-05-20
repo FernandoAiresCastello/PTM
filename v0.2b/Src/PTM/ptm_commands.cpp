@@ -746,10 +746,6 @@ void ptm_init_commands()
 		int first = String::FindFirst(str, substr, offset);
 		ptm_set_var(var, first);
 	};
-	CMD("STR.REPL") {
-	};
-	CMD("STR.REPT") {
-	};
 	CMD("STR.PFX") {
 		ARGC(3);
 		string var = ARG_IDENT(0);
@@ -771,6 +767,26 @@ void ptm_init_commands()
 		string substr = ARG_STR(2);
 		ptm_set_var(var, String::Contains(str, substr));
 	};
+	CMD("STR.REPL") {
+		ARGC(4);
+		string var = ARG_IDENT(0);
+		string str = ARG_STR(1);
+		string substr = ARG_STR(2);
+		string replacement = ARG_STR(3);
+		ptm_set_var(var, String::Replace(str, substr, replacement));
+	};
+	CMD("STR.REPT") {
+		ARGC(3);
+		string var = ARG_IDENT(0);
+		string str = ARG_STR(1);
+		int count = ARG_NUM(2);
+		ptm_set_var(var, String::Repeat(str, count));
+	};
 	CMD("STR.FMT") {
+		ARGC(3);
+		string var = ARG_IDENT(0);
+		string fmt = ARG_STR(1);
+		int number = ARG_NUM(2);
+		ptm_set_var(var, String::Format(fmt.c_str(), number));
 	};
 }
