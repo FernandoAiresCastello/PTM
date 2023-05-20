@@ -641,7 +641,7 @@ void ptm_init_commands()
 		string arr_id = ARG_IDENT(1);
 		auto lines = ptm_read_text_file_lines(path);
 		ptm_new_array(arr_id, 0);
-		auto arr = ptm_get_array(arr_id);
+		auto& arr = ptm_get_array(arr_id);
 		for (auto& line : lines) {
 			arr.push_back(line);
 		}
@@ -652,7 +652,7 @@ void ptm_init_commands()
 		string arr_id = ARG_IDENT(1);
 		auto data = ptm_read_binary_file(path);
 		ptm_new_array(arr_id, 0);
-		auto arr = ptm_get_array(arr_id);
+		auto& arr = ptm_get_array(arr_id);
 		for (auto& value : data) {
 			arr.push_back(String::ToString(value));
 		}
@@ -667,7 +667,7 @@ void ptm_init_commands()
 		ARGC(2);
 		string path = ARG_STR(0);
 		string arr_id = ARG_EXISTING_ARR(1);
-		auto arr = ptm_get_array(arr_id);
+		auto& arr = ptm_get_array(arr_id);
 		ptm_write_binary_file(path, arr);
 	};
 	CMD("RND") {
@@ -677,5 +677,73 @@ void ptm_init_commands()
 		int max = ARG_NUM(2);
 		int rnd = ptm_get_random_number(min, max);
 		ptm_set_var(var, rnd);
+	};
+	CMD("STR.CAT") {
+		ARGC(3);
+		string var = ARG_IDENT(0);
+		string str1 = ARG_STR(1);
+		string str2 = ARG_STR(2);
+		ptm_set_var(var, str1 + str2);
+	};
+	CMD("STR.UCASE") {
+		ARGC(2);
+		string var = ARG_IDENT(0);
+		string str = ARG_STR(1);
+		ptm_set_var(var, String::ToUpper(str));
+	};
+	CMD("STR.LCASE") {
+		ARGC(2);
+		string var = ARG_IDENT(0);
+		string str = ARG_STR(1);
+		ptm_set_var(var, String::ToLower(str));
+	};
+	CMD("STR.SUB") {
+		ARGC(4);
+		string var = ARG_IDENT(0);
+		string str = ARG_STR(1);
+		int begin = ARG_NUM(2);
+		int end = ARG_NUM(3);
+		string result = String::Substring(str, begin, end);
+		ptm_set_var(var, result);
+	};
+	CMD("STR.SPLIT") {
+		ARGC(3);
+		string arr_id = ARG_IDENT(0);
+		string str = ARG_STR(1);
+		string delim = ARG_STR(2);
+		ptm_new_array(arr_id, 0);
+		auto& arr = ptm_get_array(arr_id);
+		auto split_str = String::Split(str, delim, true);
+		for (auto& item : split_str) {
+			arr.push_back(item);
+		}
+	};
+	CMD("STR.TRIM") {
+		ARGC(2);
+		string var = ARG_IDENT(0);
+		string str = ARG_STR(1);
+		ptm_set_var(var, String::Trim(str));
+	};
+	CMD("STR.LEN") {
+		ARGC(2);
+		string var = ARG_IDENT(0);
+		string str = ARG_STR(1);
+		ptm_set_var(var, str.length());
+	};
+	CMD("STR.AT") {
+	};
+	CMD("STR.FIND") {
+	};
+	CMD("STR.REPL") {
+	};
+	CMD("STR.REPT") {
+	};
+	CMD("STR.PFX") {
+	};
+	CMD("STR.SFX") {
+	};
+	CMD("STR.HAS") {
+	};
+	CMD("STR.FMT") {
 	};
 }

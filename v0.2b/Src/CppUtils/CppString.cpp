@@ -231,7 +231,7 @@ namespace CppUtils
 		if (begin >= text.length() || end < begin)
 			return "";
 
-		return text.substr(begin, end - begin);
+		return text.substr(begin, (end + 1) - begin);
 	}
 
 	std::string String::Substring(std::string text, int begin)

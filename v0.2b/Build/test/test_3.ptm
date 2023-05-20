@@ -11,6 +11,10 @@ PAL 5, &h00ffff
 PAL 6, &hff00ff
 PAL 7, &hffff00
 
+VAR x, ""
+STR.LEN len, x
+MSGBOX len
+
 FOR i, 0, 10
 	RND x, 0, 359
 	RND y, 0, 199
