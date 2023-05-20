@@ -287,6 +287,54 @@ void ptm_init_commands()
 		auto& var = ptm_get_var(id);
 		ptm_set_var(id, String::ToInt(var.value) - 1);
 	};
+	CMD("ADD") {
+		ARGC(3);
+		string result = ARG_IDENT(0);
+		int a = ARG_NUM(1);
+		int b = ARG_NUM(2);
+		ptm_set_var(result, a + b);
+	};
+	CMD("SUB") {
+		ARGC(3);
+		string result = ARG_IDENT(0);
+		int a = ARG_NUM(1);
+		int b = ARG_NUM(2);
+		ptm_set_var(result, a - b);
+	};
+	CMD("MUL") {
+		ARGC(3);
+		string result = ARG_IDENT(0);
+		int a = ARG_NUM(1);
+		int b = ARG_NUM(2);
+		ptm_set_var(result, a * b);
+	};
+	CMD("DIV") {
+		ARGC(3);
+		string result = ARG_IDENT(0);
+		int a = ARG_NUM(1);
+		int b = ARG_NUM(2);
+		ptm_set_var(result, a / b);
+	};
+	CMD("DIVR") {
+		ARGC(3);
+		string result = ARG_IDENT(0);
+		int a = ARG_NUM(1);
+		int b = ARG_NUM(2);
+		ptm_set_var(result, a % b);
+	};
+	CMD("POW") {
+		ARGC(3);
+		string result = ARG_IDENT(0);
+		int a = ARG_NUM(1);
+		int b = ARG_NUM(2);
+		ptm_set_var(result, pow(a, b));
+	};
+	CMD("SQRT") {
+		ARGC(2);
+		string result = ARG_IDENT(0);
+		int a = ARG_NUM(1);
+		ptm_set_var(result, sqrt(a));
+	};
 	CMD("FRAMES") {
 		ARGC(1);
 		string id = ARG_IDENT(0);
