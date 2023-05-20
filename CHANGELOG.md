@@ -15,12 +15,12 @@
 	- CYCLES became FRAMES
 	- DBG.BRK became DEBUG
 	- DBG.MSG became MSGBOX
-- New commands added:
-	- ANIM, TILE.STR, TILE.LEN, BUF.BCOL, SND.LOAD, SND.PLAY, SND.STOP, ASSERT
+- Implemented sprites (SPR.*)
+- Implemented loading and playing external WAV sound files (SND.*)
+- Implemented assertions for debugging purposes (ASSERT)
 - Changes to tilebuffer viewports:
-	- Support for smooth scrolling
-	- Position and size are now pixel-based instead of tile-based
-	- Each tilebuffer viewport now has their own background color
-- Implemented loading and playing external WAV sound files
-- Implemented assertions for debugging purposes
-- Tile animation speed is now configurable
+	- Support for smooth scrolling (BUF.SCRL)
+	- Position and size are now pixel-based instead of tile-based (BUF.VIEW)
+	- Each tilebuffer viewport now has their own background color (BUF.BCOL)
+- Tile animation speed is now configurable (ANIM)
+- Implemented reading lines of text file into array of strings (LLOAD)
