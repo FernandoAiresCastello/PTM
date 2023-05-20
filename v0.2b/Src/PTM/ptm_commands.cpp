@@ -298,6 +298,12 @@ void ptm_init_commands()
 		binary bin = ARG_STR(1);
 		tileset.set(ix, bin);
 	};
+	CMD("CHR.GET") {
+		ARGC(2);
+		int ix = ARG_NUM(0);
+		string var = ARG_IDENT(1);
+		ptm_set_var(var, tileset.get(ix));
+	};
 	CMD("PAL") {
 		ARGC(2);
 		int ix = ARG_NUM(0);
