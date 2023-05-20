@@ -8,6 +8,12 @@ struct t_palette {
 	void add(rgb color);
 	void set(int index, rgb color);
 	rgb& get(int index);
+	int get_r(int index);
+	int get_g(int index);
+	int get_b(int index);
+	void set_r(int index, int value);
+	void set_g(int index, int value);
+	void set_b(int index, int value);
 };
 
 extern t_palette palette;

@@ -304,6 +304,48 @@ void ptm_init_commands()
 		rgb color = ARG_NUM(1);
 		palette.set(ix, color);
 	};
+	CMD("PAL.GET") {
+		ARGC(2);
+		int ix = ARG_NUM(0);
+		string var = ARG_IDENT(1);
+		ptm_set_var(var, palette.get(ix));
+	};
+	CMD("PAL.GETR") {
+		ARGC(2);
+		int ix = ARG_NUM(0);
+		string var = ARG_IDENT(1);
+		ptm_set_var(var, palette.get_r(ix));
+	};
+	CMD("PAL.GETG") {
+		ARGC(2);
+		int ix = ARG_NUM(0);
+		string var = ARG_IDENT(1);
+		ptm_set_var(var, palette.get_g(ix));
+	};
+	CMD("PAL.GETB") {
+		ARGC(2);
+		int ix = ARG_NUM(0);
+		string var = ARG_IDENT(1);
+		ptm_set_var(var, palette.get_b(ix));
+	};
+	CMD("PAL.SETR") {
+		ARGC(2);
+		int ix = ARG_NUM(0);
+		int val = ARG_NUM(1);
+		palette.set_r(ix, val);
+	};
+	CMD("PAL.SETG") {
+		ARGC(2);
+		int ix = ARG_NUM(0);
+		int val = ARG_NUM(1);
+		palette.set_g(ix, val);
+	};
+	CMD("PAL.SETB") {
+		ARGC(2);
+		int ix = ARG_NUM(0);
+		int val = ARG_NUM(1);
+		palette.set_b(ix, val);
+	};
 	CMD("BUF.NEW") {
 		ARGC(4);
 		string id = ARG_IDENT(0);

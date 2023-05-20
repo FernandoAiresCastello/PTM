@@ -10,16 +10,3 @@ PAL 4, &h0000ff
 PAL 5, &h00ffff
 PAL 6, &hff00ff
 PAL 7, &hffff00
-
-VAR x, 255
-STR.FMT str, "[0x%04X]", x
-MSGBOX str
-EXIT
-
-FOR i, 0, 10
-	RND x, 0, 359
-	RND y, 0, 199
-	SPR.NEW i, 1, 6, 7
-	SPR.POS i, x, y
-	SPR.SHOW i
-NEXT
