@@ -236,14 +236,17 @@ void t_tilebuf_layer::clear()
 t_tilebuf::t_tilebuf()
 {
 }
-t_tilebuf::t_tilebuf(int layer_count, int width, int height)
+t_tilebuf::t_tilebuf(string id, int layer_count, int width, int height, int order)
 {
-	init(layer_count, width, height);
+	init(id, layer_count, width, height, order);
 }
-void t_tilebuf::init(int layer_count, int width, int height)
+void t_tilebuf::init(string id, int layer_count, int width, int height, int order)
 {
+	this->id = id;
 	this->width = width;
 	this->height = height;
+	this->order = order;
+
 	for (int i = 0; i < layer_count; i++) {
 		layers.push_back(t_tilebuf_layer(width, height));
 	}
@@ -301,6 +304,7 @@ int t_tilebuf::get_bgcol()
 void t_tilebuf::set_bgcol(int palette_ix)
 {
 	bgcol_palette_ix = palette_ix;
+	bg_enabled = true;
 }
 int t_tilebuf::get_width()
 {
@@ -310,22 +314,38 @@ int t_tilebuf::get_height()
 {
 	return height;
 }
-void t_tilebuf_collection::new_tilebuf(string id, int layer_count, int width, int height)
+void t_tilebuf_collection::new_tilebuf(string id, int layer_count, int width, int height, int order)
 {
-	t_tilebuf tilebuf(layer_count, width, height);
-	tilebufs[id] = tilebuf;
+	t_tilebuf tilebuf(id, layer_count, width, height, order);
+	tilebufs.push_back(tilebuf);
 }
-t_tilebuf& t_tilebuf_collection::get(string id)
+t_tilebuf* t_tilebuf_collection::get(string id)
 {
-	return tilebufs[id];
+	for (auto& tilebuf : tilebufs) {
+		if (tilebuf.id == id)
+			return &tilebuf;
+	}
+	return nullptr;
+}
+t_tilebuf* t_tilebuf_collection::get_by_order(int order)
+{
+	for (auto& tilebuf : tilebufs) {
+		if (tilebuf.order == order)
+			return &tilebuf;
+	}
+	return nullptr;
 }
 bool t_tilebuf_collection::has(string id)
 {
-	return tilebufs.find(id) != tilebufs.end();
+	for (auto& tilebuf : tilebufs) {
+		if (tilebuf.id == id)
+			return true;
+	}
+	return false;
 }
 void t_tilebuf_collection::select(string id)
 {
-	selected_buf = &tilebufs[id];
+	selected_buf = get(id);
 	selected_buf_id = id;
 }
 t_tilebuf* t_tilebuf_collection::selected()
@@ -338,34 +358,31 @@ string t_tilebuf_collection::selected_id()
 }
 void ptm_create_default_tilebuffer(int layers)
 {
-	tilebufs.new_tilebuf(DEFAULT_TILEBUF_ID, layers, scr.cols, scr.rows);
+	tilebufs.new_tilebuf(DEFAULT_TILEBUF_ID, layers, scr.cols, scr.rows, 0);
 	tilebufs.select(DEFAULT_TILEBUF_ID);
-	tilebufs.get(DEFAULT_TILEBUF_ID).view(0, 0, scr.buf_w - 1, scr.buf_h - 1);
-	tilebufs.get(DEFAULT_TILEBUF_ID).set_bgcol(0);
-	tilebufs.get(DEFAULT_TILEBUF_ID).show();
+	tilebufs.get(DEFAULT_TILEBUF_ID)->view(0, 0, scr.buf_w - 1, scr.buf_h - 1);
+	tilebufs.get(DEFAULT_TILEBUF_ID)->set_bgcol(0);
+	tilebufs.get(DEFAULT_TILEBUF_ID)->show();
 }
 void ptm_draw_visible_buffers()
 {
-	ptm_draw_buffer(tilebufs.get(DEFAULT_TILEBUF_ID));
-
-	for (auto& entry : tilebufs.tilebufs) {
-		if (entry.first != DEFAULT_TILEBUF_ID) {
-			t_tilebuf& buf = entry.second;
-			ptm_draw_buffer(buf);
-		}
+	for (int i = 0; i < tilebufs.tilebufs.size(); i++) {
+		ptm_draw_buffer(tilebufs.get_by_order(i));
 	}
 }
-void ptm_draw_buffer(t_tilebuf& buf)
+void ptm_draw_buffer(t_tilebuf* buf)
 {
-	if (!buf.visible())
+	if (!buf->visible())
 		return;
 
-	ptm_clip(buf.get_viewport());
-	ptm_fill_clip(palette.get(buf.get_bgcol()));
+	ptm_clip(buf->get_viewport());
+	if (buf->bg_enabled) {
+		ptm_fill_clip(palette.get(buf->get_bgcol()));
+	}
 
-	for (auto& layer : buf.get_layers()) {
-		for (int y = 0; y < buf.get_height(); y++) {
-			for (int x = 0; x < buf.get_width(); x++) {
+	for (auto& layer : buf->get_layers()) {
+		for (int y = 0; y < buf->get_height(); y++) {
+			for (int x = 0; x < buf->get_width(); x++) {
 				t_tileseq& tile = layer.get(x, y);
 				if (tile.empty()) {
 					continue;

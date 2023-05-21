@@ -9,23 +9,23 @@ PAL 5, &h00ffff
 PAL 6, &hff00ff
 PAL 7, &hffff00
 
-BUF.NEW buf_1, 1, 20, 20
+BUF.NEW buf_1, 1, 20, 20, 2
 BUF.VIEW buf_1, 10, 10, 100, 100
 BUF.BCOL buf_1, 4
+BUF.BGOFF buf_1
 BUF.SHOW buf_1
 
-BUF.NEW buf_2, 1, 20, 20
-BUF.VIEW buf_2, 110, 10, 210, 100
+BUF.NEW buf_2, 1, 20, 20, 1
+BUF.VIEW buf_2, 60, 60, 160, 160
 BUF.BCOL buf_2, 5
 BUF.SHOW buf_2
 
+TRON
 BUF.SEL buf_1
 CALL draw_stuff
+TROFF
 BUF.SEL buf_2
 CALL draw_stuff
-
-#SND.LOAD intro, "test/intro.wav"
-#SND.PLAY intro
 
 SPR.NEW "smiley", 1, 6
 SPR.SHOW "smiley"

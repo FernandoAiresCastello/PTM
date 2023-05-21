@@ -409,16 +409,20 @@ void ptm_init_commands()
 		palette.set_b(ix, val);
 	};
 	CMD("BUF.NEW") {
-		ARGC(4);
+		ARGC(5);
 		string id = ARG_IDENT(0);
 		int layers = ARG_NUM(1);
 		int width = ARG_NUM(2);
 		int height = ARG_NUM(3);
+		int order = ARG_NUM(4);
 		if (tilebufs.has(id)) {
 			ptm_abort("Duplicate buffer id: " + id);
 		}
+		if (tilebufs.get_by_order(order) != nullptr) {
+			ptm_abort("Duplicate buffer ordering: " + String::ToString(order));
+		}
 		else {
-			tilebufs.new_tilebuf(id, layers, width, height);
+			tilebufs.new_tilebuf(id, layers, width, height, order);
 		}
 	};
 	CMD("BUF.VIEW") {
@@ -428,30 +432,35 @@ void ptm_init_commands()
 		int y1 = ARG_NUM(2);
 		int x2 = ARG_NUM(3);
 		int y2 = ARG_NUM(4);
-		tilebufs.get(id).view(x1, y1, x2, y2);
+		tilebufs.get(id)->view(x1, y1, x2, y2);
 	};
 	CMD("BUF.SCRL") {
 		ARGC(3);
 		string id = ARG_IDENT(0);
 		int dx = ARG_NUM(1);
 		int dy = ARG_NUM(2);
-		tilebufs.get(id).scroll_view(dx, dy);
+		tilebufs.get(id)->scroll_view(dx, dy);
 	};
 	CMD("BUF.SHOW") {
 		ARGC(1);
 		string id = ARG_IDENT(0);
-		tilebufs.get(id).show();
+		tilebufs.get(id)->show();
 	};
 	CMD("BUF.HIDE") {
 		ARGC(1);
 		string id = ARG_IDENT(0);
-		tilebufs.get(id).hide();
+		tilebufs.get(id)->hide();
 	};
 	CMD("BUF.BCOL") {
 		ARGC(2);
 		string id = ARG_IDENT(0);
 		int palette_ix = ARG_NUM(1);
-		tilebufs.get(id).set_bgcol(palette_ix);
+		tilebufs.get(id)->set_bgcol(palette_ix);
+	};
+	CMD("BUF.BGOFF") {
+		ARGC(1);
+		string id = ARG_IDENT(0);
+		tilebufs.get(id)->bg_enabled = false;
 	};
 	CMD("BUF.SEL") {
 		ARGC(1);
@@ -700,8 +709,7 @@ void ptm_init_commands()
 		string id = ARG_STR(0);
 		string buf_id = ARG_IDENT(1);
 		t_sprite& spr = sprites.get_sprite(id);
-		t_tilebuf& buf = tilebufs.get(buf_id);
-		spr.buf = &buf;
+		spr.buf = tilebufs.get(buf_id);
 	};
 	CMD("SPR.SHOW") {
 		ARGC(1);

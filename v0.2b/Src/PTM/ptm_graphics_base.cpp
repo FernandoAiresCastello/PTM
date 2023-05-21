@@ -29,13 +29,14 @@ void ptm_init_window(int buf_w, int buf_h, int size, rgb bgcol, int default_buf_
 	SDL_SetRenderDrawColor(scr.rend, 0, 0, 0, 255);
 	SDL_RenderClear(scr.rend);
 	SDL_RenderPresent(scr.rend);
-	ptm_clear_screen();
-	ptm_update();
-	SDL_SetWindowPosition(scr.wnd, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-	SDL_RaiseWindow(scr.wnd);
 
 	ptm_set_tile_animation_speed(80);
 	ptm_create_default_tilebuffer(default_buf_layer_count);
+	ptm_clear_screen();
+	ptm_update();
+
+	SDL_SetWindowPosition(scr.wnd, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+	SDL_RaiseWindow(scr.wnd);
 }
 void ptm_free_window()
 {

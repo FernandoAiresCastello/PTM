@@ -68,9 +68,12 @@ private:
 	int height = 0;
 };
 struct t_tilebuf {
+	string id;
+	int order = 0;
+	bool bg_enabled = true;
 	t_tilebuf();
-	t_tilebuf(int layer_count, int width, int height);
-	void init(int layer_count, int width, int height);
+	t_tilebuf(string id, int layer_count, int width, int height, int order);
+	void init(string id, int layer_count, int width, int height, int order);
 	void view(int x1, int y1, int x2, int y2);
 	void scroll_view(int dx, int dy);
 	t_clip& get_viewport();
@@ -94,9 +97,10 @@ private:
 	bool is_visible = false;
 };
 struct t_tilebuf_collection {
-	map<string, t_tilebuf> tilebufs;
-	void new_tilebuf(string id, int layer_count, int width, int height);
-	t_tilebuf& get(string id);
+	vector<t_tilebuf> tilebufs;
+	void new_tilebuf(string id, int layer_count, int width, int height, int order);
+	t_tilebuf* get(string id);
+	t_tilebuf* get_by_order(int order);
 	bool has(string id);
 	void select(string id);
 	t_tilebuf* selected();
@@ -118,7 +122,7 @@ extern t_tilebuf_cursor tilebuf_csr;
 
 void ptm_create_default_tilebuffer(int layers);
 void ptm_draw_visible_buffers();
-void ptm_draw_buffer(t_tilebuf& buf);
+void ptm_draw_buffer(t_tilebuf* buf);
 void ptm_update_tile_animation();
 void ptm_set_tile_animation_speed(int speed);
 t_tilebuf_layer& ptm_get_selected_tilebuf_layer();
