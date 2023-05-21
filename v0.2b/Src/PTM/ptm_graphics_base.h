@@ -25,6 +25,7 @@ struct t_screen {
 	t_clip clip;
 	int cols = 0;
 	int rows = 0;
+	bool transparency = false;
 
 	struct {
 		int fgc = 1;

@@ -65,6 +65,14 @@ void ptm_init_commands()
 		ptm_set_window_bgcol(palette.get(palette_ix));
 		ptm_clear_screen();
 	};
+	CMD("TRON") {
+		ARGC(0);
+		scr.transparency = true;
+	};
+	CMD("TROFF") {
+		ARGC(0);
+		scr.transparency = false;
+	};
 	CMD("ANIM") {
 		ARGC(1);
 		int speed = ARG_NUM(0);
@@ -640,14 +648,17 @@ void ptm_init_commands()
 		ptm_stop_all_sounds();
 	};
 	CMD("SPR.NEW") {
-		ARGC(4);
+		ARGC_MIN_MAX(3, 4);
 		string id = ARG_STR(0);
 		int ch = ARG_NUM(1);
 		int fgc = ARG_NUM(2);
-		int bgc = ARG_NUM(3);
+		int bgc = arg.size() == 4 ? ARG_NUM(3) : 0;
 		if (!sprites.has(id)) {
 			t_sprite& spr = sprites.new_sprite(id);
 			spr.tile = t_tileseq(ch, fgc, bgc);
+			if (arg.size() == 3) {
+				spr.tile.transparent = true;
+			}
 		}
 		else {
 			ptm_abort("Duplicate sprite id: " + id);

@@ -23,6 +23,7 @@ private:
 };
 struct t_tileseq {
 	vector<t_tile> frames;
+	bool transparent = false;
 	t_tiledata data;
 	t_tileseq();
 	t_tileseq(int ch, int fgc, int bgc);

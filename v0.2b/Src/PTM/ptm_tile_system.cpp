@@ -181,6 +181,7 @@ void t_tilebuf_layer::put(int x, int y, t_tileseq& tileseq)
 {
 	if (x >= 0 && y >= 0 && x < width && y < width) {
 		const int ix = y * width + x;
+		tileseq.transparent = scr.transparency;
 		tiles[ix] = tileseq;
 	}
 }
@@ -373,7 +374,7 @@ void ptm_draw_buffer(t_tilebuf& buf)
 				binary& bin = tileset.get(frame.ch);
 				rgb fgc = palette.get(frame.fgc);
 				rgb bgc = palette.get(frame.bgc);
-				ptm_draw_tile_bin(bin, x * 8, y * 8, fgc, bgc, false);
+				ptm_draw_tile_bin(bin, x * 8, y * 8, fgc, bgc, tile.transparent);
 			}
 		}
 	}

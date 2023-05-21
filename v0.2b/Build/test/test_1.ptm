@@ -1,7 +1,5 @@
 WINDOW 360, 200, 4, 1
 
-BLOAD "test/test.dat", x
-
 CHR 1, "1111111110000001101001011000000110100101100110011000000111111111"
 
 PAL 2, &hff0000
@@ -29,7 +27,7 @@ CALL draw_stuff
 #SND.LOAD intro, "test/intro.wav"
 #SND.PLAY intro
 
-SPR.NEW "smiley", 1, 6, 7
+SPR.NEW "smiley", 1, 6
 SPR.SHOW "smiley"
 
 loop:

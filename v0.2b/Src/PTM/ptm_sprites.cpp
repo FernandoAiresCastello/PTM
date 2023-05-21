@@ -52,6 +52,6 @@ void ptm_draw_visible_sprites()
 		binary& bin = tileset.get(frame.ch);
 		rgb fgc = palette.get(frame.fgc);
 		rgb bgc = palette.get(frame.bgc);
-		ptm_draw_tile_bin(bin, spr.x, spr.y, fgc, bgc, false);
+		ptm_draw_tile_bin(bin, spr.x, spr.y, fgc, bgc, spr.tile.transparent);
 	}
 }
