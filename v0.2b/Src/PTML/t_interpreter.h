@@ -25,14 +25,16 @@ struct t_interpreter {
 	void abort(string error);
 	bool argc(t_params& arg, int expected);
 	bool argc(t_params& arg, int min, int max);
-	int require_number(t_param& arg);
-	string require_label(t_param& arg);
-	string require_id(t_param& arg);
-	string require_existing_varname(t_param& arg);
-	string require_string(t_param& arg);
-	string require_existing_array(t_param& arg);
-	string require_array_element(t_param& arg);
-	int require_array_index(std::vector<string>& arr, string arr_id, t_param& arg);
+	
+	int arg_var_number(t_param& arg);
+	string arg_var_string(t_param& arg);
+	string arg_literal_existing_label(t_param& arg);
+	string arg_literal_id(t_param& arg);
+	string arg_literal_existing_id(t_param& arg);
+	string arg_literal_array_id(t_param& arg);
+	string arg_string_from_array_element(t_param& arg);
+	int arg_var_number_for_array_index(std::vector<string>& arr, string arr_id, t_param& arg);
+
 	void goto_label(string label);
 	void call_label(string label);
 	void return_from_call();

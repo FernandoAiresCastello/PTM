@@ -81,7 +81,7 @@ bool t_interpreter::argc(t_params& arg, int min, int max) {
 	}
 	return true;
 }
-string t_interpreter::require_label(t_param& arg) {
+string t_interpreter::arg_literal_existing_label(t_param& arg) {
 	if (arg.type != t_param_type::id) {
 		abort("Label expected");
 		return "";
@@ -92,14 +92,14 @@ string t_interpreter::require_label(t_param& arg) {
 	}
 	return arg.id;
 }
-string t_interpreter::require_id(t_param& arg) {
+string t_interpreter::arg_literal_id(t_param& arg) {
 	if (arg.type != t_param_type::id) {
 		abort("Identifier expected: " + arg.src);
 		return "";
 	}
 	return arg.id;
 }
-string t_interpreter::require_existing_varname(t_param& arg) {
+string t_interpreter::arg_literal_existing_id(t_param& arg) {
 	if (arg.is_array_element_ix()) {
 		if (arrays.find(arg.id) == arrays.end()) {
 			abort("Array not found: " + arg.id);
@@ -115,7 +115,7 @@ string t_interpreter::require_existing_varname(t_param& arg) {
 	}
 	return arg.id;
 }
-int t_interpreter::require_number(t_param& arg) {
+int t_interpreter::arg_var_number(t_param& arg) {
 	int number = PTM_INVALID_NUMBER;
 	if (arg.type == t_param_type::number || 
 		arg.type == t_param_type::string || 
@@ -128,14 +128,14 @@ int t_interpreter::require_number(t_param& arg) {
 			abort("Variable not found: " + arg.id);
 		}
 	} else if (arg.is_array_element_ix()) {
-		string value = require_array_element(arg);
+		string value = arg_string_from_array_element(arg);
 		number = String::ToInt(value);
 	} else {
 		abort("Numeric value expected");
 	}
 	return number;
 }
-string t_interpreter::require_string(t_param& arg) {
+string t_interpreter::arg_var_string(t_param& arg) {
 	if (arg.type == t_param_type::string || arg.type == t_param_type::number) {
 		return arg.textual_value;
 	} else if (arg.type == t_param_type::id) {
@@ -145,13 +145,13 @@ string t_interpreter::require_string(t_param& arg) {
 			abort("Variable not found: " + arg.id);
 		}
 	} else if (arg.is_array_element_ix()) {
-		return require_array_element(arg);
+		return arg_string_from_array_element(arg);
 	} else {
 		abort("String expected");
 	}
 	return "";
 }
-string t_interpreter::require_existing_array(t_param& arg) {
+string t_interpreter::arg_literal_array_id(t_param& arg) {
 	if (arrays.find(arg.id) != arrays.end()) {
 		return arg.id;
 	} else {
@@ -159,7 +159,7 @@ string t_interpreter::require_existing_array(t_param& arg) {
 	}
 	return "";
 }
-string t_interpreter::require_array_element(t_param& arg) {
+string t_interpreter::arg_string_from_array_element(t_param& arg) {
 	if (!arg.is_array_element_ix()) {
 		abort("Array expected");
 		return "";
@@ -191,7 +191,7 @@ string t_interpreter::require_array_element(t_param& arg) {
 	}
 	return "";
 }
-int t_interpreter::require_array_index(std::vector<string>& arr, string arr_id, t_param& arg) {
+int t_interpreter::arg_var_number_for_array_index(std::vector<string>& arr, string arr_id, t_param& arg) {
 	int index = PTM_INVALID_NUMBER;
 
 	if (arg.type == t_param_type::arr_ix_literal) {

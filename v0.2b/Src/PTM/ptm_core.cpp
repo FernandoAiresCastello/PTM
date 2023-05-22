@@ -203,8 +203,8 @@ void ptm_copy_array(string dst, string src)
 void ptm_if_block_start(t_params& arg, int cmp_mode)
 {
 	if (cmp_mode == CMP_MODE_EQ || cmp_mode == CMP_MODE_NEQ) {
-		string a = intp->require_string(arg[0]);
-		string b = intp->require_string(arg[1]);
+		string a = intp->arg_var_string(arg[0]);
+		string b = intp->arg_var_string(arg[1]);
 		if (cmp_mode == CMP_MODE_EQ) {
 			if (a == b) { return; }
 			else { intp->goto_matching_endif(); }
@@ -215,9 +215,9 @@ void ptm_if_block_start(t_params& arg, int cmp_mode)
 		}
 	}
 	else {
-		int a = intp->require_number(arg[0]);
+		int a = intp->arg_var_number(arg[0]);
 		if (a == PTM_INVALID_NUMBER) return;
-		int b = intp->require_number(arg[1]);
+		int b = intp->arg_var_number(arg[1]);
 		if (b == PTM_INVALID_NUMBER) return;
 
 		if (cmp_mode == CMP_MODE_GT) {
