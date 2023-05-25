@@ -974,4 +974,10 @@ void ptm_init_commands()
 		int vol = ARG_VAR_NUM(0);
 		ptm_mml_volume(vol);
 	};
+	CMD("BEEP") {
+		ARGC(2);
+		int freq = ARG_VAR_NUM(0);
+		int length = ARG_VAR_NUM(1);
+		ptm_mml_beep(freq, length);
+	};
 }
