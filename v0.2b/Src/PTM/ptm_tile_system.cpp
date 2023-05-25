@@ -249,6 +249,12 @@ void t_tilebuf_layer::clear()
 		tileseq.clear();
 	}
 }
+void t_tilebuf_layer::move_tile(int x, int y, int dx, int dy)
+{
+	t_tileseq tile = get_copy(x, y);
+	put(x + dx, y + dy, tile);
+	del(x, y);
+}
 void t_tilebuf_layer::move_block(int x1, int y1, int x2, int y2, int dx, int dy)
 {
 	std::vector<t_tileseq> tiles;

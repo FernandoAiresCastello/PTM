@@ -64,6 +64,7 @@ struct t_tilebuf_layer {
 	void del(int x, int y);
 	bool empty(int x, int y);
 	void clear();
+	void move_tile(int x, int y, int dx, int dy);
 	void move_block(int x1, int y1, int x2, int y2, int dx, int dy);
 private:
 	vector<t_tileseq> tiles;

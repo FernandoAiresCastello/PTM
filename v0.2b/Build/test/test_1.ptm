@@ -32,12 +32,14 @@ SPR.SHOW "smiley"
 loop:
 	INKEY x
 	IF.EQ x, 32
-		BEEP 500, 30
-		SPR.MOVE "smiley", 8, 0
+		#BEEP 500, 30
+		#SPR.MOVE "smiley", 8, 0
+		MOV 0, 0, 1, 0
 	ENDIF
 	IF.EQ x, 13
-		BEEP 800, 30
-		SPR.MOVE "smiley", 8, 8
+		#BEEP 800, 30
+		#SPR.MOVE "smiley", 8, 8
+		MOV 0, 0, 1, 1
 	ENDIF
 	UPDATE
 	GOTO loop

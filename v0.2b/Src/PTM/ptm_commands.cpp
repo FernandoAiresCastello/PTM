@@ -22,8 +22,6 @@ unordered_map<string, function<void(t_params&)>> ptm_commands;
 
 void ptm_init_commands()
 {
-	CMD("TEST") {
-	};
 	CMD("INCL") {
 		// t_program.cpp
 	};
@@ -648,6 +646,14 @@ void ptm_init_commands()
 		int y2 = ARG_VAR_NUM(3);
 		ptm_get_selected_tilebuf_layer().fill_rect(working_tile, x1, y1, x2, y2);
 	};
+	CMD("MOV") {
+		ARGC(4);
+		int x = ARG_VAR_NUM(0);
+		int y = ARG_VAR_NUM(1);
+		int dx = ARG_VAR_NUM(2);
+		int dy = ARG_VAR_NUM(3);
+		ptm_get_selected_tilebuf_layer().move_tile(x, y, dx, dy);
+	};
 	CMD("MOVB") {
 		ARGC(6);
 		int x1 = ARG_VAR_NUM(0);
@@ -979,5 +985,11 @@ void ptm_init_commands()
 		int freq = ARG_VAR_NUM(0);
 		int length = ARG_VAR_NUM(1);
 		ptm_mml_beep(freq, length);
+	};
+
+	// Test commands
+
+	CMD("TEST") {
+		ARGC(0);
 	};
 }
