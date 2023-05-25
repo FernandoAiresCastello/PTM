@@ -1,6 +1,8 @@
 #include "ptm_tile_system.h"
 #include "ptm_text_font.h"
 #include "ptm_color_palette.h"
+#include "ptm_core.h"
+#include "ptm_keyboard.h"
 
 #define DEFAULT_TILEBUF_ID "default"
 
@@ -511,4 +513,74 @@ t_tileseq ptm_load_tile(string id)
 bool ptm_has_stored_tile(string id)
 {
 	return tilestore.find(id) != tilestore.end();
+}
+
+bool text_input_cancelled = false;
+
+string ptm_text_input(int maxlen)
+{
+	text_input_cancelled = false;
+	
+	string text = "";
+	const string blanks = String::Repeat(' ', maxlen + 1);
+	const int initial_x = tilebuf_csr.x;
+	const int initial_y = tilebuf_csr.y;
+
+	bool finished = false;
+
+	while (!finished) {
+
+		tilebuf_csr.x = initial_x;
+		ptm_print_tile_string(blanks);
+		tilebuf_csr.x = initial_x;
+		ptm_print_tile_string(text + "|");
+
+		ptm_refresh_window();
+
+		SDL_Event e = { 0 };
+		SDL_PollEvent(&e);
+
+		if (e.type == SDL_QUIT) {
+			ptm_exit();
+			return "";
+		}
+		else if (e.type == SDL_KEYDOWN) {
+			SDL_Keycode key = e.key.keysym.sym;
+
+			// ALT+ENTER = Fullscreen
+			if (key == SDLK_RETURN && ptm_kb_alt()) {
+				ptm_toggle_fullscreen();
+			}
+			// ENTER = Confirm
+			else if (key == SDLK_RETURN && !ptm_kb_alt()) {
+				finished = true;
+			}
+			// ESC = Cancel
+			else if (key == SDLK_ESCAPE) {
+				text_input_cancelled = true;
+				finished = true;
+			}
+			// BACKSPACE = Erase last char
+			else if (key == SDLK_BACKSPACE) {
+				if (!text.empty()) {
+					text.pop_back();
+				}
+			}
+			// HOME = Clear
+			else if (key == SDLK_HOME) {
+				text = "";
+			}
+			// Any other typable character
+			else if (text.length() < maxlen) {
+				char ch = ptm_keycode_to_char(key);
+				if (ch) {
+					text += ch;
+				}
+			}
+		}
+	}
+
+	last_key = 0; // Clear last key, so as not to interfere with the kb_inkey function
+	tilebuf_csr.x = initial_x;
+	return text;
 }

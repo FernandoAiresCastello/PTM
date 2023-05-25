@@ -986,10 +986,11 @@ void ptm_init_commands()
 		int length = ARG_VAR_NUM(1);
 		ptm_mml_beep(freq, length);
 	};
-
-	// Test commands
-
-	CMD("TEST") {
-		ARGC(0);
+	CMD("INPUT") {
+		ARGC(2);
+		string var = ARG_LIT_ID(0);
+		int max_length = ARG_VAR_NUM(1);
+		string value = ptm_text_input(max_length);
+		ptm_set_var(var, value);
 	};
 }

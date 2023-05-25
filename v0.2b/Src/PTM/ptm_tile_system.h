@@ -137,3 +137,4 @@ void ptm_print_tile_char(int ch);
 void ptm_store_tile(string id, t_tileseq& tile);
 t_tileseq ptm_load_tile(string id);
 bool ptm_has_stored_tile(string id);
+string ptm_text_input(int maxlen);

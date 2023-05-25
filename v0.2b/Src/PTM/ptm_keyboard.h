@@ -11,3 +11,4 @@ bool ptm_kb_shift();
 bool ptm_kb_ctrl();
 bool ptm_kb_alt();
 bool ptm_kb_caps();
+char ptm_keycode_to_char(SDL_Keycode key);

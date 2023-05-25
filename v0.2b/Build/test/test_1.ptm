@@ -11,6 +11,13 @@ PAL 6, &hff00ff
 PAL 7, &hffff00
 PAL 8, &h404040
 
+LOCATE 1, 1
+COLOR 3, 4
+INPUT name, 10
+LOCATE 1, 2
+PRINT name
+HALT
+
 BUF.NEW buf_1, 1, 20, 20, 1
 BUF.VIEW buf_1, 10, 10, 100, 100
 BUF.BCOL buf_1, 4
