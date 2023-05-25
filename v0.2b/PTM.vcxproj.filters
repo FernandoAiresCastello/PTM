@@ -68,6 +68,9 @@
     <ClCompile Include="Src\PTM\ptm_filesystem.cpp">
       <Filter>PTM</Filter>
     </ClCompile>
+    <ClCompile Include="Src\PTM\ptm_mml.cpp">
+      <Filter>PTM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Common\common.h">
@@ -152,6 +155,9 @@
       <Filter>PTM</Filter>
     </ClInclude>
     <ClInclude Include="Src\PTM\ptm_filesystem.h">
+      <Filter>PTM</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTM\ptm_mml.h">
       <Filter>PTM</Filter>
     </ClInclude>
   </ItemGroup>

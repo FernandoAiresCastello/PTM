@@ -32,9 +32,11 @@ SPR.SHOW "smiley"
 loop:
 	INKEY x
 	IF.EQ x, 32
+		MML.PLAY "CDE"
 		SPR.MOVE "smiley", 8, 0
 	ENDIF
 	IF.EQ x, 13
+		MML.PLAY "EDC"
 		SPR.MOVE "smiley", 8, 8
 	ENDIF
 	UPDATE

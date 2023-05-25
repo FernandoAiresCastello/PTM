@@ -7,6 +7,7 @@
 #include "ptm_sprites.h"
 #include "ptm_filesystem.h"
 #include "ptm_keyboard.h"
+#include "ptm_mml.h"
 
 unordered_map<string, function<void(t_params&)>> ptm_commands;
 
@@ -953,5 +954,24 @@ void ptm_init_commands()
 		string fmt = ARG_VAR_STR(1);
 		int number = ARG_VAR_NUM(2);
 		ptm_set_var(var, String::Format(fmt.c_str(), number));
+	};
+	CMD("MML.PLAY") {
+		ARGC(1);
+		string mml = ARG_VAR_STR(0);
+		ptm_mml_play(mml, false);
+	};
+	CMD("MML.LOOP") {
+		ARGC(1);
+		string mml = ARG_VAR_STR(0);
+		ptm_mml_play(mml, true);
+	};
+	CMD("MML.STOP") {
+		ARGC(0);
+		ptm_mml_stop();
+	};
+	CMD("MML.VOL") {
+		ARGC(1);
+		int vol = ARG_VAR_NUM(0);
+		ptm_mml_volume(vol);
 	};
 }

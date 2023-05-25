@@ -2,6 +2,7 @@
 #include "ptm_commands.h"
 #include "ptm_graphics_base.h"
 #include "ptm_keyboard.h"
+#include "ptm_mml.h"
 #include "../PTML/t_program.h"
 #include "../PTML/t_compiler.h"
 #include "../PTML/t_interpreter.h"
@@ -18,6 +19,7 @@ int ptm_run(string program_file)
 	SDL_Init(SDL_INIT_EVERYTHING);
 	ptm_init_commands();
 	ptm_init_keyboard();
+	ptm_init_mml();
 
 	t_program* prg = new t_program();
 	if (!prg->load_plain(program_file)) {
@@ -59,6 +61,7 @@ void ptm_abort(string msg)
 void ptm_exit()
 {
 	ptm_free_window();
+	ptm_destroy_mml();
 	SDL_Quit();
 	exit(0);
 }

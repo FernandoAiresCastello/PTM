@@ -21,6 +21,7 @@
 	- STR.START became STR.PFX
 	- STR.END became STR.SFX
 	- FILE.CHK became FCHK
+	- MML commands now have the prefix MML (e.g. PLAY became MML.PLAY, etc)
 - Implemented sprites (SPR.*)
 - Implemented loading and playing external WAV sound files (SND.*)
 - Implemented assertions for debugging purposes (ASSERT)
