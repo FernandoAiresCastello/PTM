@@ -6,18 +6,21 @@
 *This version is currently under development, this list will be updated as changes are introduced.*
 
 - Some commands now have a different syntax or purpose
-	- CLS now fills the window background with a color and does not affect any tilebuffer
 	- CHR now defines a tileset entry with a single 64-character binary string
+	- Commands that require parameters for rectangle corners (e.g. RECT, FILL) now take x1, y1, x2, y2 instead of x, y, width, height
 - Some commands have been removed:
-	- NOP, CHRS
+	- NOP, CHRS, DRAW
 - Some commands have been renamed:
 	- VSYNC became UPDATE
 	- CYCLES became FRAMES
+	- CLL became BUF.CLL
+	- CLR became DELR
 	- DBG.BRK became DEBUG
 	- DBG.MSG became MSGBOX
 	- STR.IX became STR.FIND
 	- STR.START became STR.PFX
 	- STR.END became STR.SFX
+	- FILE.CHK became FCHK
 - Implemented sprites (SPR.*)
 - Implemented loading and playing external WAV sound files (SND.*)
 - Implemented assertions for debugging purposes (ASSERT)

@@ -59,7 +59,7 @@ void ptm_init_commands()
 		string title = ARG_VAR_STR(0);
 		ptm_set_window_title(title);
 	};
-	CMD("CLS") {
+	CMD("WCOL") {
 		ARGC(1);
 		int palette_ix = ARG_VAR_NUM(0);
 		ptm_set_window_bgcol(palette.get(palette_ix));
@@ -465,12 +465,22 @@ void ptm_init_commands()
 	CMD("BUF.SEL") {
 		ARGC(1);
 		string id = ARG_LIT_ID(0);
-		if (tilebufs.has(id)) {
-			tilebufs.select(id);
-		}
-		else {
-			ptm_abort("Tilebuffer not found: " + id);
-		}
+		tilebufs.select(id);
+	};
+	CMD("BUF.CLL") {
+		ARGC(2);
+		string id = ARG_LIT_ID(0);
+		int layer = ARG_VAR_NUM(1);
+		tilebufs.get(id)->clear_layer(layer);
+	};
+	CMD("BUF.CLS") {
+		ARGC(1);
+		string id = ARG_LIT_ID(0);
+		tilebufs.get(id)->clear_all_layers();
+	};
+	CMD("CLS") {
+		ARGC(0);
+		tilebufs.clear_all_buffers();
 	};
 	CMD("TILE.NEW") {
 		ARGC(3);
@@ -605,6 +615,14 @@ void ptm_init_commands()
 		ARGC(0);
 		ptm_get_selected_tilebuf_layer().del(tilebuf_csr.x, tilebuf_csr.y);
 	};
+	CMD("DELR") {
+		ARGC(4);
+		int x1 = ARG_VAR_NUM(0);
+		int y1 = ARG_VAR_NUM(1);
+		int x2 = ARG_VAR_NUM(2);
+		int y2 = ARG_VAR_NUM(3);
+		ptm_get_selected_tilebuf_layer().clear_rect(x1, y1, x2, y2);
+	};
 	CMD("GET") {
 		ARGC(0);
 		working_tile.set_equal(
@@ -613,6 +631,24 @@ void ptm_init_commands()
 	CMD("FILL") {
 		ARGC(0);
 		ptm_get_selected_tilebuf_layer().fill(working_tile);
+	};
+	CMD("RECT") {
+		ARGC(4);
+		int x1 = ARG_VAR_NUM(0);
+		int y1 = ARG_VAR_NUM(1);
+		int x2 = ARG_VAR_NUM(2);
+		int y2 = ARG_VAR_NUM(3);
+		ptm_get_selected_tilebuf_layer().fill_rect(working_tile, x1, y1, x2, y2);
+	};
+	CMD("MOVB") {
+		ARGC(6);
+		int x1 = ARG_VAR_NUM(0);
+		int y1 = ARG_VAR_NUM(1);
+		int x2 = ARG_VAR_NUM(2);
+		int y2 = ARG_VAR_NUM(3);
+		int dx = ARG_VAR_NUM(4);
+		int dy = ARG_VAR_NUM(5);
+		ptm_get_selected_tilebuf_layer().move_block(x1, y1, x2, y2, dx, dy);
 	};
 	CMD("PRINT") {
 		ARGC(1);
@@ -742,6 +778,13 @@ void ptm_init_commands()
 	CMD("RESTORE") {
 		ARGC(0);
 		intp->reset_data_pointer();
+	};
+	CMD("FCHK") {
+		ARGC(2);
+		string path = ARG_VAR_STR(0);
+		string var = ARG_LIT_ID(1);
+		bool exists = File::Exists(path);
+		ptm_set_var(var, exists ? 1 : 0);
 	};
 	CMD("CLOAD") {
 		ARGC(2);

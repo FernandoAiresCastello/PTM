@@ -208,6 +208,22 @@ void t_tilebuf_layer::fill(t_tileseq& tileseq)
 		tiles[i].set_equal(tileseq);
 	}
 }
+void t_tilebuf_layer::fill_rect(t_tileseq& tileseq, int x1, int y1, int x2, int y2)
+{
+	for (int py = y1; py <= y2; py++) {
+		for (int px = x1; px <= x2; px++) {
+			get(px, py).set_equal(tileseq);
+		}
+	}
+}
+void t_tilebuf_layer::clear_rect(int x1, int y1, int x2, int y2)
+{
+	for (int py = y1; py <= y2; py++) {
+		for (int px = x1; px <= x2; px++) {
+			del(px, py);
+		}
+	}
+}
 t_tileseq& t_tilebuf_layer::get(int x, int y)
 {
 	const int ix = y * width + x;
@@ -231,6 +247,31 @@ void t_tilebuf_layer::clear()
 {
 	for (auto& tileseq : tiles) {
 		tileseq.clear();
+	}
+}
+void t_tilebuf_layer::move_block(int x1, int y1, int x2, int y2, int dx, int dy)
+{
+	std::vector<t_tileseq> tiles;
+	for (int cy = y1; cy <= y2; cy++) {
+		for (int cx = x1; cx <= x2; cx++) {
+			if (cx >= 0 && cy >= 0 && cx < width && cy < height) {
+				tiles.push_back(get_copy(cx, cy));
+				del(cx, cy);
+			}
+			else {
+				tiles.push_back(t_tileseq());
+			}
+		}
+	}
+	const int new_x1 = x1 + dx;
+	const int new_y1 = y1 + dy;
+	const int new_x2 = x2 + dx;
+	const int new_y2 = y2 + dy;
+	int i = 0;
+	for (int cy = new_y1; cy <= new_y2; cy++) {
+		for (int cx = new_x1; cx <= new_x2; cx++) {
+			put(cx, cy, tiles[i++]);
+		}
 	}
 }
 t_tilebuf::t_tilebuf()
@@ -274,6 +315,10 @@ t_tilebuf_layer& t_tilebuf::layer(int index)
 int t_tilebuf::get_layer_count()
 {
 	return layers.size();
+}
+void t_tilebuf::clear_layer(int layer)
+{
+	layers[layer].clear();
 }
 void t_tilebuf::clear_all_layers()
 {
@@ -355,6 +400,12 @@ t_tilebuf* t_tilebuf_collection::selected()
 string t_tilebuf_collection::selected_id()
 {
 	return selected_buf_id;
+}
+void t_tilebuf_collection::clear_all_buffers()
+{
+	for (auto& tilebuf : tilebufs) {
+		tilebuf.clear_all_layers();
+	}
 }
 void ptm_create_default_tilebuffer(int layers)
 {

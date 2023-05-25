@@ -57,11 +57,14 @@ struct t_tilebuf_layer {
 	void add(int x, int y, t_tile& tile);
 	void add(int x, int y, int ch, int fgc, int bgc);
 	void fill(t_tileseq& tileseq);
+	void fill_rect(t_tileseq& tileseq, int x1, int y1, int x2, int y2);
+	void clear_rect(int x1, int y1, int x2, int y2);
 	t_tileseq& get(int x, int y);
 	t_tileseq get_copy(int x, int y);
 	void del(int x, int y);
 	bool empty(int x, int y);
 	void clear();
+	void move_block(int x1, int y1, int x2, int y2, int dx, int dy);
 private:
 	vector<t_tileseq> tiles;
 	int width = 0;
@@ -79,6 +82,7 @@ struct t_tilebuf {
 	t_clip& get_viewport();
 	t_tilebuf_layer& layer(int index);
 	int get_layer_count();
+	void clear_layer(int layer);
 	void clear_all_layers();
 	void show();
 	void hide();
@@ -105,6 +109,7 @@ struct t_tilebuf_collection {
 	void select(string id);
 	t_tilebuf* selected();
 	string selected_id();
+	void clear_all_buffers();
 private:
 	t_tilebuf* selected_buf = nullptr;
 	string selected_buf_id;
