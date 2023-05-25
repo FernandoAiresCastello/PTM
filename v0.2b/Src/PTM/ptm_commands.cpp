@@ -6,6 +6,7 @@
 #include "ptm_sound_system.h"
 #include "ptm_sprites.h"
 #include "ptm_filesystem.h"
+#include "ptm_keyboard.h"
 
 unordered_map<string, function<void(t_params&)>> ptm_commands;
 
@@ -279,9 +280,15 @@ void ptm_init_commands()
 	CMD("IF.KEY") {
 		ARGC(1);
 		string keyname = ARG_VAR_STR(0);
-		if (!ptm_last_key(keyname)) {
+		if (!ptm_kb_pressed(keyname)) {
 			intp->goto_matching_endif();
 		}
+	};
+	CMD("INKEY") {
+		ARGC(1);
+		string id = ARG_LIT_ID(0);
+		ptm_set_var(id, last_key);
+		last_key = 0;
 	};
 	CMD("INC") {
 		ARGC(1);

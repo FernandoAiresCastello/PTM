@@ -238,17 +238,6 @@ void ptm_if_block_start(t_params& arg, int cmp_mode)
 		}
 	}
 }
-bool ptm_last_key(string keyname)
-{
-	keyname = String::ToUpper(keyname);
-
-	if (keyname == "SHIFT") return ptm_kb_shift();
-	if (keyname == "CTRL") return ptm_kb_ctrl();
-	if (keyname == "ALT") return ptm_kb_alt();
-	if (keyname == "CAPS") return ptm_kb_caps();
-
-	return ptm_kb_pressed(keyname);
-}
 int ptm_get_random_number(int min, int max)
 {
 	return Util::Random(min, max);

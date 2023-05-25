@@ -30,6 +30,17 @@ SPR.NEW "smiley", 1, 6
 SPR.SHOW "smiley"
 
 loop:
+	INKEY x
+	IF.EQ x, 32
+		SPR.MOVE "smiley", 8, 0
+	ENDIF
+	IF.EQ x, 13
+		SPR.MOVE "smiley", 8, 8
+	ENDIF
+	UPDATE
+	GOTO loop
+
+loop2:
 	IF.KEY "RIGHT"
 		#BUF.SCRL buf_1, 1, 0
 		SPR.MOVE "smiley", 1, 0
@@ -61,7 +72,7 @@ loop:
 		BUF.HIDE buf_2
 	ENDIF
 	UPDATE
-	GOTO loop
+	GOTO loop2
 
 draw_stuff:
 	LOCATE 0, 0

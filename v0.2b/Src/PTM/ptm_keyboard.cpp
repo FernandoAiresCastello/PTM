@@ -78,6 +78,13 @@ bool ptm_kb_pressed(SDL_Scancode key)
 }
 bool ptm_kb_pressed(string keyname)
 {
+	keyname = String::ToUpper(keyname);
+
+	if (keyname == "SHIFT") return ptm_kb_shift();
+	if (keyname == "CTRL") return ptm_kb_ctrl();
+	if (keyname == "ALT") return ptm_kb_alt();
+	if (keyname == "CAPS") return ptm_kb_caps();
+
 	return ptm_kb_pressed(kbmap[keyname]);
 }
 bool ptm_kb_shift()
