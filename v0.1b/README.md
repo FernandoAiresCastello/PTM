@@ -1,5 +1,9 @@
 # PTM - Programmable Tile Machine (version 0.1b)
 
+## Please note
+
+This was the very first beta version released on Itch.io as part of the [Tool Jam 3](https://itch.io/jam/the-tool-jam-3). It is no longer possible to compile this version of the source code due to extensive breaking changes in some of its dependencies (mostly TileGameLib) so it has been abandoned in favor of version 0.2b which has been rebuilt in a separate project (see https://github.com/FernandoAiresCastello/PTM/tree/master/v0.2b).
+
 ## About
 	
 PTM (Programmable Tile Machine) is a "pseudo-8-bit fantasy computer" that you can program using an imperative, semi-structured, low-level programming language called PTML. The system aims to be similar in look-and-feel to some early 8-bit computer systems such as the MSX, ZX Spectrum and Atari 800. Also inspired by the modern game engines Bitsy and PICO-8.
