@@ -14,6 +14,10 @@ The latest released version is __v0.1b.__
 
 You can find pre-built PTM releases on Itch.io, on this page: https://fernandoairescastello.itch.io/ptm
 
+## Documentation
+
+- [PTML Commands v0.2b](https://docs.google.com/spreadsheets/d/1uPhPh0LLgRmL87Uo9hDXGUhOOFIESIYAcZ_nJOlN2VI/edit#gid=1742699342)
+
 ## Testers needed!
 
 If you'd like to support development of this project, please consider being a tester! At this beta stage, simply by writing demo programs in PTML and tinkering with the machine is enough to uncover subtle bugs that I might have missed, and also ideas for improvements to the language can appear. [Click here to become a tester](https://github.com/FernandoAiresCastello/PTM/discussions/new?category=testers-welcome).
