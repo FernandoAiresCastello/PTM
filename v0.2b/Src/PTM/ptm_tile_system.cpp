@@ -137,6 +137,11 @@ string t_tileseq::to_str()
 }
 t_tileset::t_tileset()
 {
+	reset();
+}
+void t_tileset::reset()
+{
+	tiles.clear();
 	add_blank(256);
 	ptm_init_text_font();
 }
@@ -414,6 +419,13 @@ void t_tilebuf_collection::clear_all_buffers()
 	for (auto& tilebuf : tilebufs) {
 		tilebuf.clear_all_layers();
 	}
+}
+void ptm_reset_tilesystem()
+{
+	tileset.reset();
+	tilebufs.tilebufs.clear();
+	working_tile.clear();
+	tilebuf_csr.set(0, 0, 0);
 }
 void ptm_create_default_tilebuffer(int layers)
 {

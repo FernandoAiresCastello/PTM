@@ -22,6 +22,7 @@ struct t_interpreter {
 
 	t_interpreter();
 	void run(t_program* prg);
+	void stop();
 	void abort(string error);
 	bool argc(t_params& arg, int expected);
 	bool argc(t_params& arg, int min, int max);
@@ -53,7 +54,6 @@ private:
 
 	bool running;
 	bool halted;
-	bool reset_requested = false;
 	int pause_cycles = 0;
 	int cur_line_ix;
 	bool branched;

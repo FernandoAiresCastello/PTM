@@ -4,6 +4,11 @@ t_palette palette;
 
 t_palette::t_palette()
 {
+	reset();
+}
+void t_palette::reset()
+{
+	colors.clear();
 	add_blank(256);
 	set(0, 0x101010);
 	set(1, 0xf0f0f0);

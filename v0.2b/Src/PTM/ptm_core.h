@@ -9,6 +9,8 @@ extern t_interpreter* intp;
 int ptm_run(string program_file);
 void ptm_abort(string msg);
 void ptm_exit();
+void ptm_delete_interpreter();
+void ptm_reset();
 void ptm_halt();
 void ptm_update();
 void ptm_proc_events();

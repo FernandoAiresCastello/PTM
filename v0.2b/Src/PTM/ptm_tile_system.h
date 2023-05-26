@@ -42,6 +42,7 @@ struct t_tileseq {
 struct t_tileset {
 	vector<binary> tiles;
 	t_tileset();
+	void reset();
 	binary blank_tile();
 	void add_blank(int count = 1);
 	void add(binary tile);
@@ -119,6 +120,11 @@ struct t_tilebuf_cursor {
 	int layer = 0;
 	int x = 0;
 	int y = 0;
+	void set(int layer, int x, int y) {
+		this->layer = layer;
+		this->x = x;
+		this->y = y;
+	}
 };
 
 extern t_tileset tileset;
@@ -126,6 +132,7 @@ extern t_tilebuf_collection tilebufs;
 extern t_tileseq working_tile;
 extern t_tilebuf_cursor tilebuf_csr;
 
+void ptm_reset_tilesystem();
 void ptm_create_default_tilebuffer(int layers);
 void ptm_draw_visible_buffers();
 void ptm_draw_buffer(t_tilebuf* buf);

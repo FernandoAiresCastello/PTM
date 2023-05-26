@@ -31,6 +31,10 @@ void t_sprite_list::remove(string id)
 {
 	sprites.erase(id);
 }
+void t_sprite_list::remove_all()
+{
+	sprites.clear();
+}
 bool t_sprite_list::has(string id)
 {
 	return sprites.find(id) != sprites.end();

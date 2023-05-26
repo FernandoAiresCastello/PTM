@@ -40,6 +40,9 @@ void t_interpreter::run(t_program* prg) {
 		if (cur_line_ix >= 0 && cur_line_ix < prg->lines.size()) {
 			cur_line = &prg->lines[cur_line_ix];
 			execute_current_line();
+			if (!running) {
+				return;
+			}
 			if (branched) {
 				branched = false;
 			} else {
@@ -49,6 +52,10 @@ void t_interpreter::run(t_program* prg) {
 			halted = true;
 		}
 	}
+}
+void t_interpreter::stop()
+{
+	running = false;
 }
 void t_interpreter::execute_current_line() {
 	string& c = cur_line->cmd;

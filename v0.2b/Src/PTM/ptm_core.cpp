@@ -3,54 +3,61 @@
 #include "ptm_graphics_base.h"
 #include "ptm_keyboard.h"
 #include "ptm_mml.h"
+#include "ptm_color_palette.h"
+#include "ptm_tile_system.h"
+#include "ptm_sprites.h"
 #include "../PTML/t_program.h"
 #include "../PTML/t_compiler.h"
 #include "../PTML/t_interpreter.h"
 
 string main_program_file;
+t_program* prg = nullptr;
 t_interpreter* intp = nullptr;
 t_compiler* compiler = nullptr;
+bool reset_requested = false;
 
 void ptm_abort_from_compiler();
 void ptm_abort_from_interpreter();
 
 int ptm_run(string program_file)
 {
-	SDL_Init(SDL_INIT_EVERYTHING);
-	ptm_init_commands();
-	ptm_init_keyboard();
-	ptm_init_mml();
+	do {
+		SDL_Init(SDL_INIT_EVERYTHING);
+		ptm_init_commands();
+		ptm_init_keyboard();
+		ptm_init_mml();
 
-	t_program* prg = new t_program();
-	if (!prg->load_plain(program_file)) {
-		delete prg;     prg = nullptr;
-		return 1;
-	}
-	main_program_file = program_file;
+		prg = new t_program();
+		if (!prg->load_plain(program_file)) {
+			delete prg;     prg = nullptr;
+			return 1;
+		}
+		main_program_file = program_file;
 
-	compiler = new t_compiler();
-	compiler->run(prg);
-	if (!compiler->errors.empty()) {
-		ptm_abort_from_compiler();
-	}
-	if (compiler->has_window_def) {
-		auto& wnd = compiler->window_def;
-		ptm_init_window(wnd.width, wnd.height, wnd.size, 0x000000, wnd.default_buf_layer_count);
-	}
-	else {
-		ptm_init_window(360, 200, 3, 0x000000, 1);
-	}
-	delete compiler;    compiler = nullptr;
+		compiler = new t_compiler();
+		compiler->run(prg);
+		if (!compiler->errors.empty()) {
+			ptm_abort_from_compiler();
+		}
+		if (compiler->has_window_def) {
+			auto& wnd = compiler->window_def;
+			ptm_init_window(wnd.width, wnd.height, wnd.size, 0x000000, wnd.default_buf_layer_count);
+		}
+		else {
+			ptm_init_window(360, 200, 3, 0x000000, 1);
+		}
+		delete compiler;    compiler = nullptr;
 
-	intp = new t_interpreter();
-	intp->on_exec_line = ptm_on_exec_line;
-	intp->on_keydown = ptm_on_keydown;
-	intp->on_idle_loop = ptm_idle_frame;
-	intp->on_abort = ptm_abort_from_interpreter;
-	intp->run(prg);
+		intp = new t_interpreter();
+		intp->on_exec_line = ptm_on_exec_line;
+		intp->on_keydown = ptm_on_keydown;
+		intp->on_idle_loop = ptm_idle_frame;
+		intp->on_abort = ptm_abort_from_interpreter;
+		intp->run(prg);
 
-	delete intp;    intp = nullptr;
-	delete prg;     prg = nullptr;
+		ptm_delete_interpreter();
+	}
+	while (reset_requested);
 
 	return 0;
 }
@@ -62,8 +69,27 @@ void ptm_exit()
 {
 	ptm_free_window();
 	ptm_destroy_mml();
+	ptm_delete_interpreter();
 	SDL_Quit();
 	exit(0);
+}
+void ptm_delete_interpreter()
+{
+	delete intp;    intp = nullptr;
+	delete prg;     prg = nullptr;
+}
+void ptm_reset()
+{
+	reset_requested = true;
+
+	intp->stop();
+	palette.reset();
+	ptm_reset_tilesystem();
+	sprites.remove_all();
+
+	ptm_free_window();
+	ptm_destroy_mml();
+	SDL_Quit();
 }
 void ptm_halt()
 {

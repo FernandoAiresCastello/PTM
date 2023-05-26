@@ -1,29 +1,6 @@
 CALL init_common_graphics
 
 #==============================================================================
-#	Blinking text
-#==============================================================================
-ANIM 90
-TRON
-LOCATE 1, 1
-COLOR 1, 0
-PRINT "Hello World!"
-LOCATE 1, 1
-COLOR 0, 0
-PRINT.ADD "Hello World!"
-HALT
-
-#==============================================================================
-#	Text input
-#==============================================================================
-LOCATE 1, 1
-COLOR 3, 4
-INPUT name, 10
-LOCATE 1, 2
-PRINT name
-HALT
-
-#==============================================================================
 #	Various different tests
 #==============================================================================
 BUF.BCOL default, 8
@@ -46,21 +23,6 @@ SPR.NEW "smiley", 1, 6
 SPR.SHOW "smiley"
 
 loop:
-	INKEY x
-	IF.EQ x, 32
-		#BEEP 500, 30
-		#SPR.MOVE "smiley", 8, 0
-		MOV 0, 0, 1, 0
-	ENDIF
-	IF.EQ x, 13
-		#BEEP 800, 30
-		#SPR.MOVE "smiley", 8, 8
-		MOV 0, 0, 1, 1
-	ENDIF
-	UPDATE
-	GOTO loop
-
-loop2:
 	IF.KEY "RIGHT"
 		#BUF.SCRL buf_1, 1, 0
 		SPR.MOVE "smiley", 1, 0
@@ -91,6 +53,22 @@ loop2:
 		BUF.HIDE buf_1
 		BUF.HIDE buf_2
 	ENDIF
+	IF.KEY "X"
+		RESET
+	ENDIF
+	UPDATE
+	GOTO loop
+	
+loop2:
+	INKEY x
+	IF.EQ x, 32
+		#BEEP 500, 30
+		SPR.MOVE "smiley", 8, 0
+	ENDIF
+	IF.EQ x, 13
+		#BEEP 800, 30
+		SPR.MOVE "smiley", 8, 8
+	ENDIF
 	UPDATE
 	GOTO loop2
 
@@ -119,6 +97,29 @@ draw_stuff:
 	BCOL 2
 	PRINT "Hello World!"
 	RET
+
+#==============================================================================
+#	Blinking text
+#==============================================================================
+ANIM 90
+TRON
+LOCATE 1, 1
+COLOR 1, 0
+PRINT "Hello World!"
+LOCATE 1, 1
+COLOR 0, 0
+PRINT.ADD "Hello World!"
+HALT
+
+#==============================================================================
+#	Text input
+#==============================================================================
+LOCATE 1, 1
+COLOR 3, 4
+INPUT name, 10
+LOCATE 1, 2
+PRINT name
+HALT
 	
 #==============================================================================
 #	Common graphics (used in all tests)

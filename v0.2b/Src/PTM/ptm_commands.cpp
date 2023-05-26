@@ -46,6 +46,10 @@ void ptm_init_commands()
 		ARGC(0);
 		ptm_exit();
 	};
+	CMD("RESET") {
+		ARGC(0);
+		ptm_reset();
+	};
 	CMD("HALT") {
 		ARGC(0);
 		ptm_halt();
