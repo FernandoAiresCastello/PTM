@@ -11,3 +11,7 @@ PTML is an interpreted, imperative, semi-structured, loosely typed, low-level pr
 ## Releases
 
 You can find pre-built PTM releases on Itch.io, on this page: https://fernandoairescastello.itch.io/ptm
+
+## Testers needed!
+
+If you'd like to support development of this project, please consider being a tester! At this beta stage, simply by writing demo programs in PTML and tinkering with the machine is enough to uncover subtle bugs that I might have missed, and also ideas for improvements to the language can appear.
