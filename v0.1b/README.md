@@ -1,5 +1,7 @@
 # PTM - Programmable Tile Machine (version 0.1b)
 
+![PTM logo](https://github.com/FernandoAiresCastello/PTM/blob/master/v0.1b/Images/ptm.fw.png)
+
 ## Please note
 
 This was the very first beta version released on Itch.io as part of the [Tool Jam 3](https://itch.io/jam/the-tool-jam-3). It is no longer possible to compile this version of the source code due to extensive breaking changes in some of its dependencies (mostly TileGameLib) so it has been abandoned in favor of version 0.2b which has been rebuilt in a separate project (see https://github.com/FernandoAiresCastello/PTM/tree/master/v0.2b).
