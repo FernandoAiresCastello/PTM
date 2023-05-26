@@ -3,7 +3,7 @@
 - Initial beta release
 
 ## v0.2b 
-*This version is currently under development, this list will be updated as changes are introduced.*
+*This version is currently under development, this list will be updated as changes are introduced. Also, programs made for v0.1b will not work properly in this version due to breaking changes in the language*
 
 - Some commands now have a different syntax or purpose
 	- CHR now defines a tileset entry with a single 64-character binary string
