@@ -10,13 +10,13 @@ __PTML__ is an interpreted, imperative, semi-structured, loosely typed, low-leve
 
 ## Releases
 
-The latest released version is __v0.1b.__
-
+The latest released version is __v0.1b.__  
 You can find pre-built PTM releases on Itch.io, on this page: https://fernandoairescastello.itch.io/ptm
 
 ## Documentation
 
-- [PTML Commands v0.2b](https://docs.google.com/spreadsheets/d/1uPhPh0LLgRmL87Uo9hDXGUhOOFIESIYAcZ_nJOlN2VI/edit#gid=1742699342)
+- [PTML Commands v0.1b](https://docs.google.com/spreadsheets/d/1YwwevUD65kUNky194NmnlzqBe67nMvq3Hs2m6oJnqa8/edit?usp=sharing)
+- [PTML Commands v0.2b (work in progress)](https://docs.google.com/spreadsheets/d/1uPhPh0LLgRmL87Uo9hDXGUhOOFIESIYAcZ_nJOlN2VI/edit?usp=sharing)
 
 ## Testers needed!
 
