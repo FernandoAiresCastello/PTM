@@ -360,6 +360,11 @@ void ptm_init_commands()
 		binary bin = ARG_VAR_STR(1);
 		tileset.set(ix, bin);
 	};
+	CMD("CHR.LEN") {
+		ARGC(1);
+		string var = ARG_LIT_ID(1);
+		ptm_set_var(var, tileset.tiles.size());
+	};
 	CMD("CHR.GET") {
 		ARGC(2);
 		int ix = ARG_VAR_NUM(0);
@@ -371,6 +376,11 @@ void ptm_init_commands()
 		int ix = ARG_VAR_NUM(0);
 		rgb color = ARG_VAR_NUM(1);
 		palette.set(ix, color);
+	};
+	CMD("PAL.LEN") {
+		ARGC(1);
+		string var = ARG_LIT_ID(1);
+		ptm_set_var(var, palette.colors.size());
 	};
 	CMD("PAL.GET") {
 		ARGC(2);
