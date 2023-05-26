@@ -1017,4 +1017,23 @@ void ptm_init_commands()
 		string value = ptm_text_input(max_length);
 		ptm_set_var(var, value);
 	};
+	CMD("ENCRYPT") {
+		ARGC(2);
+		string var = ARG_LIT_ID(0);
+		string str = ARG_VAR_STR(1);
+		string result = Util::XorEncrypt(str, xor_encryption_key);
+		ptm_set_var(var, result);
+	};
+	CMD("DECRYPT") {
+		ARGC(2);
+		string var = ARG_LIT_ID(0);
+		string str = ARG_VAR_STR(1);
+		string result = Util::XorDecrypt(str, xor_encryption_key);
+		ptm_set_var(var, result);
+	};
+	CMD("EPRG") {
+		ARGC(1);
+		string path = ARG_VAR_STR(0);
+		ptm_save_encrypted_program(prg, path);
+	};
 }

@@ -4,6 +4,7 @@
 #include "t_source_line.h"
 
 struct t_program {
+	string file;
 	vector<t_source_line> src_lines;
 	vector<t_program_line> lines;
 	unordered_map<string, int> labels;

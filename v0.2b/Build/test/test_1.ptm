@@ -1,6 +1,21 @@
 CALL init_common_graphics
 
 #==============================================================================
+#	Encryption
+#==============================================================================
+VAR original, "Hello World!"
+LOCATE 1, 1
+PRINT original
+ENCRYPT encrypted, original
+LOCATE 1, 2
+PRINT encrypted
+DECRYPT decrypted, encrypted
+LOCATE 1, 3
+PRINT decrypted
+
+HALT
+
+#==============================================================================
 #	Formatted string printing
 #==============================================================================
 VAR x, 123

@@ -38,5 +38,6 @@ bool t_program::load_plain(string path) {
 	if (String::Trim(src_lines.back().text).empty()) {
 		src_lines.pop_back();
 	}
+	file = path;
 	return true;
 }

@@ -16,6 +16,7 @@ t_program* prg = nullptr;
 t_interpreter* intp = nullptr;
 t_compiler* compiler = nullptr;
 bool reset_requested = false;
+const char xor_encryption_key = '#';
 
 void ptm_abort_from_compiler();
 void ptm_abort_from_interpreter();
@@ -61,6 +62,15 @@ int ptm_run(string program_file)
 	while (reset_requested);
 
 	return 0;
+}
+void ptm_save_encrypted_program(t_program* prg, string dest_file)
+{
+	vector<string> encrypted_lines;
+	for (auto& line : prg->src_lines) {
+		encrypted_lines.push_back(Util::XorEncrypt(line.text, xor_encryption_key));
+	}
+	string encrypted = String::Join(encrypted_lines);
+	File::WriteText(dest_file, encrypted);
 }
 void ptm_abort(string msg)
 {

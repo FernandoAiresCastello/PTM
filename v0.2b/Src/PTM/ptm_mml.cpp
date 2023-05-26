@@ -1,7 +1,7 @@
 #include "ptm_mml.h"
 
 enum class TSoundType { Square, Sine, Noise };
-std::map<std::string, float> TbFreq;
+std::unordered_map<std::string, float> TbFreq;
 static const int MinVolume = 0;
 static const int MaxVolume = 32000;
 

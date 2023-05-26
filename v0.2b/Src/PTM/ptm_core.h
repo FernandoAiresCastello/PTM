@@ -4,9 +4,12 @@
 #include "../PTML/t_program_line.h"
 #include "../PTML/t_param.h"
 
+extern t_program* prg;
 extern t_interpreter* intp;
+extern const char xor_encryption_key;
 
 int ptm_run(string program_file);
+void ptm_save_encrypted_program(t_program* prg, string dest_file);
 void ptm_abort(string msg);
 void ptm_exit();
 void ptm_delete_interpreter();
