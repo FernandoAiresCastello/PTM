@@ -10,6 +10,8 @@ PTML is an interpreted, imperative, semi-structured, loosely typed, low-level pr
 
 ## Releases
 
+The latest released version is __v0.1b.__
+
 You can find pre-built PTM releases on Itch.io, on this page: https://fernandoairescastello.itch.io/ptm
 
 ## Testers needed!
