@@ -667,7 +667,12 @@ void ptm_init_commands()
 	CMD("PRINT") {
 		ARGC(1);
 		string str = ARG_VAR_STR(0);
-		ptm_print_tile_string(str);
+		ptm_print_tile_string(str, false);
+	};
+	CMD("PRINT.ADD") {
+		ARGC(1);
+		string str = ARG_VAR_STR(0);
+		ptm_print_tile_string(str, true);
 	};
 	CMD("PUTC") {
 		ARGC(1);

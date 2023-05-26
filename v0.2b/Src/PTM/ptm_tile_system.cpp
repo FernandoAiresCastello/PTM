@@ -483,7 +483,7 @@ t_tilebuf_layer& ptm_get_selected_tilebuf_layer()
 {
 	return tilebufs.selected()->layer(tilebuf_csr.layer);
 }
-void ptm_print_tile_string(string str)
+void ptm_print_tile_string(string str, bool add_frames)
 {
 	t_tilebuf_layer& layer = ptm_get_selected_tilebuf_layer();
 	int x = tilebuf_csr.x;
@@ -491,7 +491,12 @@ void ptm_print_tile_string(string str)
 	tilebuf_csr.x += str.length();
 
 	for (auto& ch : str) {
-		layer.put(x, y, ch, scr.text_style.fgc, scr.text_style.bgc);
+		if (add_frames) {
+			layer.add(x, y, ch, scr.text_style.fgc, scr.text_style.bgc);
+		}
+		else {
+			layer.put(x, y, ch, scr.text_style.fgc, scr.text_style.bgc);
+		}
 		x++;
 	}
 }
@@ -531,9 +536,9 @@ string ptm_text_input(int maxlen)
 	while (!finished) {
 
 		tilebuf_csr.x = initial_x;
-		ptm_print_tile_string(blanks);
+		ptm_print_tile_string(blanks, false);
 		tilebuf_csr.x = initial_x;
-		ptm_print_tile_string(text + "|");
+		ptm_print_tile_string(text + "_", false);
 
 		ptm_refresh_window();
 
@@ -583,4 +588,8 @@ string ptm_text_input(int maxlen)
 	last_key = 0; // Clear last key, so as not to interfere with the kb_inkey function
 	tilebuf_csr.x = initial_x;
 	return text;
+}
+bool ptm_text_input_ok()
+{
+	return !text_input_cancelled;
 }
