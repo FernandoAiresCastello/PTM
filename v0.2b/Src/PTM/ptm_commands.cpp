@@ -688,6 +688,11 @@ void ptm_init_commands()
 		string str = ARG_VAR_STR(0);
 		ptm_print_tile_string(str, true);
 	};
+	CMD("PRINTF") {
+		ARGC(1);
+		string fmt = ARG_VAR_STR(0);
+		ptm_print_formatted_tile_string(fmt);
+	};
 	CMD("PUTC") {
 		ARGC(1);
 		int ch = ARG_VAR_NUM(0);

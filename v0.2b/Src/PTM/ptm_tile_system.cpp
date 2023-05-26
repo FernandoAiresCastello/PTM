@@ -11,6 +11,7 @@ t_tilebuf_collection tilebufs;
 t_tileseq working_tile;
 t_tilebuf_cursor tilebuf_csr;
 unordered_map<string, t_tileseq> tilestore;
+bool text_input_cancelled = false;
 
 struct {
 	int frame = 0;
@@ -497,6 +498,10 @@ t_tilebuf_layer& ptm_get_selected_tilebuf_layer()
 }
 void ptm_print_tile_string(string str, bool add_frames)
 {
+	ptm_print_tile_string(str, scr.text_style.fgc, scr.text_style.bgc, add_frames);
+}
+void ptm_print_tile_string(string str, int fgc, int bgc, bool add_frames)
+{
 	t_tilebuf_layer& layer = ptm_get_selected_tilebuf_layer();
 	int x = tilebuf_csr.x;
 	int y = tilebuf_csr.y;
@@ -504,10 +509,10 @@ void ptm_print_tile_string(string str, bool add_frames)
 
 	for (auto& ch : str) {
 		if (add_frames) {
-			layer.add(x, y, ch, scr.text_style.fgc, scr.text_style.bgc);
+			layer.add(x, y, ch, fgc, bgc);
 		}
 		else {
-			layer.put(x, y, ch, scr.text_style.fgc, scr.text_style.bgc);
+			layer.put(x, y, ch, fgc, bgc);
 		}
 		x++;
 	}
@@ -531,9 +536,6 @@ bool ptm_has_stored_tile(string id)
 {
 	return tilestore.find(id) != tilestore.end();
 }
-
-bool text_input_cancelled = false;
-
 string ptm_text_input(int maxlen)
 {
 	text_input_cancelled = false;
@@ -604,4 +606,120 @@ string ptm_text_input(int maxlen)
 bool ptm_text_input_ok()
 {
 	return !text_input_cancelled;
+}
+void ptm_print_formatted_tile_string(string fmt)
+{
+	t_tilebuf_layer& layer = ptm_get_selected_tilebuf_layer();
+	int initial_x = tilebuf_csr.x;
+	int initial_y = tilebuf_csr.y;
+	int fgc = scr.text_style.fgc;
+	int bgc = scr.text_style.bgc;
+
+	bool escape = false;
+	string escape_seq = "";
+	for (int i = 0; i < fmt.length(); i++) {
+		int ch = fmt[i];
+		if (ch == '\\') {
+			i++;
+			if (i < fmt.length()) {
+				if (fmt[i] == 'n') {
+					tilebuf_csr.set(initial_x, tilebuf_csr.y + 1);
+				}
+			}
+		}
+		else if (ch == '{') {
+			escape = true;
+			continue;
+		}
+		else if (ch == '}') {
+			escape = false;
+			const string upper_escape_seq = String::ToUpper(escape_seq);
+			if (String::StartsWith(upper_escape_seq, 'C')) {
+				ch = String::ToInt(String::Skip(String::Replace(upper_escape_seq, "&H", "0x"), 1));
+				auto tile = t_tileseq(ch, fgc, bgc);
+				layer.put(tilebuf_csr.x, tilebuf_csr.y, tile);
+				tilebuf_csr.x++;
+				escape_seq = "";
+				continue;
+			}
+			else if (String::StartsWith(upper_escape_seq, 'F')) {
+				fgc = String::ToInt(String::Skip(String::Replace(upper_escape_seq, "&H", "0x"), 1));
+				escape_seq = "";
+				continue;
+			}
+			else if (String::StartsWith(upper_escape_seq, "/F")) {
+				fgc = scr.text_style.fgc;
+				escape_seq = "";
+				continue;
+			}
+			else if (String::StartsWith(upper_escape_seq, 'B')) {
+				bgc = String::ToInt(String::Skip(String::Replace(upper_escape_seq, "&H", "0x"), 1));
+				escape_seq = "";
+				continue;
+			}
+			else if (String::StartsWith(upper_escape_seq, "/B")) {
+				bgc = scr.text_style.bgc;
+				escape_seq = "";
+				continue;
+			}
+			else if (String::StartsWith(escape_seq, '%')) {
+				string var = String::Skip(escape_seq, 1);
+				if (String::Contains(var, '[') || String::Contains(var, ']')) {
+					auto begin = String::IndexOf(var, '[');
+					auto end = String::IndexOf(var, ']');
+					if (begin != string::npos && end != string::npos && begin < end) {
+						string arr_id = String::Substring(var, 0, begin);
+						if (intp->arrays.find(arr_id) != intp->arrays.end()) {
+							string ixs = String::Substring(var, begin + 1, end);
+							int ix = -1;
+							if (String::IsNumber(ixs)) {
+								ix = String::ToInt(ixs);
+							}
+							else {
+								if (intp->vars.find(ixs) != intp->vars.end()) {
+									ix = String::ToInt(intp->vars[ixs].value);
+								}
+								else {
+									intp->abort("Variable not found: " + ixs);
+								}
+							}
+							if (ix >= 0 && ix < intp->arrays[arr_id].size()) {
+								string str = intp->arrays[arr_id].at(ix);
+								ptm_print_tile_string(str, fgc, bgc, false);
+							}
+							else {
+								intp->abort(String::Format("Array index out of bounds: %s[%i]", arr_id.c_str(), ix));
+							}
+						}
+						else {
+							intp->abort("Array not found: " + arr_id);
+						}
+					}
+				}
+				else {
+					if (intp->vars.find(var) != intp->vars.end()) {
+						ptm_print_tile_string(intp->vars[var].value, fgc, bgc, false);
+					}
+					else {
+						intp->abort("Variable not found: " + var);
+					}
+				}
+				escape_seq = "";
+				continue;
+			}
+			else {
+				intp->abort("Invalid escape sequence: " + escape_seq);
+			}
+		}
+		else if (escape) {
+			escape_seq += ch;
+			continue;
+		}
+		else {
+			auto tile = t_tileseq(ch, fgc, bgc);
+			layer.put(tilebuf_csr.x, tilebuf_csr.y, tile);
+			tilebuf_csr.x++;
+			escape_seq = "";
+		}
+	}
 }

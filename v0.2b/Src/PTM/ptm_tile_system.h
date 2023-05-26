@@ -125,6 +125,10 @@ struct t_tilebuf_cursor {
 		this->x = x;
 		this->y = y;
 	}
+	void set(int x, int y) {
+		this->x = x;
+		this->y = y;
+	}
 };
 
 extern t_tileset tileset;
@@ -140,6 +144,8 @@ void ptm_update_tile_animation();
 void ptm_set_tile_animation_speed(int speed);
 t_tilebuf_layer& ptm_get_selected_tilebuf_layer();
 void ptm_print_tile_string(string str, bool add_frames);
+void ptm_print_tile_string(string str, int fgc, int bgc, bool add_frames);
+void ptm_print_formatted_tile_string(string fmt);
 void ptm_print_tile_char(int ch);
 void ptm_store_tile(string id, t_tileseq& tile);
 t_tileseq ptm_load_tile(string id);
