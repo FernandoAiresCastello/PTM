@@ -6,6 +6,7 @@
 #include "ptm_color_palette.h"
 #include "ptm_tile_system.h"
 #include "ptm_sprites.h"
+#include "ptm_sound_system.h"
 #include "../PTML/t_program.h"
 #include "../PTML/t_compiler.h"
 #include "../PTML/t_interpreter.h"
@@ -69,6 +70,7 @@ void ptm_exit()
 {
 	ptm_free_window();
 	ptm_destroy_mml();
+	ptm_stop_all_sounds();
 	ptm_delete_interpreter();
 	SDL_Quit();
 	exit(0);
@@ -86,9 +88,9 @@ void ptm_reset()
 	palette.reset();
 	ptm_reset_tilesystem();
 	sprites.remove_all();
-
 	ptm_free_window();
 	ptm_destroy_mml();
+	ptm_stop_all_sounds();
 	SDL_Quit();
 }
 void ptm_halt()
