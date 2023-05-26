@@ -1,5 +1,5 @@
 CALL init_common_graphics
-GOTO test_transparency
+GOTO test_misc
 
 #==============================================================================
 #	Transparency

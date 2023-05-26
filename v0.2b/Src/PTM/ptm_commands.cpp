@@ -775,6 +775,15 @@ void ptm_init_commands()
 		spr.x = x;
 		spr.y = y;
 	};
+	CMD("SPR.TPOS") {
+		ARGC(3);
+		string id = ARG_VAR_STR(0);
+		int x = ARG_VAR_NUM(1);
+		int y = ARG_VAR_NUM(2);
+		t_sprite& spr = sprites.get_sprite(id);
+		spr.x = x * 8;
+		spr.y = y * 8;
+	};
 	CMD("SPR.MOVE") {
 		ARGC(3);
 		string id = ARG_VAR_STR(0);
@@ -782,6 +791,14 @@ void ptm_init_commands()
 		int dy = ARG_VAR_NUM(2);
 		t_sprite& spr = sprites.get_sprite(id);
 		spr.move(dx, dy);
+	};
+	CMD("SPR.TMOVE") {
+		ARGC(3);
+		string id = ARG_VAR_STR(0);
+		int dx = ARG_VAR_NUM(1);
+		int dy = ARG_VAR_NUM(2);
+		t_sprite& spr = sprites.get_sprite(id);
+		spr.move(dx * 8, dy * 8);
 	};
 	CMD("SPR.BUF") {
 		ARGC(2);
