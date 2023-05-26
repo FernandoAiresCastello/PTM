@@ -133,16 +133,17 @@ struct t_tilebuf_cursor {
 		this->y = y;
 	}
 };
-struct {
+struct t_tile_animation {
 	int frame = 0;
 	int ctr_next_frame = 0;
 	int ctr_next_frame_max = 20;
 	int enabled = true;
-} tile_animation;
+};
 
 extern t_tileset tileset;
 extern t_tilebuf_collection tilebufs;
 extern t_tileseq working_tile;
+extern t_tile_animation tile_animation;
 extern t_tilebuf_cursor tilebuf_csr;
 
 void ptm_reset_tilesystem();

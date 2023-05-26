@@ -48,7 +48,9 @@ CALL draw_stuff
 BUF.SEL buf_2
 CALL draw_stuff
 
-TILE.NEW 1, 6
+TILE.NEW 1, 3
+TILE.ADD 1, 4
+TILE.ADD 1, 5
 SPR.NEW "smiley"
 SPR.POS "smiley", 120, 30
 SPR.SHOW "smiley"
@@ -58,7 +60,7 @@ SPR.NEW "enemy"
 SPR.POS "enemy", 150, 50
 SPR.SHOW "enemy"
 
-VAR move_speed, 2
+VAR move_speed, 1
 NEG move_speed_neg, move_speed
 
 loop:

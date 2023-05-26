@@ -9,6 +9,7 @@
 t_tileset tileset;
 t_tilebuf_collection tilebufs;
 t_tileseq working_tile;
+t_tile_animation tile_animation;
 t_tilebuf_cursor tilebuf_csr;
 unordered_map<string, t_tileseq> tilestore;
 bool text_input_cancelled = false;
