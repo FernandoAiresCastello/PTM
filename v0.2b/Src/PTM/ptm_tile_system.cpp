@@ -13,30 +13,33 @@ t_tilebuf_cursor tilebuf_csr;
 unordered_map<string, t_tileseq> tilestore;
 bool text_input_cancelled = false;
 
-struct {
-	int frame = 0;
-	int ctr_next_frame = 0;
-	int ctr_next_frame_max = 20;
-	int enabled = true;
-} animation;
-
 t_tile::t_tile()
 {
 	this->ch = 0;
 	this->fgc = 0;
 	this->bgc = 0;
+	this->transparent = false;
 }
 t_tile::t_tile(int ch, int fgc, int bgc)
 {
 	this->ch = ch;
 	this->fgc = fgc;
 	this->bgc = bgc;
+	this->transparent = false;
+}
+t_tile::t_tile(int ch, int fgc)
+{
+	this->ch = ch;
+	this->fgc = fgc;
+	this->bgc = bgc;
+	this->transparent = true;
 }
 void t_tile::set_equal(t_tile& other)
 {
 	ch = other.ch;
 	fgc = other.fgc;
 	bgc = other.bgc;
+	transparent = other.transparent;
 }
 void t_tiledata::set(string name, string value)
 {
@@ -73,6 +76,10 @@ t_tileseq::t_tileseq(int ch, int fgc, int bgc)
 {
 	frames.push_back(t_tile(ch, fgc, bgc));
 }
+t_tileseq::t_tileseq(int ch, int fgc)
+{
+	frames.push_back(t_tile(ch, fgc));
+}
 void t_tileseq::clear()
 {
 	frames.clear();
@@ -91,6 +98,10 @@ void t_tileseq::add(t_tile& frame)
 void t_tileseq::add(int ch, int fgc, int bgc)
 {
 	frames.push_back(t_tile(ch, fgc, bgc));
+}
+void t_tileseq::add(int ch, int fgc)
+{
+	frames.push_back(t_tile(ch, fgc));
 }
 bool t_tileseq::empty()
 {
@@ -123,8 +134,13 @@ bool t_tileseq::parse(string str)
 		}
 		int ch = String::ToInt(data[0]);
 		int fgc = String::ToInt(data[1]);
-		int bgc = String::ToInt(data[2]);
-		add(ch, fgc, bgc);
+		if (String::ToUpper(data[2]) == "T") {
+			add(ch, fgc);
+		}
+		else {
+			int bgc = String::ToInt(data[2]);
+			add(ch, fgc, bgc);
+		}
 	}
 	return true;
 }
@@ -189,7 +205,6 @@ void t_tilebuf_layer::put(int x, int y, t_tileseq& tileseq)
 {
 	if (x >= 0 && y >= 0 && x < width && y < width) {
 		const int ix = y * width + x;
-		tileseq.transparent = scr.transparency;
 		tiles[ix] = tileseq;
 	}
 }
@@ -459,38 +474,38 @@ void ptm_draw_buffer(t_tilebuf* buf)
 				if (tile.empty()) {
 					continue;
 				}
-				t_tile& frame = tile.frames[animation.frame % tile.length()];
+				t_tile& frame = tile.frames[tile_animation.frame % tile.length()];
 				binary& bin = tileset.get(frame.ch);
 				rgb fgc = palette.get(frame.fgc);
 				rgb bgc = palette.get(frame.bgc);
-				ptm_draw_tile_bin(bin, x * 8, y * 8, fgc, bgc, tile.transparent);
+				ptm_draw_tile_bin(bin, x * 8, y * 8, fgc, bgc, frame.transparent);
 			}
 		}
 	}
 }
 void ptm_update_tile_animation()
 {
-	if (!animation.enabled)
+	if (!tile_animation.enabled)
 		return;
 
-	animation.ctr_next_frame++;
-	if (animation.ctr_next_frame >= animation.ctr_next_frame_max) {
-		animation.ctr_next_frame = 0;
-		animation.frame++;
+	tile_animation.ctr_next_frame++;
+	if (tile_animation.ctr_next_frame >= tile_animation.ctr_next_frame_max) {
+		tile_animation.ctr_next_frame = 0;
+		tile_animation.frame++;
 	}
 }
 void ptm_set_tile_animation_speed(int speed)
 {
 	if (speed <= 0) {
-		animation.enabled = false;
+		tile_animation.enabled = false;
 		return;
 	}
 	if (speed > 100) {
 		speed = 100;
 	}
-	animation.enabled = true;
-	animation.ctr_next_frame = 0;
-	animation.ctr_next_frame_max = 100 - speed;
+	tile_animation.enabled = true;
+	tile_animation.ctr_next_frame = 0;
+	tile_animation.ctr_next_frame_max = 100 - speed;
 }
 t_tilebuf_layer& ptm_get_selected_tilebuf_layer()
 {

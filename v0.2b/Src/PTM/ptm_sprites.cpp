@@ -52,10 +52,10 @@ void ptm_draw_visible_sprites()
 		else {
 			ptm_unclip();
 		}
-		t_tile& frame = spr.tile.frames[0];
+		t_tile& frame = spr.tile.frames[tile_animation.frame % spr.tile.length()];
 		binary& bin = tileset.get(frame.ch);
 		rgb fgc = palette.get(frame.fgc);
 		rgb bgc = palette.get(frame.bgc);
-		ptm_draw_tile_bin(bin, spr.x, spr.y, fgc, bgc, spr.tile.transparent);
+		ptm_draw_tile_bin(bin, spr.x, spr.y, fgc, bgc, frame.transparent);
 	}
 }

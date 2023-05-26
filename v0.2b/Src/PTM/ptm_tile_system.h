@@ -6,8 +6,10 @@ struct t_tile {
 	int ch = 0;
 	int fgc = 0;
 	int bgc = 0;
+	bool transparent = false;
 	t_tile();
 	t_tile(int ch, int fgc, int bgc);
+	t_tile(int ch, int fgc);
 	void set_equal(t_tile& other);
 };
 struct t_tiledata {
@@ -23,14 +25,15 @@ private:
 };
 struct t_tileseq {
 	vector<t_tile> frames;
-	bool transparent = false;
 	t_tiledata data;
 	t_tileseq();
 	t_tileseq(int ch, int fgc, int bgc);
+	t_tileseq(int ch, int fgc);
 	void clear();
 	void set_equal(t_tileseq& other);
 	void add(t_tile& frame);
 	void add(int ch, int fgc, int bgc);
+	void add(int ch, int fgc);
 	bool empty();
 	int length();
 	void set_ch(int frame, int ch);
@@ -130,6 +133,12 @@ struct t_tilebuf_cursor {
 		this->y = y;
 	}
 };
+struct {
+	int frame = 0;
+	int ctr_next_frame = 0;
+	int ctr_next_frame_max = 20;
+	int enabled = true;
+} tile_animation;
 
 extern t_tileset tileset;
 extern t_tilebuf_collection tilebufs;

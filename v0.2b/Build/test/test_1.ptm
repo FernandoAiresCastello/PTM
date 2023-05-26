@@ -1,22 +1,27 @@
 CALL init_common_graphics
+GOTO test_transparency
 
 #==============================================================================
-#	Encryption
+#	Transparency
+	test_transparency:
 #==============================================================================
-VAR original, "Hello World!"
-LOCATE 1, 1
-PRINT original
-ENCRYPT encrypted, original
-LOCATE 1, 2
-PRINT encrypted
-DECRYPT decrypted, encrypted
-LOCATE 1, 3
-PRINT decrypted
+BUF.BCOL default, 8
+
+TILE.NEW 'a', 2, 3
+TILE.ADD 'b', 3, 2
+LOCATE 10, 10
+PUT
+
+TILE.NEW 'a', 4
+TILE.ADD 'b', 5
+LOCATE 12, 10
+PUT
 
 HALT
 
 #==============================================================================
 #	Formatted string printing
+	test_printf:
 #==============================================================================
 VAR x, 123
 LOCATE 1, 1
@@ -25,6 +30,7 @@ HALT
 
 #==============================================================================
 #	Various different tests
+	test_misc:
 #==============================================================================
 BUF.BCOL default, 8
 BUF.NEW buf_1, 1, 20, 20, 1
@@ -123,6 +129,7 @@ draw_stuff:
 
 #==============================================================================
 #	Blinking text
+	test_print_add:
 #==============================================================================
 ANIM 90
 TRON
@@ -136,6 +143,7 @@ HALT
 
 #==============================================================================
 #	Text input
+	test_text_input:
 #==============================================================================
 LOCATE 1, 1
 COLOR 3, 4
@@ -146,21 +154,20 @@ HALT
 	
 #==============================================================================
 #	Common graphics (used in all tests)
+	init_common_graphics:
 #==============================================================================
-init_common_graphics:
+WINDOW 360, 200, 4, 1
 
-	WINDOW 360, 200, 4, 1
+CHR 1, "1111111110000001101001011000000110100101100110011000000111111111"
 
-	CHR 1, "1111111110000001101001011000000110100101100110011000000111111111"
+PAL 0, &h101010
+PAL 1, &hf0f0f0
+PAL 2, &hff0000
+PAL 3, &h00ff00
+PAL 4, &h0000ff
+PAL 5, &h00ffff
+PAL 6, &hff00ff
+PAL 7, &hffff00
+PAL 8, &h404040
 
-	PAL 0, &h101010
-	PAL 1, &hf0f0f0
-	PAL 2, &hff0000
-	PAL 3, &h00ff00
-	PAL 4, &h0000ff
-	PAL 5, &h00ffff
-	PAL 6, &hff00ff
-	PAL 7, &hffff00
-	PAL 8, &h404040
-	
-	RET
+RET
