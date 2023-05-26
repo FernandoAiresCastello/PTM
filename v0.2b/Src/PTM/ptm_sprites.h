@@ -12,6 +12,7 @@ struct t_sprite {
 	int z = 0;
 	void set_pos(int x, int y);
 	void move(int dx, int dy);
+	bool collides_with(t_sprite& other);
 };
 struct t_sprite_list {
 	t_sprite& new_sprite(string id);

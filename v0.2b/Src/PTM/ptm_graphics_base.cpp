@@ -13,8 +13,8 @@ void ptm_init_window(int buf_w, int buf_h, int size, rgb bgcol, int default_buf_
 	scr.buf_len = buf_w * buf_h;
 	scr.wnd_size = size;
 	scr.bgcol = bgcol;
-	scr.cols = buf_w / 8;
-	scr.rows = buf_h / 8;
+	scr.cols = buf_w / PTM_TILE_SIZE;
+	scr.rows = buf_h / PTM_TILE_SIZE;
 
 	SDL_SetHint(SDL_HINT_RENDER_DRIVER, "direct3d");
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
@@ -162,7 +162,7 @@ void ptm_draw_tile_bin(binary str, int x, int y, rgb fgc, rgb bgc, bool transpar
 			ptm_pset(x, y, ch == '1' ? fgc : bgc);
 		}
 		x++;
-		if (x >= px + 8) {
+		if (x >= px + PTM_TILE_SIZE) {
 			x = px;
 			y++;
 		}
@@ -177,7 +177,7 @@ void ptm_draw_tile_rgb(rgb colors[64], int x, int y, rgb transparency_key)
 			ptm_pset(x, y, color);
 		}
 		x++;
-		if (x >= px + 8) {
+		if (x >= px + PTM_TILE_SIZE) {
 			x = px;
 			y++;
 		}

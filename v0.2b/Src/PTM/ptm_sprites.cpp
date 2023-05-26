@@ -13,6 +13,11 @@ void t_sprite::move(int dx, int dy)
 	x += dx;
 	y += dy;
 }
+bool t_sprite::collides_with(t_sprite& other)
+{
+	return	(x > other.x - PTM_TILE_SIZE) && (x < other.x + PTM_TILE_SIZE) &&
+			(y > other.y - PTM_TILE_SIZE) && (y < other.y + PTM_TILE_SIZE);
+}
 t_sprite& t_sprite_list::new_sprite(string id)
 {
 	t_sprite sprite;

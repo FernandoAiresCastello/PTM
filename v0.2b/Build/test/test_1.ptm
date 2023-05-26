@@ -48,26 +48,40 @@ CALL draw_stuff
 BUF.SEL buf_2
 CALL draw_stuff
 
-SPR.NEW "smiley", 1, 6
+TILE.NEW 1, 6
+SPR.NEW "smiley"
+SPR.POS "smiley", 120, 30
 SPR.SHOW "smiley"
 
+TILE.NEW 1, 2
+SPR.NEW "enemy"
+SPR.POS "enemy", 150, 50
+SPR.SHOW "enemy"
+
+VAR move_speed, 2
+NEG move_speed_neg, move_speed
+
 loop:
+	SPR.GETX "smiley", prev_x
+	SPR.GETY "smiley", prev_y
+
 	IF.KEY "RIGHT"
 		#BUF.SCRL buf_1, 1, 0
-		SPR.MOVE "smiley", 1, 0
+		SPR.MOVE "smiley", move_speed, 0
 	ENDIF
 	IF.KEY "LEFT"
 		#BUF.SCRL buf_1, -1, 0
-		SPR.MOVE "smiley", -1, 0
+		SPR.MOVE "smiley", move_speed_neg, 0
 	ENDIF
 	IF.KEY "UP"
 		#BUF.SCRL buf_1, 0, -1
-		SPR.MOVE "smiley", 0, -1
+		SPR.MOVE "smiley", 0, move_speed_neg
 	ENDIF
 	IF.KEY "DOWN"
 		#BUF.SCRL buf_1, 0, 1
-		SPR.MOVE "smiley", 0, 1
+		SPR.MOVE "smiley", 0, move_speed
 	ENDIF
+	
 	IF.KEY "M"
 		SND.STOP
 	ENDIF
@@ -85,6 +99,12 @@ loop:
 	IF.KEY "X"
 		RESET
 	ENDIF
+	
+	SPR.HIT collision, "smiley", "enemy"
+	IF.EQ collision, 1
+		SPR.POS "smiley", prev_x, prev_y
+	ENDIF
+	
 	UPDATE
 	GOTO loop
 	

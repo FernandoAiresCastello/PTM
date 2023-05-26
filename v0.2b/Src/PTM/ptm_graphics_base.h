@@ -1,6 +1,8 @@
 #pragma once
 #include "../Common/common.h"
 
+#define PTM_TILE_SIZE 8
+
 struct t_clip {
 	int x1 = 0;
 	int y1 = 0;

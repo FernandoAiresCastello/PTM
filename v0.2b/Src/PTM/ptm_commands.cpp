@@ -311,6 +311,12 @@ void ptm_init_commands()
 		int b = ARG_VAR_NUM(2);
 		ptm_set_var(result, a - b);
 	};
+	CMD("NEG") {
+		ARGC(2);
+		string result = ARG_LIT_ID(0);
+		int value = ARG_VAR_NUM(1);
+		ptm_set_var(result, -value);
+	};
 	CMD("MUL") {
 		ARGC(3);
 		string result = ARG_LIT_ID(0);
@@ -733,20 +739,11 @@ void ptm_init_commands()
 		ptm_stop_all_sounds();
 	};
 	CMD("SPR.NEW") {
-		ARGC_MIN_MAX(3, 4);
+		ARGC(1);
 		string id = ARG_VAR_STR(0);
-		int ch = ARG_VAR_NUM(1);
-		int fgc = ARG_VAR_NUM(2);
-		bool transparent = arg.size() == 3;
-		int bgc = transparent ? 0 : ARG_VAR_NUM(3);
 		if (!sprites.has(id)) {
 			t_sprite& spr = sprites.new_sprite(id);
-			if (transparent) {
-				spr.tile = t_tileseq(ch, fgc);
-			}
-			else {
-				spr.tile = t_tileseq(ch, fgc, bgc);
-			}
+			spr.tile.set_equal(working_tile);
 		}
 		else {
 			ptm_abort("Duplicate sprite id: " + id);
@@ -766,6 +763,20 @@ void ptm_init_commands()
 		t_sprite& spr = sprites.get_sprite(id);
 		spr.y = y;
 	};
+	CMD("SPR.GETX") {
+		ARGC(2);
+		string id = ARG_VAR_STR(0);
+		string var = ARG_LIT_ID(1);
+		t_sprite& spr = sprites.get_sprite(id);
+		ptm_set_var(var, spr.x);
+	};
+	CMD("SPR.GETY") {
+		ARGC(2);
+		string id = ARG_VAR_STR(0);
+		string var = ARG_LIT_ID(1);
+		t_sprite& spr = sprites.get_sprite(id);
+		ptm_set_var(var, spr.y);
+	};
 	CMD("SPR.POS") {
 		ARGC(3);
 		string id = ARG_VAR_STR(0);
@@ -781,8 +792,7 @@ void ptm_init_commands()
 		int x = ARG_VAR_NUM(1);
 		int y = ARG_VAR_NUM(2);
 		t_sprite& spr = sprites.get_sprite(id);
-		spr.x = x * 8;
-		spr.y = y * 8;
+		spr.set_pos(x * PTM_TILE_SIZE, y * PTM_TILE_SIZE);
 	};
 	CMD("SPR.MOVE") {
 		ARGC(3);
@@ -798,7 +808,7 @@ void ptm_init_commands()
 		int dx = ARG_VAR_NUM(1);
 		int dy = ARG_VAR_NUM(2);
 		t_sprite& spr = sprites.get_sprite(id);
-		spr.move(dx * 8, dy * 8);
+		spr.move(dx * PTM_TILE_SIZE, dy * PTM_TILE_SIZE);
 	};
 	CMD("SPR.BUF") {
 		ARGC(2);
@@ -824,6 +834,16 @@ void ptm_init_commands()
 		string id = ARG_VAR_STR(0);
 		t_sprite& spr = sprites.get_sprite(id);
 		sprites.remove(id);
+	};
+	CMD("SPR.HIT") {
+		ARGC(3);
+		string var = ARG_LIT_ID(0);
+		string id_sprite_1 = ARG_VAR_STR(1);
+		string id_sprite_2 = ARG_VAR_STR(2);
+		t_sprite& sprite_1 = sprites.get_sprite(id_sprite_1);
+		t_sprite& sprite_2 = sprites.get_sprite(id_sprite_2);
+		bool hit = sprite_1.collides_with(sprite_2);
+		ptm_set_var(var, hit);
 	};
 	CMD("READ") {
 		ARGC(1);
