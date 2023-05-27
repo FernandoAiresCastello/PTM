@@ -246,13 +246,27 @@ void ptm_if_block_start(t_params& arg, int cmp_mode)
 	if (cmp_mode == CMP_MODE_EQ || cmp_mode == CMP_MODE_NEQ) {
 		string a = intp->arg_var_string(arg[0]);
 		string b = intp->arg_var_string(arg[1]);
+
 		if (cmp_mode == CMP_MODE_EQ) {
-			if (a == b) { return; }
-			else { intp->goto_matching_endif(); }
+			if (a == b) { return; } // execute block
+			else { intp->goto_matching_endif(); } // skip block
 		}
 		else if (cmp_mode == CMP_MODE_NEQ) {
-			if (a != b) { return; }
-			else { intp->goto_matching_endif(); }
+			if (a != b) { return; } // execute block
+			else { intp->goto_matching_endif(); } // skip block
+		}
+	}
+	else if (cmp_mode == CMP_MODE_TRUE || cmp_mode == CMP_MODE_FALSE) {
+		int value = intp->arg_var_number(arg[0]);
+		if (value == PTM_INVALID_NUMBER) return;
+
+		if (cmp_mode == CMP_MODE_TRUE) {
+			if (value > 0) { return; } // execute block
+			else { intp->goto_matching_endif(); } // skip block
+		}
+		else if (cmp_mode == CMP_MODE_FALSE) {
+			if (value <= 0) { return; } // execute block
+			else { intp->goto_matching_endif(); } // skip block
 		}
 	}
 	else {
@@ -262,20 +276,20 @@ void ptm_if_block_start(t_params& arg, int cmp_mode)
 		if (b == PTM_INVALID_NUMBER) return;
 
 		if (cmp_mode == CMP_MODE_GT) {
-			if (a > b) { return; }
-			else { intp->goto_matching_endif(); }
+			if (a > b) { return; } // execute block
+			else { intp->goto_matching_endif(); } // skip block
 		}
 		else if (cmp_mode == CMP_MODE_GTE) {
-			if (a >= b) { return; }
-			else { intp->goto_matching_endif(); }
+			if (a >= b) { return; } // execute block
+			else { intp->goto_matching_endif(); } // skip block
 		}
 		else if (cmp_mode == CMP_MODE_LT) {
-			if (a < b) { return; }
-			else { intp->goto_matching_endif(); }
+			if (a < b) { return; } // execute block
+			else { intp->goto_matching_endif(); } // skip block
 		}
 		else if (cmp_mode == CMP_MODE_LTE) {
-			if (a <= b) { return; }
-			else { intp->goto_matching_endif(); }
+			if (a <= b) { return; } // execute block
+			else { intp->goto_matching_endif(); } // skip block
 		}
 	}
 }

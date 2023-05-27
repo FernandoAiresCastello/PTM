@@ -1,5 +1,19 @@
 CALL init_common_graphics
-GOTO test_sprintf
+GOTO test_boolean
+
+#==============================================================================
+#	True/false conditional execution flow
+	test_boolean:
+#==============================================================================
+VAR ok, "Hello"
+IF.TRUE ok
+	MSGBOX "Ok!"
+ENDIF
+IF.FALSE ok
+	MSGBOX "Not ok..."
+ENDIF
+
+EXIT
 
 #==============================================================================
 #	Sprintf
@@ -26,11 +40,11 @@ PUT
 
 FIND "type=letter-a", search_result, found_x, found_y
 MSGBOX search_result
-IF.EQ search_result, 1
+IF.TRUE search_result
 	SPRINTF msg, "Letter-a found at: x{%found_x} y{%found_y}"
 	MSGBOX msg
 ENDIF
-IF.EQ search_result, 0
+IF.FALSE search_result
 	MSGBOX "Letter-a not found"
 ENDIF
 

@@ -251,6 +251,14 @@ void ptm_init_commands()
 		ARGC(2);
 		ptm_if_block_start(arg, CMP_MODE_LTE);
 	};
+	CMD("IF.TRUE") {
+		ARGC(1);
+		ptm_if_block_start(arg, CMP_MODE_TRUE);
+	};
+	CMD("IF.FALSE") {
+		ARGC(1);
+		ptm_if_block_start(arg, CMP_MODE_FALSE);
+	};
 	CMD("ENDIF") {
 		ARGC(0);
 	};
