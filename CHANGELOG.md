@@ -30,6 +30,7 @@
 - Implemented assertions for debugging purposes (ASSERT)
 - Tile animation speed is now configurable (ANIM)
 - Tile transparency is no longer a global setting. Now, tiles are made transparent upon creation by omitting the background color parameter
+- Implemented BUF.TOGL to toggle visibility of a tilebuffer
 - Changes to tilebuffer viewports:
 	- Support for smooth scrolling (BUF.SCRL)
 	- Position and size are now pixel-based instead of tile-based (BUF.VIEW)
