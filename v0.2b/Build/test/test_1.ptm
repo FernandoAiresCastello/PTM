@@ -64,7 +64,7 @@ PRINTF "Hello {f2}{%x}{/f} {b3}{f6}World{/f}{/b}\nNew line, char: {c120}"
 HALT
 
 #==============================================================================
-#	Various different tests
+#	Various different tilebuffer and sprite tests
 	test_misc:
 #==============================================================================
 BUF.BCOL default, 8
