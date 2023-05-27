@@ -1,5 +1,18 @@
 CALL init_common_graphics
-GOTO test_boolean
+GOTO test_split_join
+
+#==============================================================================
+#	String string split and join
+	test_split_join:
+#==============================================================================
+VAR fruits, "apple ,orange, lemon, tomato "
+STR.SPLIT fruit_arr, fruits, ","
+ARR.FOR fruit_arr, fruit
+	MSGBOX fruit
+NEXT
+STR.JOIN fruit_arr, joined_fruit_arr, " & "
+MSGBOX joined_fruit_arr
+EXIT
 
 #==============================================================================
 #	True/false conditional execution flow

@@ -990,6 +990,15 @@ void ptm_init_commands()
 			arr.push_back(item);
 		}
 	};
+	CMD("STR.JOIN") {
+		ARGC(3);
+		string arr_id = ARG_LIT_ID(0);
+		string var = ARG_LIT_ID(1);
+		string delim = ARG_VAR_STR(2);
+		auto& arr = ptm_get_array(arr_id);
+		auto result = String::Join(arr, delim);
+		ptm_set_var(var, result);
+	};
 	CMD("STR.TRIM") {
 		ARGC(2);
 		string var = ARG_LIT_ID(0);

@@ -36,3 +36,4 @@
 	- Each tilebuffer viewport now has their own background color (BUF.BCOL)
 - Implemented reading lines of text file into array of strings (LLOAD)
 - Implemented new conditional blocks IF.TRUE and IF.FALSE
+- Implemented STR.JOIN to join array of strings into single string
