@@ -640,8 +640,27 @@ void ptm_init_commands()
 		ARGC(2);
 		int x = ARG_VAR_NUM(0);
 		int y = ARG_VAR_NUM(1);
+		tilebuf_csr.set(x, y);
+	};
+	CMD("CSR.X") {
+		ARGC(1);
+		int x = ARG_VAR_NUM(0);
 		tilebuf_csr.x = x;
+	};
+	CMD("CSR.Y") {
+		ARGC(1);
+		int y = ARG_VAR_NUM(0);
 		tilebuf_csr.y = y;
+	};
+	CMD("CSR.GETX") {
+		ARGC(1);
+		string var = ARG_LIT_ID(0);
+		ptm_set_var(var, tilebuf_csr.x);
+	};
+	CMD("CSR.GETY") {
+		ARGC(1);
+		string var = ARG_LIT_ID(0);
+		ptm_set_var(var, tilebuf_csr.y);
 	};
 	CMD("PUT") {
 		ARGC(0);

@@ -35,3 +35,4 @@
 	- Position and size are now pixel-based instead of tile-based (BUF.VIEW)
 	- Each tilebuffer viewport now has their own background color (BUF.BCOL)
 - Implemented reading lines of text file into array of strings (LLOAD)
+- Implemented new conditional blocks IF.TRUE and IF.FALSE
