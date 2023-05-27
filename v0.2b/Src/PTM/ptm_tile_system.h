@@ -2,6 +2,8 @@
 #include "../Common/common.h"
 #include "ptm_graphics_base.h"
 
+struct t_sprite;
+
 struct t_tile {
 	int ch = 0;
 	int fgc = 0;
@@ -103,12 +105,15 @@ struct t_tilebuf {
 	void clear_all_layers();
 	void show();
 	void hide();
+	void toggle_visible();
 	bool visible();
 	vector<t_tilebuf_layer>& get_layers();
 	int get_bgcol();
 	void set_bgcol(int palette_ix);
 	int get_width();
 	int get_height();
+	void add_sprite(t_sprite* sprite);
+	vector<t_sprite*>& get_sprites();
 private:
 	vector<t_tilebuf_layer> layers;
 	int width = 0;
@@ -116,6 +121,7 @@ private:
 	t_clip viewport;
 	int bgcol_palette_ix = 0;
 	bool is_visible = false;
+	vector<t_sprite*> sprites;
 };
 struct t_tilebuf_collection {
 	vector<t_tilebuf> tilebufs;

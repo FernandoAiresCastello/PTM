@@ -477,6 +477,11 @@ void ptm_init_commands()
 		string id = ARG_LIT_ID(0);
 		tilebufs.get(id)->hide();
 	};
+	CMD("BUF.TOGL") {
+		ARGC(1);
+		string id = ARG_LIT_ID(0);
+		tilebufs.get(id)->toggle_visible();
+	};
 	CMD("BUF.BCOL") {
 		ARGC(2);
 		string id = ARG_LIT_ID(0);
@@ -849,7 +854,7 @@ void ptm_init_commands()
 		string id = ARG_VAR_STR(0);
 		string buf_id = ARG_LIT_ID(1);
 		t_sprite& spr = sprites.get_sprite(id);
-		spr.buf = tilebufs.get(buf_id);
+		spr.add_to_buffer(tilebufs.get(buf_id));
 	};
 	CMD("SPR.SHOW") {
 		ARGC(1);

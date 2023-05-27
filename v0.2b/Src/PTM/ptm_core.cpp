@@ -244,16 +244,31 @@ void ptm_copy_array(string dst, string src)
 void ptm_if_block_start(t_params& arg, int cmp_mode)
 {
 	if (cmp_mode == CMP_MODE_EQ || cmp_mode == CMP_MODE_NEQ) {
-		string a = intp->arg_var_string(arg[0]);
-		string b = intp->arg_var_string(arg[1]);
+		if (arg[1].type == t_param_type::char_literal) {
+			int a = intp->arg_var_number(arg[0]);
+			int b = intp->arg_var_number(arg[1]);
 
-		if (cmp_mode == CMP_MODE_EQ) {
-			if (a == b) { return; } // execute block
-			else { intp->goto_matching_endif(); } // skip block
+			if (cmp_mode == CMP_MODE_EQ) {
+				if (a == b) { return; } // execute block
+				else { intp->goto_matching_endif(); } // skip block
+			}
+			else if (cmp_mode == CMP_MODE_NEQ) {
+				if (a != b) { return; } // execute block
+				else { intp->goto_matching_endif(); } // skip block
+			}
 		}
-		else if (cmp_mode == CMP_MODE_NEQ) {
-			if (a != b) { return; } // execute block
-			else { intp->goto_matching_endif(); } // skip block
+		else {
+			string a = intp->arg_var_string(arg[0]);
+			string b = intp->arg_var_string(arg[1]);
+
+			if (cmp_mode == CMP_MODE_EQ) {
+				if (a == b) { return; } // execute block
+				else { intp->goto_matching_endif(); } // skip block
+			}
+			else if (cmp_mode == CMP_MODE_NEQ) {
+				if (a != b) { return; } // execute block
+				else { intp->goto_matching_endif(); } // skip block
+			}
 		}
 	}
 	else if (cmp_mode == CMP_MODE_TRUE || cmp_mode == CMP_MODE_FALSE) {

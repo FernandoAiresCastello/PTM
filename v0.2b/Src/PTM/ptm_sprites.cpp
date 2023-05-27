@@ -18,6 +18,32 @@ bool t_sprite::collides_with(t_sprite& other)
 	return	(x > other.x - PTM_TILE_SIZE) && (x < other.x + PTM_TILE_SIZE) &&
 			(y > other.y - PTM_TILE_SIZE) && (y < other.y + PTM_TILE_SIZE);
 }
+void t_sprite::add_to_buffer(t_tilebuf* tilebuf)
+{
+	buf = tilebuf;
+	tilebuf->add_sprite(this);
+}
+t_tilebuf* t_sprite::get_buffer()
+{
+	return buf;
+}
+void t_sprite::draw()
+{
+	if (!visible) {
+		return;
+	}
+	if (buf) {
+		ptm_clip(buf->get_viewport());
+	}
+	else {
+		ptm_unclip();
+	}
+	t_tile& frame = tile.frames[tile_animation.frame % tile.length()];
+	binary& bin = tileset.get(frame.ch);
+	rgb fgc = palette.get(frame.fgc);
+	rgb bgc = palette.get(frame.bgc);
+	ptm_draw_tile_bin(bin, x, y, fgc, bgc, frame.transparent);
+}
 t_sprite& t_sprite_list::new_sprite(string id)
 {
 	t_sprite sprite;
@@ -44,23 +70,12 @@ bool t_sprite_list::has(string id)
 {
 	return sprites.find(id) != sprites.end();
 }
-void ptm_draw_visible_sprites()
+void t_sprite_list::draw_all_visible_with_no_buffer()
 {
-	for (auto& entry : sprites.get_sprites()) {
+	for (auto& entry : sprites) {
 		t_sprite& spr = entry.second;
-		if (!spr.visible) {
-			continue;
+		if (!spr.get_buffer()) {
+			spr.draw();
 		}
-		if (spr.buf) {
-			ptm_clip(spr.buf->get_viewport());
-		}
-		else {
-			ptm_unclip();
-		}
-		t_tile& frame = spr.tile.frames[tile_animation.frame % spr.tile.length()];
-		binary& bin = tileset.get(frame.ch);
-		rgb fgc = palette.get(frame.fgc);
-		rgb bgc = palette.get(frame.bgc);
-		ptm_draw_tile_bin(bin, spr.x, spr.y, fgc, bgc, frame.transparent);
 	}
 }

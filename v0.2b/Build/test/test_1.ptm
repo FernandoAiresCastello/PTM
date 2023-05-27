@@ -1,5 +1,5 @@
 CALL init_common_graphics
-GOTO test_split_join
+GOTO test_misc
 
 #==============================================================================
 #	String string split and join
@@ -110,11 +110,10 @@ CALL draw_stuff
 BUF.SEL buf_2
 CALL draw_stuff
 
-TILE.NEW 1, 3
-TILE.ADD 1, 4
-TILE.ADD 1, 5
+TILE.NEW 1, 0
 SPR.NEW "smiley"
-SPR.POS "smiley", 120, 30
+SPR.BUF "smiley", buf_1
+SPR.POS "smiley", 0, 0
 SPR.SHOW "smiley"
 
 TILE.NEW 1, 2
@@ -146,21 +145,21 @@ loop:
 		SPR.MOVE "smiley", 0, move_speed
 	ENDIF
 	
-	IF.KEY "M"
-		SND.STOP
-	ENDIF
-	IF.KEY "Q"
+	INKEY key
+
+	IF.EQ key, 'q'
 		BUF.CLS buf_1
 	ENDIF
-	IF.KEY "W"
+	IF.EQ key, 'w'
 		BUF.CLS buf_2
 	ENDIF
-	IF.KEY "E"
-		CLS
-		BUF.HIDE buf_1
-		BUF.HIDE buf_2
+	IF.EQ key, 'e'
+		BUF.TOGL buf_1
 	ENDIF
-	IF.KEY "X"
+	IF.EQ key, 'r'
+		BUF.TOGL buf_2
+	ENDIF
+	IF.EQ key, 'x'
 		RESET
 	ENDIF
 	
@@ -172,19 +171,6 @@ loop:
 	UPDATE
 	GOTO loop
 	
-loop2:
-	INKEY x
-	IF.EQ x, 32
-		#BEEP 500, 30
-		SPR.MOVE "smiley", 8, 0
-	ENDIF
-	IF.EQ x, 13
-		#BEEP 800, 30
-		SPR.MOVE "smiley", 8, 8
-	ENDIF
-	UPDATE
-	GOTO loop2
-
 draw_stuff:
 	LOCATE 0, 0
 	TILE.NEW 'a', 2, 3

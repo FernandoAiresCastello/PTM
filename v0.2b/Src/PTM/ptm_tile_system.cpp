@@ -3,6 +3,7 @@
 #include "ptm_color_palette.h"
 #include "ptm_core.h"
 #include "ptm_keyboard.h"
+#include "ptm_sprites.h"
 
 #define DEFAULT_TILEBUF_ID "default"
 
@@ -390,6 +391,13 @@ void t_tilebuf::hide()
 {
 	is_visible = false;
 }
+void t_tilebuf::toggle_visible()
+{
+	if (is_visible)
+		hide();
+	else
+		show();
+}
 bool t_tilebuf::visible()
 {
 	return is_visible;
@@ -414,6 +422,17 @@ int t_tilebuf::get_width()
 int t_tilebuf::get_height()
 {
 	return height;
+}
+void t_tilebuf::add_sprite(t_sprite* sprite)
+{
+	if (std::find(sprites.begin(), sprites.end(), sprite) == sprites.end()) {
+		sprites.push_back(sprite);
+		sprite->add_to_buffer(this);
+	}
+}
+vector<t_sprite*>& t_tilebuf::get_sprites()
+{
+	return sprites;
 }
 void t_tilebuf_collection::new_tilebuf(string id, int layer_count, int width, int height, int order)
 {
@@ -508,6 +527,9 @@ void ptm_draw_buffer(t_tilebuf* buf)
 				ptm_draw_tile_bin(bin, x * PTM_TILE_SIZE, y * PTM_TILE_SIZE, fgc, bgc, frame.transparent);
 			}
 		}
+	}
+	for (auto* sprite : buf->get_sprites()) {
+		sprite->draw();
 	}
 }
 void ptm_update_tile_animation()

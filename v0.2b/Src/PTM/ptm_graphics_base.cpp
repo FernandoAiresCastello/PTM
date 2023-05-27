@@ -51,7 +51,7 @@ void ptm_refresh_window()
 		return;
 
 	ptm_draw_visible_buffers();
-	ptm_draw_visible_sprites();
+	sprites.draw_all_visible_with_no_buffer();
 	ptm_update_tile_animation();
 
 	static int pitch;
