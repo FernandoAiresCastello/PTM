@@ -52,6 +52,15 @@ struct t_tileset {
 	void set(int index, binary tile);
 	binary& get(int index);
 };
+struct t_search_pos {
+	int x = PTM_INVALID_NUMBER;
+	int y = PTM_INVALID_NUMBER;
+	bool found = false;
+	t_search_pos() : x(0), y(0), found(false) {}
+	t_search_pos(int px, int py) : x(px), y(py), found(false) {}
+	t_search_pos(int px, int py, bool is_found) : x(px), y(py), found(is_found) {}
+	static t_search_pos not_found() { return t_search_pos(PTM_INVALID_NUMBER, PTM_INVALID_NUMBER, false); }
+};
 struct t_tilebuf_layer {
 	t_tilebuf_layer();
 	t_tilebuf_layer(int width, int height);
@@ -70,6 +79,9 @@ struct t_tilebuf_layer {
 	void clear();
 	void move_tile(int x, int y, int dx, int dy);
 	void move_block(int x1, int y1, int x2, int y2, int dx, int dy);
+	t_search_pos find_with_data(t_search_pos begin_from, string data, string value);
+	t_search_pos find_with_data(t_search_pos begin_from, string data, int value);
+	t_search_pos find_with_data(t_search_pos begin_from, string data);
 private:
 	vector<t_tileseq> tiles;
 	int width = 0;

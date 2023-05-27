@@ -1,5 +1,40 @@
 CALL init_common_graphics
-GOTO test_misc
+GOTO test_sprintf
+
+#==============================================================================
+#	Sprintf
+	test_sprintf:
+#==============================================================================
+VAR x, 12345
+VAR y, "Hello"
+SPRINTF msg, "Variables are: x={%x} y={%y}"
+MSGBOX msg
+EXIT
+
+#==============================================================================
+#	Tile search
+	test_search:
+#==============================================================================
+TILE.NEW 'a', 2, 3
+TILE.SETP "type", "letter-a"
+LOCATE 10, 10
+PUT
+TILE.NEW 'b', 4, 5
+TILE.SETP "some-tag"
+LOCATE 13, 15
+PUT
+
+FIND "type=letter-a", search_result, found_x, found_y
+MSGBOX search_result
+IF.EQ search_result, 1
+	SPRINTF msg, "Letter-a found at: x{%found_x} y{%found_y}"
+	MSGBOX msg
+ENDIF
+IF.EQ search_result, 0
+	MSGBOX "Letter-a not found"
+ENDIF
+
+HALT
 
 #==============================================================================
 #	Transparency

@@ -701,6 +701,13 @@ void ptm_init_commands()
 		string fmt = ARG_VAR_STR(0);
 		ptm_print_formatted_tile_string(fmt);
 	};
+	CMD("SPRINTF") {
+		ARGC(2);
+		string var = ARG_LIT_ID(0);
+		string fmt = ARG_VAR_STR(1);
+		string result = ptm_sprintf(fmt);
+		ptm_set_var(var, result);
+	};
 	CMD("PUTC") {
 		ARGC(1);
 		int ch = ARG_VAR_NUM(0);

@@ -283,3 +283,109 @@ int ptm_get_random_number(int min, int max)
 {
 	return Util::Random(min, max);
 }
+string ptm_sprintf(string fmt)
+{
+	string result;
+	bool escape = false;
+	string escape_seq = "";
+
+	for (int i = 0; i < fmt.length(); i++) {
+		int ch = fmt[i];
+		if (ch == '\\') {
+			i++;
+			if (i < fmt.length()) {
+				if (fmt[i] == 'n') {
+					result += "\n";
+				}
+			}
+		}
+		else if (ch == '{') {
+			escape = true;
+			continue;
+		}
+		else if (ch == '}') {
+			escape = false;
+			const string upper_escape_seq = String::ToUpper(escape_seq);
+			if (String::StartsWith(upper_escape_seq, 'C')) {
+				ch = String::ToInt(String::Skip(String::Replace(upper_escape_seq, "&H", "0x"), 1));
+				result += char(ch);
+				escape_seq = "";
+				continue;
+			}
+			else if (String::StartsWith(upper_escape_seq, 'F')) {
+				escape_seq = "";
+				continue;
+			}
+			else if (String::StartsWith(upper_escape_seq, "/F")) {
+				escape_seq = "";
+				continue;
+			}
+			else if (String::StartsWith(upper_escape_seq, 'B')) {
+				escape_seq = "";
+				continue;
+			}
+			else if (String::StartsWith(upper_escape_seq, "/B")) {
+				escape_seq = "";
+				continue;
+			}
+			else if (String::StartsWith(escape_seq, '%')) {
+				string var = String::Skip(escape_seq, 1);
+				if (String::Contains(var, '[') || String::Contains(var, ']')) {
+					auto begin = String::IndexOf(var, '[');
+					auto end = String::IndexOf(var, ']');
+					if (begin != string::npos && end != string::npos && begin < end) {
+						string arr_id = String::Substring(var, 0, begin);
+						if (intp->arrays.find(arr_id) != intp->arrays.end()) {
+							string ixs = String::Substring(var, begin + 1, end);
+							int ix = -1;
+							if (String::IsNumber(ixs)) {
+								ix = String::ToInt(ixs);
+							}
+							else {
+								if (intp->vars.find(ixs) != intp->vars.end()) {
+									ix = String::ToInt(intp->vars[ixs].value);
+								}
+								else {
+									intp->abort("Variable not found: " + ixs);
+								}
+							}
+							if (ix >= 0 && ix < intp->arrays[arr_id].size()) {
+								string str = intp->arrays[arr_id].at(ix);
+								result += str;
+							}
+							else {
+								intp->abort(String::Format("Array index out of bounds: %s[%i]", arr_id.c_str(), ix));
+							}
+						}
+						else {
+							intp->abort("Array not found: " + arr_id);
+						}
+					}
+				}
+				else {
+					if (intp->vars.find(var) != intp->vars.end()) {
+						result += intp->vars[var].value;
+					}
+					else {
+						intp->abort("Variable not found: " + var);
+					}
+				}
+				escape_seq = "";
+				continue;
+			}
+			else {
+				intp->abort("Invalid escape sequence: " + escape_seq);
+			}
+		}
+		else if (escape) {
+			escape_seq += ch;
+			continue;
+		}
+		else {
+			result += char(ch);
+			escape_seq = "";
+		}
+	}
+
+	return result;
+}

@@ -304,6 +304,32 @@ void t_tilebuf_layer::move_block(int x1, int y1, int x2, int y2, int dx, int dy)
 		}
 	}
 }
+t_search_pos t_tilebuf_layer::find_with_data(t_search_pos begin_from, string data, string value)
+{
+	for (int y = begin_from.y; y < height; y++) {
+		for (int x = begin_from.x; x < width; x++) {
+			if (get(x, y).data.has(data, value)) {
+				return t_search_pos(x, y, true);
+			}
+		}
+	}
+	return t_search_pos::not_found();
+}
+t_search_pos t_tilebuf_layer::find_with_data(t_search_pos begin_from, string data, int value)
+{
+	return find_with_data(begin_from, data, String::ToString(value));
+}
+t_search_pos t_tilebuf_layer::find_with_data(t_search_pos begin_from, string data)
+{
+	for (int y = begin_from.y; y < height; y++) {
+		for (int x = begin_from.x; x < width; x++) {
+			if (get(x, y).data.has(data)) {
+				return t_search_pos(x, y, true);
+			}
+		}
+	}
+	return t_search_pos::not_found();
+}
 t_tilebuf::t_tilebuf()
 {
 }

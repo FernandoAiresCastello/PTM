@@ -37,3 +37,4 @@ vector<string>& ptm_get_array(string name);
 void ptm_copy_array(string dst, string src);
 void ptm_if_block_start(t_params& arg, int cmp_mode);
 int ptm_get_random_number(int min, int max);
+string ptm_sprintf(string fmt);
