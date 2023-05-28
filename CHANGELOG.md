@@ -38,3 +38,4 @@
 - Implemented reading lines of text file into array of strings (LLOAD)
 - Implemented new conditional blocks IF.TRUE and IF.FALSE
 - Implemented STR.JOIN to join array of strings into single string
+- Implemented PTM command to indicate intended version for running the program
