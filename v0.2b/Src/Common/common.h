@@ -1,5 +1,7 @@
 #pragma once
 
+#define PTM_VERSION "v0.2b"
+
 #include <SDL.h>
 #include <string>
 #include <iostream>

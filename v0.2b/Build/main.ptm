@@ -1,4 +1,16 @@
+#==============================================================================
+#	This is the "main" program file automatically loaded by the PTM at 
+#	startup. This file currently includes other programs used for testing 
+#	during development. You can safely replace the contents of this file 
+#	with your own code.
+#==============================================================================
+
+#INCL test/tests.ptm
+
 #INCL examples/hello_world.ptm
 #INCL examples/hello_personalized.ptm
 #INCL examples/blinking_smiley.ptm
-INCL test/tests.ptm
+
+INCL games/invaders.ptm
+#INCL games/adv_lawnmower_sim.ptm
+#INCL games/dragon_labyrinth.ptm

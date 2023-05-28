@@ -74,6 +74,7 @@ bool t_compiler::compile_line(
 	// Parse raw command argument list
 	auto raw_args = ixSpace != string::npos ? String::Trim(src_line.substr(ixSpace)) : "";
 	auto args = parse_args(raw_args);
+
 	// Compile command arguments info
 	for (auto& arg : args) {
 		t_param param;
@@ -129,6 +130,7 @@ bool t_compiler::compile_line(
 		new_line->params.push_back(param);
 	}
 
+	// Process window definition
 	if (is_window_def(new_line->cmd)) {
 		if (has_window_def) {
 			add_error(src_line_ptr, "Duplicate window definition");
@@ -149,9 +151,26 @@ bool t_compiler::compile_line(
 		return false;
 	}
 
+	// Process embedded data
 	if (is_data(new_line->cmd)) {
 		for (auto& param : new_line->params) {
 			prg->data.push_back(param.textual_value);
+		}
+		return false;
+	}
+
+	// Process PTM version directive
+	if (is_ptm_version_directive(new_line->cmd)) {
+		t_param& param = new_line->params[0];
+		string version = String::ToLower(param.id);
+		if (param.type == t_param_type::id && String::StartsWith(version, 'v')) {
+			if (version != PTM_VERSION) {
+				add_error(nullptr, 
+					"This program is supported only in PTM version " + version + 
+					"\n\nThis machine is version " PTM_VERSION ".");
+			}
+		} else {
+			add_error(src_line_ptr, "Invalid PTM version identifier");
 		}
 		return false;
 	}
@@ -168,8 +187,12 @@ int t_compiler::parse_number(string arg) {
 	return String::ToInt(arg);
 }
 void t_compiler::add_error(t_source_line* line, string msg) {
-	errors.push_back(String::Format("%s\n\nFile: %s\nLine: %i\nSource:\n\n%s", 
-		msg.c_str(), line->file.c_str(), line->line_nr, String::Trim(line->text).c_str()));
+	if (line) {
+		errors.push_back(String::Format("%s\n\nFile: %s\nLine: %i\nSource:\n\n%s",
+			msg.c_str(), line->file.c_str(), line->line_nr, String::Trim(line->text).c_str()));
+	} else {
+		errors.push_back(msg);
+	}
 }
 void t_compiler::add_syntax_error(t_source_line* line) {
 	add_error(line, "Syntax error");
@@ -255,4 +278,7 @@ bool t_compiler::is_window_def(string& arg) {
 }
 bool t_compiler::is_data(string& arg) {
 	return arg == "DATA";
+}
+bool t_compiler::is_ptm_version_directive(string& arg) {
+	return arg == "PTM";
 }
