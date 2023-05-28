@@ -170,7 +170,6 @@ cd "$(SolutionDir)Build"
     <ClInclude Include="Src\PTM\ptm_sound_system.h" />
     <ClInclude Include="Src\PTM\ptm_sprites.h" />
     <ClInclude Include="Src\PTM\ptm_text_font.h" />
-    <ClInclude Include="Src\PTM\ptm_utils.h" />
     <ClInclude Include="Src\PTM\ptm_tile_system.h" />
   </ItemGroup>
   <ItemGroup>
@@ -202,7 +201,6 @@ cd "$(SolutionDir)Build"
     <ClCompile Include="Src\PTM\ptm_sound_system.cpp" />
     <ClCompile Include="Src\PTM\ptm_sprites.cpp" />
     <ClCompile Include="Src\PTM\ptm_text_font.cpp" />
-    <ClCompile Include="Src\PTM\ptm_utils.cpp" />
     <ClCompile Include="Src\PTM\ptm_tile_system.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

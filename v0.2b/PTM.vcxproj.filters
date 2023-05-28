@@ -23,9 +23,6 @@
     <ClCompile Include="Src\PTM\ptm_core.cpp">
       <Filter>PTM</Filter>
     </ClCompile>
-    <ClCompile Include="Src\PTM\ptm_utils.cpp">
-      <Filter>PTM</Filter>
-    </ClCompile>
     <ClCompile Include="Src\PTML\t_compiler.cpp">
       <Filter>PTML</Filter>
     </ClCompile>
@@ -104,9 +101,6 @@
       <Filter>PTM</Filter>
     </ClInclude>
     <ClInclude Include="Src\PTM\ptm_core.h">
-      <Filter>PTM</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\PTM\ptm_utils.h">
       <Filter>PTM</Filter>
     </ClInclude>
     <ClInclude Include="Src\PTML\t_compiler.h">
