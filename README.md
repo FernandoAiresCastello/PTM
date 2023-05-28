@@ -61,3 +61,46 @@ TILE.ADD 2, 1
 LOCATE center_x, center_y
 PUT
 ```
+**Moving Sprites**
+```
+# Setup tileset
+CHR 1, "0011110001111110110110111111111111011011111001110111111000111100"
+CHR 2, "0011110001111110111111111111111111111111110110110110011000111100"
+
+# Setup color palette
+PAL 0, &h000080
+PAL 1, &hffff00
+PAL 2, &hf0f0f0
+
+# Create sprites
+TILE.NEW 1, 1
+TILE.ADD 2, 1
+SPR.NEW "smiley"
+SPR.POS "smiley", 170, 100
+SPR.SHOW "smiley"
+
+# Print instructions
+COLOR 2
+LOCATE 6, 1
+PRINT "Press arrow keys to move sprite"
+
+# Await input and move sprite
+loop:
+	IF.KEY "RIGHT"
+		SPR.MOVE "smiley", 1, 0
+	ENDIF
+	IF.KEY "LEFT"
+		SPR.MOVE "smiley", -1, 0
+	ENDIF
+	IF.KEY "DOWN"
+		SPR.MOVE "smiley", 0, 1
+	ENDIF
+	IF.KEY "UP"
+		SPR.MOVE "smiley", 0, -1
+	ENDIF
+	IF.KEY "ESC"
+		EXIT
+	ENDIF
+	UPDATE
+	GOTO loop
+```
