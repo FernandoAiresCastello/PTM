@@ -34,6 +34,7 @@ void ptm_init_window(int buf_w, int buf_h, int size, rgb bgcol, int default_buf_
 	ptm_create_default_tilebuffer(default_buf_layer_count);
 	ptm_clear_screen();
 	ptm_update();
+	ptm_enable_mouse_pointer(false);
 
 	SDL_SetWindowPosition(scr.wnd, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 	SDL_RaiseWindow(scr.wnd);
@@ -72,6 +73,10 @@ void ptm_toggle_fullscreen()
 	Uint32 is_full = SDL_GetWindowFlags(scr.wnd) & flag;
 	SDL_SetWindowFullscreen(scr.wnd, is_full ? 0 : flag);
 	ptm_update();
+}
+void ptm_enable_mouse_pointer(bool enable)
+{
+	SDL_ShowCursor(enable);
 }
 void ptm_set_window_title(string title)
 {

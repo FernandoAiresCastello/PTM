@@ -20,7 +20,6 @@ void ptm_proc_events();
 void ptm_idle_frame();
 void ptm_show_message_box(string msg);
 void ptm_on_exec_line(t_program_line* line, string& cmd, t_params& params);
-void ptm_on_keydown(SDL_Keycode key);
 bool ptm_has_var(string name);
 void ptm_set_var(string name, string value);
 void ptm_set_var(string name, int value);

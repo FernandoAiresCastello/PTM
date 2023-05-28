@@ -215,6 +215,11 @@ void t_tilebuf_layer::put(int x, int y, int ch, int fgc, int bgc)
 	t_tileseq tile(ch, fgc, bgc);
 	put(x, y, tile);
 }
+void t_tilebuf_layer::put(int x, int y, int ch, int fgc)
+{
+	t_tileseq tile(ch, fgc);
+	put(x, y, tile);
+}
 void t_tilebuf_layer::add(int x, int y, t_tile& tile)
 {
 	if (x >= 0 && y >= 0 && x < width && y < width) {
@@ -227,6 +232,12 @@ void t_tilebuf_layer::add(int x, int y, int ch, int fgc, int bgc)
 		get(x, y).add(ch, fgc, bgc);
 	}
 }
+void t_tilebuf_layer::add(int x, int y, int ch, int fgc)
+{
+	if (x >= 0 && y >= 0 && x < width && y < width) {
+		get(x, y).add(ch, fgc);
+	}
+}
 void t_tilebuf_layer::fill(t_tileseq& tileseq)
 {
 	for (int i = 0; i < width * height; i++) {
@@ -237,7 +248,9 @@ void t_tilebuf_layer::fill_rect(t_tileseq& tileseq, int x1, int y1, int x2, int 
 {
 	for (int py = y1; py <= y2; py++) {
 		for (int px = x1; px <= x2; px++) {
-			get(px, py).set_equal(tileseq);
+			if (px >= 0 && py >= 0 && px < width && py < height) {
+				get(px, py).set_equal(tileseq);
+			}
 		}
 	}
 }
@@ -245,7 +258,9 @@ void t_tilebuf_layer::clear_rect(int x1, int y1, int x2, int y2)
 {
 	for (int py = y1; py <= y2; py++) {
 		for (int px = x1; px <= x2; px++) {
-			del(px, py);
+			if (px >= 0 && py >= 0 && px < width && py < height) {
+				del(px, py);
+			}
 		}
 	}
 }
@@ -569,6 +584,7 @@ void ptm_print_tile_string(string str, int fgc, int bgc, bool add_frames)
 	t_tilebuf_layer& layer = ptm_get_selected_tilebuf_layer();
 	int x = tilebuf_csr.x;
 	int y = tilebuf_csr.y;
+	bool transparent = scr.text_style.transparent;
 	bool escape = false;
 
 	for (auto& ch : str) {
@@ -583,10 +599,16 @@ void ptm_print_tile_string(string str, int fgc, int bgc, bool add_frames)
 		}
 		escape = false;
 		if (add_frames) {
-			layer.add(x, y, ch, fgc, bgc);
+			if (transparent)
+				layer.add(x, y, ch, fgc);
+			else
+				layer.add(x, y, ch, fgc, bgc);
 		}
 		else {
-			layer.put(x, y, ch, fgc, bgc);
+			if (transparent)
+				layer.put(x, y, ch, fgc);
+			else
+				layer.put(x, y, ch, fgc, bgc);
 		}
 		x++;
 	}
@@ -595,9 +617,14 @@ void ptm_print_tile_string(string str, int fgc, int bgc, bool add_frames)
 }
 void ptm_print_tile_char(int ch)
 {
-	ptm_get_selected_tilebuf_layer()
-		.put(tilebuf_csr.x, tilebuf_csr.y, ch, scr.text_style.fgc, scr.text_style.bgc);
-
+	if (scr.text_style.transparent) {
+		ptm_get_selected_tilebuf_layer()
+			.put(tilebuf_csr.x, tilebuf_csr.y, ch, scr.text_style.fgc);
+	}
+	else {
+		ptm_get_selected_tilebuf_layer()
+			.put(tilebuf_csr.x, tilebuf_csr.y, ch, scr.text_style.fgc, scr.text_style.bgc);
+	}
 	tilebuf_csr.x++;
 }
 void ptm_store_tile(string id, t_tileseq& tile)
@@ -795,7 +822,7 @@ void ptm_print_formatted_tile_string(string fmt)
 			continue;
 		}
 		else {
-			auto tile = t_tileseq(ch, fgc, bgc);
+			auto tile = scr.text_style.transparent ? t_tileseq(ch, fgc) : t_tileseq(ch, fgc, bgc);
 			layer.put(tilebuf_csr.x, tilebuf_csr.y, tile);
 			tilebuf_csr.x++;
 			escape_seq = "";

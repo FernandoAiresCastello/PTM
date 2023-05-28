@@ -31,6 +31,7 @@ struct t_screen {
 	struct {
 		int fgc = 1;
 		int bgc = 0;
+		bool transparent = false;
 	} text_style;
 };
 
@@ -40,6 +41,7 @@ void ptm_init_window(int buf_w, int buf_h, int size, rgb bgcol, int default_buf_
 void ptm_free_window();
 void ptm_refresh_window();
 void ptm_toggle_fullscreen();
+void ptm_enable_mouse_pointer(bool enable);
 void ptm_set_window_title(string title);
 void ptm_set_window_bgcol(rgb bgcol);
 void ptm_clear_screen();

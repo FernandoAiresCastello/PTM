@@ -1,29 +1,14 @@
 #include "ptm_commands.h"
-#include "ptm_core.h"
-#include "ptm_graphics_base.h"
-#include "ptm_tile_system.h"
-#include "ptm_color_palette.h"
-#include "ptm_sound_system.h"
-#include "ptm_sprites.h"
-#include "ptm_filesystem.h"
-#include "ptm_keyboard.h"
-#include "ptm_mml.h"
 
 unordered_map<string, function<void(t_params&)>> ptm_commands;
-
-#define CMD(x) ptm_commands[x] = [](t_params& arg)
-#define ARG_VAR_STR(x) intp->arg_var_string(arg[x])
-#define ARG_VAR_NUM(x) intp->arg_var_number(arg[x])
-#define ARG_LIT_LABEL(x) intp->arg_literal_existing_label(arg[x])
-#define ARG_LIT_ID(x) intp->arg_literal_id(arg[x])
-#define ARG_LIT_ID_EXISTING(x) intp->arg_literal_existing_id(arg[x])
-#define ARG_LIT_ARR_ID(x) intp->arg_literal_array_id(arg[x])
-#define ARG_ARR_STR(x) intp->arg_string_from_array_element(arg[x])
 
 void ptm_init_commands()
 {
 	CMD("INCL") {
 		// t_program.cpp
+	};
+	CMD("PTM") {
+		// t_compiler.cpp
 	};
 	CMD("DATA") {
 		// t_compiler.cpp
@@ -68,6 +53,14 @@ void ptm_init_commands()
 		int palette_ix = ARG_VAR_NUM(0);
 		ptm_set_window_bgcol(palette.get(palette_ix));
 		ptm_clear_screen();
+	};
+	CMD("MOUSE.ON") {
+		ARGC(0);
+		ptm_enable_mouse_pointer(true);
+	};
+	CMD("MOUSE.OFF") {
+		ARGC(0);
+		ptm_enable_mouse_pointer(false);
 	};
 	CMD("ANIM") {
 		ARGC(1);
@@ -770,11 +763,25 @@ void ptm_init_commands()
 		scr.text_style.bgc = bgc;
 	};
 	CMD("COLOR") {
-		ARGC(2);
-		int fgc = ARG_VAR_NUM(0);
-		int bgc = ARG_VAR_NUM(1);
-		scr.text_style.fgc = fgc;
-		scr.text_style.bgc = bgc;
+		ARGC_MIN_MAX(1, 2);
+		if (arg.size() == 1) {
+			int fgc = ARG_VAR_NUM(0);
+			scr.text_style.fgc = fgc;
+		}
+		else if (arg.size() == 2) {
+			int fgc = ARG_VAR_NUM(0);
+			int bgc = ARG_VAR_NUM(1);
+			scr.text_style.fgc = fgc;
+			scr.text_style.bgc = bgc;
+		}
+	};
+	CMD("TXT.BGON") {
+		ARGC(0);
+		scr.text_style.transparent = false;
+	};
+	CMD("TXT.BGOFF") {
+		ARGC(0);
+		scr.text_style.transparent = true;
 	};
 	CMD("SND.LOAD") {
 		ARGC(2);

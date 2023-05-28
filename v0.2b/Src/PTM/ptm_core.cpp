@@ -52,7 +52,6 @@ int ptm_run(string program_file)
 
 		intp = new t_interpreter();
 		intp->on_exec_line = ptm_on_exec_line;
-		intp->on_keydown = ptm_on_keydown;
 		intp->on_idle_loop = ptm_idle_frame;
 		intp->on_abort = ptm_abort_from_interpreter;
 		intp->run(prg);
@@ -135,11 +134,7 @@ void ptm_proc_events()
 		else if (e.type == SDL_KEYDOWN) {
 			const SDL_Keycode key = e.key.keysym.sym;
 			last_key = key;
-			if (key == SDLK_ESCAPE) {
-				ptm_exit();
-				return;
-			}
-			else if (key == SDLK_RETURN && (SDL_GetModState() & KMOD_ALT)) {
+			if (key == SDLK_RETURN && (SDL_GetModState() & KMOD_ALT)) {
 				ptm_toggle_fullscreen();
 				return;
 			}
@@ -161,15 +156,6 @@ void ptm_on_exec_line(t_program_line* line, string& cmd, t_params& params)
 	}
 	catch (bad_function_call ex) {
 		intp->abort("Command not found");
-	}
-}
-void ptm_on_keydown(SDL_Keycode key)
-{
-	if (key == SDLK_RETURN && (SDL_GetModState() & KMOD_ALT)) {
-		ptm_toggle_fullscreen();
-	}
-	else if (key == SDLK_ESCAPE) {
-		ptm_exit();
 	}
 }
 bool ptm_has_var(string name)

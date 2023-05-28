@@ -1,3 +1,121 @@
 PTM v0.2b
 TITLE "Invaders"
-WINDOW 360, 200, 4, 1
+WINDOW 256, 192, 4, 1
+
+CALL init_palette
+CALL init_tileset
+BUF.BCOL default, color_black
+CALL draw_background
+CALL init_sprites
+
+#================================================
+	game_init:
+#================================================
+VAR score, 0
+VAR hiscore, 0
+
+#================================================
+	game_loop:
+#================================================
+IF.KEY "RIGHT"
+	SPR.MOVE "spr_player", 1, 0
+ENDIF
+IF.KEY "LEFT"
+	SPR.MOVE "spr_player", -1, 0
+ENDIF
+IF.KEY "ESC"
+	EXIT
+ENDIF
+
+CALL draw_score
+UPDATE
+GOTO game_loop
+
+HALT
+
+#================================================
+	draw_score:
+#================================================
+STR.FMT score_fmt,"%05i",score
+STR.FMT hiscore_fmt,"%05i",hiscore
+
+TXT.BGOFF
+LOCATE 1, 22
+PRINTF "{f1}score: {f2}{%score_fmt}{/f}"
+LOCATE 16, 22
+PRINTF "{f1}hi-score: {f2}{%hiscore_fmt}{/f}"
+RET
+
+#================================================
+	init_sprites:
+#================================================
+TILE.NEW ch_player, color_white
+SPR.NEW "spr_player"
+SPR.SHOW "spr_player"
+SPR.TPOS "spr_player", 16, 20
+
+TILE.NEW ch_missile, color_yellow
+SPR.NEW "spr_missile"
+SPR.SHOW "spr_missile"
+SPR.TPOS "spr_missile", 16, 18
+
+TILE.NEW ch_enemy_1, color_green
+TILE.ADD ch_enemy_2, color_green
+SPR.NEW "spr_enemy"
+SPR.SHOW "spr_enemy"
+SPR.TPOS "spr_enemy", 16, 10
+
+RET
+
+#================================================
+	draw_background:
+#================================================
+TILE.NEW ch_blank, color_blue, color_blue_dkr
+RECT 0, 0, 31, 8
+TILE.NEW ch_blank, color_blue, color_blue_dk
+RECT 0, 9, 31, 16
+TILE.NEW ch_blank, color_blue, color_blue
+RECT 0, 17, 31, 21
+RET
+
+#================================================
+	init_palette:
+#================================================
+DEF color_black,0
+DEF color_white,1
+DEF color_gray,2
+DEF color_blue,3
+DEF color_blue_dk,4
+DEF color_blue_dkr,5
+DEF color_green,6
+DEF color_yellow,7
+
+PAL color_black, &h101010
+PAL color_white, &hf0f0f0
+PAL color_gray, &h505050
+PAL color_blue, &h000080
+PAL color_blue_dk, &h000040
+PAL color_blue_dkr, &h000020
+PAL color_green, &h00b000
+PAL color_yellow, &hffff00
+
+RET
+
+#================================================
+	init_tileset:
+#================================================
+DEF ch_blank, 0
+DEF ch_player, 1
+DEF ch_enemy_1, 2
+DEF ch_enemy_2, 3
+DEF ch_missile, 4
+DEF ch_enemy_dead, 5
+
+CHR 0, "0000000000000000000000000000000000000000000000000000000000000000"
+CHR 1, "0001100000011000001111000111111011011011111111110010010000000000"
+CHR 2, "0000000000111000011111001010101001111100100000100100010000000000"
+CHR 3, "0000000000111000011111001101011001111100100000101000001000000000"
+CHR 4, "0001100000011000000110000000000000011000000000000001100000000000"
+CHR 5, "0000000000000000010010000011000000110000010010000000000000000000"
+
+RET
