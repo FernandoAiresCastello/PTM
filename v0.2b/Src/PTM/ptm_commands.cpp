@@ -509,6 +509,20 @@ void ptm_init_commands()
 		string id = ARG_LIT_ID(0);
 		tilebufs.get(id)->clear_all_layers();
 	};
+	CMD("BUF.COLS") {
+		ARGC(2);
+		string id = ARG_LIT_ID(0);
+		string var = ARG_LIT_ID(1);
+		int cols = tilebufs.get(id)->get_width();
+		ptm_set_var(var, cols);
+	};
+	CMD("BUF.ROWS") {
+		ARGC(2);
+		string id = ARG_LIT_ID(0);
+		string var = ARG_LIT_ID(1);
+		int rows = tilebufs.get(id)->get_height();
+		ptm_set_var(var, rows);
+	};
 	CMD("CLS") {
 		ARGC(0);
 		tilebufs.clear_all_buffers();

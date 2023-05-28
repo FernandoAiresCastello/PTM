@@ -569,9 +569,19 @@ void ptm_print_tile_string(string str, int fgc, int bgc, bool add_frames)
 	t_tilebuf_layer& layer = ptm_get_selected_tilebuf_layer();
 	int x = tilebuf_csr.x;
 	int y = tilebuf_csr.y;
-	tilebuf_csr.x += str.length();
+	bool escape = false;
 
 	for (auto& ch : str) {
+		if (ch == '\\') {
+			escape = true;
+			continue;
+		}
+		if (escape && ch == 'n') {
+			y++;
+			x = tilebuf_csr.x;
+			continue;
+		}
+		escape = false;
 		if (add_frames) {
 			layer.add(x, y, ch, fgc, bgc);
 		}
@@ -580,6 +590,8 @@ void ptm_print_tile_string(string str, int fgc, int bgc, bool add_frames)
 		}
 		x++;
 	}
+
+	tilebuf_csr.set(x, y);
 }
 void ptm_print_tile_char(int ch)
 {
@@ -664,7 +676,10 @@ string ptm_text_input(int maxlen)
 	}
 
 	last_key = 0; // Clear last key, so as not to interfere with the kb_inkey function
+	t_tilebuf_layer& buf = ptm_get_selected_tilebuf_layer();
+	buf.del(tilebuf_csr.x - 1, tilebuf_csr.y); // Delete cursor character
 	tilebuf_csr.x = initial_x;
+
 	return text;
 }
 bool ptm_text_input_ok()

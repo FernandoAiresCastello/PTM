@@ -1,1 +1,4 @@
+#INCL test/sample_hello_world.ptm
+#INCL test/sample_hello_personalized.ptm
+#INCL test/sample_blinking_smiley.ptm
 INCL test/test_1.ptm

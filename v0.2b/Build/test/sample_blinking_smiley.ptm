@@ -1,0 +1,21 @@
+# Setup tileset
+CHR 1, "0011110001111110110110111111111111011011111001110111111000111100"
+CHR 2, "0011110001111110111111111111111111111111110110110110011000111100"
+
+# Setup color palette
+PAL 0, &h000080
+PAL 1, &hffff00
+
+# Calculate center position of default tilebuffer
+BUF.COLS default, cols
+BUF.ROWS default, rows
+DIV center_x, cols, 2
+DIV center_y, rows, 2
+
+# Setup tile for smiley
+TILE.NEW 1, 1
+TILE.ADD 2, 1
+
+# Put smiley at center of default tilebuffer
+LOCATE center_x, center_y
+PUT
