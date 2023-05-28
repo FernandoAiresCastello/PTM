@@ -8,30 +8,112 @@ BUF.BCOL default, color_black
 CALL draw_background
 CALL init_sprites
 
+DEF false, 0
+DEF true, 1
+
 #================================================
 	game_init:
 #================================================
+VAR player_speed, 2
+NEG player_speed_neg, player_speed
+VAR player_missile_speed, -2
+
 VAR score, 0
 VAR hiscore, 0
+VAR player_shooting, false
 
 #================================================
 	game_loop:
 #================================================
 IF.KEY "RIGHT"
-	SPR.MOVE "spr_player", 1, 0
+	SPR.MOVE "spr_player", player_speed, 0
+	CALL maybe_wrap_player_around
 ENDIF
 IF.KEY "LEFT"
-	SPR.MOVE "spr_player", -1, 0
+	SPR.MOVE "spr_player", player_speed_neg, 0
+	CALL maybe_wrap_player_around
+ENDIF
+IF.KEY "SPACE"
+	CALL player_begin_shoot
 ENDIF
 IF.KEY "ESC"
 	EXIT
 ENDIF
 
+CALL move_player_missile
+CALL check_missile_collision
 CALL draw_score
 UPDATE
 GOTO game_loop
 
 HALT
+
+#================================================
+	player_begin_shoot:
+#================================================
+IF.TRUE player_shooting
+	RET
+ENDIF
+VAR player_shooting, true
+SPR.GETX "spr_player", mx
+SPR.GETY "spr_player", my
+SPR.POS "spr_missile", mx, my
+SPR.SHOW "spr_missile"
+RET
+
+#================================================
+	move_player_missile:
+#================================================
+IF.FALSE player_shooting
+	RET
+ENDIF
+SPR.MOVE "spr_missile", 0, player_missile_speed
+SPR.GETY "spr_missile", cur_my
+IF.LT cur_my, -8
+	VAR player_shooting, false
+ENDIF
+RET
+
+#================================================
+	check_missile_collision:
+#================================================
+IF.FALSE player_shooting
+	RET
+ENDIF
+SPR.HIT hit, "spr_missile", "spr_enemy"
+IF.TRUE hit
+	SPR.TGET "spr_enemy"
+	TILE.GETP "dead", is_dead
+	IF.FALSE is_dead
+		CALL kill_enemy
+	ENDIF
+ENDIF
+RET
+
+#================================================
+	kill_enemy:
+#================================================
+INC score
+SPR.TGET "spr_enemy"
+TILE.SETP "dead", true
+TILE.SETC 0, ch_enemy_dead_1
+TILE.SETC 1, ch_enemy_dead_2
+TILE.SETF 0, color_red
+TILE.SETF 1, color_orange
+SPR.TSET "spr_enemy"
+RET
+
+#================================================
+	maybe_wrap_player_around:
+#================================================
+SPR.GETX "spr_player", x
+IF.GT x, 255
+	SPR.X "spr_player", -8
+ENDIF
+IF.LT x, -8
+	SPR.X "spr_player", 255
+ENDIF
+RET
 
 #================================================
 	draw_score:
@@ -54,16 +136,16 @@ SPR.NEW "spr_player"
 SPR.SHOW "spr_player"
 SPR.TPOS "spr_player", 16, 20
 
-TILE.NEW ch_missile, color_yellow
+TILE.NEW ch_missile, color_cyan
 SPR.NEW "spr_missile"
-SPR.SHOW "spr_missile"
-SPR.TPOS "spr_missile", 16, 18
+SPR.HIDE "spr_missile"
+SPR.TPOS "spr_missile", 16, 19
 
 TILE.NEW ch_enemy_1, color_green
 TILE.ADD ch_enemy_2, color_green
 SPR.NEW "spr_enemy"
 SPR.SHOW "spr_enemy"
-SPR.TPOS "spr_enemy", 16, 10
+SPR.TPOS "spr_enemy", 16, 5
 
 RET
 
@@ -81,14 +163,17 @@ RET
 #================================================
 	init_palette:
 #================================================
-DEF color_black,0
-DEF color_white,1
-DEF color_gray,2
-DEF color_blue,3
-DEF color_blue_dk,4
-DEF color_blue_dkr,5
-DEF color_green,6
-DEF color_yellow,7
+DEF color_black, 0
+DEF color_white, 1
+DEF color_gray, 2
+DEF color_blue, 3
+DEF color_blue_dk, 4
+DEF color_blue_dkr, 5
+DEF color_green, 6
+DEF color_yellow, 7
+DEF color_red, 8
+DEF color_orange, 9
+DEF color_cyan, 10
 
 PAL color_black, &h101010
 PAL color_white, &hf0f0f0
@@ -98,6 +183,9 @@ PAL color_blue_dk, &h000040
 PAL color_blue_dkr, &h000020
 PAL color_green, &h00b000
 PAL color_yellow, &hffff00
+PAL color_red, &hff0000
+PAL color_orange, &hff8000
+PAL color_cyan, &h00ffff
 
 RET
 
@@ -109,7 +197,8 @@ DEF ch_player, 1
 DEF ch_enemy_1, 2
 DEF ch_enemy_2, 3
 DEF ch_missile, 4
-DEF ch_enemy_dead, 5
+DEF ch_enemy_dead_1, 5
+DEF ch_enemy_dead_2, 6
 
 CHR 0, "0000000000000000000000000000000000000000000000000000000000000000"
 CHR 1, "0001100000011000001111000111111011011011111111110010010000000000"
@@ -117,5 +206,6 @@ CHR 2, "0000000000111000011111001010101001111100100000100100010000000000"
 CHR 3, "0000000000111000011111001101011001111100100000101000001000000000"
 CHR 4, "0001100000011000000110000000000000011000000000000001100000000000"
 CHR 5, "0000000000000000010010000011000000110000010010000000000000000000"
+CHR 6, "0000000010000100010010000011000000110000010010001000010000000000"
 
 RET

@@ -71,6 +71,17 @@ bool t_tiledata::has(string name, int value)
 {
 	return has(name) && get_i(name) == value;
 }
+void t_tiledata::clear()
+{
+	data.clear();
+}
+void t_tiledata::set_equal(t_tiledata& other)
+{
+	data.clear();
+	for (auto& item : other.data) {
+		set(item.first, item.second);
+	}
+}
 t_tileseq::t_tileseq()
 {
 }
@@ -85,6 +96,7 @@ t_tileseq::t_tileseq(int ch, int fgc)
 void t_tileseq::clear()
 {
 	frames.clear();
+	data.clear();
 }
 void t_tileseq::set_equal(t_tileseq& other)
 {
@@ -92,6 +104,7 @@ void t_tileseq::set_equal(t_tileseq& other)
 	for (int i = 0; i < other.frames.size(); i++) {
 		frames.push_back(other.frames[i]);
 	}
+	data.set_equal(other.data);
 }
 void t_tileseq::add(t_tile& frame)
 {

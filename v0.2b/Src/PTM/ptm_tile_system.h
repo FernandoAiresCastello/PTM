@@ -22,6 +22,8 @@ struct t_tiledata {
 	bool has(string name);
 	bool has(string name, string value);
 	bool has(string name, int value);
+	void clear();
+	void set_equal(t_tiledata& other);
 private:
 	unordered_map<string, string> data;
 };

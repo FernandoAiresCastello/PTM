@@ -631,8 +631,8 @@ void ptm_init_commands()
 	};
 	CMD("TILE.GETP") {
 		ARGC(2);
-		string var = ARG_LIT_ID(0);
-		string prop = ARG_VAR_STR(1);
+		string prop = ARG_VAR_STR(0);
+		string var = ARG_LIT_ID(1);
 		if (working_tile.data.has(prop)) {
 			ptm_set_var(var, working_tile.data.get_s(prop));
 		}
@@ -904,6 +904,18 @@ void ptm_init_commands()
 		t_sprite& sprite_2 = sprites.get_sprite(id_sprite_2);
 		bool hit = sprite_1.collides_with(sprite_2);
 		ptm_set_var(var, hit);
+	};
+	CMD("SPR.TGET") {
+		ARGC(1);
+		string id = ARG_VAR_STR(0);
+		t_sprite& spr = sprites.get_sprite(id);
+		working_tile.set_equal(spr.tile);
+	};
+	CMD("SPR.TSET") {
+		ARGC(1);
+		string id = ARG_VAR_STR(0);
+		t_sprite& spr = sprites.get_sprite(id);
+		spr.tile.set_equal(working_tile);
 	};
 	CMD("READ") {
 		ARGC(1);
