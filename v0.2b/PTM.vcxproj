@@ -123,7 +123,7 @@
       <Command>copy "$(TargetDir)SDL2.dll" "$(SolutionDir)Build\SDL2.dll"
 copy "$(TargetPath)" "$(SolutionDir)Build\$(TargetFileName)"
 cd "$(SolutionDir)Build"
-"C:\Program Files\7-Zip\7z.exe" a PTM_v0.2b.zip</Command>
+"C:\Program Files\7-Zip\7z.exe" a PTM_v0.2b.zip -x!PTM_v0.2b.zip</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
