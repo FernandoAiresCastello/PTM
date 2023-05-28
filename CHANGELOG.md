@@ -11,6 +11,7 @@
 	- CHR now defines a tileset entry with a single 64-character binary string
 	- TILE.NEW and TILE.ADD no longer require the background color parameter (now it is optional; omitting it makes the tile transparent)
 	- Commands that require parameters for rectangle corners (e.g. RECT, FILL) now take x1, y1, x2, y2 instead of x, y, width, height
+	- The COLOR command now behaves like FCOL when the second parameter is omitted
 - Some commands have been removed:
 	- NOP, CHRS, DRAW, TRON, TROFF
 - Some commands have been renamed:
@@ -39,3 +40,5 @@
 - Implemented new conditional blocks IF.TRUE and IF.FALSE
 - Implemented STR.JOIN to join array of strings into single string
 - Implemented PTM command to indicate intended version for running the program
+- Implemented MOUSE.ON and MOUSE.OFF to show/hide the mouse cursor
+- Implemented TXT.BGON and TXT.BGOFF to enable/disable rendering the text background color
