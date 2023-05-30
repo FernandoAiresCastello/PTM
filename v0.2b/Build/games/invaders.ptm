@@ -12,15 +12,14 @@ DEF false, 0
 DEF true, 1
 
 #================================================
-	game_init:
+	init_vars:
 #================================================
 VAR player_speed, 2
 NEG player_speed_neg, player_speed
 VAR player_missile_speed, -2
-
+VAR player_shooting, false
 VAR score, 0
 VAR hiscore, 0
-VAR player_shooting, false
 
 #================================================
 	game_loop:
@@ -98,8 +97,8 @@ SPR.TGET "spr_enemy"
 TILE.SETP "dead", true
 TILE.SETC 0, ch_enemy_dead_1
 TILE.SETC 1, ch_enemy_dead_2
-TILE.SETF 0, color_red
-TILE.SETF 1, color_orange
+TILE.SETF 0, color_orange
+TILE.SETF 1, color_red
 SPR.TSET "spr_enemy"
 RET
 
@@ -206,6 +205,6 @@ CHR 2, "0000000000111000011111001010101001111100100000100100010000000000"
 CHR 3, "0000000000111000011111001101011001111100100000101000001000000000"
 CHR 4, "0001100000011000000110000000000000011000000000000001100000000000"
 CHR 5, "0000000000000000010010000011000000110000010010000000000000000000"
-CHR 6, "0000000010000100010010000011000000110000010010001000010000000000"
+CHR 6, "0000000010000100010010000000000000000000010010001000010000000000"
 
 RET
