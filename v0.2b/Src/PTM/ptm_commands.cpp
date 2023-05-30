@@ -1141,22 +1141,25 @@ void ptm_init_commands()
 		ptm_set_var(var, value);
 	};
 	CMD("ENCRYPT") {
-		ARGC(2);
+		ARGC(3);
 		string var = ARG_LIT_ID(0);
 		string str = ARG_VAR_STR(1);
-		string result = Util::XorEncrypt(str, xor_encryption_key);
+		int key = ARG_VAR_NUM(2);
+		if (key < 0 || key > 127) {
+			ptm_abort("Invalid encryption key: " + String::ToString(key));
+		}
+		string result = Util::XorEncrypt(str, key);
 		ptm_set_var(var, result);
 	};
 	CMD("DECRYPT") {
-		ARGC(2);
+		ARGC(3);
 		string var = ARG_LIT_ID(0);
 		string str = ARG_VAR_STR(1);
-		string result = Util::XorDecrypt(str, xor_encryption_key);
+		int key = ARG_VAR_NUM(2);
+		if (key < 0 || key > 127) {
+			ptm_abort("Invalid encryption key: " + String::ToString(key));
+		}
+		string result = Util::XorDecrypt(str, key);
 		ptm_set_var(var, result);
-	};
-	CMD("EPRG") {
-		ARGC(1);
-		string path = ARG_VAR_STR(0);
-		ptm_save_encrypted_program(prg, path);
 	};
 }
