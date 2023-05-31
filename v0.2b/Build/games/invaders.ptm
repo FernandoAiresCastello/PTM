@@ -6,7 +6,8 @@ CALL init_palette
 CALL init_tileset
 BUF.BCOL default, color_black
 CALL draw_background
-CALL init_sprites
+CALL init_player
+CALL init_enemies
 
 DEF false, 0
 DEF true, 1
@@ -79,27 +80,30 @@ RET
 IF.FALSE player_shooting
 	RET
 ENDIF
-SPR.HIT hit, "spr_missile", "spr_enemy"
-IF.TRUE hit
-	SPR.TGET "spr_enemy"
-	TILE.GETP "dead", is_dead
-	IF.FALSE is_dead
-		CALL kill_enemy
+ARR.FOR enemy_ids, enemy_id
+	SPR.HIT hit, "spr_missile", enemy_id
+	IF.TRUE hit
+		SPR.TGET enemy_id
+		TILE.GETP "dead", is_dead
+		IF.FALSE is_dead
+			CALL kill_enemy
+		ENDIF
 	ENDIF
-ENDIF
+NEXT
 RET
 
 #================================================
 	kill_enemy:
 #================================================
 INC score
-SPR.TGET "spr_enemy"
+SPR.TGET enemy_id
 TILE.SETP "dead", true
 TILE.SETC 0, ch_enemy_dead_1
 TILE.SETC 1, ch_enemy_dead_2
 TILE.SETF 0, color_orange
 TILE.SETF 1, color_red
-SPR.TSET "spr_enemy"
+SPR.TSET enemy_id
+SPR.POS "spr_missile", -8, -8
 RET
 
 #================================================
@@ -128,24 +132,35 @@ PRINTF "{f1}hi-score: {f2}{%hiscore_fmt}{/f}"
 RET
 
 #================================================
-	init_sprites:
+	init_player:
 #================================================
 TILE.NEW ch_player, color_white
 SPR.NEW "spr_player"
 SPR.SHOW "spr_player"
 SPR.TPOS "spr_player", 16, 20
-
 TILE.NEW ch_missile, color_cyan
 SPR.NEW "spr_missile"
 SPR.HIDE "spr_missile"
 SPR.TPOS "spr_missile", 16, 19
+RET
 
+#================================================
+	init_enemies:
+#================================================
+DEF max_enemy_sprites, 50
+ARR.NEW enemy_ids
 TILE.NEW ch_enemy_1, color_green
 TILE.ADD ch_enemy_2, color_green
-SPR.NEW "spr_enemy"
-SPR.SHOW "spr_enemy"
-SPR.TPOS "spr_enemy", 16, 5
-
+FOR i, 0, max_enemy_sprites
+	VAR enemy_sprite_id, "spr_enemy"
+	STR.CAT enemy_sprite_id, enemy_sprite_id, i
+	ARR.PUSH enemy_ids, enemy_sprite_id
+	SPR.NEW enemy_sprite_id
+	RND enemy_x, 1, 30
+	RND enemy_y, 0, 15
+	SPR.TPOS enemy_sprite_id, enemy_x, enemy_y
+	SPR.SHOW enemy_sprite_id
+NEXT
 RET
 
 #================================================
