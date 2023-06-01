@@ -28,10 +28,8 @@ loop1:
 	IF.KEY "UP"
 		SPR.MOVE "smiley", 0, -1
 	ENDIF
-	SPR.GETX "smiley", x
-	SPR.GETY "smiley", y
-	DIV x, x, 8
-	DIV y, y, 8
+	SPR.TGETX "smiley", x
+	SPR.TGETY "smiley", y
 	DELR 0, 0, 32, 1
 	LOCATE x, y
 	GET

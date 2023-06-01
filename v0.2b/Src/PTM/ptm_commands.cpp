@@ -845,6 +845,20 @@ void ptm_init_commands()
 		t_sprite& spr = sprites.get_sprite(id);
 		ptm_set_var(var, spr.y);
 	};
+	CMD("SPR.TGETX") {
+		ARGC(2);
+		string id = ARG_VAR_STR(0);
+		string var = ARG_LIT_ID(1);
+		t_sprite& spr = sprites.get_sprite(id);
+		ptm_set_var(var, spr.x / 8);
+	};
+	CMD("SPR.TGETY") {
+		ARGC(2);
+		string id = ARG_VAR_STR(0);
+		string var = ARG_LIT_ID(1);
+		t_sprite& spr = sprites.get_sprite(id);
+		ptm_set_var(var, spr.y / 8);
+	};
 	CMD("SPR.POS") {
 		ARGC(3);
 		string id = ARG_VAR_STR(0);
