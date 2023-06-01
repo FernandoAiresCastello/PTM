@@ -1,5 +1,46 @@
 CALL init_common_graphics
-GOTO test_misc
+GOTO test_sprite_tile_collision
+
+#==============================================================================
+#	String string split and join
+	test_sprite_tile_collision:
+#==============================================================================
+TILE.NEW 1, 1
+SPR.NEW "smiley"
+SPR.BUF "smiley", default
+SPR.POS "smiley", 0, 0
+SPR.SHOW "smiley"
+
+TILE.NEW 2, 7
+TILE.SETP "type", "pellet"
+RECT 5, 4, 20, 10
+
+loop1:
+	IF.KEY "RIGHT"
+		SPR.MOVE "smiley", 1, 0
+	ENDIF
+	IF.KEY "LEFT"
+		SPR.MOVE "smiley", -1, 0
+	ENDIF
+	IF.KEY "DOWN"
+		SPR.MOVE "smiley", 0, 1
+	ENDIF
+	IF.KEY "UP"
+		SPR.MOVE "smiley", 0, -1
+	ENDIF
+	SPR.GETX "smiley", x
+	SPR.GETY "smiley", y
+	DIV x, x, 8
+	DIV y, y, 8
+	DELR 0, 0, 32, 1
+	LOCATE x, y
+	GET
+	TILE.GETP "type", type
+	DEL
+	LOCATE 0, 0
+	PRINTF "({%x} {%y}) {%type}"
+	UPDATE
+	GOTO loop1
 
 #==============================================================================
 #	String string split and join
@@ -229,6 +270,7 @@ HALT
 WINDOW 360, 200, 4, 1
 
 CHR 1, "1111111110000001101001011000000110100101100110011000000111111111"
+CHR 2, "0000000000000000000110000011110000111100000110000000000000000000"
 
 PAL 0, &h101010
 PAL 1, &hf0f0f0

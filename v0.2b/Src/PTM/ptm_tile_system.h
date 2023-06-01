@@ -55,6 +55,7 @@ struct t_tileset {
 	void add(binary tile);
 	void set(int index, binary tile);
 	binary& get(int index);
+	void set_size(int size);
 };
 struct t_search_pos {
 	int x = PTM_INVALID_NUMBER;

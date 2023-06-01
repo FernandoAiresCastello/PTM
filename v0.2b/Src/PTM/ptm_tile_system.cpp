@@ -173,9 +173,7 @@ t_tileset::t_tileset()
 }
 void t_tileset::reset()
 {
-	tiles.clear();
-	add_blank(256);
-	ptm_init_text_font();
+	set_size(256);
 }
 binary t_tileset::blank_tile()
 {
@@ -198,6 +196,12 @@ void t_tileset::set(int index, binary tile)
 binary& t_tileset::get(int index)
 {
 	return tiles[index];
+}
+void t_tileset::set_size(int size)
+{
+	tiles.clear();
+	add_blank(size);
+	ptm_init_text_font();
 }
 t_tilebuf_layer::t_tilebuf_layer()
 {

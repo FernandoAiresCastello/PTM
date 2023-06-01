@@ -363,6 +363,14 @@ void ptm_init_commands()
 		binary bin = ARG_VAR_STR(1);
 		tileset.set(ix, bin);
 	};
+	CMD("CHR.NEW") {
+		ARGC(1);
+		int size = ARG_VAR_NUM(0);
+		if (size < 256 || size > 65536) {
+			ptm_abort("Illegal tileset size");
+		}
+		tileset.set_size(size);
+	};
 	CMD("CHR.LEN") {
 		ARGC(1);
 		string var = ARG_LIT_ID(1);
