@@ -15,12 +15,14 @@ DEF true, 1
 #================================================
 	init_vars:
 #================================================
-VAR player_speed, 2
+VAR player_speed, 1
 NEG player_speed_neg, player_speed
 VAR player_missile_speed, -2
 VAR player_shooting, false
 VAR score, 0
 VAR hiscore, 0
+VAR enemy_move_timer, 0
+VAR enemy_move_timer_max, 10
 
 #================================================
 	game_loop:
@@ -42,11 +44,28 @@ ENDIF
 
 CALL move_player_missile
 CALL check_missile_collision
+CALL move_enemies
 CALL draw_score
 UPDATE
 GOTO game_loop
 
 HALT
+
+#================================================
+	move_enemies:
+#================================================
+INC enemy_move_timer
+IF.GTE enemy_move_timer, enemy_move_timer_max
+	VAR enemy_move_timer, 0
+	ARR.FOR enemy_ids, enemy_id
+		SPR.MOVE enemy_id, 0, 1
+		SPR.TGETY enemy_id, enemy_y
+		IF.GTE enemy_y, 21
+			SPR.DEL enemy_id
+		ENDIF
+	NEXT
+ENDIF
+RET
 
 #================================================
 	player_begin_shoot:
@@ -147,7 +166,7 @@ RET
 #================================================
 	init_enemies:
 #================================================
-DEF max_enemy_sprites, 50
+DEF max_enemy_sprites, 100
 ARR.NEW enemy_ids
 TILE.NEW ch_enemy_1, color_green
 TILE.ADD ch_enemy_2, color_green
@@ -156,8 +175,8 @@ FOR i, 0, max_enemy_sprites
 	STR.CAT enemy_sprite_id, enemy_sprite_id, i
 	ARR.PUSH enemy_ids, enemy_sprite_id
 	SPR.NEW enemy_sprite_id
-	RND enemy_x, 1, 30
-	RND enemy_y, 0, 15
+	RND enemy_x, 5, 25
+	RND enemy_y, -100, 0
 	SPR.TPOS enemy_sprite_id, enemy_x, enemy_y
 	SPR.SHOW enemy_sprite_id
 NEXT

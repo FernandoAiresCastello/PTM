@@ -5,13 +5,13 @@
 #	with your own code.
 #==============================================================================
 
-INCL test/tests.ptm
+#INCL test/tests.ptm
 
 #INCL examples/hello_world.ptm
 #INCL examples/hello_personalized.ptm
 #INCL examples/blinking_smiley.ptm
 #INCL examples/moving_sprites.ptm
 
-#INCL games/invaders.ptm
+INCL games/invaders.ptm
 #INCL games/adv_lawnmower_sim.ptm
 #INCL games/dragon_labyrinth.ptm
