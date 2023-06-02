@@ -960,6 +960,60 @@ void ptm_init_commands()
 		bool exists = File::Exists(path);
 		ptm_set_var(var, exists ? 1 : 0);
 	};
+	CMD("FOPEN.R") {
+		ARGC(1);
+		string path = ARG_VAR_STR(0);
+		ptm_open_record_file(path, 'R');
+	};
+	CMD("FOPEN.W") {
+		ARGC(1);
+		string path = ARG_VAR_STR(0);
+		ptm_open_record_file(path, 'W');
+	};
+	CMD("FEOF") {
+		ARGC(1);
+		string var = ARG_LIT_ID(0);
+		if (ptm_get_record_file_mode() != 'R') {
+			ptm_abort("Cannot check for EOF in WRITE mode");
+		}
+		ptm_set_var(var, ptm_is_end_of_record_file() ? 1 : 0);
+	};
+	CMD("FSIZE") {
+		ARGC(1);
+		string var = ARG_LIT_ID(0);
+		if (ptm_get_record_file_mode() != 'R') {
+			ptm_abort("Cannot check for file size in WRITE mode");
+		}
+		ptm_set_var(var, ptm_get_record_file_item_count());
+	};
+	CMD("FREAD") {
+		ARGC(1);
+		string var = ARG_LIT_ID(0);
+		if (ptm_get_record_file_mode() != 'R') {
+			ptm_abort("Cannot READ from record file in WRITE mode");
+		}
+		if (ptm_is_end_of_record_file()) {
+			ptm_abort("End of file reached");
+		}
+		string record = ptm_read_string_from_record_file();
+		ptm_set_var(var, record);
+	};
+	CMD("FWRITE") {
+		ARGC(1);
+		string record = ARG_VAR_STR(0);
+		if (ptm_get_record_file_mode() != 'W') {
+			ptm_abort("Cannot WRITE to record file in READ mode");
+		}
+		ptm_write_to_record_file(record);
+	};
+	CMD("FSAVE") {
+		ARGC(1);
+		string path = ARG_VAR_STR(0);
+		if (ptm_get_record_file_mode() != 'W') {
+			ptm_abort("Cannot SAVE record file in READ mode");
+		}
+		ptm_save_record_file(path);
+	};
 	CMD("CLOAD") {
 		ARGC(2);
 		string path = ARG_VAR_STR(0);

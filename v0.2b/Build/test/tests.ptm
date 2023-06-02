@@ -1,5 +1,22 @@
 CALL init_common_graphics
-GOTO test_sprite_tile_collision
+GOTO test_filesystem
+
+#==============================================================================
+#	String string split and join
+	test_filesystem:
+#==============================================================================
+FOPEN.W "test.dat"
+FWRITE "Hello 1"
+FWRITE "Hello 2"
+FWRITE 666
+FWRITE 0
+FSAVE "test.dat"
+
+FOPEN.R "test.dat"
+FSIZE size
+MSGBOX size
+
+EXIT
 
 #==============================================================================
 #	String string split and join
