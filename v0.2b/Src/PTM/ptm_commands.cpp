@@ -358,10 +358,19 @@ void ptm_init_commands()
 		ptm_set_var(id, scr.frame_counter);
 	};
 	CMD("CHR") {
-		ARGC(2);
-		int ix = ARG_VAR_NUM(0);
-		binary bin = ARG_VAR_STR(1);
-		tileset.set(ix, bin);
+		ARGC_MIN_MAX(2, 3);
+		if (arg.size() == 2) {
+			int ix = ARG_VAR_NUM(0);
+			binary bin = ARG_VAR_STR(1);
+			tileset.set(ix, bin);
+		}
+		else if (arg.size() == 3) {
+			int ix = ARG_VAR_NUM(0);
+			string var = ARG_LIT_ID(1);
+			binary bin = ARG_VAR_STR(2);
+			tileset.set(ix, bin);
+			ptm_def_const(var, ix);
+		}
 	};
 	CMD("CHR.NEW") {
 		ARGC(1);
@@ -383,10 +392,19 @@ void ptm_init_commands()
 		ptm_set_var(var, tileset.get(ix));
 	};
 	CMD("PAL") {
-		ARGC(2);
-		int ix = ARG_VAR_NUM(0);
-		rgb color = ARG_VAR_NUM(1);
-		palette.set(ix, color);
+		ARGC_MIN_MAX(2, 3);
+		if (arg.size() == 2) {
+			int ix = ARG_VAR_NUM(0);
+			rgb color = ARG_VAR_NUM(1);
+			palette.set(ix, color);
+		}
+		else if (arg.size() == 3) {
+			int ix = ARG_VAR_NUM(0);
+			string var = ARG_LIT_ID(1);
+			rgb color = ARG_VAR_NUM(2);
+			palette.set(ix, color);
+			ptm_def_const(var, ix);
+		}
 	};
 	CMD("PAL.LEN") {
 		ARGC(1);

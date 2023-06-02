@@ -145,9 +145,9 @@ STR.FMT hiscore_fmt,"%05i",hiscore
 
 TXT.BGOFF
 LOCATE 1, 22
-PRINTF "{f1}score: {f2}{%score_fmt}{/f}"
-LOCATE 16, 22
-PRINTF "{f1}hi-score: {f2}{%hiscore_fmt}{/f}"
+PRINTF "{f1}score {f2}{%score_fmt}{/f}"
+LOCATE 17, 22
+PRINTF "{f1}hi-score {f2}{%hiscore_fmt}{/f}"
 RET
 
 #================================================
@@ -156,7 +156,7 @@ RET
 TILE.NEW ch_player, color_white
 SPR.NEW "spr_player"
 SPR.SHOW "spr_player"
-SPR.TPOS "spr_player", 16, 20
+SPR.TPOS "spr_player", 16, 21
 TILE.NEW ch_missile, color_cyan
 SPR.NEW "spr_missile"
 SPR.HIDE "spr_missile"
@@ -196,49 +196,27 @@ RET
 #================================================
 	init_palette:
 #================================================
-DEF color_black, 0
-DEF color_white, 1
-DEF color_gray, 2
-DEF color_blue, 3
-DEF color_blue_dk, 4
-DEF color_blue_dkr, 5
-DEF color_green, 6
-DEF color_yellow, 7
-DEF color_red, 8
-DEF color_orange, 9
-DEF color_cyan, 10
-
-PAL color_black, &h101010
-PAL color_white, &hf0f0f0
-PAL color_gray, &h505050
-PAL color_blue, &h000080
-PAL color_blue_dk, &h000040
-PAL color_blue_dkr, &h000020
-PAL color_green, &h00b000
-PAL color_yellow, &hffff00
-PAL color_red, &hff0000
-PAL color_orange, &hff8000
-PAL color_cyan, &h00ffff
-
+PAL 0, color_black, &h101010
+PAL 1, color_white, &hf0f0f0
+PAL 2, color_gray, &h505050
+PAL 3, color_blue, &h000080
+PAL 4, color_blue_dk, &h000040
+PAL 5, color_blue_dkr, &h000020
+PAL 6, color_green, &h00b000
+PAL 7, color_yellow, &hffff00
+PAL 8, color_red, &hff0000
+PAL 9, color_orange, &hff8000
+PAL 10, color_cyan, &h00ffff
 RET
 
 #================================================
 	init_tileset:
 #================================================
-DEF ch_blank, 0
-DEF ch_player, 1
-DEF ch_enemy_1, 2
-DEF ch_enemy_2, 3
-DEF ch_missile, 4
-DEF ch_enemy_dead_1, 5
-DEF ch_enemy_dead_2, 6
-
-CHR 0, "0000000000000000000000000000000000000000000000000000000000000000"
-CHR 1, "0001100000011000001111000111111011011011111111110010010000000000"
-CHR 2, "0000000000111000011111001010101001111100100000100100010000000000"
-CHR 3, "0000000000111000011111001101011001111100100000101000001000000000"
-CHR 4, "0001100000011000000110000000000000011000000000000001100000000000"
-CHR 5, "0000000000000000010010000011000000110000010010000000000000000000"
-CHR 6, "0000000010000100010010000000000000000000010010001000010000000000"
-
+CHR 0, ch_blank, "0000000000000000000000000000000000000000000000000000000000000000"
+CHR 1, ch_player, "0001100000011000001111000111111011011011111111110010010000000000"
+CHR 2, ch_enemy_1, "0000000000111000011111001010101001111100100000100100010000000000"
+CHR 3, ch_enemy_2, "0000000000111000011111001101011001111100100000101000001000000000"
+CHR 4, ch_missile, "0001100000011000000110000000000000011000000000000001100000000000"
+CHR 5, ch_enemy_dead_1, "0000000000000000010010000011000000110000010010000000000000000000"
+CHR 6, ch_enemy_dead_2, "0000000010000100010010000000000000000000010010001000010000000000"
 RET
