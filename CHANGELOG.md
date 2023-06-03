@@ -5,7 +5,7 @@
 ## v0.2b 
 *Note 1: This version is currently under development, this list will be updated as changes are introduced.*  
 *Note 2: Programs made for v0.1b will not work properly in this version due to breaking changes in the language.*  
-*Note 3: There are too many changes since v0.1b, some minor changes may be missing from this changelog.*  
+*Note 3: There are too many changes since v0.1b, some changes may be missing from this changelog.*  
 
 - Some commands now have a different syntax or purpose
 	- CHR now defines a tileset entry with a single 64-character binary string
@@ -26,6 +26,7 @@
 	- STR.END became STR.SFX
 	- FILE.CHK became FCHK
 	- MML commands now have the prefix MML (e.g. PLAY became MML.PLAY, etc)
+- The PAL and CHR commands now have 3 argument variants for assigning the index to a constant
 - Implemented sprites (SPR.*)
 - Implemented loading and playing external WAV sound files (SND.*)
 - Implemented assertions for debugging purposes (ASSERT)
@@ -42,3 +43,4 @@
 - Implemented PTM command to indicate intended version for running the program
 - Implemented MOUSE.ON and MOUSE.OFF to show/hide the mouse cursor
 - Implemented TXT.BGON and TXT.BGOFF to enable/disable rendering the text background color
+- Implemented record file manipulation (FOPEN.W, FOPEN.R, FSIZE, FREAD, FWRITE, FEOF, FSAVE)
