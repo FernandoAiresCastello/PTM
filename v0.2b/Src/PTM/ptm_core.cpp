@@ -189,11 +189,21 @@ void ptm_copy_var_to_const(string dst, string src)
 }
 void ptm_def_const(string name, string value)
 {
-	intp->vars[name] = t_variable(value, true);
+	if (ptm_has_var(name)) {
+		intp->abort("Constant already defined: " + name);
+	}
+	else {
+		intp->vars[name] = t_variable(value, true);
+	}
 }
 void ptm_def_const(string name, int value)
 {
-	intp->vars[name] = t_variable(value, true);
+	if (ptm_has_var(name)) {
+		intp->abort("Constant already defined: " + name);
+	}
+	else {
+		intp->vars[name] = t_variable(value, true);
+	}
 }
 void ptm_new_array(string name, int size)
 {

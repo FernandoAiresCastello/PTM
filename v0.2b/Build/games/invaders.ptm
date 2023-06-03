@@ -2,6 +2,22 @@ PTM v0.2b
 TITLE "Invaders"
 WINDOW 256, 192, 4, 1
 
+#================================================
+	init:
+#================================================
+DEF false, 0
+DEF true, 1
+DEF max_enemy_sprites, 100
+VAR enemies_left, max_enemy_sprites
+VAR player_speed, 1
+NEG player_speed_neg, player_speed
+VAR player_missile_speed, -3
+VAR player_shooting, false
+VAR score, 0
+VAR hiscore, 0
+VAR enemy_move_timer, 0
+VAR enemy_move_timer_max, 10
+
 CALL init_palette
 CALL init_tileset
 BUF.BCOL default, color_black
@@ -9,23 +25,19 @@ CALL draw_background
 CALL init_player
 CALL init_enemies
 
-DEF false, 0
-DEF true, 1
-
-#================================================
-	init_vars:
-#================================================
-VAR player_speed, 1
-NEG player_speed_neg, player_speed
-VAR player_missile_speed, -2
-VAR player_shooting, false
-VAR score, 0
-VAR hiscore, 0
-VAR enemy_move_timer, 0
-VAR enemy_move_timer_max, 10
-
 #================================================
 	game_loop:
+#================================================
+CALL check_player_input
+CALL move_player_missile
+CALL check_missile_collision
+CALL move_enemies
+CALL draw_score
+UPDATE
+GOTO game_loop
+
+#================================================
+	check_player_input:
 #================================================
 IF.KEY "RIGHT"
 	SPR.MOVE "spr_player", player_speed, 0
@@ -41,15 +53,7 @@ ENDIF
 IF.KEY "ESC"
 	EXIT
 ENDIF
-
-CALL move_player_missile
-CALL check_missile_collision
-CALL move_enemies
-CALL draw_score
-UPDATE
-GOTO game_loop
-
-HALT
+RET
 
 #================================================
 	move_enemies:
@@ -123,6 +127,28 @@ TILE.SETF 0, color_orange
 TILE.SETF 1, color_red
 SPR.TSET enemy_id
 SPR.POS "spr_missile", -8, -8
+DEC enemies_left
+CALL adjust_enemy_speed
+RET
+
+#================================================
+	adjust_enemy_speed:
+#================================================
+IF.LTE enemies_left, 80
+	VAR enemy_move_timer_max, 8
+ENDIF
+IF.LTE enemies_left, 60
+	VAR enemy_move_timer_max, 6
+ENDIF
+IF.LTE enemies_left, 40
+	VAR enemy_move_timer_max, 5
+ENDIF
+IF.LTE enemies_left, 20
+	VAR enemy_move_timer_max, 4
+ENDIF
+IF.LTE enemies_left, 2
+	VAR enemy_move_timer_max, 2
+ENDIF
 RET
 
 #================================================
@@ -166,7 +192,6 @@ RET
 #================================================
 	init_enemies:
 #================================================
-DEF max_enemy_sprites, 100
 ARR.NEW enemy_ids
 TILE.NEW ch_enemy_1, color_green
 TILE.ADD ch_enemy_2, color_green
@@ -199,9 +224,9 @@ RET
 PAL 0, color_black, &h101010
 PAL 1, color_white, &hf0f0f0
 PAL 2, color_gray, &h505050
-PAL 3, color_blue, &h000080
-PAL 4, color_blue_dk, &h000040
-PAL 5, color_blue_dkr, &h000020
+PAL 3, color_blue_dkr, &h121020
+PAL 4, color_blue_dk, &h121030
+PAL 5, color_blue, &h121040
 PAL 6, color_green, &h00b000
 PAL 7, color_yellow, &hffff00
 PAL 8, color_red, &hff0000
