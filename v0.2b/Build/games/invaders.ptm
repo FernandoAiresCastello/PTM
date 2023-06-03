@@ -7,6 +7,7 @@ WINDOW 256, 192, 4, 1
 #================================================
 DEF false, 0
 DEF true, 1
+DEF hiscore_file, "hiscore.txt"
 DEF max_enemy_sprites, 100
 VAR enemies_left, max_enemy_sprites
 VAR player_speed, 1
@@ -24,6 +25,11 @@ BUF.BCOL default, color_black
 CALL draw_background
 CALL init_player
 CALL init_enemies
+
+FCHK hiscore_file, has_hiscore
+IF.TRUE has_hiscore
+	CLOAD hiscore_file, hiscore
+ENDIF
 
 #================================================
 	game_loop:
@@ -65,6 +71,11 @@ IF.GTE enemy_move_timer, enemy_move_timer_max
 		SPR.MOVE enemy_id, 0, 1
 		SPR.TGETY enemy_id, enemy_y
 		IF.GTE enemy_y, 21
+			SPR.TGET enemy_id
+			TILE.GETP "dead", is_dead
+			IF.FALSE is_dead
+				CALL game_over
+			ENDIF
 			SPR.DEL enemy_id
 		ENDIF
 	NEXT
@@ -119,6 +130,9 @@ RET
 	kill_enemy:
 #================================================
 INC score
+IF.GTE score, hiscore
+	VAR hiscore, score
+ENDIF
 SPR.TGET enemy_id
 TILE.SETP "dead", true
 TILE.SETC 0, ch_enemy_dead_1
@@ -175,6 +189,18 @@ PRINTF "{f1}score {f2}{%score_fmt}{/f}"
 LOCATE 17, 22
 PRINTF "{f1}hi-score {f2}{%hiscore_fmt}{/f}"
 RET
+
+#================================================
+	game_over:
+#================================================
+DELR 17, 22, 32, 23
+COLOR color_red
+LOCATE 21, 22
+PRINT	  "GAME OVER!"
+LOCATE 21, 22
+PRINT.ADD "          "
+CSAVE hiscore_file, hiscore
+HALT
 
 #================================================
 	init_player:
