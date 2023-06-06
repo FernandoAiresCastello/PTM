@@ -952,6 +952,13 @@ void ptm_init_commands()
 		t_sprite& spr = sprites.get_sprite(id);
 		spr.visible = false;
 	};
+	CMD("SPR.VISBL") {
+		ARGC(2);
+		string id = ARG_VAR_STR(0);
+		string var = ARG_LIT_ID(1);
+		t_sprite& spr = sprites.get_sprite(id);
+		ptm_set_var(var, spr.visible ? 1 : 0);
+	};
 	CMD("SPR.DEL") {
 		ARGC(1);
 		string id = ARG_VAR_STR(0);
