@@ -751,6 +751,29 @@ void ptm_init_commands()
 		int dy = ARG_VAR_NUM(5);
 		ptm_get_selected_tilebuf_layer().move_block(x1, y1, x2, y2, dx, dy);
 	};
+	CMD("COPY") {
+		ARGC(4);
+		int x1 = ARG_VAR_NUM(0);
+		int y1 = ARG_VAR_NUM(1);
+		int x2 = ARG_VAR_NUM(2);
+		int y2 = ARG_VAR_NUM(3);
+		t_tilebuf_layer& buf = ptm_get_selected_tilebuf_layer();
+		ptm_copy_tile_block(buf, x1, y1, x2, y2);
+	};
+	CMD("CUT") {
+		ARGC(4);
+		int x1 = ARG_VAR_NUM(0);
+		int y1 = ARG_VAR_NUM(1);
+		int x2 = ARG_VAR_NUM(2);
+		int y2 = ARG_VAR_NUM(3);
+		t_tilebuf_layer& buf = ptm_get_selected_tilebuf_layer();
+		ptm_cut_tile_block(buf, x1, y1, x2, y2);
+	};
+	CMD("PASTE") {
+		ARGC(0);
+		t_tilebuf_layer& buf = ptm_get_selected_tilebuf_layer();
+		ptm_paste_tile_block(buf, tilebuf_csr.x , tilebuf_csr.y);
+	};
 	CMD("PRINT") {
 		ARGC(1);
 		string str = ARG_VAR_STR(0);

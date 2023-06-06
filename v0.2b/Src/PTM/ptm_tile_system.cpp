@@ -15,6 +15,12 @@ t_tilebuf_cursor tilebuf_csr;
 unordered_map<string, t_tileseq> tilestore;
 bool text_input_cancelled = false;
 
+struct {
+	int width = 0;
+	int height = 0;
+	vector<t_tileseq> tiles;
+} clipboard;
+
 t_tile::t_tile()
 {
 	this->ch = 0;
@@ -220,6 +226,14 @@ void t_tilebuf_layer::init(int width, int height)
 		tiles.push_back(t_tileseq());
 	}
 }
+int t_tilebuf_layer::get_width()
+{
+	return width;
+}
+int t_tilebuf_layer::get_height()
+{
+	return height;
+}
 void t_tilebuf_layer::put(int x, int y, t_tileseq& tileseq)
 {
 	if (x >= 0 && y >= 0 && x < width && y < width) {
@@ -314,7 +328,7 @@ void t_tilebuf_layer::move_tile(int x, int y, int dx, int dy)
 }
 void t_tilebuf_layer::move_block(int x1, int y1, int x2, int y2, int dx, int dy)
 {
-	std::vector<t_tileseq> tiles;
+	vector<t_tileseq> tiles;
 	for (int cy = y1; cy <= y2; cy++) {
 		for (int cx = x1; cx <= x2; cx++) {
 			if (cx >= 0 && cy >= 0 && cx < width && cy < height) {
@@ -843,6 +857,38 @@ void ptm_print_formatted_tile_string(string fmt)
 			layer.put(tilebuf_csr.x, tilebuf_csr.y, tile);
 			tilebuf_csr.x++;
 			escape_seq = "";
+		}
+	}
+}
+void ptm_copy_tile_block(t_tilebuf_layer& buf, int x1, int y1, int x2, int y2)
+{
+	clipboard.tiles.clear();
+	clipboard.width = x2 - x1;
+	clipboard.height = y2 - y1;
+
+	for (int cy = y1; cy <= y2; cy++) {
+		for (int cx = x1; cx <= x2; cx++) {
+			if (cx >= 0 && cy >= 0 && cx < buf.get_width() && cy < buf.get_height()) {
+				clipboard.tiles.push_back(buf.get_copy(cx, cy));
+			}
+			else {
+				clipboard.tiles.push_back(t_tileseq());
+			}
+		}
+	}
+}
+void ptm_cut_tile_block(t_tilebuf_layer& buf, int x1, int y1, int x2, int y2)
+{
+	ptm_copy_tile_block(buf, x1, y1, x2, y2);
+	buf.clear_rect(x1, y1, x2, y2);
+}
+void ptm_paste_tile_block(t_tilebuf_layer& buf, int x, int y)
+{
+	int i = 0;
+	for (int py = y; py <= y + clipboard.height; py++) {
+		for (int px = x; px <= x + clipboard.width; px++) {
+			t_tileseq& tile = clipboard.tiles[i++];
+			buf.put(px, py, tile);
 		}
 	}
 }

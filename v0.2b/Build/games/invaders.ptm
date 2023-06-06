@@ -76,7 +76,7 @@ IF.GTE enemy_move_timer, enemy_move_timer_max
 			IF.FALSE is_dead
 				CALL game_over
 			ENDIF
-			SPR.DEL enemy_id
+			SPR.HIDE enemy_id
 		ENDIF
 	NEXT
 ENDIF
@@ -227,7 +227,7 @@ FOR i, 0, max_enemy_sprites
 	ARR.PUSH enemy_ids, enemy_sprite_id
 	SPR.NEW enemy_sprite_id
 	RND enemy_x, 5, 25
-	RND enemy_y, -100, 0
+	RND enemy_y, -80, 0
 	SPR.TPOS enemy_sprite_id, enemy_x, enemy_y
 	SPR.SHOW enemy_sprite_id
 NEXT

@@ -70,6 +70,8 @@ struct t_tilebuf_layer {
 	t_tilebuf_layer();
 	t_tilebuf_layer(int width, int height);
 	void init(int width, int height);
+	int get_width();
+	int get_height();
 	void put(int x, int y, t_tileseq& tileseq);
 	void put(int x, int y, int ch, int fgc, int bgc);
 	void put(int x, int y, int ch, int fgc);
@@ -185,3 +187,6 @@ t_tileseq ptm_load_tile(string id);
 bool ptm_has_stored_tile(string id);
 string ptm_text_input(int maxlen);
 bool ptm_text_input_ok();
+void ptm_copy_tile_block(t_tilebuf_layer& buf, int x1, int y1, int x2, int y2);
+void ptm_cut_tile_block(t_tilebuf_layer& buf, int x1, int y1, int x2, int y2);
+void ptm_paste_tile_block(t_tilebuf_layer& buf, int x, int y);
