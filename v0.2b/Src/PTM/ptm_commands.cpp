@@ -971,6 +971,10 @@ void ptm_init_commands()
 		t_sprite& spr = sprites.get_sprite(id);
 		sprites.remove(id);
 	};
+	CMD("SPR.CLR") {
+		ARGC(0);
+		sprites.remove_all();
+	};
 	CMD("SPR.HIT") {
 		ARGC(3);
 		string var = ARG_LIT_ID(0);

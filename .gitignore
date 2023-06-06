@@ -16,6 +16,7 @@ x64
 *.props
 *.pdb
 hiscore.dat
+hiscore.txt
 Docs/Generated
 old
 Debug

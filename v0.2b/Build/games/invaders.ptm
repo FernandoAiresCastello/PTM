@@ -9,7 +9,6 @@ DEF false, 0
 DEF true, 1
 DEF hiscore_file, "hiscore.txt"
 DEF max_enemy_sprites, 100
-VAR enemies_left, max_enemy_sprites
 VAR player_speed, 1
 NEG player_speed_neg, player_speed
 VAR player_missile_speed, -3
@@ -17,7 +16,8 @@ VAR player_shooting, false
 VAR score, 0
 VAR hiscore, 0
 VAR enemy_move_timer, 0
-VAR enemy_move_timer_max, 10
+DEF enemy_move_timer_max_initial, 10
+VAR enemy_move_timer_max, enemy_move_timer_max_initial
 
 CALL init_palette
 CALL init_tileset
@@ -39,6 +39,7 @@ CALL move_player_missile
 CALL check_missile_collision
 CALL move_enemies
 CALL draw_score
+CALL check_wave_defeated
 UPDATE
 GOTO game_loop
 
@@ -146,6 +147,32 @@ CALL adjust_enemy_speed
 RET
 
 #================================================
+	check_wave_defeated:
+#================================================
+IF.LTE enemies_left, 0
+	DELR 17, 22, 32, 23
+	COLOR color_green_lt
+	LOCATE 21, 22
+	PRINT	  "NEXT WAVE!"
+	LOCATE 21, 22
+	PRINT.ADD "          "
+	CSAVE hiscore_file, hiscore
+	PAUSE 500
+	CALL generate_next_wave
+ENDIF
+RET
+
+#================================================
+	generate_next_wave:
+#================================================
+ARR.FOR enemy_ids, enemy_id
+	SPR.DEL enemy_id
+NEXT
+ARR.CLR enemy_ids
+CALL init_enemies
+RET
+
+#================================================
 	adjust_enemy_speed:
 #================================================
 IF.LTE enemies_left, 80
@@ -182,7 +209,6 @@ RET
 #================================================
 STR.FMT score_fmt,"%05i",score
 STR.FMT hiscore_fmt,"%05i",hiscore
-
 TXT.BGOFF
 LOCATE 1, 22
 PRINTF "{f1}score {f2}{%score_fmt}{/f}"
@@ -200,7 +226,8 @@ PRINT	  "GAME OVER!"
 LOCATE 21, 22
 PRINT.ADD "          "
 CSAVE hiscore_file, hiscore
-HALT
+PAUSE 500
+RESET
 
 #================================================
 	init_player:
@@ -218,15 +245,20 @@ RET
 #================================================
 	init_enemies:
 #================================================
+VAR enemies_left, max_enemy_sprites
+VAR enemy_move_timer_max, enemy_move_timer_max_initial
+
 ARR.NEW enemy_ids
+
 TILE.NEW ch_enemy_1, color_green
 TILE.ADD ch_enemy_2, color_green
+
 FOR i, 0, max_enemy_sprites
 	VAR enemy_sprite_id, "spr_enemy"
 	STR.CAT enemy_sprite_id, enemy_sprite_id, i
 	ARR.PUSH enemy_ids, enemy_sprite_id
 	SPR.NEW enemy_sprite_id
-	RND enemy_x, 5, 25
+	RND enemy_x, 8, 22
 	RND enemy_y, -80, 0
 	SPR.TPOS enemy_sprite_id, enemy_x, enemy_y
 	SPR.SHOW enemy_sprite_id
@@ -258,6 +290,7 @@ PAL 7, color_yellow, &hffff00
 PAL 8, color_red, &hff0000
 PAL 9, color_orange, &hff8000
 PAL 10, color_cyan, &h00ffff
+PAL 11, color_green_lt, &h00ff20
 RET
 
 #================================================
