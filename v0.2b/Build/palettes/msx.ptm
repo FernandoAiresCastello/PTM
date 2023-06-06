@@ -1,0 +1,15 @@
+PAL  0, &h000000
+PAL  1, &hcacaca
+PAL  2, &hffffff
+PAL  3, &hb75e51
+PAL  4, &hd96459
+PAL  5, &hfe877c
+PAL  6, &hcac15e
+PAL  7, &hddce85
+PAL  8, &h3ca042
+PAL  9, &h40b64a
+PAL 10, &h73ce7c
+PAL 11, &h5955df
+PAL 12, &h7e75f0
+PAL 13, &h64daee
+PAL 14, &hb565b3

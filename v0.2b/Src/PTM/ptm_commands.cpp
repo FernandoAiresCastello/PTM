@@ -362,12 +362,18 @@ void ptm_init_commands()
 		if (arg.size() == 2) {
 			int ix = ARG_VAR_NUM(0);
 			binary bin = ARG_VAR_STR(1);
+			if (bin.length() != 64) {
+				ptm_abort("Invalid tile pattern definition");
+			}
 			tileset.set(ix, bin);
 		}
 		else if (arg.size() == 3) {
 			int ix = ARG_VAR_NUM(0);
 			string var = ARG_LIT_ID(1);
 			binary bin = ARG_VAR_STR(2);
+			if (bin.length() != 64) {
+				ptm_abort("Invalid tile pattern definition");
+			}
 			tileset.set(ix, bin);
 			ptm_def_const(var, ix);
 		}

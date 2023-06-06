@@ -15,3 +15,14 @@
 INCL games/invaders.ptm
 #INCL games/adv_lawnmower_sim.ptm
 #INCL games/dragon_labyrinth.ptm
+
+#INCL palettes/intellivision.ptm
+#INCL palettes/msx.ptm
+#INCL palettes/zx-spectrum.ptm
+#INCL palettes/atari-2600-ntsc.ptm
+#INCL palettes/atari-800.ptm
+#INCL palettes/nes.ptm
+#INCL palettes/gameboy.ptm
+#INCL palettes/vga.ptm
+#INCL palettes/windows-95.ptm
+#INCL test/palette_viewer.ptm
