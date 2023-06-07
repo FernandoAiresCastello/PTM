@@ -17,7 +17,6 @@ VAR score, 0
 VAR hiscore, 0
 VAR enemy_move_timer, 0
 DEF enemy_move_timer_max_initial, 10
-VAR enemy_move_timer_max, enemy_move_timer_max_initial
 
 CALL init_palette
 CALL init_tileset

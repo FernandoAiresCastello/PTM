@@ -5,7 +5,8 @@
 #	with your own code.
 #==============================================================================
 
-#INCL test/tests.ptm
+#INCL test/misc_tests.ptm
+#INCL test/misc_tests_2.ptm
 
 #INCL examples/hello_world.ptm
 #INCL examples/hello_personalized.ptm
@@ -25,4 +26,5 @@ INCL games/invaders.ptm
 #INCL palettes/gameboy.ptm
 #INCL palettes/vga.ptm
 #INCL palettes/windows-95.ptm
+#INCL palettes/vic-20.ptm
 #INCL test/palette_viewer.ptm

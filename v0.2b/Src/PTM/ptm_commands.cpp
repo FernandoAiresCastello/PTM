@@ -878,6 +878,20 @@ void ptm_init_commands()
 		t_sprite& spr = sprites.get_sprite(id);
 		spr.y = y;
 	};
+	CMD("SPR.TX") {
+		ARGC(2);
+		string id = ARG_VAR_STR(0);
+		int x = ARG_VAR_NUM(1);
+		t_sprite& spr = sprites.get_sprite(id);
+		spr.x = x * PTM_TILE_SIZE;
+	};
+	CMD("SPR.TY") {
+		ARGC(2);
+		string id = ARG_VAR_STR(0);
+		int y = ARG_VAR_NUM(1);
+		t_sprite& spr = sprites.get_sprite(id);
+		spr.y = y * PTM_TILE_SIZE;
+	};
 	CMD("SPR.GETX") {
 		ARGC(2);
 		string id = ARG_VAR_STR(0);
@@ -897,14 +911,14 @@ void ptm_init_commands()
 		string id = ARG_VAR_STR(0);
 		string var = ARG_LIT_ID(1);
 		t_sprite& spr = sprites.get_sprite(id);
-		ptm_set_var(var, spr.x / 8);
+		ptm_set_var(var, spr.x / PTM_TILE_SIZE);
 	};
 	CMD("SPR.TGETY") {
 		ARGC(2);
 		string id = ARG_VAR_STR(0);
 		string var = ARG_LIT_ID(1);
 		t_sprite& spr = sprites.get_sprite(id);
-		ptm_set_var(var, spr.y / 8);
+		ptm_set_var(var, spr.y / PTM_TILE_SIZE);
 	};
 	CMD("SPR.POS") {
 		ARGC(3);
