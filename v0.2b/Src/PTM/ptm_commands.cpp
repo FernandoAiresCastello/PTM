@@ -384,7 +384,7 @@ void ptm_init_commands()
 		if (size < 256 || size > 65536) {
 			ptm_abort("Illegal tileset size");
 		}
-		tileset.set_size(size);
+		tileset.new_tileset(size, false);
 	};
 	CMD("CHR.LEN") {
 		ARGC(1);
@@ -411,6 +411,10 @@ void ptm_init_commands()
 			palette.set(ix, color);
 			ptm_def_const(var, ix);
 		}
+	};
+	CMD("PAL.NEW") {
+		ARGC(0);
+		palette.reset();
 	};
 	CMD("PAL.LEN") {
 		ARGC(1);

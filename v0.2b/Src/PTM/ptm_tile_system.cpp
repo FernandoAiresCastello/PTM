@@ -179,7 +179,7 @@ t_tileset::t_tileset()
 }
 void t_tileset::reset()
 {
-	set_size(256);
+	new_tileset(256, true);
 }
 binary t_tileset::blank_tile()
 {
@@ -203,11 +203,13 @@ binary& t_tileset::get(int index)
 {
 	return tiles[index];
 }
-void t_tileset::set_size(int size)
+void t_tileset::new_tileset(int size, bool init_default_font)
 {
 	tiles.clear();
 	add_blank(size);
-	ptm_init_text_font();
+	if (init_default_font) {
+		ptm_init_text_font();
+	}
 }
 t_tilebuf_layer::t_tilebuf_layer()
 {

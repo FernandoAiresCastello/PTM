@@ -1,0 +1,12 @@
+WINDOW 256, 192, 4, 1
+
+VAR i, 0
+
+FOR y, 1, 17
+	FOR x, 1, 17
+		LOCATE x, y
+		TILE.NEW i, 1, 0
+		PUT
+		INC i
+	NEXT
+NEXT

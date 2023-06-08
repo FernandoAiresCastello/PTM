@@ -1,3 +1,5 @@
+PAL.NEW
+
 PAL  0, &h0c0005
 PAL  1, &ha7a8a8
 PAL  2, &hfffcff
