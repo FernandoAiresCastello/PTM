@@ -10,9 +10,10 @@ VAR selected_tile_ix, 0
 
 CALL init_palette
 CALL init_tileset
-BUF.BCOL default, c_blue
+BUF.BCOL default, c_bg
 
 CALL init_keycodes
+
 CALL clear_screen
 CALL draw_tileset
 CALL draw_tileset_csr
@@ -35,6 +36,9 @@ IF.EQ key, k_esc
 	GOTO exit
 ENDIF
 IF.EQ key, k_enter
+	IF.KEY "ALT"
+		GOTO tile_select_loop
+	ENDIF
 	GOTO tile_edit_loop
 ENDIF
 IF.EQ key, k_right
@@ -73,9 +77,9 @@ GOTO tile_select_loop
 #================================================
 CALL draw_bottom_window
 LOCATE 1, 22
-VAR tile_ind, "{f4}{b9}{c"
+VAR tile_ind, "{c"
 STR.CAT tile_ind, tile_ind, selected_tile_ix
-STR.CAT tile_ind, tile_ind, "}{/f}{/b}"
+STR.CAT tile_ind, tile_ind, "}"
 VAR str, "Tile {%selected_tile_ix} "
 STR.CAT str, str, tile_ind
 PRINTF str
@@ -99,7 +103,7 @@ GOTO tile_edit_loop
 #================================================
 	draw_tileset_csr:
 #================================================
-TILE.NEW selected_tile_ix, c_white, c_red
+TILE.NEW selected_tile_ix, c_fg, c_bg_lt
 LOCATE tileset_csr_x, tileset_csr_y
 PUT
 RET
@@ -110,7 +114,7 @@ RET
 VAR tile_ix, 0
 FOR y, 4, 20
 	FOR x, 2, 18
-		TILE.NEW tile_ix, c_gray, c_blue
+		TILE.NEW tile_ix, c_fg, c_bg
 		LOCATE x, y
 		PUT
 		INC tile_ix
@@ -130,12 +134,12 @@ VAR p_wnd_x2, 44
 VAR p_wnd_y2, 2
 CALL draw_window
 LOCATE 1, 1
-COLOR c_white, c_blue
+COLOR c_fg, c_bg
 PRINT "PTM Tileset Editor"
 
 CALL draw_bottom_window
 
-# Tileset window
+# Tileset window frame
 VAR p_wnd_x1, 1
 VAR p_wnd_y1, 3
 VAR p_wnd_x2, 18
@@ -158,8 +162,8 @@ RET
 	draw_window:
 	# p_wnd_x1, p_wnd_y1, p_wnd_x2, p_wnd_y2
 #================================================
-VAR c_wnd_borders, c_blue_lt
-VAR c_wnd_bg, c_blue
+VAR c_wnd_borders, c_fg
+VAR c_wnd_bg, c_bg
 
 TILE.NEW t_wnd_tl, c_wnd_borders, c_wnd_bg
 LOCATE p_wnd_x1, p_wnd_y1
@@ -226,16 +230,9 @@ RET
 #================================================
 	init_palette:
 #================================================
-PAL 0, c_black, &h101010
-PAL 1, c_white, &hf0f0f0
-PAL 2, c_blue, &h101080
-PAL 3, c_blue_lt, &h303090
-PAL 4, c_gray, &h808080
-PAL 5, c_gray_dk, &h404040
-PAL 6, c_red_dk, &h801010
-PAL 7, c_red, &hf01010
-PAL 8, c_yellow, &hf0f010
-PAL 9, c_blue_dk, &h101060
+PAL 0, c_bg, &h101060
+PAL 1, c_fg, &hc0c0c0
+PAL 2, c_bg_lt, &hf01010
 RET
 
 #================================================
@@ -243,10 +240,10 @@ RET
 #================================================
 CHR 0, t_blank, "0000000000000000000000000000000000000000000000000000000000000000"
 CHR 1, t_solid, "1111111111111111111111111111111111111111111111111111111111111111"
-CHR 2, t_wnd_tl, "0000000000000000000000000001111100011111000110000001100000011000"
-CHR 3, t_wnd_tr, "0000000000000000000000001111100011111000000110000001100000011000"
-CHR 4, t_wnd_bl, "0001100000011000000110000001111100011111000000000000000000000000"
-CHR 5, t_wnd_br, "0001100000011000000110001111100011111000000000000000000000000000"
+CHR 2, t_wnd_tl, "0000000000000000000000000000111100011111000111000001100000011000"
+CHR 3, t_wnd_tr, "0000000000000000000000001111000011111000001110000001100000011000"
+CHR 4, t_wnd_bl, "0001100000011000000111000001111100001111000000000000000000000000"
+CHR 5, t_wnd_br, "0001100000011000001110001111100011110000000000000000000000000000"
 CHR 6, t_wnd_hline, "0000000000000000000000001111111111111111000000000000000000000000"
 CHR 7, t_wnd_vline, "0001100000011000000110000001100000011000000110000001100000011000"
 CHR 255, t_xmark, "1000000101000010001001000001100000011000001001000100001010000001"
