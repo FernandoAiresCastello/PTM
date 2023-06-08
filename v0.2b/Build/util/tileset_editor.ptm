@@ -1,0 +1,253 @@
+#================================================
+	main:
+#================================================
+TITLE "PTM Tileset Editor"
+WINDOW 360, 200, 4, 1
+
+VAR tileset_csr_x, 2
+VAR tileset_csr_y, 4
+VAR selected_tile_ix, 0
+
+CALL init_palette
+CALL init_tileset
+BUF.BCOL default, c_blue
+
+CALL init_keycodes
+CALL clear_screen
+CALL draw_tileset
+CALL draw_tileset_csr
+CALL print_selected_tile_ix
+
+GOTO tile_select_loop
+
+HALT
+
+#================================================
+	tile_select_loop:
+#================================================
+UPDATE
+
+INKEY key
+IF.EQ key, 0
+	GOTO tile_select_loop
+ENDIF
+IF.EQ key, k_esc
+	GOTO exit
+ENDIF
+IF.EQ key, k_enter
+	GOTO tile_edit_loop
+ENDIF
+IF.EQ key, k_right
+	IF.LT tileset_csr_x, 17
+		INC tileset_csr_x
+		INC selected_tile_ix
+	ENDIF
+ENDIF
+IF.EQ key, k_left
+	IF.GT tileset_csr_x, 2
+		DEC tileset_csr_x
+		DEC selected_tile_ix
+	ENDIF
+ENDIF
+IF.EQ key, k_down
+	IF.LT tileset_csr_y, 19
+		INC tileset_csr_y
+		ADD selected_tile_ix, selected_tile_ix, 16
+	ENDIF
+ENDIF
+IF.EQ key, k_up
+	IF.GT tileset_csr_y, 4
+		DEC tileset_csr_y
+		SUB selected_tile_ix, selected_tile_ix, 16
+	ENDIF
+ENDIF
+
+CALL draw_tileset
+CALL draw_tileset_csr
+CALL print_selected_tile_ix
+
+GOTO tile_select_loop
+
+#================================================
+	print_selected_tile_ix:
+#================================================
+CALL draw_bottom_window
+LOCATE 1, 22
+VAR tile_ind, "{f4}{b9}{c"
+STR.CAT tile_ind, tile_ind, selected_tile_ix
+STR.CAT tile_ind, tile_ind, "}{/f}{/b}"
+VAR str, "Tile {%selected_tile_ix} "
+STR.CAT str, str, tile_ind
+PRINTF str
+RET
+
+#================================================
+	tile_edit_loop:
+#================================================
+UPDATE
+
+INKEY key
+IF.EQ key, 0
+	GOTO tile_edit_loop
+ENDIF
+IF.EQ key, k_esc
+	GOTO exit
+ENDIF
+
+GOTO tile_edit_loop
+
+#================================================
+	draw_tileset_csr:
+#================================================
+TILE.NEW selected_tile_ix, c_white, c_red
+LOCATE tileset_csr_x, tileset_csr_y
+PUT
+RET
+
+#================================================
+	draw_tileset:
+#================================================
+VAR tile_ix, 0
+FOR y, 4, 20
+	FOR x, 2, 18
+		TILE.NEW tile_ix, c_gray, c_blue
+		LOCATE x, y
+		PUT
+		INC tile_ix
+	NEXT
+NEXT
+RET
+
+#================================================
+	clear_screen:
+#================================================
+CLS
+
+# Title window
+VAR p_wnd_x1, 0
+VAR p_wnd_y1, 0
+VAR p_wnd_x2, 44
+VAR p_wnd_y2, 2
+CALL draw_window
+LOCATE 1, 1
+COLOR c_white, c_blue
+PRINT "PTM Tileset Editor"
+
+CALL draw_bottom_window
+
+# Tileset window
+VAR p_wnd_x1, 1
+VAR p_wnd_y1, 3
+VAR p_wnd_x2, 18
+VAR p_wnd_y2, 20
+CALL draw_window
+
+RET
+
+#================================================
+	draw_bottom_window:
+#================================================
+VAR p_wnd_x1, 0
+VAR p_wnd_y1, 21
+VAR p_wnd_x2, 44
+VAR p_wnd_y2, 24
+CALL draw_window
+RET
+
+#================================================
+	draw_window:
+	# p_wnd_x1, p_wnd_y1, p_wnd_x2, p_wnd_y2
+#================================================
+VAR c_wnd_borders, c_blue_lt
+VAR c_wnd_bg, c_blue
+
+TILE.NEW t_wnd_tl, c_wnd_borders, c_wnd_bg
+LOCATE p_wnd_x1, p_wnd_y1
+PUT
+TILE.NEW t_wnd_tr, c_wnd_borders, c_wnd_bg
+LOCATE p_wnd_x2, p_wnd_y1
+PUT
+TILE.NEW t_wnd_bl, c_wnd_borders, c_wnd_bg
+LOCATE p_wnd_x1, p_wnd_y2
+PUT
+TILE.NEW t_wnd_br, c_wnd_borders, c_wnd_bg
+LOCATE p_wnd_x2, p_wnd_y2
+PUT
+ADD x1, p_wnd_x1, 1
+VAR x2, p_wnd_x2
+FOR x, x1, x2
+	TILE.NEW t_wnd_hline, c_wnd_borders, c_wnd_bg
+	LOCATE x, p_wnd_y1
+	PUT
+	LOCATE x, p_wnd_y2
+	PUT
+NEXT
+ADD y1, p_wnd_y1, 1
+VAR y2, p_wnd_y2
+FOR y, y1, y2
+	TILE.NEW t_wnd_vline, c_wnd_borders, c_wnd_bg
+	LOCATE p_wnd_x1, y
+	PUT
+	LOCATE p_wnd_x2, y
+	PUT
+NEXT
+TILE.NEW t_solid, c_wnd_bg
+SUB x2, p_wnd_x2, 1
+SUB y2, p_wnd_y2, 1
+RECT x1, y1, x2, y2
+RET
+
+#================================================
+	key_test_loop:
+#================================================
+INKEY key
+IF.NEQ key, 0
+	MSGBOX key
+ENDIF
+UPDATE
+GOTO key_test_loop
+
+#================================================
+	exit:
+#================================================
+EXIT
+
+#================================================
+	init_keycodes:
+#================================================
+DEF k_right, 1073741903
+DEF k_left, 1073741904
+DEF k_up, 1073741906
+DEF k_down, 1073741905
+DEF k_enter, 13
+DEF k_esc, 27
+RET
+
+#================================================
+	init_palette:
+#================================================
+PAL 0, c_black, &h101010
+PAL 1, c_white, &hf0f0f0
+PAL 2, c_blue, &h101080
+PAL 3, c_blue_lt, &h303090
+PAL 4, c_gray, &h808080
+PAL 5, c_gray_dk, &h404040
+PAL 6, c_red_dk, &h801010
+PAL 7, c_red, &hf01010
+PAL 8, c_yellow, &hf0f010
+PAL 9, c_blue_dk, &h101060
+RET
+
+#================================================
+	init_tileset:
+#================================================
+CHR 0, t_blank, "0000000000000000000000000000000000000000000000000000000000000000"
+CHR 1, t_solid, "1111111111111111111111111111111111111111111111111111111111111111"
+CHR 2, t_wnd_tl, "0000000000000000000000000001111100011111000110000001100000011000"
+CHR 3, t_wnd_tr, "0000000000000000000000001111100011111000000110000001100000011000"
+CHR 4, t_wnd_bl, "0001100000011000000110000001111100011111000000000000000000000000"
+CHR 5, t_wnd_br, "0001100000011000000110001111100011111000000000000000000000000000"
+CHR 6, t_wnd_hline, "0000000000000000000000001111111111111111000000000000000000000000"
+CHR 7, t_wnd_vline, "0001100000011000000110000001100000011000000110000001100000011000"
+CHR 255, t_xmark, "1000000101000010001001000001100000011000001001000100001010000001"
+RET

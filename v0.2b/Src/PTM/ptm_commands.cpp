@@ -557,16 +557,24 @@ void ptm_init_commands()
 		tilebufs.clear_all_buffers();
 	};
 	CMD("TILE.NEW") {
-		ARGC_MIN_MAX(2, 3);
+		ARGC_MIN_MAX(0, 3);
 		int ch = ARG_VAR_NUM(0);
 		int fgc = ARG_VAR_NUM(1);
+	
 		working_tile.clear();
+
 		if (arg.size() == 3) {
 			int bgc = ARG_VAR_NUM(2);
 			working_tile.add(ch, fgc, bgc);
 		}
-		else {
+		else if (arg.size() == 2) {
 			working_tile.add(ch, fgc);
+		}
+		else if (arg.size() == 1) {
+			working_tile.add(ch, 1, 0);
+		}
+		else {
+			// keep empty
 		}
 	};
 	CMD("TILE.ADD") {

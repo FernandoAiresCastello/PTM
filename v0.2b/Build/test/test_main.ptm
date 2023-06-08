@@ -1,11 +1,1 @@
-WINDOW 256, 192, 4, 1
-
-LOCATE 1, 1
-PRINT "Hello World!"
-
-loop:
-	IF.KEY "ESC"
-		EXIT
-	ENDIF
-	UPDATE
-	GOTO loop
+INCL util/tileset_editor.ptm
