@@ -4,7 +4,7 @@
 
 ## v0.2b 
 *Note 1: This version is currently under development, this list will be updated as changes are introduced.*  
-*Note 2: Programs made for v0.1b will not work properly in this version due to breaking changes in the language.*  
+*Note 2: This version breaks compatibility with most v0.1b programs*  
 *Note 3: There are too many changes since v0.1b, some changes may be missing from this changelog.*  
 
 - Some commands now have a different syntax or purpose
