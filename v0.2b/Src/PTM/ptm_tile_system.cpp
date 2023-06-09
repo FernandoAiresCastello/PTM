@@ -774,15 +774,108 @@ void ptm_print_formatted_tile_string(string fmt)
 			escape = false;
 			const string upper_escape_seq = String::ToUpper(escape_seq);
 			if (String::StartsWith(upper_escape_seq, 'C')) {
-				ch = String::ToInt(String::Skip(String::Replace(upper_escape_seq, "&H", "0x"), 1));
-				auto tile = t_tileseq(ch, fgc, bgc);
-				layer.put(tilebuf_csr.x, tilebuf_csr.y, tile);
-				tilebuf_csr.x++;
+				if (escape_seq[1] == '%') {
+					string var = String::Skip(escape_seq, 2);
+					if (String::Contains(var, '[') || String::Contains(var, ']')) {
+						auto begin = String::IndexOf(var, '[');
+						auto end = String::IndexOf(var, ']');
+						if (begin != string::npos && end != string::npos && begin < end) {
+							string arr_id = String::Substring(var, 0, begin);
+							if (intp->arrays.find(arr_id) != intp->arrays.end()) {
+								string ixs = String::Substring(var, begin + 1, end);
+								int ix = -1;
+								if (String::IsNumber(ixs)) {
+									ix = String::ToInt(ixs);
+								}
+								else {
+									if (intp->vars.find(ixs) != intp->vars.end()) {
+										ix = String::ToInt(intp->vars[ixs].value);
+									}
+									else {
+										intp->abort("Variable not found: " + ixs);
+									}
+								}
+								if (ix >= 0 && ix < intp->arrays[arr_id].size()) {
+									string str = intp->arrays[arr_id].at(ix);
+									ptm_print_tile_string(str, fgc, bgc, false);
+								}
+								else {
+									intp->abort(String::Format("Array index out of bounds: %s[%i]", arr_id.c_str(), ix));
+								}
+							}
+							else {
+								intp->abort("Array not found: " + arr_id);
+							}
+						}
+					}
+					else {
+						if (intp->vars.find(var) != intp->vars.end()) {
+							ch = String::ToInt(intp->vars[var].value);
+							auto tile = t_tileseq(ch, fgc, bgc);
+							layer.put(tilebuf_csr.x, tilebuf_csr.y, tile);
+							tilebuf_csr.x++;
+						}
+						else {
+							intp->abort("Variable not found: " + var);
+						}
+					}
+				}
+				else {
+					ch = String::ToInt(String::Skip(String::Replace(upper_escape_seq, "&H", "0x"), 1));
+					auto tile = t_tileseq(ch, fgc, bgc);
+					layer.put(tilebuf_csr.x, tilebuf_csr.y, tile);
+					tilebuf_csr.x++;
+				}
 				escape_seq = "";
 				continue;
 			}
 			else if (String::StartsWith(upper_escape_seq, 'F')) {
-				fgc = String::ToInt(String::Skip(String::Replace(upper_escape_seq, "&H", "0x"), 1));
+				if (escape_seq[1] == '%') {
+					string var = String::Skip(escape_seq, 2);
+					if (String::Contains(var, '[') || String::Contains(var, ']')) {
+						auto begin = String::IndexOf(var, '[');
+						auto end = String::IndexOf(var, ']');
+						if (begin != string::npos && end != string::npos && begin < end) {
+							string arr_id = String::Substring(var, 0, begin);
+							if (intp->arrays.find(arr_id) != intp->arrays.end()) {
+								string ixs = String::Substring(var, begin + 1, end);
+								int ix = -1;
+								if (String::IsNumber(ixs)) {
+									ix = String::ToInt(ixs);
+								}
+								else {
+									if (intp->vars.find(ixs) != intp->vars.end()) {
+										ix = String::ToInt(intp->vars[ixs].value);
+									}
+									else {
+										intp->abort("Variable not found: " + ixs);
+									}
+								}
+								if (ix >= 0 && ix < intp->arrays[arr_id].size()) {
+									string str = intp->arrays[arr_id].at(ix);
+									ptm_print_tile_string(str, fgc, bgc, false);
+								}
+								else {
+									intp->abort(String::Format("Array index out of bounds: %s[%i]", arr_id.c_str(), ix));
+								}
+							}
+							else {
+								intp->abort("Array not found: " + arr_id);
+							}
+						}
+					}
+					else {
+						if (intp->vars.find(var) != intp->vars.end()) {
+							fgc = String::ToInt(intp->vars[var].value);
+						}
+						else {
+							intp->abort("Variable not found: " + var);
+						}
+					}
+				}
+				else {
+					fgc = String::ToInt(String::Skip(String::Replace(upper_escape_seq, "&H", "0x"), 1));
+				}
 				escape_seq = "";
 				continue;
 			}
@@ -792,7 +885,52 @@ void ptm_print_formatted_tile_string(string fmt)
 				continue;
 			}
 			else if (String::StartsWith(upper_escape_seq, 'B')) {
-				bgc = String::ToInt(String::Skip(String::Replace(upper_escape_seq, "&H", "0x"), 1));
+				if (escape_seq[1] == '%') {
+					string var = String::Skip(escape_seq, 2);
+					if (String::Contains(var, '[') || String::Contains(var, ']')) {
+						auto begin = String::IndexOf(var, '[');
+						auto end = String::IndexOf(var, ']');
+						if (begin != string::npos && end != string::npos && begin < end) {
+							string arr_id = String::Substring(var, 0, begin);
+							if (intp->arrays.find(arr_id) != intp->arrays.end()) {
+								string ixs = String::Substring(var, begin + 1, end);
+								int ix = -1;
+								if (String::IsNumber(ixs)) {
+									ix = String::ToInt(ixs);
+								}
+								else {
+									if (intp->vars.find(ixs) != intp->vars.end()) {
+										ix = String::ToInt(intp->vars[ixs].value);
+									}
+									else {
+										intp->abort("Variable not found: " + ixs);
+									}
+								}
+								if (ix >= 0 && ix < intp->arrays[arr_id].size()) {
+									string str = intp->arrays[arr_id].at(ix);
+									ptm_print_tile_string(str, fgc, bgc, false);
+								}
+								else {
+									intp->abort(String::Format("Array index out of bounds: %s[%i]", arr_id.c_str(), ix));
+								}
+							}
+							else {
+								intp->abort("Array not found: " + arr_id);
+							}
+						}
+					}
+					else {
+						if (intp->vars.find(var) != intp->vars.end()) {
+							bgc = String::ToInt(intp->vars[var].value);
+						}
+						else {
+							intp->abort("Variable not found: " + var);
+						}
+					}
+				}
+				else {
+					bgc = String::ToInt(String::Skip(String::Replace(upper_escape_seq, "&H", "0x"), 1));
+				}
 				escape_seq = "";
 				continue;
 			}

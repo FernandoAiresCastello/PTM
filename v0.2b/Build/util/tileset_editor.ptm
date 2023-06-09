@@ -77,12 +77,7 @@ GOTO tile_select_loop
 #================================================
 CALL draw_bottom_window
 LOCATE 1, 22
-VAR tile_ind, "{c"
-STR.CAT tile_ind, tile_ind, selected_tile_ix
-STR.CAT tile_ind, tile_ind, "}"
-VAR str, "Tile {%selected_tile_ix} "
-STR.CAT str, str, tile_ind
-PRINTF str
+PRINTF "Tile {%selected_tile_ix} {f%c_fg_lt}{c%selected_tile_ix}{/f}"
 RET
 
 #================================================
@@ -103,7 +98,7 @@ GOTO tile_edit_loop
 #================================================
 	draw_tileset_csr:
 #================================================
-TILE.NEW selected_tile_ix, c_fg, c_bg_lt
+TILE.NEW selected_tile_ix, c_fg_lt, c_bg_lt
 LOCATE tileset_csr_x, tileset_csr_y
 PUT
 RET
@@ -233,6 +228,7 @@ RET
 PAL 0, c_bg, &h101060
 PAL 1, c_fg, &hc0c0c0
 PAL 2, c_bg_lt, &hf01010
+PAL 3, c_fg_lt, &hf0f0f0
 RET
 
 #================================================
