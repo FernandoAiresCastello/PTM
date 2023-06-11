@@ -93,6 +93,9 @@ IF.EQ key, k_esc
 	GOTO exit
 ENDIF
 
+CALL draw_tile_edit
+CALL draw_tile_edit_csr
+
 GOTO tile_edit_loop
 
 #================================================

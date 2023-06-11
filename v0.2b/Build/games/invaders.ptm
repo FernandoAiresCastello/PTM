@@ -93,6 +93,7 @@ SPR.GETX "spr_player", mx
 SPR.GETY "spr_player", my
 SPR.POS "spr_missile", mx, my
 SPR.SHOW "spr_missile"
+MML.PLAY "L10O4CDF"
 RET
 
 #================================================
@@ -141,6 +142,7 @@ TILE.SETF 0, color_orange
 TILE.SETF 1, color_red
 SPR.TSET enemy_id
 SPR.POS "spr_missile", -8, -8
+MML.PLAY "L10O6ECD"
 DEC enemies_left
 CALL adjust_enemy_speed
 RET
@@ -225,6 +227,7 @@ PRINT	  "GAME OVER!"
 LOCATE 21, 22
 PRINT.ADD "          "
 CSAVE hiscore_file, hiscore
+MML.PLAY "O2L80BAGFEDCCC"
 PAUSE 500
 RESET
 
