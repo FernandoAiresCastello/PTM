@@ -1209,7 +1209,7 @@ void ptm_init_commands()
 		string str = ARG_VAR_STR(1);
 		ptm_set_var(var, str.length());
 	};
-	CMD("STR.AT") {
+	CMD("STR.GETC") {
 		ARGC(3);
 		string var = ARG_LIT_ID(0);
 		string str = ARG_VAR_STR(1);

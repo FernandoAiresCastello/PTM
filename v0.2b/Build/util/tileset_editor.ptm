@@ -39,11 +39,7 @@ IF.EQ key, k_enter
 	IF.KEY "ALT"
 		GOTO tile_select_loop
 	ENDIF
-	CHR.GET selected_tile_ix, tile_pattern
-	VAR tile_edit_csr_x, 21
-	VAR tile_edit_csr_y, 4
-	VAR tile_edit_csr_pixel_ix, 0
-	GOTO tile_edit_loop
+	GOTO enter_tile_edit_mode
 ENDIF
 IF.EQ key, k_right
 	IF.LT tileset_csr_x, 17
@@ -81,13 +77,22 @@ GOTO tile_select_loop
 #================================================
 CALL draw_bottom_window
 LOCATE 1, 22
-PRINTF "Tile {%selected_tile_ix} {f%c_fg_lt}{c%selected_tile_ix}{/f}"
+PRINTF "Tile {%selected_tile_ix} {f%c_fg}{c%selected_tile_ix}{/f}"
 RET
+
+#================================================
+	enter_tile_edit_mode:
+#================================================
+CHR.GET selected_tile_ix, tile_pattern
+VAR tile_edit_csr_x, 21
+VAR tile_edit_csr_y, 4
+VAR tile_edit_csr_pixel_ix, 0
+CALL draw_tile_edit_wnd
+CALL draw_tile_mosaic_wnd
 
 #================================================
 	tile_edit_loop:
 #================================================
-CALL draw_tile_edit_wnd
 CALL draw_tile_edit
 CALL draw_tile_edit_csr
 
@@ -103,6 +108,9 @@ IF.EQ key, k_esc
 	GOTO exit_tile_edit_loop
 ENDIF
 IF.EQ key, k_enter
+	IF.KEY "ALT"
+		GOTO tile_edit_loop_wait
+	ENDIF
 	GOTO exit_tile_edit_loop
 ENDIF
 
@@ -132,7 +140,7 @@ IF.EQ key, k_up
 ENDIF
 
 IF.EQ key, k_space
-	STR.AT pixel, tile_pattern, tile_edit_csr_pixel_ix
+	STR.GETC pixel, tile_pattern, tile_edit_csr_pixel_ix
 	IF.EQ pixel, '1'
 		STR.SETC tile_pattern, tile_pattern, tile_edit_csr_pixel_ix, '0'
 	ENDIF
@@ -164,7 +172,7 @@ GOTO tile_select_loop
 VAR x, 21
 VAR y, 4
 FOR i, 0, 64
-	STR.AT pixel, tile_pattern, i
+	STR.GETC pixel, tile_pattern, i
 	IF.EQ pixel, '1'
 		TILE.NEW t_tile_pixel_on, c_fg, c_bg
 	ENDIF
@@ -184,7 +192,7 @@ RET
 #================================================
 	draw_tile_edit_csr:
 #================================================
-STR.AT pixel, tile_pattern, tile_edit_csr_pixel_ix
+STR.GETC pixel, tile_pattern, tile_edit_csr_pixel_ix
 IF.EQ pixel, '1'
 	TILE.NEW t_tile_edit_csr_on, c_bg_lt
 ENDIF
@@ -203,6 +211,18 @@ VAR p_wnd_y1, 3
 VAR p_wnd_x2, 29
 VAR p_wnd_y2, 12
 CALL draw_window
+RET
+
+#================================================
+	draw_tile_mosaic_wnd:
+#================================================
+VAR p_wnd_x1, 31
+VAR p_wnd_y1, 3
+VAR p_wnd_x2, 43
+VAR p_wnd_y2, 12
+CALL draw_window
+TILE.NEW selected_tile_ix, c_fg, c_bg
+RECT 32, 4, 42, 11
 RET
 
 #================================================
@@ -343,10 +363,10 @@ RET
 #================================================
 	init_palette:
 #================================================
-PAL 0, c_bg, &h101060
-PAL 1, c_fg, &hc0c0c0
+PAL 0, c_bg, &he0e0e0
+PAL 1, c_fg, &h202020
 PAL 2, c_bg_lt, &hf01010
-PAL 3, c_fg_lt, &hf0f0f0
+PAL 3, c_fg_lt, &hffffff
 RET
 
 #================================================
