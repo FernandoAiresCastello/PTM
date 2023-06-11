@@ -22,7 +22,7 @@ Note that development builds can be *very* unstable since they are being activel
 - [PTML Command Reference v0.1b](https://docs.google.com/spreadsheets/d/1YwwevUD65kUNky194NmnlzqBe67nMvq3Hs2m6oJnqa8/edit?usp=sharing)
 - [PTML Command Reference v0.2b (work in progress)](https://docs.google.com/spreadsheets/d/1uPhPh0LLgRmL87Uo9hDXGUhOOFIESIYAcZ_nJOlN2VI/edit?usp=sharing)
 
-## Examples
+## Examples (for v0.2b)
 
 Here are some examples of PTML programs:
 
@@ -105,3 +105,4 @@ loop:
 	UPDATE
 	GOTO loop
 ```
+For a complete example game in PTML, check out [Invaders](https://github.com/FernandoAiresCastello/PTM/blob/master/v0.2b/Build/games/invaders.ptm).
