@@ -1216,6 +1216,15 @@ void ptm_init_commands()
 		int ix = ARG_VAR_NUM(2);
 		ptm_set_var(var, str[ix]);
 	};
+	CMD("STR.SETC") {
+		ARGC(4);
+		string var = ARG_LIT_ID(0);
+		string str = ARG_VAR_STR(1);
+		int ix = ARG_VAR_NUM(2);
+		int ch = ARG_VAR_NUM(3);
+		str[ix] = ch;
+		ptm_set_var(var, str);
+	};
 	CMD("STR.FIND") {
 		ARGC(4);
 		string var = ARG_LIT_ID(0);

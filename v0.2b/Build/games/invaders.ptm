@@ -134,13 +134,15 @@ INC score
 IF.GTE score, hiscore
 	VAR hiscore, score
 ENDIF
+
 SPR.TGET enemy_id
-TILE.SETP "dead", true
-TILE.SETC 0, ch_enemy_dead_1
-TILE.SETC 1, ch_enemy_dead_2
-TILE.SETF 0, color_orange
-TILE.SETF 1, color_red
+	TILE.SETP "dead", true
+	TILE.SETC 0, ch_enemy_dead_1
+	TILE.SETC 1, ch_enemy_dead_2
+	TILE.SETF 0, color_orange
+	TILE.SETF 1, color_red
 SPR.TSET enemy_id
+
 SPR.POS "spr_missile", -8, -8
 MML.PLAY "L10O6ECD"
 DEC enemies_left

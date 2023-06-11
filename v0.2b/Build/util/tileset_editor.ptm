@@ -7,6 +7,9 @@ WINDOW 360, 200, 4, 1
 VAR tileset_csr_x, 2
 VAR tileset_csr_y, 4
 VAR selected_tile_ix, 0
+VAR tile_edit_csr_x, 0
+VAR tile_edit_csr_y, 0
+VAR tile_edit_csr_pixel_ix, 0
 
 CALL init_palette
 CALL init_tileset
@@ -14,7 +17,7 @@ BUF.BCOL default, c_bg
 
 CALL init_keycodes
 
-CALL clear_screen
+CALL redraw_screen
 CALL draw_tileset
 CALL draw_tileset_csr
 CALL print_selected_tile_ix
@@ -32,13 +35,14 @@ INKEY key
 IF.EQ key, 0
 	GOTO tile_select_loop
 ENDIF
-IF.EQ key, k_esc
-	GOTO exit
-ENDIF
 IF.EQ key, k_enter
 	IF.KEY "ALT"
 		GOTO tile_select_loop
 	ENDIF
+	CHR.GET selected_tile_ix, tile_pattern
+	VAR tile_edit_csr_x, 21
+	VAR tile_edit_csr_y, 4
+	VAR tile_edit_csr_pixel_ix, 0
 	GOTO tile_edit_loop
 ENDIF
 IF.EQ key, k_right
@@ -83,20 +87,123 @@ RET
 #================================================
 	tile_edit_loop:
 #================================================
-UPDATE
-
-INKEY key
-IF.EQ key, 0
-	GOTO tile_edit_loop
-ENDIF
-IF.EQ key, k_esc
-	GOTO exit
-ENDIF
-
+CALL draw_tile_edit_wnd
 CALL draw_tile_edit
 CALL draw_tile_edit_csr
 
+tile_edit_loop_wait:
+
+UPDATE
+INKEY key
+
+IF.EQ key, 0
+	GOTO tile_edit_loop_wait
+ENDIF
+IF.EQ key, k_esc
+	GOTO exit_tile_edit_loop
+ENDIF
+IF.EQ key, k_enter
+	GOTO exit_tile_edit_loop
+ENDIF
+
+IF.EQ key, k_right
+	IF.LT tile_edit_csr_x, 28
+		INC tile_edit_csr_x
+		INC tile_edit_csr_pixel_ix
+	ENDIF
+ENDIF
+IF.EQ key, k_left
+	IF.GT tile_edit_csr_x, 21
+		DEC tile_edit_csr_x
+		DEC tile_edit_csr_pixel_ix
+	ENDIF
+ENDIF
+IF.EQ key, k_down
+	IF.LT tile_edit_csr_y, 11
+		INC tile_edit_csr_y
+		ADD tile_edit_csr_pixel_ix, tile_edit_csr_pixel_ix, 8
+	ENDIF
+ENDIF
+IF.EQ key, k_up
+	IF.GT tile_edit_csr_y, 4
+		DEC tile_edit_csr_y
+		SUB tile_edit_csr_pixel_ix, tile_edit_csr_pixel_ix, 8
+	ENDIF
+ENDIF
+
+IF.EQ key, k_space
+	STR.AT pixel, tile_pattern, tile_edit_csr_pixel_ix
+	IF.EQ pixel, '1'
+		STR.SETC tile_pattern, tile_pattern, tile_edit_csr_pixel_ix, '0'
+	ENDIF
+	IF.EQ pixel, '0'
+		STR.SETC tile_pattern, tile_pattern, tile_edit_csr_pixel_ix, '1'
+	ENDIF
+	CHR selected_tile_ix, tile_pattern
+ENDIF
+
+IF.EQ key, k_del
+	CHR selected_tile_ix, "0000000000000000000000000000000000000000000000000000000000000000"
+	CHR.GET selected_tile_ix, tile_pattern
+ENDIF
+
 GOTO tile_edit_loop
+
+#================================================
+	exit_tile_edit_loop:
+#================================================
+CALL redraw_screen
+CALL draw_tileset
+CALL draw_tileset_csr
+CALL print_selected_tile_ix
+GOTO tile_select_loop
+
+#================================================
+	draw_tile_edit:
+#================================================
+VAR x, 21
+VAR y, 4
+FOR i, 0, 64
+	STR.AT pixel, tile_pattern, i
+	IF.EQ pixel, '1'
+		TILE.NEW t_tile_pixel_on, c_fg, c_bg
+	ENDIF
+	IF.EQ pixel, '0'
+		TILE.NEW t_tile_pixel_off, c_fg, c_bg
+	ENDIF
+	LOCATE x, y
+	PUT
+	INC x
+	IF.GTE x, 29
+		VAR x, 21
+		INC y
+	ENDIF
+NEXT
+RET
+
+#================================================
+	draw_tile_edit_csr:
+#================================================
+STR.AT pixel, tile_pattern, tile_edit_csr_pixel_ix
+IF.EQ pixel, '1'
+	TILE.NEW t_tile_edit_csr_on, c_bg_lt
+ENDIF
+IF.EQ pixel, '0'
+	TILE.NEW t_tile_edit_csr_off, c_bg_lt
+ENDIF
+LOCATE tile_edit_csr_x, tile_edit_csr_y
+PUT
+RET
+
+#================================================
+	draw_tile_edit_wnd:
+#================================================
+VAR p_wnd_x1, 20
+VAR p_wnd_y1, 3
+VAR p_wnd_x2, 29
+VAR p_wnd_y2, 12
+CALL draw_window
+RET
 
 #================================================
 	draw_tileset_csr:
@@ -121,11 +228,17 @@ NEXT
 RET
 
 #================================================
-	clear_screen:
+	redraw_screen:
 #================================================
 CLS
+CALL draw_title_window
+CALL draw_bottom_window
+CALL draw_tileset_window_frame
+RET
 
-# Title window
+#================================================
+	draw_title_window:
+#================================================
 VAR p_wnd_x1, 0
 VAR p_wnd_y1, 0
 VAR p_wnd_x2, 44
@@ -134,16 +247,16 @@ CALL draw_window
 LOCATE 1, 1
 COLOR c_fg, c_bg
 PRINT "PTM Tileset Editor"
+RET
 
-CALL draw_bottom_window
-
-# Tileset window frame
+#================================================
+	draw_tileset_window_frame:
+#================================================
 VAR p_wnd_x1, 1
 VAR p_wnd_y1, 3
 VAR p_wnd_x2, 18
 VAR p_wnd_y2, 20
 CALL draw_window
-
 RET
 
 #================================================
@@ -223,6 +336,8 @@ DEF k_up, 1073741906
 DEF k_down, 1073741905
 DEF k_enter, 13
 DEF k_esc, 27
+DEF k_space, 32
+DEF k_del, 127
 RET
 
 #================================================
@@ -245,5 +360,9 @@ CHR 4, t_wnd_bl, "00011000000110000001110000011111000011110000000000000000000000
 CHR 5, t_wnd_br, "0001100000011000001110001111100011110000000000000000000000000000"
 CHR 6, t_wnd_hline, "0000000000000000000000001111111111111111000000000000000000000000"
 CHR 7, t_wnd_vline, "0001100000011000000110000001100000011000000110000001100000011000"
+CHR 8, t_tile_pixel_on, "1111111011111110111111101111111011111110111111101111111000000000"
+CHR 9, t_tile_pixel_off, "0000000000000000000000000001000000000000000000000000000000000000"
+CHR 10, t_tile_edit_csr_on, "1111111011111110111111101111111011111110111111101111111000000000"
+CHR 11, t_tile_edit_csr_off, "1111111010000010100000101001001010000010100000101111111000000000"
 CHR 255, t_xmark, "1000000101000010001001000001100000011000001001000100001010000001"
 RET
