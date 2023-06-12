@@ -105,4 +105,4 @@ loop:
 	UPDATE
 	GOTO loop
 ```
-For a complete example game in PTML, check out [Invaders](https://github.com/FernandoAiresCastello/PTM/blob/master/v0.2b/Build/games/invaders.ptm).
+For complete example games in PTML, check out [Invaders](https://github.com/FernandoAiresCastello/PTM/blob/master/v0.2b/Build/games/invaders.ptm) and [Advanced Lawnmower Simulator](https://github.com/FernandoAiresCastello/PTM/blob/master/v0.2b/Build/games/advanced_lawnmower_sim.ptm).
