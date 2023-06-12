@@ -1,18 +1,14 @@
 # Things left to do in v0.2b
 
-- Convert the sample game programs from v0.1b to v0.2b
-	- Invaders
-	- Advanced Lawnmower Simulator
+- Review existing commands
 
 # Possible ideas for next version (v0.3b)
 
 - Implement gamepad detection
 - Implement a few new example games. Some ideas:
 	- Pacman clone
-	- Pong clone
 	- Breakout clone
-	
-- Convert my old C++ game "Labirinto do Dragão" (aka "Dragon Labyrinth") to PTML
+	- Convert my old C++ game "Labirinto do Dragão" (aka "Dragon Labyrinth") to PTML
 
 # Possible ideas for future versions
 
