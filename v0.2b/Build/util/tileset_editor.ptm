@@ -10,6 +10,7 @@ VAR selected_tile_ix, 0
 VAR tile_edit_csr_x, 0
 VAR tile_edit_csr_y, 0
 VAR tile_edit_csr_pixel_ix, 0
+DEF tileset_file, "tileset.ptm"
 
 CALL init_palette
 CALL init_tileset
@@ -40,6 +41,11 @@ IF.EQ key, k_enter
 		GOTO tile_select_loop
 	ENDIF
 	GOTO enter_tile_edit_mode
+ENDIF
+IF.EQ key, 's'
+	IF.KEY "CTRL"
+		CALL save_tileset_file
+	ENDIF
 ENDIF
 IF.EQ key, k_right
 	IF.LT tileset_csr_x, 17
@@ -330,6 +336,16 @@ TILE.NEW t_solid, c_wnd_bg
 SUB x2, p_wnd_x2, 1
 SUB y2, p_wnd_y2, 1
 RECT x1, y1, x2, y2
+RET
+
+#================================================
+	save_tileset_file:
+#================================================
+CALL draw_bottom_window
+LOCATE 1, 22
+SPRINTF msg, "File saved: {%tileset_file}"
+PRINT msg
+PAUSE 100
 RET
 
 #================================================

@@ -822,7 +822,7 @@ void ptm_print_formatted_tile_string(string fmt)
 				}
 				else {
 					ch = String::ToInt(String::Skip(String::Replace(upper_escape_seq, "&H", "0x"), 1));
-					auto tile = t_tileseq(ch, fgc, bgc);
+					auto tile = scr.text_style.transparent ? t_tileseq(ch, fgc) : t_tileseq(ch, fgc, bgc);
 					layer.put(tilebuf_csr.x, tilebuf_csr.y, tile);
 					tilebuf_csr.x++;
 				}

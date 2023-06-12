@@ -1,0 +1,350 @@
+PTM v0.2b
+TITLE "Advanced Lawnmower Simulator"
+WINDOW 360, 200, 4, 1
+
+CALL init_colors
+CALL init_chars
+
+show_title_screen:
+    BUF.BCOL default, col.green
+    TXT.BGON
+    CLS
+
+    # Draw title banner
+    COLOR col.white, col.black
+    LOCATE 10, 3
+    PRINT "************************"
+    LOCATE 10, 4
+    PRINT "* LAWN MOWER SIMULATOR *"
+    LOCATE 10, 5
+    PRINT "************************"
+    COLOR col.black, col.white
+    LOCATE 10, 3
+    PRINT.ADD "************************"
+    LOCATE 10, 4
+    PRINT.ADD "* LAWN MOWER SIMULATOR *"
+    LOCATE 10, 5
+    PRINT.ADD "************************"
+
+    # Draw intro text
+    TXT.BGOFF
+    LOCATE 6, 8
+    COLOR col.black
+    PRINTF "THIS IS A POWERFUL AND ACCURATE\n"
+    PRINTF "LAWN MOWING SIMULATION. CHOOSE\n"
+    PRINTF "FROM SEVERAL DIFFERENT MACHINES\n"
+    PRINTF "AND {c&h22}GO GET THAT GRASS{c&h22}\n"
+
+    # Draw options
+    PRINTF "\n\nPress relevant number:\n\n"
+    PRINTF "{f1}1{/f} CAMPARI GRASSMASTER\n"
+    PRINTF "{f1}2{/f} DAF TURFOMATIC\n"
+    PRINTF "{f1}3{/f} ACME MEGA-CUT 3000\n"
+    PRINTF "{f1}4{/f} ACME LAWN-ACE\n"
+    PRINTF "{f1}5{/f} FLYMO GRASSCHUM\n"
+    PRINTF "{f1}6{/f} PATIO SPRINTETTE\n"
+
+options_loop:
+    UPDATE
+    INKEY opt
+    IF.EQ opt, '1'
+        VAR opt_sel,"CAMPARI GRASSMASTER"
+        GOTO print_option
+    ENDIF
+    IF.EQ opt, '2'
+        VAR opt_sel,"DAF TURFOMATIC"
+        GOTO print_option
+    ENDIF
+    IF.EQ opt, '3'
+        VAR opt_sel,"ACME MEGA-CUT 3000"
+        GOTO print_option
+    ENDIF
+    IF.EQ opt, '4'
+        VAR opt_sel,"ACME LAWN-ACE"
+        GOTO print_option
+    ENDIF
+    IF.EQ opt, '5'
+        VAR opt_sel,"FLYMO GRASSCHUM"
+        GOTO print_option
+    ENDIF
+    IF.EQ opt, '6'
+        GOTO print_working_option
+    ENDIF
+    GOTO options_loop
+
+print_option:
+    CLS
+    LOCATE 8,11
+    PRINTF "I'M SORRY, I'M AFRAID THAT THE\n{%opt_sel}\nIS BROKEN AT THE MOMENT"
+    PAUSE 150
+    GOTO show_title_screen
+
+print_working_option:
+    CLS
+    LOCATE 5,9
+    PRINT "THE PATIO SPRINTETTE IS WORKING WELL\n"
+    PRINT "\n"
+    PRINT "PRESSING 'M' ENGAGES THE MOTOR\n"
+    PRINT "RELEASING 'M' DISENGAGES IT\n"
+    PRINT "\n"
+    PRINT "PRESS ANY KEY TO START...\n"
+
+await_keypress_to_start:
+    UPDATE
+    INKEY key
+    IF.EQ key, 0
+        GOTO await_keypress_to_start
+    ENDIF
+
+start:
+    VAR score, 0
+    VAR man.x, 37
+    VAR man.xi, man.x
+    VAR man.y, 22
+    VAR mach.x, 36
+    VAR mach.xi, mach.x
+    VAR mach.y, 22
+    VAR current_row, 0
+
+    CLS
+
+    # Draw sky
+    TILE.NEW chr.sky, col.white, col.cyan
+    RECT 7,2,37,22
+
+    # Draw grass
+    TILE.NEW chr.grass, col.ltgreen, col.dkgreen
+    RECT 7,13,37,22
+
+    # Draw sun
+    LOCATE 27,5
+    TILE.NEW chr.sun_1, col.yellow, col.cyan
+    TILE.ADD chr.sun_2, col.yellow, col.cyan
+    PUT
+
+    # Draw shed
+    TILE.NEW chr.shed_dl, col.black, col.cyan
+    LOCATE 19, 9
+    PUT
+    LOCATE 20, 8
+    PUT
+    TILE.NEW chr.shed_dr, col.black, col.cyan
+    LOCATE 21, 8
+    PUT
+    LOCATE 22, 9
+    PUT
+    TILE.NEW chr.shed_vl, col.black, col.cyan
+    LOCATE 18, 12
+    PUT
+    LOCATE 18, 11
+    PUT
+    LOCATE 18, 10
+    PUT
+    TILE.NEW chr.shed_vr, col.black, col.cyan
+    LOCATE 23, 12
+    PUT
+    LOCATE 23, 11
+    PUT
+    LOCATE 23, 10
+    PUT
+
+    CALL add_man
+    CALL add_machine
+
+main_loop:
+    CALL print_score
+    UPDATE
+    INKEY key
+    IF.EQ key, 'm'
+        VAR speed, 1
+        CALL cut_grass
+    ENDIF
+    GOTO main_loop
+
+cut_grass:
+    MML.PLAY "L5O2CD"
+    INC score
+    PAUSE 5
+    IF.EQ mach.x, 7
+        CALL begin_next_row
+        RET
+    ENDIF
+    IF.GT mach.x, 7
+        FOR i, 0, speed
+            IF.GTE mach.x, 7
+                TILE.NEW chr.empty, col.green, col.dkgreen
+                LOCATE man.x, man.y
+                PUT
+                DEC man.x
+                DEC mach.x
+            ENDIF
+            CALL add_man
+            CALL add_machine
+        NEXT
+    ENDIF
+    RET
+
+print_score:
+    LOCATE 2, 2
+    TXT.BGOFF
+    COLOR col.white
+    PRINT score
+    TXT.BGON
+    RET
+
+add_man:
+    TILE.NEW chr.man, col.white, col.dkgreen
+    LOCATE man.x, man.y
+    PUT
+    RET
+
+add_machine:
+    TILE.NEW chr.machine, col.black, col.dkgreen
+    LOCATE mach.x, mach.y
+    PUT
+    RET
+
+begin_next_row:
+    TILE.NEW chr.empty, col.green, col.dkgreen
+    RECT 7, man.y, 37, man.y
+    INC current_row
+    IF.EQ current_row, 10
+        GOTO well_mown
+    ENDIF
+    VAR mach.x, mach.xi
+    VAR man.x, man.xi
+    DEC mach.y
+    DEC man.y
+    CALL add_man
+    CALL add_machine
+    RET
+
+well_mown:
+    MML.PLAY "L60O6CDEDEFEFGGGGG"
+    CALL print_score
+    COLOR col.white, col.black
+    LOCATE 17, 17
+    PRINT " WELL MOWN! "
+    PAUSE 200
+
+end_game:
+    BUF.BCOL default, col.black
+    COLOR col.white, col.black
+    CLS
+    CALL draw_endgame_window_frame
+    CALL draw_endgame_msg_frame
+    LOCATE 11, 22
+    PRINT "Hold any key to restart"
+    VAR msg, "WELL DONE. YOU'VE EARNED YOURSELF A CORNED BEEF SANDWICH! "
+    STR.REPT spaces, " ", 34
+    STR.CAT msg, spaces, msg
+    VAR ix_begin, 0
+    VAR ix_end, 33
+    STR.LEN ix_begin_max, msg
+
+ending_loop:
+    STR.SUB msg_part, msg, ix_begin, ix_end
+    LOCATE 6, 11
+    PRINT msg_part
+    UPDATE
+    INC ix_begin
+    INC ix_end
+    IF.GT ix_begin, ix_begin_max
+        VAR ix_begin, 0
+        VAR ix_end, 33
+    ENDIF
+    INKEY key
+    IF.EQ key, 0
+        PAUSE 5
+        GOTO ending_loop
+    ENDIF
+    GOTO show_title_screen
+
+draw_endgame_window_frame:
+    VAR p_wnd_x1, 0
+    VAR p_wnd_y1, 0
+    VAR p_wnd_x2, 44
+    VAR p_wnd_y2, 24
+    CALL draw_window
+    RET
+
+draw_endgame_msg_frame:
+    VAR p_wnd_x1, 5
+    VAR p_wnd_y1, 10
+    VAR p_wnd_x2, 40
+    VAR p_wnd_y2, 12
+    CALL draw_window
+    RET
+
+draw_window:
+    # (p_wnd_x1, p_wnd_y1, p_wnd_x2, p_wnd_y2)
+
+    VAR c_wnd_borders, 1
+    VAR c_wnd_bg, 0
+
+    TILE.NEW chr.tl, c_wnd_borders, c_wnd_bg
+    LOCATE p_wnd_x1, p_wnd_y1
+    PUT
+    TILE.NEW chr.tr, c_wnd_borders, c_wnd_bg
+    LOCATE p_wnd_x2, p_wnd_y1
+    PUT
+    TILE.NEW chr.bl, c_wnd_borders, c_wnd_bg
+    LOCATE p_wnd_x1, p_wnd_y2
+    PUT
+    TILE.NEW chr.br, c_wnd_borders, c_wnd_bg
+    LOCATE p_wnd_x2, p_wnd_y2
+    PUT
+    ADD x1, p_wnd_x1, 1
+    VAR x2, p_wnd_x2
+    FOR x, x1, x2
+        TILE.NEW chr.hline, c_wnd_borders, c_wnd_bg
+        LOCATE x, p_wnd_y1
+        PUT
+        LOCATE x, p_wnd_y2
+        PUT
+    NEXT
+    ADD y1, p_wnd_y1, 1
+    VAR y2, p_wnd_y2
+    FOR y, y1, y2
+        TILE.NEW chr.vline, c_wnd_borders, c_wnd_bg
+        LOCATE p_wnd_x1, y
+        PUT
+        LOCATE p_wnd_x2, y
+        PUT
+    NEXT
+    TILE.NEW chr.solid, c_wnd_bg
+    SUB x2, p_wnd_x2, 1
+    SUB y2, p_wnd_y2, 1
+    RECT x1, y1, x2, y2
+    RET
+
+init_colors:
+    PAL 0, col.black, &h101010
+    PAL 1, col.white, &hf0f0f0
+    PAL 2, col.green, &h109020
+    PAL 3, col.dkgreen, &h206020
+    PAL 4, col.ltgreen, &h20a040
+    PAL 5, col.cyan, &h10c0e0
+    PAL 6, col.yellow, &hffff00
+    RET
+
+init_chars:
+    CHR 1, chr.hline, "0000000000000000000000001111111111111111000000000000000000000000"
+    CHR 2, chr.vline, "0001100000011000000110000001100000011000000110000001100000011000"
+    CHR 3, chr.tl, "0000000000000000000000000001111100011111000110000001100000011000"
+    CHR 4, chr.tr, "0000000000000000000000001111100011111000000110000001100000011000"
+    CHR 5, chr.bl, "0001100000011000000110000001111100011111000000000000000000000000"
+    CHR 6, chr.br, "0001100000011000000110001111100011111000000000000000000000000000"
+    CHR 7, chr.sky, "0000000000000000000000000000000000000000000000000000000000000000"
+    CHR 8, chr.grass, "0100010001010101010101010001000110000000101010100010101000001000"
+    CHR 9, chr.man, "0000110000001110000001100111111010000110000010100001001000110110"
+    CHR 10, chr.machine, "0000000000000000000000000000000000000000011111111101111111001110"
+    CHR 11, chr.empty, "1010101001010101101010100101010110101010010101011010101001010101"
+    CHR 12, chr.shed_vl, "0000000100000001000000010000000100000001000000010000000100000001"
+    CHR 13, chr.shed_vr, "1000000010000000100000001000000010000000100000001000000010000000"
+    CHR 14, chr.shed_dl, "0000000100000010000001000000100000010000001000000100000010000000"
+    CHR 15, chr.shed_dr, "1000000001000000001000000001000000001000000001000000001000000001"
+    CHR 16, chr.sun_1, "0011110001111110110110111111111111011011111001110111111000111100"
+    CHR 17, chr.sun_2, "0011110001000010101001011000000110100101100110010100001000111100"
+    CHR 18, chr.solid, "1111111111111111111111111111111111111111111111111111111111111111"
+    RET
