@@ -58,3 +58,15 @@ void t_palette::set_b(int index, int value)
 	colors[index] &= 0xffff00;
 	colors[index] |= value;
 }
+int ptm_rgb_extract_r(rgb color)
+{
+	return (color & 0xff0000) >> 16;
+}
+int ptm_rgb_extract_g(rgb color)
+{
+	return (color & 0x00ff00) >> 8;
+}
+int ptm_rgb_extract_b(rgb color)
+{
+	return (color & 0x0000ff);
+}

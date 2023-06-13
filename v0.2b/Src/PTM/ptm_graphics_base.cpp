@@ -2,6 +2,7 @@
 #include "ptm_core.h"
 #include "ptm_tile_system.h"
 #include "ptm_sprites.h"
+#include "ptm_color_palette.h"
 
 t_screen scr;
 
@@ -61,6 +62,10 @@ void ptm_refresh_window()
 	SDL_LockTexture(scr.tx, NULL, &pixels, &pitch);
 	SDL_memcpy(pixels, scr.pixel_buf, scr.buf_len * sizeof(rgb));
 	SDL_UnlockTexture(scr.tx);
+	int r = ptm_rgb_extract_r(scr.bgcol);
+	int g = ptm_rgb_extract_g(scr.bgcol);
+	int b = ptm_rgb_extract_b(scr.bgcol);
+	SDL_SetRenderDrawColor(scr.rend, r, g, b, 255);
 	SDL_RenderClear(scr.rend);
 	SDL_RenderCopy(scr.rend, scr.tx, NULL, NULL);
 	SDL_RenderPresent(scr.rend);

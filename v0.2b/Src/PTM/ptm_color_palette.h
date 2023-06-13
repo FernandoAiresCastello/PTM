@@ -18,3 +18,7 @@ struct t_palette {
 };
 
 extern t_palette palette;
+
+int ptm_rgb_extract_r(rgb color);
+int ptm_rgb_extract_g(rgb color);
+int ptm_rgb_extract_b(rgb color);
