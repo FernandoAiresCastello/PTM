@@ -62,6 +62,16 @@ void ptm_init_commands()
 		ARGC(0);
 		ptm_enable_mouse_pointer(false);
 	};
+	CMD("MOUSE.X") {
+		ARGC(1);
+		string var = ARG_LIT_ID(0);
+		ptm_set_var(var, ptm_mouse_get_x());
+	};
+	CMD("MOUSE.Y") {
+		ARGC(1);
+		string var = ARG_LIT_ID(0);
+		ptm_set_var(var, ptm_mouse_get_y());
+	};
 	CMD("ANIM") {
 		ARGC(1);
 		int speed = ARG_VAR_NUM(0);

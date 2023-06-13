@@ -83,6 +83,18 @@ void ptm_enable_mouse_pointer(bool enable)
 {
 	SDL_ShowCursor(enable);
 }
+int ptm_mouse_get_x()
+{
+	int x = 0;
+	SDL_GetMouseState(&x, nullptr);
+	return x / scr.wnd_size;
+}
+int ptm_mouse_get_y()
+{
+	int y = 0;
+	SDL_GetMouseState(nullptr, &y);
+	return y / scr.wnd_size;
+}
 void ptm_set_window_title(string title)
 {
 	SDL_SetWindowTitle(scr.wnd, title.c_str());

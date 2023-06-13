@@ -1,0 +1,12 @@
+WINDOW 360, 200, 4, 1
+MOUSE.ON
+
+loop:
+	CLS
+	MOUSE.X x
+	MOUSE.Y y
+	LOCATE 1, 1
+	PRINTF "{%x}\n"
+	PRINTF "{%y}\n"
+	UPDATE
+	GOTO loop

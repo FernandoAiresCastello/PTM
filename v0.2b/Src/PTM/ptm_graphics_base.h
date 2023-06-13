@@ -42,6 +42,8 @@ void ptm_free_window();
 void ptm_refresh_window();
 void ptm_toggle_fullscreen();
 void ptm_enable_mouse_pointer(bool enable);
+int ptm_mouse_get_x();
+int ptm_mouse_get_y();
 void ptm_set_window_title(string title);
 void ptm_set_window_bgcol(rgb bgcol);
 void ptm_clear_screen();
