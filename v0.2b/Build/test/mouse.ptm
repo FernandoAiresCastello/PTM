@@ -3,10 +3,17 @@ MOUSE.ON
 
 loop:
 	CLS
+	
 	MOUSE.X x
 	MOUSE.Y y
+	MOUSE.L l
+	MOUSE.M m
+	MOUSE.R r
+
 	LOCATE 1, 1
-	PRINTF "{%x}\n"
-	PRINTF "{%y}\n"
+	PRINTF "X: {%x}\n"
+	PRINTF "Y: {%y}\n\n"
+	PRINTF "L:{%l} M:{%m} R:{%r}\n"
+
 	UPDATE
 	GOTO loop

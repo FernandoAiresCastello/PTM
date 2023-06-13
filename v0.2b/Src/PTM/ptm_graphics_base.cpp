@@ -95,6 +95,18 @@ int ptm_mouse_get_y()
 	SDL_GetMouseState(nullptr, &y);
 	return y / scr.wnd_size;
 }
+bool ptm_mouse_get_btn_left()
+{
+	return SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON_LMASK;
+}
+bool ptm_mouse_get_btn_right()
+{
+	return SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON_RMASK;
+}
+bool ptm_mouse_get_btn_middle()
+{
+	return SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON_MMASK;
+}
 void ptm_set_window_title(string title)
 {
 	SDL_SetWindowTitle(scr.wnd, title.c_str());
