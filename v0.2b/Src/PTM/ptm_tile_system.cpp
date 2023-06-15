@@ -753,11 +753,12 @@ void ptm_print_formatted_tile_string(string fmt)
 	int initial_y = tilebuf_csr.y;
 	int fgc = scr.text_style.fgc;
 	int bgc = scr.text_style.bgc;
-
 	bool escape = false;
 	string escape_seq = "";
+
 	for (int i = 0; i < fmt.length(); i++) {
 		int ch = fmt[i];
+		// NEW LINE (CRLF)
 		if (ch == '\\') {
 			i++;
 			if (i < fmt.length()) {
@@ -766,23 +767,28 @@ void ptm_print_formatted_tile_string(string fmt)
 				}
 			}
 		}
+		// BEGIN READ ESCAPE SEQUENCE
 		else if (ch == '{') {
 			escape = true;
 			continue;
 		}
+		// BEGIN APPLY ESCAPE SEQUENCE
 		else if (ch == '}') {
 			escape = false;
 			const string upper_escape_seq = String::ToUpper(escape_seq);
+			// {C} = CHARACTER LITERAL
 			if (String::StartsWith(upper_escape_seq, 'C')) {
+				// {C} from variable or array
 				if (escape_seq[1] == '%') {
 					string var = String::Skip(escape_seq, 2);
+					// {C} from array
 					if (String::Contains(var, '[') || String::Contains(var, ']')) {
 						auto begin = String::IndexOf(var, '[');
 						auto end = String::IndexOf(var, ']');
 						if (begin != string::npos && end != string::npos && begin < end) {
-							string arr_id = String::Substring(var, 0, begin);
+							string arr_id = String::Substring(var, 0, begin - 1);
 							if (intp->arrays.find(arr_id) != intp->arrays.end()) {
-								string ixs = String::Substring(var, begin + 1, end);
+								string ixs = String::Substring(var, begin + 1, end - 1);
 								int ix = -1;
 								if (String::IsNumber(ixs)) {
 									ix = String::ToInt(ixs);
@@ -797,7 +803,7 @@ void ptm_print_formatted_tile_string(string fmt)
 								}
 								if (ix >= 0 && ix < intp->arrays[arr_id].size()) {
 									string str = intp->arrays[arr_id].at(ix);
-									ptm_print_tile_string(str, fgc, bgc, false);
+									ptm_print_tile_char(String::ToInt(str));
 								}
 								else {
 									intp->abort(String::Format("Array index out of bounds: %s[%i]", arr_id.c_str(), ix));
@@ -808,6 +814,7 @@ void ptm_print_formatted_tile_string(string fmt)
 							}
 						}
 					}
+					// {C} from variable
 					else {
 						if (intp->vars.find(var) != intp->vars.end()) {
 							ch = String::ToInt(intp->vars[var].value);
@@ -820,6 +827,7 @@ void ptm_print_formatted_tile_string(string fmt)
 						}
 					}
 				}
+				// {C} from literal value
 				else {
 					ch = String::ToInt(String::Skip(String::Replace(upper_escape_seq, "&H", "0x"), 1));
 					auto tile = scr.text_style.transparent ? t_tileseq(ch, fgc) : t_tileseq(ch, fgc, bgc);
@@ -829,16 +837,19 @@ void ptm_print_formatted_tile_string(string fmt)
 				escape_seq = "";
 				continue;
 			}
+			// {F} = FOREGROUND COLOR
 			else if (String::StartsWith(upper_escape_seq, 'F')) {
+				// {F} from variable or array
 				if (escape_seq[1] == '%') {
 					string var = String::Skip(escape_seq, 2);
+					// {F} from array
 					if (String::Contains(var, '[') || String::Contains(var, ']')) {
 						auto begin = String::IndexOf(var, '[');
 						auto end = String::IndexOf(var, ']');
 						if (begin != string::npos && end != string::npos && begin < end) {
-							string arr_id = String::Substring(var, 0, begin);
+							string arr_id = String::Substring(var, 0, begin - 1);
 							if (intp->arrays.find(arr_id) != intp->arrays.end()) {
-								string ixs = String::Substring(var, begin + 1, end);
+								string ixs = String::Substring(var, begin + 1, end - 1);
 								int ix = -1;
 								if (String::IsNumber(ixs)) {
 									ix = String::ToInt(ixs);
@@ -852,8 +863,7 @@ void ptm_print_formatted_tile_string(string fmt)
 									}
 								}
 								if (ix >= 0 && ix < intp->arrays[arr_id].size()) {
-									string str = intp->arrays[arr_id].at(ix);
-									ptm_print_tile_string(str, fgc, bgc, false);
+									fgc = String::ToInt(intp->arrays[arr_id].at(ix));
 								}
 								else {
 									intp->abort(String::Format("Array index out of bounds: %s[%i]", arr_id.c_str(), ix));
@@ -864,6 +874,7 @@ void ptm_print_formatted_tile_string(string fmt)
 							}
 						}
 					}
+					// {F} from variable
 					else {
 						if (intp->vars.find(var) != intp->vars.end()) {
 							fgc = String::ToInt(intp->vars[var].value);
@@ -873,27 +884,32 @@ void ptm_print_formatted_tile_string(string fmt)
 						}
 					}
 				}
+				// {F} from literal value
 				else {
 					fgc = String::ToInt(String::Skip(String::Replace(upper_escape_seq, "&H", "0x"), 1));
 				}
 				escape_seq = "";
 				continue;
 			}
+			// {/F} REVERT FOREGROUND COLOR
 			else if (String::StartsWith(upper_escape_seq, "/F")) {
 				fgc = scr.text_style.fgc;
 				escape_seq = "";
 				continue;
 			}
+			// {B} = BACKGROUND COLOR
 			else if (String::StartsWith(upper_escape_seq, 'B')) {
+				// {B} from variable or array
 				if (escape_seq[1] == '%') {
 					string var = String::Skip(escape_seq, 2);
+					// {B} from array
 					if (String::Contains(var, '[') || String::Contains(var, ']')) {
 						auto begin = String::IndexOf(var, '[');
 						auto end = String::IndexOf(var, ']');
 						if (begin != string::npos && end != string::npos && begin < end) {
-							string arr_id = String::Substring(var, 0, begin);
+							string arr_id = String::Substring(var, 0, begin - 1);
 							if (intp->arrays.find(arr_id) != intp->arrays.end()) {
-								string ixs = String::Substring(var, begin + 1, end);
+								string ixs = String::Substring(var, begin + 1, end - 1);
 								int ix = -1;
 								if (String::IsNumber(ixs)) {
 									ix = String::ToInt(ixs);
@@ -907,8 +923,7 @@ void ptm_print_formatted_tile_string(string fmt)
 									}
 								}
 								if (ix >= 0 && ix < intp->arrays[arr_id].size()) {
-									string str = intp->arrays[arr_id].at(ix);
-									ptm_print_tile_string(str, fgc, bgc, false);
+									bgc = String::ToInt(intp->arrays[arr_id].at(ix));
 								}
 								else {
 									intp->abort(String::Format("Array index out of bounds: %s[%i]", arr_id.c_str(), ix));
@@ -919,6 +934,7 @@ void ptm_print_formatted_tile_string(string fmt)
 							}
 						}
 					}
+					// {B} from variable
 					else {
 						if (intp->vars.find(var) != intp->vars.end()) {
 							bgc = String::ToInt(intp->vars[var].value);
@@ -928,26 +944,30 @@ void ptm_print_formatted_tile_string(string fmt)
 						}
 					}
 				}
+				// {B} from literal value
 				else {
 					bgc = String::ToInt(String::Skip(String::Replace(upper_escape_seq, "&H", "0x"), 1));
 				}
 				escape_seq = "";
 				continue;
 			}
+			// {/B} REVERT BACKGROUND COLOR
 			else if (String::StartsWith(upper_escape_seq, "/B")) {
 				bgc = scr.text_style.bgc;
 				escape_seq = "";
 				continue;
 			}
+			// {%} EMBED VARIABLE OR ARRAY ELEMENT
 			else if (String::StartsWith(escape_seq, '%')) {
 				string var = String::Skip(escape_seq, 1);
+				// {%} EMBED ARRAY ELEMENT
 				if (String::Contains(var, '[') || String::Contains(var, ']')) {
 					auto begin = String::IndexOf(var, '[');
 					auto end = String::IndexOf(var, ']');
 					if (begin != string::npos && end != string::npos && begin < end) {
-						string arr_id = String::Substring(var, 0, begin);
+						string arr_id = String::Substring(var, 0, begin - 1);
 						if (intp->arrays.find(arr_id) != intp->arrays.end()) {
-							string ixs = String::Substring(var, begin + 1, end);
+							string ixs = String::Substring(var, begin + 1, end - 1);
 							int ix = -1;
 							if (String::IsNumber(ixs)) {
 								ix = String::ToInt(ixs);
@@ -973,6 +993,7 @@ void ptm_print_formatted_tile_string(string fmt)
 						}
 					}
 				}
+				// {%} EMBED VARIABLE
 				else {
 					if (intp->vars.find(var) != intp->vars.end()) {
 						ptm_print_tile_string(intp->vars[var].value, fgc, bgc, false);
@@ -984,14 +1005,18 @@ void ptm_print_formatted_tile_string(string fmt)
 				escape_seq = "";
 				continue;
 			}
+			// INVALID ESCAPE SEQUENCE
 			else {
 				intp->abort("Invalid escape sequence: " + escape_seq);
 			}
+
 		}
+		// END APPLY ESCAPE SEQUENCE
 		else if (escape) {
 			escape_seq += ch;
 			continue;
 		}
+		// NOT AN ESCAPE SEQUENCE. JUST OUTPUT THE CHARACTER
 		else {
 			auto tile = scr.text_style.transparent ? t_tileseq(ch, fgc) : t_tileseq(ch, fgc, bgc);
 			layer.put(tilebuf_csr.x, tilebuf_csr.y, tile);

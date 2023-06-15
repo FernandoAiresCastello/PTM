@@ -338,9 +338,9 @@ string ptm_sprintf(string fmt)
 						auto begin = String::IndexOf(var, '[');
 						auto end = String::IndexOf(var, ']');
 						if (begin != string::npos && end != string::npos && begin < end) {
-							string arr_id = String::Substring(var, 0, begin);
+							string arr_id = String::Substring(var, 0, begin - 1);
 							if (intp->arrays.find(arr_id) != intp->arrays.end()) {
-								string ixs = String::Substring(var, begin + 1, end);
+								string ixs = String::Substring(var, begin + 1, end - 1);
 								int ix = -1;
 								if (String::IsNumber(ixs)) {
 									ix = String::ToInt(ixs);
@@ -403,9 +403,9 @@ string ptm_sprintf(string fmt)
 					auto begin = String::IndexOf(var, '[');
 					auto end = String::IndexOf(var, ']');
 					if (begin != string::npos && end != string::npos && begin < end) {
-						string arr_id = String::Substring(var, 0, begin);
+						string arr_id = String::Substring(var, 0, begin - 1);
 						if (intp->arrays.find(arr_id) != intp->arrays.end()) {
-							string ixs = String::Substring(var, begin + 1, end);
+							string ixs = String::Substring(var, begin + 1, end - 1);
 							int ix = -1;
 							if (String::IsNumber(ixs)) {
 								ix = String::ToInt(ixs);
