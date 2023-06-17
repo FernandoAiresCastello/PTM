@@ -413,7 +413,7 @@ void ptm_init_commands()
 	};
 	CMD("CHR.LEN") {
 		ARGC(1);
-		string var = ARG_LIT_ID(1);
+		string var = ARG_LIT_ID(0);
 		ptm_set_var(var, tileset.tiles.size());
 	};
 	CMD("CHR.GET") {
@@ -443,7 +443,7 @@ void ptm_init_commands()
 	};
 	CMD("PAL.LEN") {
 		ARGC(1);
-		string var = ARG_LIT_ID(1);
+		string var = ARG_LIT_ID(0);
 		ptm_set_var(var, palette.colors.size());
 	};
 	CMD("PAL.GET") {

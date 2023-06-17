@@ -11,21 +11,19 @@ VAR tile_edit_csr_x, 0
 VAR tile_edit_csr_y, 0
 VAR tile_edit_csr_pixel_ix, 0
 DEF tileset_file, "tileset.ptm"
+DEF blank_tile_def, "0000000000000000000000000000000000000000000000000000000000000000"
+VAR tile_clipboard, blank_tile_def
+VAR tileset_page, 0
 
 CALL init_palette
 CALL init_tileset
 BUF.BCOL default, c_bg
 
 CALL init_keycodes
-
 CALL redraw_screen
 CALL draw_tileset
 CALL draw_tileset_csr
 CALL print_selected_tile_ix
-
-GOTO tile_select_loop
-
-HALT
 
 #================================================
 	tile_select_loop:
@@ -42,10 +40,29 @@ IF.EQ key, k_enter
 	ENDIF
 	GOTO enter_tile_edit_mode
 ENDIF
+IF.EQ key, 'c'
+	IF.KEY "CTRL"
+		CHR.GET selected_tile_ix, tile_clipboard
+	ENDIF
+ENDIF
+IF.EQ key, 'x'
+	IF.KEY "CTRL"
+		CHR.GET selected_tile_ix, tile_clipboard
+		CHR selected_tile_ix, blank_tile_def
+	ENDIF
+ENDIF
+IF.EQ key, 'v'
+	IF.KEY "CTRL"
+		CHR selected_tile_ix, tile_clipboard
+	ENDIF
+ENDIF
 IF.EQ key, 's'
 	IF.KEY "CTRL"
 		CALL save_tileset_file
 	ENDIF
+ENDIF
+IF.EQ key, k_del
+	CHR selected_tile_ix, blank_tile_def
 ENDIF
 IF.EQ key, k_right
 	IF.LT tileset_csr_x, 17
@@ -71,6 +88,18 @@ IF.EQ key, k_up
 		SUB selected_tile_ix, selected_tile_ix, 16
 	ENDIF
 ENDIF
+IF.EQ key, k_pgdn
+	INC tileset_page
+	VAR tileset_csr_x, 2
+	VAR tileset_csr_y, 4
+	VAR selected_tile_ix, 0
+ENDIF
+IF.EQ key, k_pgup
+	DEC tileset_page
+	VAR tileset_csr_x, 2
+	VAR tileset_csr_y, 4
+	VAR selected_tile_ix, 0
+ENDIF
 
 CALL draw_tileset
 CALL draw_tileset_csr
@@ -84,12 +113,16 @@ GOTO tile_select_loop
 CALL draw_bottom_window
 LOCATE 1, 22
 PRINTF "Tile {%selected_tile_ix} {f%c_fg}{c%selected_tile_ix}{/f}"
+LOCATE 23, 22
+CHR.LEN tile_count
+PRINTF "Page {%tileset_page} / Tiles {%tile_count}"
 RET
 
 #================================================
 	enter_tile_edit_mode:
 #================================================
 CHR.GET selected_tile_ix, tile_pattern
+VAR original_binary_string, tile_pattern
 VAR tile_edit_csr_x, 21
 VAR tile_edit_csr_y, 4
 VAR tile_edit_csr_pixel_ix, 0
@@ -159,6 +192,13 @@ ENDIF
 IF.EQ key, k_del
 	CHR selected_tile_ix, "0000000000000000000000000000000000000000000000000000000000000000"
 	CHR.GET selected_tile_ix, tile_pattern
+ENDIF
+
+IF.EQ key, 'z'
+	IF.KEY "CTRL"
+		CHR selected_tile_ix, original_binary_string
+		CHR.GET selected_tile_ix, tile_pattern
+	ENDIF
 ENDIF
 
 GOTO tile_edit_loop
@@ -374,6 +414,8 @@ DEF k_enter, 13
 DEF k_esc, 27
 DEF k_space, 32
 DEF k_del, 127
+DEF k_pgup, 1073741899
+DEF k_pgdn, 1073741902
 RET
 
 #================================================
@@ -388,7 +430,7 @@ RET
 #================================================
 	init_tileset:
 #================================================
-CHR 0, t_blank, "0000000000000000000000000000000000000000000000000000000000000000"
+CHR 0, t_blank, blank_tile_def
 CHR 1, t_solid, "1111111111111111111111111111111111111111111111111111111111111111"
 CHR 2, t_wnd_tl, "0000000000000000000000000000111100011111000111000001100000011000"
 CHR 3, t_wnd_tr, "0000000000000000000000001111000011111000001110000001100000011000"
