@@ -486,6 +486,15 @@ RET
 	load_tileset_file:
 #================================================
 LLOAD tileset_file, file_lines
+ARR.LEN file_lines, size
+CHR.NEW size
+VAR tile_ix, 0
+ARR.FOR file_lines, line
+	STR.SPLIT parts, line, ","
+	STR.SUB binary, parts[1], 1, 64
+	CHR tile_ix, binary
+	INC tile_ix
+NEXT
 RET
 
 #================================================

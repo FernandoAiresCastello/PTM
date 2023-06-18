@@ -105,8 +105,8 @@ bool t_compiler::compile_line(
 			if (begin == string::npos || end == string::npos || begin >= end) {
 				add_syntax_error(src_line_ptr);
 			} else {
-				param.id = String::Substring(arg, 0, begin);
-				string ix = String::Substring(arg, begin + 1, end);
+				param.id = String::Substring(arg, 0, begin - 1);
+				string ix = String::Substring(arg, begin + 1, end - 1);
 
 				if (String::StartsWithNumber(ix)) { // Literal array index
 					param.type = t_param_type::arr_ix_literal;
