@@ -10,25 +10,95 @@ VAR selected_tile_ix, 0
 VAR tile_edit_csr_x, 0
 VAR tile_edit_csr_y, 0
 VAR tile_edit_csr_pixel_ix, 0
-DEF tileset_file, "tileset.ptm"
 DEF blank_tile_def, "0000000000000000000000000000000000000000000000000000000000000000"
 VAR tile_clipboard, blank_tile_def
 VAR tileset_page, 0
+VAR tileset_page_count, 1
 
 CALL init_palette
 CALL init_tileset
 BUF.BCOL default, c_bg
-
 CALL init_keycodes
+
+#================================================
+	enter_menu:
+#================================================
+CLS
+CALL draw_title_window
+LOCATE 1, 1
+PRINT "PTM Tileset Editor"
+LOCATE 1, 4
+PRINT "Press numeric key to select option:"
+LOCATE 2, 6
+PRINT "1. Create new tileset\n"
+PRINT "2. Load tileset\n"
+PRINT "3. Quit\n"
+
+#================================================
+	menu_loop:
+#================================================
+UPDATE
+INKEY key
+IF.EQ key, '1'
+	CALL draw_bottom_window
+	LOCATE 1, 22
+	PRINT "Create new tileset\n"
+	PRINT "Enter filename: "
+	INPUT tileset_file, 26
+	STR.TRIM tileset_file, tileset_file
+	IF.EQ tileset_file, ""
+		GOTO enter_menu
+	ENDIF
+	CALL create_new_tileset
+	GOTO enter_tile_select_mode
+ENDIF
+IF.EQ key, '2'
+	CALL draw_bottom_window
+	LOCATE 1, 22
+	PRINT "Load tileset\n"
+	PRINT "Enter filename: "
+	INPUT tileset_file, 26
+	STR.TRIM tileset_file, tileset_file
+	IF.EQ tileset_file, ""
+		GOTO enter_menu
+	ENDIF
+	FCHK tileset_file, file_exists
+	IF.FALSE file_exists
+		CALL draw_bottom_window
+		LOCATE 1, 22
+		PRINT "File not found"
+		PAUSE 100
+		GOTO enter_menu
+	ENDIF
+	CALL load_tileset_file
+	GOTO enter_tile_select_mode
+ENDIF
+IF.EQ key, '3'
+	EXIT
+ENDIF
+GOTO menu_loop
+
+#================================================
+	create_new_tileset:
+#================================================
+CSAVE tileset_file, "# New tileset"
+RET
+
+#================================================
+	enter_tile_select_mode:
+#================================================
 CALL redraw_screen
 CALL draw_tileset
 CALL draw_tileset_csr
-CALL print_selected_tile_ix
+CALL print_info
 
 #================================================
 	tile_select_loop:
 #================================================
 UPDATE
+
+CHR.LEN tileset_size
+DIV tileset_page_count, tileset_size, 256
 
 INKEY key
 IF.EQ key, 0
@@ -39,6 +109,11 @@ IF.EQ key, k_enter
 		GOTO tile_select_loop
 	ENDIF
 	GOTO enter_tile_edit_mode
+ENDIF
+IF.EQ key, 'q'
+	IF.KEY "CTRL"
+		RESET
+	ENDIF
 ENDIF
 IF.EQ key, 'c'
 	IF.KEY "CTRL"
@@ -89,33 +164,45 @@ IF.EQ key, k_up
 	ENDIF
 ENDIF
 IF.EQ key, k_pgdn
-	INC tileset_page
-	VAR tileset_csr_x, 2
-	VAR tileset_csr_y, 4
-	VAR selected_tile_ix, 0
+	SUB max_tileset_page, tileset_page_count, 1
+	IF.LT tileset_page, max_tileset_page
+		INC tileset_page
+		VAR tileset_csr_x, 2
+		VAR tileset_csr_y, 4
+		VAR selected_tile_ix, 0
+		MUL selected_tile_ix, tileset_page, 256
+	ENDIF
 ENDIF
 IF.EQ key, k_pgup
-	DEC tileset_page
-	VAR tileset_csr_x, 2
-	VAR tileset_csr_y, 4
-	VAR selected_tile_ix, 0
+	IF.GT tileset_page, 0
+		DEC tileset_page
+		VAR tileset_csr_x, 2
+		VAR tileset_csr_y, 4
+		VAR selected_tile_ix, 0
+		MUL selected_tile_ix, tileset_page, 256
+	ENDIF
 ENDIF
 
 CALL draw_tileset
 CALL draw_tileset_csr
-CALL print_selected_tile_ix
+CALL print_info
 
 GOTO tile_select_loop
 
 #================================================
-	print_selected_tile_ix:
+	print_info:
 #================================================
 CALL draw_bottom_window
+LOCATE 1, 1
+PRINTF "File: {%tileset_file}"
 LOCATE 1, 22
-PRINTF "Tile {%selected_tile_ix} {f%c_fg}{c%selected_tile_ix}{/f}"
+PRINTF "Tile: {%selected_tile_ix} {f%c_fg}({c%selected_tile_ix}){/f} "
 LOCATE 23, 22
 CHR.LEN tile_count
-PRINTF "Page {%tileset_page} / Tiles {%tile_count}"
+PRINTF "Total: {%tile_count}"
+LOCATE 23, 23
+ADD tileset_page_plus_1, tileset_page, 1
+PRINTF "Page : {%tileset_page_plus_1}/{%tileset_page_count} "
 RET
 
 #================================================
@@ -209,7 +296,7 @@ GOTO tile_edit_loop
 CALL redraw_screen
 CALL draw_tileset
 CALL draw_tileset_csr
-CALL print_selected_tile_ix
+CALL print_info
 GOTO tile_select_loop
 
 #================================================
@@ -274,7 +361,8 @@ RET
 #================================================
 	draw_tileset_csr:
 #================================================
-TILE.NEW selected_tile_ix, c_fg_lt, c_bg_lt
+TILE.NEW selected_tile_ix, c_fg, c_bg_lt
+TILE.ADD selected_tile_ix, c_bg, c_bg_lt
 LOCATE tileset_csr_x, tileset_csr_y
 PUT
 RET
@@ -282,7 +370,7 @@ RET
 #================================================
 	draw_tileset:
 #================================================
-VAR tile_ix, 0
+MUL tile_ix, tileset_page, 256
 FOR y, 4, 20
 	FOR x, 2, 18
 		TILE.NEW tile_ix, c_fg, c_bg
@@ -312,7 +400,6 @@ VAR p_wnd_y2, 2
 CALL draw_window
 LOCATE 1, 1
 COLOR c_fg, c_bg
-PRINT "PTM Tileset Editor"
 RET
 
 #================================================
@@ -381,11 +468,24 @@ RET
 #================================================
 	save_tileset_file:
 #================================================
+ARR.NEW file_lines
+CHR.LEN tileset_size
+FOR i, 0, tileset_size
+	CHR.GET i, binary
+	SPRINTF line, "CHR {%i}, {c34}{%binary}{c34}"
+	ARR.PUSH file_lines, line
+NEXT
+LSAVE tileset_file, file_lines
 CALL draw_bottom_window
 LOCATE 1, 22
-SPRINTF msg, "File saved: {%tileset_file}"
-PRINT msg
+PRINT "File saved!"
 PAUSE 100
+RET
+
+#================================================
+	load_tileset_file:
+#================================================
+LLOAD tileset_file, file_lines
 RET
 
 #================================================
@@ -423,8 +523,7 @@ RET
 #================================================
 PAL 0, c_bg, &he0e0e0
 PAL 1, c_fg, &h202020
-PAL 2, c_bg_lt, &hf01010
-PAL 3, c_fg_lt, &hffffff
+PAL 2, c_bg_lt, &h2040e0
 RET
 
 #================================================

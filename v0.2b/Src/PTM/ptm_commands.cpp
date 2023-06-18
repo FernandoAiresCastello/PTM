@@ -1144,6 +1144,13 @@ void ptm_init_commands()
 			arr.push_back(line);
 		}
 	};
+	CMD("LSAVE") {
+		ARGC(2);
+		string path = ARG_VAR_STR(0);
+		string arr_id = ARG_LIT_ID(1);
+		auto& arr = ptm_get_array(arr_id);
+		ptm_write_text_file_lines(path, arr);
+	};
 	CMD("BLOAD") {
 		ARGC(2);
 		string path = ARG_VAR_STR(0);

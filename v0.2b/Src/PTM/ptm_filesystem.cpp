@@ -1,6 +1,6 @@
 #include "ptm_filesystem.h"
 
-string file_line_delimiter = "\r\n";
+string file_line_delimiter = "\n";
 string record_file_delimiter = "§";
 vector<string> record_file_input;
 string record_file_output;
@@ -15,6 +15,10 @@ string ptm_read_text_file(string path)
 vector<string> ptm_read_text_file_lines(string path)
 {
 	return File::ReadLines(path, file_line_delimiter);
+}
+void ptm_write_text_file_lines(string path, vector<string>& lines)
+{
+	File::WriteLines(path, lines, file_line_delimiter);
 }
 vector<int> ptm_read_binary_file(string path)
 {

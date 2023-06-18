@@ -4,16 +4,17 @@
 
 # Possible ideas for next version (v0.3b)
 
-- Implement gamepad detection
-- Implement a few new example games. Some ideas:
+- Gamepad detection
+- Clipboard manipulation
+- Some new example games. Ideas:
 	- Pacman clone
 	- Breakout clone
 	- Convert my old C++ game "Labirinto do Dragão" (aka "Dragon Labyrinth") to PTML
 
 # Possible ideas for future versions
 
-- Implement functions
-- Implement an optional obfuscation format for PTML source code
-- Create some kind of basic IDE for PTML programming
-- Create more user-friendly documentation
-- Maybe create some kind of test suite?
+- Functions
+- Optional obfuscation format for PTML source code
+- Some kind of basic IDE for PTML programming
+- More user-friendly documentation
+- Some kind of test suite?
