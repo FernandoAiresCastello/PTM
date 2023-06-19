@@ -1,4 +1,4 @@
-WINDOW 360, 200, 4, 1
+WINDOW 360, 200, 3, 1
 MOUSE.ON
 
 loop:

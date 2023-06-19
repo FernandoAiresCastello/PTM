@@ -40,5 +40,6 @@ namespace CppUtils
 		static std::string CurrentTime();
 		static void SendTextToClipboard(std::string text);
 		static std::string GetTextFromClipboard();
+		static int Run(std::string exe_path, std::string args);
 	};
 }

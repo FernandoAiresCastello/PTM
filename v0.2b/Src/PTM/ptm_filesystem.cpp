@@ -99,5 +99,6 @@ char ptm_get_record_file_mode()
 }
 vector<string> ptm_file_list(string root_dir)
 {
-	return File::List(root_dir, "*", true, false);
+	string ptm_folder = File::GetParentDirectory(File::GetCurrentExecutableFilePath()) + "\\";
+	return File::List(ptm_folder + root_dir, true, false);
 }

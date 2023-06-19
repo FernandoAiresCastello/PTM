@@ -39,6 +39,11 @@ void ptm_init_commands()
 		ARGC(0);
 		ptm_halt();
 	};
+	CMD("RUN") {
+		ARGC(1);
+		string path = ARG_VAR_STR(0);
+		ptm_launch_new_instance_with_program(path);
+	};
 	CMD("UPDATE") {
 		ARGC(0);
 		ptm_update();

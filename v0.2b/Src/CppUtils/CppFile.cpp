@@ -41,14 +41,12 @@ namespace CppUtils
 		}
 	}
 
-	std::vector<std::string> File::List(std::string directory, std::string pattern, bool showFolders, bool showHidden)
+	std::vector<std::string> File::List(std::string directory, bool showFolders, bool showHidden)
 	{
-		if (pattern.empty())
-			pattern = "*";
-
 		std::vector<std::string> files;
-		std::string path = directory + "\\" + pattern;
+		std::string path = directory + "*";
 		WIN32_FIND_DATA data;
+
 		HANDLE hFind = FindFirstFile(path.c_str(), &data);
 
 		if (hFind != INVALID_HANDLE_VALUE) {
@@ -84,7 +82,7 @@ namespace CppUtils
 	{
 		std::vector<std::string> folders;
 
-		for (auto& entry : List(directory, "*", true, showHidden)) {
+		for (auto& entry : List(directory, true, showHidden)) {
 			if (IsDirectory(entry)) {
 				folders.push_back(entry);
 			}
@@ -110,7 +108,7 @@ namespace CppUtils
 
 	bool File::IsRoot(std::string directory)
 	{
-		std::vector<std::string> files = File::List(directory, "*", true, true);
+		std::vector<std::string> files = File::List(directory, true, true);
 		for (unsigned i = 0; i < files.size(); i++) {
 			if (files[i] == "../")
 				return false;

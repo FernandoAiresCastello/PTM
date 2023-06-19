@@ -22,7 +22,7 @@ namespace CppUtils
 		static const std::string CurrentDirectory;
 		static const std::string ParentDirectory;
 
-		static std::vector<std::string> List(std::string directory, std::string pattern, bool showFolders, bool showHidden);
+		static std::vector<std::string> List(std::string directory, bool showFolders, bool showHidden);
 		static std::vector<std::string> ListFolders(std::string directory, bool showHidden);
 		static bool IsDirectory(std::string file);
 		static bool IsCurrentDirectory(std::string file);

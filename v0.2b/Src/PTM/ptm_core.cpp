@@ -458,3 +458,7 @@ string ptm_sprintf(string fmt)
 
 	return result;
 }
+void ptm_launch_new_instance_with_program(string program_path)
+{
+	Util::Run("PTM", "\"" + program_path + "\"");
+}

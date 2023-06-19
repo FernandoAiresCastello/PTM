@@ -22,6 +22,7 @@
 #include "CppUtil.h"
 #include "CppMsgBox.h"
 #include "CppString.h"
+#include "CppFile.h"
 
 namespace CppUtils
 {
@@ -277,5 +278,10 @@ namespace CppUtils
 			}
 		}
 		return "";
+	}
+
+	int Util::Run(std::string exe_path, std::string args)
+	{
+		return (INT_PTR)ShellExecute(NULL, "open", exe_path.c_str(), args.c_str(), NULL, SW_SHOWDEFAULT);;
 	}
 }

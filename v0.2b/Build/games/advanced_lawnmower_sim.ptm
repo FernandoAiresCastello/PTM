@@ -1,6 +1,6 @@
 PTM v0.2b
 TITLE "Advanced Lawnmower Simulator"
-WINDOW 360, 200, 4, 1
+WINDOW 360, 200, 3, 1
 
 CALL init_colors
 CALL init_chars
