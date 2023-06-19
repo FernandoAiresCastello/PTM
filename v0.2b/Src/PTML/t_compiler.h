@@ -30,8 +30,8 @@ private:
 	bool is_char_literal(string& arg);
 	bool is_variable_identifier(string& arg);
 	bool is_array_identifier(string& arg);
-	bool is_if(string& arg);
-	bool is_endif(string& arg);
+	bool is_if_block_start(string& arg);
+	bool is_if_block_end(string& arg);
 	bool is_endfor(string& arg);
 	bool is_window_def(string& arg);
 	bool is_data(string& arg);

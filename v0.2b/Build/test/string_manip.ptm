@@ -1,0 +1,9 @@
+WINDOW 360, 200, 4, 1
+
+LOCATE 1, 1
+VAR hello, "Hello"
+PRINT hello
+
+LOCATE 1, 2
+STR.SUB hello2, hello, 1, 3
+PRINT hello2

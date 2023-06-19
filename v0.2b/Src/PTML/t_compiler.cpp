@@ -58,11 +58,11 @@ bool t_compiler::compile_line(
 	new_line->cmd = String::ToUpper(new_line->cmd);
 
 	// Check for IF
-	if (is_if(new_line->cmd)) {
+	if (is_if_block_start(new_line->cmd)) {
 		new_line->is_if = true;
 	}
 	// Check for ENDIF
-	if (is_endif(new_line->cmd)) {
+	if (is_if_block_end(new_line->cmd)) {
 		new_line->is_endif = true;
 		return true;
 	}
@@ -264,10 +264,13 @@ bool t_compiler::is_array_identifier(string& arg) {
 		String::Contains(arg, '[') || 
 		String::Contains(arg, ']');
 }
-bool t_compiler::is_if(string& arg) {
+bool t_compiler::is_if_block_start(string& arg) {
+	if (arg == "IF.GOTO" || arg == "IF.CALL") {
+		return false;
+	}
 	return String::StartsWith(arg, "IF.");
 }
-bool t_compiler::is_endif(string& arg) {
+bool t_compiler::is_if_block_end(string& arg) {
 	return arg == "ENDIF";
 }
 bool t_compiler::is_endfor(string& arg) {

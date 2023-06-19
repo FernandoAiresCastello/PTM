@@ -411,6 +411,19 @@ void ptm_init_commands()
 		}
 		tileset.new_tileset(size, false);
 	};
+	CMD("CHR.ADD") {
+		ARGC(1);
+		int tiles_to_add = ARG_VAR_NUM(0);
+		if (tiles_to_add <= 0) {
+			ptm_abort("A number larger than zero is required");
+		}
+		const int cur_size = tileset.tiles.size();
+		const int new_size = cur_size + tiles_to_add;
+		if (new_size < 256 || new_size > 65536) {
+			ptm_abort("Illegal tileset size");
+		}
+		tileset.add_blank(tiles_to_add);
+	};
 	CMD("CHR.LEN") {
 		ARGC(1);
 		string var = ARG_LIT_ID(0);
@@ -1261,11 +1274,14 @@ void ptm_init_commands()
 		ptm_set_var(var, str);
 	};
 	CMD("STR.FIND") {
-		ARGC(4);
+		ARGC_MIN_MAX(3, 4);
 		string var = ARG_LIT_ID(0);
 		string str = ARG_VAR_STR(1);
 		string substr = ARG_VAR_STR(2);
-		int offset = ARG_VAR_NUM(3);
+		int offset = 0;
+		if (arg.size() == 4) {
+			offset = ARG_VAR_NUM(3);
+		}
 		int first = String::FindFirst(str, substr, offset);
 		ptm_set_var(var, first);
 	};

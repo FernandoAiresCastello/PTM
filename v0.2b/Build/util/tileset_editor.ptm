@@ -2,7 +2,7 @@
 	main:
 #================================================
 TITLE "PTM Tileset Editor"
-WINDOW 360, 200, 4, 1
+WINDOW 360, 200, 3, 1
 
 VAR tileset_csr_x, 2
 VAR tileset_csr_y, 4
@@ -14,6 +14,8 @@ DEF blank_tile_def, "00000000000000000000000000000000000000000000000000000000000
 VAR tile_clipboard, blank_tile_def
 VAR tileset_page, 0
 VAR tileset_page_count, 1
+DEF mode_tile_select, 0
+DEF mode_tile_edit, 1
 
 CALL init_palette
 CALL init_tileset
@@ -25,7 +27,7 @@ CALL init_keycodes
 #================================================
 CLS
 CALL draw_title_window
-LOCATE 1, 1
+LOCATE 13, 1
 PRINT "PTM Tileset Editor"
 LOCATE 1, 4
 PRINT "Press numeric key to select option:"
@@ -85,6 +87,24 @@ CSAVE tileset_file, "# New tileset"
 RET
 
 #================================================
+	create_new_page:
+#================================================
+CALL draw_bottom_window
+LOCATE 1, 22
+PRINT "Create new tileset page (Y/N)? "
+INPUT confirm, 1
+STR.UCASE confirm, confirm
+IF.EQ confirm, "Y"
+	CHR.ADD 256
+	CALL update_page_count
+	CALL draw_bottom_window
+	LOCATE 1, 22
+	PRINT "New tileset page added"
+	PAUSE 100
+ENDIF
+RET
+
+#================================================
 	enter_tile_select_mode:
 #================================================
 CALL redraw_screen
@@ -95,10 +115,8 @@ CALL print_info
 #================================================
 	tile_select_loop:
 #================================================
+VAR mode, mode_tile_select
 UPDATE
-
-CHR.LEN tileset_size
-DIV tileset_page_count, tileset_size, 256
 
 INKEY key
 IF.EQ key, 0
@@ -182,6 +200,12 @@ IF.EQ key, k_pgup
 		MUL selected_tile_ix, tileset_page, 256
 	ENDIF
 ENDIF
+IF.EQ key, k_insert
+	CALL create_new_page
+ENDIF
+IF.EQ key, k_f1
+	GOTO show_help
+ENDIF
 
 CALL draw_tileset
 CALL draw_tileset_csr
@@ -203,11 +227,25 @@ PRINTF "Total: {%tile_count}"
 LOCATE 23, 23
 ADD tileset_page_plus_1, tileset_page, 1
 PRINTF "Page : {%tileset_page_plus_1}/{%tileset_page_count} "
+LOCATE 27, 20
+PRINTF "{f%c_wnd}Press F1 for help"
+RET
+
+#================================================
+	update_page_count:
+#================================================
+CHR.LEN tileset_size
+DIV tileset_page_count, tileset_size, 256
 RET
 
 #================================================
 	enter_tile_edit_mode:
 #================================================
+CALL redraw_screen
+CALL draw_tileset
+CALL draw_tileset_csr
+CALL print_info
+
 CHR.GET selected_tile_ix, tile_pattern
 VAR original_binary_string, tile_pattern
 VAR tile_edit_csr_x, 21
@@ -219,6 +257,7 @@ CALL draw_tile_mosaic_wnd
 #================================================
 	tile_edit_loop:
 #================================================
+VAR mode, mode_tile_edit
 CALL draw_tile_edit
 CALL draw_tile_edit_csr
 
@@ -264,7 +303,6 @@ IF.EQ key, k_up
 		SUB tile_edit_csr_pixel_ix, tile_edit_csr_pixel_ix, 8
 	ENDIF
 ENDIF
-
 IF.EQ key, k_space
 	STR.GETC pixel, tile_pattern, tile_edit_csr_pixel_ix
 	IF.EQ pixel, '1'
@@ -275,17 +313,18 @@ IF.EQ key, k_space
 	ENDIF
 	CHR selected_tile_ix, tile_pattern
 ENDIF
-
 IF.EQ key, k_del
 	CHR selected_tile_ix, "0000000000000000000000000000000000000000000000000000000000000000"
 	CHR.GET selected_tile_ix, tile_pattern
 ENDIF
-
 IF.EQ key, 'z'
 	IF.KEY "CTRL"
 		CHR selected_tile_ix, original_binary_string
 		CHR.GET selected_tile_ix, tile_pattern
 	ENDIF
+ENDIF
+IF.EQ key, k_f1
+	GOTO show_help
 ENDIF
 
 GOTO tile_edit_loop
@@ -426,7 +465,7 @@ RET
 	draw_window:
 	# p_wnd_x1, p_wnd_y1, p_wnd_x2, p_wnd_y2
 #================================================
-VAR c_wnd_borders, c_fg
+VAR c_wnd_borders, c_wnd
 VAR c_wnd_bg, c_bg
 
 TILE.NEW t_wnd_tl, c_wnd_borders, c_wnd_bg
@@ -488,6 +527,7 @@ RET
 LLOAD tileset_file, file_lines
 ARR.LEN file_lines, size
 CHR.NEW size
+CALL update_page_count
 VAR tile_ix, 0
 ARR.FOR file_lines, line
 	STR.SPLIT parts, line, ","
@@ -496,6 +536,25 @@ ARR.FOR file_lines, line
 	INC tile_ix
 NEXT
 RET
+
+#================================================
+	show_help:
+#================================================
+CLS
+CALL draw_title_window
+LOCATE 20, 1
+PRINT "Help"
+LOCATE 1, 23
+PRINTF "{f%c_wnd}Press F1 to return..."
+
+help_return_wait_loop:
+	UPDATE
+	INKEY key
+	IF.EQ key, k_f1
+		IF.GOTO mode, mode_tile_select, enter_tile_select_mode
+		IF.GOTO mode, mode_tile_edit, enter_tile_edit_mode
+	ENDIF
+	GOTO help_return_wait_loop
 
 #================================================
 	key_test_loop:
@@ -525,6 +584,8 @@ DEF k_space, 32
 DEF k_del, 127
 DEF k_pgup, 1073741899
 DEF k_pgdn, 1073741902
+DEF k_insert, 1073741897
+DEF k_f1, 1073741882
 RET
 
 #================================================
@@ -533,6 +594,7 @@ RET
 PAL 0, c_bg, &he0e0e0
 PAL 1, c_fg, &h202020
 PAL 2, c_bg_lt, &h2040e0
+PAL 3, c_wnd, &hc0c0c0
 RET
 
 #================================================
