@@ -52,22 +52,21 @@ ENDIF
 IF.EQ key, k_backspace
 	CALL enter_root_folder
 ENDIF
-
 GOTO await_input
 
 #================================================
 	select_file:
 #================================================
-VAR file, files[selected_file_ix]
-STR.SFX is_ptml, file, ".ptm"
+VAR selected_file, files[selected_file_ix]
+STR.SFX is_ptml, selected_file, ".ptm"
 IF.TRUE is_ptml
 	CALL launch_program
 ENDIF
-STR.SFX is_folder, file, "/"
+STR.SFX is_folder, selected_file, "/"
 IF.TRUE is_folder
 	CALL enter_sub_folder
 ENDIF
-IF.EQ file, root_path_indicator
+IF.EQ selected_file, root_path_indicator
 	CALL enter_root_folder
 ENDIF
 RET
@@ -75,14 +74,14 @@ RET
 #================================================
 	launch_program:
 #================================================
-STR.CAT file_path, root, file
+STR.CAT file_path, root, selected_file
 RUN file_path
 RET
 
 #================================================
 	enter_sub_folder:
 #================================================
-STR.CAT root, root, file
+STR.CAT root, root, selected_file
 CALL redraw_screen
 CALL print_files
 CALL reset_cursor
@@ -141,22 +140,25 @@ RET
 	get_files:
 #================================================
 FILES all_files, root
+ARR.LEN all_files, all_file_count
 ARR.NEW files
 IF.NEQ root, ""
 	ARR.PUSH files, root_path_indicator
 ENDIF
-ARR.FOR all_files, file
-	STR.SFX is_ptml, file, ".ptm"
-	IF.TRUE is_ptml
-		ARR.PUSH files, file
-	ENDIF
-NEXT
-ARR.FOR all_files, file
-	STR.SFX is_folder, file, "/"
-	IF.TRUE is_folder
-		ARR.PUSH files, file
-	ENDIF
-NEXT
+IF.GT all_file_count, 0
+	ARR.FOR all_files, file
+		STR.SFX is_ptml, file, ".ptm"
+		IF.TRUE is_ptml
+			ARR.PUSH files, file
+		ENDIF
+	NEXT
+	ARR.FOR all_files, file
+		STR.SFX is_folder, file, "/"
+		IF.TRUE is_folder
+			ARR.PUSH files, file
+		ENDIF
+	NEXT
+ENDIF
 ARR.LEN files, file_count
 SUB last_file_ix, file_count, 1
 RET

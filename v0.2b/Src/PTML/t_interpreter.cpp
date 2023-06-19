@@ -256,6 +256,10 @@ void t_interpreter::loop_start(string var, int first, int last, int step) {
 }
 void t_interpreter::array_loop_start(string arr_id, string iter_var) {
 	auto& arr = arrays[arr_id];
+	if (arr.empty()) {
+		abort("Cannot loop over empty array");
+		return;
+	}
 	vars[iter_var] = t_variable(arr[0]);
 	t_loop loop;
 	loop.is_array = true;
