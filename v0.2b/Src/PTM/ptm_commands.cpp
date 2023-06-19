@@ -1401,4 +1401,14 @@ void ptm_init_commands()
 		string result = Util::XorDecrypt(str, key);
 		ptm_set_var(var, result);
 	};
+	CMD("CLIP.SET") {
+		ARGC(1);
+		string str = ARG_VAR_STR(0);
+		ptm_clipboard_set(str);
+	};
+	CMD("CLIP.GET") {
+		ARGC(1);
+		string var = ARG_LIT_ID(0);
+		ptm_set_var(var, ptm_clipboard_get());
+	};
 }

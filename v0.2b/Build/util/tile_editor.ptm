@@ -1,0 +1,157 @@
+TITLE "PTM Tile Editor"
+WINDOW 120, 64, 5, 1
+MOUSE.ON
+
+CHR 0, t.blank, "0000000000000000000000000000000000000000000000000000000000000000"
+CHR 1, t.pixel_off, "1111111111111111111111111111111111111111111111111111111111111111"
+CHR 2, t.pixel_on, "1111111111111111111111111111111111111111111111111111111111111111"
+
+PAL 0, c.black, &h101010
+PAL 1, c.white, &hf0f0f0
+PAL 2, c.pixel_off, &h404040
+PAL 3, c.pixel_on, &hf0f0f0
+
+DEF false, 0
+DEF true, 1
+DEF tile_ix, 255
+
+CALL init_keycodes
+
+#================================================
+	setup:
+#================================================
+CLS
+TILE.NEW tile_ix, c.white
+LOCATE 11, 1
+PUT
+RECT 9, 3, 13, 6
+
+#================================================
+	main_loop:
+#================================================
+CALL handle_input
+CALL refresh
+UPDATE
+GOTO main_loop
+
+#================================================
+	refresh:
+#================================================
+CHR.GET tile_ix, binary
+VAR x, 0
+VAR y, 0
+FOR i, 0, 64
+	STR.GETC pixel, binary, i
+	IF.EQ pixel, '0'
+		TILE.NEW t.pixel_off, c.pixel_off
+	ENDIF
+	IF.EQ pixel, '1'
+		TILE.NEW t.pixel_on, c.pixel_on
+	ENDIF
+	LOCATE x, y
+	PUT
+	INC x
+	IF.GT x, 7
+		VAR x, 0
+		INC y
+	ENDIF
+NEXT
+RET
+
+#================================================
+	handle_input:
+#================================================
+MOUSE.L left
+IF.TRUE left
+	CALL calc_pixel_index
+	IF.TRUE pixel_index_valid
+		CHR.GET tile_ix, binary
+		STR.SETC new_binary, binary, pixel_index, '1'
+		CHR tile_ix, new_binary
+		CHR.GET tile_ix, new_binary
+	ENDIF
+	RET
+ENDIF
+
+MOUSE.R right
+IF.TRUE right
+	CALL calc_pixel_index
+	IF.TRUE pixel_index_valid
+		CHR.GET tile_ix, binary
+		STR.SETC new_binary, binary, pixel_index, '0'
+		CHR tile_ix, new_binary
+		CHR.GET tile_ix, new_binary
+	ENDIF
+	RET
+ENDIF
+
+IF.KEY "DEL"
+	CHR tile_ix, "0000000000000000000000000000000000000000000000000000000000000000"
+ENDIF
+IF.KEY "CTRL"
+	IF.KEY "C"
+		CALL copy_tile_to_clipboard
+	ENDIF
+	IF.KEY "V"
+		CALL parse_tile_from_clipboard
+	ENDIF
+ENDIF
+RET
+
+#================================================
+	calc_pixel_index:
+#================================================
+MOUSE.X mx
+MOUSE.Y my
+DIV mx, mx, 8
+DIV my, my, 8
+MUL pixel_index, my, 8
+ADD pixel_index, pixel_index, mx
+CALL validate_pixel_index
+RET
+
+#================================================
+	validate_pixel_index:
+#================================================
+VAR pixel_index_valid, false
+IF.GTE mx, 0
+	IF.LTE mx, 7
+		IF.GTE my, 0
+			IF.LTE my, 7
+				VAR pixel_index_valid, true
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+RET
+
+#================================================
+	copy_tile_to_clipboard:
+#================================================
+CHR.GET tile_ix, binary
+CLIP.SET binary
+RET
+
+#================================================
+	parse_tile_from_clipboard:
+#================================================
+CLIP.GET binary
+CHR tile_ix, binary
+RET
+
+#================================================
+	init_keycodes:
+#================================================
+DEF k_right, 1073741903
+DEF k_left, 1073741904
+DEF k_up, 1073741906
+DEF k_down, 1073741905
+DEF k_enter, 13
+DEF k_esc, 27
+DEF k_space, 32
+DEF k_del, 127
+DEF k_pgup, 1073741899
+DEF k_pgdn, 1073741902
+DEF k_insert, 1073741897
+DEF k_f1, 1073741882
+RET

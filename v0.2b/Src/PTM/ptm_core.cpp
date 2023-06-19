@@ -462,3 +462,11 @@ void ptm_launch_new_instance_with_program(string program_path)
 {
 	Util::Run("PTM", "\"" + program_path + "\"");
 }
+void ptm_clipboard_set(string value)
+{
+	Util::SendTextToClipboard(value);
+}
+string ptm_clipboard_get()
+{
+	return Util::GetTextFromClipboard();
+}

@@ -6,7 +6,6 @@
 
 - Stack (STK.NEW, STK.PUSH, STK.POP, STK.TOP)
 - Gamepad detection (GPAD.*)
-- Clipboard manipulation (CLIP.*)
 - Some new example games. Ideas:
 	- Pacman clone
 	- Breakout clone
