@@ -30,7 +30,7 @@ CALL draw_title_window
 LOCATE 13, 1
 PRINT "PTM Tileset Editor"
 LOCATE 1, 4
-PRINT "Press numeric key to select option:"
+PRINTF "{f%c_bold}Press numeric key to select option:"
 LOCATE 2, 6
 PRINT "1. Create new tileset\n"
 PRINT "2. Load tileset\n"
@@ -44,20 +44,20 @@ INKEY key
 IF.EQ key, '1'
 	CALL draw_bottom_window
 	LOCATE 1, 22
-	PRINT "Create new tileset\n"
+	PRINTF "{f%c_bold}Create new tileset\n"
 	PRINT "Enter filename: "
 	INPUT tileset_file, 26
 	STR.TRIM tileset_file, tileset_file
 	IF.EQ tileset_file, ""
 		GOTO enter_menu
 	ENDIF
-	CALL create_new_tileset
+	CALL save_tileset_file
 	GOTO enter_tile_select_mode
 ENDIF
 IF.EQ key, '2'
 	CALL draw_bottom_window
 	LOCATE 1, 22
-	PRINT "Load tileset\n"
+	PRINTF "{f%c_bold}Load tileset\n"
 	PRINT "Enter filename: "
 	INPUT tileset_file, 26
 	STR.TRIM tileset_file, tileset_file
@@ -79,12 +79,6 @@ IF.EQ key, '3'
 	EXIT
 ENDIF
 GOTO menu_loop
-
-#================================================
-	create_new_tileset:
-#================================================
-CSAVE tileset_file, "# New tileset"
-RET
 
 #================================================
 	create_new_page:
@@ -218,15 +212,15 @@ GOTO tile_select_loop
 #================================================
 CALL draw_bottom_window
 LOCATE 1, 1
-PRINTF "File: {%tileset_file}"
+PRINTF "{f%c_bold}File{/f} {%tileset_file}"
 LOCATE 1, 22
-PRINTF "Tile: {%selected_tile_ix} {f%c_fg}({c%selected_tile_ix}){/f} "
+PRINTF "{f%c_bold}Tile{/f} {%selected_tile_ix} ({f%c_bold}{c%selected_tile_ix}{/f})"
 LOCATE 23, 22
 CHR.LEN tile_count
-PRINTF "Total: {%tile_count}"
+PRINTF "{f%c_bold}Total{/f} {%tile_count}"
 LOCATE 23, 23
 ADD tileset_page_plus_1, tileset_page, 1
-PRINTF "Page : {%tileset_page_plus_1}/{%tileset_page_count} "
+PRINTF "{f%c_bold}Page {/f} {%tileset_page_plus_1}/{%tileset_page_count}"
 LOCATE 27, 20
 PRINTF "{f%c_wnd}Press F1 for help"
 RET
@@ -366,10 +360,10 @@ RET
 #================================================
 STR.GETC pixel, tile_pattern, tile_edit_csr_pixel_ix
 IF.EQ pixel, '1'
-	TILE.NEW t_tile_edit_csr_on, c_bg_lt
+	TILE.NEW t_tile_edit_csr_on, c_bold
 ENDIF
 IF.EQ pixel, '0'
-	TILE.NEW t_tile_edit_csr_off, c_bg_lt
+	TILE.NEW t_tile_edit_csr_off, c_bold
 ENDIF
 LOCATE tile_edit_csr_x, tile_edit_csr_y
 PUT
@@ -400,8 +394,8 @@ RET
 #================================================
 	draw_tileset_csr:
 #================================================
-TILE.NEW selected_tile_ix, c_fg, c_bg_lt
-TILE.ADD selected_tile_ix, c_bg, c_bg_lt
+TILE.NEW selected_tile_ix, c_fg, c_bold
+TILE.ADD selected_tile_ix, c_bg, c_bold
 LOCATE tileset_csr_x, tileset_csr_y
 PUT
 RET
@@ -544,6 +538,28 @@ CLS
 CALL draw_title_window
 LOCATE 20, 1
 PRINT "Help"
+
+LOCATE 1, 4
+
+PRINTF "{f%c_bold}In tile select window:\n"
+PRINT " ARROW KEYS = move cursor\n"
+PRINT " ENTER = select tile\n"
+PRINT " CTRL+C = copy tile\n"
+PRINT " CTRL+X = cut tile\n"
+PRINT " CTRL+V = paste tile\n"
+PRINT " DELETE = clear tile (all pixels turn off)\n"
+PRINT " CTRL+S = save tileset file\n"
+PRINT " INSERT = add new tileset page\n"
+PRINT " PAGEUP/PAGEDN = change tileset page\n"
+PRINT " CTRL+Q = reset program\n"
+
+PRINTF "{f%c_bold}\nIn tile edit window:\n"
+PRINT " ARROW KEYS = move cursor\n"
+PRINT " ENTER/ESCAPE = return to tile select\n"
+PRINT " SPACE = toggle pixel on/off\n"
+PRINT " DELETE = clear tile (all pixels turn off)\n"
+PRINT " CTRL+Z = undo changes\n"
+
 LOCATE 1, 23
 PRINTF "{f%c_wnd}Press F1 to return..."
 
@@ -593,7 +609,7 @@ RET
 #================================================
 PAL 0, c_bg, &he0e0e0
 PAL 1, c_fg, &h202020
-PAL 2, c_bg_lt, &h2040e0
+PAL 2, c_bold, &h2040e0
 PAL 3, c_wnd, &hc0c0c0
 RET
 

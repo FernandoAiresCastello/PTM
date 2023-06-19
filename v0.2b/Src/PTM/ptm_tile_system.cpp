@@ -712,6 +712,7 @@ string ptm_text_input(int maxlen)
 			}
 			// ESC = Cancel
 			else if (key == SDLK_ESCAPE) {
+				text = "";
 				text_input_cancelled = true;
 				finished = true;
 			}
