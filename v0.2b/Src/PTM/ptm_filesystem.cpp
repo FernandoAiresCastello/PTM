@@ -97,3 +97,7 @@ char ptm_get_record_file_mode()
 {
 	return record_file_mode;
 }
+vector<string> ptm_file_list(string root_dir)
+{
+	return File::List(root_dir, "*", true, false);
+}

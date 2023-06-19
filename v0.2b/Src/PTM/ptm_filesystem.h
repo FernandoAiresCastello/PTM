@@ -20,3 +20,4 @@ void ptm_write_to_record_file(int value);
 string ptm_read_string_from_record_file();
 int ptm_read_int_from_record_file();
 char ptm_get_record_file_mode();
+vector<string> ptm_file_list(string root_dir);

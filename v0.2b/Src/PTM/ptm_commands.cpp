@@ -1078,6 +1078,20 @@ void ptm_init_commands()
 		ARGC(0);
 		intp->reset_data_pointer();
 	};
+	CMD("FILES") {
+		ARGC_MIN_MAX(1, 2);
+		string arr_id = ARG_LIT_ID(0);
+		string path = ".";
+		if (arg.size() == 2) {
+			path = ARG_VAR_STR(1);
+		}
+		ptm_new_array(arr_id, 0);
+		auto& arr = ptm_get_array(arr_id);
+		auto entries = ptm_file_list(path);
+		for (auto& entry : entries) {
+			arr.push_back(entry);
+		}
+	};
 	CMD("FCHK") {
 		ARGC(2);
 		string path = ARG_VAR_STR(0);
