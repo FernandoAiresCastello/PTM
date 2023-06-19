@@ -23,7 +23,8 @@ You'll want to download the *"PTM_v0.2b.zip"* file which bundles everything.
 - [PTML Command Reference v0.1b](https://docs.google.com/spreadsheets/d/1YwwevUD65kUNky194NmnlzqBe67nMvq3Hs2m6oJnqa8/edit?usp=sharing)
 - [PTML Command Reference v0.2b (work in progress)](https://docs.google.com/spreadsheets/d/1uPhPh0LLgRmL87Uo9hDXGUhOOFIESIYAcZ_nJOlN2VI/edit?usp=sharing)
 
-## Examples (for v0.2b)
+## Examples
+### v0.2b
 
 Here are some examples of PTML programs:
 
