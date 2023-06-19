@@ -145,20 +145,18 @@ ARR.NEW files
 IF.NEQ root, ""
 	ARR.PUSH files, root_path_indicator
 ENDIF
-IF.GT all_file_count, 0
-	ARR.FOR all_files, file
-		STR.SFX is_ptml, file, ".ptm"
-		IF.TRUE is_ptml
-			ARR.PUSH files, file
-		ENDIF
-	NEXT
-	ARR.FOR all_files, file
-		STR.SFX is_folder, file, "/"
-		IF.TRUE is_folder
-			ARR.PUSH files, file
-		ENDIF
-	NEXT
-ENDIF
+ARR.FOR all_files, file
+	STR.SFX is_ptml, file, ".ptm"
+	IF.TRUE is_ptml
+		ARR.PUSH files, file
+	ENDIF
+NEXT
+ARR.FOR all_files, file
+	STR.SFX is_folder, file, "/"
+	IF.TRUE is_folder
+		ARR.PUSH files, file
+	ENDIF
+NEXT
 ARR.LEN files, file_count
 SUB last_file_ix, file_count, 1
 RET
