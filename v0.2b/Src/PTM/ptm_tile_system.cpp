@@ -1066,3 +1066,21 @@ void ptm_paste_tile_block(t_tilebuf_layer& buf, int x, int y)
 		}
 	}
 }
+bool ptm_validate_tilebuf_csr()
+{
+	const int x = tilebuf_csr.x;
+	const int y = tilebuf_csr.y;
+	t_tilebuf_layer& buf = ptm_get_selected_tilebuf_layer();
+
+	return
+		x >= 0 && y >= 0 &&
+		x < buf.get_width() && y < buf.get_height();
+}
+void ptm_assert_tilebuf_csr()
+{
+	if (!ptm_validate_tilebuf_csr()) {
+		ptm_abort("Tilebuffer cursor out of bounds:\n\n" +
+			String::Format("Buf.id: %s\nLayer: %i / X: %i / Y: %i",
+				tilebufs.selected()->id.c_str(), tilebuf_csr.layer, tilebuf_csr.x, tilebuf_csr.y));
+	}
+}

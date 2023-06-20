@@ -778,10 +778,12 @@ void ptm_init_commands()
 	};
 	CMD("PUT") {
 		ARGC(0);
+		ptm_assert_tilebuf_csr();
 		ptm_get_selected_tilebuf_layer().put(tilebuf_csr.x, tilebuf_csr.y, working_tile);
 	};
 	CMD("DEL") {
 		ARGC(0);
+		ptm_assert_tilebuf_csr();
 		ptm_get_selected_tilebuf_layer().del(tilebuf_csr.x, tilebuf_csr.y);
 	};
 	CMD("DELR") {
@@ -794,8 +796,8 @@ void ptm_init_commands()
 	};
 	CMD("GET") {
 		ARGC(0);
-		working_tile.set_equal(
-			ptm_get_selected_tilebuf_layer().get(tilebuf_csr.x, tilebuf_csr.y));
+		ptm_assert_tilebuf_csr();
+		working_tile.set_equal(ptm_get_selected_tilebuf_layer().get(tilebuf_csr.x, tilebuf_csr.y));
 	};
 	CMD("FILL") {
 		ARGC(0);

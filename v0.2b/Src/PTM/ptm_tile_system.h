@@ -192,3 +192,5 @@ bool ptm_text_input_ok();
 void ptm_copy_tile_block(t_tilebuf_layer& buf, int x1, int y1, int x2, int y2);
 void ptm_cut_tile_block(t_tilebuf_layer& buf, int x1, int y1, int x2, int y2);
 void ptm_paste_tile_block(t_tilebuf_layer& buf, int x, int y);
+bool ptm_validate_tilebuf_csr();
+void ptm_assert_tilebuf_csr();
