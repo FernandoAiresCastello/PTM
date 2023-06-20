@@ -19,11 +19,13 @@ struct t_tiledata {
 	void set(string name, int value);
 	string get_s(string name);
 	int get_i(string name);
+	unordered_map<string, string>& get_all();
 	bool has(string name);
 	bool has(string name, string value);
 	bool has(string name, int value);
 	void clear();
 	void set_equal(t_tiledata& other);
+	bool empty();
 private:
 	unordered_map<string, string> data;
 };

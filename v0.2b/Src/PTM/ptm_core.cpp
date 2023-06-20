@@ -471,3 +471,148 @@ string ptm_clipboard_get()
 {
 	return Util::GetTextFromClipboard();
 }
+void ptm_save_debug_file(string file)
+{
+	string text = "PTM DEBUG FILE [" + Util::DateTime() + "]\n\n";
+
+	// Variables / constants
+
+	text += "Variables and constants:\n\n";
+
+	if (intp->vars.empty()) {
+		text += "\t(empty)\n";
+	}
+	else {
+		for (auto& entry : intp->vars) {
+			string name = entry.first;
+			string value = entry.second.value;
+			bool is_const = entry.second.is_const;
+			if (is_const) {
+				text += "\tDEF " + name + " = " + value + "\n";
+			}
+		}
+		for (auto& entry : intp->vars) {
+			string name = entry.first;
+			string value = entry.second.value;
+			bool is_const = entry.second.is_const;
+			if (!is_const) {
+				text += "\tVAR " + name + " = " + value + "\n";
+			}
+		}
+	}
+	text += "\n";
+
+	// Arrays
+
+	text += "Arrays:\n\n";
+
+	if (intp->arrays.empty()) {
+		text += "\t(empty)\n";
+	}
+	else {
+		for (auto& entry : intp->arrays) {
+			string name = entry.first;
+			vector<string>& arr = entry.second;
+			text += "\tARR " + name + " (length: " + String::ToString(arr.size()) + ")\n";
+			for (int i = 0; i < arr.size(); i++) {
+				string& element = arr[i];
+				text += String::Format("\t\t[%i] %s", i, element.c_str()) + "\n";
+			}
+		}
+	}
+	text += "\n";
+
+	// Window
+
+	text += "Window:\n\n";
+	text += "\tScreen size: " + String::Format("%i width x %i height", scr.buf_w, scr.buf_h) + "\n";
+	text += "\tSize factor: " + String::ToString(scr.wnd_size) + "\n";
+	text += "\tPhysical size: " + String::Format("%i width x %i height", scr.wnd_size * scr.buf_w, scr.wnd_size * scr.buf_h) + "\n";
+	text += "\tBg. color RGB: " + String::Format("&H%06X", scr.bgcol) + "\n";
+	text += "\n";
+
+	// TILE register
+
+	text += "TILE register:\n\n";
+	if (working_tile.empty()) {
+		text += "\t\tFrames: (empty)\n";
+	}
+	else {
+		text += "\t\tFrames: " + working_tile.to_str() + "\n";
+	}
+	text += "\t\tProperties:\n";
+	auto& prop = working_tile.data;
+	if (prop.empty()) {
+		text += "\t\t\t(empty)\n";
+	}
+	else {
+		for (auto& prop : working_tile.data.get_all()) {
+			text += "\t\t\t" + prop.first + " = " + prop.second + "\n";
+		}
+	}
+	text += "\n";
+
+	// Tilebuffers
+
+	text += "Tile buffers:\n\n";
+
+	for (auto& buf : tilebufs.tilebufs) {
+		text += "\tBUF " + buf.id + "\n";
+		text += "\t\tOrder: " + String::ToString(buf.order) + "\n";
+		text += "\t\tSize: " + String::Format("%i cols x %i rows", buf.get_width(), buf.get_height()) + "\n";
+		text += "\t\tLayers: " + String::ToString(buf.get_layer_count()) + "\n";
+		text += "\t\tVisible: " + String::Format("%s\n", buf.visible() ? "YES" : "NO");
+		text += "\t\tBg. enabled: " + String::Format("%s\n", buf.bg_enabled ? "YES" : "NO");
+		text += "\t\tBg. color index: " + String::ToString(buf.get_bgcol()) + "\n";
+		t_clip& view = buf.get_viewport();
+		text += "\t\tViewport rect: " + String::Format("X1:%i Y1:%i X2:%i Y2:%i", view.x1, view.y1, view.x2, view.y2) + "\n";
+		text += "\t\tViewport scroll: " + String::Format("X:%i Y:%i", view.x_offset, view.y_offset) + "\n";
+		text += "\t\tSprites owned: " + String::ToString(buf.get_sprites().size()) + "\n";
+	}
+	text += "\n";
+
+	// Sprites
+
+	text += "Sprites:\n\n";
+
+	if (sprites.get_sprites().empty()) {
+		text += "\t(empty)\n";
+	}
+	else {
+		for (auto& entry : sprites.get_sprites()) {
+			string id = entry.first;
+			t_sprite& spr = entry.second;
+			text += "\tSPR " + id + "\n";
+			text += "\t\tPosition: " + String::Format("X:%i Y:%i", spr.x, spr.y) + "\n";
+			text += "\t\tVisible: " + String::Format("%s\n", spr.visible ? "YES" : "NO");
+			auto* buf = spr.get_buffer();
+			if (buf) {
+				text += "\t\tParent buffer: " + buf->id + "\n";
+			}
+			else {
+				text += "\t\tParent buffer: (none)\n";
+			}
+			if (spr.tile.empty()) {
+				text += "\t\tTile frames: (empty)\n";
+			}
+			else {
+				text += "\t\tTile frames: " + spr.tile.to_str() + "\n";
+			}
+			text += "\t\tProperties:\n";
+			auto& prop = spr.tile.data;
+			if (prop.empty()) {
+				text += "\t\t\t(empty)\n";
+			}
+			else {
+				for (auto& prop : spr.tile.data.get_all()) {
+					text += "\t\t\t" + prop.first + " = " + prop.second + "\n";
+				}
+			}
+		}
+	}
+	text += "\n";
+
+	// END
+
+	File::WriteText(file, text);
+}

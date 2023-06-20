@@ -65,6 +65,10 @@ int t_tiledata::get_i(string name)
 {
 	return String::ToInt(data[name]);
 }
+unordered_map<string, string>& t_tiledata::get_all()
+{
+	return data;
+}
 bool t_tiledata::has(string name)
 {
 	return data.find(name) != data.end();
@@ -87,6 +91,10 @@ void t_tiledata::set_equal(t_tiledata& other)
 	for (auto& item : other.data) {
 		set(item.first, item.second);
 	}
+}
+bool t_tiledata::empty()
+{
+	return data.empty();
 }
 t_tileseq::t_tileseq()
 {

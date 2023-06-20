@@ -40,3 +40,4 @@ string ptm_sprintf(string fmt);
 void ptm_launch_new_instance_with_program(string program_path);
 void ptm_clipboard_set(string value);
 string ptm_clipboard_get();
+void ptm_save_debug_file(string file);

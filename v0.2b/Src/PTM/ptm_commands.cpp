@@ -97,9 +97,14 @@ void ptm_init_commands()
 		int speed = ARG_VAR_NUM(0);
 		ptm_set_tile_animation_speed(speed);
 	};
-	CMD("DEBUG") {
+	CMD("DEBUG.BRK") {
 		ARGC(0);
 		debugger;
+	};
+	CMD("DEBUG") {
+		ARGC(1);
+		string file = ARG_VAR_STR(0);
+		ptm_save_debug_file(file);
 	};
 	CMD("MSGBOX") {
 		ARGC(1);
