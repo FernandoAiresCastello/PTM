@@ -1,0 +1,13 @@
+DEF k_right, 1073741903
+DEF k_left, 1073741904
+DEF k_up, 1073741906
+DEF k_down, 1073741905
+DEF k_enter, 13
+DEF k_esc, 27
+DEF k_space, 32
+DEF k_del, 127
+DEF k_pgup, 1073741899
+DEF k_pgdn, 1073741902
+DEF k_insert, 1073741897
+DEF k_f1, 1073741882
+DEF k_backspace, 8

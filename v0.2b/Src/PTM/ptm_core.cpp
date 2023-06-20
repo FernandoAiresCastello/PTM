@@ -26,7 +26,6 @@ int ptm_run(string program_file)
 	do {
 		SDL_Init(SDL_INIT_EVERYTHING);
 		ptm_init_commands();
-		ptm_init_keyboard();
 		ptm_init_mml();
 
 		prg = new t_program();
@@ -164,11 +163,13 @@ bool ptm_has_var(string name)
 }
 void ptm_set_var(string name, string value)
 {
-	intp->vars[name] = t_variable(value, false);
+	intp->vars[name].value = value;
+	intp->vars[name].is_const = false;
 }
 void ptm_set_var(string name, int value)
 {
-	intp->vars[name] = t_variable(value, false);
+	intp->vars[name].value = String::ToString(value);
+	intp->vars[name].is_const = false;
 }
 t_variable& ptm_get_var(string name)
 {

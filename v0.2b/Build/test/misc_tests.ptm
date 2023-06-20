@@ -1,5 +1,6 @@
 CALL init_common_graphics
-GOTO test_filesystem
+
+HALT
 
 #==============================================================================
 #	String string split and join

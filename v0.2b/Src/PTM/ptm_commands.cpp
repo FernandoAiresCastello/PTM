@@ -160,6 +160,13 @@ void ptm_init_commands()
 			string src_var = ARG_LIT_ID_EXISTING(1);
 			ptm_copy_var_to_const(dst_const, src_var);
 		}
+		else if (arg[1].is_array_element_ix()) {
+			string value = ARG_ARR_STR(1);
+			ptm_def_const(dst_const, value);
+		}
+		else if (arg[1].type == t_param_type::char_literal) {
+			ptm_def_const(dst_const, arg[1].numeric_value);
+		}
 		else {
 			ptm_def_const(dst_const, arg[1].textual_value);
 		}
