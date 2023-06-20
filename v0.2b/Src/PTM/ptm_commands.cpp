@@ -587,11 +587,13 @@ void ptm_init_commands()
 		string id = ARG_LIT_ID(0);
 		int layer = ARG_VAR_NUM(1);
 		tilebufs.get(id)->clear_layer(layer);
+		tilebuf_csr.set(0, 0);
 	};
 	CMD("BUF.CLS") {
 		ARGC(1);
 		string id = ARG_LIT_ID(0);
 		tilebufs.get(id)->clear_all_layers();
+		tilebuf_csr.set(0, 0);
 	};
 	CMD("BUF.COLS") {
 		ARGC(2);
@@ -610,6 +612,7 @@ void ptm_init_commands()
 	CMD("CLS") {
 		ARGC(0);
 		tilebufs.clear_all_buffers();
+		tilebuf_csr.set(0, 0);
 	};
 	CMD("TILE.NEW") {
 		ARGC_MIN_MAX(0, 3);
@@ -778,12 +781,10 @@ void ptm_init_commands()
 	};
 	CMD("PUT") {
 		ARGC(0);
-		ptm_assert_tilebuf_csr();
 		ptm_get_selected_tilebuf_layer().put(tilebuf_csr.x, tilebuf_csr.y, working_tile);
 	};
 	CMD("DEL") {
 		ARGC(0);
-		ptm_assert_tilebuf_csr();
 		ptm_get_selected_tilebuf_layer().del(tilebuf_csr.x, tilebuf_csr.y);
 	};
 	CMD("DELR") {
