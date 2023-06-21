@@ -1,0 +1,68 @@
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<div class="main-title">
+    <h1>PTM - Programmable Tile Machine</h1>
+    <h2>Programming Guide ( v0.2b )</h2>
+</div>
+
+<div class="content">
+
+<div class="section" id="links">
+    <div class="section-title">Links</div>
+    <p>
+        Project source code on GitHub: <a href="https://github.com/FernandoAiresCastello/PTM" target="_blank">https://github.com/FernandoAiresCastello/PTM</a>
+        <br>
+        Release page on Itch.io: <a href="https://fernandoairescastello.itch.io/ptm" target="_blank">https://fernandoairescastello.itch.io/ptm</a>
+    </p>
+</div>
+
+<div class="section" id="about">
+    <div class="section-title">About</div>
+    <p>PTM (Programmable Tile Machine) is a "pseudo-8-bit fantasy computer" that you can program using a built-in programming language called PTML. The system aims to be similar in look-and-feel to some early 8-bit computer systems such as the MSX, ZX Spectrum and Atari 800. Also inspired by the modern game engines Bitsy and PICO-8.</p>
+    <p>PTML is an interpreted, imperative, semi-structured, loosely typed, low-level programming language, with only two data types: strings and integers (with support for dynamic arrays of those types). All you need for programming in it is a plain-text editor like Notepad. The syntax looks like some early dialects of BASIC and some common Assembly languages for 8-bit computers. Familiarity with any of those will probably make it easier to work with PTML, but the language itself is fairly straightforward.</p>
+</div> <!-- end section -->
+
+<div class="section" id="how-to-run-programs">
+    <div class="section-title">How To Run Programs</div>
+    <p>The PTM.exe file is the machine executable, which also contains the PTML interpreter. To run any PTML program, you need to provide the PTML source code file to PTM.exe. PTML source code files are plain-text files that end with the extension .ptm. There are two ways to run a program:</p>
+    <ol>
+        <li>You can either drag and drop the *.ptm file onto the PTM.exe file.</li>
+        <li>Or you can pass the path to a *.ptm file to the PTM.exe file via the command line. The path of the *.ptm file needs to be relative to the location of the PTM.exe file.</li>
+    </ol>
+</div> <!-- end section -->
+
+<div class="section" id="the-main-ptm-file">
+    <div class="section-title">The main.ptm File</div>
+    <p>If you simply double-click PTM.exe without specifying the path of any PTML program file, it will look for a “main.ptm” file in the same directory and run it. If it doesn't find one, an error will appear. A default main.ptm file is usually included in the release package.</p>
+    <p>As of version 0.2b, the default main.ptm file includes an utility program called “PTM Launcher” that shows an interactive menu where you can browse and launch an existing program without having to manually provide the .ptm file to the machine executable.</p>
+</div> <!-- end section -->
+
+<div class="section" id="hello-world">
+    <div class="section-title">Hello World!</div>
+    <p>Let's start with the most basic program ever, as we usually do when we begin learning any new programming language. PTML is partially inspired by BASIC language dialects for early 8-bit computers. As such, the “Hello World” program in PTML is a very simple one-liner:</p>
+    <div class="code">
+    PRINT “Hello World!”
+    </div>
+    <p>When this code is executed, the machine will print the text "Hello World!" (without the quotes) on the window. The double quotes around the text are required since it's a literal string (as opposed to a variable or a number). The position and colors in this example are the machine defaults, since they were not specified.</p>
+</div> <!-- end section -->
+
+<div class="section" id="app-window">
+    <div class="section-title">The Application Window</div>
+    <p>If not overriden, the machine starts with a preconfigured window with default dimensions. The command WINDOW is used to override the defaults. The example below will instruct the PTM to open a window with a screen width of 256 pixels and height of 192 pixels. It will also define a "size factor" of 3 which will be used to scale the screen image to fit a larger window. The last parameter indicates that the default tilebuffer will contain 1 layer only.</p>
+    <div class="code">
+    WINDOW 256, 192, 3, 1
+    </div>
+</div> <!-- end section -->
+
+<div class="section" id="tilebuffers">
+    <div class="section-title">Tile Buffers</div>
+    <p></p>
+    </div>
+</div> <!-- end section -->
+
+</div> <!-- end content -->
+
+</html>

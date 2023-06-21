@@ -1,0 +1,52 @@
+@font-face {
+    font-family: 'Intellec';
+    src: url('fonts/intellec.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Nintendo';
+	src: url('fonts/press_start_2p.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	src: url('fonts/Roboto-Regular.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto Mono';
+	src: url('fonts/RobotoMono-Regular.ttf') format('truetype');
+}
+body {
+    font-family: Roboto;
+    background: #e0e0e0;
+    color: #101010;
+    font-size: 18px;
+}
+.main-title {
+    font-family: 'Intellec';
+    text-align: center;
+    border: 0 solid #888;
+    margin: 30px 0;
+}
+.content {
+    margin: 0 40px;
+    margin-bottom: 100px;
+}
+.section {
+    /** Empty */
+}
+.section-title {
+    font-family: 'Intellec';
+    font-size: 18px;
+    color: #8020a0;
+    border-bottom: 2px solid #aaa;
+    margin-top: 30px;
+}
+p {
+    margin-left: 40px;
+}
+.code {
+    font-family: 'Intellec';
+    white-space: pre;
+    margin-left: 40px;
+    background: #d0d0d0;
+    color: #404040;
+}
