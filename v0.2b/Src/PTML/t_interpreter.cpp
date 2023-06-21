@@ -368,3 +368,6 @@ bool t_interpreter::has_more_data() {
 	bool has = data_ptr < size;
 	return has;
 }
+string t_interpreter::get_program_filename() {
+	return prg->file;
+}

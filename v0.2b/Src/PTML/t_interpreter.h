@@ -49,6 +49,7 @@ struct t_interpreter {
 	int read_data_i();
 	void reset_data_pointer();
 	bool has_more_data();
+	string get_program_filename();
 
 private:
 

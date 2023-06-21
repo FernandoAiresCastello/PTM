@@ -5,7 +5,7 @@ unordered_map<string, function<void(t_params&)>> ptm_commands;
 void ptm_init_commands()
 {
 	CMD("INCL") {
-		// t_program.cpp
+		ptm_abort("The INCL command is only valid in the program that started the machine (" + intp->get_program_filename() + ")");
 	};
 	CMD("PTM") {
 		// t_compiler.cpp
