@@ -154,10 +154,16 @@ string t_interpreter::arg_var_string(t_param& arg) {
 		} else {
 			abort("Variable not found: " + arg.id);
 		}
+	} else if (arg.type == t_param_type::char_literal) {
+		int number = arg.numeric_value;
+		if (arg.negative_sign) {
+			number = -number;
+		}
+		return String::ToString(number);
 	} else if (arg.is_array_element_ix()) {
 		return arg_string_from_array_element(arg);
 	} else {
-		abort("String expected");
+		abort("Could not convert argument to string: " + arg.src);
 	}
 	return "";
 }
