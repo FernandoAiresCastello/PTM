@@ -161,14 +161,24 @@ bool ptm_has_var(string name)
 {
 	return intp->vars.find(name) != intp->vars.end();
 }
-void ptm_set_var(string name, string value)
+void ptm_set_var(string name, string value, bool negative_sign)
 {
-	intp->vars[name].value = value;
+	if (negative_sign) {
+		intp->vars[name] = "-" + value;
+	}
+	else {
+		intp->vars[name].value = value;
+	}
 	intp->vars[name].is_const = false;
 }
-void ptm_set_var(string name, int value)
+void ptm_set_var(string name, int value, bool negative_sign)
 {
-	intp->vars[name].value = String::ToString(value);
+	if (negative_sign) {
+		intp->vars[name].value = "-" + String::ToString(value);
+	}
+	else {
+		intp->vars[name].value = String::ToString(value);
+	}
 	intp->vars[name].is_const = false;
 }
 t_variable& ptm_get_var(string name)
@@ -178,32 +188,54 @@ t_variable& ptm_get_var(string name)
 	}
 	return intp->vars[name];
 }
-void ptm_copy_var(string dst, string src)
+void ptm_copy_var(string dst, string src, bool negative_sign)
 {
-	intp->vars[dst] = intp->vars[src];
+	if (negative_sign) {
+		intp->vars[dst] = intp->vars[src];
+		intp->vars[dst].value = "-" + intp->vars[dst].value;
+	}
+	else {
+		intp->vars[dst] = intp->vars[src];
+	}
 	intp->vars[dst].is_const = false;
 }
-void ptm_copy_var_to_const(string dst, string src)
+void ptm_copy_var_to_const(string dst, string src, bool negative_sign)
 {
-	intp->vars[dst] = intp->vars[src];
+	if (negative_sign) {
+		intp->vars[dst] = intp->vars[src];
+		intp->vars[dst].value = "-" + intp->vars[dst].value;
+	}
+	else {
+		intp->vars[dst] = intp->vars[src];
+	}
 	intp->vars[dst].is_const = true;
 }
-void ptm_def_const(string name, string value)
+void ptm_def_const(string name, string value, bool negative_sign)
 {
 	if (ptm_has_var(name)) {
 		intp->abort("Constant already defined: " + name);
 	}
 	else {
-		intp->vars[name] = t_variable(value, true);
+		if (negative_sign) {
+			intp->vars[name] = t_variable("-" + value, true);
+		}
+		else {
+			intp->vars[name] = t_variable(value, true);
+		}
 	}
 }
-void ptm_def_const(string name, int value)
+void ptm_def_const(string name, int value, bool negative_sign)
 {
 	if (ptm_has_var(name)) {
 		intp->abort("Constant already defined: " + name);
 	}
 	else {
-		intp->vars[name] = t_variable(value, true);
+		if (negative_sign) {
+			intp->vars[name] = t_variable(-value, true);
+		}
+		else {
+			intp->vars[name] = t_variable(value, true);
+		}
 	}
 }
 void ptm_new_array(string name, int size)
@@ -218,13 +250,23 @@ void ptm_new_array(string name, int size)
 		intp->abort("Illegal array length");
 	}
 }
-void ptm_array_push(string name, string value)
+void ptm_array_push(string name, string value, bool negative_sign)
 {
-	intp->arrays[name].push_back(value);
+	if (negative_sign) {
+		intp->arrays[name].push_back("-" + value);
+	}
+	else {
+		intp->arrays[name].push_back(value);
+	}
 }
-void ptm_array_push(string name, int value)
+void ptm_array_push(string name, int value, bool negative_sign)
 {
-	intp->arrays[name].push_back(String::ToString(value));
+	if (negative_sign) {
+		intp->arrays[name].push_back("-" + String::ToString(value));
+	}
+	else {
+		intp->arrays[name].push_back(String::ToString(value));
+	}
 }
 int ptm_array_size(string name)
 {

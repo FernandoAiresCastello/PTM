@@ -79,9 +79,24 @@ bool t_compiler::compile_line(
 	for (auto& arg : args) {
 		t_param param;
 
+		// Check for negative or positive sign prefix
+		if (has_sign(arg)) {
+			char sign = arg[0];
+			if (sign == '-') {
+				param.negative_sign = true;
+			}
+			else if (sign == '+') {
+				param.negative_sign = false;
+			}
+			arg = arg.substr(1);
+		}
+
 		if (is_number(arg)) { // Number
 			param.type = t_param_type::number;
 			param.numeric_value = parse_number(arg);
+			if (param.negative_sign) {
+				param.numeric_value = -param.numeric_value;
+			}
 			param.textual_value = String::ToString(param.numeric_value);
 
 		} else if (is_string_literal(arg)) { // String literal
@@ -154,7 +169,15 @@ bool t_compiler::compile_line(
 	// Process embedded data
 	if (is_data(new_line->cmd)) {
 		for (auto& param : new_line->params) {
-			prg->data.push_back(param.textual_value);
+			if (param.type == t_param_type::string || param.type == t_param_type::number) {
+				prg->data.push_back(param.textual_value);
+			}
+			else if (param.type == t_param_type::char_literal) {
+				prg->data.push_back(String::ToString(param.numeric_value));
+			}
+			else {
+				add_error(src_line_ptr, "Illegal data item: " + param.src);
+			}
 		}
 		return false;
 	}
@@ -232,14 +255,15 @@ vector<string> t_compiler::parse_args(string& raw_args) {
 	}
 	return args;
 }
+bool t_compiler::has_sign(string& arg)
+{
+	return String::StartsWith(arg, '+') || String::StartsWith(arg, '-');
+}
 bool t_compiler::is_number(string& arg) {
 	return
 		!String::StartsWith(arg, "0x") &&
 		!String::StartsWith(arg, "0b") &&
-		(String::StartsWithNumber(arg) ||
-			String::StartsWith(arg, '&') ||
-			String::StartsWith(arg, '-') ||
-			String::StartsWith(arg, '+'));
+		(String::StartsWithNumber(arg) || String::StartsWith(arg, '&'));
 }
 bool t_compiler::is_string_literal(string& arg) {
 	return String::StartsAndEndsWith(arg, '"');
@@ -248,8 +272,7 @@ bool t_compiler::is_char_literal(string& arg) {
 	return String::StartsAndEndsWith(arg, '\'');
 }
 bool t_compiler::is_variable_identifier(string& arg) {
-	bool has_invalid_chars =
-		String::Contains(arg, ';');
+	bool has_invalid_chars = String::Contains(arg, ';');
 
 	if (has_invalid_chars) return false;
 

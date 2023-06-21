@@ -30,6 +30,8 @@ namespace CppUtils
 		static uint BytesToInt(byte bytes[4]);
 		static void ShortToBytes(ushort val, byte bytes[2]);
 		static ushort BytesToShort(byte bytes[2]);
+		static std::string Date();
+		static std::string Time();
 		static std::string DateTime();
 		static unsigned WrapAdd(unsigned val, int dx, const unsigned lower, const unsigned upper);
 		static int GetDigitCount(unsigned number);

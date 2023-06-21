@@ -25,6 +25,7 @@ private:
 	bool is_comment(string& src_line);
 	bool is_label(string& src_line);
 	vector<string> parse_args(string& raw_args);
+	bool has_sign(string& arg);
 	bool is_number(string& arg);
 	bool is_string_literal(string& arg);
 	bool is_char_literal(string& arg);

@@ -131,6 +131,9 @@ int t_interpreter::arg_var_number(t_param& arg) {
 	} else if (arg.type == t_param_type::id) {
 		if (vars.find(arg.id) != vars.end()) {
 			number = String::ToInt(vars[arg.id].value);
+			if (arg.negative_sign) {
+				number = -number;
+			}
 		} else {
 			abort("Variable not found: " + arg.id);
 		}
