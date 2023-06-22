@@ -862,6 +862,11 @@ void ptm_init_commands()
 		string str = ARG_VAR_STR(0);
 		ptm_print_tile_string(str, false);
 	};
+	CMD("PRINTL") {
+		ARGC(1);
+		string str = ARG_VAR_STR(0);
+		ptm_print_tile_string(str + "\n", false);
+	};
 	CMD("PRINT.ADD") {
 		ARGC(1);
 		string str = ARG_VAR_STR(0);

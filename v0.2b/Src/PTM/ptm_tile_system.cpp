@@ -633,7 +633,7 @@ void ptm_print_tile_string(string str, int fgc, int bgc, bool add_frames)
 			escape = true;
 			continue;
 		}
-		if (escape && ch == 'n') {
+		if ((escape && ch == 'n') || ch == '\n') {
 			y++;
 			x = tilebuf_csr.x;
 			continue;
