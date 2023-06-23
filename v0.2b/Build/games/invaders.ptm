@@ -10,6 +10,7 @@ DEF true, 1
 DEF hiscore_file, "hiscore.txt"
 DEF max_enemy_sprites, 100
 VAR player_speed, 1
+NEG neg_player_speed, player_speed
 VAR player_missile_speed, -3
 VAR player_shooting, false
 VAR score, 0
@@ -49,7 +50,7 @@ IF.KEY "RIGHT"
 	CALL maybe_wrap_player_around
 ENDIF
 IF.KEY "LEFT"
-	SPR.MOVE "spr_player", -player_speed, 0
+	SPR.MOVE "spr_player", neg_player_speed, 0
 	CALL maybe_wrap_player_around
 ENDIF
 IF.KEY "SPACE"

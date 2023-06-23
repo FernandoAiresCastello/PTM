@@ -141,17 +141,17 @@ void ptm_init_commands()
 		}
 		if (arg[1].type == t_param_type::id) {
 			string src_var = ARG_LIT_ID_EXISTING(1);
-			ptm_copy_var(dst_var, src_var, arg[1].negative_sign);
+			ptm_copy_var(dst_var, src_var);
 		}
 		else if (arg[1].is_array_element_ix()) {
 			string value = ARG_ARR_STR(1);
-			ptm_set_var(dst_var, value, arg[1].negative_sign);
+			ptm_set_var(dst_var, value);
 		}
 		else if (arg[1].type == t_param_type::char_literal) {
-			ptm_set_var(dst_var, arg[1].numeric_value, arg[1].negative_sign);
+			ptm_set_var(dst_var, arg[1].numeric_value);
 		}
 		else {
-			ptm_set_var(dst_var, arg[1].textual_value, arg[1].negative_sign);
+			ptm_set_var(dst_var, arg[1].textual_value);
 		}
 	};
 	CMD("DEF") {
@@ -163,17 +163,17 @@ void ptm_init_commands()
 		}
 		if (arg[1].type == t_param_type::id) {
 			string src_var = ARG_LIT_ID_EXISTING(1);
-			ptm_copy_var_to_const(dst_const, src_var, arg[1].negative_sign);
+			ptm_copy_var_to_const(dst_const, src_var);
 		}
 		else if (arg[1].is_array_element_ix()) {
 			string value = ARG_ARR_STR(1);
-			ptm_def_const(dst_const, value, arg[1].negative_sign);
+			ptm_def_const(dst_const, value);
 		}
 		else if (arg[1].type == t_param_type::char_literal) {
-			ptm_def_const(dst_const, arg[1].numeric_value, arg[1].negative_sign);
+			ptm_def_const(dst_const, arg[1].numeric_value);
 		}
 		else {
-			ptm_def_const(dst_const, arg[1].textual_value, arg[1].negative_sign);
+			ptm_def_const(dst_const, arg[1].textual_value);
 		}
 	};
 	CMD("ARR.NEW") {
@@ -186,17 +186,17 @@ void ptm_init_commands()
 		ARGC(2);
 		string arr_id = ARG_LIT_ARR_ID(0);
 		if (arg[1].type == t_param_type::char_literal) {
-			ptm_array_push(arr_id, arg[1].numeric_value, arg[1].negative_sign);
+			ptm_array_push(arr_id, arg[1].numeric_value);
 		}
 		else if (arg[1].type == t_param_type::id) {
-			ptm_array_push(arr_id, ptm_get_var(arg[1].id).value, arg[1].negative_sign);
+			ptm_array_push(arr_id, ptm_get_var(arg[1].id).value);
 		}
 		else if (arg[1].type == t_param_type::arr_ix_literal || arg[1].type == t_param_type::arr_ix_var) {
 			string value = intp->arg_string_from_array_element(arg[1]);
-			ptm_array_push(arr_id, value, arg[1].negative_sign);
+			ptm_array_push(arr_id, value);
 		}
 		else {
-			ptm_array_push(arr_id, arg[1].textual_value, arg[1].negative_sign);
+			ptm_array_push(arr_id, arg[1].textual_value);
 		}
 	};
 	CMD("ARR.LEN") {

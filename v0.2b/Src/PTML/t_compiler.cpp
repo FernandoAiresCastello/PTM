@@ -79,24 +79,9 @@ bool t_compiler::compile_line(
 	for (auto& arg : args) {
 		t_param param;
 
-		// Check for negative or positive sign prefix
-		if (has_sign(arg)) {
-			char sign = arg[0];
-			if (sign == '-') {
-				param.negative_sign = true;
-			}
-			else if (sign == '+') {
-				param.negative_sign = false;
-			}
-			arg = arg.substr(1);
-		}
-
 		if (is_number(arg)) { // Number
 			param.type = t_param_type::number;
 			param.numeric_value = parse_number(arg);
-			if (param.negative_sign) {
-				param.numeric_value = -param.numeric_value;
-			}
 			param.textual_value = String::ToString(param.numeric_value);
 
 		} else if (is_string_literal(arg)) { // String literal
@@ -255,15 +240,18 @@ vector<string> t_compiler::parse_args(string& raw_args) {
 	}
 	return args;
 }
-bool t_compiler::has_sign(string& arg)
-{
+bool t_compiler::has_sign(string& arg) {
 	return String::StartsWith(arg, '+') || String::StartsWith(arg, '-');
 }
 bool t_compiler::is_number(string& arg) {
-	return
-		!String::StartsWith(arg, "0x") &&
-		!String::StartsWith(arg, "0b") &&
-		(String::StartsWithNumber(arg) || String::StartsWith(arg, '&'));
+	if (String::StartsWith(arg, "0x") || String::StartsWith(arg, "0b"))
+		return false;
+	if (String::StartsWithNumber(arg) || String::StartsWith(arg, "&h") || String::StartsWith(arg, "&b"))
+		return true;
+	if (arg[0] == '-' && isdigit(arg[1]))
+		return true;
+
+	return false;
 }
 bool t_compiler::is_string_literal(string& arg) {
 	return String::StartsAndEndsWith(arg, '"');
@@ -278,6 +266,7 @@ bool t_compiler::is_variable_identifier(string& arg) {
 
 	bool is_valid =
 		String::StartsWith(arg, '$') ||
+		String::StartsWith(arg, '_') ||
 		String::StartsWithLetter(arg);
 
 	return is_valid;

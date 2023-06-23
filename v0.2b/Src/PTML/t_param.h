@@ -7,7 +7,6 @@ enum class t_param_type {
 struct t_param {
 	string src;
 	t_param_type type = t_param_type::undefined;
-	bool negative_sign = false;
 	string textual_value;
 	int numeric_value = 0;
 	string id;
