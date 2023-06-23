@@ -1,0 +1,25 @@
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<div class="content">
+
+<div class="section" id="how-to-run-programs">
+    <div class="section-title">How To Run Programs</div>
+    <p>The PTM.exe file is the machine executable, which also contains the PTML interpreter. To run any PTML program, you need to provide the PTML source code file to PTM.exe. PTML source code files are plain-text files that end with the extension .ptm. There are two ways to run a program:</p>
+    <ol>
+        <li>You can either drag and drop the *.ptm file onto the PTM.exe file.</li>
+        <li>Or you can pass the path to a *.ptm file to the PTM.exe file via the command line. The path of the *.ptm file needs to be relative to the location of the PTM.exe file.</li>
+    </ol>
+</div> <!-- end section -->
+
+<div class="section" id="the-main-ptm-file">
+    <div class="section-title">The main.ptm File</div>
+    <p>If you simply double-click PTM.exe without specifying the path of any PTML program file, it will look for a “main.ptm” file in the same directory and run it. If it doesn't find one, an error will appear. A default main.ptm file is usually included in the release package.</p>
+    <p>As of version 0.2b, the default main.ptm file includes an utility program called “PTM Launcher” that shows an interactive menu where you can browse and launch an existing program without having to manually provide the .ptm file to the machine executable.</p>
+</div> <!-- end section -->
+
+</div>
+
+</html>
