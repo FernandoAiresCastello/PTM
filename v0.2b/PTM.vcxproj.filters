@@ -68,6 +68,9 @@
     <ClCompile Include="Src\PTM\ptm_mml.cpp">
       <Filter>PTM</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Util\docgen.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Common\common.h">
@@ -154,6 +157,9 @@
     <ClInclude Include="Src\PTM\ptm_mml.h">
       <Filter>PTM</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Util\docgen.h">
+      <Filter>Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CppUtils">
@@ -170,6 +176,9 @@
     </Filter>
     <Filter Include="Resources">
       <UniqueIdentifier>{874d3363-3914-4234-8308-467ca70c840d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{29be0ea6-60b2-41e3-955d-e204b4bcdd13}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
