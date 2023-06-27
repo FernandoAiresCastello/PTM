@@ -4,6 +4,7 @@
 extern string file_line_delimiter;
 extern string record_file_delimiter;
 
+bool ptm_assert_file_exists(string path);
 string ptm_read_text_file(string path);
 vector<string> ptm_read_text_file_lines(string path);
 void ptm_write_text_file_lines(string path, vector<string>& lines);

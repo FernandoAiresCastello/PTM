@@ -921,12 +921,16 @@ void ptm_init_commands()
 		ARGC(2);
 		string id = ARG_LIT_ID(0);
 		string file = ARG_VAR_STR(1);
-		ptm_load_sound_wav(id, file);
+		if (!ptm_load_sound_wav(id, file)) {
+			ptm_abort("Could not load sound file: " + file);
+		}
 	};
 	CMD("SND.PLAY") {
 		ARGC(1);
 		string id = ARG_LIT_ID(0);
-		ptm_play_sound_wav(id);
+		if (!ptm_play_sound_wav(id)) {
+			ptm_abort("Sound not found: " + id);
+		}
 	};
 	CMD("SND.STOP") {
 		ARGC(0);
@@ -947,6 +951,7 @@ void ptm_init_commands()
 		ARGC(2);
 		string id = ARG_VAR_STR(0);
 		int x = ARG_VAR_NUM(1);
+		ptm_assert_sprite_exists(id);
 		t_sprite& spr = sprites.get_sprite(id);
 		spr.x = x;
 	};
@@ -954,6 +959,7 @@ void ptm_init_commands()
 		ARGC(2);
 		string id = ARG_VAR_STR(0);
 		int y = ARG_VAR_NUM(1);
+		ptm_assert_sprite_exists(id);
 		t_sprite& spr = sprites.get_sprite(id);
 		spr.y = y;
 	};
@@ -961,6 +967,7 @@ void ptm_init_commands()
 		ARGC(2);
 		string id = ARG_VAR_STR(0);
 		int x = ARG_VAR_NUM(1);
+		ptm_assert_sprite_exists(id);
 		t_sprite& spr = sprites.get_sprite(id);
 		spr.x = x * PTM_TILE_SIZE;
 	};
@@ -968,6 +975,7 @@ void ptm_init_commands()
 		ARGC(2);
 		string id = ARG_VAR_STR(0);
 		int y = ARG_VAR_NUM(1);
+		ptm_assert_sprite_exists(id);
 		t_sprite& spr = sprites.get_sprite(id);
 		spr.y = y * PTM_TILE_SIZE;
 	};
@@ -975,6 +983,7 @@ void ptm_init_commands()
 		ARGC(2);
 		string id = ARG_VAR_STR(0);
 		string var = ARG_LIT_ID(1);
+		ptm_assert_sprite_exists(id);
 		t_sprite& spr = sprites.get_sprite(id);
 		ptm_set_var(var, spr.x);
 	};
@@ -982,6 +991,7 @@ void ptm_init_commands()
 		ARGC(2);
 		string id = ARG_VAR_STR(0);
 		string var = ARG_LIT_ID(1);
+		ptm_assert_sprite_exists(id);
 		t_sprite& spr = sprites.get_sprite(id);
 		ptm_set_var(var, spr.y);
 	};
@@ -989,6 +999,7 @@ void ptm_init_commands()
 		ARGC(2);
 		string id = ARG_VAR_STR(0);
 		string var = ARG_LIT_ID(1);
+		ptm_assert_sprite_exists(id);
 		t_sprite& spr = sprites.get_sprite(id);
 		ptm_set_var(var, spr.x / PTM_TILE_SIZE);
 	};
@@ -996,6 +1007,7 @@ void ptm_init_commands()
 		ARGC(2);
 		string id = ARG_VAR_STR(0);
 		string var = ARG_LIT_ID(1);
+		ptm_assert_sprite_exists(id);
 		t_sprite& spr = sprites.get_sprite(id);
 		ptm_set_var(var, spr.y / PTM_TILE_SIZE);
 	};
@@ -1004,6 +1016,7 @@ void ptm_init_commands()
 		string id = ARG_VAR_STR(0);
 		int x = ARG_VAR_NUM(1);
 		int y = ARG_VAR_NUM(2);
+		ptm_assert_sprite_exists(id);
 		t_sprite& spr = sprites.get_sprite(id);
 		spr.x = x;
 		spr.y = y;
@@ -1013,6 +1026,7 @@ void ptm_init_commands()
 		string id = ARG_VAR_STR(0);
 		int x = ARG_VAR_NUM(1);
 		int y = ARG_VAR_NUM(2);
+		ptm_assert_sprite_exists(id);
 		t_sprite& spr = sprites.get_sprite(id);
 		spr.set_pos(x * PTM_TILE_SIZE, y * PTM_TILE_SIZE);
 	};
@@ -1021,6 +1035,7 @@ void ptm_init_commands()
 		string id = ARG_VAR_STR(0);
 		int dx = ARG_VAR_NUM(1);
 		int dy = ARG_VAR_NUM(2);
+		ptm_assert_sprite_exists(id);
 		t_sprite& spr = sprites.get_sprite(id);
 		spr.move(dx, dy);
 	};
@@ -1029,6 +1044,7 @@ void ptm_init_commands()
 		string id = ARG_VAR_STR(0);
 		int dx = ARG_VAR_NUM(1);
 		int dy = ARG_VAR_NUM(2);
+		ptm_assert_sprite_exists(id);
 		t_sprite& spr = sprites.get_sprite(id);
 		spr.move(dx * PTM_TILE_SIZE, dy * PTM_TILE_SIZE);
 	};
@@ -1036,18 +1052,22 @@ void ptm_init_commands()
 		ARGC(2);
 		string id = ARG_VAR_STR(0);
 		string buf_id = ARG_LIT_ID(1);
+		ptm_assert_sprite_exists(id);
 		t_sprite& spr = sprites.get_sprite(id);
-		spr.add_to_buffer(tilebufs.get(buf_id));
+		t_tilebuf* buf = tilebufs.get(buf_id);
+		spr.add_to_buffer(buf);
 	};
 	CMD("SPR.SHOW") {
 		ARGC(1);
 		string id = ARG_VAR_STR(0);
+		ptm_assert_sprite_exists(id);
 		t_sprite& spr = sprites.get_sprite(id);
 		spr.visible = true;
 	};
 	CMD("SPR.HIDE") {
 		ARGC(1);
 		string id = ARG_VAR_STR(0);
+		ptm_assert_sprite_exists(id);
 		t_sprite& spr = sprites.get_sprite(id);
 		spr.visible = false;
 	};
@@ -1055,12 +1075,14 @@ void ptm_init_commands()
 		ARGC(2);
 		string id = ARG_VAR_STR(0);
 		string var = ARG_LIT_ID(1);
+		ptm_assert_sprite_exists(id);
 		t_sprite& spr = sprites.get_sprite(id);
 		ptm_set_var(var, spr.visible ? 1 : 0);
 	};
 	CMD("SPR.DEL") {
 		ARGC(1);
 		string id = ARG_VAR_STR(0);
+		ptm_assert_sprite_exists(id);
 		t_sprite& spr = sprites.get_sprite(id);
 		sprites.remove(id);
 	};
@@ -1073,6 +1095,8 @@ void ptm_init_commands()
 		string var = ARG_LIT_ID(0);
 		string id_sprite_1 = ARG_VAR_STR(1);
 		string id_sprite_2 = ARG_VAR_STR(2);
+		ptm_assert_sprite_exists(id_sprite_1);
+		ptm_assert_sprite_exists(id_sprite_2);
 		t_sprite& sprite_1 = sprites.get_sprite(id_sprite_1);
 		t_sprite& sprite_2 = sprites.get_sprite(id_sprite_2);
 		bool hit = sprite_1.collides_with(sprite_2);
@@ -1081,12 +1105,14 @@ void ptm_init_commands()
 	CMD("SPR.TGET") {
 		ARGC(1);
 		string id = ARG_VAR_STR(0);
+		ptm_assert_sprite_exists(id);
 		t_sprite& spr = sprites.get_sprite(id);
 		working_tile.set_equal(spr.tile);
 	};
 	CMD("SPR.TSET") {
 		ARGC(1);
 		string id = ARG_VAR_STR(0);
+		ptm_assert_sprite_exists(id);
 		t_sprite& spr = sprites.get_sprite(id);
 		spr.tile.set_equal(working_tile);
 	};

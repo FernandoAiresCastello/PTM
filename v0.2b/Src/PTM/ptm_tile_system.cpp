@@ -501,6 +501,7 @@ t_tilebuf* t_tilebuf_collection::get(string id)
 		if (tilebuf.id == id)
 			return &tilebuf;
 	}
+	ptm_abort("Tilebuffer not found: " + id);
 	return nullptr;
 }
 t_tilebuf* t_tilebuf_collection::get_by_order(int order)
@@ -1083,4 +1084,12 @@ void ptm_assert_tilebuf_csr()
 			String::Format("Buf.id: %s\nLayer: %i / X: %i / Y: %i",
 				tilebufs.selected()->id.c_str(), tilebuf_csr.layer, tilebuf_csr.x, tilebuf_csr.y));
 	}
+}
+bool ptm_assert_tilebuf_exists(string id)
+{
+	if (!tilebufs.has(id)) {
+		ptm_abort("Tilebuffer not found: " + id);
+		return false;
+	}
+	return true;
 }

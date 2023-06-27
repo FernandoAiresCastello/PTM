@@ -1,4 +1,5 @@
 #include "ptm_filesystem.h"
+#include "ptm_core.h"
 
 string file_line_delimiter = "\n";
 string record_file_delimiter = "§";
@@ -8,12 +9,22 @@ string record_file_path;
 char record_file_mode = 0;
 int record_file_ptr = PTM_INVALID_NUMBER;
 
+bool ptm_assert_file_exists(string path)
+{
+	if (File::Exists(path)) {
+		return true;
+	}
+	ptm_abort("File not found: " + path);
+	return false;
+}
 string ptm_read_text_file(string path)
 {
+	ptm_assert_file_exists(path);
 	return File::ReadText(path);
 }
 vector<string> ptm_read_text_file_lines(string path)
 {
+	ptm_assert_file_exists(path);
 	return File::ReadLines(path, file_line_delimiter);
 }
 void ptm_write_text_file_lines(string path, vector<string>& lines)
@@ -22,6 +33,7 @@ void ptm_write_text_file_lines(string path, vector<string>& lines)
 }
 vector<int> ptm_read_binary_file(string path)
 {
+	ptm_assert_file_exists(path);
 	return File::ReadBytesAsIntegers(path);
 }
 void ptm_write_text_file(string path, string text)
@@ -100,5 +112,9 @@ char ptm_get_record_file_mode()
 vector<string> ptm_file_list(string root_dir)
 {
 	string ptm_folder = File::GetParentDirectory(File::GetCurrentExecutableFilePath()) + "\\";
-	return File::List(ptm_folder + root_dir, true, false);
+	string path = ptm_folder + root_dir;
+	if (!File::ExistsFolder(path)) {
+		ptm_abort("Path not found: " + path);
+	}
+	return File::List(path, true, false);
 }

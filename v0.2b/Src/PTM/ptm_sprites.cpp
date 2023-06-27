@@ -1,5 +1,6 @@
 #include "ptm_sprites.h"
 #include "ptm_color_palette.h"
+#include "ptm_core.h"
 
 t_sprite_list sprites;
 
@@ -78,4 +79,12 @@ void t_sprite_list::draw_all_visible_with_no_buffer()
 			spr.draw();
 		}
 	}
+}
+bool ptm_assert_sprite_exists(string id)
+{
+	if (!sprites.has(id)) {
+		ptm_abort("Sprite not found: " + id);
+		return false;
+	}
+	return true;
 }

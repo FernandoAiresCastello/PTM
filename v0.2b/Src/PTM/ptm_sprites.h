@@ -31,3 +31,5 @@ private:
 };
 
 extern t_sprite_list sprites;
+
+bool ptm_assert_sprite_exists(string id);

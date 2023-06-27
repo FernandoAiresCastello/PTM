@@ -17,6 +17,7 @@
 
 - Function support
 - Complex expression evaluation
+- Some kind of PTML standard library
 - Optional obfuscation format for PTML source code
 - Compilation of PTML source code into bytecode to improve runtime performance
 - More user-friendly documentation
