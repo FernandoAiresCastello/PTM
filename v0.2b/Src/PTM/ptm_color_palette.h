@@ -22,3 +22,5 @@ extern t_palette palette;
 int ptm_rgb_extract_r(rgb color);
 int ptm_rgb_extract_g(rgb color);
 int ptm_rgb_extract_b(rgb color);
+void ptm_save_palette(string file);
+void ptm_load_palette(string file);

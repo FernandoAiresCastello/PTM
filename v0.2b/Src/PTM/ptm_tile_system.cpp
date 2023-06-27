@@ -4,6 +4,7 @@
 #include "ptm_core.h"
 #include "ptm_keyboard.h"
 #include "ptm_sprites.h"
+#include "ptm_filesystem.h"
 
 #define DEFAULT_TILEBUF_ID "default"
 
@@ -1092,4 +1093,17 @@ bool ptm_assert_tilebuf_exists(string id)
 		return false;
 	}
 	return true;
+}
+void ptm_save_tileset(string file)
+{
+	File::WriteLines(file, tileset.tiles, "\n");
+}
+void ptm_load_tileset(string file)
+{
+	ptm_assert_file_exists(file);
+	auto tiles = File::ReadLines(file, "\n");
+	if (tiles.size() > 65536) {
+		ptm_abort("Cannot load more than 65536 tiles in the tileset");
+	}
+	tileset.tiles = tiles;
 }

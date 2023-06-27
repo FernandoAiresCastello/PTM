@@ -501,14 +501,16 @@ RET
 #================================================
 	save_tileset_file:
 #================================================
-ARR.NEW file_lines
-CHR.LEN tileset_size
-FOR i, 0, tileset_size
-	CHR.GET i, binary
-	SPRINTF line, "CHR {%i}, {c34}{%binary}{c34}"
-	ARR.PUSH file_lines, line
-NEXT
-LSAVE tileset_file, file_lines
+# ARR.NEW file_lines
+# CHR.LEN tileset_size
+# FOR i, 0, tileset_size
+# 	CHR.GET i, binary
+# 	SPRINTF line, "CHR {%i}, {c34}{%binary}{c34}"
+# 	ARR.PUSH file_lines, line
+# NEXT
+# LSAVE tileset_file, file_lines
+
+CHR.SAVE tileset_file
 CALL draw_bottom_window
 LOCATE 1, 22
 PRINT "File saved!"
@@ -518,17 +520,19 @@ RET
 #================================================
 	load_tileset_file:
 #================================================
-LLOAD tileset_file, file_lines
-ARR.LEN file_lines, size
-CHR.NEW size
-CALL update_page_count
-VAR tile_ix, 0
-ARR.FOR file_lines, line
-	STR.SPLIT parts, line, ","
-	STR.SUB binary, parts[1], 1, 64
-	CHR tile_ix, binary
-	INC tile_ix
-NEXT
+# LLOAD tileset_file, file_lines
+# ARR.LEN file_lines, size
+# CHR.NEW size
+# CALL update_page_count
+# VAR tile_ix, 0
+# ARR.FOR file_lines, line
+# 	STR.SPLIT parts, line, ","
+# 	STR.SUB binary, parts[1], 1, 64
+# 	CHR tile_ix, binary
+# 	INC tile_ix
+# NEXT
+
+CHR.LOAD tileset_file
 RET
 
 #================================================

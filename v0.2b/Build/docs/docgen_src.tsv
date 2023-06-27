@@ -8,15 +8,15 @@ DEBUG.BRK 		Trigger a breakpoint (reserved for internal usage)	Debugging
 MSGBOX 	 text	Show a modal message box, program is interrupted until OK button is pressed	Debugging
 DECRYPT 	 x, text, key	Decrypt text into x using specified key (valid key must be from 0 to 127)	Encryption
 ENCRYPT 	 x, text, key	Encrypt text into x using specified key (valid key must be from 0 to 127)	Encryption
-CALL 	 label	Transfer execution to subroutine at label	Execution flow
+CALL 	 label	Transfer execution to subroutine at label. Can return to the caller using the RET command	Execution flow
 ENDIF 		Mark the end of a conditional code block	Execution flow
 EXIT 		Terminate program and close window	Execution flow
 GOTO 	 label	Transfer execution to code at label	Execution flow
 HALT 		Terminate program but keep window open	Execution flow
-IF.CALL 	 x, y, label	Transfer execution to code at label only if x = y	Execution flow
+IF.CALL 	 x, y, label	Transfer execution to subroutine at label only if x = y	Execution flow
 IF.EQ 	 x, y	Begin a code block that will execute only if x = y	Execution flow
 IF.FALSE 	 x	Begin a code block that will execute only if x <= 0	Execution flow
-IF.GOTO 	 x, y, label	Transfer execution to subroutine at label only if x = y	Execution flow
+IF.GOTO 	 x, y, label	Transfer execution to code at label only if x = y	Execution flow
 IF.GT 	 x, y	Begin a code block that will execute only if x > y	Execution flow
 IF.GTE 	 x, y	Begin a code block that will execute only if x >= y	Execution flow
 IF.LT 	 x, y	Begin a code block that will execute only if x < y	Execution flow
@@ -84,9 +84,11 @@ PAL.NEW 		Clear entire palette to black, then set default black and white colors
 PAL.SETB 	 index, b	Adjust the blue component for color at palette index	Palette manipulation
 PAL.SETG 	 index, g	Adjust the green component for color at palette index	Palette manipulation
 PAL.SETR 	 index, r	Adjust the red component for color at palette index	Palette manipulation
+PAL.SAVE 	 file	Save palette to file	Palette manipulation
+PAL.LOAD 	 file	Load palette from file	Palette manipulation
 BEEP 	 frequency, length	Play a beeping sound with the specified frequency and length	Sound
 MML.LOOP 	 mml	Play asynchronously the notes specified in the MML string, in a loop. See MML.PLAY for more info	Sound (MML)
-MML.PLAY 	 mml	Play asynchronously the notes specified in the MML string, only once Notes: C,C#,D,D#,E,F,F#,G,G#,A,A#,B Control: P = pause; L = set length for all following notes (min. length: 30); O = set octave for all following notes (valid octaves: 1 through 8)	Sound (MML)
+MML.PLAY 	 mml	Play asynchronously the notes specified in the MML string, only once. Notes: C,C#,D,D#,E,F,F#,G,G#,A,A#,B; Control: P = pause; L = set length for all following notes (min. length: 30); O = set octave for all following notes (valid octaves: 1 through 8)	Sound (MML)
 MML.STOP 		Stop all MML sounds	Sound (MML)
 MML.VOL 	 volume	Set volume for MML sounds	Sound (MML)
 SND.LOAD 	 id, file	Load a WAV sound file and assign id	Sound (WAV)
@@ -196,6 +198,8 @@ CHR.ADD 	 x	Add x blank tiles to the tileset (total max. must not exceed 65536)	
 CHR.GET 	 index, x	Store in x the pixel pattern (binary string) at tileset index	Tileset manipulation
 CHR.LEN 	 x	Store in x the size of tileset	Tileset manipulation
 CHR.NEW 	 tile_count	Initialize tileset (tile_count min. 256; max. 65536)	Tileset manipulation
+CHR.SAVE 	 file	Save tileset to file	Tileset manipulation
+CHR.LOAD 	 file	Load tileset from file	Tileset manipulation
 ARR.CLR 	 name	Remove all items from array. This also reduces the size of the array to 0	Variables, arrays and constants
 ARR.COPY 	 source, destination	Make destination array equal to source array	Variables, arrays and constants
 ARR.ERASE 	 name, index	Remove array item from index. This also reduces the size of the array by 1	Variables, arrays and constants

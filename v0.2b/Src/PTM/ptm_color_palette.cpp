@@ -1,4 +1,6 @@
 #include "ptm_color_palette.h"
+#include "ptm_filesystem.h"
+#include "ptm_core.h"
 
 t_palette palette;
 
@@ -69,4 +71,27 @@ int ptm_rgb_extract_g(rgb color)
 int ptm_rgb_extract_b(rgb color)
 {
 	return (color & 0x0000ff);
+}
+void ptm_save_palette(string file)
+{
+	vector<string> colors;
+	for (rgb& color : palette.colors) {
+		colors.push_back(String::Format("%06X", color));
+	}
+	File::WriteLines(file, colors, "\n");
+}
+void ptm_load_palette(string file)
+{
+	ptm_assert_file_exists(file);
+	palette.reset();
+	auto colors = File::ReadLines(file, "\n");
+	if (colors.size() > 256) {
+		ptm_abort("Cannot load more than 256 colors in the palette");
+	}
+	int index = 0;
+	for (string& color_str : colors) {
+		rgb color = String::ToInt("0x" + color_str);
+		palette.set(index, color);
+		index++;
+	}
 }

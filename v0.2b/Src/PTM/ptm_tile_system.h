@@ -195,3 +195,5 @@ void ptm_paste_tile_block(t_tilebuf_layer& buf, int x, int y);
 bool ptm_validate_tilebuf_csr();
 void ptm_assert_tilebuf_csr();
 bool ptm_assert_tilebuf_exists(string id);
+void ptm_save_tileset(string file);
+void ptm_load_tileset(string file);

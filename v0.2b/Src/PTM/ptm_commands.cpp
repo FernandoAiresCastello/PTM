@@ -453,6 +453,16 @@ void ptm_init_commands()
 		string var = ARG_LIT_ID(1);
 		ptm_set_var(var, tileset.get(ix));
 	};
+	CMD("CHR.SAVE") {
+		ARGC(1);
+		string file = ARG_VAR_STR(0);
+		ptm_save_tileset(file);
+	};
+	CMD("CHR.LOAD") {
+		ARGC(1);
+		string file = ARG_VAR_STR(0);
+		ptm_load_tileset(file);
+	};
 	CMD("PAL") {
 		ARGC_MIN_MAX(2, 3);
 		if (arg.size() == 2) {
@@ -518,6 +528,16 @@ void ptm_init_commands()
 		int ix = ARG_VAR_NUM(0);
 		int val = ARG_VAR_NUM(1);
 		palette.set_b(ix, val);
+	};
+	CMD("PAL.SAVE") {
+		ARGC(1);
+		string file = ARG_VAR_STR(0);
+		ptm_save_palette(file);
+	};
+	CMD("PAL.LOAD") {
+		ARGC(1);
+		string file = ARG_VAR_STR(0);
+		ptm_load_palette(file);
 	};
 	CMD("BUF.NEW") {
 		ARGC(5);
