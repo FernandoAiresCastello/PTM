@@ -24,11 +24,19 @@ table.index td {
 	text-align: left;
 	font-weight: bold;
 }
+table.index td:hover {
+	background: #fff;
+}
 table.index a {
 	text-decoration: none;
+	width: 100%;
+	display: block;
 }
 table.index a, table.index a:visited {
 	color: #3550a9;
+}
+table.index a:hover {
+	color: #3c78d8;
 }
 table.entry {
 	border: 0;
