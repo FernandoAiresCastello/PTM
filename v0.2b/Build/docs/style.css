@@ -4,7 +4,7 @@ body {
 }
 div.content {
 	margin: 0 auto;
-    width: 50%;
+    width: 70%;
 }
 div.title {
 	text-align: center;
@@ -13,16 +13,26 @@ div.title {
 div.title h1 {
 	margin: 0;
 }
+div.index-container {
+	margin-bottom: 20px;
+}
+div.index-container div.index-title {
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 20px;
+}
+table.index, table.index td {
+	border: 1px solid #d0d0d0;
+}
 table.index {
 	width: 100%;
-	margin-bottom: 20px;
-	border: 1px solid #ccc;
 	border-collapse: collapse;
 }
 table.index td {
-	border: 1px solid #ccc;
 	text-align: left;
 	font-weight: bold;
+	padding: 0 5px
 }
 table.index td:hover {
 	background: #fff;
@@ -39,8 +49,7 @@ table.index a:hover {
 	color: #3c78d8;
 }
 table.entry {
-	border: 0;
-	border-left: 0px solid #643ea1;
+	border: 2px solid #222;
 	width: 100%;
 	border-collapse: collapse;
 	margin-bottom: 20px;
@@ -67,7 +76,7 @@ td.description {
 	background: #ffffff;
 }
 td.category {
-	background: #ffffff;
+	background: linear-gradient(0deg, #aaa 0%, rgb(255 255 255) 100%);
 	font-size: 12px;
 	text-align: right;
 	font-style: italic;

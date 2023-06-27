@@ -148,8 +148,6 @@ bool ptm_kb_pressed(string keyname)
 		return ptm_kb_pressed(SDL_SCANCODE_PAUSE);
 	if (keyname == "PRINT")
 		return ptm_kb_pressed(SDL_SCANCODE_PRINTSCREEN);
-	if (keyname == "SCRLK")
-		return ptm_kb_pressed(SDL_SCANCODE_SCROLLLOCK);
 
 	// FUNCTION
 	if (keyname == "F1")

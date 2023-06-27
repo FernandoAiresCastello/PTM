@@ -52,7 +52,7 @@ TITLE 	 x	Set x as the title of the window	Graphics core
 UPDATE 		Draw all visible tilebuffers and sprites then update window and process window events	Graphics core
 WCOL 	 palette_index	Clear window background to specified color	Graphics core
 WINDOW 	 width, height, size, default_layers	Override the default window settings. Width and height are in pixel units. Size is used as a multiplier for both width and height. Default_layers defines the number of layers in the "default" tilebuffer 	Graphics core
-IF.KEY 	 keyname	Begin a code block that will execute only if the specified named key is pressed	Keyboard
+IF.KEY 	 keyname	Begin a code block that will execute only if the specified named key is pressed. List of recognized key names: SHIFT, CTRL, ALT, CAPS, NUMLOCK, SCRLOCK, RIGHT, LEFT, UP, DOWN, SPACE, ENTER, RETURN, ESC, TAB, BS, INS, DEL, HOME, END, PGUP, PGDN, PAUSE, BREAK, PRINT, F1 through F12, A through Z, 0 through 9, , (comma), . (period), <, >, /, *, +, -	Keyboard
 INKEY 	 x	Store in x the numeric code of the last key that was pressed	Keyboard
 INPUT 	 x, max_length	Show a text input field and waits for user to type a string. When user presses the ENTER or ESCAPE key, the string gets stored in x	Keyboard
 ADD 	 result, x, y	result = x + y	Math
