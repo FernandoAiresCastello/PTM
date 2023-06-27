@@ -45,10 +45,6 @@ struct t_interpreter {
 	void loop_break();
 	void loop_continue();
 	void goto_matching_endif();
-	string read_data_s();
-	int read_data_i();
-	void reset_data_pointer();
-	bool has_more_data();
 	string get_program_filename();
 
 private:
@@ -64,7 +60,6 @@ private:
 	stack<t_loop> loopstack;
 	stack<int> ifstack;
 	SDL_Keycode last_keycode_pressed = 0;
-	int data_ptr = 0;
 
 	void execute_current_line();
 };

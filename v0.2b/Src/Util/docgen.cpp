@@ -3,8 +3,8 @@
 #include "../Common/common.h"
 using namespace CppUtils;
 
-#define DOCGEN_SRC_FILE "_DOCGEN/docgen_src.tsv"
-#define DOCGEN_OUT_FILE "_DOCGEN/docgen_output.html"
+#define DOCGEN_SRC_FILE "docs/docgen_src.tsv"
+#define DOCGEN_OUT_FILE "docs/PTM v2.0 Command Reference.html"
 
 struct t_doc_entry {
 	string cmd;
@@ -37,11 +37,8 @@ t_doc docgen_parse_file()
 	}
 	return doc;
 }
-void docgen_main()
+void docgen_begin_html(t_html& html)
 {
-	t_html html;
-	t_doc doc = docgen_parse_file();
-	
 	html.println("<html>");
 	html.println("<head>");
 	html.println("<link rel='stylesheet' href='style.css'>");
@@ -53,10 +50,18 @@ void docgen_main()
 	html.println("<div class='title'>");
 	html.println("<h1>PTM v0.2b</h1>");
 	html.println("</div>");
-
+}
+void docgen_end_html(t_html& html)
+{
+	html.println("</div>");
+	html.println("</body>");
+	html.println("</html>");
+}
+void docgen_make_complete_reference(t_html& html, t_doc& doc)
+{
 	for (auto& entry : doc.entries) {
-		html.println("<table class='entry'>");
-		
+		html.println("<table class='entry' id='" + entry.cmd + "'>");
+
 		html.println("<tr>");
 		html.println("<td class='cmd'>");
 		html.println(entry.cmd);
@@ -80,10 +85,40 @@ void docgen_main()
 
 		html.println("</table>");
 	}
+}
+void docgen_make_table_of_contents(t_html& html, t_doc& doc)
+{
+	html.println("<table class='index'>");
 
-	html.println("</div>");
-	html.println("</body>");
-	html.println("</html>");
+	int col = 0;
+	int max_cols = 10;
+
+	for (auto& entry : doc.entries) {
+		string cmd = entry.cmd;
+		if (col == 0) {
+			html.println("<tr>");
+		}
+		html.println("<td class='index-cmd'>");
+		html.println("<a href='#" + cmd + "'>" + cmd + "</a>");
+		html.println("</td>");
+		col++;
+		if (col == max_cols) {
+			html.println("</tr>");
+			col = 0;
+		}
+	}
+
+	html.println("</table>");
+}
+void docgen_main()
+{
+	t_html html;
+	t_doc doc = docgen_parse_file();
+	
+	docgen_begin_html(html);
+	docgen_make_table_of_contents(html, doc);
+	docgen_make_complete_reference(html, doc);
+	docgen_end_html(html);
 
 	File::WriteLines(DOCGEN_OUT_FILE, html.lines, "\n");
 }

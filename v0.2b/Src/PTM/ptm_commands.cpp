@@ -10,9 +10,6 @@ void ptm_init_commands()
 	CMD("PTM") {
 		// t_compiler.cpp
 	};
-	CMD("DATA") {
-		// t_compiler.cpp
-	};
 	CMD("WINDOW") {
 		// t_compiler.cpp
 	};
@@ -1092,20 +1089,6 @@ void ptm_init_commands()
 		string id = ARG_VAR_STR(0);
 		t_sprite& spr = sprites.get_sprite(id);
 		spr.tile.set_equal(working_tile);
-	};
-	CMD("READ") {
-		ARGC(1);
-		string var = ARG_LIT_ID(0);
-		if (intp->has_more_data()) {
-			ptm_set_var(var, intp->read_data_s());
-		}
-		else {
-			ptm_abort("Out of data");
-		}
-	};
-	CMD("RESTORE") {
-		ARGC(0);
-		intp->reset_data_pointer();
 	};
 	CMD("FILES") {
 		ARGC_MIN_MAX(1, 2);

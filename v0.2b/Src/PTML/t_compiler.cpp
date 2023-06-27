@@ -6,7 +6,6 @@ void t_compiler::run(t_program* prg) {
 	errors.clear();
 	prg->lines.clear();
 	prg->labels.clear();
-	prg->data.clear();
 	has_window_def = false;
 	int src_line_nr = 1;
 
@@ -151,38 +150,6 @@ bool t_compiler::compile_line(
 		return false;
 	}
 
-	// Process embedded data
-	if (is_data(new_line->cmd)) {
-		for (auto& param : new_line->params) {
-			if (param.type == t_param_type::string || param.type == t_param_type::number) {
-				prg->data.push_back(param.textual_value);
-			}
-			else if (param.type == t_param_type::char_literal) {
-				prg->data.push_back(String::ToString(param.numeric_value));
-			}
-			else {
-				add_error(src_line_ptr, "Illegal data item: " + param.src);
-			}
-		}
-		return false;
-	}
-
-	// Process PTM version directive
-	if (is_ptm_version_directive(new_line->cmd)) {
-		t_param& param = new_line->params[0];
-		string version = String::ToLower(param.id);
-		if (param.type == t_param_type::id && String::StartsWith(version, 'v')) {
-			if (version != PTM_VERSION) {
-				add_error(nullptr, 
-					"This program is supported only in PTM version " + version + 
-					"\n\nThis machine is version " PTM_VERSION ".");
-			}
-		} else {
-			add_error(src_line_ptr, "Invalid PTM version identifier");
-		}
-		return false;
-	}
-
 	return true;
 }
 int t_compiler::parse_number(string arg) {
@@ -290,10 +257,4 @@ bool t_compiler::is_endfor(string& arg) {
 }
 bool t_compiler::is_window_def(string& arg) {
 	return arg == "WINDOW";
-}
-bool t_compiler::is_data(string& arg) {
-	return arg == "DATA";
-}
-bool t_compiler::is_ptm_version_directive(string& arg) {
-	return arg == "PTM";
 }
