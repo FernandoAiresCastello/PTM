@@ -71,6 +71,9 @@
     <ClCompile Include="Src\Util\docgen.cpp">
       <Filter>Util</Filter>
     </ClCompile>
+    <ClCompile Include="Src\PTM\ptm_image.cpp">
+      <Filter>PTM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Common\common.h">
@@ -159,6 +162,9 @@
     </ClInclude>
     <ClInclude Include="Src\Util\docgen.h">
       <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTM\ptm_image.h">
+      <Filter>PTM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -166,6 +166,7 @@ cd "$(SolutionDir)Build"
     <ClInclude Include="Src\PTM\ptm_core.h" />
     <ClInclude Include="Src\PTM\ptm_filesystem.h" />
     <ClInclude Include="Src\PTM\ptm_graphics_base.h" />
+    <ClInclude Include="Src\PTM\ptm_image.h" />
     <ClInclude Include="Src\PTM\ptm_keyboard.h" />
     <ClInclude Include="Src\PTM\ptm_mml.h" />
     <ClInclude Include="Src\PTM\ptm_sound_system.h" />
@@ -198,6 +199,7 @@ cd "$(SolutionDir)Build"
     <ClCompile Include="Src\PTM\ptm_core.cpp" />
     <ClCompile Include="Src\PTM\ptm_filesystem.cpp" />
     <ClCompile Include="Src\PTM\ptm_graphics_base.cpp" />
+    <ClCompile Include="Src\PTM\ptm_image.cpp" />
     <ClCompile Include="Src\PTM\ptm_keyboard.cpp" />
     <ClCompile Include="Src\PTM\ptm_mml.cpp" />
     <ClCompile Include="Src\PTM\ptm_sound_system.cpp" />

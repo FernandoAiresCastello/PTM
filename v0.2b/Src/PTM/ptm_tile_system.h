@@ -197,3 +197,4 @@ void ptm_assert_tilebuf_csr();
 bool ptm_assert_tilebuf_exists(string id);
 void ptm_save_tileset(string file);
 void ptm_load_tileset(string file);
+void ptm_load_tileset_from_image(string file, rgb fgc, rgb bgc);

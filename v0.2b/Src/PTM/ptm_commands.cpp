@@ -460,6 +460,13 @@ void ptm_init_commands()
 		string file = ARG_VAR_STR(0);
 		ptm_load_tileset(file);
 	};
+	CMD("CHR.ILOAD") {
+		ARGC(3);
+		string file = ARG_VAR_STR(0);
+		rgb fgc = ARG_VAR_NUM(1);
+		rgb bgc = ARG_VAR_NUM(2);
+		ptm_load_tileset_from_image(file, fgc, bgc);
+	};
 	CMD("PAL") {
 		ARGC_MIN_MAX(2, 3);
 		if (arg.size() == 2) {

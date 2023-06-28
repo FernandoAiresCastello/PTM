@@ -198,8 +198,9 @@ CHR.ADD 	 x	Add x blank tiles to the tileset (total max. must not exceed 65536)	
 CHR.GET 	 index, x	Store in x the pixel pattern (binary string) at tileset index	Tileset manipulation
 CHR.LEN 	 x	Store in x the size of tileset	Tileset manipulation
 CHR.NEW 	 tile_count	Initialize tileset (tile_count min. 256; max. 65536)	Tileset manipulation
-CHR.SAVE 	 file	Save tileset to file	Tileset manipulation
-CHR.LOAD 	 file	Load tileset from file	Tileset manipulation
+CHR.SAVE 	 file	Save tileset to text file	Tileset manipulation
+CHR.LOAD 	 file	Load tileset from text file	Tileset manipulation
+CHR.ILOAD 	 file, fgc_rgb, bgc_rgb	Load tileset from image file. Both the image width and height must be multiples of 8. Fgc_rgb is the color in the image that will be converted to pixel code 1 (foreground color). Bgc_rgb is the color in the image that will be converted to pixel code 0 (background color)	Tileset manipulation
 ARR.CLR 	 name	Remove all items from array. This also reduces the size of the array to 0	Variables, arrays and constants
 ARR.COPY 	 source, destination	Make destination array equal to source array	Variables, arrays and constants
 ARR.ERASE 	 name, index	Remove array item from index. This also reduces the size of the array by 1	Variables, arrays and constants

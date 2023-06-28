@@ -5,6 +5,7 @@
 #include "ptm_keyboard.h"
 #include "ptm_sprites.h"
 #include "ptm_filesystem.h"
+#include "ptm_image.h"
 
 #define DEFAULT_TILEBUF_ID "default"
 
@@ -1106,4 +1107,47 @@ void ptm_load_tileset(string file)
 		ptm_abort("Cannot load more than 65536 tiles in the tileset");
 	}
 	tileset.tiles = tiles;
+}
+void ptm_load_tileset_from_image(string file, rgb fgc, rgb bgc)
+{
+	ptm_assert_file_exists(file);
+	
+	t_image image;
+	image.load(file);
+
+	if (image.get_width() % 8 != 0)
+		ptm_abort("Tileset image width must be a multiple of 8");
+	if (image.get_height() % 8 != 0)
+		ptm_abort("Tileset image height must be a multiple of 8");
+
+	struct tile_pos {
+		int x = 0;
+		int y = 0;
+		tile_pos(int x, int y) : x(x), y(y) {}
+	};
+	vector<tile_pos> positions;
+	for (int y = 0; y < image.get_height(); y += 8) {
+		for (int x = 0; x < image.get_width(); x += 8) {
+			positions.push_back(tile_pos(x, y));
+		}
+	}
+
+	tileset.new_tileset(positions.size(), false);
+
+	for (int index = 0; index < positions.size(); index++) {
+		tile_pos& pos = positions[index];
+		string tile = "";
+		for (int py = pos.y; py < pos.y + 8; py++) {
+			for (int px = pos.x; px < pos.x + 8; px++) {
+				rgb pixel = image.get_pixel(px, py);
+				if (pixel == fgc)
+					tile += '1';
+				else if (pixel == bgc)
+					tile += '0';
+				else
+					ptm_abort("Invalid color in tileset image: " + String::Format("&h%06x", pixel));
+			}
+		}
+		tileset.set(index, tile);
+	}
 }

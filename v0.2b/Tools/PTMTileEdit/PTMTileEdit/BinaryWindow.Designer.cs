@@ -32,13 +32,13 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.BtnMode = new System.Windows.Forms.Button();
             this.BtnPaste = new System.Windows.Forms.Button();
             this.BtnCopy = new System.Windows.Forms.Button();
             this.BtnClear = new System.Windows.Forms.Button();
             this.PnlTileEditContainer = new System.Windows.Forms.Panel();
             this.TxtBinary = new System.Windows.Forms.TextBox();
             this.PnlMosaicContainer = new System.Windows.Forms.Panel();
-            this.BtnMode = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -92,6 +92,18 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(596, 34);
             this.tableLayoutPanel2.TabIndex = 0;
+            // 
+            // BtnMode
+            // 
+            this.BtnMode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BtnMode.Location = new System.Drawing.Point(447, 0);
+            this.BtnMode.Margin = new System.Windows.Forms.Padding(0);
+            this.BtnMode.Name = "BtnMode";
+            this.BtnMode.Size = new System.Drawing.Size(149, 34);
+            this.BtnMode.TabIndex = 12;
+            this.BtnMode.Text = "Mode (F1)";
+            this.BtnMode.UseVisualStyleBackColor = true;
+            this.BtnMode.Click += new System.EventHandler(this.BtnMode_Click);
             // 
             // BtnPaste
             // 
@@ -159,18 +171,6 @@
             this.PnlMosaicContainer.Padding = new System.Windows.Forms.Padding(32);
             this.PnlMosaicContainer.Size = new System.Drawing.Size(224, 342);
             this.PnlMosaicContainer.TabIndex = 3;
-            // 
-            // BtnMode
-            // 
-            this.BtnMode.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BtnMode.Location = new System.Drawing.Point(447, 0);
-            this.BtnMode.Margin = new System.Windows.Forms.Padding(0);
-            this.BtnMode.Name = "BtnMode";
-            this.BtnMode.Size = new System.Drawing.Size(149, 34);
-            this.BtnMode.TabIndex = 12;
-            this.BtnMode.Text = "Mode (F1)";
-            this.BtnMode.UseVisualStyleBackColor = true;
-            this.BtnMode.Click += new System.EventHandler(this.BtnMode_Click);
             // 
             // BinaryWindow
             // 

@@ -8,7 +8,7 @@
 <h1>PTM v0.2b</h1>
 </div>
 <div class='index-container'>
-<div class='index-title'>Command Reference</div>
+<div class='index-title'>PTML Command Reference</div>
 <table class='index'>
 <tr>
 <td class='index-cmd'>
@@ -674,10 +674,13 @@
 <a href='#CHR.LOAD'>CHR.LOAD</a>
 </td>
 <td class='index-cmd'>
-<a href='#ARR.CLR'>ARR.CLR</a>
+<a href='#CHR.ILOAD'>CHR.ILOAD</a>
 </td>
 </tr>
 <tr>
+<td class='index-cmd'>
+<a href='#ARR.CLR'>ARR.CLR</a>
+</td>
 <td class='index-cmd'>
 <a href='#ARR.COPY'>ARR.COPY</a>
 </td>
@@ -696,11 +699,11 @@
 <td class='index-cmd'>
 <a href='#ARR.PUSH'>ARR.PUSH</a>
 </td>
+</tr>
+<tr>
 <td class='index-cmd'>
 <a href='#ARR.SET'>ARR.SET</a>
 </td>
-</tr>
-<tr>
 <td class='index-cmd'>
 <a href='#DEF'>DEF</a>
 </td>
@@ -4720,7 +4723,7 @@ file
 </tr>
 <tr>
 <td class='description' colspan=2>
-Save tileset to file
+Save tileset to text file
 </td>
 </tr>
 <tr>
@@ -4740,7 +4743,27 @@ file
 </tr>
 <tr>
 <td class='description' colspan=2>
-Load tileset from file
+Load tileset from text file
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Tileset manipulation
+</td>
+</tr>
+</table>
+<table class='entry' id='CHR.ILOAD'>
+<tr>
+<td class='cmd'>
+CHR.ILOAD
+</td>
+<td class='params'>
+file, fgc_rgb, bgc_rgb
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Load tileset from image file. Both the image width and height must be multiples of 8. Fgc_rgb is the color in the image that will be converted to pixel code 1 (foreground color). Bgc_rgb is the color in the image that will be converted to pixel code 0 (background color)
 </td>
 </tr>
 <tr>

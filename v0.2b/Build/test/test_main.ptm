@@ -1,0 +1,15 @@
+CHR.ILOAD "tilesets/test_tileset.bmp", &h000000, &hffffff
+
+VAR i, 0
+CHR.LEN size
+FOR y, 0, 24
+	FOR x, 0, 45
+		LOCATE x, y
+		TILE.NEW i, 1, 0
+		PUT
+		INC i
+		IF.GTE i, size
+			HALT
+		ENDIF
+	NEXT
+NEXT

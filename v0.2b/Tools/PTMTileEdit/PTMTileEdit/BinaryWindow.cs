@@ -183,7 +183,7 @@ namespace TGLTilePaint
 
             if (text.Length != 64)
             {
-                MessageBox.Show("Invalid tile data", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Invalid 8x8 tile data", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -199,7 +199,7 @@ namespace TGLTilePaint
                     color = TileForeColor;
                 else
                 {
-                    MessageBox.Show("Invalid tile data", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Invalid 8x8 tile data", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -219,9 +219,17 @@ namespace TGLTilePaint
 
         private void Paste16x16()
         {
+            MessageBox.Show("Pasting 16x16 tile data is not supported", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            /*
             string text = Clipboard.GetText();
+            string[] binary = text.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
-            MessageBox.Show("Cannot paste 16x16 tile", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            if (binary.Length != 4)
+            {
+                MessageBox.Show("Invalid 16x16 tile data", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            */
         }
 
         private void Paste16x16_Linear()

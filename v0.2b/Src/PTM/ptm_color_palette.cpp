@@ -72,6 +72,10 @@ int ptm_rgb_extract_b(rgb color)
 {
 	return (color & 0x0000ff);
 }
+rgb ptm_rgb_from_components(int r, int g, int b)
+{
+	return b | (g << CHAR_BIT) | (r << CHAR_BIT * 2);
+}
 void ptm_save_palette(string file)
 {
 	vector<string> colors;
