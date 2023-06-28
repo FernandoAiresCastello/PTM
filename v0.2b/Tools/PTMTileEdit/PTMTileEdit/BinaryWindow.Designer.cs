@@ -38,6 +38,7 @@
             this.PnlTileEditContainer = new System.Windows.Forms.Panel();
             this.TxtBinary = new System.Windows.Forms.TextBox();
             this.PnlMosaicContainer = new System.Windows.Forms.Panel();
+            this.BtnMode = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -74,10 +75,12 @@
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 3;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.00062F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.00063F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.00063F));
+            this.tableLayoutPanel2.ColumnCount = 4;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.00015F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.00016F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.00016F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.99953F));
+            this.tableLayoutPanel2.Controls.Add(this.BtnMode, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.BtnPaste, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.BtnCopy, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.BtnClear, 2, 0);
@@ -86,20 +89,19 @@
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 109F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(596, 34);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // BtnPaste
             // 
             this.BtnPaste.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BtnPaste.Location = new System.Drawing.Point(198, 0);
+            this.BtnPaste.Location = new System.Drawing.Point(149, 0);
             this.BtnPaste.Margin = new System.Windows.Forms.Padding(0);
             this.BtnPaste.Name = "BtnPaste";
-            this.BtnPaste.Size = new System.Drawing.Size(198, 34);
+            this.BtnPaste.Size = new System.Drawing.Size(149, 34);
             this.BtnPaste.TabIndex = 11;
-            this.BtnPaste.Text = "Paste";
+            this.BtnPaste.Text = "Paste (Ctrl+V)";
             this.BtnPaste.UseVisualStyleBackColor = true;
             this.BtnPaste.Click += new System.EventHandler(this.BtnPaste_Click);
             // 
@@ -109,21 +111,21 @@
             this.BtnCopy.Location = new System.Drawing.Point(0, 0);
             this.BtnCopy.Margin = new System.Windows.Forms.Padding(0);
             this.BtnCopy.Name = "BtnCopy";
-            this.BtnCopy.Size = new System.Drawing.Size(198, 34);
+            this.BtnCopy.Size = new System.Drawing.Size(149, 34);
             this.BtnCopy.TabIndex = 5;
-            this.BtnCopy.Text = "Copy";
+            this.BtnCopy.Text = "Copy (Ctrl+C)";
             this.BtnCopy.UseVisualStyleBackColor = true;
             this.BtnCopy.Click += new System.EventHandler(this.BtnCopy_Click);
             // 
             // BtnClear
             // 
             this.BtnClear.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BtnClear.Location = new System.Drawing.Point(396, 0);
+            this.BtnClear.Location = new System.Drawing.Point(298, 0);
             this.BtnClear.Margin = new System.Windows.Forms.Padding(0);
             this.BtnClear.Name = "BtnClear";
-            this.BtnClear.Size = new System.Drawing.Size(200, 34);
+            this.BtnClear.Size = new System.Drawing.Size(149, 34);
             this.BtnClear.TabIndex = 0;
-            this.BtnClear.Text = "Clear";
+            this.BtnClear.Text = "Clear (Delete)";
             this.BtnClear.UseVisualStyleBackColor = true;
             this.BtnClear.Click += new System.EventHandler(this.BtnClear_Click);
             // 
@@ -158,6 +160,18 @@
             this.PnlMosaicContainer.Size = new System.Drawing.Size(224, 342);
             this.PnlMosaicContainer.TabIndex = 3;
             // 
+            // BtnMode
+            // 
+            this.BtnMode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BtnMode.Location = new System.Drawing.Point(447, 0);
+            this.BtnMode.Margin = new System.Windows.Forms.Padding(0);
+            this.BtnMode.Name = "BtnMode";
+            this.BtnMode.Size = new System.Drawing.Size(149, 34);
+            this.BtnMode.TabIndex = 12;
+            this.BtnMode.Text = "Mode (F1)";
+            this.BtnMode.UseVisualStyleBackColor = true;
+            this.BtnMode.Click += new System.EventHandler(this.BtnMode_Click);
+            // 
             // BinaryWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -169,6 +183,7 @@
             this.Name = "BinaryWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PTM Tile Edit";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BinaryWindow_KeyDown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -188,5 +203,6 @@
         private System.Windows.Forms.Button BtnPaste;
         private System.Windows.Forms.TextBox TxtBinary;
         private System.Windows.Forms.Panel PnlMosaicContainer;
+        private System.Windows.Forms.Button BtnMode;
     }
 }

@@ -27,7 +27,7 @@ If you want the machine to boot up using some program file other than the "main.
     
 Alternatively, you can simply drag and drop any .ptm file onto PTM.exe to run it.
 
-- "PTMTileEdit.exe" is a simple Windows tool for drawing 8x8 tiles. In this application you can use the copy and paste buttons to copy and paste the binary string representing that tile, so that it can be embedded into the PTML code via the CHR command. There is also a simplified version of this program written in PTML located in util/tile_editor_8x8.ptm.
+- "PTMTileEdit.exe" is a simple Windows tool for drawing tiles. In this application you can use the copy and paste buttons to copy and paste the binary string representing that tile, so that it can be embedded directly into the PTML code via the CHR command.
 
 - The "docs" folder contains the offline documentation files for this version of the PTM.
 

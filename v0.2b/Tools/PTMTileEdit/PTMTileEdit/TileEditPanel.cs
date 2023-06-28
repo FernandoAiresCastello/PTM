@@ -37,7 +37,7 @@ namespace TGLTilePaint
 
         public TileEditPanel()
         {
-            Init(null, EditMode.Multiple);
+            Init(null, EditMode.Single);
         }
 
         public TileEditPanel(Form wnd)

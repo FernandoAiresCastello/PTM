@@ -7,9 +7,6 @@ void ptm_init_commands()
 	CMD("INCL") {
 		ptm_abort("The INCL command is only valid in the program that started the machine (" + intp->get_program_filename() + ")");
 	};
-	CMD("PTM") {
-		// t_compiler.cpp
-	};
 	CMD("WINDOW") {
 		// t_compiler.cpp
 	};
