@@ -1,13 +1,16 @@
-CLIP.GET 	 x	Get string from the Windows clipboard and store into x	Clipboard
-CLIP.SET 	 x	Copy string x to the Windows clipboard	Clipboard
-DATE 	 x	Store in x the current system date in the format: YYYY-MM-DD	Date and time
-TIME 	 x	Store in x the current system time in the format: HH:MM:SS	Date and time
+Command	Params (? = optional)	Description	Category
+ARR.CLR 	 name	Remove all items from array. This also reduces the size of the array to 0	Data - Variables and arrays
+ARR.COPY 	 source, destination	Make destination array equal to source array	Data - Variables and arrays
+ARR.ERASE 	 name, index	Remove array item from index. This also reduces the size of the array by 1	Data - Variables and arrays
+ARR.LEN 	 name, x	Store in x the length of the array	Data - Variables and arrays
+ARR.NEW 	 name, size?	Create a new array (with optional initial size)	Data - Variables and arrays
+ARR.PUSH 	 name, value	Add new value to end of array	Data - Variables and arrays
+ARR.SET 	 name[index], x	Store x at array index	Data - Variables and arrays
+DEF 	 name, value	Define a constant	Data - Variables and arrays
+VAR 	 name, value	Set value for a new or existing variable	Data - Variables and arrays
 ASSERT 	 x, y	Abort program execution if x is not equal to y	Debugging
 DEBUG 	 path	Save detailed information about the current machine state into a text file	Debugging
-DEBUG.BRK 		Trigger a breakpoint (reserved for internal usage)	Debugging
 MSGBOX 	 text	Show a modal message box, program is interrupted until OK button is pressed	Debugging
-DECRYPT 	 x, text, key	Decrypt text into x using specified key (valid key must be from 0 to 127)	Encryption
-ENCRYPT 	 x, text, key	Encrypt text into x using specified key (valid key must be from 0 to 127)	Encryption
 CALL 	 label	Transfer execution to subroutine at label. Can return to the caller using the RET command	Execution flow
 ENDIF 		Mark the end of a conditional code block	Execution flow
 EXIT 		Terminate program and close window	Execution flow
@@ -24,9 +27,10 @@ IF.LTE 	 x, y	Begin a code block that will execute only if x <= y	Execution flow
 IF.NEQ 	 x, y	Begin a code block that will execute only if x does not equal y	Execution flow
 IF.TRUE 	 x	Begin a code block that will execute only if x > 0	Execution flow
 PAUSE 	 x	Pause program execution for x frames	Execution flow
-RESET 		Restart machine and reload program	Execution flow
+RESET 		Restart machine and program	Execution flow
 RET 		Return from subroutine	Execution flow
 RUN 	 program_path	Launch a separate instance of the PTM to run the specified program file. The program path must be relative to the PTM executable	Execution flow
+ARR.FOR 	 name, x	Begin a code block that will execute repeatedly for each item in the array. Current value will be assigned to x and will begin with the first array item. Code block ends with the NEXT command	Execution loops
 BRK 		Force exit loop prematurely	Execution loops
 FOR 	 x, first, last_exclusive, step?	Begin a code block that will execute repeatedly as long as x < last. Current value will be assigned to x and will begin with the first value. X will be incremented by 1 (or by step, if specified) on every iteration	Execution loops
 NEXT 		Mark the end of a code block loop	Execution loops
@@ -46,15 +50,125 @@ FSIZE 	 x	Store in x the number of records in the record file	Filesystem
 FWRITE 	 x	Write a new record to the end of the record file	Filesystem
 LLOAD 	 path, arr_id	Load text file at path and store lines into array	Filesystem
 LSAVE 	 path, arr_id	Save text file at path with lines from array	Filesystem
-ANIM 	 x	Set tile animation speed (0 to 100; 0 disables animation)	Graphics core
-FRAMES 	 x	Store in x the number of frames rendered since machine started	Graphics core
-TITLE 	 x	Set x as the title of the window	Graphics core
-UPDATE 		Draw all visible tilebuffers and sprites then update window and process window events	Graphics core
-WCOL 	 palette_index	Clear window background to specified color	Graphics core
-WINDOW 	 width, height, size, default_layers	Override the default window settings. Width and height are in pixel units. Size is used as a multiplier for both width and height. Default_layers defines the number of layers in the "default" tilebuffer 	Graphics core
-IF.KEY 	 keyname	Begin a code block that will execute only if the specified named key is pressed. List of recognized key names: SHIFT, CTRL, ALT, CAPS, NUMLOCK, SCRLOCK, RIGHT, LEFT, UP, DOWN, SPACE, ENTER, RETURN, ESC, TAB, BS, INS, DEL, HOME, END, PGUP, PGDN, PAUSE, BREAK, PRINT, F1 through F12, A through Z, 0 through 9, , (comma), . (period), <, >, /, *, +, -	Keyboard
-INKEY 	 x	Store in x the numeric code of the last key that was pressed	Keyboard
-INPUT 	 x, max_length	Show a text input field and waits for user to type a string. When user presses the ENTER or ESCAPE key, the string gets stored in x	Keyboard
+PAL 	 index, rgb	Set RGB for color at palette index. RGB must be a color encoded in a 24-bit integer, i.e. from &h000000 (pure black) to &hffffff (pure white)	Graphics - Color palette
+PAL 	 index, constant, rgb	Variant of PAL command, but with an additional parameter being a constant identifier that will be created and to which the index will be assigned	Graphics - Color palette
+PAL.GET 	 index, x	Store in x the RGB value of color at palette index	Graphics - Color palette
+PAL.GETB 	 index, x	Store in x the blue component from color at palette index	Graphics - Color palette
+PAL.GETG 	 index, x	Store in x the green component from color at palette index	Graphics - Color palette
+PAL.GETR 	 index, x	Store in x the red component from color at palette index	Graphics - Color palette
+PAL.LEN 	 x	Store in x the size of palette	Graphics - Color palette
+PAL.LOAD 	 file	Load palette from file	Graphics - Color palette
+PAL.NEW 		Clear entire palette to black, then set default black and white colors at indices 0 and 1	Graphics - Color palette
+PAL.SAVE 	 file	Save palette to file	Graphics - Color palette
+PAL.SETB 	 index, b	Adjust the blue component for color at palette index	Graphics - Color palette
+PAL.SETG 	 index, g	Adjust the green component for color at palette index	Graphics - Color palette
+PAL.SETR 	 index, r	Adjust the red component for color at palette index	Graphics - Color palette
+ANIM 	 x	Set tile animation speed (0 to 100; 0 disables animation)	Graphics - Core
+FRAMES 	 x	Store in x the number of frames rendered since machine started	Graphics - Core
+TITLE 	 x	Set x as the title of the window	Graphics - Core
+UPDATE 		Draw all visible tilebuffers and sprites then update window and process window events	Graphics - Core
+WCOL 	 palette_index	Clear window background to specified color	Graphics - Core
+WINDOW 	 width, height, size, default_layers	Override the default window settings. Width and height are in pixel units. Size is used as a multiplier for both width and height. Default_layers defines the number of layers in the "default" tilebuffer 	Graphics - Core
+SPR.BUF 	 id, buf_id	Assign sprite to a tilebuffer. The tilebuffer becomes the "owner" of the sprite. The sprite will then be drawn inside its viewport	Graphics - Sprites
+SPR.CLR 		Delete all sprites	Graphics - Sprites
+SPR.DEL 	 id	Delete sprite with id	Graphics - Sprites
+SPR.GETX 	 id, x	Store in x the x coordinate of sprite (in pixel units)	Graphics - Sprites
+SPR.GETY 	 id, y	Store in y the y coordinate of sprite (in pixel units)	Graphics - Sprites
+SPR.HIDE 	 id	Hide sprite	Graphics - Sprites
+SPR.HIT 	 x, id_sprite_1, id_sprite_2	Store in x whether there is any collision (overlap) between two sprites’ hitboxes. 1 means yes; 0 means no	Graphics - Sprites
+SPR.MOVE 	 id, dx, dy	Move sprite by specified distance (in pixel units)	Graphics - Sprites
+SPR.NEW 	 id	Create a new sprite using tile in the TILE register	Graphics - Sprites
+SPR.POS 	 id, x, y	Set x and y coordinates of sprite (in pixel units)	Graphics - Sprites
+SPR.SHOW 	 id	Show sprite	Graphics - Sprites
+SPR.TGET 	 id	Store sprite tile in the TILE register	Graphics - Sprites
+SPR.TGETX 	 id, x	Store in x the x coordinate of sprite (in tile units)	Graphics - Sprites
+SPR.TGETY 	 id, y	Store in y the y coordinate of sprite (in tile units)	Graphics - Sprites
+SPR.TMOVE 	 id, dx, dy	Move sprite by specified distance (in tile units)	Graphics - Sprites
+SPR.TPOS 	 id, x, y	Set x and y coordinates of sprite (in tile units)	Graphics - Sprites
+SPR.TSET 	 id	Set sprite tile equal to the TILE register	Graphics - Sprites
+SPR.TX 	 id, x	Set x coordinate of sprite (in tile units)	Graphics - Sprites
+SPR.TY 	 id, y	Set y coordinate of sprite (in tile units)	Graphics - Sprites
+SPR.VISBL 	 id, x	Store in x whether sprite is visible. 1 means yes; 0 means no	Graphics - Sprites
+SPR.X 	 id, x	Set x coordinate of sprite (in pixel units)	Graphics - Sprites
+SPR.Y 	 id, y	Set y coordinate of sprite (in pixel units)	Graphics - Sprites
+COPY 	 x1, y1, x2, y2	Copy to internal clipboard all tiles within specified rectangle from selected tilebuffer layer	Graphics - Tile output
+CUT 	 x1, y1, x2, y2	Copy to internal clipboard all tiles within specified rectangle from selected tilebuffer layer, then delete them	Graphics - Tile output
+DEL 		Delete tile from selected tilebuffer at current cursor position	Graphics - Tile output
+DELR 	 x1, y1, x2, y2	Delete all tiles within specified rectangle from selected tilebuffer layer	Graphics - Tile output
+FILL 		Fill entire selected tilebuffer layer with TILE register	Graphics - Tile output
+GET 		Make TILE register equal to tile in selected tilebuffer at current cursor position	Graphics - Tile output
+MOV 	 x, y, dx, dy	Move tile in selected tilebuffer, from specified position to specified distance	Graphics - Tile output
+MOVB 	 x1, y1, x2, y2, dx, dy	Move block of tiles in selected tilebuffer, from specified rectangle area to specified distance	Graphics - Tile output
+PASTE 		Paste all tiles from internal clipboard into selected tilebuffer layer starting at current cursor position	Graphics - Tile output
+PUT 		Put TILE register in selected tilebuffer at current cursor position	Graphics - Tile output
+RECT 	 x1, y1, x2, y2	Fill rectangle in selected tilebuffer layer with TILE register	Graphics - Tile output
+TILE.ADD 	 tileset_ix, fgc_pal_ix, bgc_pal_ix?	Add an animation frame to the TILE register with the specified tileset index and colors. If bgc_pal_ix is not specified, then the background color for this tile will not be rendered	Graphics - TILE register
+TILE.COLOR 	 frame_ix, fgc_pal_ix, bgc_pal_ix	Change palette references for both colors at specified frame in the TILE register	Graphics - TILE register
+TILE.GETB 	 frame_ix, x	Store in x the palette reference for background color at a frame in the TILE register	Graphics - TILE register
+TILE.GETC 	 frame_ix, x	Store in x the tileset reference at a frame in the TILE register	Graphics - TILE register
+TILE.GETF 	 frame_ix, x	Store in x the palette reference for foreground color at a frame in the TILE register	Graphics - TILE register
+TILE.GETP 	 name, x	Store in x the value of a property in the TILE register	Graphics - TILE register
+TILE.LEN 	 x	Store in x the number of animation frames in the TILE register	Graphics - TILE register
+TILE.LOAD 	 id	Load TILE register from memory with id	Graphics - TILE register
+TILE.NEW 	 tileset_ix?, fgc_pal_ix?, bgc_pal_ix?	Remove all tiles from TILE register. If arguments are given, add a single animation frame with the specified tileset index and colors. If bgc_pal_ix is not specified, then the background color for this tile will not be rendered	Graphics - TILE register
+TILE.PARSE 	 string	Parse the specified string as data into the TILE register. Format: "tileset_index,fgc_palette_index,bgc_palette_index;..."	Graphics - TILE register
+TILE.SETB 	 frame_ix, bgc_pal_ix	Change palette reference for background color at specified frame in the TILE register	Graphics - TILE register
+TILE.SETC 	 frame_ix, tileset_ix	Change tileset reference at specified frame in the TILE register	Graphics - TILE register
+TILE.SETF 	 frame_ix, fgc_pal_ix	Change palette reference for foreground color at specified frame in the TILE register	Graphics - TILE register
+TILE.SETP 	 name, value	Set value for a property in the TILE register	Graphics - TILE register
+TILE.STORE 	 id	Store TILE register into memory and assign id	Graphics - TILE register
+TILE.STR 	 x	Store in x a string representing the TILE register (uses the same format as TILE.PARSE)	Graphics - TILE register
+COLOR 	 fgc_pal_ix, bgc_pal_ix?	Set colors for subsequently printed text	Graphics - Tile string output
+COLOR.B 	 bgc_pal_ix	Set background color for subsequently printed text	Graphics - Tile string output
+COLOR.F 	 fgc_pal_ix	Set foreground color for subsequently printed text	Graphics - Tile string output
+PRINT 	 text	Print text starting at current cursor position in the selected tilebuffer. This will override the existing tiles at the same character positions	Graphics - Tile string output
+PRINT.ADD 	 text	Print text starting at current cursor position in the selected tilebuffer. This will add new frames on top of the existing tiles at the same character positions (useful for e.g. blinking or animated text)	Graphics - Tile string output
+PRINTF 	 format	Almost the same as PRINT, but will interpret escape sequences delimited by curly brackets. This will override the existing tiles at the same character positions. List of recognized escape sequences: {f…} change text foreground color; {/f} revert text foreground to previous color; {b…} change text background color; {/b} revert text background to previous color; {c…} output tile with specified tileset index; {%x} output value stored in variable x; {%x[ix]} output value stored in array x at index ix	Graphics - Tile string output
+PRINTF.ADD 	 format	Almost the same as PRINTF, but will add new frames on top of the existing tiles at the same character positions (useful for e.g. blinking or animated text)	Graphics - Tile string output
+PRINTL 	 text	Almost the same as PRINT, but automatically append a "\n" (newline character) at the end of the text	Graphics - Tile string output
+PUTC 	 tileset_ix	Print character at current cursor position in the selected tilebuffer. This will override the existing tile at the same character position	Graphics - Tile string output
+PUTC.ADD 	 tileset_ix	Print character at current cursor position in the selected tilebuffer. This will add a new frame on top of the existing tile at the same character position	Graphics - Tile string output
+TXT.BGOFF 		Disable rendering text background	Graphics - Tile string output
+TXT.BGON 		Enable rendering text background	Graphics - Tile string output
+CSR.GETX 	 var	Store in var the x coordinate of cursor	Graphics - Tilebuffer cursor
+CSR.GETY 	 var	Store in var the y coordinate of cursor	Graphics - Tilebuffer cursor
+CSR.X 	 x	Set x coordinate of cursor	Graphics - Tilebuffer cursor
+CSR.Y 	 y	Set y coordinate of cursor	Graphics - Tilebuffer cursor
+LAYER 	 index	Set cursor at layer index of the currently selected tilebuffer	Graphics - Tilebuffer cursor
+LOCATE 	 x, y	Set cursor at specified column and row in the currently selected tilebuffer	Graphics - Tilebuffer cursor
+BUF.BCOL 	 id, bgc_pal_ix	Enable rendering tilebuffer background and set the background color	Graphics - Tilebuffer manipulation
+BUF.BGOFF 	 id	Disable rendering tilebuffer background	Graphics - Tilebuffer manipulation
+BUF.CLL 	 id, layer	Delete all tiles from layer in the tilebuffer. This will also reset the tilebuffer cursor to the top-left corner of the current buffer layer (X0 Y0)	Graphics - Tilebuffer manipulation
+BUF.CLS 	 id	Delete all tiles from all layers in specified tilebuffer. This will also reset the tilebuffer cursor to the top-left corner of the current buffer layer (X0 Y0)	Graphics - Tilebuffer manipulation
+BUF.COLS 	 id, x	Store in x the number of columns (width in tile units) in the tilebuffer	Graphics - Tilebuffer manipulation
+BUF.HIDE 	 id	Hide a tilebuffer	Graphics - Tilebuffer manipulation
+BUF.NEW 	 id, layers, columns, rows, order	Create a new tilebuffer (columns and rows are in tile units). Order 0 is reserved for the default buffer. Higher order buffers are drawn on top of lower order buffers	Graphics - Tilebuffer manipulation
+BUF.ROWS 	 id, x	Store in x the number of rows (height in tile units) in the tilebuffer	Graphics - Tilebuffer manipulation
+BUF.SCRL 	 id, dx, dy	Smoothly scroll tilebuffer viewport contents by the specified distance (in pixels)	Graphics - Tilebuffer manipulation
+BUF.SEL 	 id	Select tilebuffer that will be used for all subsequent tile operations	Graphics - Tilebuffer manipulation
+BUF.SHOW 	 id	Show a tilebuffer	Graphics - Tilebuffer manipulation
+BUF.TOGL 	 id	If tilebuffer is visible, hide it; if it's hidden, show it	Graphics - Tilebuffer manipulation
+BUF.VIEW 	 id, x1, y1, x2, y2	Set tilebuffer viewport rectangle on the screen	Graphics - Tilebuffer manipulation
+CLS 		Delete all tiles from all tilebuffers. This will also reset the tilebuffer cursor to the top-left corner of the current buffer layer (X0 Y0)	Graphics - Tilebuffer manipulation
+CHR 	 index, binary	Define pixel pattern (binary string) at tileset index. A binary string is just a string containing 64 characters, each character being either 0 or 1. 0 means pixel represents the background; 1 means pixel represents the foreground	Graphics - Tileset
+CHR 	 index, constant, binary	Variant of CHR command, but with an additional parameter being a constant identifier that will be created and to which the index will be assigned	Graphics - Tileset
+CHR.ADD 	 x	Add x blank tiles to the tileset (total max. must not exceed 65536)	Graphics - Tileset
+CHR.GET 	 index, x	Store in x the pixel pattern (binary string) at tileset index	Graphics - Tileset
+CHR.ILOAD 	 file, fgc, bgc	Load tileset from image file. Both the image width and height must be multiples of 8. Fgc_rgb is the color in the image that will be converted to pixel code 1 (foreground color). Bgc_rgb is the color in the image that will be converted to pixel code 0 (background color)	Graphics - Tileset
+CHR.LEN 	 x	Store in x the size of tileset	Graphics - Tileset
+CHR.LOAD 	 file	Load tileset from text file	Graphics - Tileset
+CHR.NEW 	 tile_count	Initialize tileset (tile_count min. 256; max. 65536)	Graphics - Tileset
+CHR.SAVE 	 file	Save tileset to text file	Graphics - Tileset
+IF.KEY 	 keyname	Begin a code block that will execute only if the specified named key is pressed. List of recognized key names: SHIFT, CTRL, ALT, CAPS, NUMLOCK, SCRLOCK, RIGHT, LEFT, UP, DOWN, SPACE, ENTER, RETURN, ESC, TAB, BS, INS, DEL, HOME, END, PGUP, PGDN, PAUSE, BREAK, PRINT, F1 through F12, A through Z, 0 through 9, , (comma), . (period), <, >, /, *, +, -	Input - Keyboard
+INKEY 	 x	Store in x the numeric code of the last key that was pressed	Input - Keyboard
+INPUT 	 x, max_length	Show a text input field and waits for user to type a string. When user presses the ENTER or ESCAPE key, the string gets stored in x	Input - Keyboard
+MOUSE.L 	 var	Store in var whether the left mouse button is pressed	Input - Mouse
+MOUSE.M 	 var	Store in var whether the middle mouse button is pressed	Input - Mouse
+MOUSE.OFF 		Hide the mouse pointer	Input - Mouse
+MOUSE.ON 		Show the mouse pointer	Input - Mouse
+MOUSE.R 	 var	Store in var whether the right mouse button is pressed	Input - Mouse
+MOUSE.X 	 x	Store in x the x coordinate of the mouse pointer	Input - Mouse
+MOUSE.Y 	 y	Store in y the y coordinate of the mouse pointer	Input - Mouse
 ADD 	 result, x, y	result = x + y	Math
 DEC 	 x	x = x - 1	Math
 DIV 	 result, x, y	result = x / y	Math
@@ -66,148 +180,34 @@ POW 	 result, base, power	result = base ^ power (exponentiation)	Math
 RND 	 x, min, max	Store in x a random number between min and max (inclusive)	Math
 SQRT 	 result, x	result = square root of x	Math
 SUB 	 result, x, y	result = x - y	Math
-MOUSE.L 	 var	Store in var whether the left mouse button is pressed	Mouse
-MOUSE.M 	 var	Store in var whether the middle mouse button is pressed	Mouse
-MOUSE.OFF 		Hide the mouse pointer	Mouse
-MOUSE.ON 		Show the mouse pointer	Mouse
-MOUSE.R 	 var	Store in var whether the right mouse button is pressed	Mouse
-MOUSE.X 	 x	Store in x the x coordinate of the mouse pointer	Mouse
-MOUSE.Y 	 y	Store in y the y coordinate of the mouse pointer	Mouse
-PAL 	 index, rgb	Set RGB for color at palette index. RGB must be a color encoded in a 24-bit integer, i.e. from 0x000000 (pure black) to 0xffffff (pure white)	Palette manipulation
-PAL 	 index, constant, rgb	Variant of PAL command, but with an additional parameter being a constant identifier that will be created and to which the index will be assigned	Palette manipulation
-PAL.GET 	 index, x	Store in x the RGB value of color at palette index	Palette manipulation
-PAL.GETB 	 index, x	Store in x the blue component from color at palette index	Palette manipulation
-PAL.GETG 	 index, x	Store in x the green component from color at palette index	Palette manipulation
-PAL.GETR 	 index, x	Store in x the red component from color at palette index	Palette manipulation
-PAL.LEN 	 x	Store in x the size of palette	Palette manipulation
-PAL.NEW 		Clear entire palette to black, then set default black and white colors at indices 0 and 1	Palette manipulation
-PAL.SETB 	 index, b	Adjust the blue component for color at palette index	Palette manipulation
-PAL.SETG 	 index, g	Adjust the green component for color at palette index	Palette manipulation
-PAL.SETR 	 index, r	Adjust the red component for color at palette index	Palette manipulation
-PAL.SAVE 	 file	Save palette to file	Palette manipulation
-PAL.LOAD 	 file	Load palette from file	Palette manipulation
 BEEP 	 frequency, length	Play a beeping sound with the specified frequency and length	Sound
-MML.LOOP 	 mml	Play asynchronously the notes specified in the MML string, in a loop. See MML.PLAY for more info	Sound (MML)
-MML.PLAY 	 mml	Play asynchronously the notes specified in the MML string, only once. Notes: C,C#,D,D#,E,F,F#,G,G#,A,A#,B; Control: P = pause; L = set length for all following notes (min. length: 30); O = set octave for all following notes (valid octaves: 1 through 8)	Sound (MML)
-MML.STOP 		Stop all MML sounds	Sound (MML)
-MML.VOL 	 volume	Set volume for MML sounds	Sound (MML)
-SND.LOAD 	 id, file	Load a WAV sound file and assign id	Sound (WAV)
-SND.PLAY 	 id	Play asynchronously the WAV sound associated with id, only once	Sound (WAV)
-SND.STOP 		Stop all WAV sounds currently playing	Sound (WAV)
+MML.LOOP 	 mml	Play asynchronously the notes specified in the MML string, in a loop. See MML.PLAY for more info	Sound
+MML.PLAY 	 mml	Play asynchronously the notes specified in the MML string, only once. Notes: C,C#,D,D#,E,F,F#,G,G#,A,A#,B; Control: P = pause; L = set length for all following notes (min. length: 30); O = set octave for all following notes (valid octaves: 1 through 8)	Sound
+MML.STOP 		Stop all MML sounds	Sound
+MML.VOL 	 volume	Set volume for MML sounds	Sound
+SND.LOAD 	 id, file	Load a WAV sound file and assign id	Sound
+SND.PLAY 	 id	Play asynchronously the WAV sound associated with id, only once	Sound
+SND.STOP 		Stop all WAV sounds currently playing	Sound
 INCL 	 path	Insert PTML code from a different file at the same point where this command is used. This command is only valid inside the file that started the machine. Paths must be relative to the PTM executable file (PTM.exe)	Source code
-SPR.BUF 	 id, buf_id	Assign sprite to a tilebuffer. The tilebuffer becomes the "owner" of the sprite. The sprite will then be drawn inside its viewport	Sprites
-SPR.CLR 		Delete all sprites	Sprites
-SPR.DEL 	 id	Delete sprite with id	Sprites
-SPR.GETX 	 id, x	Store in x the x coordinate of sprite (in pixel units)	Sprites
-SPR.GETY 	 id, y	Store in y the y coordinate of sprite (in pixel units)	Sprites
-SPR.HIDE 	 id	Hide sprite	Sprites
-SPR.HIT 	 x, id_sprite_1, id_sprite_2	Store in x whether there is any collision (overlap) between two sprites’ hitboxes. 1 means yes; 0 means no	Sprites
-SPR.MOVE 	 id, dx, dy	Move sprite by specified distance (in pixel units)	Sprites
-SPR.NEW 	 id	Create a new sprite using tile in the TILE register	Sprites
-SPR.POS 	 id, x, y	Set x and y coordinates of sprite (in pixel units)	Sprites
-SPR.SHOW 	 id	Show sprite	Sprites
-SPR.TGET 	 id	Store sprite tile in the TILE register	Sprites
-SPR.TGETX 	 id, x	Store in x the x coordinate of sprite (in tile units)	Sprites
-SPR.TGETY 	 id, y	Store in y the y coordinate of sprite (in tile units)	Sprites
-SPR.TMOVE 	 id, dx, dy	Move sprite by specified distance (in tile units)	Sprites
-SPR.TPOS 	 id, x, y	Set x and y coordinates of sprite (in tile units)	Sprites
-SPR.TSET 	 id	Set sprite tile equal to the TILE register	Sprites
-SPR.TX 	 id, x	Set x coordinate of sprite (in tile units)	Sprites
-SPR.TY 	 id, y	Set y coordinate of sprite (in tile units)	Sprites
-SPR.VISBL 	 id, x	Store in x whether sprite is visible. 1 means yes; 0 means no	Sprites
-SPR.X 	 id, x	Set x coordinate of sprite (in pixel units)	Sprites
-SPR.Y 	 id, y	Set y coordinate of sprite (in pixel units)	Sprites
-SPRINTF 	 x, format	Almost the same as PRINTF, but will store the result in x instead of printing to the screen	String manipulation
-STR.CAT 	 result, x, y	Concatenate strings x and y	String manipulation
-STR.FIND 	 result, x, y, begin?	Search x for substring y and store index of first occurrence starting from index (or from 0 if begin is omitted)	String manipulation
-STR.FMT 	 result, format, x	Embed the number x into a string using the specified format. The format used by this command is closely related to the C/C++ printf function format, and has no relation to the format used by the commands PRINTF or SPRINTF	String manipulation
-STR.GETC 	 result, x, index	Get character at index of x	String manipulation
-STR.HAS 	 result, x, y	Search x for substring y and store 1 if any occurrence found, 0 otherwise	String manipulation
-STR.JOIN 	 array, x, delimiter	Join array of strings into a single string in x	String manipulation
-STR.LCASE 	 result, x	Convert string x to lowercase	String manipulation
-STR.LEN 	 result, x	Get length of x	String manipulation
-STR.PFX 	 result, x, prefix	Get 1 if x starts with prefix, 0 otherwise	String manipulation
-STR.REPL 	 result, x, y, z	Search x for all occurrences of substring y and replace them with z	String manipulation
-STR.REPT 	 result, x, count	Repeat string x for specified number of times	String manipulation
-STR.SETC 	 result, x, index, y	Set character y at index of x	String manipulation
-STR.SFX 	 result, x, suffix	Get 1 if x ends with suffix, 0 otherwise	String manipulation
-STR.SPLIT 	 array, x, delimiter	Split string x into an array of strings	String manipulation
-STR.SUB 	 result, x, first_index, last_index	Get substring from x starting from first_index until last_index (inclusive)	String manipulation
-STR.TRIM 	 result, x	Remove leading and trailing spaces from x	String manipulation
-STR.UCASE 	 result, x	Convert string x to uppercase	String manipulation
-BCOL 	 bgc_pal_ix	Set background color for subsequently printed text	Text printing
-COLOR 	 fgc_pal_ix, bgc_pal_ix?	Set colors for subsequently printed text	Text printing
-FCOL 	 fgc_pal_ix	Set foreground color for subsequently printed text	Text printing
-PRINT 	 text	Print text starting at current cursor position in the selected tilebuffer. This will override the existing tiles at the same character positions	Text printing
-PRINTL 	 text	Almost the same as PRINT, but automatically append a "\n" (newline character) at the end of the text	Text printing
-PRINT.ADD 	 text	Print text starting at current cursor position in the selected tilebuffer. This will add new frames on top of the existing tiles at the same character positions (useful for e.g. blinking or animated text)	Text printing
-PRINTF 	 format	Almost the same as PRINT, but will interpret escape characters delimited by curly brackets: {} {f…} change text foreground color {/f} revert text foreground to previous color {b…} change text background color {/b} revert text background to previous color {c…} output tile with specified tileset index {%x} output value stored in variable x {%x[ix]} output value stored in array x at index ix	Text printing
-PUTC 	 tileset_ix	Print character at current cursor position in the selected tilebuffer	Text printing
-TXT.BGOFF 		Disable rendering text background	Text printing
-TXT.BGON 		Enable rendering text background	Text printing
-TILE.ADD 	 tileset_ix, fgc_pal_ix, bgc_pal_ix?	Add an animation frame to the TILE register with the specified tileset index and colors. If bgc_pal_ix is not specified, then the background color for this tile will not be rendered	TILE register
-TILE.COLOR 	 frame_ix, fgc_pal_ix, bgc_pal_ix	Change palette references for both colors at specified frame in the TILE register	TILE register
-TILE.GETB 	 frame_ix, x	Store in x the palette reference for background color at a frame in the TILE register	TILE register
-TILE.GETC 	 frame_ix, x	Store in x the tileset reference at a frame in the TILE register	TILE register
-TILE.GETF 	 frame_ix, x	Store in x the palette reference for foreground color at a frame in the TILE register	TILE register
-TILE.GETP 	 name, x	Store in x the value of a property in the TILE register	TILE register
-TILE.LEN 	 x	Store in x the number of animation frames in the TILE register	TILE register
-TILE.LOAD 	 id	Load TILE register from memory with id	TILE register
-TILE.NEW 	 tileset_ix?, fgc_pal_ix?, bgc_pal_ix?	Remove all tiles from TILE register. If arguments are given, add a single animation frame with the specified tileset index and colors. If bgc_pal_ix is not specified, then the background color for this tile will not be rendered	TILE register
-TILE.PARSE 	 string	Parse the specified string as data into the TILE register. Format: "tileset_index,fgc_palette_index,bgc_palette_index;..."	TILE register
-TILE.SETB 	 frame_ix, bgc_pal_ix	Change palette reference for background color at specified frame in the TILE register	TILE register
-TILE.SETC 	 frame_ix, tileset_ix	Change tileset reference at specified frame in the TILE register	TILE register
-TILE.SETF 	 frame_ix, fgc_pal_ix	Change palette reference for foreground color at specified frame in the TILE register	TILE register
-TILE.SETP 	 name, value	Set value for a property in the TILE register	TILE register
-TILE.STORE 	 id	Store TILE register into memory and assign id	TILE register
-TILE.STR 	 x	Store in x a string representing the TILE register (uses the same format as TILE.PARSE)	TILE register
-COPY 	 x1, y1, x2, y2	Copy to internal clipboard all tiles within specified rectangle from selected tilebuffer layer	Tile-tilebuffer operations
-CUT 	 x1, y1, x2, y2	Copy to internal clipboard all tiles within specified rectangle from selected tilebuffer layer, then delete them	Tile-tilebuffer operations
-DEL 		Delete tile from selected tilebuffer at current cursor position	Tile-tilebuffer operations
-DELR 	 x1, y1, x2, y2	Delete all tiles within specified rectangle from selected tilebuffer layer	Tile-tilebuffer operations
-FILL 		Fill entire selected tilebuffer layer with TILE register	Tile-tilebuffer operations
-GET 		Make TILE register equal to tile in selected tilebuffer at current cursor position	Tile-tilebuffer operations
-MOV 	 x, y, dx, dy	Move tile in selected tilebuffer, from specified position to specified distance	Tile-tilebuffer operations
-MOVB 	 x1, y1, x2, y2, dx, dy	Move block of tiles in selected tilebuffer, from specified rectangle area to specified distance	Tile-tilebuffer operations
-PASTE 		Paste all tiles from internal clipboard into selected tilebuffer layer starting at current cursor position	Tile-tilebuffer operations
-PUT 		Put TILE register in selected tilebuffer at current cursor position	Tile-tilebuffer operations
-RECT 	 x1, y1, x2, y2	Fill rectangle in selected tilebuffer layer with TILE register	Tile-tilebuffer operations
-CSR.GETX 	 var	Store in var the x coordinate of cursor	Tilebuffer cursor
-CSR.GETY 	 var	Store in var the y coordinate of cursor	Tilebuffer cursor
-CSR.X 	 x	Set x coordinate of cursor	Tilebuffer cursor
-CSR.Y 	 y	Set y coordinate of cursor	Tilebuffer cursor
-LAYER 	 index	Set cursor at layer index of the currently selected tilebuffer	Tilebuffer cursor
-LOCATE 	 x, y	Set cursor at specified column and row in the currently selected tilebuffer	Tilebuffer cursor
-BUF.BCOL 	 id, bgc_pal_ix	Enable rendering tilebuffer background and set the background color	Tilebuffer manipulation
-BUF.BGOFF 	 id	Disable rendering tilebuffer background	Tilebuffer manipulation
-BUF.CLL 	 id, layer	Delete all tiles from layer in the tilebuffer. This will also reset the tilebuffer cursor to the top-left corner of the current buffer layer (X0 Y0)	Tilebuffer manipulation
-BUF.CLS 	 id	Delete all tiles from all layers in specified tilebuffer. This will also reset the tilebuffer cursor to the top-left corner of the current buffer layer (X0 Y0)	Tilebuffer manipulation
-BUF.COLS 	 id, x	Store in x the number of columns (width in tile units) in the tilebuffer	Tilebuffer manipulation
-BUF.HIDE 	 id	Hide a tilebuffer	Tilebuffer manipulation
-BUF.NEW 	 id, layers, columns, rows, order	Create a new tilebuffer (columns and rows are in tile units). Order 0 is reserved for the default buffer. Higher order buffers are drawn on top of lower order buffers	Tilebuffer manipulation
-BUF.ROWS 	 id, x	Store in x the number of rows (height in tile units) in the tilebuffer	Tilebuffer manipulation
-BUF.SCRL 	 id, dx, dy	Smoothly scroll tilebuffer viewport contents by the specified distance (in pixels)	Tilebuffer manipulation
-BUF.SEL 	 id	Select tilebuffer that will be used for all subsequent tile operations	Tilebuffer manipulation
-BUF.SHOW 	 id	Show a tilebuffer	Tilebuffer manipulation
-BUF.TOGL 	 id	If tilebuffer is visible, hide it; if it's hidden, show it	Tilebuffer manipulation
-BUF.VIEW 	 id, x1, y1, x2, y2	Set tilebuffer viewport rectangle on the screen	Tilebuffer manipulation
-CLS 		Delete all tiles from all tilebuffers. This will also reset the tilebuffer cursor to the top-left corner of the current buffer layer (X0 Y0)	Tilebuffer manipulation
-CHR 	 index, binary	Define pixel pattern (binary string) at tileset index. A binary string is just a string containing 64 characters, each character being either 0 or 1. 0 means pixel represents the background; 1 means pixel represents the foreground	Tileset manipulation
-CHR 	 index, constant, binary	Variant of CHR command, but with an additional parameter being a constant identifier that will be created and to which the index will be assigned	Tileset manipulation
-CHR.ADD 	 x	Add x blank tiles to the tileset (total max. must not exceed 65536)	Tileset manipulation
-CHR.GET 	 index, x	Store in x the pixel pattern (binary string) at tileset index	Tileset manipulation
-CHR.LEN 	 x	Store in x the size of tileset	Tileset manipulation
-CHR.NEW 	 tile_count	Initialize tileset (tile_count min. 256; max. 65536)	Tileset manipulation
-CHR.SAVE 	 file	Save tileset to text file	Tileset manipulation
-CHR.LOAD 	 file	Load tileset from text file	Tileset manipulation
-CHR.ILOAD 	 file, fgc_rgb, bgc_rgb	Load tileset from image file. Both the image width and height must be multiples of 8. Fgc_rgb is the color in the image that will be converted to pixel code 1 (foreground color). Bgc_rgb is the color in the image that will be converted to pixel code 0 (background color)	Tileset manipulation
-ARR.CLR 	 name	Remove all items from array. This also reduces the size of the array to 0	Variables, arrays and constants
-ARR.COPY 	 source, destination	Make destination array equal to source array	Variables, arrays and constants
-ARR.ERASE 	 name, index	Remove array item from index. This also reduces the size of the array by 1	Variables, arrays and constants
-ARR.FOR 	 name, x	Begin a code block that will execute repeatedly for each item in the array. Current value will be assigned to x and will begin with the first array item. Code block ends with the NEXT command	Variables, arrays and constants
-ARR.LEN 	 name, x	Store in x the length of the array	Variables, arrays and constants
-ARR.NEW 	 name, size?	Create a new array (with optional initial size)	Variables, arrays and constants
-ARR.PUSH 	 name, value	Add new value to end of array	Variables, arrays and constants
-ARR.SET 	 name[index], x	Store x at array index	Variables, arrays and constants
-DEF 	 name, value	Define a constant	Variables, arrays and constants
-VAR 	 name, value	Set value for a new or existing variable	Variables, arrays and constants
+SPRINTF 	 x, format	Almost the same as PRINTF, but will store the result in x instead of printing to the screen	String handling
+STR.CAT 	 result, x, y	Concatenate strings x and y	String handling
+STR.FIND 	 result, x, y, begin?	Search x for substring y and store index of first occurrence starting from index (or from 0 if begin is omitted)	String handling
+STR.FMT 	 result, format, x	Embed the number x into a string using the specified format. The format used by this command is closely related to the C/C++ printf function format, and has no relation to the format used by the commands PRINTF or SPRINTF	String handling
+STR.GETC 	 result, x, index	Get character at index of x	String handling
+STR.HAS 	 result, x, y	Search x for substring y and store 1 if any occurrence found, 0 otherwise	String handling
+STR.JOIN 	 array, x, delimiter	Join array of strings into a single string in x	String handling
+STR.LCASE 	 result, x	Convert string x to lowercase	String handling
+STR.LEN 	 result, x	Get length of x	String handling
+STR.PFX 	 result, x, prefix	Get 1 if x starts with prefix, 0 otherwise	String handling
+STR.REPL 	 result, x, y, z	Search x for all occurrences of substring y and replace them with z	String handling
+STR.REPT 	 result, x, count	Repeat string x for specified number of times	String handling
+STR.SETC 	 result, x, index, y	Set character y at index of x	String handling
+STR.SFX 	 result, x, suffix	Get 1 if x ends with suffix, 0 otherwise	String handling
+STR.SPLIT 	 array, x, delimiter	Split string x into an array of strings	String handling
+STR.SUB 	 result, x, first_index, last_index	Get substring from x starting from first_index until last_index (inclusive)	String handling
+STR.TRIM 	 result, x	Remove leading and trailing spaces from x	String handling
+STR.UCASE 	 result, x	Convert string x to uppercase	String handling
+CLIP.GET 	 x	Get string from the Windows clipboard and store into x	System - Clipboard
+CLIP.SET 	 x	Copy string x to the Windows clipboard	System - Clipboard
+DATE 	 x	Store in x the current system date in the format: YYYY-MM-DD	System - Date and time
+TIME 	 x	Store in x the current system time in the format: HH:MM:SS	System - Date and time

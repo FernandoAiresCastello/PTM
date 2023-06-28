@@ -30,6 +30,9 @@ t_doc docgen_parse_file()
 		auto parts = String::Split(line, "\t", true);
 		t_doc_entry entry;
 		entry.cmd = parts[0];
+		if (String::Trim(String::ToLower(entry.cmd)) == "command") {
+			continue;
+		}
 		entry.params = parts[1];
 		entry.description = parts[2];
 		entry.category = parts[3];
@@ -86,7 +89,49 @@ void docgen_make_complete_reference(t_html& html, t_doc& doc)
 		html.println("</table>");
 	}
 }
-void docgen_make_table_of_contents(t_html& html, t_doc& doc)
+void docgen_make_table_of_contents_categorized(t_html& html, t_doc& doc)
+{
+	html.println("<div class='index-container'>");
+	html.println("<div class='index-title'>PTML Command Reference</div>");
+	html.println("<table class='index'>");
+
+	map<string, vector<t_doc_entry>> categorized_entries;
+	for (auto& entry : doc.entries) {
+		if (categorized_entries.find(entry.category) == categorized_entries.end()) {
+			categorized_entries[entry.category] = vector<t_doc_entry>();
+		}
+	}
+	for (auto& entry : doc.entries) {
+		categorized_entries[entry.category].push_back(entry);
+	}
+	for (auto& categories : categorized_entries) {
+		int col = 0;
+		int max_cols = 7;
+		string category = categories.first;
+		vector<t_doc_entry>& entries = categories.second;
+		html.println("<tr>");
+		html.println(String::Format("<td class='index-category' colspan=%i>%s</td>", max_cols, category.c_str()));
+		html.println("</tr>");
+		for (auto& entry : entries) {
+			string cmd = entry.cmd;
+			if (col == 0) {
+				html.println("<tr>");
+			}
+			html.println("<td class='index-cmd'>");
+			html.println("<a href='#" + cmd + "'>" + cmd + "</a>");
+			html.println("</td>");
+			col++;
+			if (col == max_cols) {
+				html.println("</tr>");
+				col = 0;
+			}
+		}
+	}
+
+	html.println("</table>");
+	html.println("</div>");
+}
+void docgen_make_table_of_contents_simple(t_html& html, t_doc& doc)
 {
 	html.println("<div class='index-container'>");
 	html.println("<div class='index-title'>PTML Command Reference</div>");
@@ -119,7 +164,7 @@ void docgen_main()
 	t_doc doc = docgen_parse_file();
 	
 	docgen_begin_html(html);
-	docgen_make_table_of_contents(html, doc);
+	docgen_make_table_of_contents_categorized(html, doc);
 	docgen_make_complete_reference(html, doc);
 	docgen_end_html(html);
 

@@ -14,7 +14,7 @@ div.title h1 {
 	margin: 0;
 }
 div.index-container {
-	margin-bottom: 20px;
+	margin-bottom: 50px;
 }
 div.index-container div.index-title {
 	font-size: 18px;
@@ -26,7 +26,9 @@ table.index {
     width: 100%;
     margin: auto;
 	border-collapse: collapse;
+	border: 1px solid #c0c0c0;
 }
+/*
 table.index td {
 	text-align: left;
 	font-weight: bold;
@@ -35,8 +37,17 @@ table.index td {
 	border-right: 1px solid #d0d0d0;
     border-left: 1px solid #d0d0d0;
 }
-table.index td:hover {
-	background: linear-gradient(0deg, rgb(255 255 255) 0%, #d5d5d5 100%);
+*/
+table.index td {
+	font-weight: bold;
+	border: 1px solid #c0c0c0;
+	padding-left: 10px;
+}
+table.index td.index-category {
+	background: #e4e4e4;
+	color: #808080;
+	font-weight: normal;
+	font-style: italic;
 }
 table.index a {
 	text-decoration: none;

@@ -896,7 +896,12 @@ void ptm_init_commands()
 	CMD("PRINTF") {
 		ARGC(1);
 		string fmt = ARG_VAR_STR(0);
-		ptm_print_formatted_tile_string(fmt);
+		ptm_print_formatted_tile_string(fmt, false);
+	};
+	CMD("PRINTF.ADD") {
+		ARGC(1);
+		string fmt = ARG_VAR_STR(0);
+		ptm_print_formatted_tile_string(fmt, true);
 	};
 	CMD("SPRINTF") {
 		ARGC(2);
@@ -908,17 +913,12 @@ void ptm_init_commands()
 	CMD("PUTC") {
 		ARGC(1);
 		int ch = ARG_VAR_NUM(0);
-		ptm_print_tile_char(ch);
+		ptm_print_tile_char(ch, false);
 	};
-	CMD("FCOL") {
+	CMD("PUTC.ADD") {
 		ARGC(1);
-		int fgc = ARG_VAR_NUM(0);
-		scr.text_style.fgc = fgc;
-	};
-	CMD("BCOL") {
-		ARGC(1);
-		int bgc = ARG_VAR_NUM(0);
-		scr.text_style.bgc = bgc;
+		int ch = ARG_VAR_NUM(0);
+		ptm_print_tile_char(ch, true);
 	};
 	CMD("COLOR") {
 		ARGC_MIN_MAX(1, 2);
@@ -932,6 +932,16 @@ void ptm_init_commands()
 			scr.text_style.fgc = fgc;
 			scr.text_style.bgc = bgc;
 		}
+	};
+	CMD("COLOR.F") {
+		ARGC(1);
+		int fgc = ARG_VAR_NUM(0);
+		scr.text_style.fgc = fgc;
+	};
+	CMD("COLOR.B") {
+		ARGC(1);
+		int bgc = ARG_VAR_NUM(0);
+		scr.text_style.bgc = bgc;
 	};
 	CMD("TXT.BGON") {
 		ARGC(0);
@@ -1436,6 +1446,7 @@ void ptm_init_commands()
 		string value = ptm_text_input(max_length);
 		ptm_set_var(var, value);
 	};
+	/*
 	CMD("ENCRYPT") {
 		ARGC(3);
 		string var = ARG_LIT_ID(0);
@@ -1458,6 +1469,7 @@ void ptm_init_commands()
 		string result = Util::XorDecrypt(str, key);
 		ptm_set_var(var, result);
 	};
+	*/
 	CMD("CLIP.SET") {
 		ARGC(1);
 		string str = ARG_VAR_STR(0);

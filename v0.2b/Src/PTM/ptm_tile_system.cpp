@@ -659,15 +659,27 @@ void ptm_print_tile_string(string str, int fgc, int bgc, bool add_frames)
 
 	tilebuf_csr.set(x, y);
 }
-void ptm_print_tile_char(int ch)
+void ptm_print_tile_char(int ch, bool add_frame)
 {
 	if (scr.text_style.transparent) {
-		ptm_get_selected_tilebuf_layer()
-			.put(tilebuf_csr.x, tilebuf_csr.y, ch, scr.text_style.fgc);
+		if (add_frame) {
+			ptm_get_selected_tilebuf_layer()
+				.add(tilebuf_csr.x, tilebuf_csr.y, ch, scr.text_style.fgc);
+		}
+		else {
+			ptm_get_selected_tilebuf_layer()
+				.put(tilebuf_csr.x, tilebuf_csr.y, ch, scr.text_style.fgc);
+		}
 	}
 	else {
-		ptm_get_selected_tilebuf_layer()
-			.put(tilebuf_csr.x, tilebuf_csr.y, ch, scr.text_style.fgc, scr.text_style.bgc);
+		if (add_frame) {
+			ptm_get_selected_tilebuf_layer()
+				.add(tilebuf_csr.x, tilebuf_csr.y, ch, scr.text_style.fgc, scr.text_style.bgc);
+		}
+		else {
+			ptm_get_selected_tilebuf_layer()
+				.put(tilebuf_csr.x, tilebuf_csr.y, ch, scr.text_style.fgc, scr.text_style.bgc);
+		}
 	}
 	tilebuf_csr.x++;
 }
@@ -699,7 +711,9 @@ string ptm_text_input(int maxlen)
 		tilebuf_csr.x = initial_x;
 		ptm_print_tile_string(blanks, false);
 		tilebuf_csr.x = initial_x;
-		ptm_print_tile_string(text + "_", false);
+		ptm_print_tile_string(text + " ", false);
+		tilebuf_csr.x--;
+		ptm_print_tile_char(127, true);
 
 		ptm_refresh_window();
 
@@ -749,7 +763,7 @@ string ptm_text_input(int maxlen)
 
 	last_key = 0; // Clear last key, so as not to interfere with the kb_inkey function
 	t_tilebuf_layer& buf = ptm_get_selected_tilebuf_layer();
-	buf.del(tilebuf_csr.x - 1, tilebuf_csr.y); // Delete cursor character
+	buf.put(tilebuf_csr.x - 1, tilebuf_csr.y, 0, scr.text_style.fgc, scr.text_style.bgc); // Delete cursor character
 	tilebuf_csr.x = initial_x;
 
 	return text;
@@ -758,7 +772,7 @@ bool ptm_text_input_ok()
 {
 	return !text_input_cancelled;
 }
-void ptm_print_formatted_tile_string(string fmt)
+void ptm_print_formatted_tile_string(string fmt, bool add_frames)
 {
 	t_tilebuf_layer& layer = ptm_get_selected_tilebuf_layer();
 	int initial_x = tilebuf_csr.x;
@@ -815,7 +829,7 @@ void ptm_print_formatted_tile_string(string fmt)
 								}
 								if (ix >= 0 && ix < intp->arrays[arr_id].size()) {
 									string str = intp->arrays[arr_id].at(ix);
-									ptm_print_tile_char(String::ToInt(str));
+									ptm_print_tile_char(String::ToInt(str), add_frames);
 								}
 								else {
 									intp->abort(String::Format("Array index out of bounds: %s[%i]", arr_id.c_str(), ix));
@@ -831,7 +845,12 @@ void ptm_print_formatted_tile_string(string fmt)
 						if (intp->vars.find(var) != intp->vars.end()) {
 							ch = String::ToInt(intp->vars[var].value);
 							auto tile = t_tileseq(ch, fgc, bgc);
-							layer.put(tilebuf_csr.x, tilebuf_csr.y, tile);
+
+							if (add_frames)
+								layer.add(tilebuf_csr.x, tilebuf_csr.y, tile.frames[0]);
+							else
+								layer.put(tilebuf_csr.x, tilebuf_csr.y, tile);
+
 							tilebuf_csr.x++;
 						}
 						else {
@@ -843,7 +862,12 @@ void ptm_print_formatted_tile_string(string fmt)
 				else {
 					ch = String::ToInt(String::Skip(String::Replace(upper_escape_seq, "&H", "0x"), 1));
 					auto tile = scr.text_style.transparent ? t_tileseq(ch, fgc) : t_tileseq(ch, fgc, bgc);
-					layer.put(tilebuf_csr.x, tilebuf_csr.y, tile);
+
+					if (add_frames)
+						layer.add(tilebuf_csr.x, tilebuf_csr.y, tile.frames[0]);
+					else
+						layer.put(tilebuf_csr.x, tilebuf_csr.y, tile);
+
 					tilebuf_csr.x++;
 				}
 				escape_seq = "";
@@ -994,7 +1018,7 @@ void ptm_print_formatted_tile_string(string fmt)
 							}
 							if (ix >= 0 && ix < intp->arrays[arr_id].size()) {
 								string str = intp->arrays[arr_id].at(ix);
-								ptm_print_tile_string(str, fgc, bgc, false);
+								ptm_print_tile_string(str, fgc, bgc, add_frames);
 							}
 							else {
 								intp->abort(String::Format("Array index out of bounds: %s[%i]", arr_id.c_str(), ix));
@@ -1008,7 +1032,7 @@ void ptm_print_formatted_tile_string(string fmt)
 				// {%} EMBED VARIABLE
 				else {
 					if (intp->vars.find(var) != intp->vars.end()) {
-						ptm_print_tile_string(intp->vars[var].value, fgc, bgc, false);
+						ptm_print_tile_string(intp->vars[var].value, fgc, bgc, add_frames);
 					}
 					else {
 						intp->abort("Variable not found: " + var);
@@ -1031,7 +1055,12 @@ void ptm_print_formatted_tile_string(string fmt)
 		// NOT AN ESCAPE SEQUENCE. JUST OUTPUT THE CHARACTER
 		else {
 			auto tile = scr.text_style.transparent ? t_tileseq(ch, fgc) : t_tileseq(ch, fgc, bgc);
-			layer.put(tilebuf_csr.x, tilebuf_csr.y, tile);
+			
+			if (add_frames)
+				layer.add(tilebuf_csr.x, tilebuf_csr.y, tile.frames[0]);
+			else
+				layer.put(tilebuf_csr.x, tilebuf_csr.y, tile);
+
 			tilebuf_csr.x++;
 			escape_seq = "";
 		}
