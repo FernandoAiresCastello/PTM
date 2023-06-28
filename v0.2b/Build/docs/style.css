@@ -4,7 +4,7 @@ body {
 }
 div.content {
 	margin: 0 auto;
-    width: 70%;
+    width: 60%;
 }
 div.title {
 	text-align: center;
@@ -26,7 +26,8 @@ table.index, table.index td {
 	border: 1px solid #d0d0d0;
 }
 table.index {
-	width: 100%;
+    width: 60%;
+    margin: auto;
 	border-collapse: collapse;
 }
 table.index td {
@@ -52,7 +53,7 @@ table.entry {
 	border: 2px solid #222;
 	width: 100%;
 	border-collapse: collapse;
-	margin-bottom: 20px;
+	margin: 20px auto;
 	font-size: 18px;
 	box-shadow: 2px 2px 5px rgba(.5,.5,.5,.5);
 }

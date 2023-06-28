@@ -93,7 +93,7 @@ void docgen_make_table_of_contents(t_html& html, t_doc& doc)
 	html.println("<table class='index'>");
 
 	int col = 0;
-	int max_cols = 10;
+	int max_cols = 7;
 
 	for (auto& entry : doc.entries) {
 		string cmd = entry.cmd;
