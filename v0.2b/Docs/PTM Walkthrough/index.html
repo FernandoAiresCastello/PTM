@@ -16,8 +16,9 @@
 <div class="index">
     <ul>
         <li><a href="#introduction">Introduction</a></li>
-        <li><a href="#ptm">PTM - Programmable Tile Machine</a></li>
-        <li><a href="#ptml">PTML - Programmable Tile Machine Language</a></li>
+        <li><a href="#ptm">The machine (PTM)</a></li>
+        <li><a href="#boot">PTM boot process</a></li>
+        <li><a href="#ptml">The language (PTML)</a></li>
         <li><a href="#syntax">PTML Syntax</a></li>
     </ul>
 </div>
@@ -30,16 +31,16 @@
 <p>In this document, I'd like to guide you through the process of working with the Programmable Tile Machine, or as I like to call it for short, the PTM.</p>
 
 <!-- PTM -->
-<div class="section" id="ptm">PTM - Programmable Tile Machine</div>
+<div class="section" id="ptm">The machine (PTM)</div>
 
 <p>
-    Ok so to start off, what is this thing? Technically speaking, The Programmable Tile Machine, or PTM as I will refer to it for the remainder of this document, is a "fantasy computer" that you can program using an interpreted using a built-in programming language called PTML. It attempts to be similar in look-and-feel to some early 8-bit computer systems such as the MSX, ZX Spectrum and Atari 800. Also inspired by the modern game engines Bitsy and PICO-8.
+    Ok so to start off, what is this thing? The Programmable Tile Machine, or PTM as I will refer to it for the remainder of this document, is a "fantasy computer" that you can program using an interpreted using a built-in programming language called PTML. It attempts to be similar in look-and-feel to some early 8-bit computer systems such as the MSX, ZX Spectrum and Atari 800. Also inspired by the modern game engines Bitsy and PICO-8.
 </p>
 <p>
     By "fantasy computer" I mean it's obviously not a true computer, it's just a regular Windows program. At its core it's an emulator for a computer that does not actually exist. If you're into the fantasy computer scene you probably know about Bitsy and PICO-8, two of the most popular fantasy consoles as of 2023. Well, the PTM is something like that, it allows you to develop games for a platform that does not exist physically.
 </p>
 <p>
-    So... what sets the PTM apart? Why and who needs another fantasy console? From the perspective of the developer, the PTM is merely an interpreter. All it does is take a program written in PTML (the specific language understood by the PTM) from a plain-text file and interpret the commands one by one, executing them as it goes. There is no built-in IDE, no editors. You just write the code and the PTM runs it. That's basically it. It doesn't really hold your hand except for the useful error messages when your code would do something that could "break" the program. It doesn't get in the way. You can structure your program in whichever way you like, all it requires is that you follow the proper PTML syntax which is extremely simple.
+    So... what sets the PTM apart? Why and who needs another fantasy console? From the perspective of the developer, the PTM is merely an interpreter. All it does is take a program written in PTML (the specific language understood by the PTM) from a plain-text file and interpret the commands one by one, executing them as it goes. There is no built-in IDE, no editors. You just write the code and the PTM runs it. That's basically it. It doesn't really hold your hand except for displaying useful error messages when your code would do something that could "break" the machine (i.e. crash or freeze the PTM.exe application process in Windows). It doesn't get in the way. You can structure your program in whichever way you like, all it requires is that you follow the proper PTML syntax which is extremely simple.
 </p>
 <p>
     In short, the PTM is heavily code-centric. Its focus is the code. How you make graphics, sounds, or anything else really is up to you. As such, it's not particularly beginnner-friendly. If you're just starting with game development, it's most likely not the best option. The PTM is mostly aimed at seasoned programmers who have some experience with programming, who like and know how to make things work by just writing code as opposed to using drag-and-drop interfaces, IDEs and other GUI tools. To develop for the PTM you just need a plain-text editor and knowledge of PTML. It's both spartan and barebones. It's almost like programming in some ancient assembler language but without the compiling and linking. If you know PTML and how the PTM works, you don't need anything else to develop games for it.
@@ -48,8 +49,20 @@
     From the perspective of the "end-user", that is, the person playing the game written for the PTM, it may look and feel just like an early 8-bit computer emulator. It has tile-based graphics, it has keyboard input, it can reproduce sound. In fact, the PTM was heavily inspired by a few popular early 8-bit computers like the ZX Spectrum and the MSX.
 </p>
 
+<!-- BOOT -->
+<div class="section" id="boot">PTM boot process</div>
+
+<p>The PTM.exe file is the machine executable, which also contains the PTML interpreter. To run any PTML program, you need to provide the PTML source code file to PTM.exe. PTML source code files are plain-text files that end with the extension .ptm. There are two ways to run a program:</p>
+<ol>
+    <li>You can either drag and drop the *.ptm file onto the PTM.exe file.</li>
+    <li>Or you can pass the path to a *.ptm file to the PTM.exe file via the command line. The path of the *.ptm file needs to be relative to the location of the PTM.exe file.</li>
+</ol>
+
+<p>If you simply double-click PTM.exe without specifying the path of any PTML program file, it will look for a “main.ptm” file in the same directory and run it. If it doesn't find one, an error will appear. A default main.ptm file is usually included in the release package.</p>
+<p>As of version 0.2b, the default main.ptm file includes an utility program called “PTM Launcher” that shows an interactive menu where you can browse and launch an existing program without having to manually provide the .ptm file to the machine executable.</p>
+
 <!-- PTML -->
-<div class="section" id="ptml">PTML - The Programmable Tile Machine Language</div>
+<div class="section" id="ptml">The language (PTML)</div>
 
 <p>
     PTML is the language understood by the PTM. PTML is an interpreted, imperative, semi-structured, loosely typed, low-level programming language, with only two data types: strings and integers (with support for dynamic arrays of those types). All you need for programming in it is a plain-text editor like Notepad. The syntax looks like some early dialects of BASIC and some common assembly languages for 8-bit computers. Familiarity with any of those will probably make it easier to work with PTML, but the language itself is fairly straightforward.
@@ -77,6 +90,15 @@
 </p>
 <p>
     Every line in a PTML source code is internally divided into two fields: command and list of arguments. The command is separated from its list of arguments by a space or tab character. The list of arguments may contain a single argument, or multiple arguments, in which case each individual argument must be separated from the next by a comma character (,).
+</p>
+<p>
+    The following pseudocode snippet shows how PTML lines are generally "seen" by the interpreter:
+    <div class="code">
+        COMMAND
+        COMMAND argument_1
+        COMMAND argument_1, argument_2
+        COMMAND argument_1, argument_2, argument_3
+    </div>
 </p>
 <p>
     The interpreter ignores blank or empty lines.
@@ -158,6 +180,10 @@
             GOTO infinite_loop_label
     </div>
     There are several commands which "jump" unconditionally or conditionally to code starting from labels, and from where the execution flow may or may not later continue from the original location, depending on the specific command used.
+</p>
+<div class="subsection">Scope</div>
+<p>
+    In short, there are no scoping rules. All identifiers in PTML have global scope. All variables, constants, arrays and other runtime data is global. Any variable, constant, array, label, or any other identifier is fully visible and accessible anywhere in the entire program. For large programs this requires a great deal of coding discipline when naming identifiers. The overall structure of the program and its data is left entirely up to the programmer.
 </p>
 <div class="subsection">... And that's it</div>
 <p>
