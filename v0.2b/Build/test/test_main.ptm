@@ -1,0 +1,4 @@
+        ARR.NEW example_array
+        ARR.PUSH example_array, "first element"
+        VAR first_element_of_array, example_array[0]
+        PRINT first_element_of_array

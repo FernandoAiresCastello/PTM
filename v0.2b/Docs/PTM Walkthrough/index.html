@@ -1,0 +1,169 @@
+<html>
+<head>
+    <title>PTM Walkthrough</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="content">
+
+<div class="title">
+    <h1>PTM Walkthrough (v0.2b)</h1>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="section" id="contents">Table Of Contents</div>
+
+<div class="index">
+    <ul>
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#ptm">PTM - Programmable Tile Machine</a></li>
+        <li><a href="#ptml">PTML - Programmable Tile Machine Language</a></li>
+        <li><a href="#syntax">PTML Syntax</a></li>
+    </ul>
+</div>
+
+<!-- INTRODUCTION -->
+<div class="section" id="introduction">Introduction</div>
+
+<p>Hello! Welcome to the PTM walkthrough!</p>
+<p>This document specifically refers to version 0.2b. It may not apply to any previous or future versions.</p>
+<p>In this document, I'd like to guide you through the process of working with the Programmable Tile Machine, or as I like to call it for short, the PTM.</p>
+
+<!-- PTM -->
+<div class="section" id="ptm">PTM - Programmable Tile Machine</div>
+
+<p>
+    Ok so to start off, what is this thing? Technically speaking, The Programmable Tile Machine, or PTM as I will refer to it for the remainder of this document, is a "fantasy computer" that you can program using an interpreted using a built-in programming language called PTML. It attempts to be similar in look-and-feel to some early 8-bit computer systems such as the MSX, ZX Spectrum and Atari 800. Also inspired by the modern game engines Bitsy and PICO-8.
+</p>
+<p>
+    By "fantasy computer" I mean it's obviously not a true computer, it's just a regular Windows program. At its core it's an emulator for a computer that does not actually exist. If you're into the fantasy computer scene you probably know about Bitsy and PICO-8, two of the most popular fantasy consoles as of 2023. Well, the PTM is something like that, it allows you to develop games for a platform that does not exist physically.
+</p>
+<p>
+    So... what sets the PTM apart? Why and who needs another fantasy console? From the perspective of the developer, the PTM is merely an interpreter. All it does is take a program written in PTML (the specific language understood by the PTM) from a plain-text file and interpret the commands one by one, executing them as it goes. There is no built-in IDE, no editors. You just write the code and the PTM runs it. That's basically it. It doesn't really hold your hand except for the useful error messages when your code would do something that could "break" the program. It doesn't get in the way. You can structure your program in whichever way you like, all it requires is that you follow the proper PTML syntax which is extremely simple.
+</p>
+<p>
+    In short, the PTM is heavily code-centric. Its focus is the code. How you make graphics, sounds, or anything else really is up to you. As such, it's not particularly beginnner-friendly. If you're just starting with game development, it's most likely not the best option. The PTM is mostly aimed at seasoned programmers who have some experience with programming, who like and know how to make things work by just writing code as opposed to using drag-and-drop interfaces, IDEs and other GUI tools. To develop for the PTM you just need a plain-text editor and knowledge of PTML. It's both spartan and barebones. It's almost like programming in some ancient assembler language but without the compiling and linking. If you know PTML and how the PTM works, you don't need anything else to develop games for it.
+</p>
+<p>
+    From the perspective of the "end-user", that is, the person playing the game written for the PTM, it may look and feel just like an early 8-bit computer emulator. It has tile-based graphics, it has keyboard input, it can reproduce sound. In fact, the PTM was heavily inspired by a few popular early 8-bit computers like the ZX Spectrum and the MSX.
+</p>
+
+<!-- PTML -->
+<div class="section" id="ptml">PTML - The Programmable Tile Machine Language</div>
+
+<p>
+    PTML is the language understood by the PTM. PTML is an interpreted, imperative, semi-structured, loosely typed, low-level programming language, with only two data types: strings and integers (with support for dynamic arrays of those types). All you need for programming in it is a plain-text editor like Notepad. The syntax looks like some early dialects of BASIC and some common assembly languages for 8-bit computers. Familiarity with any of those will probably make it easier to work with PTML, but the language itself is fairly straightforward.
+</p>
+<p>
+    PTML commands are inspired by BASIC, which is a programming language that was prevalent among home computers in the early 80's and which was famous for its simplicity and beginner-friendliness when compared to assembly or C. Both the ZX Spectrum and MSX had a built-in BASIC interpreter that would start as soon as the machine would boot up.
+</p>
+<p>
+    Despite being somewhat inspired by BASIC, PTML is a much simpler language when you consider its syntax. I dare say it's more closely related to assembly languages than to BASIC. The PTML syntax actually bears little resemblance to BASIC. It does not support complex expression evaluation. That is, you can't write code like "x = x + 1" in a PTML program as you would in BASIC. You can however write "INC x", which will have the exact same result, but is heavily reminescent of Z80 assembly language rather than BASIC.
+</p>
+
+<!-- PTML SYNTAX -->
+<div class="section" id="syntax">PTML Syntax</div>
+
+<p>
+    As discussed in the previous section, PTML can resemble the BASIC language when you look at some of the command names, but don't be fooled. The syntax is much more closely related to Z80 assembly language. In this section you will learn all the syntactic rules that make for a well-formed PTML program.
+</p>
+<div class="subsection">Case-sensitivity</div>
+<p>
+    The PTML interpreter is case-insensitive when reading the command names, but it is case-sensitive when reading identifiers. That means for example, in your source code, the commands VAR, var, Var, VaR, vAr are all interpreted as the same command VAR, because the letter casing does not matter. But the variables x and X are considered different variables.
+</p>
+<div class="subsection">Line by line</div>
+<p>
+    A PTML program is executed sequentially, on a line-by-line basis, meaning every command along with all of its arguments, if any, always occupies exactly a single line in the source code. It's not possible to have more than a single command in a single line.
+</p>
+<p>
+    Every line in a PTML source code is internally divided into two fields: command and list of arguments. The command is separated from its list of arguments by a space or tab character. The list of arguments may contain a single argument, or multiple arguments, in which case each individual argument must be separated from the next by a comma character (,).
+</p>
+<p>
+    The interpreter ignores blank or empty lines.
+</p>
+<div class="subsection">Code comments</div>
+<p>
+    You can force the interpreter to ignore any line in your source code by starting with a hash sign # (aka pound sign). Lines starting with # are considered "comments" and they get automatically discarded by the interpreter.
+</p>
+<div class="subsection">Data types</div>
+<p>
+    PTML only has two basic data types: integer numbers and text strings. The range of integers is the same as in the C language (i.e. –2147483648 to 2147483647). Strings are sequences of ASCII characters, like in the C language.
+</p>
+<p>
+    The language is loosely typed, which means that, for example, the string "123" can evaluate to the number 123 if the context where it's used requires a number. Accordingly, the number 777 can evaluate to the string "777" if the context requires a string.
+</p>
+<div class="subsection">Literals</div>
+<p>
+    When specifying literal integer values to commands, integers in base 10 (decimal) don't require any special syntax. Integers in base 16 (hexadecimal) can be specified using the prefix &H or &h. Integers in base 2 (binary) can be specified using the prefix &B or &b. For example, &hff means 255 in decimal and &b11111111 also means 255 in decimal.
+</p>
+<p>
+    The PTML syntax allows specifying character literals that automatically get converted to integers. A character literal is a character enclosed in single quotes, like '@'. For example, '@' gets converted to 64, which is the ASCII code of the @ character.
+</p>
+<p>
+    Strings literals are specified by a sequence of characters enclosed in double quotes, like "Hello World".
+</p>
+<p>
+    The following code snippet shows how to create variables using different literals:
+    <div class="code">
+        VAR num_sides_of_triangle, 3
+        VAR ascii_code_of_at_symbol, '@'
+        VAR hello_message, "Hello World!"
+    </div>
+</p>
+<div class="subsection">Variables</div>
+<p>
+    All variables need to be created and assigned to before they are used. Variable identifiers must start with only alphanumeric characters, or an underscore, or the dollar sign ($). Other characters may be valid inside the identifier, such as the period and slash characters. Examples:
+    <div class="code">
+        VAR $system.value, 123
+        VAR _player.x, 0
+        VAR global/version, "1.0"
+    </div>
+</p>
+<p>
+    It's possible to copy the value of one variable to another by simply referring to the variable identifier when creating a new variable:
+    <div class="code">
+        VAR some_variable, 123
+        VAR copy_of_some_variable, some_variable
+    </div>
+</p>
+<div class="subsection">Constants</div>
+<p>
+    Constants can be defined only once. It is considered an error if the execution flow reaches a constant definition for a second time. The syntax for defining a constant is the same as for defining a variable, except that it uses a different command. Example:
+    <div class="code">
+        DEF this_is_a_constant, 123
+    </div>
+</p>
+<div class="subsection">Arrays</div>
+<p>
+    Besides the basic types, PTML also supports dynamically-sized arrays that can hold strings. Since the language is loosely typed, numbers can also be stored in arrays as strings which will automatically evaluate to numbers if required by the context in which they are used. Array indices are zero-based, meaning the first index is 0 and the last index is equal to the array size minus 1 (like in C).
+</p>
+<p>
+    To access the element in a specific array index, square brackets are used, just like in the C language. For example, for an array named example_array, the expression example_array[0] will attempt to access the first element of that array, like the example below:
+    <div class="code">
+        ARR.NEW example_array
+        ARR.PUSH example_array, "first element"
+        VAR first_element_of_array, example_array[0]
+        PRINT first_element_of_array
+    </div>
+</p>
+<div class="subsection">Labels</div>
+<p>
+    Since the execution of a PTML program follows a sequential, top-to-bottom, line-based flow, there must be a way to "jump" from a specific point in the program to another, in order to implement subroutines. For this purpose, the PTML syntax supports labels.
+</p>
+<p>
+    A label is a unique identifier that must end with a colon (:). Labels must stand alone in their own lines in the source code. Several PTML commands that change the execution flow of the program require an argument that refers to a label, in which case the label itself must be specified without the colon. For example, the following code snippet implements an "infinite" loop where infinite_loop_label is the label itself, which is referred to by the GOTO command:
+    <div class="code">
+        infinite_loop_label:
+            UPDATE
+            GOTO infinite_loop_label
+    </div>
+    There are several commands which "jump" unconditionally or conditionally to code starting from labels, and from where the execution flow may or may not later continue from the original location, depending on the specific command used.
+</p>
+<div class="subsection">... And that's it</div>
+<p>
+    What you've read in this section covers the basic PTML syntax, which doesn't get much more complex than this, except for a few commands that can interpret special escape sequences embedded into regular strings, such as PRINTF, but information about those are addressed in later sections in this document.
+</p>
+
+</div> <!-- <div class="content"> -->
+</body>
+</html>
