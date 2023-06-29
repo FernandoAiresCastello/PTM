@@ -1,4 +1,4 @@
-<html>
+html>
 <head>
     <title>PTM Walkthrough</title>
     <link rel="stylesheet" href="style.css">
@@ -16,10 +16,11 @@
 <div class="index">
     <ul>
         <li><a href="#introduction">Introduction</a></li>
-        <li><a href="#ptm">The machine (PTM)</a></li>
+        <li><a href="#ptm">About the machine (PTM)</a></li>
         <li><a href="#boot">PTM boot process</a></li>
-        <li><a href="#ptml">The language (PTML)</a></li>
-        <li><a href="#syntax">PTML Syntax</a></li>
+        <li><a href="#ptml">About the language (PTML)</a></li>
+        <li><a href="#syntax">PTML syntax</a></li>
+        <li><a href="#gfx-sys">The graphics system</a></li>
     </ul>
 </div>
 
@@ -31,7 +32,7 @@
 <p>In this document, I'd like to guide you through the process of working with the Programmable Tile Machine, or as I like to call it for short, the PTM.</p>
 
 <!-- PTM -->
-<div class="section" id="ptm">The machine (PTM)</div>
+<div class="section" id="ptm">About the machine (PTM)</div>
 
 <p>
     Ok so to start off, what is this thing? The Programmable Tile Machine, or PTM as I will refer to it for the remainder of this document, is a "fantasy computer" that you can program using an interpreted using a built-in programming language called PTML. It attempts to be similar in look-and-feel to some early 8-bit computer systems such as the MSX, ZX Spectrum and Atari 800. Also inspired by the modern game engines Bitsy and PICO-8.
@@ -62,7 +63,7 @@
 <p>As of version 0.2b, the default main.ptm file includes an utility program called “PTM Launcher” that shows an interactive menu where you can browse and launch an existing program without having to manually provide the .ptm file to the machine executable.</p>
 
 <!-- PTML -->
-<div class="section" id="ptml">The language (PTML)</div>
+<div class="section" id="ptml">About the language (PTML)</div>
 
 <p>
     PTML is the language understood by the PTM. PTML is an interpreted, imperative, semi-structured, loosely typed, low-level programming language, with only two data types: strings and integers (with support for dynamic arrays of those types). All you need for programming in it is a plain-text editor like Notepad. The syntax looks like some early dialects of BASIC and some common assembly languages for 8-bit computers. Familiarity with any of those will probably make it easier to work with PTML, but the language itself is fairly straightforward.
@@ -75,7 +76,7 @@
 </p>
 
 <!-- PTML SYNTAX -->
-<div class="section" id="syntax">PTML Syntax</div>
+<div class="section" id="syntax">PTML syntax</div>
 
 <p>
     As discussed in the previous section, PTML can resemble the BASIC language when you look at some of the command names, but don't be fooled. The syntax is much more closely related to Z80 assembly language. In this section you will learn all the syntactic rules that make for a well-formed PTML program.
@@ -189,6 +190,26 @@
 <p>
     What you've read in this section covers the basic PTML syntax, which doesn't get much more complex than this, except for a few commands that can interpret special escape sequences embedded into regular strings, such as PRINTF, but information about those are addressed in later sections in this document.
 </p>
+
+<!-- GRAPHICS SYTEM -->
+<div class="section" id="gfx-sys">The graphics system</div>
+
+<p>
+    The PTM runs inside a standard window provided by the operating system. Only a single window is supported for each PTM.exe process. Every program starts with a default window, which has a default size. The default window settings can be overriden with the WINDOW command. In this documentation, the inner drawable area of the PTM window is referred to as "the screen".
+</p>
+<p>
+    As a tile-based system, everything that appears anywhere on the screen is essentially a tile. A tile is a very small rectangular image that can be used by itself or to generate larger images by "stitching" many tiles together, as in a mosaic. In the PTM, every tile has a fixed width of 8 pixels and height of 8 pixels. The system contains several structures that allow displaying tiles in many ways, which will be covered in this section.</p>
+<p>
+    PTML does not support manipulation of individual pixels on the screen.
+</p>
+<p>
+    The PTM supports only 2 colors per tile. One color is known as the "foreground color", the other is known as the "background color".
+</p>
+<p>
+    The system has an internal list of tile patterns, called the "tileset". It also has an internal list of colors, called the "palette". When using PTML commands to draw anything on the screen, references to the internal tileset and palette are used, rather than specifying the tile data and color itself.
+</p>
+
+<div class="subsection"></div>
 
 </div> <!-- <div class="content"> -->
 </body>
