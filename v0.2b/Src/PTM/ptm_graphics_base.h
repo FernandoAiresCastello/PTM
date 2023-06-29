@@ -59,3 +59,4 @@ void ptm_unclip();
 void ptm_pset(int x, int y, rgb color);
 void ptm_draw_tile_bin(binary str, int x, int y, rgb fgc, rgb bgc, bool transparent);
 void ptm_draw_tile_rgb(rgb colors[64], int x, int y, rgb transparency_key);
+void ptm_save_screenshot(string file);

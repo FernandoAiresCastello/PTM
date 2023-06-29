@@ -217,3 +217,11 @@ void ptm_draw_tile_rgb(rgb colors[64], int x, int y, rgb transparency_key)
 		}
 	}
 }
+void ptm_save_screenshot(string file)
+{
+	ptm_refresh_window();
+	SDL_Surface* surface = SDL_CreateRGBSurfaceWithFormat(0, scr.buf_w, scr.buf_h, 32, SDL_PIXELFORMAT_ARGB8888);
+	SDL_memcpy(surface->pixels, scr.pixel_buf, scr.buf_len * sizeof(rgb));
+	SDL_SaveBMP(surface, file.c_str());
+	SDL_FreeSurface(surface);
+}

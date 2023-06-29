@@ -69,6 +69,7 @@ TITLE 	 x	Set x as the title of the window	Graphics - Core
 UPDATE 		Draw all visible tilebuffers and sprites then update window and process window events	Graphics - Core
 WCOL 	 palette_index	Clear window background to specified color	Graphics - Core
 WINDOW 	 width, height, size, default_layers	Override the default window settings. Width and height are in pixel units. Size is used as a multiplier for both width and height. Default_layers defines the number of layers in the "default" tilebuffer 	Graphics - Core
+PRTSCR 	 file	Save a screenshot to a bitmap file	Graphics - Core
 SPR.BUF 	 id, buf_id	Assign sprite to a tilebuffer. The tilebuffer becomes the "owner" of the sprite. The sprite will then be drawn inside its viewport	Graphics - Sprites
 SPR.CLR 		Delete all sprites	Graphics - Sprites
 SPR.DEL 	 id	Delete sprite with id	Graphics - Sprites

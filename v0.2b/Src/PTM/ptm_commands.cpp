@@ -53,6 +53,11 @@ void ptm_init_commands()
 		ptm_set_window_bgcol(palette.get(palette_ix));
 		ptm_clear_screen();
 	};
+	CMD("PRTSCR") {
+		ARGC(1);
+		string file = ARG_VAR_STR(0);
+		ptm_save_screenshot(file);
+	};
 	CMD("MOUSE.ON") {
 		ARGC(0);
 		ptm_enable_mouse_pointer(true);
