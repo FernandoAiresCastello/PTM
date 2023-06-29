@@ -131,6 +131,12 @@ void t_tileseq::add(t_tile& frame)
 {
 	frames.push_back(frame);
 }
+void t_tileseq::add(t_tileseq& other)
+{
+	for (auto& tile : other.frames) {
+		frames.push_back(tile);
+	}
+}
 void t_tileseq::add(int ch, int fgc, int bgc)
 {
 	assert_tile_ch(ch);
@@ -310,6 +316,12 @@ void t_tilebuf_layer::put(int x, int y, int ch, int fgc)
 {
 	t_tileseq tile(ch, fgc);
 	put(x, y, tile);
+}
+void t_tilebuf_layer::add(int x, int y, t_tileseq& tileseq)
+{
+	if (x >= 0 && y >= 0 && x < width && y < width) {
+		get(x, y).add(tileseq);
+	}
 }
 void t_tilebuf_layer::add(int x, int y, t_tile& tile)
 {

@@ -153,6 +153,7 @@ cd "$(SolutionDir)Build"
     <ClInclude Include="Src\CppUtils\CppString.h" />
     <ClInclude Include="Src\CppUtils\CppUtil.h" />
     <ClInclude Include="Src\CppUtils\CppUtils.h" />
+    <ClInclude Include="Src\Docgen\docgen.h" />
     <ClInclude Include="Src\PTML\t_compiler.h" />
     <ClInclude Include="Src\PTML\t_interpreter.h" />
     <ClInclude Include="Src\PTML\t_loop.h" />
@@ -173,7 +174,6 @@ cd "$(SolutionDir)Build"
     <ClInclude Include="Src\PTM\ptm_sprites.h" />
     <ClInclude Include="Src\PTM\ptm_text_font.h" />
     <ClInclude Include="Src\PTM\ptm_tile_system.h" />
-    <ClInclude Include="Src\Util\docgen.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resources\PTM.rc" />
@@ -187,6 +187,7 @@ cd "$(SolutionDir)Build"
     <ClCompile Include="Src\CppUtils\CppProperties.cpp" />
     <ClCompile Include="Src\CppUtils\CppString.cpp" />
     <ClCompile Include="Src\CppUtils\CppUtil.cpp" />
+    <ClCompile Include="Src\Docgen\docgen.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\PTML\t_compiler.cpp" />
     <ClCompile Include="Src\PTML\t_interpreter.cpp" />
@@ -206,7 +207,6 @@ cd "$(SolutionDir)Build"
     <ClCompile Include="Src\PTM\ptm_sprites.cpp" />
     <ClCompile Include="Src\PTM\ptm_text_font.cpp" />
     <ClCompile Include="Src\PTM\ptm_tile_system.cpp" />
-    <ClCompile Include="Src\Util\docgen.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

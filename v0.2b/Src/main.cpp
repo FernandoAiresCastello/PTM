@@ -1,5 +1,5 @@
 #include "PTM/ptm_core.h"
-#include "Util/docgen.h"
+#include "Docgen/docgen.h"
 
 #define RUN_DOCGEN 0
 

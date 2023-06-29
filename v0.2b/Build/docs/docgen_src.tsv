@@ -91,17 +91,19 @@ SPR.TY 	 id, y	Set y coordinate of sprite (in tile units)	Graphics - Sprites
 SPR.VISBL 	 id, x	Store in x whether sprite is visible. 1 means yes; 0 means no	Graphics - Sprites
 SPR.X 	 id, x	Set x coordinate of sprite (in pixel units)	Graphics - Sprites
 SPR.Y 	 id, y	Set y coordinate of sprite (in pixel units)	Graphics - Sprites
-COPY 	 x1, y1, x2, y2	Copy to internal clipboard all tiles within specified rectangle from selected tilebuffer layer	Graphics - Tile output
-CUT 	 x1, y1, x2, y2	Copy to internal clipboard all tiles within specified rectangle from selected tilebuffer layer, then delete them	Graphics - Tile output
-DEL 		Delete tile from selected tilebuffer at current cursor position	Graphics - Tile output
-DELR 	 x1, y1, x2, y2	Delete all tiles within specified rectangle from selected tilebuffer layer	Graphics - Tile output
-FILL 		Fill entire selected tilebuffer layer with TILE register	Graphics - Tile output
-GET 		Make TILE register equal to tile in selected tilebuffer at current cursor position	Graphics - Tile output
-MOV 	 x, y, dx, dy	Move tile in selected tilebuffer, from specified position to specified distance	Graphics - Tile output
-MOVB 	 x1, y1, x2, y2, dx, dy	Move block of tiles in selected tilebuffer, from specified rectangle area to specified distance	Graphics - Tile output
-PASTE 		Paste all tiles from internal clipboard into selected tilebuffer layer starting at current cursor position	Graphics - Tile output
-PUT 		Put TILE register in selected tilebuffer at current cursor position	Graphics - Tile output
-RECT 	 x1, y1, x2, y2	Fill rectangle in selected tilebuffer layer with TILE register	Graphics - Tile output
+COPY 	 x1, y1, x2, y2	Copy to internal clipboard all tiles within specified rectangle from selected tilebuffer layer	Graphics - Tile output/input
+CUT 	 x1, y1, x2, y2	Copy to internal clipboard all tiles within specified rectangle from selected tilebuffer layer, then delete them	Graphics - Tile output/input
+DEL 		Delete tile from selected tilebuffer at current cursor position	Graphics - Tile output/input
+DELR 	 x1, y1, x2, y2	Delete all tiles within specified rectangle from selected tilebuffer layer	Graphics - Tile output/input
+FILL 		Fill entire selected tilebuffer layer with TILE register	Graphics - Tile output/input
+GET 		Make tile sequence in TILE register equal to tile sequence at current cursor position in selected tilebuffer	Graphics - Tile output/input
+GETS 		Add the tile sequence at current cursor position in selected tilebuffer to tile sequence in TILE register 	Graphics - Tile output/input
+MOV 	 x, y, dx, dy	Move tile in selected tilebuffer, from specified position to specified distance	Graphics - Tile output/input
+MOVR 	 x1, y1, x2, y2, dx, dy	Move rectangle of tiles in selected tilebuffer, from specified area towards specified distance	Graphics - Tile output/input
+PASTE 		Paste all tiles from internal clipboard into selected tilebuffer layer starting at current cursor position	Graphics - Tile output/input
+PUT 		Put tile sequence from the TILE register at current cursor position in selected tilebuffer. This will overwrite the existing tile sequence at that position	Graphics - Tile output/input
+PUTS 		Almost the same as PUT, but will add the tiles to the existing tile sequence at that position instead of overwriting them	Graphics - Tile output/input
+RECT 	 x1, y1, x2, y2	Fill rectangle in selected tilebuffer layer with TILE register	Graphics - Tile output/input
 TILE.ADD 	 tileset_ix, fgc_pal_ix, bgc_pal_ix?	Add an animation frame to the TILE register with the specified tileset index and colors. If bgc_pal_ix is not specified, then the background color for this tile will not be rendered	Graphics - TILE register
 TILE.COLOR 	 frame_ix, fgc_pal_ix, bgc_pal_ix	Change palette references for both colors at specified frame in the TILE register	Graphics - TILE register
 TILE.GETB 	 frame_ix, x	Store in x the palette reference for background color at a frame in the TILE register	Graphics - TILE register

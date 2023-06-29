@@ -393,7 +393,7 @@
 <a href='#TILE.STR'>TILE.STR</a>
 </td>
 <tr>
-<td class='index-category' colspan=7>Graphics - Tile output</td>
+<td class='index-category' colspan=7>Graphics - Tile output/input</td>
 </tr>
 <tr>
 <td class='index-cmd'>
@@ -415,18 +415,24 @@
 <a href='#GET'>GET</a>
 </td>
 <td class='index-cmd'>
-<a href='#MOV'>MOV</a>
+<a href='#GETS'>GETS</a>
 </td>
 </tr>
 <tr>
 <td class='index-cmd'>
-<a href='#MOVB'>MOVB</a>
+<a href='#MOV'>MOV</a>
+</td>
+<td class='index-cmd'>
+<a href='#MOVR'>MOVR</a>
 </td>
 <td class='index-cmd'>
 <a href='#PASTE'>PASTE</a>
 </td>
 <td class='index-cmd'>
 <a href='#PUT'>PUT</a>
+</td>
+<td class='index-cmd'>
+<a href='#PUTS'>PUTS</a>
 </td>
 <td class='index-cmd'>
 <a href='#RECT'>RECT</a>
@@ -2632,7 +2638,7 @@ Copy to internal clipboard all tiles within specified rectangle from selected ti
 </tr>
 <tr>
 <td class='category' colspan=2>
-Category: Graphics - Tile output
+Category: Graphics - Tile output/input
 </td>
 </tr>
 </table>
@@ -2652,7 +2658,7 @@ Copy to internal clipboard all tiles within specified rectangle from selected ti
 </tr>
 <tr>
 <td class='category' colspan=2>
-Category: Graphics - Tile output
+Category: Graphics - Tile output/input
 </td>
 </tr>
 </table>
@@ -2672,7 +2678,7 @@ Delete tile from selected tilebuffer at current cursor position
 </tr>
 <tr>
 <td class='category' colspan=2>
-Category: Graphics - Tile output
+Category: Graphics - Tile output/input
 </td>
 </tr>
 </table>
@@ -2692,7 +2698,7 @@ Delete all tiles within specified rectangle from selected tilebuffer layer
 </tr>
 <tr>
 <td class='category' colspan=2>
-Category: Graphics - Tile output
+Category: Graphics - Tile output/input
 </td>
 </tr>
 </table>
@@ -2712,7 +2718,7 @@ Fill entire selected tilebuffer layer with TILE register
 </tr>
 <tr>
 <td class='category' colspan=2>
-Category: Graphics - Tile output
+Category: Graphics - Tile output/input
 </td>
 </tr>
 </table>
@@ -2727,12 +2733,32 @@ GET
 </tr>
 <tr>
 <td class='description' colspan=2>
-Make TILE register equal to tile in selected tilebuffer at current cursor position
+Make tile sequence in TILE register equal to tile sequence at current cursor position in selected tilebuffer
 </td>
 </tr>
 <tr>
 <td class='category' colspan=2>
-Category: Graphics - Tile output
+Category: Graphics - Tile output/input
+</td>
+</tr>
+</table>
+<table class='entry' id='GETS'>
+<tr>
+<td class='cmd'>
+GETS
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Add the tile sequence at current cursor position in selected tilebuffer to tile sequence in TILE register
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile output/input
 </td>
 </tr>
 </table>
@@ -2752,14 +2778,14 @@ Move tile in selected tilebuffer, from specified position to specified distance
 </tr>
 <tr>
 <td class='category' colspan=2>
-Category: Graphics - Tile output
+Category: Graphics - Tile output/input
 </td>
 </tr>
 </table>
-<table class='entry' id='MOVB'>
+<table class='entry' id='MOVR'>
 <tr>
 <td class='cmd'>
-MOVB
+MOVR
 </td>
 <td class='params'>
 x1, y1, x2, y2, dx, dy
@@ -2767,12 +2793,12 @@ x1, y1, x2, y2, dx, dy
 </tr>
 <tr>
 <td class='description' colspan=2>
-Move block of tiles in selected tilebuffer, from specified rectangle area to specified distance
+Move rectangle of tiles in selected tilebuffer, from specified area towards specified distance
 </td>
 </tr>
 <tr>
 <td class='category' colspan=2>
-Category: Graphics - Tile output
+Category: Graphics - Tile output/input
 </td>
 </tr>
 </table>
@@ -2792,7 +2818,7 @@ Paste all tiles from internal clipboard into selected tilebuffer layer starting 
 </tr>
 <tr>
 <td class='category' colspan=2>
-Category: Graphics - Tile output
+Category: Graphics - Tile output/input
 </td>
 </tr>
 </table>
@@ -2807,12 +2833,32 @@ PUT
 </tr>
 <tr>
 <td class='description' colspan=2>
-Put TILE register in selected tilebuffer at current cursor position
+Put tile sequence from the TILE register at current cursor position in selected tilebuffer. This will overwrite the existing tile sequence at that position
 </td>
 </tr>
 <tr>
 <td class='category' colspan=2>
-Category: Graphics - Tile output
+Category: Graphics - Tile output/input
+</td>
+</tr>
+</table>
+<table class='entry' id='PUTS'>
+<tr>
+<td class='cmd'>
+PUTS
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Almost the same as PUT, but will add the tiles to the existing tile sequence at that position instead of overwriting them
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile output/input
 </td>
 </tr>
 </table>
@@ -2832,7 +2878,7 @@ Fill rectangle in selected tilebuffer layer with TILE register
 </tr>
 <tr>
 <td class='category' colspan=2>
-Category: Graphics - Tile output
+Category: Graphics - Tile output/input
 </td>
 </tr>
 </table>

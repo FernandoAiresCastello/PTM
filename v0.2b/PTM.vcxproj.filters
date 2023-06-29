@@ -68,11 +68,11 @@
     <ClCompile Include="Src\PTM\ptm_mml.cpp">
       <Filter>PTM</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Util\docgen.cpp">
-      <Filter>Util</Filter>
-    </ClCompile>
     <ClCompile Include="Src\PTM\ptm_image.cpp">
       <Filter>PTM</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Docgen\docgen.cpp">
+      <Filter>Docgen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -160,11 +160,11 @@
     <ClInclude Include="Src\PTM\ptm_mml.h">
       <Filter>PTM</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Util\docgen.h">
-      <Filter>Util</Filter>
-    </ClInclude>
     <ClInclude Include="Src\PTM\ptm_image.h">
       <Filter>PTM</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Docgen\docgen.h">
+      <Filter>Docgen</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -183,7 +183,7 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{874d3363-3914-4234-8308-467ca70c840d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Util">
+    <Filter Include="Docgen">
       <UniqueIdentifier>{29be0ea6-60b2-41e3-955d-e204b4bcdd13}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

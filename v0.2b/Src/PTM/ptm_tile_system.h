@@ -38,6 +38,7 @@ struct t_tileseq {
 	void clear();
 	void set_equal(t_tileseq& other);
 	void add(t_tile& frame);
+	void add(t_tileseq& other);
 	void add(int ch, int fgc, int bgc);
 	void add(int ch, int fgc);
 	bool empty();
@@ -81,6 +82,7 @@ struct t_tilebuf_layer {
 	void put(int x, int y, t_tileseq& tileseq);
 	void put(int x, int y, int ch, int fgc, int bgc);
 	void put(int x, int y, int ch, int fgc);
+	void add(int x, int y, t_tileseq& tileseq);
 	void add(int x, int y, t_tile& tile);
 	void add(int x, int y, int ch, int fgc, int bgc);
 	void add(int x, int y, int ch, int fgc);

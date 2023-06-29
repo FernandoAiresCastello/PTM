@@ -814,6 +814,10 @@ void ptm_init_commands()
 		ARGC(0);
 		ptm_get_selected_tilebuf_layer().put(tilebuf_csr.x, tilebuf_csr.y, working_tile);
 	};
+	CMD("PUTS") {
+		ARGC(0);
+		ptm_get_selected_tilebuf_layer().add(tilebuf_csr.x, tilebuf_csr.y, working_tile);
+	};
 	CMD("DEL") {
 		ARGC(0);
 		ptm_get_selected_tilebuf_layer().del(tilebuf_csr.x, tilebuf_csr.y);
@@ -830,6 +834,11 @@ void ptm_init_commands()
 		ARGC(0);
 		ptm_assert_tilebuf_csr();
 		working_tile.set_equal(ptm_get_selected_tilebuf_layer().get(tilebuf_csr.x, tilebuf_csr.y));
+	};
+	CMD("GETS") {
+		ARGC(0);
+		ptm_assert_tilebuf_csr();
+		working_tile.add(ptm_get_selected_tilebuf_layer().get(tilebuf_csr.x, tilebuf_csr.y));
 	};
 	CMD("FILL") {
 		ARGC(0);
@@ -851,7 +860,7 @@ void ptm_init_commands()
 		int dy = ARG_VAR_NUM(3);
 		ptm_get_selected_tilebuf_layer().move_tile(x, y, dx, dy);
 	};
-	CMD("MOVB") {
+	CMD("MOVR") {
 		ARGC(6);
 		int x1 = ARG_VAR_NUM(0);
 		int y1 = ARG_VAR_NUM(1);
