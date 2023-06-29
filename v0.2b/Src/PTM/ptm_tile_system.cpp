@@ -103,10 +103,15 @@ t_tileseq::t_tileseq()
 }
 t_tileseq::t_tileseq(int ch, int fgc, int bgc)
 {
+	assert_tile_ch(ch);
+	assert_tile_fgc(fgc);
+	assert_tile_bgc(bgc);
 	frames.push_back(t_tile(ch, fgc, bgc));
 }
 t_tileseq::t_tileseq(int ch, int fgc)
 {
+	assert_tile_ch(ch);
+	assert_tile_fgc(fgc);
 	frames.push_back(t_tile(ch, fgc));
 }
 void t_tileseq::clear()
@@ -128,10 +133,15 @@ void t_tileseq::add(t_tile& frame)
 }
 void t_tileseq::add(int ch, int fgc, int bgc)
 {
+	assert_tile_ch(ch);
+	assert_tile_fgc(fgc);
+	assert_tile_bgc(bgc);
 	frames.push_back(t_tile(ch, fgc, bgc));
 }
 void t_tileseq::add(int ch, int fgc)
 {
+	assert_tile_ch(ch);
+	assert_tile_fgc(fgc);
 	frames.push_back(t_tile(ch, fgc));
 }
 bool t_tileseq::empty()
@@ -144,14 +154,20 @@ int t_tileseq::length()
 }
 void t_tileseq::set_ch(int frame, int ch)
 {
+	assert_tile_frame(frame);
+	assert_tile_ch(ch);
 	frames[frame].ch = ch;
 }
 void t_tileseq::set_fgc(int frame, int fgc)
 {
+	assert_tile_frame(frame);
+	assert_tile_fgc(fgc);
 	frames[frame].fgc = fgc;
 }
 void t_tileseq::set_bgc(int frame, int bgc)
 {
+	assert_tile_frame(frame);
+	assert_tile_bgc(bgc);
 	frames[frame].bgc = bgc;
 }
 bool t_tileseq::parse(string str)
@@ -182,6 +198,38 @@ string t_tileseq::to_str()
 		str += String::Format("%i,%i,%i;", tile.ch, tile.fgc, tile.bgc);
 	}
 	return str;
+}
+bool t_tileseq::assert_tile_frame(int frame)
+{
+	if (frame >= 0 && frame < frames.size())
+		return true;
+
+	ptm_abort("TILE register frame index out of range: " + String::ToString(frame));
+	return false;
+}
+bool t_tileseq::assert_tile_ch(int ch)
+{
+	if (ch >= 0 && ch < tileset.tiles.size())
+		return true;
+
+	ptm_abort("TILE register tileset index out of range: " + String::ToString(ch));
+	return false;
+}
+bool t_tileseq::assert_tile_fgc(int fgc)
+{
+	if (fgc >= 0 && fgc < palette.colors.size())
+		return true;
+
+	ptm_abort("TILE register foreground color palette index out of range: " + String::ToString(fgc));
+	return false;
+}
+bool t_tileseq::assert_tile_bgc(int bgc)
+{
+	if (bgc >= 0 && bgc < palette.colors.size())
+		return true;
+
+	ptm_abort("TILE register background color palette index out of range: " + String::ToString(bgc));
+	return false;
 }
 t_tileset::t_tileset()
 {

@@ -6,6 +6,7 @@
 
 #define ARGC(x)				if (!intp->argc(arg, x)) return;
 #define ARGC_MIN_MAX(x, y)	if (!intp->argc(arg, x, y)) return;
+#define ARGC_MIN(x)			if (!intp->argc_min(arg, x)) return;
 
 struct t_program;
 struct t_program_line;
@@ -26,6 +27,7 @@ struct t_interpreter {
 	void abort(string error);
 	bool argc(t_params& arg, int expected);
 	bool argc(t_params& arg, int min, int max);
+	bool argc_min(t_params& arg, int min);
 	
 	int arg_var_number(t_param& arg);
 	string arg_var_string(t_param& arg);

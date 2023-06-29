@@ -177,20 +177,23 @@ void ptm_init_commands()
 		ptm_new_array(arr_id, len);
 	};
 	CMD("ARR.PUSH") {
-		ARGC(2);
+		ARGC_MIN(2);
 		string arr_id = ARG_LIT_ARR_ID(0);
-		if (arg[1].type == t_param_type::char_literal) {
-			ptm_array_push(arr_id, arg[1].numeric_value);
-		}
-		else if (arg[1].type == t_param_type::id) {
-			ptm_array_push(arr_id, ptm_get_var(arg[1].id).value);
-		}
-		else if (arg[1].type == t_param_type::arr_ix_literal || arg[1].type == t_param_type::arr_ix_var) {
-			string value = intp->arg_string_from_array_element(arg[1]);
-			ptm_array_push(arr_id, value);
-		}
-		else {
-			ptm_array_push(arr_id, arg[1].textual_value);
+		for (int i = 1; i < arg.size(); i++) {
+			t_param& cur_arg = arg[i];
+			if (cur_arg.type == t_param_type::char_literal) {
+				ptm_array_push(arr_id, cur_arg.numeric_value);
+			}
+			else if (cur_arg.type == t_param_type::id) {
+				ptm_array_push(arr_id, ptm_get_var(cur_arg.id).value);
+			}
+			else if (cur_arg.type == t_param_type::arr_ix_literal || cur_arg.type == t_param_type::arr_ix_var) {
+				string value = intp->arg_string_from_array_element(cur_arg);
+				ptm_array_push(arr_id, value);
+			}
+			else {
+				ptm_array_push(arr_id, cur_arg.textual_value);
+			}
 		}
 	};
 	CMD("ARR.LEN") {
@@ -697,18 +700,21 @@ void ptm_init_commands()
 		ARGC(2);
 		int ix = ARG_VAR_NUM(0);
 		string var = ARG_LIT_ID(1);
+		working_tile.assert_tile_frame(ix);
 		ptm_set_var(var, working_tile.frames[ix].ch);
 	};
 	CMD("TILE.GETF") {
 		ARGC(2);
 		int ix = ARG_VAR_NUM(0);
 		string var = ARG_LIT_ID(1);
+		working_tile.assert_tile_frame(ix);
 		ptm_set_var(var, working_tile.frames[ix].fgc);
 	};
 	CMD("TILE.GETB") {
 		ARGC(2);
 		int ix = ARG_VAR_NUM(0);
 		string var = ARG_LIT_ID(1);
+		working_tile.assert_tile_frame(ix);
 		ptm_set_var(var, working_tile.frames[ix].bgc);
 	};
 	CMD("TILE.COLOR") {

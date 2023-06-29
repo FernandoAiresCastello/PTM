@@ -4,7 +4,7 @@ ARR.COPY 	 source, destination	Make destination array equal to source array	Data
 ARR.ERASE 	 name, index	Remove array item from index. This also reduces the size of the array by 1	Data - Variables and arrays
 ARR.LEN 	 name, x	Store in x the length of the array	Data - Variables and arrays
 ARR.NEW 	 name, size?	Create a new array (with optional initial size)	Data - Variables and arrays
-ARR.PUSH 	 name, value	Add new value to end of array	Data - Variables and arrays
+ARR.PUSH 	 name, value, value_2?, value_3?, ...	Add one or more new values to end of array	Data - Variables and arrays
 ARR.SET 	 name[index], x	Store x at array index	Data - Variables and arrays
 DEF 	 name, value	Define a constant	Data - Variables and arrays
 VAR 	 name, value	Set value for a new or existing variable	Data - Variables and arrays

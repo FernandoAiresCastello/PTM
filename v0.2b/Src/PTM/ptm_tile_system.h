@@ -47,6 +47,10 @@ struct t_tileseq {
 	void set_bgc(int frame, int bgc);
 	bool parse(string str);
 	string to_str();
+	bool assert_tile_frame(int frame);
+	bool assert_tile_ch(int ch);
+	bool assert_tile_fgc(int fgc);
+	bool assert_tile_bgc(int bgc);
 };
 struct t_tileset {
 	vector<binary> tiles;

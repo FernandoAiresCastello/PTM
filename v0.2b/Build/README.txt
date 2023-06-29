@@ -10,7 +10,7 @@
 
 Welcome to the PTM version 0.2 beta!
 Release date: July 1st, 2023
-Please note: This is a very early beta release, expect bugs and limited documentation.
+Please note: This is an early beta release, expect bugs and limited documentation.
 You can follow the project on GitHub if you like it: https://github.com/FernandoAiresCastello/PTM
 
 The following is an explanation of the files in the package you've just downloaded:

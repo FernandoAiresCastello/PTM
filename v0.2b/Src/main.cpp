@@ -1,7 +1,7 @@
 #include "PTM/ptm_core.h"
 #include "Util/docgen.h"
 
-#define RUN_DOCGEN 01
+#define RUN_DOCGEN 0
 
 int main(int argc, char* argv[])
 {

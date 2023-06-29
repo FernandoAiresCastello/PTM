@@ -88,6 +88,14 @@ bool t_interpreter::argc(t_params& arg, int min, int max) {
 	}
 	return true;
 }
+bool t_interpreter::argc_min(t_params& arg, int min)
+{
+	if (arg.size() < min) {
+		abort("Invalid argument count");
+		return false;
+	}
+	return true;
+}
 string t_interpreter::arg_literal_existing_label(t_param& arg) {
 	if (arg.type != t_param_type::id) {
 		abort("Label expected");
