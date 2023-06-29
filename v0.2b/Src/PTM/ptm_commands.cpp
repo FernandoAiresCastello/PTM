@@ -599,7 +599,7 @@ void ptm_init_commands()
 		string id = ARG_LIT_ID(0);
 		tilebufs.get(id)->toggle_visible();
 	};
-	CMD("BUF.BCOL") {
+	CMD("BUF.BGCOL") {
 		ARGC(2);
 		string id = ARG_LIT_ID(0);
 		int palette_ix = ARG_VAR_NUM(1);

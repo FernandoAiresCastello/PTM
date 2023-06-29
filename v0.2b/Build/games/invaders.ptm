@@ -19,7 +19,7 @@ DEF enemy_move_timer_max_initial, 10
 
 CALL init_palette
 CALL init_tileset
-BUF.BCOL default, color_black
+BUF.BGCOL default, color_black
 CALL draw_background
 CALL init_player
 CALL init_enemies

@@ -19,7 +19,7 @@ DEF mode_tile_edit, 1
 
 CALL init_palette
 CALL init_tileset
-BUF.BCOL default, c_bg
+BUF.BGCOL default, c_bg
 CALL init_keycodes
 
 #================================================

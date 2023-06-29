@@ -4,7 +4,7 @@ WINDOW 256, 192, 3, 1
 CALL init_palette
 CALL init_tileset
 
-BUF.BCOL default, c_black
+BUF.BGCOL default, c_black
 VAR paddle_speed, 1
 NEG paddle_speed_neg, paddle_speed
 

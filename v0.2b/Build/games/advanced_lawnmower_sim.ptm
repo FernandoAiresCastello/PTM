@@ -5,7 +5,7 @@ CALL init_colors
 CALL init_chars
 
 show_title_screen:
-    BUF.BCOL default, col.green
+    BUF.BGCOL default, col.green
     TXT.BGON
     CLS
 
@@ -227,7 +227,7 @@ well_mown:
     PAUSE 200
 
 end_game:
-    BUF.BCOL default, col.black
+    BUF.BGCOL default, col.black
     COLOR col.white, col.black
     CLS
     CALL draw_endgame_window_frame
