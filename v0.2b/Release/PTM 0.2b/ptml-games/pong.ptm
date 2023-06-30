@@ -1,0 +1,255 @@
+TITLE "Pong"
+WINDOW 256, 192, 3, 1
+
+CALL init_palette
+CALL init_tileset
+
+BUF.BGCOL default, c_black
+VAR paddle_speed, 1
+NEG paddle_speed_neg, paddle_speed
+
+DEF false, 0
+DEF true, 1
+
+DEF ball_dir_ur, 0
+DEF ball_dir_dr, 1
+DEF ball_dir_ul, 2
+DEF ball_dir_dl, 3
+
+DEF player_ball_collision_snd, "O5L20DC"
+DEF ball_edge_collision_snd, "O4L20CD"
+DEF score_snd, "O5L20EFEFF"
+
+VAR score_player_1, 0
+VAR score_player_2, 0
+
+#================================================
+	start:
+#================================================
+CLS
+CALL init_sprites
+CALL start_ball_movement
+CALL draw_score
+UPDATE
+PAUSE 100
+
+#================================================
+	game_loop:
+#================================================
+UPDATE
+CALL handle_input
+CALL move_ball
+CALL draw_score
+GOTO game_loop
+
+#================================================
+	handle_input:
+#================================================
+IF.KEY "Q"
+	SPR.MOVE "player_1_top", 0, paddle_speed_neg
+	SPR.MOVE "player_1_mid", 0, paddle_speed_neg
+	SPR.MOVE "player_1_btm", 0, paddle_speed_neg
+ENDIF
+IF.KEY "A"
+	SPR.MOVE "player_1_top", 0, paddle_speed
+	SPR.MOVE "player_1_mid", 0, paddle_speed
+	SPR.MOVE "player_1_btm", 0, paddle_speed
+ENDIF
+IF.KEY "O"
+	SPR.MOVE "player_2_top", 0, paddle_speed_neg
+	SPR.MOVE "player_2_mid", 0, paddle_speed_neg
+	SPR.MOVE "player_2_btm", 0, paddle_speed_neg
+ENDIF
+IF.KEY "L"
+	SPR.MOVE "player_2_top", 0, paddle_speed
+	SPR.MOVE "player_2_mid", 0, paddle_speed
+	SPR.MOVE "player_2_btm", 0, paddle_speed
+ENDIF
+RET
+
+#================================================
+	move_ball:
+#================================================
+IF.EQ ball_dir, ball_dir_ur
+	SPR.MOVE "ball", 1, -1
+ENDIF
+IF.EQ ball_dir, ball_dir_dr
+	SPR.MOVE "ball", 1, 1
+ENDIF
+IF.EQ ball_dir, ball_dir_ul
+	SPR.MOVE "ball", -1, -1
+ENDIF
+IF.EQ ball_dir, ball_dir_dl
+	SPR.MOVE "ball", -1, 1
+ENDIF
+CALL maybe_bounce_ball
+RET
+
+#================================================
+	maybe_bounce_ball:
+#================================================
+
+# Check collision with player 1 paddle
+
+	SPR.HIT hit1, "ball", "player_1_top"
+	SPR.HIT hit2, "ball", "player_1_mid"
+	SPR.HIT hit3, "ball", "player_1_btm"
+
+	IF.EQ hit1, true
+		CALL bounce_ball_against_player_1
+	ENDIF
+	IF.EQ hit2, true
+		CALL bounce_ball_against_player_1
+	ENDIF
+	IF.EQ hit3, true
+		CALL bounce_ball_against_player_1
+	ENDIF
+
+# Check collision with player 2 paddle
+
+	SPR.HIT hit1, "ball", "player_2_top"
+	SPR.HIT hit2, "ball", "player_2_mid"
+	SPR.HIT hit3, "ball", "player_2_btm"
+
+	IF.EQ hit1, true
+		CALL bounce_ball_against_player_2
+	ENDIF
+	IF.EQ hit2, true
+		CALL bounce_ball_against_player_2
+	ENDIF
+	IF.EQ hit3, true
+		CALL bounce_ball_against_player_2
+	ENDIF
+
+# Check collision with screen top and bottom edges
+
+	SPR.GETX "ball", x
+	SPR.GETY "ball", y
+
+	IF.LT y, 0
+		IF.EQ ball_dir, ball_dir_ul
+			VAR ball_dir, ball_dir_dl
+		ENDIF
+		IF.EQ ball_dir, ball_dir_ur
+			VAR ball_dir, ball_dir_dr
+		ENDIF
+		MML.PLAY ball_edge_collision_snd
+	ENDIF
+	IF.GT y, 184
+		IF.EQ ball_dir, ball_dir_dl
+			VAR ball_dir, ball_dir_ul
+		ENDIF
+		IF.EQ ball_dir, ball_dir_dr
+			VAR ball_dir, ball_dir_ur
+		ENDIF
+		MML.PLAY ball_edge_collision_snd
+	ENDIF
+
+# Check collision with screen left and right edges
+
+	IF.LT x, 0
+		INC score_player_2
+		MML.PLAY score_snd
+		GOTO start
+	ENDIF
+	IF.GT x, 248
+		INC score_player_1
+		MML.PLAY score_snd
+		GOTO start
+	ENDIF
+
+# Done checking
+
+RET
+
+#================================================
+	bounce_ball_against_player_1:
+#================================================
+IF.EQ ball_dir, ball_dir_ul
+	VAR ball_dir, ball_dir_ur
+	MML.PLAY player_ball_collision_snd
+ENDIF
+IF.EQ ball_dir, ball_dir_dl
+	VAR ball_dir, ball_dir_dr
+	MML.PLAY player_ball_collision_snd
+ENDIF
+RET
+
+#================================================
+	bounce_ball_against_player_2:
+#================================================
+IF.EQ ball_dir, ball_dir_ur
+	VAR ball_dir, ball_dir_ul
+	MML.PLAY player_ball_collision_snd
+ENDIF
+IF.EQ ball_dir, ball_dir_dr
+	VAR ball_dir, ball_dir_dl
+	MML.PLAY player_ball_collision_snd
+ENDIF
+RET
+
+#================================================
+	start_ball_movement:
+#================================================
+SPR.POS "ball", 128, 88
+RND ball_dir, 0, 3
+RET
+
+#================================================
+	draw_score:
+#================================================
+LOCATE 5, 1
+PRINT score_player_1
+LOCATE 26, 1
+PRINT score_player_2
+RET
+
+#================================================
+	init_sprites:
+#================================================
+SPR.CLR
+
+TILE.NEW t_paddle, c_white
+
+SPR.NEW "player_1_top"
+SPR.NEW "player_1_mid"
+SPR.NEW "player_1_btm"
+SPR.POS "player_1_top", 12, 80
+SPR.POS "player_1_mid", 12, 88
+SPR.POS "player_1_btm", 12, 96
+SPR.SHOW "player_1_top"
+SPR.SHOW "player_1_mid"
+SPR.SHOW "player_1_btm"
+
+SPR.NEW "player_2_top"
+SPR.NEW "player_2_mid"
+SPR.NEW "player_2_btm"
+SPR.POS "player_2_top", 240, 80
+SPR.POS "player_2_mid", 240, 88
+SPR.POS "player_2_btm", 240, 96
+SPR.SHOW "player_2_top"
+SPR.SHOW "player_2_mid"
+SPR.SHOW "player_2_btm"
+
+TILE.NEW t_ball, c_white
+
+SPR.NEW "ball"
+SPR.POS "ball", -10, -10
+SPR.SHOW "ball"
+
+RET
+
+#================================================
+	init_palette:
+#================================================
+PAL 0, c_black, &h101010
+PAL 1, c_white, &hf0f0f0
+RET
+
+#================================================
+	init_tileset:
+#================================================
+CHR 0, t_blank, "0000000000000000000000000000000000000000000000000000000000000000"
+CHR 1, t_paddle, "0011110000111100001111000011110000111100001111000011110000111100"
+CHR 2, t_ball, "0000000000011000001111000111111001111110001111000001100000000000"
+RET

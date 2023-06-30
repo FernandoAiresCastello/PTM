@@ -57,11 +57,12 @@ All the .dll files need to be always present in the same folder as the PTM.exe f
 Directories:
 
 	- The "docs" folder contains the offline documentation files for this version of the PTM.
-	- The "examples" folder contains the PTML samples as they appear on the README file of the GitHub repository root.
-	- The "games" folder contains some simple example games in PTML.
+	- The "tools" folder contains a few standalone tools that can be used in PTML programming.
+	- The "ptml-samples" folder contains the PTML samples as they appear on the README file of the GitHub repository root.
+	- The "ptml-games" folder contains some simple example games in PTML.
+	- The "ptml-utils" folder contains PTML programs implementing some common utilities.
 	- The "palettes" folder contains palette files for some common color palettes that can be loaded using the PAL.LOAD command.
 	- The "tilesets" folder contains tileset files for some common tilesets that can be loaded using the CHR.LOAD command.
-	- The "util" folder contains PTML programs implementing some common utilities.
 
 
 #===============#

@@ -182,7 +182,7 @@
             this.MaximizeBox = false;
             this.Name = "BinaryWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PTM Tile Edit";
+            this.Text = "PTM Tile Editor";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BinaryWindow_KeyDown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

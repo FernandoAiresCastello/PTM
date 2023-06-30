@@ -1,0 +1,5 @@
+LOCATE 1, 1
+PRINT "Please, type your name:\n"
+INPUT name, 10
+LOCATE 1, 4
+PRINTF "Hello, {%name}!"

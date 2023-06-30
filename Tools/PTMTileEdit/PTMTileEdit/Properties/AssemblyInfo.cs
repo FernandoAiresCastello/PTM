@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TGLTilePaint")]
+[assembly: AssemblyTitle("PTM Tile Editor")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("TGLTilePaint")]
-[assembly: AssemblyCopyright("Copyright ©  2023")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("Fernando Aires Castello")]
+[assembly: AssemblyProduct("PTM Tile Editor")]
+[assembly: AssemblyCopyright("(c) 2023")]
+[assembly: AssemblyTrademark("Fernando Aires Castello")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible

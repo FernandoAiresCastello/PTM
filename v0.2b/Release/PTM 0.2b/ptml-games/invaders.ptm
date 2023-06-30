@@ -1,0 +1,309 @@
+TITLE "Invaders"
+WINDOW 256, 192, 3, 1
+
+#================================================
+	init:
+#================================================
+DEF false, 0
+DEF true, 1
+DEF hiscore_file, "hiscore.txt"
+DEF max_enemy_sprites, 100
+VAR player_speed, 1
+NEG neg_player_speed, player_speed
+VAR player_missile_speed, -3
+VAR player_shooting, false
+VAR score, 0
+VAR hiscore, 0
+VAR enemy_move_timer, 0
+DEF enemy_move_timer_max_initial, 10
+
+CALL init_palette
+CALL init_tileset
+BUF.BGCOL default, color_black
+CALL draw_background
+CALL init_player
+CALL init_enemies
+
+FCHK hiscore_file, has_hiscore
+IF.TRUE has_hiscore
+	CLOAD hiscore_file, hiscore
+ENDIF
+
+#================================================
+	game_loop:
+#================================================
+CALL check_player_input
+CALL move_player_missile
+CALL check_missile_collision
+CALL move_enemies
+CALL draw_score
+CALL check_wave_defeated
+UPDATE
+GOTO game_loop
+
+#================================================
+	check_player_input:
+#================================================
+IF.KEY "RIGHT"
+	SPR.MOVE "spr_player", player_speed, 0
+	CALL maybe_wrap_player_around
+ENDIF
+IF.KEY "LEFT"
+	SPR.MOVE "spr_player", neg_player_speed, 0
+	CALL maybe_wrap_player_around
+ENDIF
+IF.KEY "SPACE"
+	CALL player_begin_shoot
+ENDIF
+IF.KEY "ESC"
+	EXIT
+ENDIF
+RET
+
+#================================================
+	move_enemies:
+#================================================
+INC enemy_move_timer
+IF.GTE enemy_move_timer, enemy_move_timer_max
+	VAR enemy_move_timer, 0
+	ARR.FOR enemy_ids, enemy_id
+		SPR.MOVE enemy_id, 0, 1
+		SPR.TGETY enemy_id, enemy_y
+		IF.GTE enemy_y, 21
+			SPR.TGET enemy_id
+			TILE.GETP "dead", is_dead
+			IF.FALSE is_dead
+				CALL game_over
+			ENDIF
+			SPR.HIDE enemy_id
+		ENDIF
+	NEXT
+ENDIF
+RET
+
+#================================================
+	player_begin_shoot:
+#================================================
+IF.TRUE player_shooting
+	RET
+ENDIF
+VAR player_shooting, true
+SPR.GETX "spr_player", mx
+SPR.GETY "spr_player", my
+SPR.POS "spr_missile", mx, my
+SPR.SHOW "spr_missile"
+MML.PLAY "L10O4CDF"
+RET
+
+#================================================
+	move_player_missile:
+#================================================
+IF.FALSE player_shooting
+	RET
+ENDIF
+SPR.MOVE "spr_missile", 0, player_missile_speed
+SPR.GETY "spr_missile", cur_my
+IF.LT cur_my, -8
+	VAR player_shooting, false
+ENDIF
+RET
+
+#================================================
+	check_missile_collision:
+#================================================
+IF.FALSE player_shooting
+	RET
+ENDIF
+ARR.FOR enemy_ids, enemy_id
+	SPR.HIT hit, "spr_missile", enemy_id
+	IF.TRUE hit
+		SPR.TGET enemy_id
+		TILE.GETP "dead", is_dead
+		IF.FALSE is_dead
+			CALL kill_enemy
+		ENDIF
+	ENDIF
+NEXT
+RET
+
+#================================================
+	kill_enemy:
+#================================================
+INC score
+IF.GTE score, hiscore
+	VAR hiscore, score
+ENDIF
+
+SPR.TGET enemy_id
+	TILE.SETP "dead", true
+	TILE.SETC 0, ch_enemy_dead_1
+	TILE.SETC 1, ch_enemy_dead_2
+	TILE.SETF 0, color_orange
+	TILE.SETF 1, color_red
+SPR.TSET enemy_id
+
+SPR.POS "spr_missile", -8, -8
+MML.PLAY "L10O6ECD"
+DEC enemies_left
+CALL adjust_enemy_speed
+RET
+
+#================================================
+	check_wave_defeated:
+#================================================
+IF.LTE enemies_left, 0
+	DELR 17, 22, 32, 23
+	COLOR color_green_lt
+	LOCATE 21, 22
+	PRINT	  "NEXT WAVE!"
+	LOCATE 21, 22
+	PRINT.ADD "          "
+	CSAVE hiscore_file, hiscore
+	PAUSE 500
+	CALL generate_next_wave
+ENDIF
+RET
+
+#================================================
+	generate_next_wave:
+#================================================
+ARR.FOR enemy_ids, enemy_id
+	SPR.DEL enemy_id
+NEXT
+ARR.CLR enemy_ids
+CALL init_enemies
+RET
+
+#================================================
+	adjust_enemy_speed:
+#================================================
+IF.LTE enemies_left, 80
+	VAR enemy_move_timer_max, 8
+ENDIF
+IF.LTE enemies_left, 60
+	VAR enemy_move_timer_max, 6
+ENDIF
+IF.LTE enemies_left, 40
+	VAR enemy_move_timer_max, 5
+ENDIF
+IF.LTE enemies_left, 20
+	VAR enemy_move_timer_max, 4
+ENDIF
+IF.LTE enemies_left, 2
+	VAR enemy_move_timer_max, 2
+ENDIF
+RET
+
+#================================================
+	maybe_wrap_player_around:
+#================================================
+SPR.GETX "spr_player", x
+IF.GT x, 255
+	SPR.X "spr_player", -8
+ENDIF
+IF.LT x, -8
+	SPR.X "spr_player", 255
+ENDIF
+RET
+
+#================================================
+	draw_score:
+#================================================
+STR.FMT score_fmt,"%05i",score
+STR.FMT hiscore_fmt,"%05i",hiscore
+TXT.BGOFF
+LOCATE 1, 22
+PRINTF "{f1}score {f2}{%score_fmt}{/f}"
+LOCATE 17, 22
+PRINTF "{f1}hi-score {f2}{%hiscore_fmt}{/f}"
+RET
+
+#================================================
+	game_over:
+#================================================
+DELR 17, 22, 32, 23
+COLOR color_red
+LOCATE 21, 22
+PRINT	  "GAME OVER!"
+LOCATE 21, 22
+PRINT.ADD "          "
+CSAVE hiscore_file, hiscore
+MML.PLAY "O2L80BAGFEDCCC"
+PAUSE 500
+RESET
+
+#================================================
+	init_player:
+#================================================
+TILE.NEW ch_player, color_white
+SPR.NEW "spr_player"
+SPR.SHOW "spr_player"
+SPR.TPOS "spr_player", 16, 21
+TILE.NEW ch_missile, color_cyan
+SPR.NEW "spr_missile"
+SPR.HIDE "spr_missile"
+SPR.TPOS "spr_missile", 16, 19
+RET
+
+#================================================
+	init_enemies:
+#================================================
+VAR enemies_left, max_enemy_sprites
+VAR enemy_move_timer_max, enemy_move_timer_max_initial
+
+ARR.NEW enemy_ids
+
+TILE.NEW ch_enemy_1, color_green
+TILE.ADD ch_enemy_2, color_green
+
+FOR i, 0, max_enemy_sprites
+	VAR enemy_sprite_id, "spr_enemy"
+	STR.CAT enemy_sprite_id, enemy_sprite_id, i
+	ARR.PUSH enemy_ids, enemy_sprite_id
+	SPR.NEW enemy_sprite_id
+	RND enemy_x, 8, 22
+	RND enemy_y, -80, 0
+	SPR.TPOS enemy_sprite_id, enemy_x, enemy_y
+	SPR.SHOW enemy_sprite_id
+NEXT
+RET
+
+#================================================
+	draw_background:
+#================================================
+TILE.NEW ch_blank, color_blue, color_blue_dkr
+RECT 0, 0, 31, 8
+TILE.NEW ch_blank, color_blue, color_blue_dk
+RECT 0, 9, 31, 16
+TILE.NEW ch_blank, color_blue, color_blue
+RECT 0, 17, 31, 21
+RET
+
+#================================================
+	init_palette:
+#================================================
+PAL 0, color_black, &h101010
+PAL 1, color_white, &hf0f0f0
+PAL 2, color_gray, &h505050
+PAL 3, color_blue_dkr, &h121020
+PAL 4, color_blue_dk, &h121030
+PAL 5, color_blue, &h121040
+PAL 6, color_green, &h00b000
+PAL 7, color_yellow, &hffff00
+PAL 8, color_red, &hff0000
+PAL 9, color_orange, &hff8000
+PAL 10, color_cyan, &h00ffff
+PAL 11, color_green_lt, &h00ff20
+RET
+
+#================================================
+	init_tileset:
+#================================================
+CHR 0, ch_blank, "0000000000000000000000000000000000000000000000000000000000000000"
+CHR 1, ch_player, "0001100000011000001111000111111011011011111111110010010000000000"
+CHR 2, ch_enemy_1, "0000000000111000011111001010101001111100100000100100010000000000"
+CHR 3, ch_enemy_2, "0000000000111000011111001101011001111100100000101000001000000000"
+CHR 4, ch_missile, "0001100000011000000110000000000000011000000000000001100000000000"
+CHR 5, ch_enemy_dead_1, "0000000000000000010010000011000000110000010010000000000000000000"
+CHR 6, ch_enemy_dead_2, "0000000010000100010010000000000000000000010010001000010000000000"
+RET

@@ -288,7 +288,9 @@ namespace CppUtils
 
 	std::string File::GetCurrentExecutableFilePath()
 	{
-		return __argv[0];
+		char path[1024] = { 0 };
+		GetModuleFileName(NULL, path, 1024);
+		return path;
 	}
 
 	std::string File::GetCurrentExecutableFileName(bool removeExtension)

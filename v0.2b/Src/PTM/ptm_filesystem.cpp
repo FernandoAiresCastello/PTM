@@ -111,7 +111,9 @@ char ptm_get_record_file_mode()
 }
 vector<string> ptm_file_list(string root_dir)
 {
-	string ptm_folder = File::GetParentDirectory(File::GetCurrentExecutableFilePath()) + "\\";
+	string ptm_exe_path = File::GetCurrentExecutableFilePath();
+	string ptm_folder = File::GetParentDirectory(ptm_exe_path) + "\\";
+
 	string path = ptm_folder + root_dir;
 	if (!File::ExistsFolder(path)) {
 		ptm_abort("Path not found: " + path);

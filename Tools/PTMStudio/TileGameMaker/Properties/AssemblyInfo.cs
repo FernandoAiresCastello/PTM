@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TileGameMaker")]
+[assembly: AssemblyTitle("PTM Studio")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Fernando Aires Castello")]
-[assembly: AssemblyProduct("TileGameMaker")]
-[assembly: AssemblyCopyright("Copyleft 2019 - 2021")]
+[assembly: AssemblyProduct("PTM Studio")]
+[assembly: AssemblyCopyright("(c) 2023")]
 [assembly: AssemblyTrademark("Fernando Aires Castello")]
 [assembly: AssemblyCulture("")]
 
