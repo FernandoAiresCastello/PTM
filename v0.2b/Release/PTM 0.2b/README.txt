@@ -9,10 +9,10 @@
 #=============================================================================#
 
 
-Welcome to the PTM version 0.2 beta! 
-Release date: July 1st, 2023
-Note: This is an early beta release, expect bugs and limited documentation.
-
+	Thank you for downloading and trying the PTM version 0.2 beta!
+	Please note, this is an early beta release, expect bugs and limited documentation.
+	Release date: July 1st, 2023
+	
 
 #===========#
 #   Links   #
@@ -21,10 +21,20 @@ Note: This is an early beta release, expect bugs and limited documentation.
 You can find all released versions of PTM on Itch.io:
 
 	https://fernandoairescastello.itch.io/ptm
+	
 
 Please follow the project on GitHub if you like it. There you can also download nightly (very unstable) development builds for the next upcoming version:
 
 	https://github.com/FernandoAiresCastello/PTM
+	
+	
+If you encounter any issues, please get in contact. All bug reports, questions and suggestions are welcome. You can reach me (Fernando) directly at:
+	
+	fernandoairescastello@gmail.com
+	
+I work in this project in my spare time, so even though I may reply quickly, it may take some time until I am able to fix any issues. Also, this version is feature complete, meaning any potential new features will be implemented only in the next version.
+
+If you send me an e-mail, please make sure to include the word "PTM" in the subject field, or else it might get filtered. Thank you!
 	
 
 #===========#
