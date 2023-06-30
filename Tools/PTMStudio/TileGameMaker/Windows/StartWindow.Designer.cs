@@ -168,7 +168,7 @@
             this.LbVersionBuild.Name = "LbVersionBuild";
             this.LbVersionBuild.Size = new System.Drawing.Size(686, 20);
             this.LbVersionBuild.TabIndex = 2;
-            this.LbVersionBuild.Text = "v0.2b";
+            this.LbVersionBuild.Text = "version 1.0";
             this.LbVersionBuild.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel3

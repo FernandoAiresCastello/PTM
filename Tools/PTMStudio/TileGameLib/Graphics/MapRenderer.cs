@@ -255,7 +255,7 @@ namespace TileGameLib.Graphics
             {
                 Tile tile = o.Animation.GetFrame(AnimationFrame);
                 if (tile != null)
-                    Disp.Graphics.PutTile(x, y, tile.Index, tile.ForeColor, tile.BackColor);
+                    Disp.Graphics.PutTile(x, y, tile.Index, tile.ForeColor, tile.BackColor, o.Transparent);
             }
         }
 
@@ -267,7 +267,7 @@ namespace TileGameLib.Graphics
             {
                 Tile tile = Map.OutOfBoundsObject.Animation.GetFrame(AnimationFrame);
                 if (tile != null)
-                    Disp.Graphics.PutTile(x, y, tile.Index, tile.ForeColor, tile.BackColor);
+                    Disp.Graphics.PutTile(x, y, tile.Index, tile.ForeColor, tile.BackColor, oob.Transparent);
             }
         }
     }

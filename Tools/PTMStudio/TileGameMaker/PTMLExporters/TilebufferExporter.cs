@@ -45,6 +45,8 @@ namespace TileGameMaker.PTMLExporters
                     {
                         Append(1);
 
+                        Append(o.Transparent ? 1 : 0);
+
                         Append(o.Animation.Size);
                         foreach (Tile tile in o.Animation.Frames)
                         {

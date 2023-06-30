@@ -47,13 +47,13 @@ namespace TileGameMaker.TiledDisplays
                     int selectionIndicatorColor = Graphics.Palette.GetBrightness(i) > 0.5 ? black : white;
 
                     if (i == SelectedForeColor && i == SelectedBackColor)
-                        Graphics.PutTile(x, y, SelectedBothColorsEqualSwatchTile, selectionIndicatorColor, i);
+                        Graphics.PutTile(x, y, SelectedBothColorsEqualSwatchTile, selectionIndicatorColor, i, false);
                     else if (i == SelectedForeColor)
-                        Graphics.PutTile(x, y, SelectedForeColorSwatchTile, selectionIndicatorColor, i);
+                        Graphics.PutTile(x, y, SelectedForeColorSwatchTile, selectionIndicatorColor, i, false);
                     else if (i == SelectedBackColor)
-                        Graphics.PutTile(x, y, SelectedBackColorSwatchTile, selectionIndicatorColor, i);
+                        Graphics.PutTile(x, y, SelectedBackColorSwatchTile, selectionIndicatorColor, i, false);
                     else
-                        Graphics.PutTile(x, y, SwatchTileIx, i, i);
+                        Graphics.PutTile(x, y, SwatchTileIx, i, i, false);
 
                     x++;
 
@@ -65,7 +65,7 @@ namespace TileGameMaker.TiledDisplays
                 }
                 else
                 {
-                    Graphics.PutTile(x, y, 0, white, white);
+                    Graphics.PutTile(x, y, 0, white, white, false);
                 }
             }
 

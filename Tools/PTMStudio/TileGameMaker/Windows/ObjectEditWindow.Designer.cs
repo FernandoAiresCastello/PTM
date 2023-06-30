@@ -36,14 +36,14 @@
             this.BtnClearAnim = new System.Windows.Forms.Button();
             this.AnimationPanel = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.ChkVisible = new System.Windows.Forms.CheckBox();
+            this.ChkTransparent = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.PropertyGrid = new TileGameMaker.Panels.ObjectPropertyGridPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.BtnSetEqualToClipboard = new System.Windows.Forms.Button();
             this.BtnRevert = new System.Windows.Forms.Button();
             this.BtnClear = new System.Windows.Forms.Button();
             this.BtnApply = new System.Windows.Forms.Button();
-            this.PropertyGrid = new TileGameMaker.Panels.ObjectPropertyGridPanel();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TxtFrames)).BeginInit();
@@ -159,7 +159,7 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.ChkVisible);
+            this.panel1.Controls.Add(this.ChkTransparent);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(5, 61);
@@ -168,18 +168,17 @@
             this.panel1.Size = new System.Drawing.Size(232, 31);
             this.panel1.TabIndex = 4;
             // 
-            // ChkVisible
+            // ChkTransparent
             // 
-            this.ChkVisible.AutoSize = true;
-            this.ChkVisible.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ChkVisible.Location = new System.Drawing.Point(176, 0);
-            this.ChkVisible.Margin = new System.Windows.Forms.Padding(0);
-            this.ChkVisible.Name = "ChkVisible";
-            this.ChkVisible.Size = new System.Drawing.Size(56, 31);
-            this.ChkVisible.TabIndex = 6;
-            this.ChkVisible.Text = "Visible";
-            this.ChkVisible.UseVisualStyleBackColor = true;
-            this.ChkVisible.Visible = false;
+            this.ChkTransparent.AutoSize = true;
+            this.ChkTransparent.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ChkTransparent.Location = new System.Drawing.Point(149, 0);
+            this.ChkTransparent.Margin = new System.Windows.Forms.Padding(0);
+            this.ChkTransparent.Name = "ChkTransparent";
+            this.ChkTransparent.Size = new System.Drawing.Size(83, 31);
+            this.ChkTransparent.TabIndex = 6;
+            this.ChkTransparent.Text = "Transparent";
+            this.ChkTransparent.UseVisualStyleBackColor = true;
             // 
             // label3
             // 
@@ -192,6 +191,16 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "Properties";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // PropertyGrid
+            // 
+            this.PropertyGrid.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PropertyGrid.Location = new System.Drawing.Point(5, 92);
+            this.PropertyGrid.Margin = new System.Windows.Forms.Padding(0);
+            this.PropertyGrid.Name = "PropertyGrid";
+            this.PropertyGrid.Size = new System.Drawing.Size(232, 159);
+            this.PropertyGrid.TabIndex = 8;
             // 
             // tableLayoutPanel2
             // 
@@ -262,16 +271,6 @@
             this.BtnApply.UseVisualStyleBackColor = true;
             this.BtnApply.Click += new System.EventHandler(this.BtnApply_Click);
             // 
-            // PropertyGrid
-            // 
-            this.PropertyGrid.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PropertyGrid.Location = new System.Drawing.Point(5, 92);
-            this.PropertyGrid.Margin = new System.Windows.Forms.Padding(0);
-            this.PropertyGrid.Name = "PropertyGrid";
-            this.PropertyGrid.Size = new System.Drawing.Size(232, 159);
-            this.PropertyGrid.TabIndex = 8;
-            // 
             // ObjectEditWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -302,7 +301,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label3;
         private Panels.ObjectPropertyGridPanel PropertyGrid;
-        private System.Windows.Forms.CheckBox ChkVisible;
+        private System.Windows.Forms.CheckBox ChkTransparent;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Button BtnApply;
         private System.Windows.Forms.Button BtnRevert;

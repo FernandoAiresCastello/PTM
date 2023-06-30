@@ -201,14 +201,14 @@ namespace TileGameMaker.Windows
         {
             if (NewData != null)
             {
-                ChkVisible.Checked = NewData.Object.Visible;
+                ChkTransparent.Checked = NewData.Object.Transparent;
                 PropertyGrid.UpdateProperties(NewData.Object);
                 TxtFrames.Value = NewData.Object.Animation.Size;
                 AnimationStrip.Animation = NewData.Object.Animation;
             }
             else if (NewObject != null)
             {
-                ChkVisible.Checked = NewObject.Visible;
+                ChkTransparent.Checked = NewObject.Transparent;
                 PropertyGrid.UpdateProperties(NewObject);
                 TxtFrames.Value = NewObject.Animation.Size;
                 AnimationStrip.Animation = NewObject.Animation;
@@ -231,13 +231,13 @@ namespace TileGameMaker.Windows
             if (NewData != null)
             {
                 NewData.Object.Animation = new ObjectAnimation(Animation);
-                NewData.Object.Visible = ChkVisible.Checked;
+                NewData.Object.Transparent = ChkTransparent.Checked;
                 NewData.Object.Properties = PropertyGrid.Properties;
             }
             else if (NewObject != null)
             {
                 NewObject.Animation = new ObjectAnimation(Animation);
-                NewObject.Visible = ChkVisible.Checked;
+                NewObject.Transparent = ChkTransparent.Checked;
                 NewObject.Properties = PropertyGrid.Properties;
             }
 
@@ -269,12 +269,12 @@ namespace TileGameMaker.Windows
         {
             if (NewData != null)
             {
-                NewData.Object.Visible = true;
+                NewData.Object.Transparent = false;
                 NewData.Object.Properties.RemoveAll();
             }
             else if (NewObject != null)
             {
-                NewObject.Visible = true;
+                NewObject.Transparent = false;
                 NewObject.Properties.RemoveAll();
             }
 

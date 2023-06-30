@@ -1285,12 +1285,17 @@ void ptm_load_tilebuffer(string id, string file)
 				bool empty = NEXT_INT <= 0;
 				if (empty) continue;
 				t_tileseq tile;
+				bool transparent = NEXT_INT > 0;
 				int frames = NEXT_INT;
 				for (int frame_ix = 0; frame_ix < frames; frame_ix++) {
 					int ch = NEXT_INT;
 					int fgc = NEXT_INT;
 					int bgc = NEXT_INT;
-					tile.add(ch, fgc, bgc);
+					if (transparent)
+						tile.add(ch, fgc);
+					else
+						tile.add(ch, fgc, bgc);
+
 					layer.put(x, y, tile);
 				}
 				int prop_count = NEXT_INT;

@@ -38,8 +38,8 @@
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.exportToFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.BtnExportRawBytes = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnExportBinaryStrings = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnExportRawBytes = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnExportHex = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnExportToImage = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnCode = new System.Windows.Forms.ToolStripButton();
@@ -121,26 +121,26 @@
             // 
             this.importFromFileAs.Enabled = false;
             this.importFromFileAs.Name = "importFromFileAs";
-            this.importFromFileAs.Size = new System.Drawing.Size(180, 22);
+            this.importFromFileAs.Size = new System.Drawing.Size(175, 22);
             this.importFromFileAs.Text = "Import from file as:";
             this.importFromFileAs.Click += new System.EventHandler(this.BtnImportRawBytes_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(172, 6);
             // 
             // BtnImportBinaryStrings
             // 
             this.BtnImportBinaryStrings.Name = "BtnImportBinaryStrings";
-            this.BtnImportBinaryStrings.Size = new System.Drawing.Size(180, 22);
+            this.BtnImportBinaryStrings.Size = new System.Drawing.Size(175, 22);
             this.BtnImportBinaryStrings.Text = "Binary strings";
             this.BtnImportBinaryStrings.Click += new System.EventHandler(this.BtnImportBinaryStrings_Click);
             // 
             // BtnImportRawBytes
             // 
             this.BtnImportRawBytes.Name = "BtnImportRawBytes";
-            this.BtnImportRawBytes.Size = new System.Drawing.Size(180, 22);
+            this.BtnImportRawBytes.Size = new System.Drawing.Size(175, 22);
             this.BtnImportRawBytes.Text = "Bytes";
             this.BtnImportRawBytes.Click += new System.EventHandler(this.BtnImportRawBytes_Click);
             // 
@@ -165,39 +165,39 @@
             // 
             this.exportToFileToolStripMenuItem.Enabled = false;
             this.exportToFileToolStripMenuItem.Name = "exportToFileToolStripMenuItem";
-            this.exportToFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportToFileToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.exportToFileToolStripMenuItem.Text = "Export to file as:";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
-            // 
-            // BtnExportRawBytes
-            // 
-            this.BtnExportRawBytes.Name = "BtnExportRawBytes";
-            this.BtnExportRawBytes.Size = new System.Drawing.Size(180, 22);
-            this.BtnExportRawBytes.Text = "Bytes";
-            this.BtnExportRawBytes.Click += new System.EventHandler(this.BtnExportRawBytes_Click);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(164, 6);
             // 
             // BtnExportBinaryStrings
             // 
             this.BtnExportBinaryStrings.Name = "BtnExportBinaryStrings";
-            this.BtnExportBinaryStrings.Size = new System.Drawing.Size(180, 22);
+            this.BtnExportBinaryStrings.Size = new System.Drawing.Size(167, 22);
             this.BtnExportBinaryStrings.Text = "Binary strings";
             this.BtnExportBinaryStrings.Click += new System.EventHandler(this.BtnExportBinaryStrings_Click);
+            // 
+            // BtnExportRawBytes
+            // 
+            this.BtnExportRawBytes.Name = "BtnExportRawBytes";
+            this.BtnExportRawBytes.Size = new System.Drawing.Size(167, 22);
+            this.BtnExportRawBytes.Text = "Bytes";
+            this.BtnExportRawBytes.Click += new System.EventHandler(this.BtnExportRawBytes_Click);
             // 
             // BtnExportHex
             // 
             this.BtnExportHex.Name = "BtnExportHex";
-            this.BtnExportHex.Size = new System.Drawing.Size(180, 22);
+            this.BtnExportHex.Size = new System.Drawing.Size(167, 22);
             this.BtnExportHex.Text = "Hexadecimal CSV";
             this.BtnExportHex.Click += new System.EventHandler(this.BtnExportHex_Click);
             // 
             // BtnExportToImage
             // 
             this.BtnExportToImage.Name = "BtnExportToImage";
-            this.BtnExportToImage.Size = new System.Drawing.Size(180, 22);
+            this.BtnExportToImage.Size = new System.Drawing.Size(167, 22);
             this.BtnExportToImage.Text = "Image";
             this.BtnExportToImage.Click += new System.EventHandler(this.BtnExportToImage_Click);
             // 
@@ -210,6 +210,7 @@
             this.BtnCode.Size = new System.Drawing.Size(23, 20);
             this.BtnCode.Text = "toolStripButton1";
             this.BtnCode.ToolTipText = "View / edit as code";
+            this.BtnCode.Visible = false;
             this.BtnCode.Click += new System.EventHandler(this.BtnCode_Click);
             // 
             // toolStripSeparator1
