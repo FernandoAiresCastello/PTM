@@ -1,7 +1,3 @@
-# Things left to do in v0.2b
-
-- Tutorial
-
 # Possible ideas for next version (v0.3b)
 
 - Stack (STK.NEW, STK.PUSH, STK.POP, STK.TOP)

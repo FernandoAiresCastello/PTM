@@ -1,1 +1,3 @@
 Tools/** linguist-vendored
+*.html -linguist-detectable
+*.css -linguist-detectable
