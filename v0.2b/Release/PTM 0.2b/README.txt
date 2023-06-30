@@ -3,21 +3,21 @@
 #       PTM - Programmable Tile Machine                                       #
 #                                                                             #
 #       Version 0.2b                                                          #
+#       Released on July 1st, 2023                                            #
 #                                                                             #
 #       (c) 2023 Developed by Fernando Aires Castello                         #
 #                                                                             #
 #=============================================================================#
 
 Welcome to the PTM version 0.2 beta!
-Release date: July 1st, 2023
 Please note: This is an early beta release, expect bugs and limited documentation.
 You can follow the project on GitHub if you like it: https://github.com/FernandoAiresCastello/PTM
 
-The following is a brief explanation of the files in the package you've just downloaded:
+The following is a brief explanation of the files and directories contained in this package:
 
 PTM.exe is the machine executable itself. It contains the PTML interpreter. If you double-click this file, it will launch the PTM and by default it will look for a program file called "main.ptm" in the same folder.
 
-The default main.ptm file included in this release simply includes an utility program called "PTM Launcher" (located under util/launcher.ptm), which will display an interactive menu for selecting and running a program.
+The default main.ptm file included in this release simply includes an utility program called "PTM Launcher", which will display an interactive menu for selecting and running another program. You can safely replace the contents of main.ptm with your own code, or create different PTML source files and include them directly in main.ptm using the INCL command.
 
 If you want the machine to boot up using some program file other than main.ptm, you can specify the file path via the command line to PTM.exe and it will load then run the code. For example, the following command line will launch the PTM and run the "games/invaders.ptm" program included in this package:
 
