@@ -1,7 +1,9 @@
-## v0.1b (May 15th, 2023)
+## v0.1b
+### Released: May 15th, 2023
 
 - Initial beta release.
 
-## v0.2b (In development)
+## v0.2b
+### Released: July 1st, 2023
 
 - Too many changes since v0.1b to keep track of. This version breaks compatibility with most v0.1b programs since several core PTML features have changed.
