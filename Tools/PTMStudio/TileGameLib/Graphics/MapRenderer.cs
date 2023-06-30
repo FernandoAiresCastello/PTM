@@ -211,7 +211,7 @@ namespace TileGameLib.Graphics
             Disp.Graphics.Palette = Map.Palette;
 
             if (ClearViewportBeforeRender)
-                Disp.Graphics.ClearRect(Map.BackColor, Viewport.X, Viewport.Y, Viewport.Width, Viewport.Height);
+                Disp.Graphics.ClearRect(Map.BackColorIndex, Viewport.X, Viewport.Y, Viewport.Width, Viewport.Height);
 
             if (RenderSingleLayer)
             {

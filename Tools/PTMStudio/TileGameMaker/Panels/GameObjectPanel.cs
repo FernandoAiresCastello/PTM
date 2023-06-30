@@ -41,7 +41,7 @@ namespace TileGameMaker.Panels
         {
             ObjectEditWindow win = new ObjectEditWindow(MapEditor, MapEditor.GetClipboardObject());
 
-            if (win.ShowDialog(this, "Edit clipboard object") == DialogResult.OK)
+            if (win.ShowDialog(this, "Edit TILE register") == DialogResult.OK)
             {
                 MapEditor.CopyObjectToClipboard(win.EditedObject);
                 UpdateClipboardView();
@@ -96,10 +96,10 @@ namespace TileGameMaker.Panels
                 ClipboardDisplay.Graphics.PutTile(0, 0, clipboardObject.Tile);
                 ClipboardDisplay.Refresh();
 
-                Print(TxtClipboard, $"[Clipboard]");
-                Print(TxtClipboard, $"    Visible: {clipboardObject.Visible}");
-                Print(TxtClipboard, $"    Frames: {clipboardObject.Animation.Size}");
-                Print(TxtClipboard, $"    Properties: ");
+                Print(TxtClipboard, $"[TILE register]");
+                //Print(TxtClipboard, $"    Visible: {clipboardObject.Visible}");
+                Print(TxtClipboard, $"    Nr. Tiles: {clipboardObject.Animation.Size}");
+                Print(TxtClipboard, $"    Nr. Properties: ");
 
                 if (clipboardObject.Properties.Size > 0)
                 {
@@ -126,16 +126,16 @@ namespace TileGameMaker.Panels
             GameObject o = pc.Cell.Object;
             ObjectPosition pos = pc.Position;
 
-            Print(TxtObject, $"[Cell]");
+            Print(TxtObject, $"[Cursor]");
             Print(TxtObject, $"    Layer: {pos.Layer}, X: {pos.X}, Y: {pos.Y}");
             Print(TxtObject);
-            Print(TxtObject, $"[Object]");
+            Print(TxtObject, $"[Tile]");
 
             if (o != null)
             {
-                Print(TxtObject, $"    Visible: {o.Visible}");
-                Print(TxtObject, $"    Frames: {o.Animation.Size}");
-                Print(TxtObject, $"    Properties: ");
+                //Print(TxtObject, $"    Visible: {o.Visible}");
+                Print(TxtObject, $"    Nr. Tiles: {o.Animation.Size}");
+                Print(TxtObject, $"    Nr. Properties: ");
 
                 if (o.Properties.Size > 0)
                 {

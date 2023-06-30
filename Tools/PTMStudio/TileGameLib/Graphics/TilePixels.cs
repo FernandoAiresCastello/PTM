@@ -53,6 +53,11 @@ namespace TileGameLib.Graphics
             PixelRows[7] = row8;
         }
 
+        public void Set(string binary)
+        {
+            FromBinaryString(binary);
+        }
+
         public void Invert()
         {
             for (int i = 0; i < PixelRows.Length; i++)
@@ -113,7 +118,7 @@ namespace TileGameLib.Graphics
                 PixelRows[i] = pixels.PixelRows[i];
         }
 
-        public void FromBinaryString(string binaryString)
+        private void FromBinaryString(string binaryString)
         {
             string msgError = "Cannot parse tile pixels from given binary string: " + binaryString;
 

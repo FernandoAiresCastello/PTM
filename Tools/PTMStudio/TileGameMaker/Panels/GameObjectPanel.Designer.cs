@@ -78,7 +78,7 @@
             this.TxtObject.Name = "TxtObject";
             this.TxtObject.ReadOnly = true;
             this.TxtObject.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.TxtObject.Size = new System.Drawing.Size(224, 153);
+            this.TxtObject.Size = new System.Drawing.Size(224, 154);
             this.TxtObject.TabIndex = 2;
             this.TxtObject.WordWrap = false;
             // 
@@ -89,13 +89,13 @@
             this.tableLayoutPanel2.Controls.Add(this.TxtClipboard, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 153);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 154);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 71.83099F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 28.16901F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(224, 189);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(224, 188);
             this.tableLayoutPanel2.TabIndex = 3;
             // 
             // TxtClipboard
@@ -124,7 +124,7 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(218, 48);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(218, 47);
             this.tableLayoutPanel3.TabIndex = 5;
             // 
             // ClipboardPanel
@@ -132,20 +132,21 @@
             this.ClipboardPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ClipboardPanel.Location = new System.Drawing.Point(3, 3);
             this.ClipboardPanel.Name = "ClipboardPanel";
-            this.ClipboardPanel.Size = new System.Drawing.Size(59, 42);
+            this.ClipboardPanel.Size = new System.Drawing.Size(59, 41);
             this.ClipboardPanel.TabIndex = 6;
             // 
             // LbClipboard
             // 
             this.LbClipboard.AutoSize = true;
             this.LbClipboard.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LbClipboard.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.LbClipboard.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LbClipboard.ForeColor = System.Drawing.SystemColors.ControlText;
             this.LbClipboard.Location = new System.Drawing.Point(68, 0);
             this.LbClipboard.Name = "LbClipboard";
             this.LbClipboard.Padding = new System.Windows.Forms.Padding(0, 0, 0, 3);
-            this.LbClipboard.Size = new System.Drawing.Size(147, 48);
+            this.LbClipboard.Size = new System.Drawing.Size(147, 47);
             this.LbClipboard.TabIndex = 7;
-            this.LbClipboard.Text = "Clipboard\r\nClick to edit tile data";
+            this.LbClipboard.Text = "TILE register\r\nClick to edit tile data";
             this.LbClipboard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // GameObjectPanel

@@ -50,7 +50,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ptm_icon_2.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\ptm_icon_2.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
@@ -505,7 +505,7 @@
     <None Include="Resources\control_play_blue.png" />
     <None Include="Resources\bricks.png" />
     <None Include="Resources\flag_flyaway_blue.png" />
-    <Content Include="ptm_icon_2.ico" />
+    <Content Include="Resources\ptm_icon_2.ico" />
     <Content Include="Resources\gameboy.ico" />
   </ItemGroup>
   <ItemGroup>

@@ -55,7 +55,7 @@ namespace TileGameLib.File
                 Append(map.Name);
                 Append(map.Width);
                 Append(map.Height);
-                Append(map.BackColor);
+                Append(map.BackColorIndex);
                 Append(map.Layers.Count);
 
                 // === LAYERS ===

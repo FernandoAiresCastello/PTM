@@ -29,7 +29,14 @@
         private void InitializeComponent()
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnSaveProject = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnSaveAndExportProject = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnCloseProject = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.MiExit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnTemplateObjects = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnDataExtractor = new System.Windows.Forms.ToolStripMenuItem();
             this.WindowLayout = new System.Windows.Forms.TableLayoutPanel();
             this.MainLayout = new System.Windows.Forms.TableLayoutPanel();
@@ -44,13 +51,6 @@
             this.MapEditorPanel = new System.Windows.Forms.Panel();
             this.CommandLinePanel = new System.Windows.Forms.Panel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.BtnTemplateObjects = new System.Windows.Forms.ToolStripMenuItem();
-            this.BtnSaveProject = new System.Windows.Forms.ToolStripMenuItem();
-            this.BtnSaveAndExportProject = new System.Windows.Forms.ToolStripMenuItem();
-            this.BtnCloseProject = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.MiExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.WindowLayout.SuspendLayout();
             this.MainLayout.SuspendLayout();
@@ -73,6 +73,59 @@
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BtnSaveProject,
+            this.BtnSaveAndExportProject,
+            this.BtnCloseProject,
+            this.toolStripSeparator2,
+            this.MiExit});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
+            this.fileToolStripMenuItem.Text = "Project";
+            // 
+            // BtnSaveProject
+            // 
+            this.BtnSaveProject.Image = global::TileGameMaker.Properties.Resources.diskette;
+            this.BtnSaveProject.Name = "BtnSaveProject";
+            this.BtnSaveProject.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.BtnSaveProject.Size = new System.Drawing.Size(230, 22);
+            this.BtnSaveProject.Text = "Save";
+            this.BtnSaveProject.Click += new System.EventHandler(this.BtnSaveProject_Click);
+            // 
+            // BtnSaveAndExportProject
+            // 
+            this.BtnSaveAndExportProject.Image = global::TileGameMaker.Properties.Resources.save_close;
+            this.BtnSaveAndExportProject.Name = "BtnSaveAndExportProject";
+            this.BtnSaveAndExportProject.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.BtnSaveAndExportProject.Size = new System.Drawing.Size(230, 22);
+            this.BtnSaveAndExportProject.Text = "Save and export";
+            this.BtnSaveAndExportProject.Visible = false;
+            this.BtnSaveAndExportProject.Click += new System.EventHandler(this.BtnSaveAndExportProject_Click);
+            // 
+            // BtnCloseProject
+            // 
+            this.BtnCloseProject.Image = global::TileGameMaker.Properties.Resources.folder_vertical_zipper;
+            this.BtnCloseProject.Name = "BtnCloseProject";
+            this.BtnCloseProject.Size = new System.Drawing.Size(230, 22);
+            this.BtnCloseProject.Text = "Close";
+            this.BtnCloseProject.Click += new System.EventHandler(this.BtnCloseProject_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(227, 6);
+            // 
+            // MiExit
+            // 
+            this.MiExit.Image = global::TileGameMaker.Properties.Resources.cross;
+            this.MiExit.Name = "MiExit";
+            this.MiExit.Size = new System.Drawing.Size(230, 22);
+            this.MiExit.Text = "Quit";
+            this.MiExit.Click += new System.EventHandler(this.MiExit_Click);
+            // 
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -82,12 +135,21 @@
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
+            // BtnTemplateObjects
+            // 
+            this.BtnTemplateObjects.Image = global::TileGameMaker.Properties.Resources.bricks;
+            this.BtnTemplateObjects.Name = "BtnTemplateObjects";
+            this.BtnTemplateObjects.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.BtnTemplateObjects.Size = new System.Drawing.Size(167, 22);
+            this.BtnTemplateObjects.Text = "Saved tiles";
+            this.BtnTemplateObjects.Click += new System.EventHandler(this.BtnTemplateObjects_Click);
+            // 
             // BtnDataExtractor
             // 
             this.BtnDataExtractor.Image = global::TileGameMaker.Properties.Resources.database_lightning;
             this.BtnDataExtractor.Name = "BtnDataExtractor";
             this.BtnDataExtractor.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.BtnDataExtractor.Size = new System.Drawing.Size(180, 22);
+            this.BtnDataExtractor.Size = new System.Drawing.Size(167, 22);
             this.BtnDataExtractor.Text = "Data extractor";
             this.BtnDataExtractor.Click += new System.EventHandler(this.BtnDataExtractor_Click);
             // 
@@ -242,67 +304,6 @@
             this.statusStrip1.Size = new System.Drawing.Size(784, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
-            // 
-            // BtnTemplateObjects
-            // 
-            this.BtnTemplateObjects.Image = global::TileGameMaker.Properties.Resources.bricks;
-            this.BtnTemplateObjects.Name = "BtnTemplateObjects";
-            this.BtnTemplateObjects.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.BtnTemplateObjects.Size = new System.Drawing.Size(180, 22);
-            this.BtnTemplateObjects.Text = "Saved tiles";
-            this.BtnTemplateObjects.Click += new System.EventHandler(this.BtnTemplateObjects_Click);
-            // 
-            // BtnSaveProject
-            // 
-            this.BtnSaveProject.Image = global::TileGameMaker.Properties.Resources.diskette;
-            this.BtnSaveProject.Name = "BtnSaveProject";
-            this.BtnSaveProject.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.BtnSaveProject.Size = new System.Drawing.Size(230, 22);
-            this.BtnSaveProject.Text = "Save";
-            this.BtnSaveProject.Click += new System.EventHandler(this.BtnSaveProject_Click);
-            // 
-            // BtnSaveAndExportProject
-            // 
-            this.BtnSaveAndExportProject.Image = global::TileGameMaker.Properties.Resources.save_close;
-            this.BtnSaveAndExportProject.Name = "BtnSaveAndExportProject";
-            this.BtnSaveAndExportProject.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.S)));
-            this.BtnSaveAndExportProject.Size = new System.Drawing.Size(230, 22);
-            this.BtnSaveAndExportProject.Text = "Save and export";
-            this.BtnSaveAndExportProject.Click += new System.EventHandler(this.BtnSaveAndExportProject_Click);
-            // 
-            // BtnCloseProject
-            // 
-            this.BtnCloseProject.Image = global::TileGameMaker.Properties.Resources.folder_vertical_zipper;
-            this.BtnCloseProject.Name = "BtnCloseProject";
-            this.BtnCloseProject.Size = new System.Drawing.Size(230, 22);
-            this.BtnCloseProject.Text = "Close";
-            this.BtnCloseProject.Click += new System.EventHandler(this.BtnCloseProject_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(227, 6);
-            // 
-            // MiExit
-            // 
-            this.MiExit.Image = global::TileGameMaker.Properties.Resources.cross;
-            this.MiExit.Name = "MiExit";
-            this.MiExit.Size = new System.Drawing.Size(230, 22);
-            this.MiExit.Text = "Quit";
-            this.MiExit.Click += new System.EventHandler(this.MiExit_Click);
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.BtnSaveProject,
-            this.BtnSaveAndExportProject,
-            this.BtnCloseProject,
-            this.toolStripSeparator2,
-            this.MiExit});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
-            this.fileToolStripMenuItem.Text = "Project";
             // 
             // MainWindow
             // 
