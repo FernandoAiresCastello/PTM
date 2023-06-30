@@ -24,9 +24,8 @@ You'll want to download the *"PTM_v0.2b.zip"* file which bundles everything.
 - [PTML Command Reference v0.2b (work in progress)](https://docs.google.com/spreadsheets/d/1uPhPh0LLgRmL87Uo9hDXGUhOOFIESIYAcZ_nJOlN2VI/edit?usp=sharing)
 
 ## Examples
-### v0.2b
 
-Here are some examples of PTML programs:
+The following are some examples of PTML programs. These examples target the lastest version of the machine **v0.2b**:
 
 **Hello World!**
 ```
@@ -107,4 +106,4 @@ loop:
 	UPDATE
 	GOTO loop
 ```
-For complete example games in PTML, check out [Invaders](https://github.com/FernandoAiresCastello/PTM/blob/master/v0.2b/Build/games/invaders.ptm), [Advanced Lawnmower Simulator](https://github.com/FernandoAiresCastello/PTM/blob/master/v0.2b/Build/games/advanced_lawnmower_sim.ptm) and [Pong](https://github.com/FernandoAiresCastello/PTM/blob/master/v0.2b/Build/games/pong.ptm).
+You can also check out a few example games in PTML: [Invaders](https://github.com/FernandoAiresCastello/PTM/blob/master/v0.2b/Build/games/invaders.ptm), [Advanced Lawnmower Simulator](https://github.com/FernandoAiresCastello/PTM/blob/master/v0.2b/Build/games/advanced_lawnmower_sim.ptm) and [Pong](https://github.com/FernandoAiresCastello/PTM/blob/master/v0.2b/Build/games/pong.ptm).
