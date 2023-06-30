@@ -17,7 +17,6 @@ x64
 *.pdb
 hiscore.dat
 hiscore.txt
-Docs/Generated
 old
 Debug
 PTM.dbg
@@ -26,4 +25,3 @@ PTM.last
 temp.ptm
 *.odt#
 *.ods#
-_DOCGEN
