@@ -21,11 +21,11 @@ You'll want to download the *"PTM_v0.2b.zip"* file which bundles everything.
 ## Documentation
 
 - [PTML Command Reference v0.2b](https://docs.google.com/spreadsheets/d/1uPhPh0LLgRmL87Uo9hDXGUhOOFIESIYAcZ_nJOlN2VI/edit?usp=sharing)
-- [PTML Command Reference v0.1b](https://docs.google.com/spreadsheets/d/1YwwevUD65kUNky194NmnlzqBe67nMvq3Hs2m6oJnqa8/edit?usp=sharing)
+
 
 ## Examples
 
-The following are some examples of PTML programs. These examples target the lastest version of the machine **v0.2b**:
+The following are some examples of PTML programs. These examples target the lastest version of the machine:
 
 **Hello World!**
 ```
