@@ -72,8 +72,8 @@
             this.BtnZoomOut = new System.Windows.Forms.ToolStripButton();
             this.BtnGrid = new System.Windows.Forms.ToolStripButton();
             this.BtnScreenshot = new System.Windows.Forms.ToolStripButton();
-            this.BtnExport = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.BtnExport = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel2.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.MapPanel.SuspendLayout();
@@ -567,6 +567,11 @@
             this.BtnScreenshot.ToolTipText = "Export to bitmap image";
             this.BtnScreenshot.Click += new System.EventHandler(this.BtnScreenshot_Click);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 23);
+            // 
             // BtnExport
             // 
             this.BtnExport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -574,13 +579,8 @@
             this.BtnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BtnExport.Name = "BtnExport";
             this.BtnExport.Size = new System.Drawing.Size(23, 20);
-            this.BtnExport.Text = "Export to PTM source code";
+            this.BtnExport.Text = "Export as PTML tilebuffer file";
             this.BtnExport.Click += new System.EventHandler(this.BtnExport_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 23);
             // 
             // MapEditorPanel
             // 

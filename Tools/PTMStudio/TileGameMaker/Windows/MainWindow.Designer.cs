@@ -102,7 +102,6 @@
             | System.Windows.Forms.Keys.S)));
             this.BtnSaveAndExportProject.Size = new System.Drawing.Size(230, 22);
             this.BtnSaveAndExportProject.Text = "Save and export";
-            this.BtnSaveAndExportProject.Visible = false;
             this.BtnSaveAndExportProject.Click += new System.EventHandler(this.BtnSaveAndExportProject_Click);
             // 
             // BtnCloseProject

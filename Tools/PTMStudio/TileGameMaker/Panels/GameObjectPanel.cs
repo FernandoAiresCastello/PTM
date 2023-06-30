@@ -97,7 +97,7 @@ namespace TileGameMaker.Panels
                 ClipboardDisplay.Refresh();
 
                 Print(TxtClipboard, $"[TILE register]");
-                //Print(TxtClipboard, $"    Visible: {clipboardObject.Visible}");
+                Print(TxtClipboard, $"    Transparent: {clipboardObject.Transparent}");
                 Print(TxtClipboard, $"    Nr. Tiles: {clipboardObject.Animation.Size}");
                 Print(TxtClipboard, $"    Nr. Properties: ");
 
@@ -133,7 +133,7 @@ namespace TileGameMaker.Panels
 
             if (o != null)
             {
-                //Print(TxtObject, $"    Visible: {o.Visible}");
+                Print(TxtObject, $"    Transparent: {o.Transparent}");
                 Print(TxtObject, $"    Nr. Tiles: {o.Animation.Size}");
                 Print(TxtObject, $"    Nr. Properties: ");
 

@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.TemplatePropPanel = new System.Windows.Forms.Panel();
             this.PropertyList = new System.Windows.Forms.DataGridView();
@@ -45,10 +45,10 @@
             this.BtnEditSelected = new System.Windows.Forms.ToolStripButton();
             this.BtnDuplicateSelected = new System.Windows.Forms.ToolStripButton();
             this.BtnDeleteSelected = new System.Windows.Forms.ToolStripButton();
+            this.BtnRearrange = new System.Windows.Forms.ToolStripButton();
             this.TemplateMapPanel = new System.Windows.Forms.Panel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.LbStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.BtnRearrange = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.TemplatePropPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PropertyList)).BeginInit();
@@ -95,26 +95,26 @@
             this.PropertyList.AllowUserToDeleteRows = false;
             this.PropertyList.AllowUserToResizeRows = false;
             this.PropertyList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.PropertyList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.PropertyList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.PropertyList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.PropertyList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.gridViewPropertyName,
             this.gridViewPropertyValue});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.PropertyList.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.PropertyList.DefaultCellStyle = dataGridViewCellStyle2;
             this.PropertyList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PropertyList.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.PropertyList.Location = new System.Drawing.Point(0, 0);
@@ -157,25 +157,25 @@
             this.TemplateList.AllowUserToDeleteRows = false;
             this.TemplateList.AllowUserToResizeRows = false;
             this.TemplateList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.TemplateList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.TemplateList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.TemplateList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.TemplateList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.gridViewTemplateId});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.TemplateList.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.TemplateList.DefaultCellStyle = dataGridViewCellStyle4;
             this.TemplateList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TemplateList.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.TemplateList.Location = new System.Drawing.Point(0, 0);
@@ -249,6 +249,16 @@
             this.BtnDeleteSelected.Text = "Delete selected template";
             this.BtnDeleteSelected.Click += new System.EventHandler(this.BtnDeleteSelected_Click);
             // 
+            // BtnRearrange
+            // 
+            this.BtnRearrange.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnRearrange.Image = global::TileGameMaker.Properties.Resources.layer_stack_arrange;
+            this.BtnRearrange.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnRearrange.Name = "BtnRearrange";
+            this.BtnRearrange.Size = new System.Drawing.Size(23, 22);
+            this.BtnRearrange.Text = "Rearrange templates";
+            this.BtnRearrange.Click += new System.EventHandler(this.BtnRearrange_Click);
+            // 
             // TemplateMapPanel
             // 
             this.TemplateMapPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -277,16 +287,6 @@
             this.LbStatus.Text = "LMB: Select template | RMB: New template | ESC: Minimize | F2: Rename | DEL: Dele" +
     "te";
             // 
-            // BtnRearrange
-            // 
-            this.BtnRearrange.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.BtnRearrange.Image = global::TileGameMaker.Properties.Resources.layer_stack_arrange;
-            this.BtnRearrange.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.BtnRearrange.Name = "BtnRearrange";
-            this.BtnRearrange.Size = new System.Drawing.Size(23, 22);
-            this.BtnRearrange.Text = "Rearrange templates";
-            this.BtnRearrange.Click += new System.EventHandler(this.BtnRearrange_Click);
-            // 
             // TemplateObjectWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -297,7 +297,7 @@
             this.MaximizeBox = false;
             this.Name = "TemplateObjectWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Template objects";
+            this.Text = "Saved tiles";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.TemplatePropPanel.ResumeLayout(false);

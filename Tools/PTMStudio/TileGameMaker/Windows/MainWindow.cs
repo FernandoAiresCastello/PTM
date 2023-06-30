@@ -214,8 +214,8 @@ namespace TileGameMaker.Windows
             string palFile = MapEditor.Project.Name + ".pal.dat";
             string folder = MapEditor.Project.Folder;
 
-            TilesetFile.Export(TilesetExportFormat.RawBytes, MapEditor.Tileset, Path.Combine(folder, chrFile));
-            PaletteFile.Export(PaletteExportFormat.RawBytes, MapEditor.Palette, Path.Combine(folder, palFile));
+            TilesetFile.Export(TilesetExportFormat.BinaryStrings, MapEditor.Tileset, Path.Combine(folder, chrFile));
+            PaletteFile.Export(PaletteExportFormat.HexadecimalRgb, MapEditor.Palette, Path.Combine(folder, palFile));
 
             Alert.Info(
                 $"Project saved to: {projFile}\n" +
