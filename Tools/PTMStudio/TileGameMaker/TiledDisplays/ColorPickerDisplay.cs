@@ -82,8 +82,14 @@ namespace TileGameMaker.TiledDisplays
         public int GetBackColorIndexAtMousePos(Point mousePos)
         {
             Point p = GetMouseToCellPos(mousePos);
-            Tile tile = Graphics.GetTile(p.X, p.Y);
-            return tile.BackColor;
+            
+            if (p.X >= 0 && p.Y >= 0 && p.X < Graphics.Cols && p.Y < Graphics.Rows)
+            {
+                Tile tile = Graphics.GetTile(p.X, p.Y);
+                return tile.BackColor;
+            }
+
+            return -1;
         }
 
         public int GetColor(int index)

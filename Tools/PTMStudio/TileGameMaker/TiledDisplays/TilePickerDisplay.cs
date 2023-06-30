@@ -141,8 +141,10 @@ namespace TileGameMaker.TiledDisplays
 
                 if (p.Y * Cols + p.X >= Graphics.Tileset.Size)
                     return InvalidIndex;
+                if (p.X >= 0 && p.Y >= 0 && p.X < Graphics.Cols && p.Y < Graphics.Rows)
+                    return tile.Index;
 
-                return tile.Index;
+                return InvalidIndex;
             }
             catch
             {
