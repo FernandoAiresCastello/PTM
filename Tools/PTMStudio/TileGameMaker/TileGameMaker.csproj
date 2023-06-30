@@ -127,6 +127,7 @@
     <Compile Include="Panels\ProjectPanel.Designer.cs">
       <DependentUpon>ProjectPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="PTMLExporters\TilebufferExporter.cs" />
     <Compile Include="TiledDisplays\AnimationStripDisplay.cs">
       <SubType>Component</SubType>
     </Compile>

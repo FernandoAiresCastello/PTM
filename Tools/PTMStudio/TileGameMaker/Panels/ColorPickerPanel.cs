@@ -290,13 +290,19 @@ namespace TileGameMaker.Panels
             Import(PaletteExportFormat.RawBytes);
         }
 
+        private void BtnImportHexRgb_Click(object sender, EventArgs e)
+        {
+            Import(PaletteExportFormat.HexadecimalRgb);
+        }
+
         private void Import(PaletteExportFormat format)
         {
             OpenFileDialog dialog = new OpenFileDialog();
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                ColorPicker.Graphics.Palette.SetEqual(PaletteFile.Import(format, dialog.FileName));
+                Palette pal = PaletteFile.Import(format, dialog.FileName);
+                ColorPicker.Graphics.Palette.SetEqual(pal);
                 ColorPicker.Refresh();
                 UpdatePanelColors();
                 UpdateStatus();

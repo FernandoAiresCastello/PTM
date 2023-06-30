@@ -48,14 +48,12 @@
             this.BtnRenderInvisibleObjects = new System.Windows.Forms.ToolStripButton();
             this.BtnClearLayer = new System.Windows.Forms.ToolStripButton();
             this.BtnSetBackColor = new System.Windows.Forms.ToolStripButton();
-            this.BtnSetOutOfBoundsObject = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnPutTemplate = new System.Windows.Forms.ToolStripButton();
             this.BtnDelete = new System.Windows.Forms.ToolStripButton();
             this.BtnAddText = new System.Windows.Forms.ToolStripButton();
             this.BtnReplaceObjects = new System.Windows.Forms.ToolStripButton();
             this.BtnEditObject = new System.Windows.Forms.ToolStripButton();
-            this.BtnBookmarks = new System.Windows.Forms.ToolStripButton();
             this.BtnSelect = new System.Windows.Forms.ToolStripButton();
             this.BtnSelectionActions = new System.Windows.Forms.ToolStripDropDownButton();
             this.MiCancelSelection = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,6 +72,8 @@
             this.BtnZoomOut = new System.Windows.Forms.ToolStripButton();
             this.BtnGrid = new System.Windows.Forms.ToolStripButton();
             this.BtnScreenshot = new System.Windows.Forms.ToolStripButton();
+            this.BtnExport = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tableLayoutPanel2.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.MapPanel.SuspendLayout();
@@ -243,21 +243,21 @@
             this.BtnRenderInvisibleObjects,
             this.BtnClearLayer,
             this.BtnSetBackColor,
-            this.BtnSetOutOfBoundsObject,
             this.toolStripSeparator1,
             this.BtnPutTemplate,
             this.BtnDelete,
             this.BtnAddText,
             this.BtnReplaceObjects,
             this.BtnEditObject,
-            this.BtnBookmarks,
             this.BtnSelect,
             this.BtnSelectionActions,
             this.toolStripSeparator4,
             this.BtnZoomIn,
             this.BtnZoomOut,
             this.BtnGrid,
-            this.BtnScreenshot});
+            this.BtnScreenshot,
+            this.toolStripSeparator3,
+            this.BtnExport});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(8, 5, 0, 2);
@@ -345,18 +345,6 @@
             this.BtnSetBackColor.ToolTipText = "Set tilebuffer background color";
             this.BtnSetBackColor.Click += new System.EventHandler(this.BtnSetBackColor_Click);
             // 
-            // BtnSetOutOfBoundsObject
-            // 
-            this.BtnSetOutOfBoundsObject.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.BtnSetOutOfBoundsObject.Image = global::TileGameMaker.Properties.Resources.select_by_difference;
-            this.BtnSetOutOfBoundsObject.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.BtnSetOutOfBoundsObject.Name = "BtnSetOutOfBoundsObject";
-            this.BtnSetOutOfBoundsObject.Size = new System.Drawing.Size(23, 20);
-            this.BtnSetOutOfBoundsObject.Text = "BtnSetOutOfBoundsObject";
-            this.BtnSetOutOfBoundsObject.ToolTipText = "Set out of bounds object";
-            this.BtnSetOutOfBoundsObject.Visible = false;
-            this.BtnSetOutOfBoundsObject.Click += new System.EventHandler(this.BtnSetOutOfBoundsObject_Click);
-            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
@@ -393,7 +381,7 @@
             this.BtnAddText.Name = "BtnAddText";
             this.BtnAddText.Size = new System.Drawing.Size(23, 20);
             this.BtnAddText.Text = "toolStripButton1";
-            this.BtnAddText.ToolTipText = "Draw text (CTRL+4)";
+            this.BtnAddText.ToolTipText = "Draw text (CTRL+3)";
             this.BtnAddText.Click += new System.EventHandler(this.BtnAddText_Click);
             // 
             // BtnReplaceObjects
@@ -404,7 +392,7 @@
             this.BtnReplaceObjects.Name = "BtnReplaceObjects";
             this.BtnReplaceObjects.Size = new System.Drawing.Size(23, 20);
             this.BtnReplaceObjects.Text = "toolStripButton1";
-            this.BtnReplaceObjects.ToolTipText = "Replace tiles (CTRL+5)";
+            this.BtnReplaceObjects.ToolTipText = "Replace tiles (CTRL+4)";
             this.BtnReplaceObjects.Click += new System.EventHandler(this.BtnReplaceObjects_Click);
             // 
             // BtnEditObject
@@ -415,19 +403,8 @@
             this.BtnEditObject.Name = "BtnEditObject";
             this.BtnEditObject.Size = new System.Drawing.Size(23, 20);
             this.BtnEditObject.Text = "toolStripButton1";
-            this.BtnEditObject.ToolTipText = "Edit tile data";
+            this.BtnEditObject.ToolTipText = "Edit tile data (CTRL+5)";
             this.BtnEditObject.Click += new System.EventHandler(this.BtnEditObject_Click);
-            // 
-            // BtnBookmarks
-            // 
-            this.BtnBookmarks.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.BtnBookmarks.Image = global::TileGameMaker.Properties.Resources.flag_flyaway_blue;
-            this.BtnBookmarks.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.BtnBookmarks.Name = "BtnBookmarks";
-            this.BtnBookmarks.Size = new System.Drawing.Size(23, 20);
-            this.BtnBookmarks.Text = "Bookmarks";
-            this.BtnBookmarks.Visible = false;
-            this.BtnBookmarks.Click += new System.EventHandler(this.BtnBookmarks_Click);
             // 
             // BtnSelect
             // 
@@ -464,20 +441,20 @@
             // MiCancelSelection
             // 
             this.MiCancelSelection.Name = "MiCancelSelection";
-            this.MiCancelSelection.Size = new System.Drawing.Size(237, 22);
+            this.MiCancelSelection.Size = new System.Drawing.Size(253, 22);
             this.MiCancelSelection.Text = "Cancel";
             this.MiCancelSelection.Click += new System.EventHandler(this.MiCancelSelection_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(234, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(250, 6);
             // 
             // MiCopyObjects
             // 
             this.MiCopyObjects.Name = "MiCopyObjects";
             this.MiCopyObjects.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.MiCopyObjects.Size = new System.Drawing.Size(237, 22);
+            this.MiCopyObjects.Size = new System.Drawing.Size(253, 22);
             this.MiCopyObjects.Text = "Copy tiles";
             this.MiCopyObjects.Click += new System.EventHandler(this.MiCopyObjects_Click);
             // 
@@ -485,7 +462,7 @@
             // 
             this.MiCutObjects.Name = "MiCutObjects";
             this.MiCutObjects.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.MiCutObjects.Size = new System.Drawing.Size(237, 22);
+            this.MiCutObjects.Size = new System.Drawing.Size(253, 22);
             this.MiCutObjects.Text = "Cut tiles";
             this.MiCutObjects.Click += new System.EventHandler(this.MiCutObjects_Click);
             // 
@@ -493,7 +470,7 @@
             // 
             this.MiPasteObjects.Name = "MiPasteObjects";
             this.MiPasteObjects.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.MiPasteObjects.Size = new System.Drawing.Size(237, 22);
+            this.MiPasteObjects.Size = new System.Drawing.Size(253, 22);
             this.MiPasteObjects.Text = "Paste tiles";
             this.MiPasteObjects.Click += new System.EventHandler(this.MiPasteObjects_Click);
             // 
@@ -501,7 +478,7 @@
             // 
             this.MiDeleteObjects.Name = "MiDeleteObjects";
             this.MiDeleteObjects.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.MiDeleteObjects.Size = new System.Drawing.Size(237, 22);
+            this.MiDeleteObjects.Size = new System.Drawing.Size(253, 22);
             this.MiDeleteObjects.Text = "Delete tiles";
             this.MiDeleteObjects.Click += new System.EventHandler(this.MiDeleteObjects_Click);
             // 
@@ -524,14 +501,14 @@
             // MiExportSelectionToImage
             // 
             this.MiExportSelectionToImage.Name = "MiExportSelectionToImage";
-            this.MiExportSelectionToImage.Size = new System.Drawing.Size(237, 22);
+            this.MiExportSelectionToImage.Size = new System.Drawing.Size(253, 22);
             this.MiExportSelectionToImage.Text = "Export to image file";
             this.MiExportSelectionToImage.Click += new System.EventHandler(this.MiExportSelectionToImage_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(234, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(250, 6);
             // 
             // MiSetSelectionColor
             // 
@@ -587,8 +564,23 @@
             this.BtnScreenshot.Name = "BtnScreenshot";
             this.BtnScreenshot.Size = new System.Drawing.Size(23, 20);
             this.BtnScreenshot.Text = "toolStripButton1";
-            this.BtnScreenshot.ToolTipText = "Export image";
+            this.BtnScreenshot.ToolTipText = "Export to bitmap image";
             this.BtnScreenshot.Click += new System.EventHandler(this.BtnScreenshot_Click);
+            // 
+            // BtnExport
+            // 
+            this.BtnExport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnExport.Image = global::TileGameMaker.Properties.Resources.table_export;
+            this.BtnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnExport.Name = "BtnExport";
+            this.BtnExport.Size = new System.Drawing.Size(23, 20);
+            this.BtnExport.Text = "Export to PTM source code";
+            this.BtnExport.Click += new System.EventHandler(this.BtnExport_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 23);
             // 
             // MapEditorPanel
             // 
@@ -648,7 +640,6 @@
         private System.Windows.Forms.ToolStripButton BtnRenderInvisibleObjects;
         private System.Windows.Forms.ToolStripMenuItem MiOverrideColors;
         private System.Windows.Forms.ToolStripButton BtnEditObject;
-        private System.Windows.Forms.ToolStripButton BtnSetOutOfBoundsObject;
         private System.Windows.Forms.ToolStripButton BtnGrid;
         private System.Windows.Forms.ToolStripStatusLabel LbViewPos;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
@@ -657,7 +648,8 @@
         private System.Windows.Forms.Button BtnScrollRight;
         private System.Windows.Forms.Button BtnScrollLeft;
         private System.Windows.Forms.TextBox TxtScrollAmount;
-        private System.Windows.Forms.ToolStripButton BtnBookmarks;
         private System.Windows.Forms.ToolStripMenuItem MiExportSelectionToImage;
+        private System.Windows.Forms.ToolStripButton BtnExport;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }

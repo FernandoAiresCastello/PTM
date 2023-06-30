@@ -37,8 +37,8 @@ namespace TileGameMaker.TiledDisplays
             int x = 0;
             int y = 0;
 
-            int black = Graphics.Palette.Black;
-            int white = Graphics.Palette.White;
+            int black = 0;
+            int white = 1;
 
             for (int i = 0; i < Graphics.Palette.Size; i++)
             {
@@ -65,7 +65,7 @@ namespace TileGameMaker.TiledDisplays
                 }
                 else
                 {
-                    Graphics.PutTile(x, y, 0, Graphics.Palette.White, Graphics.Palette.White);
+                    Graphics.PutTile(x, y, 0, white, white);
                 }
             }
 

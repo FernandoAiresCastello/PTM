@@ -13,6 +13,7 @@ using TileGameMaker.Util;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
+using TileGameMaker.PTMLExporters;
 
 namespace TileGameMaker.Panels
 {
@@ -829,6 +830,9 @@ namespace TileGameMaker.Panels
                         SetMode(EditMode.Replace);
                         break;
                     case Keys.D5:
+                        SetMode(EditMode.EditObject);
+                        break;
+                    case Keys.D6:
                         SetMode(EditMode.Selection);
                         break;
                     case Keys.G:
@@ -1142,6 +1146,19 @@ namespace TileGameMaker.Panels
                 Alert.Info("Selection image successfully exported to file!");
             }
             */
+        }
+
+        private void BtnExport_Click(object sender, EventArgs e)
+        {
+            TilebufferExporter exp = new TilebufferExporter();
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Title = "Export tilebuffer data";
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                exp.Export(Map, dialog.FileName);
+                Alert.Info("Tilebuffer exported successfully!");
+            }
         }
     }
 }

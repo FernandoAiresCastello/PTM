@@ -33,6 +33,7 @@
             this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
             this.importFromFileAs = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.BtnImportBinaryStrings = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnImportRawBytes = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.exportToFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,11 +55,11 @@
             this.BtnClearAll = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnClearRange = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnRestoreDefault = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnTruncate = new System.Windows.Forms.ToolStripMenuItem();
             this.PnlTilePicker = new System.Windows.Forms.Panel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.HoverLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.BtnTruncate = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.ToolStrip.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -108,6 +109,7 @@
             this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.importFromFileAs,
             this.toolStripSeparator3,
+            this.BtnImportBinaryStrings,
             this.BtnImportRawBytes});
             this.toolStripDropDownButton2.Image = global::TileGameMaker.Properties.Resources.folder;
             this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -119,19 +121,26 @@
             // 
             this.importFromFileAs.Enabled = false;
             this.importFromFileAs.Name = "importFromFileAs";
-            this.importFromFileAs.Size = new System.Drawing.Size(175, 22);
+            this.importFromFileAs.Size = new System.Drawing.Size(180, 22);
             this.importFromFileAs.Text = "Import from file as:";
             this.importFromFileAs.Click += new System.EventHandler(this.BtnImportRawBytes_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(172, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+            // 
+            // BtnImportBinaryStrings
+            // 
+            this.BtnImportBinaryStrings.Name = "BtnImportBinaryStrings";
+            this.BtnImportBinaryStrings.Size = new System.Drawing.Size(180, 22);
+            this.BtnImportBinaryStrings.Text = "Binary strings";
+            this.BtnImportBinaryStrings.Click += new System.EventHandler(this.BtnImportBinaryStrings_Click);
             // 
             // BtnImportRawBytes
             // 
             this.BtnImportRawBytes.Name = "BtnImportRawBytes";
-            this.BtnImportRawBytes.Size = new System.Drawing.Size(175, 22);
+            this.BtnImportRawBytes.Size = new System.Drawing.Size(180, 22);
             this.BtnImportRawBytes.Text = "Bytes";
             this.BtnImportRawBytes.Click += new System.EventHandler(this.BtnImportRawBytes_Click);
             // 
@@ -142,8 +151,8 @@
             this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exportToFileToolStripMenuItem,
             this.toolStripSeparator2,
-            this.BtnExportRawBytes,
             this.BtnExportBinaryStrings,
+            this.BtnExportRawBytes,
             this.BtnExportHex,
             this.BtnExportToImage});
             this.toolStripDropDownButton1.Image = global::TileGameMaker.Properties.Resources.diskette;
@@ -156,39 +165,39 @@
             // 
             this.exportToFileToolStripMenuItem.Enabled = false;
             this.exportToFileToolStripMenuItem.Name = "exportToFileToolStripMenuItem";
-            this.exportToFileToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.exportToFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportToFileToolStripMenuItem.Text = "Export to file as:";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(163, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // BtnExportRawBytes
             // 
             this.BtnExportRawBytes.Name = "BtnExportRawBytes";
-            this.BtnExportRawBytes.Size = new System.Drawing.Size(166, 22);
+            this.BtnExportRawBytes.Size = new System.Drawing.Size(180, 22);
             this.BtnExportRawBytes.Text = "Bytes";
             this.BtnExportRawBytes.Click += new System.EventHandler(this.BtnExportRawBytes_Click);
             // 
             // BtnExportBinaryStrings
             // 
             this.BtnExportBinaryStrings.Name = "BtnExportBinaryStrings";
-            this.BtnExportBinaryStrings.Size = new System.Drawing.Size(166, 22);
+            this.BtnExportBinaryStrings.Size = new System.Drawing.Size(180, 22);
             this.BtnExportBinaryStrings.Text = "Binary strings";
             this.BtnExportBinaryStrings.Click += new System.EventHandler(this.BtnExportBinaryStrings_Click);
             // 
             // BtnExportHex
             // 
             this.BtnExportHex.Name = "BtnExportHex";
-            this.BtnExportHex.Size = new System.Drawing.Size(166, 22);
+            this.BtnExportHex.Size = new System.Drawing.Size(180, 22);
             this.BtnExportHex.Text = "Hexadecimal CSV";
             this.BtnExportHex.Click += new System.EventHandler(this.BtnExportHex_Click);
             // 
             // BtnExportToImage
             // 
             this.BtnExportToImage.Name = "BtnExportToImage";
-            this.BtnExportToImage.Size = new System.Drawing.Size(166, 22);
+            this.BtnExportToImage.Size = new System.Drawing.Size(180, 22);
             this.BtnExportToImage.Text = "Image";
             this.BtnExportToImage.Click += new System.EventHandler(this.BtnExportToImage_Click);
             // 
@@ -258,7 +267,7 @@
             // 
             this.BtnAdd8Tiles.Image = global::TileGameMaker.Properties.Resources.add;
             this.BtnAdd8Tiles.Name = "BtnAdd8Tiles";
-            this.BtnAdd8Tiles.Size = new System.Drawing.Size(180, 22);
+            this.BtnAdd8Tiles.Size = new System.Drawing.Size(167, 22);
             this.BtnAdd8Tiles.Text = "Add 8 tiles";
             this.BtnAdd8Tiles.Click += new System.EventHandler(this.BtnAdd8Tiles_Click);
             // 
@@ -267,14 +276,14 @@
             this.BtnUse16x16TileEditor.CheckOnClick = true;
             this.BtnUse16x16TileEditor.Image = global::TileGameMaker.Properties.Resources.layouts_four_grid;
             this.BtnUse16x16TileEditor.Name = "BtnUse16x16TileEditor";
-            this.BtnUse16x16TileEditor.Size = new System.Drawing.Size(180, 22);
+            this.BtnUse16x16TileEditor.Size = new System.Drawing.Size(167, 22);
             this.BtnUse16x16TileEditor.Text = "Use 16x16 editor";
             // 
             // BtnPopOutWindow
             // 
             this.BtnPopOutWindow.Image = global::TileGameMaker.Properties.Resources.color_picker_default;
             this.BtnPopOutWindow.Name = "BtnPopOutWindow";
-            this.BtnPopOutWindow.Size = new System.Drawing.Size(180, 22);
+            this.BtnPopOutWindow.Size = new System.Drawing.Size(167, 22);
             this.BtnPopOutWindow.Text = "Pop-out window";
             this.BtnPopOutWindow.Click += new System.EventHandler(this.BtnPopOutWindow_Click);
             // 
@@ -285,7 +294,7 @@
             this.BtnClearRange});
             this.clearTilesToolStripMenuItem.Image = global::TileGameMaker.Properties.Resources.broom;
             this.clearTilesToolStripMenuItem.Name = "clearTilesToolStripMenuItem";
-            this.clearTilesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clearTilesToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.clearTilesToolStripMenuItem.Text = "Clear tiles";
             // 
             // BtnClearAll
@@ -306,8 +315,15 @@
             // 
             this.BtnRestoreDefault.Image = global::TileGameMaker.Properties.Resources.site_backup_and_restore;
             this.BtnRestoreDefault.Name = "BtnRestoreDefault";
-            this.BtnRestoreDefault.Size = new System.Drawing.Size(180, 22);
+            this.BtnRestoreDefault.Size = new System.Drawing.Size(167, 22);
             this.BtnRestoreDefault.Text = "Restore to default";
+            // 
+            // BtnTruncate
+            // 
+            this.BtnTruncate.Name = "BtnTruncate";
+            this.BtnTruncate.Size = new System.Drawing.Size(167, 22);
+            this.BtnTruncate.Text = "Truncate to size";
+            this.BtnTruncate.Click += new System.EventHandler(this.BtnTruncate_Click);
             // 
             // PnlTilePicker
             // 
@@ -346,13 +362,6 @@
             this.HoverLabel.Name = "HoverLabel";
             this.HoverLabel.Size = new System.Drawing.Size(67, 19);
             this.HoverLabel.Text = "HoverLabel";
-            // 
-            // BtnTruncate
-            // 
-            this.BtnTruncate.Name = "BtnTruncate";
-            this.BtnTruncate.Size = new System.Drawing.Size(180, 22);
-            this.BtnTruncate.Text = "Truncate to size";
-            this.BtnTruncate.Click += new System.EventHandler(this.BtnTruncate_Click);
             // 
             // TilePickerPanel
             // 
@@ -404,5 +413,6 @@
         private System.Windows.Forms.ToolStripMenuItem BtnRestoreDefault;
         private System.Windows.Forms.ToolStripButton BtnCode;
         private System.Windows.Forms.ToolStripMenuItem BtnTruncate;
+        private System.Windows.Forms.ToolStripMenuItem BtnImportBinaryStrings;
     }
 }

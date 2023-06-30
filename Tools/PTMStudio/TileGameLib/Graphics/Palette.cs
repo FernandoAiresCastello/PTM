@@ -14,8 +14,6 @@ namespace TileGameLib.Graphics
 
         public List<int> Colors { get; private set; } = new List<int>();
         public int Size => Colors.Count;
-        public int White => GetWhite();
-        public int Black => GetBlack();
 
         private const Default DefaultPalette = Default.PTM;
         private const int DefaultSize = 256;
@@ -93,7 +91,7 @@ namespace TileGameLib.Graphics
         public void SetEqual(Palette other)
         {
             Colors.Clear();
-            for (int i = 0; i < Size; i++)
+            for (int i = 0; i < other.Size; i++)
                 Colors.Add(other.Colors[i]);
         }
 
