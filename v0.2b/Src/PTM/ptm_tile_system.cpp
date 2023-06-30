@@ -1246,6 +1246,18 @@ void ptm_load_tileset_from_image(string file, rgb fgc, rgb bgc)
 		tileset.set(index, tile);
 	}
 }
+string ltb_get_str(vector<string>& data, int& data_ptr)
+{
+	if (data_ptr < data.size())
+		return data[data_ptr++];
+
+	ptm_abort("Tilebuffer data file is corrupt");
+	return "";
+}
+int ltb_get_int(vector<string>& data, int& data_ptr)
+{
+	return String::ToInt(ltb_get_str(data, data_ptr));
+}
 void ptm_load_tilebuffer(string id, string file)
 {
 	ptm_assert_file_exists(file);
@@ -1255,8 +1267,8 @@ void ptm_load_tilebuffer(string id, string file)
 	auto data = String::Split(contents, '§', false);
 	int data_ptr = 0;
 
-	#define NEXT_INT	String::ToInt(data[data_ptr++])
-	#define NEXT_STR	data[data_ptr++]
+	#define NEXT_INT	ltb_get_int(data, data_ptr)
+	#define NEXT_STR	ltb_get_str(data, data_ptr)
 
 	int width = NEXT_INT;
 	int height = NEXT_INT;
@@ -1272,12 +1284,13 @@ void ptm_load_tilebuffer(string id, string file)
 			for (int x = 0; x < width; x++) {
 				bool empty = NEXT_INT <= 0;
 				if (empty) continue;
+				t_tileseq tile;
 				int frames = NEXT_INT;
 				for (int frame_ix = 0; frame_ix < frames; frame_ix++) {
 					int ch = NEXT_INT;
 					int fgc = NEXT_INT;
 					int bgc = NEXT_INT;
-					t_tileseq tile = t_tileseq(ch, fgc, bgc);
+					tile.add(ch, fgc, bgc);
 					layer.put(x, y, tile);
 				}
 				int prop_count = NEXT_INT;
