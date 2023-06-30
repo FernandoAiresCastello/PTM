@@ -302,7 +302,7 @@ int t_tilebuf_layer::get_height()
 }
 void t_tilebuf_layer::put(int x, int y, t_tileseq& tileseq)
 {
-	if (x >= 0 && y >= 0 && x < width && y < width) {
+	if (x >= 0 && y >= 0 && x < width && y < height) {
 		const int ix = y * width + x;
 		tiles[ix] = tileseq;
 	}
@@ -319,25 +319,25 @@ void t_tilebuf_layer::put(int x, int y, int ch, int fgc)
 }
 void t_tilebuf_layer::add(int x, int y, t_tileseq& tileseq)
 {
-	if (x >= 0 && y >= 0 && x < width && y < width) {
+	if (x >= 0 && y >= 0 && x < width && y < height) {
 		get(x, y).add(tileseq);
 	}
 }
 void t_tilebuf_layer::add(int x, int y, t_tile& tile)
 {
-	if (x >= 0 && y >= 0 && x < width && y < width) {
+	if (x >= 0 && y >= 0 && x < width && y < height) {
 		get(x, y).add(tile);
 	}
 }
 void t_tilebuf_layer::add(int x, int y, int ch, int fgc, int bgc)
 {
-	if (x >= 0 && y >= 0 && x < width && y < width) {
+	if (x >= 0 && y >= 0 && x < width && y < height) {
 		get(x, y).add(ch, fgc, bgc);
 	}
 }
 void t_tilebuf_layer::add(int x, int y, int ch, int fgc)
 {
-	if (x >= 0 && y >= 0 && x < width && y < width) {
+	if (x >= 0 && y >= 0 && x < width && y < height) {
 		get(x, y).add(ch, fgc);
 	}
 }
@@ -378,7 +378,7 @@ t_tileseq t_tilebuf_layer::get_copy(int x, int y)
 }
 void t_tilebuf_layer::del(int x, int y)
 {
-	if (x >= 0 && y >= 0 && x < width && y < width) {
+	if (x >= 0 && y >= 0 && x < width && y < height) {
 		get(x, y).clear();
 	}
 }

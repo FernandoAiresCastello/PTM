@@ -1,0 +1,22 @@
+BUF.LOAD default, "test/test_tilebuf_long.dat"
+
+PAL 2, &h0000a0
+BUF.BGCOL default, 2
+
+loop:
+
+IF.KEY "DOWN"
+	BUF.SCRL default, 0, 1
+ENDIF
+IF.KEY "UP"
+	BUF.SCRL default, 0, -1
+ENDIF
+IF.KEY "RIGHT"
+	BUF.SCRL default, 1, 0
+ENDIF
+IF.KEY "LEFT"
+	BUF.SCRL default, -1, 0
+ENDIF
+
+UPDATE
+GOTO loop
