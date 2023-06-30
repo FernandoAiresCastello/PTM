@@ -510,7 +510,7 @@
 </tr>
 <tr>
 <td class='index-cmd'>
-<a href='#BUF.BCOL'>BUF.BCOL</a>
+<a href='#BUF.BGCOL'>BUF.BGCOL</a>
 </td>
 <td class='index-cmd'>
 <a href='#BUF.BGOFF'>BUF.BGOFF</a>
@@ -533,6 +533,9 @@
 </tr>
 <tr>
 <td class='index-cmd'>
+<a href='#BUF.LOAD'>BUF.LOAD</a>
+</td>
+<td class='index-cmd'>
 <a href='#BUF.ROWS'>BUF.ROWS</a>
 </td>
 <td class='index-cmd'>
@@ -550,10 +553,11 @@
 <td class='index-cmd'>
 <a href='#BUF.VIEW'>BUF.VIEW</a>
 </td>
+</tr>
+<tr>
 <td class='index-cmd'>
 <a href='#CLS'>CLS</a>
 </td>
-</tr>
 <tr>
 <td class='index-category' colspan=7>Graphics - Tileset</td>
 </tr>
@@ -3586,10 +3590,10 @@ Category: Graphics - Tilebuffer cursor
 </td>
 </tr>
 </table>
-<table class='entry' id='BUF.BCOL'>
+<table class='entry' id='BUF.BGCOL'>
 <tr>
 <td class='cmd'>
-BUF.BCOL
+BUF.BGCOL
 </td>
 <td class='params'>
 id, bgc_pal_ix
@@ -3718,6 +3722,26 @@ id, layers, columns, rows, order
 <tr>
 <td class='description' colspan=2>
 Create a new tilebuffer (columns and rows are in tile units). Order 0 is reserved for the default buffer. Higher order buffers are drawn on top of lower order buffers
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tilebuffer manipulation
+</td>
+</tr>
+</table>
+<table class='entry' id='BUF.LOAD'>
+<tr>
+<td class='cmd'>
+BUF.LOAD
+</td>
+<td class='params'>
+id, file
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Load tilebuffer data from file
 </td>
 </tr>
 <tr>

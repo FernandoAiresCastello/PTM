@@ -139,13 +139,14 @@ CSR.X 	 x	Set x coordinate of cursor	Graphics - Tilebuffer cursor
 CSR.Y 	 y	Set y coordinate of cursor	Graphics - Tilebuffer cursor
 LAYER 	 index	Set cursor at layer index of the currently selected tilebuffer	Graphics - Tilebuffer cursor
 LOCATE 	 x, y	Set cursor at specified column and row in the currently selected tilebuffer	Graphics - Tilebuffer cursor
-BUF.BCOL 	 id, bgc_pal_ix	Enable rendering tilebuffer background and set the background color	Graphics - Tilebuffer manipulation
+BUF.BGCOL 	 id, bgc_pal_ix	Enable rendering tilebuffer background and set the background color	Graphics - Tilebuffer manipulation
 BUF.BGOFF 	 id	Disable rendering tilebuffer background	Graphics - Tilebuffer manipulation
 BUF.CLL 	 id, layer	Delete all tiles from layer in the tilebuffer. This will also reset the tilebuffer cursor to the top-left corner of the current buffer layer (X0 Y0)	Graphics - Tilebuffer manipulation
 BUF.CLS 	 id	Delete all tiles from all layers in specified tilebuffer. This will also reset the tilebuffer cursor to the top-left corner of the current buffer layer (X0 Y0)	Graphics - Tilebuffer manipulation
 BUF.COLS 	 id, x	Store in x the number of columns (width in tile units) in the tilebuffer	Graphics - Tilebuffer manipulation
 BUF.HIDE 	 id	Hide a tilebuffer	Graphics - Tilebuffer manipulation
 BUF.NEW 	 id, layers, columns, rows, order	Create a new tilebuffer (columns and rows are in tile units). Order 0 is reserved for the default buffer. Higher order buffers are drawn on top of lower order buffers	Graphics - Tilebuffer manipulation
+BUF.LOAD 	 id, file	Load tilebuffer data from file	Graphics - Tilebuffer manipulation
 BUF.ROWS 	 id, x	Store in x the number of rows (height in tile units) in the tilebuffer	Graphics - Tilebuffer manipulation
 BUF.SCRL 	 id, dx, dy	Smoothly scroll tilebuffer viewport contents by the specified distance (in pixels)	Graphics - Tilebuffer manipulation
 BUF.SEL 	 id	Select tilebuffer that will be used for all subsequent tile operations	Graphics - Tilebuffer manipulation

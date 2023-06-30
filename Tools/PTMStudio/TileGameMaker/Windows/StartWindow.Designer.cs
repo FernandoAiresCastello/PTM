@@ -162,13 +162,13 @@
             // 
             this.tableLayoutPanel2.SetColumnSpan(this.LbVersionBuild, 3);
             this.LbVersionBuild.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LbVersionBuild.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LbVersionBuild.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LbVersionBuild.Location = new System.Drawing.Point(1, 247);
             this.LbVersionBuild.Margin = new System.Windows.Forms.Padding(1);
             this.LbVersionBuild.Name = "LbVersionBuild";
             this.LbVersionBuild.Size = new System.Drawing.Size(686, 20);
             this.LbVersionBuild.TabIndex = 2;
-            this.LbVersionBuild.Text = "v1.0";
+            this.LbVersionBuild.Text = "v0.2b";
             this.LbVersionBuild.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel3

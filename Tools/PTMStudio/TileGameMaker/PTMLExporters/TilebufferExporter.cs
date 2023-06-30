@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using TileGameLib.File;
 using TileGameLib.GameElements;
 using TileGameLib.Graphics;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace TileGameMaker.PTMLExporters
 {
@@ -40,7 +39,6 @@ namespace TileGameMaker.PTMLExporters
             {
                 for (int x = 0; x < layer.Width; x++)
                 {
-                    // === OBJECT ===
                     GameObject o = layer.GetObject(x, y);
 
                     if (o != null)

@@ -46,17 +46,14 @@
             this.BtnRotateDown = new System.Windows.Forms.ToolStripButton();
             this.BtnRotateUp = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.TilePanel = new System.Windows.Forms.Panel();
             this.PnlStrings = new System.Windows.Forms.Panel();
-            this.ChkHexIndex = new System.Windows.Forms.CheckBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.TxtBinaryBlock = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.TxtCsvDec = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.TxtCsvHex = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.TxtBinaryString = new System.Windows.Forms.TextBox();
-            this.TilePanel = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -269,11 +266,16 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(658, 233);
             this.tableLayoutPanel2.TabIndex = 2;
             // 
+            // TilePanel
+            // 
+            this.TilePanel.Location = new System.Drawing.Point(12, 12);
+            this.TilePanel.Margin = new System.Windows.Forms.Padding(10);
+            this.TilePanel.Name = "TilePanel";
+            this.TilePanel.Size = new System.Drawing.Size(210, 208);
+            this.TilePanel.TabIndex = 6;
+            // 
             // PnlStrings
             // 
-            this.PnlStrings.Controls.Add(this.ChkHexIndex);
-            this.PnlStrings.Controls.Add(this.label4);
-            this.PnlStrings.Controls.Add(this.TxtBinaryBlock);
             this.PnlStrings.Controls.Add(this.label3);
             this.PnlStrings.Controls.Add(this.TxtCsvDec);
             this.PnlStrings.Controls.Add(this.label2);
@@ -287,40 +289,6 @@
             this.PnlStrings.Size = new System.Drawing.Size(422, 229);
             this.PnlStrings.TabIndex = 5;
             this.PnlStrings.Click += new System.EventHandler(this.PnlStrings_Click);
-            // 
-            // ChkHexIndex
-            // 
-            this.ChkHexIndex.AutoSize = true;
-            this.ChkHexIndex.Location = new System.Drawing.Point(334, 70);
-            this.ChkHexIndex.Name = "ChkHexIndex";
-            this.ChkHexIndex.Size = new System.Drawing.Size(76, 17);
-            this.ChkHexIndex.TabIndex = 9;
-            this.ChkHexIndex.Text = "Hex. index";
-            this.ChkHexIndex.UseVisualStyleBackColor = true;
-            this.ChkHexIndex.CheckedChanged += new System.EventHandler(this.ChkHexIndex_CheckedChanged);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(7, 67);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(71, 15);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "PTM format";
-            // 
-            // TxtBinaryBlock
-            // 
-            this.TxtBinaryBlock.BackColor = System.Drawing.SystemColors.Control;
-            this.TxtBinaryBlock.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtBinaryBlock.Location = new System.Drawing.Point(9, 90);
-            this.TxtBinaryBlock.Multiline = true;
-            this.TxtBinaryBlock.Name = "TxtBinaryBlock";
-            this.TxtBinaryBlock.ReadOnly = true;
-            this.TxtBinaryBlock.Size = new System.Drawing.Size(401, 128);
-            this.TxtBinaryBlock.TabIndex = 7;
-            this.TxtBinaryBlock.TabStop = false;
-            this.TxtBinaryBlock.Text = "Row 0\r\nRow 1\r\nRow 2\r\nRow 3\r\nRow 4\r\nRow 5\r\nRow 6\r\nRow 7";
             // 
             // label3
             // 
@@ -391,14 +359,6 @@
             this.TxtBinaryString.Text = "0000000000000000000000000000000000000000000000000000000000000000";
             this.TxtBinaryString.Click += new System.EventHandler(this.Txt_Click);
             // 
-            // TilePanel
-            // 
-            this.TilePanel.Location = new System.Drawing.Point(12, 12);
-            this.TilePanel.Margin = new System.Windows.Forms.Padding(10);
-            this.TilePanel.Name = "TilePanel";
-            this.TilePanel.Size = new System.Drawing.Size(210, 208);
-            this.TilePanel.TabIndex = 6;
-            // 
             // TileEditor8x8Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -453,9 +413,6 @@
         private System.Windows.Forms.TextBox TxtCsvHex;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox TxtCsvDec;
-        private System.Windows.Forms.TextBox TxtBinaryBlock;
-        private System.Windows.Forms.Label label4;
-        public System.Windows.Forms.CheckBox ChkHexIndex;
         private System.Windows.Forms.Panel TilePanel;
     }
 }

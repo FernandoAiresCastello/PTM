@@ -558,15 +558,7 @@ void ptm_init_commands()
 		int width = ARG_VAR_NUM(2);
 		int height = ARG_VAR_NUM(3);
 		int order = ARG_VAR_NUM(4);
-		if (tilebufs.has(id)) {
-			ptm_abort("Duplicate buffer id: " + id);
-		}
-		if (tilebufs.get_by_order(order) != nullptr) {
-			ptm_abort("Duplicate buffer ordering: " + String::ToString(order));
-		}
-		else {
-			tilebufs.new_tilebuf(id, layers, width, height, order);
-		}
+		tilebufs.new_tilebuf(id, layers, width, height, order);
 	};
 	CMD("BUF.VIEW") {
 		ARGC(5);
@@ -641,6 +633,12 @@ void ptm_init_commands()
 		string var = ARG_LIT_ID(1);
 		int rows = tilebufs.get(id)->get_height();
 		ptm_set_var(var, rows);
+	};
+	CMD("BUF.LOAD") {
+		ARGC(2);
+		string id = ARG_LIT_ID(0);
+		string file = ARG_VAR_STR(1);
+		ptm_load_tilebuffer(id, file);
 	};
 	CMD("CLS") {
 		ARGC(0);

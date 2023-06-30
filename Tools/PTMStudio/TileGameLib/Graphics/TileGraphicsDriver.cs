@@ -40,7 +40,7 @@ namespace TileGameLib.Graphics
         public Tile GetTile(int col, int row)
         {
             if (col < 0 || row < 0 || col >= TileBuffer.Cols || row >= TileBuffer.Rows)
-                throw new TGLException();
+                return null;
 
             return TileBuffer.Tiles[col, row];
         }

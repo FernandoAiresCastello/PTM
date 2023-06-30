@@ -463,6 +463,7 @@ void t_tilebuf::init(string id, int layer_count, int width, int height, int orde
 	this->height = height;
 	this->order = order;
 
+	layers.clear();
 	for (int i = 0; i < layer_count; i++) {
 		layers.push_back(t_tilebuf_layer(width, height));
 	}
@@ -554,6 +555,11 @@ vector<t_sprite*>& t_tilebuf::get_sprites()
 }
 void t_tilebuf_collection::new_tilebuf(string id, int layer_count, int width, int height, int order)
 {
+	if (has(id))
+		ptm_abort("Duplicate buffer id: " + id);
+	if (get_by_order(order) != nullptr)
+		ptm_abort("Duplicate buffer ordering: " + String::ToString(order));
+
 	t_tilebuf tilebuf(id, layer_count, width, height, order);
 	tilebufs.push_back(tilebuf);
 }
@@ -1238,5 +1244,49 @@ void ptm_load_tileset_from_image(string file, rgb fgc, rgb bgc)
 			}
 		}
 		tileset.set(index, tile);
+	}
+}
+void ptm_load_tilebuffer(string id, string file)
+{
+	ptm_assert_file_exists(file);
+	ptm_assert_tilebuf_exists(id);
+
+	string contents = File::ReadText(file);
+	auto data = String::Split(contents, '§', false);
+	int data_ptr = 0;
+
+	#define NEXT_INT	String::ToInt(data[data_ptr++])
+	#define NEXT_STR	data[data_ptr++]
+
+	int width = NEXT_INT;
+	int height = NEXT_INT;
+	int layer_count = NEXT_INT;
+	int bgcolor = NEXT_INT;
+
+	t_tilebuf* buf = tilebufs.get(id);
+	buf->init(buf->id, layer_count, width, height, buf->order);
+
+	for (int layer_ix = 0; layer_ix < layer_count; layer_ix++) {
+		t_tilebuf_layer& layer = buf->layer(layer_ix);
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				bool empty = NEXT_INT <= 0;
+				if (empty) continue;
+				int frames = NEXT_INT;
+				for (int frame_ix = 0; frame_ix < frames; frame_ix++) {
+					int ch = NEXT_INT;
+					int fgc = NEXT_INT;
+					int bgc = NEXT_INT;
+					t_tileseq tile = t_tileseq(ch, fgc, bgc);
+					layer.put(x, y, tile);
+				}
+				int prop_count = NEXT_INT;
+				for (int prop_ix = 0; prop_ix < prop_count; prop_ix++) {
+					string prop = NEXT_STR;
+					string value = NEXT_STR;
+					layer.get(x, y).data.set(prop, value);
+				}
+			}
+		}
 	}
 }

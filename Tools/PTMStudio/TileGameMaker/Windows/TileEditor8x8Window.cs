@@ -39,7 +39,6 @@ namespace TileGameMaker.Windows
             KeyDown += TileEditor8x8Window_KeyDown;
 
             HoverLabel.Text = "";
-            ChkHexIndex.Checked = ptmFormatHexIndex;
         }
 
         private void TileEditor8x8Window_KeyDown(object sender, KeyEventArgs e)
@@ -110,31 +109,6 @@ namespace TileGameMaker.Windows
             TxtCsvHex.Select(0, 0);
             TxtCsvDec.Text = Tileset.Get(TileIndex).ToCsvString();
             TxtCsvDec.Select(0, 0);
-
-            UpdatePtmFormat();
-        }
-
-        private void UpdatePtmFormat()
-        {
-            TxtBinaryBlock.Clear();
-
-            var rows = SplitBinaryString(TxtBinaryString.Text);
-            string prefix;
-
-            if (ChkHexIndex.Checked)
-                prefix = "CHR &h" + TileIndex.ToString("x2");
-            else
-                prefix = "CHR " + TileIndex;
-
-            string suffix = "";
-
-            for (int i = 0; i < rows.Count; i++)
-            {
-                string row = rows[i];
-                TxtBinaryBlock.AppendText(prefix + "," + i + ",&b" + row + suffix + Environment.NewLine);
-            }
-
-            TxtBinaryBlock.Select(0, 0);
         }
 
         static List<string> SplitBinaryString(string str)
@@ -225,11 +199,6 @@ namespace TileGameMaker.Windows
                     (ctl as TextBox).DeselectAll();
                 }
             }
-        }
-
-        private void ChkHexIndex_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdatePtmFormat();
         }
     }
 }

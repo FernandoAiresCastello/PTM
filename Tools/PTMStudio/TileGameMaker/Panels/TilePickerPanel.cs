@@ -206,7 +206,6 @@ namespace TileGameMaker.Panels
 
         private void TileEditor8x8Window_FormClosed(object sender, FormClosedEventArgs e)
         {
-            PtmFormatHexIndex = TileEditor8x8Window.ChkHexIndex.Checked;
         }
 
         private void TilePicker_MouseLeave(object sender, EventArgs e)

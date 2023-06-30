@@ -27,7 +27,7 @@ namespace TileGameMaker.Windows
             InitializeComponent();
             Icon = Global.WindowIcon;
             LbTitle.Font = EmbeddedFontLoader.Load(Properties.Resources.INTELLEC, 24);
-            LbVersionBuild.Font = EmbeddedFontLoader.Load(Properties.Resources.INTELLEC, 10);
+            LbVersionBuild.Font = EmbeddedFontLoader.Load(Properties.Resources.INTELLEC, 12);
             LbCopyright.Font = EmbeddedFontLoader.Load(Properties.Resources.INTELLEC, 14);
 
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
