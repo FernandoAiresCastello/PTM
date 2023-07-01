@@ -1,3 +1,7 @@
+## v0.2.1b
+
+- Fixed issue: when loading tilebuffer file from PTM Studio, the background color is not getting applied.
+
 ## v0.2b
 ### Released: July 1st, 2023
 

@@ -1277,6 +1277,7 @@ void ptm_load_tilebuffer(string id, string file)
 
 	t_tilebuf* buf = tilebufs.get(id);
 	buf->init(buf->id, layer_count, width, height, buf->order);
+	buf->set_bgcol(bgcolor);
 
 	for (int layer_ix = 0; layer_ix < layer_count; layer_ix++) {
 		t_tilebuf_layer& layer = buf->layer(layer_ix);
