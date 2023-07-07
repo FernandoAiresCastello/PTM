@@ -124,6 +124,12 @@
     <Compile Include="Panels\MapTextPanel.Designer.cs">
       <DependentUpon>MapTextPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Panels\ProgramPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\ProgramPanel.Designer.cs">
+      <DependentUpon>ProgramPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Panels\ProjectPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -315,6 +321,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Panels\MapTextPanel.resx">
       <DependentUpon>MapTextPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\ProgramPanel.resx">
+      <DependentUpon>ProgramPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Panels\ProjectPanel.resx">
       <DependentUpon>ProjectPanel.cs</DependentUpon>

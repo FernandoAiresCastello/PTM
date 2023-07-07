@@ -1171,7 +1171,7 @@ void ptm_init_commands()
 	CMD("FILES") {
 		ARGC_MIN_MAX(1, 2);
 		string arr_id = ARG_LIT_ID(0);
-		string path = ".";
+		string path = "";
 		if (arg.size() == 2) {
 			path = ARG_VAR_STR(1);
 		}
