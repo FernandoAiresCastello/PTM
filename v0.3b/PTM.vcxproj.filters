@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\CppUtils\CppFile.cpp">
+      <Filter>CppUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CppUtils\CppMsgBox.cpp">
+      <Filter>CppUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CppUtils\CppProperties.cpp">
+      <Filter>CppUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CppUtils\CppString.cpp">
+      <Filter>CppUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CppUtils\CppUtil.cpp">
+      <Filter>CppUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTM\ptm_commands.cpp">
+      <Filter>PTM</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTM\ptm_core.cpp">
+      <Filter>PTM</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTML\t_compiler.cpp">
+      <Filter>PTML</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTML\t_interpreter.cpp">
+      <Filter>PTML</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTML\t_param.cpp">
+      <Filter>PTML</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTML\t_program.cpp">
+      <Filter>PTML</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTML\t_source_line.cpp">
+      <Filter>PTML</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTML\t_variable.cpp">
+      <Filter>PTML</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTM\ptm_graphics_base.cpp">
+      <Filter>PTM</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTM\ptm_keyboard.cpp">
+      <Filter>PTM</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTM\ptm_tile_system.cpp">
+      <Filter>PTM</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTM\ptm_color_palette.cpp">
+      <Filter>PTM</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTM\ptm_text_font.cpp">
+      <Filter>PTM</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTM\ptm_sound_system.cpp">
+      <Filter>PTM</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTM\ptm_sprites.cpp">
+      <Filter>PTM</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTM\ptm_filesystem.cpp">
+      <Filter>PTM</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTM\ptm_mml.cpp">
+      <Filter>PTM</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PTM\ptm_image.cpp">
+      <Filter>PTM</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Docgen\docgen.cpp">
+      <Filter>Docgen</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Src\Common\common.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\CppUtils\CppFile.h">
+      <Filter>CppUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\CppUtils\CppGlobal.h">
+      <Filter>CppUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\CppUtils\CppMsgBox.h">
+      <Filter>CppUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\CppUtils\CppProperties.h">
+      <Filter>CppUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\CppUtils\CppString.h">
+      <Filter>CppUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\CppUtils\CppUtil.h">
+      <Filter>CppUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\CppUtils\CppUtils.h">
+      <Filter>CppUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTM\ptm_commands.h">
+      <Filter>PTM</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTM\ptm_core.h">
+      <Filter>PTM</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTML\t_compiler.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTML\t_interpreter.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTML\t_loop.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTML\t_param.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTML\t_program.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTML\t_program_line.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTML\t_source_line.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTML\t_variable.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTM\ptm_graphics_base.h">
+      <Filter>PTM</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTM\ptm_keyboard.h">
+      <Filter>PTM</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTM\ptm_tile_system.h">
+      <Filter>PTM</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTM\ptm_color_palette.h">
+      <Filter>PTM</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTM\ptm_text_font.h">
+      <Filter>PTM</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTM\ptm_sound_system.h">
+      <Filter>PTM</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTM\ptm_sprites.h">
+      <Filter>PTM</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTM\ptm_filesystem.h">
+      <Filter>PTM</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTM\ptm_mml.h">
+      <Filter>PTM</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PTM\ptm_image.h">
+      <Filter>PTM</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Docgen\docgen.h">
+      <Filter>Docgen</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CppUtils">
+      <UniqueIdentifier>{92e3fc93-a63b-4ce6-8d0b-f5e672393ce8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{b2d6124d-8ef1-4199-a412-1b23250adda5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PTM">
+      <UniqueIdentifier>{0d454045-cb6f-47a7-b930-da49672a80d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PTML">
+      <UniqueIdentifier>{07126054-de90-45e3-a422-ba77e9f1affc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{874d3363-3914-4234-8308-467ca70c840d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Docgen">
+      <UniqueIdentifier>{29be0ea6-60b2-41e3-955d-e204b4bcdd13}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\app_icon.ico">
+      <Filter>Resources</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resources\PTM.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
