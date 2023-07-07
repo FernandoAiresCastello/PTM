@@ -27,9 +27,42 @@ namespace TileGameMaker.Panels
         private ColorPickerDisplay ColorPicker;
         private ColorEditorWindow ColorEditorWindow;
 
-        public ColorPickerPanel()
+        public ColorPickerPanel(Palette palette)
         {
             InitializeComponent();
+
+            ColorPicker = new ColorPickerDisplay(PnlColorPicker,
+                palette,
+                Config.ReadInt("ColorPickerCols"), 
+                Config.ReadInt("ColorPickerRows"), 
+                Config.ReadInt("ColorPickerZoom"));
+
+            int colorsPerRow = Config.ReadInt("ColorPickerColorsPerRow");
+            ColorPicker.ResizeGraphicsByTileCount(ColorPicker.Graphics.Palette.Size, colorsPerRow);
+            //TxtColorsPerRow.Text = colorsPerRow.ToString();
+
+            ColorPicker.Graphics.Palette = palette;
+            ColorPicker.ShowGrid = true;
+            ColorPicker.MouseMove += ColorPicker_MouseMove;
+            ColorPicker.MouseLeave += ColorPicker_MouseLeave;
+            ColorPicker.MouseDown += ColorPicker_MouseDown;
+            ColorPicker.MouseUp += ColorPicker_MouseUp;
+            ColorPicker.MouseClick += ColorPicker_MouseClick;
+            ColorPicker.MouseDoubleClick += ColorPicker_MouseDoubleClick;
+
+            ForeColorPanel.MouseDown += ColorPanel_Click;
+            BackColorPanel.MouseDown += ColorPanel_Click;
+
+            ColorEditorWindow = new ColorEditorWindow(ColorPicker.Graphics.Palette);
+            ColorEditorWindow.Subscribe(this);
+            ColorEditorWindow.Subscribe(ColorPicker);
+            //ColorEditorWindow.Subscribe(editor.MapEditorControl);
+            //ColorEditorWindow.Subscribe(editor.TemplateControl);
+
+            UpdateDefaultPaletteMenu();
+            UpdatePanelColors();
+            UpdateStatus();
+            SetHoverStatus("");
         }
 
         public ColorPickerPanel(MapEditor editor)

@@ -209,7 +209,6 @@ namespace TileGameMaker.Windows
         private void BtnSaveAndExportProject_Click(object sender, EventArgs e)
         {
             SaveProject(false);
-            string projectPath = Path.GetFileName(MapEditor.Project.Path);
             ProjectExporter.ExportEverything(MapEditor.Project);
 
             Alert.Info("Project saved and files exported successfully!");
@@ -217,7 +216,6 @@ namespace TileGameMaker.Windows
 
         private void BtnOpenCodeEdit_Click(object sender, EventArgs e)
         {
-            // todo
         }
     }
 }

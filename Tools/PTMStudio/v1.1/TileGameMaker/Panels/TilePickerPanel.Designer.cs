@@ -79,7 +79,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(209, 380);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(220, 380);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
             // ToolStrip
@@ -98,7 +98,7 @@
             this.ToolStrip.Location = new System.Drawing.Point(0, 0);
             this.ToolStrip.Name = "ToolStrip";
             this.ToolStrip.Padding = new System.Windows.Forms.Padding(8, 5, 1, 2);
-            this.ToolStrip.Size = new System.Drawing.Size(209, 30);
+            this.ToolStrip.Size = new System.Drawing.Size(220, 30);
             this.ToolStrip.TabIndex = 2;
             this.ToolStrip.Text = "toolStrip1";
             // 
@@ -334,7 +334,7 @@
             this.PnlTilePicker.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PnlTilePicker.Location = new System.Drawing.Point(3, 33);
             this.PnlTilePicker.Name = "PnlTilePicker";
-            this.PnlTilePicker.Size = new System.Drawing.Size(203, 320);
+            this.PnlTilePicker.Size = new System.Drawing.Size(214, 320);
             this.PnlTilePicker.TabIndex = 1;
             this.PnlTilePicker.MouseLeave += new System.EventHandler(this.TilePicker_MouseLeave);
             // 
@@ -346,7 +346,7 @@
             this.HoverLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 356);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(209, 24);
+            this.statusStrip1.Size = new System.Drawing.Size(220, 24);
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
@@ -370,7 +370,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "TilePickerPanel";
-            this.Size = new System.Drawing.Size(209, 380);
+            this.Size = new System.Drawing.Size(220, 380);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ToolStrip.ResumeLayout(false);

@@ -69,6 +69,9 @@
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework" />
+    <Reference Include="ScintillaNET">
+      <HintPath>..\..\..\..\..\..\..\Lib\ScintillaNET.3.6.3\ScintillaNET.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -156,6 +159,12 @@
     </Compile>
     <Compile Include="Windows\LineInputWindow.Designer.cs">
       <DependentUpon>LineInputWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MainWindow2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\MainWindow2.Designer.cs">
+      <DependentUpon>MainWindow2.cs</DependentUpon>
     </Compile>
     <Compile Include="Windows\MapBookmarkWindow.cs">
       <SubType>Form</SubType>
@@ -318,6 +327,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\LineInputWindow.resx">
       <DependentUpon>LineInputWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\MainWindow2.resx">
+      <DependentUpon>MainWindow2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\MapBookmarkWindow.resx">
       <DependentUpon>MapBookmarkWindow.cs</DependentUpon>

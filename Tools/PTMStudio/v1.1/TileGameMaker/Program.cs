@@ -18,6 +18,9 @@ namespace TileGameMaker
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            Application.Run(new MainWindow2());
+
+            /*
             if (args.Length == 0)
             {
                 Application.Run(new StartWindow());
@@ -36,6 +39,7 @@ namespace TileGameMaker
                     Alert.Error($"Could not load project file: {args[0]}");
                 }
             }
+            */
         }
     }
 }

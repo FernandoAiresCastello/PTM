@@ -48,9 +48,22 @@ namespace TileGameMaker.Panels
         private bool RearrangeMode => BtnRearrange.Checked;
         private bool PtmFormatHexIndex = true;
 
-        public TilePickerPanel()
+        public TilePickerPanel(Tileset tileset)
         {
             InitializeComponent();
+
+            TilePicker = new TilePickerDisplay(PnlTilePicker, tileset, 8);
+            TilePicker.ShowGrid = true;
+
+            TilePicker.MouseMove += TilePicker_MouseMove;
+            TilePicker.MouseLeave += TilePicker_MouseLeave;
+            TilePicker.MouseDown += TilePicker_MouseDown;
+            TilePicker.MouseUp += TilePicker_MouseUp;
+            TilePicker.MouseDoubleClick += TilePicker_MouseDoubleClick;
+
+            UpdateDefaultTilesetMenu();
+            SetHoverStatus("");
+            UpdateStatus();
         }
 
         public TilePickerPanel(MapEditor editor, int tilesPerRow)
