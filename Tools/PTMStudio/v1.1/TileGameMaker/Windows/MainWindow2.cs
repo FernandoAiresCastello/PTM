@@ -31,6 +31,9 @@ namespace TileGameMaker.Windows
             Icon = Global.WindowIcon;
             Settings = new UserSettings();
             PtmExePath = Settings.Get("ptm_exe");
+            if (string.IsNullOrWhiteSpace(PtmExePath))
+                PtmExePath = "PTM.exe";
+
             Size = new System.Drawing.Size(1024, 600);
 
             Tileset = new Tileset();
