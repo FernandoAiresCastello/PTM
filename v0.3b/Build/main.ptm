@@ -1,1 +1,4 @@
-INCL test.ptm
+FILES x
+ARR.FOR x, file
+	PRINTL file
+NEXT

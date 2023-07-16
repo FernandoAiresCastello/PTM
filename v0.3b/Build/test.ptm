@@ -1,4 +1,0 @@
-files x
-arr.for x, file
-	printl file
-next
