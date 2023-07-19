@@ -9,43 +9,72 @@ string record_file_path;
 char record_file_mode = 0;
 int record_file_ptr = PTM_INVALID_NUMBER;
 
-bool ptm_assert_file_exists(string path)
+string ptm_get_filesys_root_path()
 {
+	string ptm_path = File::GetCurrentExecutableFilePath();
+	string ptm_folder = File::GetParentDirectory(ptm_path);
+	return ptm_folder + "\\" + PTM_FILESYS_ROOT + "\\";
+}
+string ptm_get_filesys_path(string path)
+{
+	path = String::Replace(path, "/", "\\");
+	return ptm_get_filesys_root_path() + path;
+}
+bool ptm_assert_file_exists(string path, bool resolve_root)
+{
+	if (resolve_root) {
+		path = ptm_get_filesys_path(path);
+	}
 	if (File::Exists(path)) {
 		return true;
 	}
 	ptm_abort("File not found: " + path);
 	return false;
 }
+bool ptm_check_file_exists(string path)
+{
+	path = ptm_get_filesys_path(path);
+	if (File::Exists(path)) {
+		return true;
+	}
+	return false;
+}
 string ptm_read_text_file(string path)
 {
-	ptm_assert_file_exists(path);
+	path = ptm_get_filesys_path(path);
+	ptm_assert_file_exists(path, false);
 	return File::ReadText(path);
 }
 vector<string> ptm_read_text_file_lines(string path)
 {
-	ptm_assert_file_exists(path);
+	path = ptm_get_filesys_path(path);
+	ptm_assert_file_exists(path, false);
 	return File::ReadLines(path, file_line_delimiter);
 }
 void ptm_write_text_file_lines(string path, vector<string>& lines)
 {
+	path = ptm_get_filesys_path(path);
 	File::WriteLines(path, lines, file_line_delimiter);
 }
 vector<int> ptm_read_binary_file(string path)
 {
-	ptm_assert_file_exists(path);
+	path = ptm_get_filesys_path(path);
+	ptm_assert_file_exists(path, false);
 	return File::ReadBytesAsIntegers(path);
 }
 void ptm_write_text_file(string path, string text)
 {
+	path = ptm_get_filesys_path(path);
 	File::WriteText(path, text);
 }
 void ptm_write_binary_file(string path, vector<int>& bytes)
 {
+	path = ptm_get_filesys_path(path);
 	File::WriteIntegersAsBytes(path, bytes);
 }
 void ptm_write_binary_file(string path, vector<string>& str_bytes)
 {
+	path = ptm_get_filesys_path(path);
 	vector<int> bytes;
 	for (auto& str : str_bytes) {
 		bytes.push_back(String::ToInt(str));
@@ -54,6 +83,7 @@ void ptm_write_binary_file(string path, vector<string>& str_bytes)
 }
 void ptm_open_record_file(string path, char mode)
 {
+	path = ptm_get_filesys_path(path);
 	record_file_path = path;
 	mode = toupper(mode);
 	record_file_mode = mode;
@@ -70,6 +100,7 @@ void ptm_open_record_file(string path, char mode)
 }
 void ptm_save_record_file(string path)
 {
+	path = ptm_get_filesys_path(path);
 	if (record_file_mode == 'W') {
 		record_file_output = String::RemoveLast(record_file_output);
 		File::WriteText(path, record_file_output);
@@ -111,12 +142,22 @@ char ptm_get_record_file_mode()
 }
 vector<string> ptm_file_list(string root_dir)
 {
-	string ptm_exe_path = File::GetCurrentExecutableFilePath();
-	string ptm_folder = File::GetParentDirectory(ptm_exe_path) + "\\";
-
-	string path = ptm_folder + root_dir;
+	ptm_assert_filesys_path(root_dir);
+	string path = ptm_get_filesys_path(root_dir);
 	if (!File::ExistsFolder(path)) {
 		ptm_abort("Path not found: " + path);
 	}
 	return File::List(path, true, false);
+}
+bool ptm_assert_filesys_path(string path)
+{
+	path = String::Replace(path, "/", "\\");
+	auto parts = String::Split(path, "\\", true);
+	for (auto& part : parts) {
+		if (String::StartsWith(part, ".") || String::Contains(path, ":")) {
+			ptm_abort("Illegal file path: " + path);
+			return false;
+		}
+	}
+	return true;
 }

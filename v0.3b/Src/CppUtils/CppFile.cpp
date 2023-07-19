@@ -43,6 +43,9 @@ namespace CppUtils
 
 	std::vector<std::string> File::List(std::string directory, bool showFolders, bool showHidden)
 	{
+		if (!String::EndsWith(directory, "\\") && !String::EndsWith(directory, "/"))
+			directory += "\\";
+
 		std::vector<std::string> files;
 		std::string path = directory + "*";
 		WIN32_FIND_DATA data;

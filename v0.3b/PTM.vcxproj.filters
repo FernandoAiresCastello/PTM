@@ -74,6 +74,9 @@
     <ClCompile Include="Src\Docgen\docgen.cpp">
       <Filter>Docgen</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Editor\ptm_editor.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Common\common.h">
@@ -166,6 +169,9 @@
     <ClInclude Include="Src\Docgen\docgen.h">
       <Filter>Docgen</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Editor\ptm_editor.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CppUtils">
@@ -185,6 +191,9 @@
     </Filter>
     <Filter Include="Docgen">
       <UniqueIdentifier>{29be0ea6-60b2-41e3-955d-e204b4bcdd13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor">
+      <UniqueIdentifier>{150d12a4-8762-4635-823f-8cd2dd25b988}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -1196,7 +1196,8 @@ void ptm_save_tileset(string file)
 }
 void ptm_load_tileset(string file)
 {
-	ptm_assert_file_exists(file);
+	file = ptm_get_filesys_path(file);
+	ptm_assert_file_exists(file, false);
 	auto tiles = File::ReadLines(file, "\n");
 	if (tiles.size() > 65536) {
 		ptm_abort("Cannot load more than 65536 tiles in the tileset");
@@ -1205,8 +1206,9 @@ void ptm_load_tileset(string file)
 }
 void ptm_load_tileset_from_image(string file, rgb fgc, rgb bgc)
 {
-	ptm_assert_file_exists(file);
-	
+	file = ptm_get_filesys_path(file);
+	ptm_assert_file_exists(file, false);
+
 	t_image image;
 	image.load(file);
 
@@ -1260,7 +1262,8 @@ int ltb_get_int(vector<string>& data, int& data_ptr)
 }
 void ptm_load_tilebuffer(string id, string file)
 {
-	ptm_assert_file_exists(file);
+	file = ptm_get_filesys_path(file);
+	ptm_assert_file_exists(file, false);
 	ptm_assert_tilebuf_exists(id);
 
 	string contents = File::ReadText(file);

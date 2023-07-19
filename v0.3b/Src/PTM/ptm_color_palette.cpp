@@ -86,7 +86,8 @@ void ptm_save_palette(string file)
 }
 void ptm_load_palette(string file)
 {
-	ptm_assert_file_exists(file);
+	file = ptm_get_filesys_path(file);
+	ptm_assert_file_exists(file, false);
 	palette.reset();
 	auto colors = File::ReadLines(file, "\n");
 	if (colors.size() > 256) {

@@ -1186,7 +1186,7 @@ void ptm_init_commands()
 		ARGC(2);
 		string path = ARG_VAR_STR(0);
 		string var = ARG_LIT_ID(1);
-		bool exists = File::Exists(path);
+		bool exists = ptm_check_file_exists(path);
 		ptm_set_var(var, exists ? 1 : 0);
 	};
 	CMD("FOPEN.R") {

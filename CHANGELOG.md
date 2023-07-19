@@ -1,3 +1,8 @@
+## v0.3b
+### Unreleased
+
+- All filesystem access is now limited to the "files" subdirectory in the PTM.exe installation folder
+
 ## v0.2b
 ### Released: July 1st, 2023
 

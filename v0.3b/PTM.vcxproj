@@ -154,6 +154,7 @@ cd "$(SolutionDir)Build"
     <ClInclude Include="Src\CppUtils\CppUtil.h" />
     <ClInclude Include="Src\CppUtils\CppUtils.h" />
     <ClInclude Include="Src\Docgen\docgen.h" />
+    <ClInclude Include="Src\Editor\ptm_editor.h" />
     <ClInclude Include="Src\PTML\t_compiler.h" />
     <ClInclude Include="Src\PTML\t_interpreter.h" />
     <ClInclude Include="Src\PTML\t_loop.h" />
@@ -188,6 +189,7 @@ cd "$(SolutionDir)Build"
     <ClCompile Include="Src\CppUtils\CppString.cpp" />
     <ClCompile Include="Src\CppUtils\CppUtil.cpp" />
     <ClCompile Include="Src\Docgen\docgen.cpp" />
+    <ClCompile Include="Src\Editor\ptm_editor.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\PTML\t_compiler.cpp" />
     <ClCompile Include="Src\PTML\t_interpreter.cpp" />
