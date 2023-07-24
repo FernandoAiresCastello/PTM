@@ -1,6 +1,6 @@
 #include "PTM/ptm_core.h"
 #include "PTM/ptm_filesystem.h"
-#include "Editor/ptm_editor.h"
+#include "Editor/ptm_editor_core.h"
 #include "Docgen/docgen.h"
 
 #define RUN_DOCGEN 0

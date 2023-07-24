@@ -74,7 +74,7 @@
     <ClCompile Include="Src\Docgen\docgen.cpp">
       <Filter>Docgen</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Editor\ptm_editor.cpp">
+    <ClCompile Include="Src\Editor\ptm_editor_core.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
   </ItemGroup>
@@ -169,7 +169,7 @@
     <ClInclude Include="Src\Docgen\docgen.h">
       <Filter>Docgen</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Editor\ptm_editor.h">
+    <ClInclude Include="Src\Editor\ptm_editor_core.h">
       <Filter>Editor</Filter>
     </ClInclude>
   </ItemGroup>
