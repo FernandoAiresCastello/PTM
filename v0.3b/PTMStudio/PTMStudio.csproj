@@ -50,6 +50,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="TileGameLib">
+      <HintPath>..\..\..\TileGameLib\Side projects\TileGameLibCS\Builds\TileGameLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FilesystemPanel.cs">

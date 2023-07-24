@@ -61,9 +61,11 @@
             // 
             this.LstFiles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LstFiles.FormattingEnabled = true;
+            this.LstFiles.HorizontalScrollbar = true;
             this.LstFiles.Location = new System.Drawing.Point(0, 25);
             this.LstFiles.Margin = new System.Windows.Forms.Padding(0);
             this.LstFiles.Name = "LstFiles";
+            this.LstFiles.ScrollAlwaysVisible = true;
             this.LstFiles.Size = new System.Drawing.Size(179, 228);
             this.LstFiles.TabIndex = 1;
             // 
