@@ -32,9 +32,10 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.PnlTileset = new System.Windows.Forms.Panel();
             this.TxtFilename = new System.Windows.Forms.TextBox();
-            this.BtnNext = new System.Windows.Forms.ToolStripButton();
-            this.BtnPrev = new System.Windows.Forms.ToolStripButton();
             this.LblIndicator = new System.Windows.Forms.ToolStripLabel();
+            this.BtnPrev = new System.Windows.Forms.ToolStripButton();
+            this.BtnNext = new System.Windows.Forms.ToolStripButton();
+            this.BtnSave = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -61,6 +62,7 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BtnSave,
             this.BtnPrev,
             this.BtnNext,
             this.LblIndicator});
@@ -94,16 +96,12 @@
             this.TxtFilename.TabIndex = 2;
             this.TxtFilename.Text = "Default PTM tileset";
             // 
-            // BtnNext
+            // LblIndicator
             // 
-            this.BtnNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.BtnNext.Image = global::PTMStudio.Properties.Resources.resultset_next;
-            this.BtnNext.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.BtnNext.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.BtnNext.Name = "BtnNext";
-            this.BtnNext.Size = new System.Drawing.Size(23, 22);
-            this.BtnNext.Text = "Scroll down";
-            this.BtnNext.Click += new System.EventHandler(this.BtnNext_Click);
+            this.LblIndicator.ForeColor = System.Drawing.Color.Gray;
+            this.LblIndicator.Name = "LblIndicator";
+            this.LblIndicator.Size = new System.Drawing.Size(86, 22);
+            this.LblIndicator.Text = "toolStripLabel1";
             // 
             // BtnPrev
             // 
@@ -113,15 +111,26 @@
             this.BtnPrev.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BtnPrev.Name = "BtnPrev";
             this.BtnPrev.Size = new System.Drawing.Size(23, 22);
-            this.BtnPrev.Text = "Scroll up";
             this.BtnPrev.Click += new System.EventHandler(this.BtnPrev_Click);
             // 
-            // LblIndicator
+            // BtnNext
             // 
-            this.LblIndicator.ForeColor = System.Drawing.Color.Gray;
-            this.LblIndicator.Name = "LblIndicator";
-            this.LblIndicator.Size = new System.Drawing.Size(86, 22);
-            this.LblIndicator.Text = "toolStripLabel1";
+            this.BtnNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnNext.Image = global::PTMStudio.Properties.Resources.resultset_next;
+            this.BtnNext.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.BtnNext.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnNext.Name = "BtnNext";
+            this.BtnNext.Size = new System.Drawing.Size(23, 22);
+            this.BtnNext.Click += new System.EventHandler(this.BtnNext_Click);
+            // 
+            // BtnSave
+            // 
+            this.BtnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnSave.Image = global::PTMStudio.Properties.Resources.diskette;
+            this.BtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnSave.Name = "BtnSave";
+            this.BtnSave.Size = new System.Drawing.Size(23, 22);
+            this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // TilesetEditPanel
             // 
@@ -148,5 +157,6 @@
         private System.Windows.Forms.ToolStripButton BtnNext;
         private System.Windows.Forms.ToolStripButton BtnPrev;
         private System.Windows.Forms.ToolStripLabel LblIndicator;
+        private System.Windows.Forms.ToolStripButton BtnSave;
     }
 }

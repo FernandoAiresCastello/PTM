@@ -137,6 +137,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ptm_icon.ico" />
+    <None Include="Resources\diskette.png" />
+    <None Include="Resources\arrow_up.png" />
+    <None Include="Resources\arrow_left.png" />
+    <None Include="Resources\arrow_down.png" />
+    <None Include="Resources\arrow_right.png" />
+    <None Include="Resources\color_picker_switch.png" />
+    <None Include="Resources\shape_flip_vertical.png" />
+    <None Include="Resources\shape_flip_horizontal.png" />
     <None Include="Resources\page_white.png" />
     <None Include="Resources\arrow_undo.png" />
     <None Include="Resources\resultset_previous.png" />

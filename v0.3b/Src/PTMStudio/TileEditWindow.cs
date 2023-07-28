@@ -16,6 +16,7 @@ namespace PTMStudio
     {
         private TilesetEditPanel TilesetPanel;
         private TiledDisplay Display;
+        private TiledDisplay MosaicDisplay;
         private Tileset Tileset;
         private int Index;
         private TilePixels Original;
@@ -35,7 +36,7 @@ namespace PTMStudio
             Original = Tileset.Get(index).Copy();
             Text = index.ToString();
 
-            Size = new Size(218, 263);
+            //Size = new Size(248, 287);
             StartPosition = FormStartPosition.CenterParent;
 
             Display = new TiledDisplay(TilePanel, 8, 8, 3);
@@ -51,9 +52,27 @@ namespace PTMStudio
             Display.MouseClick += Display_MouseClick;
             Display.MouseDown += Display_MouseDown;
 
+            InitMosaic();
             UpdateView();
 
             //ResizeEnd += TileEditWindow_ResizeEnd;
+        }
+
+        private void InitMosaic()
+        {
+            MosaicDisplay = new TiledDisplay(MosaicPanel, 9, 9, 3);
+            MosaicDisplay.Graphics.Tileset = Tileset;
+            MosaicDisplay.Graphics.Palette = Display.Graphics.Palette;
+            MosaicDisplay.Graphics.Clear(1);
+        }
+
+        private void DrawMosaic()
+        {
+            for (int y = 0; y < MosaicDisplay.Rows; y++)
+                for (int x = 0; x < MosaicDisplay.Cols; x++)
+                    MosaicDisplay.Graphics.PutTile(x, y, Index, 0, 1);
+
+            MosaicDisplay.Refresh();
         }
 
         private void Display_MouseDown(object sender, MouseEventArgs e)
@@ -94,6 +113,7 @@ namespace PTMStudio
             }
 
             Display.Refresh();
+            DrawMosaic();
         }
 
         private void SetPixel(MouseEventArgs e)
@@ -146,6 +166,48 @@ namespace PTMStudio
         private void ClearAllPixels()
         {
             Tileset.Get(Index).Clear();
+            OnPixelsChanged();
+        }
+
+        private void BtnFlipH_Click(object sender, EventArgs e)
+        {
+            Tileset.Get(Index).FlipHorizontal();
+            OnPixelsChanged();
+        }
+
+        private void BtnFlipV_Click(object sender, EventArgs e)
+        {
+            Tileset.Get(Index).FlipVertical();
+            OnPixelsChanged();
+        }
+
+        private void BtnRotateR_Click(object sender, EventArgs e)
+        {
+            Tileset.Get(Index).RotateRight();
+            OnPixelsChanged();
+        }
+
+        private void BtnRotateD_Click(object sender, EventArgs e)
+        {
+            Tileset.Get(Index).RotateDown();
+            OnPixelsChanged();
+        }
+
+        private void BtnRotateL_Click(object sender, EventArgs e)
+        {
+            Tileset.Get(Index).RotateLeft();
+            OnPixelsChanged();
+        }
+
+        private void BtnRotateU_Click(object sender, EventArgs e)
+        {
+            Tileset.Get(Index).RotateUp();
+            OnPixelsChanged();
+        }
+
+        private void BtnInvert_Click(object sender, EventArgs e)
+        {
+            Tileset.Get(Index).Invert();
             OnPixelsChanged();
         }
     }

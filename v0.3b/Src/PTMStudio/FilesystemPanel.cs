@@ -41,7 +41,7 @@ namespace PTMStudio
             MainWindow.LoadFile("files/" + file);
         }
 
-        private void UpdateFileList()
+        public void UpdateFileList()
         {
             LstFiles.Items.Clear();
             var files = Directory.EnumerateFiles(RootDir, "*.*", SearchOption.AllDirectories);
@@ -50,6 +50,16 @@ namespace PTMStudio
                 string file = path.Replace("\\", "/").Replace(RootDir, "");
                 LstFiles.Items.Add(file);
             }
+        }
+
+        public static string NormalizePath(string path)
+        {
+            return path.Replace("\\", "/");
+        }
+
+        public static string RemoveAbsoluteRoot(string path)
+        {
+            return path.Replace(RootDir, "");
         }
 
         public static string RemoveFilesPrefix(string path)

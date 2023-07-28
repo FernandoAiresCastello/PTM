@@ -42,7 +42,7 @@ namespace PTMStudio
             FilePanel.Parent = TopRightPanel;
             FilePanel.Dock = DockStyle.Fill;
 
-            TilesetPanel = new TilesetEditPanel();
+            TilesetPanel = new TilesetEditPanel(this);
             TilesetPanel.Parent = TopLeftPanel;
             TilesetPanel.Dock = DockStyle.Fill;
 
@@ -104,6 +104,11 @@ namespace PTMStudio
             {
                 PalettePanel.LoadFile(file);
             }
+        }
+
+        public void UpdateFilePanel()
+        {
+            FilePanel.UpdateFileList();
         }
     }
 }

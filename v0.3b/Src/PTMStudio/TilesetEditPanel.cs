@@ -9,20 +9,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TileGameLib.Components;
+using TileGameLib.File;
 using TileGameLib.Graphics;
 
 namespace PTMStudio
 {
     public partial class TilesetEditPanel : UserControl
     {
+        private MainWindow MainWindow;
         private TiledDisplay Display;
         private readonly int MaxTiles;
         private int FirstTile = 0;
+        private string Filename;
 
-        public TilesetEditPanel()
+        private TilesetEditPanel()
         {
             InitializeComponent();
-            
+        }
+
+        public TilesetEditPanel(MainWindow mainWnd)
+        {
+            InitializeComponent();
+            MainWindow = mainWnd;
+
             Display = new TiledDisplay(PnlTileset, 8, 8, 3);
             Display.Graphics.Palette.Clear(2);
             Display.Graphics.Palette.Set(0, 0x000000);
@@ -109,6 +118,7 @@ namespace PTMStudio
                 Display.Graphics.Tileset.Add(line);
 
             FirstTile = 0;
+            Filename = file;
             TxtFilename.Text = FilesystemPanel.RemoveFilesPrefix(file);
             UpdateDisplay();
         }
@@ -142,6 +152,32 @@ namespace PTMStudio
 
             TileEditWindow wnd = new TileEditWindow(this, Display.Graphics.Tileset, index);
             wnd.ShowDialog(this);
+        }
+
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            SaveFile();
+        }
+
+        private void SaveFile()
+        {
+            if (string.IsNullOrWhiteSpace(Filename))
+            {
+                SaveFileDialog dialog = new SaveFileDialog();
+                dialog.InitialDirectory = Path.Combine(MainWindow.WorkingDir, "files");
+                dialog.Filter = "PTM Tileset File (*.ptm.chr)|*.ptm.chr";
+                if (dialog.ShowDialog() == DialogResult.OK)
+                    Filename = dialog.FileName;
+                else
+                    return;
+            }
+
+            TilesetFile.SaveAsBinaryStrings(Display.Graphics.Tileset, Filename);
+            Filename = FilesystemPanel.NormalizePath(Filename);
+            TxtFilename.Text = FilesystemPanel.RemoveAbsoluteRoot(Filename);
+            TxtFilename.Text = FilesystemPanel.RemoveFilesPrefix(TxtFilename.Text);
+            MainWindow.UpdateFilePanel();
+            MessageBox.Show("Tileset saved in: " + TxtFilename.Text, "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
