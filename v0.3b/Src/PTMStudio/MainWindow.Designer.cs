@@ -35,20 +35,16 @@
             this.BtnRun = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.SplitContainer = new System.Windows.Forms.SplitContainer();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.BtmRightPanel = new System.Windows.Forms.Panel();
-            this.TopRightPanel = new System.Windows.Forms.Panel();
+            this.CenterPanel = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.BtmLeftPanel = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.TopLeftPanel = new System.Windows.Forms.Panel();
+            this.TopRightPanel = new System.Windows.Forms.Panel();
+            this.BtmLeftPanel = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SplitContainer)).BeginInit();
-            this.SplitContainer.Panel2.SuspendLayout();
-            this.SplitContainer.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -86,7 +82,7 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 539);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 489);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(884, 22);
             this.statusStrip1.TabIndex = 1;
@@ -94,71 +90,33 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.Control;
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 203F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.SplitContainer, 1, 0);
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.CenterPanel, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(10, 10, 10, 15);
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(884, 515);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(884, 465);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
-            // SplitContainer
+            // CenterPanel
             // 
-            this.SplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SplitContainer.Location = new System.Drawing.Point(203, 3);
-            this.SplitContainer.Name = "SplitContainer";
-            // 
-            // SplitContainer.Panel1
-            // 
-            this.SplitContainer.Panel1.BackColor = System.Drawing.SystemColors.Control;
-            // 
-            // SplitContainer.Panel2
-            // 
-            this.SplitContainer.Panel2.BackColor = System.Drawing.SystemColors.Control;
-            this.SplitContainer.Panel2.Controls.Add(this.tableLayoutPanel3);
-            this.SplitContainer.Size = new System.Drawing.Size(678, 509);
-            this.SplitContainer.SplitterDistance = 466;
-            this.SplitContainer.TabIndex = 0;
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 1;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.BtmRightPanel, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.TopRightPanel, 0, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(208, 509);
-            this.tableLayoutPanel3.TabIndex = 2;
-            // 
-            // BtmRightPanel
-            // 
-            this.BtmRightPanel.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.BtmRightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BtmRightPanel.Location = new System.Drawing.Point(0, 254);
-            this.BtmRightPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.BtmRightPanel.Name = "BtmRightPanel";
-            this.BtmRightPanel.Size = new System.Drawing.Size(208, 255);
-            this.BtmRightPanel.TabIndex = 1;
-            // 
-            // TopRightPanel
-            // 
-            this.TopRightPanel.BackColor = System.Drawing.SystemColors.Control;
-            this.TopRightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TopRightPanel.Location = new System.Drawing.Point(0, 0);
-            this.TopRightPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.TopRightPanel.Name = "TopRightPanel";
-            this.TopRightPanel.Size = new System.Drawing.Size(208, 254);
-            this.TopRightPanel.TabIndex = 0;
+            this.CenterPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CenterPanel.Location = new System.Drawing.Point(213, 10);
+            this.CenterPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.CenterPanel.Name = "CenterPanel";
+            this.CenterPanel.Padding = new System.Windows.Forms.Padding(0, 3, 3, 0);
+            this.CenterPanel.Size = new System.Drawing.Size(461, 440);
+            this.CenterPanel.TabIndex = 0;
             // 
             // tableLayoutPanel2
             // 
@@ -167,39 +125,63 @@
             this.tableLayoutPanel2.Controls.Add(this.BtmLeftPanel, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.TopLeftPanel, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(10, 10);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(194, 509);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(203, 440);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
-            // BtmLeftPanel
+            // tableLayoutPanel3
             // 
-            this.BtmLeftPanel.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.BtmLeftPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BtmLeftPanel.Location = new System.Drawing.Point(0, 254);
-            this.BtmLeftPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.BtmLeftPanel.Name = "BtmLeftPanel";
-            this.BtmLeftPanel.Size = new System.Drawing.Size(194, 255);
-            this.BtmLeftPanel.TabIndex = 1;
+            this.tableLayoutPanel3.ColumnCount = 1;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Controls.Add(this.TopRightPanel, 0, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(674, 10);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(200, 440);
+            this.tableLayoutPanel3.TabIndex = 2;
             // 
             // TopLeftPanel
             // 
-            this.TopLeftPanel.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.TopLeftPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TopLeftPanel.Location = new System.Drawing.Point(0, 0);
-            this.TopLeftPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.TopLeftPanel.Location = new System.Drawing.Point(3, 3);
+            this.TopLeftPanel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.TopLeftPanel.Name = "TopLeftPanel";
-            this.TopLeftPanel.Size = new System.Drawing.Size(194, 254);
+            this.TopLeftPanel.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.TopLeftPanel.Size = new System.Drawing.Size(197, 217);
             this.TopLeftPanel.TabIndex = 0;
+            // 
+            // TopRightPanel
+            // 
+            this.TopRightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TopRightPanel.Location = new System.Drawing.Point(3, 3);
+            this.TopRightPanel.Name = "TopRightPanel";
+            this.TopRightPanel.Size = new System.Drawing.Size(194, 214);
+            this.TopRightPanel.TabIndex = 1;
+            // 
+            // BtmLeftPanel
+            // 
+            this.BtmLeftPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BtmLeftPanel.Location = new System.Drawing.Point(3, 223);
+            this.BtmLeftPanel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
+            this.BtmLeftPanel.Name = "BtmLeftPanel";
+            this.BtmLeftPanel.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.BtmLeftPanel.Size = new System.Drawing.Size(197, 217);
+            this.BtmLeftPanel.TabIndex = 1;
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(884, 561);
+            this.ClientSize = new System.Drawing.Size(884, 511);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -211,11 +193,8 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.SplitContainer.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.SplitContainer)).EndInit();
-            this.SplitContainer.ResumeLayout(false);
-            this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -225,17 +204,16 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.SplitContainer SplitContainer;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Panel BtmLeftPanel;
-        private System.Windows.Forms.Panel TopLeftPanel;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.Panel BtmRightPanel;
-        private System.Windows.Forms.Panel TopRightPanel;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem runToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem BtnRun;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Panel CenterPanel;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.Panel TopRightPanel;
+        private System.Windows.Forms.Panel TopLeftPanel;
+        private System.Windows.Forms.Panel BtmLeftPanel;
     }
 }
 

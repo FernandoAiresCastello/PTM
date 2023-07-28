@@ -622,6 +622,10 @@ void ptm_create_default_tilebuffer(int layers)
 	tilebufs.get(DEFAULT_TILEBUF_ID)->set_bgcol(0);
 	tilebufs.get(DEFAULT_TILEBUF_ID)->show();
 }
+t_tilebuf* ptm_get_default_tilebuffer()
+{
+	return tilebufs.get(DEFAULT_TILEBUF_ID);
+}
 void ptm_draw_visible_buffers()
 {
 	for (int i = 0; i < tilebufs.tilebufs.size(); i++) {

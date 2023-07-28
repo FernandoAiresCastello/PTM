@@ -17,5 +17,9 @@ int main(int argc, char* argv[])
 	}
 	string main_file = ptm_get_filesys_path("main.ptm");
 	return ptm_run(main_file);
-	//return ptm_edit();
+	/*
+	ptm_editor_core editor;
+	editor.run();
+	return 0;
+	*/
 }

@@ -51,7 +51,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="TileGameLib">
-      <HintPath>..\..\..\TileGameLib\Side projects\TileGameLibCS\Builds\TileGameLib.dll</HintPath>
+      <HintPath>..\..\..\..\TileGameLib\Side projects\TileGameLibCS\Builds\TileGameLib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +67,12 @@
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="PaletteEditPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PaletteEditPanel.Designer.cs">
+      <DependentUpon>PaletteEditPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="ProgramEditPanel.cs">
       <SubType>UserControl</SubType>
@@ -75,11 +81,20 @@
       <DependentUpon>ProgramEditPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TilesetEditPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TilesetEditPanel.Designer.cs">
+      <DependentUpon>TilesetEditPanel.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="FilesystemPanel.resx">
       <DependentUpon>FilesystemPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PaletteEditPanel.resx">
+      <DependentUpon>PaletteEditPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProgramEditPanel.resx">
       <DependentUpon>ProgramEditPanel.cs</DependentUpon>
@@ -93,6 +108,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="TilesetEditPanel.resx">
+      <DependentUpon>TilesetEditPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

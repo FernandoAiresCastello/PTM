@@ -181,6 +181,7 @@ extern t_tilebuf_cursor tilebuf_csr;
 
 void ptm_reset_tilesystem();
 void ptm_create_default_tilebuffer(int layers);
+t_tilebuf* ptm_get_default_tilebuffer();
 void ptm_draw_visible_buffers();
 void ptm_draw_buffer(t_tilebuf* buf);
 void ptm_update_tile_animation();

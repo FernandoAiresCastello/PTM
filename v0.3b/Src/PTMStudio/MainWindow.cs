@@ -22,16 +22,20 @@ namespace PTMStudio
         private ProgramEditPanel PrgPanel;
         private Scintilla Scintilla;
         private FilesystemPanel FilePanel;
+        private TilesetEditPanel TilesetPanel;
+        private PaletteEditPanel PalettePanel;
 
         public MainWindow(string workingDir, string ptmExe)
         {
             InitializeComponent();
+            Size = new Size(980, 550);
+            MinimumSize = Size;
 
             WorkingDir = workingDir;
             PtmExe = ptmExe;
 
             PrgPanel = new ProgramEditPanel();
-            PrgPanel.Parent = SplitContainer.Panel1;
+            PrgPanel.Parent = CenterPanel;
             PrgPanel.Dock = DockStyle.Fill;
 
             Scintilla = new Scintilla();
@@ -45,6 +49,14 @@ namespace PTMStudio
             FilePanel = new FilesystemPanel(this);
             FilePanel.Parent = TopRightPanel;
             FilePanel.Dock = DockStyle.Fill;
+
+            TilesetPanel = new TilesetEditPanel();
+            TilesetPanel.Parent = TopLeftPanel;
+            TilesetPanel.Dock = DockStyle.Fill;
+
+            PalettePanel = new PaletteEditPanel();
+            PalettePanel.Parent = BtmLeftPanel;
+            PalettePanel.Dock = DockStyle.Fill;
         }
 
         public void Abort(string message)
