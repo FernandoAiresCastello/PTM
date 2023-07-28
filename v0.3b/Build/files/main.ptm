@@ -3,4 +3,5 @@ pal.load "palettes/msx_palette.ptm.pal"
 window 256, 192, 3, 1
 locate 1, 1
 color 3, 13
+buf.bgcol default, 13
 print "hello!"

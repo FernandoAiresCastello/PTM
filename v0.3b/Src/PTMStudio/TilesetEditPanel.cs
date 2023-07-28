@@ -30,7 +30,6 @@ namespace PTMStudio
             Display.ShowGrid = true;
 
             DefaultTileset.Init(Display.Graphics.Tileset);
-
             UpdateDisplay();
         }
 
@@ -61,6 +60,7 @@ namespace PTMStudio
                 Display.Graphics.Tileset.Add(line);
 
             FirstTile = 0;
+            TxtFilename.Text = file;
             UpdateDisplay();
         }
     }

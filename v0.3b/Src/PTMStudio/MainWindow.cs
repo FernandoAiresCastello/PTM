@@ -28,7 +28,7 @@ namespace PTMStudio
         public MainWindow(string workingDir, string ptmExe)
         {
             InitializeComponent();
-            Size = new Size(980, 550);
+            Size = new Size(980, 595);
             MinimumSize = Size;
 
             WorkingDir = workingDir;
@@ -54,6 +54,13 @@ namespace PTMStudio
                 File.Create(MainProgramFile).Close();
 
             LoadFile(MainProgramFile);
+
+            //ResizeEnd += MainWindow_ResizeEnd;
+        }
+
+        private void MainWindow_ResizeEnd(object sender, EventArgs e)
+        {
+            Text = Size.ToString();
         }
 
         public void Abort(string message)

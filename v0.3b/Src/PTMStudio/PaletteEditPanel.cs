@@ -60,6 +60,7 @@ namespace PTMStudio
                 Display.Graphics.Palette.Add(int.Parse(line, NumberStyles.HexNumber));
 
             FirstColor = 0;
+            TxtFilename.Text = file;
             UpdateDisplay();
         }
     }
