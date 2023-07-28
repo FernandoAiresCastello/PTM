@@ -1,1 +1,6 @@
-PRINT "Hello World!"
+chr.load "tilesets/msx_tileset.ptm.chr"
+pal.load "palettes/msx_palette.ptm.pal"
+window 256, 192, 3, 1
+locate 1, 1
+color 3, 13
+print "hello!"

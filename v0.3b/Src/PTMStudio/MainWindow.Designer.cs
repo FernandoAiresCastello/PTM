@@ -76,7 +76,7 @@
             // 
             this.BtnRun.Name = "BtnRun";
             this.BtnRun.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.BtnRun.Size = new System.Drawing.Size(163, 22);
+            this.BtnRun.Size = new System.Drawing.Size(180, 22);
             this.BtnRun.Text = "Run program";
             this.BtnRun.Click += new System.EventHandler(this.BtnRun_Click);
             // 

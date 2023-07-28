@@ -38,7 +38,7 @@ namespace PTMStudio
             if (file == null)
                 return;
 
-            MainWindow.OpenFile("files/" + file);
+            MainWindow.LoadFile("files/" + file);
         }
 
         private void UpdateFileList()

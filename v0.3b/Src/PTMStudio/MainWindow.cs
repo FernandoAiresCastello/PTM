@@ -19,8 +19,8 @@ namespace PTMStudio
         public string WorkingDir { get; private set; }
         private string PtmExe;
         private string ProgramFile = "";
-        private ProgramEditPanel PrgPanel;
-        private Scintilla Scintilla;
+        private readonly string MainProgramFile = "files/main.ptm";
+        private ProgramEditPanel ProgramPanel;
         private FilesystemPanel FilePanel;
         private TilesetEditPanel TilesetPanel;
         private PaletteEditPanel PalettePanel;
@@ -34,17 +34,9 @@ namespace PTMStudio
             WorkingDir = workingDir;
             PtmExe = ptmExe;
 
-            PrgPanel = new ProgramEditPanel();
-            PrgPanel.Parent = CenterPanel;
-            PrgPanel.Dock = DockStyle.Fill;
-
-            Scintilla = new Scintilla();
-            Scintilla.Parent = PrgPanel.ScintillaPanel;
-            Scintilla.Dock = DockStyle.Fill;
-            Scintilla.BorderStyle = BorderStyle.Fixed3D;
-            Scintilla.HScrollBar = true;
-            Scintilla.VScrollBar = true;
-            Scintilla.Margins[0].Width = 40;
+            ProgramPanel = new ProgramEditPanel();
+            ProgramPanel.Parent = CenterPanel;
+            ProgramPanel.Dock = DockStyle.Fill;
 
             FilePanel = new FilesystemPanel(this);
             FilePanel.Parent = TopRightPanel;
@@ -57,6 +49,11 @@ namespace PTMStudio
             PalettePanel = new PaletteEditPanel();
             PalettePanel.Parent = BtmLeftPanel;
             PalettePanel.Dock = DockStyle.Fill;
+
+            if (!File.Exists(MainProgramFile))
+                File.Create(MainProgramFile).Close();
+
+            LoadFile(MainProgramFile);
         }
 
         public void Abort(string message)
@@ -73,14 +70,33 @@ namespace PTMStudio
 
         private void BtnRun_Click(object sender, EventArgs e)
         {
+            RunProgram();
+        }
+
+        public void RunProgram()
+        {
+            ProgramPanel.SaveFile();
             Process.Start(PtmExe, ProgramFile);
         }
 
-        public void OpenFile(string file)
+        public void LoadFile(string file)
         {
-            ProgramFile = file;
-            string program = File.ReadAllText(file);
-            Scintilla.Text = program;
+            string ext = Path.GetExtension(file).ToLower();
+            
+            if (ext == ".ptm")
+            {
+                ProgramPanel.LoadFile(file);
+                ProgramFile = file;
+                Text = "PTM Studio - " + file;
+            }
+            else if (ext == ".chr")
+            {
+                TilesetPanel.LoadFile(file);
+            }
+            else if (ext == ".pal")
+            {
+                PalettePanel.LoadFile(file);
+            }
         }
     }
 }

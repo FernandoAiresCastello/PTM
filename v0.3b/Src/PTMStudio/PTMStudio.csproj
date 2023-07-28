@@ -55,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DefaultTileset.cs" />
     <Compile Include="FilesystemPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
