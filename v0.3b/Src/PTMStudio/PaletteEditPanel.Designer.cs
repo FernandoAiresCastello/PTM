@@ -28,20 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.PnlPalette = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.TxtFilename = new System.Windows.Forms.TextBox();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.BtnSave = new System.Windows.Forms.ToolStripButton();
+            this.BtnPrev = new System.Windows.Forms.ToolStripButton();
+            this.BtnNext = new System.Windows.Forms.ToolStripButton();
+            this.LblIndicator = new System.Windows.Forms.ToolStripLabel();
             this.tableLayoutPanel1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Location = new System.Drawing.Point(1, 1);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(196, 25);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Text = "toolStrip1";
             // 
             // PnlPalette
             // 
@@ -58,8 +55,8 @@
             this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.TxtFilename, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.toolStrip1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.TxtFilename, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.PnlPalette, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -69,6 +66,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(198, 253);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
@@ -86,6 +84,54 @@
             this.TxtFilename.TabIndex = 3;
             this.TxtFilename.Text = "Default PTM palette";
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BtnSave,
+            this.BtnPrev,
+            this.BtnNext,
+            this.LblIndicator});
+            this.toolStrip1.Location = new System.Drawing.Point(1, 1);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(196, 25);
+            this.toolStrip1.TabIndex = 4;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // BtnSave
+            // 
+            this.BtnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnSave.Image = global::PTMStudio.Properties.Resources.diskette;
+            this.BtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnSave.Name = "BtnSave";
+            this.BtnSave.Size = new System.Drawing.Size(23, 22);
+            // 
+            // BtnPrev
+            // 
+            this.BtnPrev.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnPrev.Image = global::PTMStudio.Properties.Resources.resultset_previous;
+            this.BtnPrev.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.BtnPrev.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnPrev.Name = "BtnPrev";
+            this.BtnPrev.Size = new System.Drawing.Size(23, 22);
+            this.BtnPrev.Click += new System.EventHandler(this.BtnPrev_Click);
+            // 
+            // BtnNext
+            // 
+            this.BtnNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnNext.Image = global::PTMStudio.Properties.Resources.resultset_next;
+            this.BtnNext.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.BtnNext.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnNext.Name = "BtnNext";
+            this.BtnNext.Size = new System.Drawing.Size(23, 22);
+            this.BtnNext.Click += new System.EventHandler(this.BtnNext_Click);
+            // 
+            // LblIndicator
+            // 
+            this.LblIndicator.ForeColor = System.Drawing.Color.Gray;
+            this.LblIndicator.Name = "LblIndicator";
+            this.LblIndicator.Size = new System.Drawing.Size(86, 22);
+            this.LblIndicator.Text = "toolStripLabel1";
+            // 
             // PaletteEditPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -96,15 +142,20 @@
             this.Size = new System.Drawing.Size(198, 253);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.Panel PnlPalette;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TextBox TxtFilename;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton BtnSave;
+        private System.Windows.Forms.ToolStripButton BtnPrev;
+        private System.Windows.Forms.ToolStripButton BtnNext;
+        private System.Windows.Forms.ToolStripLabel LblIndicator;
     }
 }
