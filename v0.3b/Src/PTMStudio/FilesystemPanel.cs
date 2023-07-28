@@ -15,7 +15,7 @@ namespace PTMStudio
     public partial class FilesystemPanel : UserControl
     {
         private MainWindow MainWindow;
-        private string RootDir;
+        private static string RootDir;
 
         private FilesystemPanel()
         {
@@ -26,7 +26,7 @@ namespace PTMStudio
         {
             InitializeComponent();
             MainWindow = mainWnd;
-            RootDir = Path.Combine(MainWindow.WorkingDir, "files\\");
+            RootDir = Path.Combine(MainWindow.WorkingDir, "files/").Replace("\\", "/");
             UpdateFileList();
 
             LstFiles.DoubleClick += LstFiles_DoubleClick;
@@ -47,9 +47,17 @@ namespace PTMStudio
             var files = Directory.EnumerateFiles(RootDir, "*.*", SearchOption.AllDirectories);
             foreach (string path in files)
             {
-                string file = path.Replace(RootDir, "").Replace("\\", "/");
+                string file = path.Replace("\\", "/").Replace(RootDir, "");
                 LstFiles.Items.Add(file);
             }
+        }
+
+        public static string RemoveFilesPrefix(string path)
+        {
+            if (path.StartsWith("files/"))
+                path = path.Substring(6);
+
+            return path;
         }
     }
 }

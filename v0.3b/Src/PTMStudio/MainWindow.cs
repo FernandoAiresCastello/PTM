@@ -94,7 +94,7 @@ namespace PTMStudio
             {
                 ProgramPanel.LoadFile(file);
                 ProgramFile = file;
-                Text = "PTM Studio - " + file;
+                Text = "PTM Studio - " + FilesystemPanel.RemoveFilesPrefix(file);
             }
             else if (ext == ".chr")
             {

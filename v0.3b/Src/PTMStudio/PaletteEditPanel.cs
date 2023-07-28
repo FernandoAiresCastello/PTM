@@ -26,8 +26,10 @@ namespace PTMStudio
             Display.Graphics.Palette.Clear(256, 0x000000);
             Display.Graphics.Palette.Set(0, 0x101010);
             Display.Graphics.Palette.Set(1, 0xf0f0f0);
+            Display.Graphics.Tileset.ClearToSize(0);
             Display.Graphics.Tileset.Add("1111111111111111111111111111111111111111111111111111111111111111");
             Display.ShowGrid = true;
+            Display.Cursor = Cursors.Hand;
             Display.SetMainGridColor(Color.FromArgb(80, 128, 128, 128));
 
             UpdateDisplay();
@@ -60,7 +62,7 @@ namespace PTMStudio
                 Display.Graphics.Palette.Add(int.Parse(line, NumberStyles.HexNumber));
 
             FirstColor = 0;
-            TxtFilename.Text = file;
+            TxtFilename.Text = FilesystemPanel.RemoveFilesPrefix(file);
             UpdateDisplay();
         }
     }

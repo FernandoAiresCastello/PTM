@@ -82,6 +82,12 @@
       <DependentUpon>ProgramEditPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TileEditWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TileEditWindow.Designer.cs">
+      <DependentUpon>TileEditWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="TilesetEditPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -108,7 +114,11 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="TileEditWindow.resx">
+      <DependentUpon>TileEditWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TilesetEditPanel.resx">
       <DependentUpon>TilesetEditPanel.cs</DependentUpon>
     </EmbeddedResource>
@@ -127,6 +137,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ptm_icon.ico" />
+    <None Include="Resources\page_white.png" />
+    <None Include="Resources\arrow_undo.png" />
+    <None Include="Resources\resultset_previous.png" />
+    <None Include="Resources\resultset_next.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

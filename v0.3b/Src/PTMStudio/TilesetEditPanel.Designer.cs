@@ -32,7 +32,11 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.PnlTileset = new System.Windows.Forms.Panel();
             this.TxtFilename = new System.Windows.Forms.TextBox();
+            this.BtnNext = new System.Windows.Forms.ToolStripButton();
+            this.BtnPrev = new System.Windows.Forms.ToolStripButton();
+            this.LblIndicator = new System.Windows.Forms.ToolStripLabel();
             this.tableLayoutPanel1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -56,6 +60,10 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BtnPrev,
+            this.BtnNext,
+            this.LblIndicator});
             this.toolStrip1.Location = new System.Drawing.Point(1, 1);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(198, 25);
@@ -86,6 +94,35 @@
             this.TxtFilename.TabIndex = 2;
             this.TxtFilename.Text = "Default PTM tileset";
             // 
+            // BtnNext
+            // 
+            this.BtnNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnNext.Image = global::PTMStudio.Properties.Resources.resultset_next;
+            this.BtnNext.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.BtnNext.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnNext.Name = "BtnNext";
+            this.BtnNext.Size = new System.Drawing.Size(23, 22);
+            this.BtnNext.Text = "Scroll down";
+            this.BtnNext.Click += new System.EventHandler(this.BtnNext_Click);
+            // 
+            // BtnPrev
+            // 
+            this.BtnPrev.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnPrev.Image = global::PTMStudio.Properties.Resources.resultset_previous;
+            this.BtnPrev.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.BtnPrev.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnPrev.Name = "BtnPrev";
+            this.BtnPrev.Size = new System.Drawing.Size(23, 22);
+            this.BtnPrev.Text = "Scroll up";
+            this.BtnPrev.Click += new System.EventHandler(this.BtnPrev_Click);
+            // 
+            // LblIndicator
+            // 
+            this.LblIndicator.ForeColor = System.Drawing.Color.Gray;
+            this.LblIndicator.Name = "LblIndicator";
+            this.LblIndicator.Size = new System.Drawing.Size(86, 22);
+            this.LblIndicator.Text = "toolStripLabel1";
+            // 
             // TilesetEditPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -96,6 +133,8 @@
             this.Size = new System.Drawing.Size(200, 253);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -106,5 +145,8 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.Panel PnlTileset;
         private System.Windows.Forms.TextBox TxtFilename;
+        private System.Windows.Forms.ToolStripButton BtnNext;
+        private System.Windows.Forms.ToolStripButton BtnPrev;
+        private System.Windows.Forms.ToolStripLabel LblIndicator;
     }
 }
