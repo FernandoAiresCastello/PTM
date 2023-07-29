@@ -55,6 +55,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColorEditWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColorEditWindow.Designer.cs">
+      <DependentUpon>ColorEditWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="DefaultTileset.cs" />
     <Compile Include="FilesystemPanel.cs">
       <SubType>UserControl</SubType>
@@ -94,6 +100,9 @@
     <Compile Include="TilesetEditPanel.Designer.cs">
       <DependentUpon>TilesetEditPanel.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ColorEditWindow.resx">
+      <DependentUpon>ColorEditWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FilesystemPanel.resx">
       <DependentUpon>FilesystemPanel.cs</DependentUpon>
     </EmbeddedResource>
@@ -137,6 +146,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ptm_icon.ico" />
+    <None Include="Resources\delete.png" />
+    <None Include="Resources\folder.png" />
     <None Include="Resources\diskette.png" />
     <None Include="Resources\arrow_up.png" />
     <None Include="Resources\arrow_left.png" />

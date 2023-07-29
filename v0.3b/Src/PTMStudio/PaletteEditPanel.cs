@@ -10,18 +10,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TileGameLib.Components;
+using TileGameLib.File;
 
 namespace PTMStudio
 {
     public partial class PaletteEditPanel : UserControl
     {
+        private MainWindow MainWindow;
         private TiledDisplay Display;
         private int FirstColor = 0;
         private readonly int MaxColors;
+        private string Filename;
 
-        public PaletteEditPanel()
+        private PaletteEditPanel()
         {
             InitializeComponent();
+        }
+
+        public PaletteEditPanel(MainWindow mainWnd)
+        {
+            InitializeComponent();
+            MainWindow = mainWnd;
 
             Display = new TiledDisplay(PnlPalette, 8, 8, 3);
             Display.Graphics.Palette.Clear(256, 0x000000);
@@ -79,6 +88,7 @@ namespace PTMStudio
                 Display.Graphics.Palette.Set(i++, int.Parse(line, NumberStyles.HexNumber));
 
             FirstColor = 0;
+            Filename = file;
             TxtFilename.Text = FilesystemPanel.RemoveFilesPrefix(file);
             UpdateDisplay();
         }
@@ -131,16 +141,50 @@ namespace PTMStudio
         private void Display_MouseClick(object sender, MouseEventArgs e)
         {
             int ix = GetColorIndexFromMousePos(e.Location);
-            EditColor(ix);
+            EditColor(ix, MousePosition);
         }
 
-        private void EditColor(int index)
+        private void EditColor(int index, Point windowPos)
         {
             if (index < 0 || index >= Display.Graphics.Palette.Size)
             {
                 MessageBox.Show("Index out of bounds", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            ColorEditWindow wnd = new ColorEditWindow(this, Display.Graphics.Palette, index, windowPos);
+            
+            if (wnd.ShowDialog(this) == DialogResult.OK)
+            {
+                Display.Graphics.Palette.Set(index, wnd.GetSelectedColor());
+                UpdateDisplay();
+            }
+        }
+
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            SaveFile();
+        }
+
+        private void SaveFile()
+        {
+            if (string.IsNullOrWhiteSpace(Filename))
+            {
+                SaveFileDialog dialog = new SaveFileDialog();
+                dialog.InitialDirectory = Path.Combine(MainWindow.WorkingDir, "files");
+                dialog.Filter = "PTM Palette File (*.ptm.pal)|*.ptm.pal";
+                if (dialog.ShowDialog() == DialogResult.OK)
+                    Filename = dialog.FileName;
+                else
+                    return;
+            }
+
+            PaletteFile.SaveAsHexadecimalRgb(Display.Graphics.Palette, Filename);
+            Filename = FilesystemPanel.NormalizePath(Filename);
+            TxtFilename.Text = FilesystemPanel.RemoveAbsoluteRoot(Filename);
+            TxtFilename.Text = FilesystemPanel.RemoveFilesPrefix(TxtFilename.Text);
+            MainWindow.UpdateFilePanel();
+            MessageBox.Show("Palette saved in: " + TxtFilename.Text, "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

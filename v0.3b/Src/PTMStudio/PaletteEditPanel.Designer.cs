@@ -104,6 +104,7 @@
             this.BtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Size = new System.Drawing.Size(23, 22);
+            this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // BtnPrev
             // 

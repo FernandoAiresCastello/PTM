@@ -69,5 +69,27 @@ namespace PTMStudio
 
             return path;
         }
+
+        private void BtnExplorer_Click(object sender, EventArgs e)
+        {
+            Process.Start(RootDir);
+        }
+
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
+            string file = LstFiles.SelectedItem as string;
+            if (file == null)
+                return;
+
+            DialogResult result = MessageBox.Show("Delete this file?\n\n" + file, 
+                "Confirm delete file", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+            if (result == DialogResult.OK)
+            {
+                string path = RootDir + file;
+                File.Delete(path);
+                UpdateFileList();
+            }
+        }
     }
 }

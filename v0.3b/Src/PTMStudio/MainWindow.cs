@@ -46,7 +46,7 @@ namespace PTMStudio
             TilesetPanel.Parent = TopLeftPanel;
             TilesetPanel.Dock = DockStyle.Fill;
 
-            PalettePanel = new PaletteEditPanel();
+            PalettePanel = new PaletteEditPanel(this);
             PalettePanel.Parent = BtmLeftPanel;
             PalettePanel.Dock = DockStyle.Fill;
 

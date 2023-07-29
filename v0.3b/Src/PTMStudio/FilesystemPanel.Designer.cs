@@ -31,7 +31,10 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.LstFiles = new System.Windows.Forms.ListBox();
+            this.BtnExplorer = new System.Windows.Forms.ToolStripButton();
+            this.BtnDelete = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -51,6 +54,9 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BtnExplorer,
+            this.BtnDelete});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(179, 25);
@@ -69,6 +75,27 @@
             this.LstFiles.Size = new System.Drawing.Size(179, 228);
             this.LstFiles.TabIndex = 1;
             // 
+            // BtnExplorer
+            // 
+            this.BtnExplorer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnExplorer.Image = global::PTMStudio.Properties.Resources.folder;
+            this.BtnExplorer.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnExplorer.Name = "BtnExplorer";
+            this.BtnExplorer.Size = new System.Drawing.Size(23, 22);
+            this.BtnExplorer.ToolTipText = "Explore directory";
+            this.BtnExplorer.Click += new System.EventHandler(this.BtnExplorer_Click);
+            // 
+            // BtnDelete
+            // 
+            this.BtnDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnDelete.Image = global::PTMStudio.Properties.Resources.delete;
+            this.BtnDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnDelete.Name = "BtnDelete";
+            this.BtnDelete.Size = new System.Drawing.Size(23, 22);
+            this.BtnDelete.Text = "toolStripButton1";
+            this.BtnDelete.ToolTipText = "Delete selected file";
+            this.BtnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
+            // 
             // FilesystemPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -78,6 +105,8 @@
             this.Size = new System.Drawing.Size(179, 253);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -87,5 +116,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ListBox LstFiles;
+        private System.Windows.Forms.ToolStripButton BtnExplorer;
+        private System.Windows.Forms.ToolStripButton BtnDelete;
     }
 }
