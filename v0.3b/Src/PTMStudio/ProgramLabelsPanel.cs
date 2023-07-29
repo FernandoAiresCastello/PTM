@@ -40,6 +40,8 @@ namespace PTMStudio
                 if (line.EndsWith(":"))
                     LstLabels.Items.Add(line.Substring(0, line.Length - 1));
             }
+
+            LstLabels.Sorted = true;
         }
 
         private void BtnRefresh_Click(object sender, EventArgs e)

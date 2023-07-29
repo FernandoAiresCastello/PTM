@@ -114,6 +114,7 @@ namespace PTMStudio
 
             Display.Refresh();
             DrawMosaic();
+            UpdateBinary();
         }
 
         private void SetPixel(MouseEventArgs e)
@@ -139,6 +140,11 @@ namespace PTMStudio
             string newPixels = new string(pixels);
             Tileset.Set(Index, newPixels);
             OnPixelsChanged();
+        }
+
+        private void UpdateBinary()
+        {
+            TxtBinary.Text = Tileset.Get(Index).ToBinaryString();
         }
 
         private void OnPixelsChanged()
