@@ -22,6 +22,7 @@ namespace PTMStudio
         private readonly string MainProgramFile = "files/main.ptm";
         private ProgramEditPanel ProgramPanel;
         private FilesystemPanel FilePanel;
+        private ProgramLabelsPanel LabelsPanel;
         private TilesetEditPanel TilesetPanel;
         private PaletteEditPanel PalettePanel;
 
@@ -34,13 +35,17 @@ namespace PTMStudio
             WorkingDir = workingDir;
             PtmExe = ptmExe;
 
-            ProgramPanel = new ProgramEditPanel();
+            ProgramPanel = new ProgramEditPanel(this);
             ProgramPanel.Parent = CenterPanel;
             ProgramPanel.Dock = DockStyle.Fill;
 
             FilePanel = new FilesystemPanel(this);
             FilePanel.Parent = TopRightPanel;
             FilePanel.Dock = DockStyle.Fill;
+
+            LabelsPanel = new ProgramLabelsPanel(this);
+            LabelsPanel.Parent = BtmRightPanel;
+            LabelsPanel.Dock = DockStyle.Fill;
 
             TilesetPanel = new TilesetEditPanel(this);
             TilesetPanel.Parent = TopLeftPanel;
@@ -95,6 +100,7 @@ namespace PTMStudio
                 ProgramPanel.LoadFile(file);
                 ProgramFile = file;
                 Text = "PTM Studio - " + FilesystemPanel.RemoveFilesPrefix(file);
+                LabelsPanel.UpdateLabels();
             }
             else if (ext == ".chr")
             {
@@ -109,6 +115,16 @@ namespace PTMStudio
         public void UpdateFilePanel()
         {
             FilePanel.UpdateFileList();
+        }
+
+        public List<string> GetProgramSource()
+        {
+            return ProgramPanel.GetProgramSource();
+        }
+
+        public void GoToLabel(string label)
+        {
+            ProgramPanel.GoToLabel(label);
         }
     }
 }

@@ -41,6 +41,7 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.BtmLeftPanel = new System.Windows.Forms.Panel();
             this.TopLeftPanel = new System.Windows.Forms.Panel();
+            this.BtmRightPanel = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -112,6 +113,7 @@
             // 
             this.tableLayoutPanel3.ColumnCount = 1;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Controls.Add(this.BtmRightPanel, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.TopRightPanel, 0, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(674, 10);
@@ -127,8 +129,9 @@
             // 
             this.TopRightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TopRightPanel.Location = new System.Drawing.Point(3, 3);
+            this.TopRightPanel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.TopRightPanel.Name = "TopRightPanel";
-            this.TopRightPanel.Size = new System.Drawing.Size(194, 214);
+            this.TopRightPanel.Size = new System.Drawing.Size(194, 217);
             this.TopRightPanel.TabIndex = 1;
             // 
             // CenterPanel
@@ -177,6 +180,15 @@
             this.TopLeftPanel.Size = new System.Drawing.Size(197, 217);
             this.TopLeftPanel.TabIndex = 0;
             // 
+            // BtmRightPanel
+            // 
+            this.BtmRightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BtmRightPanel.Location = new System.Drawing.Point(3, 220);
+            this.BtmRightPanel.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+            this.BtmRightPanel.Name = "BtmRightPanel";
+            this.BtmRightPanel.Size = new System.Drawing.Size(194, 217);
+            this.BtmRightPanel.TabIndex = 2;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -214,6 +226,7 @@
         private System.Windows.Forms.Panel TopRightPanel;
         private System.Windows.Forms.Panel TopLeftPanel;
         private System.Windows.Forms.Panel BtmLeftPanel;
+        private System.Windows.Forms.Panel BtmRightPanel;
     }
 }
 

@@ -14,12 +14,19 @@ namespace PTMStudio
 {
     public partial class ProgramEditPanel : UserControl
     {
+        private MainWindow MainWindow;
         private Scintilla Scintilla;
         private string LoadedFile = "";
 
-        public ProgramEditPanel()
+        private ProgramEditPanel()
         {
             InitializeComponent();
+        }
+
+        public ProgramEditPanel(MainWindow mainWnd)
+        {
+            InitializeComponent();
+            MainWindow = mainWnd;
 
             Scintilla = new Scintilla();
             Scintilla.Parent = ScintillaPanel;
@@ -39,6 +46,40 @@ namespace PTMStudio
         public void SaveFile()
         {
             File.WriteAllText(LoadedFile, Scintilla.Text);
+        }
+
+        private void BtnRun_Click(object sender, EventArgs e)
+        {
+            MainWindow.RunProgram();
+        }
+
+        public List<string> GetProgramSource()
+        {
+            List<string> program = new List<string>();
+            foreach (var line in Scintilla.Lines)
+                program.Add(line.Text);
+
+            return program;
+        }
+
+        public void GoToLabel(string label)
+        {
+            int lineNumber = -1;
+
+            foreach (var rawLine in Scintilla.Lines)
+            {
+                lineNumber++;
+                string line = rawLine.Text.Trim();
+                if (string.IsNullOrEmpty(line) || !line.EndsWith(":"))
+                    continue;
+
+                string curLabel = line.Substring(0, line.Length - 1);
+                if (curLabel == label)
+                {
+                    Scintilla.FirstVisibleLine = lineNumber;
+                    return;
+                }
+            }
         }
     }
 }

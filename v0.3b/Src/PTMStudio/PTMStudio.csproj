@@ -87,6 +87,12 @@
     <Compile Include="ProgramEditPanel.Designer.cs">
       <DependentUpon>ProgramEditPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProgramLabelsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProgramLabelsPanel.Designer.cs">
+      <DependentUpon>ProgramLabelsPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TileEditWindow.cs">
       <SubType>Form</SubType>
@@ -114,6 +120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ProgramEditPanel.resx">
       <DependentUpon>ProgramEditPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProgramLabelsPanel.resx">
+      <DependentUpon>ProgramLabelsPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -146,6 +155,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ptm_icon.ico" />
+    <None Include="Resources\update.png" />
+    <None Include="Resources\control_play_blue.png" />
     <None Include="Resources\delete.png" />
     <None Include="Resources\folder.png" />
     <None Include="Resources\diskette.png" />
