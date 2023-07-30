@@ -42,6 +42,10 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.BtmLeftPanel = new System.Windows.Forms.Panel();
             this.TopLeftPanel = new System.Windows.Forms.Panel();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnViewPrgEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnViewTilebufEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnAlternateEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -52,7 +56,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.runToolStripMenuItem});
+            this.runToolStripMenuItem,
+            this.viewToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(884, 24);
@@ -190,6 +195,38 @@
             this.TopLeftPanel.Size = new System.Drawing.Size(197, 217);
             this.TopLeftPanel.TabIndex = 0;
             // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BtnViewPrgEdit,
+            this.BtnViewTilebufEdit,
+            this.BtnAlternateEditor});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem.Text = "View";
+            // 
+            // BtnViewPrgEdit
+            // 
+            this.BtnViewPrgEdit.Name = "BtnViewPrgEdit";
+            this.BtnViewPrgEdit.Size = new System.Drawing.Size(228, 22);
+            this.BtnViewPrgEdit.Text = "Program Editor";
+            this.BtnViewPrgEdit.Click += new System.EventHandler(this.BtnViewPrgEdit_Click);
+            // 
+            // BtnViewTilebufEdit
+            // 
+            this.BtnViewTilebufEdit.Name = "BtnViewTilebufEdit";
+            this.BtnViewTilebufEdit.Size = new System.Drawing.Size(228, 22);
+            this.BtnViewTilebufEdit.Text = "Tilebuffer Editor";
+            this.BtnViewTilebufEdit.Click += new System.EventHandler(this.BtnViewTilebufEdit_Click);
+            // 
+            // BtnAlternateEditor
+            // 
+            this.BtnAlternateEditor.Name = "BtnAlternateEditor";
+            this.BtnAlternateEditor.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.BtnAlternateEditor.Size = new System.Drawing.Size(228, 22);
+            this.BtnAlternateEditor.Text = "Alternate between editors";
+            this.BtnAlternateEditor.Click += new System.EventHandler(this.BtnAlternateEditor_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -228,6 +265,10 @@
         private System.Windows.Forms.Panel TopLeftPanel;
         private System.Windows.Forms.Panel BtmLeftPanel;
         private System.Windows.Forms.Panel BtmRightPanel;
+        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem BtnViewPrgEdit;
+        private System.Windows.Forms.ToolStripMenuItem BtnViewTilebufEdit;
+        private System.Windows.Forms.ToolStripMenuItem BtnAlternateEditor;
     }
 }
 

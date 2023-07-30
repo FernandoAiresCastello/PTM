@@ -94,6 +94,12 @@
       <DependentUpon>ProgramLabelsPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TilebufferEditPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TilebufferEditPanel.Designer.cs">
+      <DependentUpon>TilebufferEditPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="TilebufferExporter.cs" />
     <Compile Include="TileEditWindow.cs">
       <SubType>Form</SubType>
@@ -135,6 +141,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="TilebufferEditPanel.resx">
+      <DependentUpon>TilebufferEditPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TileEditWindow.resx">
       <DependentUpon>TileEditWindow.cs</DependentUpon>
     </EmbeddedResource>

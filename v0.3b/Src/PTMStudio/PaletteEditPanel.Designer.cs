@@ -30,12 +30,12 @@
         {
             this.PnlPalette = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.TxtFilename = new System.Windows.Forms.TextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.BtnSave = new System.Windows.Forms.ToolStripButton();
             this.BtnPrev = new System.Windows.Forms.ToolStripButton();
             this.BtnNext = new System.Windows.Forms.ToolStripButton();
             this.LblIndicator = new System.Windows.Forms.ToolStripLabel();
+            this.TxtFilename = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -69,20 +69,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(198, 253);
             this.tableLayoutPanel1.TabIndex = 2;
-            // 
-            // TxtFilename
-            // 
-            this.TxtFilename.BackColor = System.Drawing.SystemColors.Control;
-            this.TxtFilename.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TxtFilename.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TxtFilename.ForeColor = System.Drawing.Color.Gray;
-            this.TxtFilename.Location = new System.Drawing.Point(6, 30);
-            this.TxtFilename.Margin = new System.Windows.Forms.Padding(5, 3, 3, 3);
-            this.TxtFilename.Name = "TxtFilename";
-            this.TxtFilename.ReadOnly = true;
-            this.TxtFilename.Size = new System.Drawing.Size(188, 13);
-            this.TxtFilename.TabIndex = 3;
-            this.TxtFilename.Text = "Default PTM palette";
             // 
             // toolStrip1
             // 
@@ -132,6 +118,20 @@
             this.LblIndicator.Name = "LblIndicator";
             this.LblIndicator.Size = new System.Drawing.Size(86, 22);
             this.LblIndicator.Text = "toolStripLabel1";
+            // 
+            // TxtFilename
+            // 
+            this.TxtFilename.BackColor = System.Drawing.SystemColors.Control;
+            this.TxtFilename.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TxtFilename.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TxtFilename.ForeColor = System.Drawing.Color.Gray;
+            this.TxtFilename.Location = new System.Drawing.Point(6, 30);
+            this.TxtFilename.Margin = new System.Windows.Forms.Padding(5, 3, 3, 3);
+            this.TxtFilename.Name = "TxtFilename";
+            this.TxtFilename.ReadOnly = true;
+            this.TxtFilename.Size = new System.Drawing.Size(188, 13);
+            this.TxtFilename.TabIndex = 3;
+            this.TxtFilename.Text = "<Unsaved>";
             // 
             // PaletteEditPanel
             // 

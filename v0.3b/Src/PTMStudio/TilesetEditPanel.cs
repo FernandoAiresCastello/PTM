@@ -22,6 +22,8 @@ namespace PTMStudio
         private int FirstTile = 0;
         private string Filename;
 
+        public Tileset Tileset { get => Display.Graphics.Tileset; }
+
         private TilesetEditPanel()
         {
             InitializeComponent();
@@ -152,6 +154,8 @@ namespace PTMStudio
 
             TileEditWindow wnd = new TileEditWindow(this, Display.Graphics.Tileset, index);
             wnd.ShowDialog(this);
+
+            MainWindow.UpdateTilebufferEditorDisplay();
         }
 
         private void BtnSave_Click(object sender, EventArgs e)

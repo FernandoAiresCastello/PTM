@@ -21,6 +21,7 @@ namespace PTMStudio
         private string ProgramFile = "";
         private readonly string MainProgramFile = "files/main.ptm";
         private ProgramEditPanel ProgramPanel;
+        private TilebufferEditPanel TilebufferPanel;
         private FilesystemPanel FilePanel;
         private ProgramLabelsPanel LabelsPanel;
         private TilesetEditPanel TilesetPanel;
@@ -29,7 +30,7 @@ namespace PTMStudio
         public MainWindow(string workingDir, string ptmExe)
         {
             InitializeComponent();
-            Size = new Size(980, 595);
+            Size = new Size(1024, 595);
             MinimumSize = Size;
 
             WorkingDir = workingDir;
@@ -54,6 +55,12 @@ namespace PTMStudio
             PalettePanel = new PaletteEditPanel(this);
             PalettePanel.Parent = BtmLeftPanel;
             PalettePanel.Dock = DockStyle.Fill;
+
+            TilebufferPanel = new TilebufferEditPanel(this, 
+                TilesetPanel.Tileset, PalettePanel.Palette);
+            TilebufferPanel.Parent = CenterPanel;
+            TilebufferPanel.Dock = DockStyle.Fill;
+            TilebufferPanel.Visible = false;
 
             if (!File.Exists(MainProgramFile))
                 File.Create(MainProgramFile).Close();
@@ -125,6 +132,42 @@ namespace PTMStudio
         public void GoToLabel(string label)
         {
             ProgramPanel.GoToLabel(label);
+        }
+
+        private void BtnViewPrgEdit_Click(object sender, EventArgs e)
+        {
+            ShowProgramEditor();
+        }
+
+        private void BtnViewTilebufEdit_Click(object sender, EventArgs e)
+        {
+            ShowTilebufferEditor();
+        }
+
+        public void UpdateTilebufferEditorDisplay()
+        {
+            TilebufferPanel.UpdateDisplay();
+        }
+
+        private void ShowProgramEditor()
+        {
+            ProgramPanel.Visible = true;
+            TilebufferPanel.Visible = false;
+            ProgramPanel.Focus();
+        }
+
+        private void ShowTilebufferEditor()
+        {
+            TilebufferPanel.Visible = true;
+            ProgramPanel.Visible = false;
+        }
+
+        private void BtnAlternateEditor_Click(object sender, EventArgs e)
+        {
+            if (ProgramPanel.Visible)
+                ShowTilebufferEditor();
+            else
+                ShowProgramEditor();
         }
     }
 }

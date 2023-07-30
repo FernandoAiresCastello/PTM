@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TileGameLib.Components;
 using TileGameLib.File;
+using TileGameLib.Graphics;
 
 namespace PTMStudio
 {
@@ -21,6 +22,8 @@ namespace PTMStudio
         private int FirstColor = 0;
         private readonly int MaxColors;
         private string Filename;
+
+        public Palette Palette { get => Display.Graphics.Palette; }
 
         private PaletteEditPanel()
         {
@@ -158,6 +161,7 @@ namespace PTMStudio
             {
                 Display.Graphics.Palette.Set(index, wnd.GetSelectedColor());
                 UpdateDisplay();
+                MainWindow.UpdateTilebufferEditorDisplay();
             }
         }
 
