@@ -30,7 +30,12 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.TilePanel = new System.Windows.Forms.Panel();
+            this.MosaicPanel = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.TxtBinary = new System.Windows.Forms.TextBox();
             this.BtnClear = new System.Windows.Forms.ToolStripButton();
+            this.BtnPasteBinary = new System.Windows.Forms.ToolStripButton();
             this.BtnFlipH = new System.Windows.Forms.ToolStripButton();
             this.BtnFlipV = new System.Windows.Forms.ToolStripButton();
             this.BtnRotateR = new System.Windows.Forms.ToolStripButton();
@@ -38,12 +43,9 @@
             this.BtnRotateL = new System.Windows.Forms.ToolStripButton();
             this.BtnRotateU = new System.Windows.Forms.ToolStripButton();
             this.BtnInvert = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnUndo = new System.Windows.Forms.ToolStripButton();
-            this.TilePanel = new System.Windows.Forms.Panel();
-            this.MosaicPanel = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.TxtBinary = new System.Windows.Forms.TextBox();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -54,7 +56,7 @@
             this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 219F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 221F));
             this.tableLayoutPanel1.Controls.Add(this.toolStrip1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.TilePanel, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.MosaicPanel, 1, 1);
@@ -75,6 +77,8 @@
             this.tableLayoutPanel1.SetColumnSpan(this.toolStrip1, 2);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BtnClear,
+            this.BtnPasteBinary,
+            this.toolStripSeparator2,
             this.BtnFlipH,
             this.BtnFlipV,
             this.BtnRotateR,
@@ -90,6 +94,51 @@
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // TilePanel
+            // 
+            this.TilePanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.TilePanel.Location = new System.Drawing.Point(18, 39);
+            this.TilePanel.Margin = new System.Windows.Forms.Padding(16, 10, 5, 0);
+            this.TilePanel.Name = "TilePanel";
+            this.TilePanel.Size = new System.Drawing.Size(196, 196);
+            this.TilePanel.TabIndex = 1;
+            // 
+            // MosaicPanel
+            // 
+            this.MosaicPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MosaicPanel.Location = new System.Drawing.Point(226, 29);
+            this.MosaicPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.MosaicPanel.Name = "MosaicPanel";
+            this.MosaicPanel.Size = new System.Drawing.Size(221, 216);
+            this.MosaicPanel.TabIndex = 2;
+            // 
+            // panel1
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.panel1, 2);
+            this.panel1.Controls.Add(this.TxtBinary);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(2, 247);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.panel1.Size = new System.Drawing.Size(445, 20);
+            this.panel1.TabIndex = 3;
+            // 
+            // TxtBinary
+            // 
+            this.TxtBinary.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TxtBinary.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TxtBinary.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.TxtBinary.Location = new System.Drawing.Point(0, 2);
+            this.TxtBinary.Margin = new System.Windows.Forms.Padding(0);
+            this.TxtBinary.Name = "TxtBinary";
+            this.TxtBinary.ReadOnly = true;
+            this.TxtBinary.Size = new System.Drawing.Size(445, 13);
+            this.TxtBinary.TabIndex = 4;
+            this.TxtBinary.TabStop = false;
+            this.TxtBinary.Text = "Binary";
+            this.TxtBinary.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // BtnClear
             // 
             this.BtnClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -98,6 +147,15 @@
             this.BtnClear.Name = "BtnClear";
             this.BtnClear.Size = new System.Drawing.Size(23, 22);
             this.BtnClear.Click += new System.EventHandler(this.BtnClear_Click);
+            // 
+            // BtnPasteBinary
+            // 
+            this.BtnPasteBinary.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnPasteBinary.Image = global::PTMStudio.Properties.Resources.page_white_paste;
+            this.BtnPasteBinary.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnPasteBinary.Name = "BtnPasteBinary";
+            this.BtnPasteBinary.Size = new System.Drawing.Size(23, 22);
+            this.BtnPasteBinary.Click += new System.EventHandler(this.BtnPasteBinary_Click);
             // 
             // BtnFlipH
             // 
@@ -162,11 +220,6 @@
             this.BtnInvert.Size = new System.Drawing.Size(23, 22);
             this.BtnInvert.Click += new System.EventHandler(this.BtnInvert_Click);
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
             // BtnUndo
             // 
             this.BtnUndo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -176,50 +229,15 @@
             this.BtnUndo.Size = new System.Drawing.Size(23, 22);
             this.BtnUndo.Click += new System.EventHandler(this.BtnUndo_Click);
             // 
-            // TilePanel
+            // toolStripSeparator2
             // 
-            this.TilePanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.TilePanel.Location = new System.Drawing.Point(18, 39);
-            this.TilePanel.Margin = new System.Windows.Forms.Padding(16, 10, 5, 0);
-            this.TilePanel.Name = "TilePanel";
-            this.TilePanel.Size = new System.Drawing.Size(196, 196);
-            this.TilePanel.TabIndex = 1;
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
-            // MosaicPanel
+            // toolStripSeparator1
             // 
-            this.MosaicPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MosaicPanel.Location = new System.Drawing.Point(228, 29);
-            this.MosaicPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.MosaicPanel.Name = "MosaicPanel";
-            this.MosaicPanel.Size = new System.Drawing.Size(219, 216);
-            this.MosaicPanel.TabIndex = 2;
-            // 
-            // panel1
-            // 
-            this.tableLayoutPanel1.SetColumnSpan(this.panel1, 2);
-            this.panel1.Controls.Add(this.TxtBinary);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(2, 247);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.panel1.Size = new System.Drawing.Size(445, 20);
-            this.panel1.TabIndex = 3;
-            // 
-            // TxtBinary
-            // 
-            this.TxtBinary.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TxtBinary.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TxtBinary.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.TxtBinary.Location = new System.Drawing.Point(0, 2);
-            this.TxtBinary.Margin = new System.Windows.Forms.Padding(0);
-            this.TxtBinary.Name = "TxtBinary";
-            this.TxtBinary.ReadOnly = true;
-            this.TxtBinary.Size = new System.Drawing.Size(445, 13);
-            this.TxtBinary.TabIndex = 4;
-            this.TxtBinary.TabStop = false;
-            this.TxtBinary.Text = "Binary";
-            this.TxtBinary.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // TileEditWindow
             // 
@@ -255,9 +273,11 @@
         private System.Windows.Forms.ToolStripButton BtnRotateD;
         private System.Windows.Forms.ToolStripButton BtnRotateL;
         private System.Windows.Forms.ToolStripButton BtnRotateU;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Panel MosaicPanel;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox TxtBinary;
+        private System.Windows.Forms.ToolStripButton BtnPasteBinary;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }

@@ -40,7 +40,7 @@
             this.ScintillaPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ScintillaPanel.Location = new System.Drawing.Point(0, 25);
             this.ScintillaPanel.Name = "ScintillaPanel";
-            this.ScintillaPanel.Size = new System.Drawing.Size(295, 320);
+            this.ScintillaPanel.Size = new System.Drawing.Size(406, 320);
             this.ScintillaPanel.TabIndex = 5;
             // 
             // toolStrip1
@@ -49,7 +49,7 @@
             this.BtnRun});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(295, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(406, 25);
             this.toolStrip1.TabIndex = 4;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -69,7 +69,7 @@
             this.Controls.Add(this.ScintillaPanel);
             this.Controls.Add(this.toolStrip1);
             this.Name = "ProgramEditPanel";
-            this.Size = new System.Drawing.Size(295, 345);
+            this.Size = new System.Drawing.Size(406, 345);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);

@@ -7,7 +7,7 @@ using TileGameLib.File;
 using TileGameLib.GameElements;
 using TileGameLib.Graphics;
 
-namespace TileGameMaker.PTMLExporters
+namespace PTMStudio
 {
     public class TilebufferExporter
     {

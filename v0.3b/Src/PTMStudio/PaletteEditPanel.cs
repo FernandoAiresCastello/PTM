@@ -70,7 +70,7 @@ namespace PTMStudio
                 for (int x = 0; x < Display.Cols; x++)
                 {
                     if (i < Display.Graphics.Palette.Size)
-                        Display.Graphics.PutTile(x, y, 0, i, i);
+                        Display.Graphics.PutTile(x, y, 0, i, i, false);
 
                     i++;
                 }

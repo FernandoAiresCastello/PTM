@@ -101,7 +101,7 @@ namespace PTMStudio
                 for (int x = 0; x < Display.Cols; x++)
                 {
                     if (i < Display.Graphics.Tileset.Size)
-                        Display.Graphics.PutTile(x, y, i, 0, 1);
+                        Display.Graphics.PutTile(x, y, i, 0, 1, false);
                     
                     i++;
                 }

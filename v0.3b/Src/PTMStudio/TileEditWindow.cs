@@ -38,6 +38,8 @@ namespace PTMStudio
 
             //Size = new Size(248, 287);
             StartPosition = FormStartPosition.CenterParent;
+            KeyPreview = true;
+            KeyDown += TileEditWindow_KeyDown;
 
             Display = new TiledDisplay(TilePanel, 8, 8, 3);
             Display.Graphics.Tileset.ClearToSize(0);
@@ -70,7 +72,7 @@ namespace PTMStudio
         {
             for (int y = 0; y < MosaicDisplay.Rows; y++)
                 for (int x = 0; x < MosaicDisplay.Cols; x++)
-                    MosaicDisplay.Graphics.PutTile(x, y, Index, 0, 1);
+                    MosaicDisplay.Graphics.PutTile(x, y, Index, 0, 1, false);
 
             MosaicDisplay.Refresh();
         }
@@ -106,9 +108,9 @@ namespace PTMStudio
                 {
                     char ch = pixels[i++];
                     if (ch == '0')
-                        Display.Graphics.PutTile(x, y, 0, 1, 0);
+                        Display.Graphics.PutTile(x, y, 0, 1, 0, false);
                     else if (ch == '1')
-                        Display.Graphics.PutTile(x, y, 0, 0, 1);
+                        Display.Graphics.PutTile(x, y, 0, 0, 1, false);
                 }
             }
 
@@ -215,6 +217,49 @@ namespace PTMStudio
         {
             Tileset.Get(Index).Invert();
             OnPixelsChanged();
+        }
+
+        private void BtnPasteBinary_Click(object sender, EventArgs e)
+        {
+            PasteBinaryString();
+        }
+
+        private void PasteBinaryString()
+        {
+            string text = Clipboard.GetText();
+            if (text.Length != 64)
+            {
+                AlertInvalidBinaryString();
+                return;
+            }
+
+            foreach (char ch in text)
+            {
+                if (ch != '0' && ch != '1')
+                {
+                    AlertInvalidBinaryString();
+                    return;
+                }
+            }
+
+            Tileset.Get(Index).FromBinaryString(text);
+            OnPixelsChanged();
+        }
+
+        private void AlertInvalidBinaryString()
+        {
+            MessageBox.Show("Invalid binary string", "Warning",
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void TileEditWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.V)
+                PasteBinaryString();
+            else if (e.Control && e.KeyCode == Keys.Z)
+                UndoChanges();
+            else if (e.KeyCode == Keys.Delete)
+                ClearAllPixels();
         }
     }
 }

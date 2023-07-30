@@ -36,12 +36,12 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.BtmRightPanel = new System.Windows.Forms.Panel();
             this.TopRightPanel = new System.Windows.Forms.Panel();
             this.CenterPanel = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.BtmLeftPanel = new System.Windows.Forms.Panel();
             this.TopLeftPanel = new System.Windows.Forms.Panel();
-            this.BtmRightPanel = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -75,9 +75,10 @@
             // 
             // BtnRun
             // 
+            this.BtnRun.Image = global::PTMStudio.Properties.Resources.control_play_blue;
             this.BtnRun.Name = "BtnRun";
             this.BtnRun.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.BtnRun.Size = new System.Drawing.Size(163, 22);
+            this.BtnRun.Size = new System.Drawing.Size(180, 22);
             this.BtnRun.Text = "Run program";
             this.BtnRun.Click += new System.EventHandler(this.BtnRun_Click);
             // 
@@ -124,6 +125,15 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(200, 440);
             this.tableLayoutPanel3.TabIndex = 2;
+            // 
+            // BtmRightPanel
+            // 
+            this.BtmRightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BtmRightPanel.Location = new System.Drawing.Point(3, 220);
+            this.BtmRightPanel.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+            this.BtmRightPanel.Name = "BtmRightPanel";
+            this.BtmRightPanel.Size = new System.Drawing.Size(194, 217);
+            this.BtmRightPanel.TabIndex = 2;
             // 
             // TopRightPanel
             // 
@@ -179,15 +189,6 @@
             this.TopLeftPanel.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.TopLeftPanel.Size = new System.Drawing.Size(197, 217);
             this.TopLeftPanel.TabIndex = 0;
-            // 
-            // BtmRightPanel
-            // 
-            this.BtmRightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BtmRightPanel.Location = new System.Drawing.Point(3, 220);
-            this.BtmRightPanel.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-            this.BtmRightPanel.Name = "BtmRightPanel";
-            this.BtmRightPanel.Size = new System.Drawing.Size(194, 217);
-            this.BtmRightPanel.TabIndex = 2;
             // 
             // MainWindow
             // 
