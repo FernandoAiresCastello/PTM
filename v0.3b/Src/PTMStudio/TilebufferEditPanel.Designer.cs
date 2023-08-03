@@ -36,6 +36,8 @@
             this.DisplayPanel = new System.Windows.Forms.Panel();
             this.BtnSave = new System.Windows.Forms.ToolStripButton();
             this.BtnSetBgColor = new System.Windows.Forms.ToolStripButton();
+            this.BtnFill = new System.Windows.Forms.ToolStripButton();
+            this.BtnClear = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.LayoutPanel.SuspendLayout();
@@ -81,7 +83,9 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BtnSave,
-            this.BtnSetBgColor});
+            this.BtnSetBgColor,
+            this.BtnFill,
+            this.BtnClear});
             this.toolStrip1.Location = new System.Drawing.Point(1, 1);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(404, 25);
@@ -140,6 +144,24 @@
             this.BtnSetBgColor.Size = new System.Drawing.Size(23, 22);
             this.BtnSetBgColor.Click += new System.EventHandler(this.BtnSetBgColor_Click);
             // 
+            // BtnFill
+            // 
+            this.BtnFill.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnFill.Image = global::PTMStudio.Properties.Resources.fill_color;
+            this.BtnFill.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnFill.Name = "BtnFill";
+            this.BtnFill.Size = new System.Drawing.Size(23, 22);
+            this.BtnFill.Click += new System.EventHandler(this.BtnFill_Click);
+            // 
+            // BtnClear
+            // 
+            this.BtnClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnClear.Image = global::PTMStudio.Properties.Resources.broom;
+            this.BtnClear.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnClear.Name = "BtnClear";
+            this.BtnClear.Size = new System.Drawing.Size(23, 22);
+            this.BtnClear.Click += new System.EventHandler(this.BtnClear_Click);
+            // 
             // TilebufferEditPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -167,5 +189,7 @@
         private System.Windows.Forms.Panel DisplayPanel;
         private System.Windows.Forms.ToolStripButton BtnSave;
         private System.Windows.Forms.ToolStripButton BtnSetBgColor;
+        private System.Windows.Forms.ToolStripButton BtnFill;
+        private System.Windows.Forms.ToolStripButton BtnClear;
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -83,6 +84,12 @@ namespace PTMStudio
             Renderer.Render();
         }
 
+        private void AlertEmptyTileRegister()
+        {
+            MessageBox.Show("Tile register is empty", "Warning",
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
         private void PutTile(int x, int y)
         {
             GameObject tile = MainWindow.GetTileRegister();
@@ -93,8 +100,7 @@ namespace PTMStudio
             }
             else
             {
-                MessageBox.Show("Tile register is empty", "Warning", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                AlertEmptyTileRegister();
             }
         }
 
@@ -134,7 +140,41 @@ namespace PTMStudio
 
         private void SelectBackColor()
         {
+        }
 
+        private void BtnFill_Click(object sender, EventArgs e)
+        {
+            FillLayer();
+        }
+
+        private void FillLayer()
+        {
+            GameObject tile = MainWindow.GetTileRegister();
+            if (tile.Animation.Frames.Count > 0)
+            {
+                DialogResult result = MessageBox.Show("Fill entire layer with the tile register data?",
+                    "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    TileBuffer.Fill(tile, 0);
+                }
+            }
+            else
+            {
+                AlertEmptyTileRegister();
+            }
+        }
+
+        private void BtnClear_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Delete all tiles from this layer?",
+                "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                TileBuffer.Clear(0);
+            }
         }
     }
 }

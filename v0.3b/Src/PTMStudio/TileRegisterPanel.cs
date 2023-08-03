@@ -46,7 +46,7 @@ namespace PTMStudio
             TileSeqDisplay.Graphics.Tileset = tileset;
             TileSeqDisplay.Graphics.Clear(0);
             TileSeqDisplay.ShowGrid = true;
-            TileSeqDisplay.BorderStyle = BorderStyle.FixedSingle;
+            TileSeqDisplay.BorderStyle = BorderStyle.None;
             TileSeqDisplay.Cursor = Cursors.Hand;
             TileSeqDisplay.MouseClick += TileSeqDisplay_MouseClick;
 
@@ -55,7 +55,7 @@ namespace PTMStudio
             TileFrameDisplay.Graphics.Tileset = tileset;
             TileFrameDisplay.Graphics.Clear(0);
             TileFrameDisplay.ShowGrid = true;
-            TileFrameDisplay.BorderStyle = BorderStyle.FixedSingle;
+            TileFrameDisplay.BorderStyle = BorderStyle.None;
 
             ChkTransparent.CheckedChanged += ChkTransparent_CheckedChanged;
             PropertyGrid.CellValueChanged += PropertyGrid_CellValueChanged;

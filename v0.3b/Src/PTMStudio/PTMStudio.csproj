@@ -174,6 +174,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\color_wheel.png" />
+    <None Include="Resources\fill_color.png" />
+    <None Include="Resources\broom.png" />
     <Content Include="Resources\ptm_icon.ico" />
     <None Include="Resources\page_white_paste.png" />
     <None Include="Resources\update.png" />
