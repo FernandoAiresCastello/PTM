@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ScintillaNET;
+using TileGameLib.GameElements;
 
 namespace PTMStudio
 {
@@ -26,6 +27,7 @@ namespace PTMStudio
         private ProgramLabelsPanel LabelsPanel;
         private TilesetEditPanel TilesetPanel;
         private PaletteEditPanel PalettePanel;
+        private TileRegisterPanel TileRegPanel;
 
         public MainWindow(string workingDir, string ptmExe)
         {
@@ -61,6 +63,12 @@ namespace PTMStudio
             TilebufferPanel.Parent = CenterPanel;
             TilebufferPanel.Dock = DockStyle.Fill;
             TilebufferPanel.Visible = false;
+
+            TileRegPanel = new TileRegisterPanel(this, 
+                TilesetPanel.Tileset, PalettePanel.Palette);
+            TileRegPanel.Parent = BtmRightPanel;
+            TileRegPanel.Dock = DockStyle.Fill;
+            TileRegPanel.Visible = false;
 
             if (!File.Exists(MainProgramFile))
                 File.Create(MainProgramFile).Close();
@@ -149,25 +157,62 @@ namespace PTMStudio
             TilebufferPanel.UpdateDisplay();
         }
 
+        public void UpdateTileRegisterPanelDisplay()
+        {
+            TileRegPanel.UpdateDisplay();
+        }
+
         private void ShowProgramEditor()
         {
             ProgramPanel.Visible = true;
+            LabelsPanel.Visible = true;
             TilebufferPanel.Visible = false;
+            TileRegPanel.Visible = false;
             ProgramPanel.Focus();
         }
 
         private void ShowTilebufferEditor()
         {
             TilebufferPanel.Visible = true;
+            TileRegPanel.Visible = true;
             ProgramPanel.Visible = false;
+            LabelsPanel.Visible = false;
         }
-
+        
         private void BtnAlternateEditor_Click(object sender, EventArgs e)
         {
             if (ProgramPanel.Visible)
                 ShowTilebufferEditor();
             else
                 ShowProgramEditor();
+        }
+
+        public void SetTileRegisterForeColor(int index)
+        {
+            TileRegPanel.TileRegisterFrame.ForeColor = index;
+            TileRegPanel.UpdateDisplay();
+        }
+
+        public void SetTileRegisterBackColor(int index)
+        {
+            TileRegPanel.TileRegisterFrame.BackColor = index;
+            TileRegPanel.UpdateDisplay();
+        }
+
+        public void SetTileRegisterTile(int index)
+        {
+            TileRegPanel.TileRegisterFrame.Index = index;
+            TileRegPanel.UpdateDisplay();
+        }
+
+        public GameObject GetTileRegister()
+        {
+            return TileRegPanel.GetTileRegister();
+        }
+
+        public void SetTileRegister(GameObject tile)
+        {
+            TileRegPanel.SetTileRegister(tile);
         }
     }
 }

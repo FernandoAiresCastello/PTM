@@ -123,6 +123,16 @@ namespace PTMStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap color_picker_switch1 {
+            get {
+                object obj = ResourceManager.GetObject("color_picker_switch1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap control_play_blue {
             get {
                 object obj = ResourceManager.GetObject("control_play_blue", resourceCulture);

@@ -42,6 +42,7 @@ namespace PTMStudio
             Display.ShowGrid = true;
             Display.Cursor = Cursors.Hand;
             Display.MouseClick += Display_MouseClick;
+            Display.MouseDoubleClick += Display_MouseDoubleClick;
             Display.MouseMove += Display_MouseMove;
             Display.MouseLeave += Display_MouseLeave;
             Display.MouseWheel += Display_MouseWheel;
@@ -79,7 +80,22 @@ namespace PTMStudio
         private void Display_MouseClick(object sender, MouseEventArgs e)
         {
             int ix = GetTileIndexFromMousePos(e.Location);
-            EditTile(ix);
+
+            if (e.Button == MouseButtons.Left)
+                SelectTile(ix);
+        }
+
+        private void SelectTile(int index)
+        {
+            MainWindow.SetTileRegisterTile(index);
+        }
+
+        private void Display_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            int ix = GetTileIndexFromMousePos(e.Location);
+
+            if (e.Button == MouseButtons.Left)
+                EditTile(ix);
         }
 
         private string GetIndicator()
@@ -156,6 +172,7 @@ namespace PTMStudio
             wnd.ShowDialog(this);
 
             MainWindow.UpdateTilebufferEditorDisplay();
+            MainWindow.UpdateTileRegisterPanelDisplay();
         }
 
         private void BtnSave_Click(object sender, EventArgs e)

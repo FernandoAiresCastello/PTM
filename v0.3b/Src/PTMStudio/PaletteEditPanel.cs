@@ -48,6 +48,7 @@ namespace PTMStudio
             Display.MouseMove += Display_MouseMove;
             Display.MouseLeave += Display_MouseLeave;
             Display.MouseClick += Display_MouseClick;
+            Display.MouseDoubleClick += Display_MouseDoubleClick;
 
             MaxColors = Display.Graphics.Cols * Display.Graphics.Rows;
 
@@ -144,7 +145,29 @@ namespace PTMStudio
         private void Display_MouseClick(object sender, MouseEventArgs e)
         {
             int ix = GetColorIndexFromMousePos(e.Location);
-            EditColor(ix, MousePosition);
+
+            if (e.Button == MouseButtons.Left)
+                SelectForeColor(ix);
+            else if (e.Button == MouseButtons.Right)
+                SelectBackColor(ix);
+        }
+
+        private void SelectForeColor(int index)
+        {
+            MainWindow.SetTileRegisterForeColor(index);
+        }
+
+        private void SelectBackColor(int index)
+        {
+            MainWindow.SetTileRegisterBackColor(index);
+        }
+
+        private void Display_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            int ix = GetColorIndexFromMousePos(e.Location);
+
+            if (e.Button == MouseButtons.Left)
+                EditColor(ix, MousePosition);
         }
 
         private void EditColor(int index, Point windowPos)
@@ -162,6 +185,7 @@ namespace PTMStudio
                 Display.Graphics.Palette.Set(index, wnd.GetSelectedColor());
                 UpdateDisplay();
                 MainWindow.UpdateTilebufferEditorDisplay();
+                MainWindow.UpdateTileRegisterPanelDisplay();
             }
         }
 
