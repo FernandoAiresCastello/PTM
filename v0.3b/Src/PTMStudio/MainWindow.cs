@@ -32,7 +32,7 @@ namespace PTMStudio
         public MainWindow(string workingDir, string ptmExe)
         {
             InitializeComponent();
-            Size = new Size(1024, 595);
+            Size = new Size(1024, 605);
             MinimumSize = Size;
 
             WorkingDir = workingDir;
@@ -215,15 +215,16 @@ namespace PTMStudio
             return CachedTileRegister;
         }
 
-        public void CacheTileRegister(GameObject tile)
+        public void CacheTileRegister()
         {
-            CachedTileRegister = TileRegPanel.GetTileRegister();
+            if (TileRegPanel != null)
+                CachedTileRegister = TileRegPanel.GetTileRegister();
         }
 
         public void SetTileRegister(GameObject tile)
         {
             TileRegPanel.SetTileRegister(tile);
-            CacheTileRegister(tile);
+            CacheTileRegister();
         }
     }
 }

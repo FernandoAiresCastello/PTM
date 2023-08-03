@@ -58,7 +58,6 @@ namespace PTMStudio
             TileFrameDisplay.BorderStyle = BorderStyle.FixedSingle;
 
             ChkTransparent.CheckedChanged += ChkTransparent_CheckedChanged;
-
             PropertyGrid.CellValueChanged += PropertyGrid_CellValueChanged;
 
             ClearTileRegister();
@@ -67,21 +66,26 @@ namespace PTMStudio
 
         private void PropertyGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            MainWindow.CacheTileRegister(GetTileRegister());
+            MainWindow.CacheTileRegister();
         }
 
         private void ChkTransparent_CheckedChanged(object sender, EventArgs e)
         {
-            MainWindow.CacheTileRegister(GetTileRegister());
+            MainWindow.CacheTileRegister();
         }
 
         public void ClearTileRegister()
         {
             FrameCount = 0;
+            ChkTransparent.Checked = false;
             TileRegisterFrame.Set(0, 1, 0);
             TileRegister.Animation.Frames.Clear();
             for (int i = 0; i < TileSeqDisplay.Cols; i++)
                 TileRegister.Animation.Frames.Add(new Tile(0, 1, 0));
+
+            TileRegister.Properties.Entries.Clear();
+            UpdatePropertiesPanel();
+            MainWindow.CacheTileRegister();
         }
 
         public void UpdateDisplay()
@@ -106,19 +110,27 @@ namespace PTMStudio
                 TileRegisterFrame.Index, TileRegisterFrame.ForeColor, TileRegisterFrame.BackColor);
 
             LblFrameCount.Text = FrameCount.ToString();
-
-            PropertyGrid.Refresh();
         }
 
         private void TileSeqDisplay_MouseClick(object sender, MouseEventArgs e)
         {
             int frameIndex = TileSeqDisplay.GetMouseToCellPos(e.Location).X;
-            if (FrameCount < frameIndex + 1)
-                FrameCount = frameIndex + 1;
 
-            TileRegister.Animation.SetFrame(frameIndex, TileRegisterFrame.Copy());
-            UpdateDisplay();
-            MainWindow.CacheTileRegister(GetTileRegister());
+            if (e.Button == MouseButtons.Left)
+            {
+                if (FrameCount < frameIndex + 1)
+                    FrameCount = frameIndex + 1;
+
+                TileRegister.Animation.SetFrame(frameIndex, TileRegisterFrame.Copy());
+                UpdateDisplay();
+                MainWindow.CacheTileRegister();
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                Tile tile = TileRegister.Animation.Frames[frameIndex];
+                TileRegisterFrame.SetEqual(tile);
+                UpdateDisplay();
+            }
         }
 
         private void BtnSwitchColor_Click(object sender, EventArgs e)
@@ -184,15 +196,20 @@ namespace PTMStudio
             TileRegisterFrame = TileRegister.Tile.Copy();
             ChkTransparent.Checked = TileRegister.Transparent;
 
+            UpdatePropertiesPanel();
+            UpdateDisplay();
+        }
+
+        private void UpdatePropertiesPanel()
+        {
             PropertyGrid.Rows.Clear();
-            foreach (var item in copiedTile.Properties.Entries)
+            foreach (var item in TileRegister.Properties.Entries)
             {
                 string prop = item.Key;
                 string value = item.Value;
                 PropertyGrid.Rows.Add(prop, value);
             }
-
-            UpdateDisplay();
+            PropertyGrid.Refresh();
         }
     }
 }

@@ -123,9 +123,9 @@ namespace PTMStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap color_picker_switch1 {
+        internal static System.Drawing.Bitmap color_wheel {
             get {
-                object obj = ResourceManager.GetObject("color_picker_switch1", resourceCulture);
+                object obj = ResourceManager.GetObject("color_wheel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

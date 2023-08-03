@@ -143,7 +143,7 @@
             // BtnSwitchColor
             // 
             this.BtnSwitchColor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.BtnSwitchColor.Image = global::PTMStudio.Properties.Resources.color_picker_switch1;
+            this.BtnSwitchColor.Image = global::PTMStudio.Properties.Resources.color_picker_switch;
             this.BtnSwitchColor.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BtnSwitchColor.Name = "BtnSwitchColor";
             this.BtnSwitchColor.Size = new System.Drawing.Size(23, 22);

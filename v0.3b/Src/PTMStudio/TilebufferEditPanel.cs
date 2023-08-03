@@ -65,9 +65,16 @@ namespace PTMStudio
             if (x >= 0 && y >= 0 && x < TileBuffer.Width && y < TileBuffer.Height)
             {
                 if (e.Button == MouseButtons.Left)
-                    PutTile(x, y);
+                {
+                    if (ModifierKeys == Keys.Control)
+                        DeleteTile(x, y);
+                    else
+                        PutTile(x, y);
+                }
                 else if (e.Button == MouseButtons.Right)
+                {
                     GrabTile(x, y);
+                }
             }
         }
 
@@ -91,6 +98,11 @@ namespace PTMStudio
             }
         }
 
+        private void DeleteTile(int x, int y)
+        {
+            TileBuffer.DeleteObject(new ObjectPosition(0, x, y));
+        }
+
         private void GrabTile(int x, int y)
         {
             GameObject obj = TileBuffer.GetObject(new ObjectPosition(0, x, y));
@@ -104,6 +116,25 @@ namespace PTMStudio
                 MessageBox.Show("No tile found at this buffer position", "Warning",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            SaveFile();
+        }
+
+        private void BtnSetBgColor_Click(object sender, EventArgs e)
+        {
+            SelectBackColor();
+        }
+
+        private void SaveFile()
+        {
+        }
+
+        private void SelectBackColor()
+        {
+
         }
     }
 }

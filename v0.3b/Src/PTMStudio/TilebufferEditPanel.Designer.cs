@@ -34,7 +34,10 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.DisplayPanel = new System.Windows.Forms.Panel();
+            this.BtnSave = new System.Windows.Forms.ToolStripButton();
+            this.BtnSetBgColor = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.LayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,6 +79,9 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BtnSave,
+            this.BtnSetBgColor});
             this.toolStrip1.Location = new System.Drawing.Point(1, 1);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(404, 25);
@@ -116,6 +122,24 @@
             this.DisplayPanel.Size = new System.Drawing.Size(404, 273);
             this.DisplayPanel.TabIndex = 8;
             // 
+            // BtnSave
+            // 
+            this.BtnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnSave.Image = global::PTMStudio.Properties.Resources.diskette;
+            this.BtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnSave.Name = "BtnSave";
+            this.BtnSave.Size = new System.Drawing.Size(23, 22);
+            this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
+            // 
+            // BtnSetBgColor
+            // 
+            this.BtnSetBgColor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnSetBgColor.Image = global::PTMStudio.Properties.Resources.color_wheel;
+            this.BtnSetBgColor.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnSetBgColor.Name = "BtnSetBgColor";
+            this.BtnSetBgColor.Size = new System.Drawing.Size(23, 22);
+            this.BtnSetBgColor.Click += new System.EventHandler(this.BtnSetBgColor_Click);
+            // 
             // TilebufferEditPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -126,6 +150,8 @@
             this.Size = new System.Drawing.Size(406, 345);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.LayoutPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -139,5 +165,7 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.TableLayoutPanel LayoutPanel;
         private System.Windows.Forms.Panel DisplayPanel;
+        private System.Windows.Forms.ToolStripButton BtnSave;
+        private System.Windows.Forms.ToolStripButton BtnSetBgColor;
     }
 }
