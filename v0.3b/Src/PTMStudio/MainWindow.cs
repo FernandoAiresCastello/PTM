@@ -205,14 +205,25 @@ namespace PTMStudio
             TileRegPanel.UpdateDisplay();
         }
 
+        private GameObject CachedTileRegister;
+
         public GameObject GetTileRegister()
         {
-            return TileRegPanel.GetTileRegister();
+            if (CachedTileRegister == null)
+                CachedTileRegister = TileRegPanel.GetTileRegister();
+
+            return CachedTileRegister;
+        }
+
+        public void CacheTileRegister(GameObject tile)
+        {
+            CachedTileRegister = TileRegPanel.GetTileRegister();
         }
 
         public void SetTileRegister(GameObject tile)
         {
             TileRegPanel.SetTileRegister(tile);
+            CacheTileRegister(tile);
         }
     }
 }

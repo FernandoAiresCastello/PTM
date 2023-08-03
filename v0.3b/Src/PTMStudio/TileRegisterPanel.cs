@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -56,8 +57,22 @@ namespace PTMStudio
             TileFrameDisplay.ShowGrid = true;
             TileFrameDisplay.BorderStyle = BorderStyle.FixedSingle;
 
+            ChkTransparent.CheckedChanged += ChkTransparent_CheckedChanged;
+
+            PropertyGrid.CellValueChanged += PropertyGrid_CellValueChanged;
+
             ClearTileRegister();
             UpdateDisplay();
+        }
+
+        private void PropertyGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            MainWindow.CacheTileRegister(GetTileRegister());
+        }
+
+        private void ChkTransparent_CheckedChanged(object sender, EventArgs e)
+        {
+            MainWindow.CacheTileRegister(GetTileRegister());
         }
 
         public void ClearTileRegister()
@@ -91,15 +106,19 @@ namespace PTMStudio
                 TileRegisterFrame.Index, TileRegisterFrame.ForeColor, TileRegisterFrame.BackColor);
 
             LblFrameCount.Text = FrameCount.ToString();
+
+            PropertyGrid.Refresh();
         }
 
         private void TileSeqDisplay_MouseClick(object sender, MouseEventArgs e)
         {
             int frameIndex = TileSeqDisplay.GetMouseToCellPos(e.Location).X;
-            if (FrameCount == 0 || frameIndex >= FrameCount)
+            if (FrameCount < frameIndex + 1)
                 FrameCount = frameIndex + 1;
+
             TileRegister.Animation.SetFrame(frameIndex, TileRegisterFrame.Copy());
             UpdateDisplay();
+            MainWindow.CacheTileRegister(GetTileRegister());
         }
 
         private void BtnSwitchColor_Click(object sender, EventArgs e)
@@ -130,15 +149,49 @@ namespace PTMStudio
             }
 
             obj.Transparent = ChkTransparent.Checked;
+
+            obj.Properties.Entries.Clear();
+            foreach (DataGridViewRow row in PropertyGrid.Rows)
+            {
+                if (row.Cells[0].Value != null && row.Cells[1].Value != null)
+                {
+                    string prop = row.Cells[0].Value.ToString();
+                    string value = row.Cells[1].Value.ToString();
+                    obj.Properties.Set(prop, value);
+                }
+            }
+
             return obj;
         }
 
         public void SetTileRegister(GameObject tile)
         {
-            TileRegister = tile.Copy();
-            FrameCount = TileRegister.Animation.Size;
+            GameObject copiedTile = tile.Copy();
+            FrameCount = copiedTile.Animation.Size;
+
+            TileRegister.Animation.Frames.Clear();
+            for (int i = 0; i < TileSeqDisplay.Cols; i++)
+            {
+                if (i < copiedTile.Animation.Size)
+                    TileRegister.Animation.Frames.Add(copiedTile.Animation.Frames[i]);
+                else
+                    TileRegister.Animation.Frames.Add(new Tile(0, 1, 0));
+            }
+
+            TileRegister.Transparent = copiedTile.Transparent;
+            TileRegister.Properties.SetEqual(copiedTile.Properties);
+
             TileRegisterFrame = TileRegister.Tile.Copy();
             ChkTransparent.Checked = TileRegister.Transparent;
+
+            PropertyGrid.Rows.Clear();
+            foreach (var item in copiedTile.Properties.Entries)
+            {
+                string prop = item.Key;
+                string value = item.Value;
+                PropertyGrid.Rows.Add(prop, value);
+            }
+
             UpdateDisplay();
         }
     }
