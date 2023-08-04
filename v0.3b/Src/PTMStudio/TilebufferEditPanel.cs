@@ -211,6 +211,14 @@ namespace PTMStudio
 
         private void SelectBackColor()
         {
+            ColorSelectWindow wnd = new ColorSelectWindow(
+                Display.Graphics.Palette, "Select background color");
+
+            if (wnd.ShowDialog(MainWindow) == DialogResult.OK)
+            {
+                TileBuffer.BackColorIndex = wnd.SelectedIndex;
+                UpdateDisplay();
+            }
         }
 
         private void BtnFill_Click(object sender, EventArgs e)

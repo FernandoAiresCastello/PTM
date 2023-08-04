@@ -61,6 +61,12 @@
     <Compile Include="ColorEditWindow.Designer.cs">
       <DependentUpon>ColorEditWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="ColorSelectWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColorSelectWindow.Designer.cs">
+      <DependentUpon>ColorSelectWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="DefaultTileset.cs" />
     <Compile Include="FilesystemPanel.cs">
       <SubType>UserControl</SubType>
@@ -121,6 +127,9 @@
     </Compile>
     <EmbeddedResource Include="ColorEditWindow.resx">
       <DependentUpon>ColorEditWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorSelectWindow.resx">
+      <DependentUpon>ColorSelectWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FilesystemPanel.resx">
       <DependentUpon>FilesystemPanel.cs</DependentUpon>

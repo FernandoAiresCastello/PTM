@@ -91,5 +91,10 @@ namespace PTMStudio
                 UpdateFileList();
             }
         }
+
+        private void BtnRefresh_Click(object sender, EventArgs e)
+        {
+            UpdateFileList();
+        }
     }
 }

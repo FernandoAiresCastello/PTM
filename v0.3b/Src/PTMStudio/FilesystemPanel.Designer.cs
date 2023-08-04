@@ -30,9 +30,10 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.LstFiles = new System.Windows.Forms.ListBox();
             this.BtnExplorer = new System.Windows.Forms.ToolStripButton();
             this.BtnDelete = new System.Windows.Forms.ToolStripButton();
+            this.LstFiles = new System.Windows.Forms.ListBox();
+            this.BtnRefresh = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -56,24 +57,13 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BtnExplorer,
+            this.BtnRefresh,
             this.BtnDelete});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(179, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // LstFiles
-            // 
-            this.LstFiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LstFiles.FormattingEnabled = true;
-            this.LstFiles.HorizontalScrollbar = true;
-            this.LstFiles.Location = new System.Drawing.Point(0, 25);
-            this.LstFiles.Margin = new System.Windows.Forms.Padding(0);
-            this.LstFiles.Name = "LstFiles";
-            this.LstFiles.ScrollAlwaysVisible = true;
-            this.LstFiles.Size = new System.Drawing.Size(179, 228);
-            this.LstFiles.TabIndex = 1;
             // 
             // BtnExplorer
             // 
@@ -95,6 +85,27 @@
             this.BtnDelete.Text = "toolStripButton1";
             this.BtnDelete.ToolTipText = "Delete selected file";
             this.BtnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
+            // 
+            // LstFiles
+            // 
+            this.LstFiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LstFiles.FormattingEnabled = true;
+            this.LstFiles.HorizontalScrollbar = true;
+            this.LstFiles.Location = new System.Drawing.Point(0, 25);
+            this.LstFiles.Margin = new System.Windows.Forms.Padding(0);
+            this.LstFiles.Name = "LstFiles";
+            this.LstFiles.ScrollAlwaysVisible = true;
+            this.LstFiles.Size = new System.Drawing.Size(179, 228);
+            this.LstFiles.TabIndex = 1;
+            // 
+            // BtnRefresh
+            // 
+            this.BtnRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnRefresh.Image = global::PTMStudio.Properties.Resources.update;
+            this.BtnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnRefresh.Name = "BtnRefresh";
+            this.BtnRefresh.Size = new System.Drawing.Size(23, 22);
+            this.BtnRefresh.Click += new System.EventHandler(this.BtnRefresh_Click);
             // 
             // FilesystemPanel
             // 
@@ -118,5 +129,6 @@
         private System.Windows.Forms.ListBox LstFiles;
         private System.Windows.Forms.ToolStripButton BtnExplorer;
         private System.Windows.Forms.ToolStripButton BtnDelete;
+        private System.Windows.Forms.ToolStripButton BtnRefresh;
     }
 }

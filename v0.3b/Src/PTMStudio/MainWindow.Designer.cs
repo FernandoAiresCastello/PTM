@@ -47,6 +47,7 @@
             this.BtnRun = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnViewPrgEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnViewTilebufEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -58,7 +59,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.runToolStripMenuItem,
-            this.viewToolStripMenuItem});
+            this.viewToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(884, 24);
@@ -213,7 +215,7 @@
             this.BtnQuit.Name = "BtnQuit";
             this.BtnQuit.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
             | System.Windows.Forms.Keys.Q)));
-            this.BtnQuit.Size = new System.Drawing.Size(180, 22);
+            this.BtnQuit.Size = new System.Drawing.Size(163, 22);
             this.BtnQuit.Text = "Quit";
             this.BtnQuit.Click += new System.EventHandler(this.BtnQuit_Click);
             // 
@@ -222,7 +224,7 @@
             this.BtnRun.Image = global::PTMStudio.Properties.Resources.control_play_blue;
             this.BtnRun.Name = "BtnRun";
             this.BtnRun.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.BtnRun.Size = new System.Drawing.Size(180, 22);
+            this.BtnRun.Size = new System.Drawing.Size(163, 22);
             this.BtnRun.Text = "Run program";
             this.BtnRun.Click += new System.EventHandler(this.BtnRun_Click);
             // 
@@ -241,6 +243,12 @@
             this.BtnViewTilebufEdit.Size = new System.Drawing.Size(215, 22);
             this.BtnViewTilebufEdit.Text = "Tilebuffer Editor";
             this.BtnViewTilebufEdit.Click += new System.EventHandler(this.BtnViewTilebufEdit_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
             // 
             // MainWindow
             // 
@@ -285,6 +293,7 @@
         private System.Windows.Forms.ToolStripMenuItem BtnViewTilebufEdit;
         private System.Windows.Forms.ToolStripMenuItem BtnAlternateEditor;
         private System.Windows.Forms.ToolStripMenuItem BtnQuit;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
     }
 }
 

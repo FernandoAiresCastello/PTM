@@ -1,6 +1,5 @@
 #include "PTM/ptm_core.h"
 #include "PTM/ptm_filesystem.h"
-#include "Editor/ptm_editor_core.h"
 #include "Docgen/docgen.h"
 
 #define RUN_DOCGEN 0
@@ -17,9 +16,4 @@ int main(int argc, char* argv[])
 	}
 	string main_file = ptm_get_filesys_path("main.ptm");
 	return ptm_run(main_file);
-	/*
-	ptm_editor_core editor;
-	editor.run();
-	return 0;
-	*/
 }
