@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -145,6 +146,11 @@ namespace PTMStudio
         private void Display_MouseClick(object sender, MouseEventArgs e)
         {
             int ix = GetColorIndexFromMousePos(e.Location);
+            if (ix < 0 || ix >= Display.Graphics.Palette.Size)
+            {
+                AlertIndexOutOfBounds();
+                return;
+            }
 
             if (e.Button == MouseButtons.Left)
                 SelectForeColor(ix);
@@ -170,11 +176,17 @@ namespace PTMStudio
                 EditColor(ix, MousePosition);
         }
 
+        private void AlertIndexOutOfBounds()
+        {
+            MessageBox.Show("Color index out of bounds", "Warning",
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
         private void EditColor(int index, Point windowPos)
         {
             if (index < 0 || index >= Display.Graphics.Palette.Size)
             {
-                MessageBox.Show("Index out of bounds", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                AlertIndexOutOfBounds();
                 return;
             }
 

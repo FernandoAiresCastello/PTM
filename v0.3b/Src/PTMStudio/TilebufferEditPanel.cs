@@ -23,6 +23,7 @@ namespace PTMStudio
         private MapRenderer Renderer;
         private ObjectMap TileBuffer;
         private Project Proj;
+        private int ActiveLayer;
 
         private TilebufferEditPanel()
         {
@@ -42,6 +43,7 @@ namespace PTMStudio
             Display.ShowGrid = true;
             Display.MouseClick += Display_MouseClick;
             Display.MouseMove += Display_MouseMove;
+            Display.MouseLeave += Display_MouseLeave;
 
             Proj = new Project();
             Proj.Palette = palette;
@@ -49,10 +51,43 @@ namespace PTMStudio
 
             TileBuffer = new ObjectMap(Proj, 1, 45, 25);
             Renderer = new MapRenderer(TileBuffer, Display);
+            ActiveLayer = 0;
+            UpdateLayerComboBox(0);
+
+            LbPos.Text = "";
+            UpdateSizeLabel();
+        }
+
+        private void UpdateSizeLabel()
+        {
+            LbSize.Text = string.Format("Layers: {0} Width: {1} Height: {2}", 
+                TileBuffer.Layers.Count, TileBuffer.Width, TileBuffer.Height);
+        }
+
+        private void UpdateLayerComboBox(int selected)
+        {
+            CmbLayer.Items.Clear();
+            for (int i = 0; i < TileBuffer.Layers.Count; i++)
+                CmbLayer.Items.Add("Layer " + i);
+
+            CmbLayer.SelectedIndex = selected;
+        }
+
+        private int GetSelectedLayer()
+        {
+            return CmbLayer.SelectedIndex;
+        }
+
+        private void Display_MouseLeave(object sender, EventArgs e)
+        {
+            LbPos.Text = "";
         }
 
         private void Display_MouseMove(object sender, MouseEventArgs e)
         {
+            Point pos = Display.GetMouseToCellPos(e.Location);
+            LbPos.Text = string.Format("X: {0} Y: {1}", pos.X, pos.Y);
+
             if (e.Button != MouseButtons.None)
                 Display_MouseClick(sender, e);
         }
@@ -95,7 +130,7 @@ namespace PTMStudio
             GameObject tile = MainWindow.GetTileRegister();
             if (tile.Animation.Frames.Count > 0)
             {
-                TileBuffer.SetObject(tile, new ObjectPosition(0, x, y));
+                TileBuffer.SetObject(tile, new ObjectPosition(GetSelectedLayer(), x, y));
                 UpdateDisplay();
             }
             else
@@ -106,12 +141,12 @@ namespace PTMStudio
 
         private void DeleteTile(int x, int y)
         {
-            TileBuffer.DeleteObject(new ObjectPosition(0, x, y));
+            TileBuffer.DeleteObject(new ObjectPosition(GetSelectedLayer(), x, y));
         }
 
         private void GrabTile(int x, int y)
         {
-            GameObject obj = TileBuffer.GetObject(new ObjectPosition(0, x, y));
+            GameObject obj = TileBuffer.GetObject(new ObjectPosition(GetSelectedLayer(), x, y));
 
             if (obj != null)
             {
@@ -157,7 +192,7 @@ namespace PTMStudio
 
                 if (result == DialogResult.Yes)
                 {
-                    TileBuffer.Fill(tile, 0);
+                    TileBuffer.Fill(tile, GetSelectedLayer());
                 }
             }
             else
@@ -168,12 +203,17 @@ namespace PTMStudio
 
         private void BtnClear_Click(object sender, EventArgs e)
         {
+            ClearLayer();
+        }
+
+        private void ClearLayer()
+        {
             DialogResult result = MessageBox.Show("Delete all tiles from this layer?",
-                "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                            "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
-                TileBuffer.Clear(0);
+                TileBuffer.Clear(GetSelectedLayer());
             }
         }
     }

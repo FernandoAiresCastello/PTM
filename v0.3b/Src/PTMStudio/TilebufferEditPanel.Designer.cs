@@ -38,8 +38,12 @@
             this.BtnSetBgColor = new System.Windows.Forms.ToolStripButton();
             this.BtnFill = new System.Windows.Forms.ToolStripButton();
             this.BtnClear = new System.Windows.Forms.ToolStripButton();
+            this.LbPos = new System.Windows.Forms.ToolStripStatusLabel();
+            this.LbSize = new System.Windows.Forms.ToolStripStatusLabel();
+            this.CmbLayer = new System.Windows.Forms.ToolStripComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.LayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -83,6 +87,7 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BtnSave,
+            this.CmbLayer,
             this.BtnSetBgColor,
             this.BtnFill,
             this.BtnClear});
@@ -94,9 +99,12 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(1, 322);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LbSize,
+            this.LbPos});
+            this.statusStrip1.Location = new System.Drawing.Point(1, 320);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(404, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(404, 24);
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 6;
             this.statusStrip1.Text = "statusStrip1";
@@ -113,7 +121,7 @@
             this.LayoutPanel.Name = "LayoutPanel";
             this.LayoutPanel.RowCount = 1;
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.LayoutPanel.Size = new System.Drawing.Size(404, 273);
+            this.LayoutPanel.Size = new System.Drawing.Size(404, 271);
             this.LayoutPanel.TabIndex = 7;
             // 
             // DisplayPanel
@@ -123,7 +131,7 @@
             this.DisplayPanel.Location = new System.Drawing.Point(0, 0);
             this.DisplayPanel.Margin = new System.Windows.Forms.Padding(0);
             this.DisplayPanel.Name = "DisplayPanel";
-            this.DisplayPanel.Size = new System.Drawing.Size(404, 273);
+            this.DisplayPanel.Size = new System.Drawing.Size(404, 271);
             this.DisplayPanel.TabIndex = 8;
             // 
             // BtnSave
@@ -162,6 +170,27 @@
             this.BtnClear.Size = new System.Drawing.Size(23, 22);
             this.BtnClear.Click += new System.EventHandler(this.BtnClear_Click);
             // 
+            // LbPos
+            // 
+            this.LbPos.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.LbPos.Name = "LbPos";
+            this.LbPos.Size = new System.Drawing.Size(30, 19);
+            this.LbPos.Text = "Pos";
+            // 
+            // LbSize
+            // 
+            this.LbSize.Name = "LbSize";
+            this.LbSize.Size = new System.Drawing.Size(27, 19);
+            this.LbSize.Text = "Size";
+            // 
+            // CmbLayer
+            // 
+            this.CmbLayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CmbLayer.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
+            this.CmbLayer.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.CmbLayer.Name = "CmbLayer";
+            this.CmbLayer.Size = new System.Drawing.Size(121, 25);
+            // 
             // TilebufferEditPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -174,6 +203,8 @@
             this.tableLayoutPanel1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.LayoutPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -191,5 +222,8 @@
         private System.Windows.Forms.ToolStripButton BtnSetBgColor;
         private System.Windows.Forms.ToolStripButton BtnFill;
         private System.Windows.Forms.ToolStripButton BtnClear;
+        private System.Windows.Forms.ToolStripStatusLabel LbPos;
+        private System.Windows.Forms.ToolStripStatusLabel LbSize;
+        private System.Windows.Forms.ToolStripComboBox CmbLayer;
     }
 }

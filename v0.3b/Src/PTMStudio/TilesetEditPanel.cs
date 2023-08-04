@@ -80,6 +80,11 @@ namespace PTMStudio
         private void Display_MouseClick(object sender, MouseEventArgs e)
         {
             int ix = GetTileIndexFromMousePos(e.Location);
+            if (ix < 0 || ix >= Display.Graphics.Tileset.Size)
+            {
+                AlertIndexOutOfBounds();
+                return;
+            }
 
             if (e.Button == MouseButtons.Left)
                 SelectTile(ix);
@@ -160,11 +165,17 @@ namespace PTMStudio
             UpdateDisplay();
         }
 
+        private void AlertIndexOutOfBounds()
+        {
+            MessageBox.Show("Tile index out of bounds", "Warning", 
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
         private void EditTile(int index)
         {
             if (index < 0 || index >= Display.Graphics.Tileset.Size)
             {
-                MessageBox.Show("Index out of bounds", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                AlertIndexOutOfBounds();
                 return;
             }
 
