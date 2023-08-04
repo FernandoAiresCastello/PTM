@@ -74,6 +74,12 @@
     <Compile Include="FilesystemPanel.Designer.cs">
       <DependentUpon>FilesystemPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="HelpWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HelpWindow.Designer.cs">
+      <DependentUpon>HelpWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,6 +140,9 @@
     <EmbeddedResource Include="FilesystemPanel.resx">
       <DependentUpon>FilesystemPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="HelpWindow.resx">
+      <DependentUpon>HelpWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -191,6 +200,7 @@
     <None Include="Resources\layer_add.png" />
     <None Include="Resources\layer_delete.png" />
     <None Include="Resources\eye.png" />
+    <None Include="Resources\help.png" />
     <Content Include="Resources\ptm_icon.ico" />
     <None Include="Resources\page_white_paste.png" />
     <None Include="Resources\update.png" />

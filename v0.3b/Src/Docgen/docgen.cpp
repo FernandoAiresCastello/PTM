@@ -4,7 +4,7 @@
 using namespace CppUtils;
 
 #define DOCGEN_SRC_FILE "docs/docgen_src.tsv"
-#define DOCGEN_OUT_FILE "docs/PTML v0.2b Command Reference.html"
+#define DOCGEN_OUT_FILE "docs/PTML v0.3b Command Reference.html"
 
 struct t_doc_entry {
 	string cmd;
@@ -51,7 +51,7 @@ void docgen_begin_html(t_html& html)
 	html.println("<div class='content'>");
 
 	html.println("<div class='title'>");
-	html.println("<h1>PTM v0.2b</h1>");
+	html.println("<h1>PTM v0.3b</h1>");
 	html.println("</div>");
 }
 void docgen_end_html(t_html& html)

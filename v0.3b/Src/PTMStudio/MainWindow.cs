@@ -28,6 +28,7 @@ namespace PTMStudio
         private TilesetEditPanel TilesetPanel;
         private PaletteEditPanel PalettePanel;
         private TileRegisterPanel TileRegPanel;
+        private HelpWindow HelpWindow;
 
         public MainWindow(string workingDir, string ptmExe)
         {
@@ -234,6 +235,18 @@ namespace PTMStudio
         private void BtnQuit_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void BtnHelp_Click(object sender, EventArgs e)
+        {
+            if (HelpWindow == null || HelpWindow.IsDisposed)
+                HelpWindow = new HelpWindow();
+
+            if (!HelpWindow.Visible)
+                HelpWindow.Show();
+
+            HelpWindow.WindowState = FormWindowState.Normal;
+            HelpWindow.BringToFront();
         }
     }
 }

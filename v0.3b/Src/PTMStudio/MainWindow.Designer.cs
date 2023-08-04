@@ -34,6 +34,7 @@
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnAlternateEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -47,7 +48,7 @@
             this.BtnRun = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnViewPrgEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnViewTilebufEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -100,6 +101,14 @@
             this.BtnAlternateEditor.Size = new System.Drawing.Size(215, 22);
             this.BtnAlternateEditor.Text = "Switch between editors";
             this.BtnAlternateEditor.Click += new System.EventHandler(this.BtnAlternateEditor_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BtnHelp});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
             // 
             // statusStrip1
             // 
@@ -244,11 +253,14 @@
             this.BtnViewTilebufEdit.Text = "Tilebuffer Editor";
             this.BtnViewTilebufEdit.Click += new System.EventHandler(this.BtnViewTilebufEdit_Click);
             // 
-            // helpToolStripMenuItem
+            // BtnHelp
             // 
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
+            this.BtnHelp.Image = global::PTMStudio.Properties.Resources.help;
+            this.BtnHelp.Name = "BtnHelp";
+            this.BtnHelp.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.BtnHelp.Size = new System.Drawing.Size(238, 22);
+            this.BtnHelp.Text = "PTML Command Reference";
+            this.BtnHelp.Click += new System.EventHandler(this.BtnHelp_Click);
             // 
             // MainWindow
             // 
@@ -294,6 +306,7 @@
         private System.Windows.Forms.ToolStripMenuItem BtnAlternateEditor;
         private System.Windows.Forms.ToolStripMenuItem BtnQuit;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem BtnHelp;
     }
 }
 

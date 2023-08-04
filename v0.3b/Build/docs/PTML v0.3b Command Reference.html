@@ -1,0 +1,5115 @@
+<html>
+<head>
+<link rel='stylesheet' href='style.css'>
+</head>
+<body>
+<div class='content'>
+<div class='title'>
+<h1>PTM v0.3b</h1>
+</div>
+<div class='index-container'>
+<div class='index-title'>PTML Command Reference</div>
+<table class='index'>
+<tr>
+<td class='index-category' colspan=7>Data - Variables and arrays</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#ARR.CLR'>ARR.CLR</a>
+</td>
+<td class='index-cmd'>
+<a href='#ARR.COPY'>ARR.COPY</a>
+</td>
+<td class='index-cmd'>
+<a href='#ARR.ERASE'>ARR.ERASE</a>
+</td>
+<td class='index-cmd'>
+<a href='#ARR.LEN'>ARR.LEN</a>
+</td>
+<td class='index-cmd'>
+<a href='#ARR.NEW'>ARR.NEW</a>
+</td>
+<td class='index-cmd'>
+<a href='#ARR.PUSH'>ARR.PUSH</a>
+</td>
+<td class='index-cmd'>
+<a href='#ARR.SET'>ARR.SET</a>
+</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#DEF'>DEF</a>
+</td>
+<td class='index-cmd'>
+<a href='#VAR'>VAR</a>
+</td>
+<tr>
+<td class='index-category' colspan=7>Debugging</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#ASSERT'>ASSERT</a>
+</td>
+<td class='index-cmd'>
+<a href='#DEBUG'>DEBUG</a>
+</td>
+<td class='index-cmd'>
+<a href='#MSGBOX'>MSGBOX</a>
+</td>
+<tr>
+<td class='index-category' colspan=7>Execution flow</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#CALL'>CALL</a>
+</td>
+<td class='index-cmd'>
+<a href='#ENDIF'>ENDIF</a>
+</td>
+<td class='index-cmd'>
+<a href='#EXIT'>EXIT</a>
+</td>
+<td class='index-cmd'>
+<a href='#GOTO'>GOTO</a>
+</td>
+<td class='index-cmd'>
+<a href='#HALT'>HALT</a>
+</td>
+<td class='index-cmd'>
+<a href='#IF.CALL'>IF.CALL</a>
+</td>
+<td class='index-cmd'>
+<a href='#IF.EQ'>IF.EQ</a>
+</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#IF.FALSE'>IF.FALSE</a>
+</td>
+<td class='index-cmd'>
+<a href='#IF.GOTO'>IF.GOTO</a>
+</td>
+<td class='index-cmd'>
+<a href='#IF.GT'>IF.GT</a>
+</td>
+<td class='index-cmd'>
+<a href='#IF.GTE'>IF.GTE</a>
+</td>
+<td class='index-cmd'>
+<a href='#IF.LT'>IF.LT</a>
+</td>
+<td class='index-cmd'>
+<a href='#IF.LTE'>IF.LTE</a>
+</td>
+<td class='index-cmd'>
+<a href='#IF.NEQ'>IF.NEQ</a>
+</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#IF.TRUE'>IF.TRUE</a>
+</td>
+<td class='index-cmd'>
+<a href='#PAUSE'>PAUSE</a>
+</td>
+<td class='index-cmd'>
+<a href='#RESET'>RESET</a>
+</td>
+<td class='index-cmd'>
+<a href='#RET'>RET</a>
+</td>
+<td class='index-cmd'>
+<a href='#RUN'>RUN</a>
+</td>
+<tr>
+<td class='index-category' colspan=7>Execution loops</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#ARR.FOR'>ARR.FOR</a>
+</td>
+<td class='index-cmd'>
+<a href='#BRK'>BRK</a>
+</td>
+<td class='index-cmd'>
+<a href='#FOR'>FOR</a>
+</td>
+<td class='index-cmd'>
+<a href='#NEXT'>NEXT</a>
+</td>
+<td class='index-cmd'>
+<a href='#SKIP'>SKIP</a>
+</td>
+<tr>
+<td class='index-category' colspan=7>Filesystem</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#BLOAD'>BLOAD</a>
+</td>
+<td class='index-cmd'>
+<a href='#BSAVE'>BSAVE</a>
+</td>
+<td class='index-cmd'>
+<a href='#CLOAD'>CLOAD</a>
+</td>
+<td class='index-cmd'>
+<a href='#CSAVE'>CSAVE</a>
+</td>
+<td class='index-cmd'>
+<a href='#FCHK'>FCHK</a>
+</td>
+<td class='index-cmd'>
+<a href='#FEOF'>FEOF</a>
+</td>
+<td class='index-cmd'>
+<a href='#FILES'>FILES</a>
+</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#FOPEN.R'>FOPEN.R</a>
+</td>
+<td class='index-cmd'>
+<a href='#FOPEN.W'>FOPEN.W</a>
+</td>
+<td class='index-cmd'>
+<a href='#FREAD'>FREAD</a>
+</td>
+<td class='index-cmd'>
+<a href='#FSAVE'>FSAVE</a>
+</td>
+<td class='index-cmd'>
+<a href='#FSIZE'>FSIZE</a>
+</td>
+<td class='index-cmd'>
+<a href='#FWRITE'>FWRITE</a>
+</td>
+<td class='index-cmd'>
+<a href='#LLOAD'>LLOAD</a>
+</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#LSAVE'>LSAVE</a>
+</td>
+<tr>
+<td class='index-category' colspan=7>Graphics - Color palette</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#PAL'>PAL</a>
+</td>
+<td class='index-cmd'>
+<a href='#PAL'>PAL</a>
+</td>
+<td class='index-cmd'>
+<a href='#PAL.GET'>PAL.GET</a>
+</td>
+<td class='index-cmd'>
+<a href='#PAL.GETB'>PAL.GETB</a>
+</td>
+<td class='index-cmd'>
+<a href='#PAL.GETG'>PAL.GETG</a>
+</td>
+<td class='index-cmd'>
+<a href='#PAL.GETR'>PAL.GETR</a>
+</td>
+<td class='index-cmd'>
+<a href='#PAL.LEN'>PAL.LEN</a>
+</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#PAL.LOAD'>PAL.LOAD</a>
+</td>
+<td class='index-cmd'>
+<a href='#PAL.NEW'>PAL.NEW</a>
+</td>
+<td class='index-cmd'>
+<a href='#PAL.SAVE'>PAL.SAVE</a>
+</td>
+<td class='index-cmd'>
+<a href='#PAL.SETB'>PAL.SETB</a>
+</td>
+<td class='index-cmd'>
+<a href='#PAL.SETG'>PAL.SETG</a>
+</td>
+<td class='index-cmd'>
+<a href='#PAL.SETR'>PAL.SETR</a>
+</td>
+<tr>
+<td class='index-category' colspan=7>Graphics - Core</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#ANIM'>ANIM</a>
+</td>
+<td class='index-cmd'>
+<a href='#FRAMES'>FRAMES</a>
+</td>
+<td class='index-cmd'>
+<a href='#TITLE'>TITLE</a>
+</td>
+<td class='index-cmd'>
+<a href='#UPDATE'>UPDATE</a>
+</td>
+<td class='index-cmd'>
+<a href='#WCOL'>WCOL</a>
+</td>
+<td class='index-cmd'>
+<a href='#WINDOW'>WINDOW</a>
+</td>
+<td class='index-cmd'>
+<a href='#PRTSCR'>PRTSCR</a>
+</td>
+</tr>
+<tr>
+<td class='index-category' colspan=7>Graphics - Sprites</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#SPR.BUF'>SPR.BUF</a>
+</td>
+<td class='index-cmd'>
+<a href='#SPR.CLR'>SPR.CLR</a>
+</td>
+<td class='index-cmd'>
+<a href='#SPR.DEL'>SPR.DEL</a>
+</td>
+<td class='index-cmd'>
+<a href='#SPR.GETX'>SPR.GETX</a>
+</td>
+<td class='index-cmd'>
+<a href='#SPR.GETY'>SPR.GETY</a>
+</td>
+<td class='index-cmd'>
+<a href='#SPR.HIDE'>SPR.HIDE</a>
+</td>
+<td class='index-cmd'>
+<a href='#SPR.HIT'>SPR.HIT</a>
+</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#SPR.MOVE'>SPR.MOVE</a>
+</td>
+<td class='index-cmd'>
+<a href='#SPR.NEW'>SPR.NEW</a>
+</td>
+<td class='index-cmd'>
+<a href='#SPR.POS'>SPR.POS</a>
+</td>
+<td class='index-cmd'>
+<a href='#SPR.SHOW'>SPR.SHOW</a>
+</td>
+<td class='index-cmd'>
+<a href='#SPR.TGET'>SPR.TGET</a>
+</td>
+<td class='index-cmd'>
+<a href='#SPR.TGETX'>SPR.TGETX</a>
+</td>
+<td class='index-cmd'>
+<a href='#SPR.TGETY'>SPR.TGETY</a>
+</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#SPR.TMOVE'>SPR.TMOVE</a>
+</td>
+<td class='index-cmd'>
+<a href='#SPR.TPOS'>SPR.TPOS</a>
+</td>
+<td class='index-cmd'>
+<a href='#SPR.TSET'>SPR.TSET</a>
+</td>
+<td class='index-cmd'>
+<a href='#SPR.TX'>SPR.TX</a>
+</td>
+<td class='index-cmd'>
+<a href='#SPR.TY'>SPR.TY</a>
+</td>
+<td class='index-cmd'>
+<a href='#SPR.VISBL'>SPR.VISBL</a>
+</td>
+<td class='index-cmd'>
+<a href='#SPR.X'>SPR.X</a>
+</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#SPR.Y'>SPR.Y</a>
+</td>
+<tr>
+<td class='index-category' colspan=7>Graphics - TILE register</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#TILE.ADD'>TILE.ADD</a>
+</td>
+<td class='index-cmd'>
+<a href='#TILE.COLOR'>TILE.COLOR</a>
+</td>
+<td class='index-cmd'>
+<a href='#TILE.GETB'>TILE.GETB</a>
+</td>
+<td class='index-cmd'>
+<a href='#TILE.GETC'>TILE.GETC</a>
+</td>
+<td class='index-cmd'>
+<a href='#TILE.GETF'>TILE.GETF</a>
+</td>
+<td class='index-cmd'>
+<a href='#TILE.GETP'>TILE.GETP</a>
+</td>
+<td class='index-cmd'>
+<a href='#TILE.LEN'>TILE.LEN</a>
+</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#TILE.LOAD'>TILE.LOAD</a>
+</td>
+<td class='index-cmd'>
+<a href='#TILE.NEW'>TILE.NEW</a>
+</td>
+<td class='index-cmd'>
+<a href='#TILE.PARSE'>TILE.PARSE</a>
+</td>
+<td class='index-cmd'>
+<a href='#TILE.SETB'>TILE.SETB</a>
+</td>
+<td class='index-cmd'>
+<a href='#TILE.SETC'>TILE.SETC</a>
+</td>
+<td class='index-cmd'>
+<a href='#TILE.SETF'>TILE.SETF</a>
+</td>
+<td class='index-cmd'>
+<a href='#TILE.SETP'>TILE.SETP</a>
+</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#TILE.STORE'>TILE.STORE</a>
+</td>
+<td class='index-cmd'>
+<a href='#TILE.STR'>TILE.STR</a>
+</td>
+<tr>
+<td class='index-category' colspan=7>Graphics - Tile output/input</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#COPY'>COPY</a>
+</td>
+<td class='index-cmd'>
+<a href='#CUT'>CUT</a>
+</td>
+<td class='index-cmd'>
+<a href='#DEL'>DEL</a>
+</td>
+<td class='index-cmd'>
+<a href='#DELR'>DELR</a>
+</td>
+<td class='index-cmd'>
+<a href='#FILL'>FILL</a>
+</td>
+<td class='index-cmd'>
+<a href='#GET'>GET</a>
+</td>
+<td class='index-cmd'>
+<a href='#GETS'>GETS</a>
+</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#MOV'>MOV</a>
+</td>
+<td class='index-cmd'>
+<a href='#MOVR'>MOVR</a>
+</td>
+<td class='index-cmd'>
+<a href='#PASTE'>PASTE</a>
+</td>
+<td class='index-cmd'>
+<a href='#PUT'>PUT</a>
+</td>
+<td class='index-cmd'>
+<a href='#PUTS'>PUTS</a>
+</td>
+<td class='index-cmd'>
+<a href='#RECT'>RECT</a>
+</td>
+<tr>
+<td class='index-category' colspan=7>Graphics - Tile string output</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#COLOR'>COLOR</a>
+</td>
+<td class='index-cmd'>
+<a href='#COLOR.B'>COLOR.B</a>
+</td>
+<td class='index-cmd'>
+<a href='#COLOR.F'>COLOR.F</a>
+</td>
+<td class='index-cmd'>
+<a href='#PRINT'>PRINT</a>
+</td>
+<td class='index-cmd'>
+<a href='#PRINT.ADD'>PRINT.ADD</a>
+</td>
+<td class='index-cmd'>
+<a href='#PRINTF'>PRINTF</a>
+</td>
+<td class='index-cmd'>
+<a href='#PRINTF.ADD'>PRINTF.ADD</a>
+</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#PRINTL'>PRINTL</a>
+</td>
+<td class='index-cmd'>
+<a href='#PUTC'>PUTC</a>
+</td>
+<td class='index-cmd'>
+<a href='#PUTC.ADD'>PUTC.ADD</a>
+</td>
+<td class='index-cmd'>
+<a href='#TXT.BGOFF'>TXT.BGOFF</a>
+</td>
+<td class='index-cmd'>
+<a href='#TXT.BGON'>TXT.BGON</a>
+</td>
+<tr>
+<td class='index-category' colspan=7>Graphics - Tilebuffer cursor</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#CSR.GETX'>CSR.GETX</a>
+</td>
+<td class='index-cmd'>
+<a href='#CSR.GETY'>CSR.GETY</a>
+</td>
+<td class='index-cmd'>
+<a href='#CSR.X'>CSR.X</a>
+</td>
+<td class='index-cmd'>
+<a href='#CSR.Y'>CSR.Y</a>
+</td>
+<td class='index-cmd'>
+<a href='#LAYER'>LAYER</a>
+</td>
+<td class='index-cmd'>
+<a href='#LOCATE'>LOCATE</a>
+</td>
+<tr>
+<td class='index-category' colspan=7>Graphics - Tilebuffer manipulation</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#BUF.BGCOL'>BUF.BGCOL</a>
+</td>
+<td class='index-cmd'>
+<a href='#BUF.BGOFF'>BUF.BGOFF</a>
+</td>
+<td class='index-cmd'>
+<a href='#BUF.CLL'>BUF.CLL</a>
+</td>
+<td class='index-cmd'>
+<a href='#BUF.CLS'>BUF.CLS</a>
+</td>
+<td class='index-cmd'>
+<a href='#BUF.COLS'>BUF.COLS</a>
+</td>
+<td class='index-cmd'>
+<a href='#BUF.HIDE'>BUF.HIDE</a>
+</td>
+<td class='index-cmd'>
+<a href='#BUF.NEW'>BUF.NEW</a>
+</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#BUF.LOAD'>BUF.LOAD</a>
+</td>
+<td class='index-cmd'>
+<a href='#BUF.ROWS'>BUF.ROWS</a>
+</td>
+<td class='index-cmd'>
+<a href='#BUF.SCRL'>BUF.SCRL</a>
+</td>
+<td class='index-cmd'>
+<a href='#BUF.SEL'>BUF.SEL</a>
+</td>
+<td class='index-cmd'>
+<a href='#BUF.SHOW'>BUF.SHOW</a>
+</td>
+<td class='index-cmd'>
+<a href='#BUF.TOGL'>BUF.TOGL</a>
+</td>
+<td class='index-cmd'>
+<a href='#BUF.VIEW'>BUF.VIEW</a>
+</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#CLS'>CLS</a>
+</td>
+<tr>
+<td class='index-category' colspan=7>Graphics - Tileset</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#CHR'>CHR</a>
+</td>
+<td class='index-cmd'>
+<a href='#CHR'>CHR</a>
+</td>
+<td class='index-cmd'>
+<a href='#CHR.ADD'>CHR.ADD</a>
+</td>
+<td class='index-cmd'>
+<a href='#CHR.GET'>CHR.GET</a>
+</td>
+<td class='index-cmd'>
+<a href='#CHR.ILOAD'>CHR.ILOAD</a>
+</td>
+<td class='index-cmd'>
+<a href='#CHR.LEN'>CHR.LEN</a>
+</td>
+<td class='index-cmd'>
+<a href='#CHR.LOAD'>CHR.LOAD</a>
+</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#CHR.NEW'>CHR.NEW</a>
+</td>
+<td class='index-cmd'>
+<a href='#CHR.SAVE'>CHR.SAVE</a>
+</td>
+<tr>
+<td class='index-category' colspan=7>Input - Keyboard</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#IF.KEY'>IF.KEY</a>
+</td>
+<td class='index-cmd'>
+<a href='#INKEY'>INKEY</a>
+</td>
+<td class='index-cmd'>
+<a href='#INPUT'>INPUT</a>
+</td>
+<tr>
+<td class='index-category' colspan=7>Input - Mouse</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#MOUSE.L'>MOUSE.L</a>
+</td>
+<td class='index-cmd'>
+<a href='#MOUSE.M'>MOUSE.M</a>
+</td>
+<td class='index-cmd'>
+<a href='#MOUSE.OFF'>MOUSE.OFF</a>
+</td>
+<td class='index-cmd'>
+<a href='#MOUSE.ON'>MOUSE.ON</a>
+</td>
+<td class='index-cmd'>
+<a href='#MOUSE.R'>MOUSE.R</a>
+</td>
+<td class='index-cmd'>
+<a href='#MOUSE.X'>MOUSE.X</a>
+</td>
+<td class='index-cmd'>
+<a href='#MOUSE.Y'>MOUSE.Y</a>
+</td>
+</tr>
+<tr>
+<td class='index-category' colspan=7>Math</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#ADD'>ADD</a>
+</td>
+<td class='index-cmd'>
+<a href='#DEC'>DEC</a>
+</td>
+<td class='index-cmd'>
+<a href='#DIV'>DIV</a>
+</td>
+<td class='index-cmd'>
+<a href='#DIVR'>DIVR</a>
+</td>
+<td class='index-cmd'>
+<a href='#INC'>INC</a>
+</td>
+<td class='index-cmd'>
+<a href='#MUL'>MUL</a>
+</td>
+<td class='index-cmd'>
+<a href='#NEG'>NEG</a>
+</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#POW'>POW</a>
+</td>
+<td class='index-cmd'>
+<a href='#RND'>RND</a>
+</td>
+<td class='index-cmd'>
+<a href='#SQRT'>SQRT</a>
+</td>
+<td class='index-cmd'>
+<a href='#SUB'>SUB</a>
+</td>
+<tr>
+<td class='index-category' colspan=7>Sound</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#BEEP'>BEEP</a>
+</td>
+<td class='index-cmd'>
+<a href='#MML.LOOP'>MML.LOOP</a>
+</td>
+<td class='index-cmd'>
+<a href='#MML.PLAY'>MML.PLAY</a>
+</td>
+<td class='index-cmd'>
+<a href='#MML.STOP'>MML.STOP</a>
+</td>
+<td class='index-cmd'>
+<a href='#MML.VOL'>MML.VOL</a>
+</td>
+<td class='index-cmd'>
+<a href='#SND.LOAD'>SND.LOAD</a>
+</td>
+<td class='index-cmd'>
+<a href='#SND.PLAY'>SND.PLAY</a>
+</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#SND.STOP'>SND.STOP</a>
+</td>
+<tr>
+<td class='index-category' colspan=7>Source code</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#INCL'>INCL</a>
+</td>
+<tr>
+<td class='index-category' colspan=7>String handling</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#SPRINTF'>SPRINTF</a>
+</td>
+<td class='index-cmd'>
+<a href='#STR.CAT'>STR.CAT</a>
+</td>
+<td class='index-cmd'>
+<a href='#STR.FIND'>STR.FIND</a>
+</td>
+<td class='index-cmd'>
+<a href='#STR.FMT'>STR.FMT</a>
+</td>
+<td class='index-cmd'>
+<a href='#STR.GETC'>STR.GETC</a>
+</td>
+<td class='index-cmd'>
+<a href='#STR.HAS'>STR.HAS</a>
+</td>
+<td class='index-cmd'>
+<a href='#STR.JOIN'>STR.JOIN</a>
+</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#STR.LCASE'>STR.LCASE</a>
+</td>
+<td class='index-cmd'>
+<a href='#STR.LEN'>STR.LEN</a>
+</td>
+<td class='index-cmd'>
+<a href='#STR.PFX'>STR.PFX</a>
+</td>
+<td class='index-cmd'>
+<a href='#STR.REPL'>STR.REPL</a>
+</td>
+<td class='index-cmd'>
+<a href='#STR.REPT'>STR.REPT</a>
+</td>
+<td class='index-cmd'>
+<a href='#STR.SETC'>STR.SETC</a>
+</td>
+<td class='index-cmd'>
+<a href='#STR.SFX'>STR.SFX</a>
+</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#STR.SPLIT'>STR.SPLIT</a>
+</td>
+<td class='index-cmd'>
+<a href='#STR.SUB'>STR.SUB</a>
+</td>
+<td class='index-cmd'>
+<a href='#STR.TRIM'>STR.TRIM</a>
+</td>
+<td class='index-cmd'>
+<a href='#STR.UCASE'>STR.UCASE</a>
+</td>
+<tr>
+<td class='index-category' colspan=7>System - Clipboard</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#CLIP.GET'>CLIP.GET</a>
+</td>
+<td class='index-cmd'>
+<a href='#CLIP.SET'>CLIP.SET</a>
+</td>
+<tr>
+<td class='index-category' colspan=7>System - Date and time</td>
+</tr>
+<tr>
+<td class='index-cmd'>
+<a href='#DATE'>DATE</a>
+</td>
+<td class='index-cmd'>
+<a href='#TIME'>TIME</a>
+</td>
+</table>
+</div>
+<table class='entry' id='ARR.CLR'>
+<tr>
+<td class='cmd'>
+ARR.CLR
+</td>
+<td class='params'>
+name
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Remove all items from array. This also reduces the size of the array to 0
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Data - Variables and arrays
+</td>
+</tr>
+</table>
+<table class='entry' id='ARR.COPY'>
+<tr>
+<td class='cmd'>
+ARR.COPY
+</td>
+<td class='params'>
+source, destination
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Make destination array equal to source array
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Data - Variables and arrays
+</td>
+</tr>
+</table>
+<table class='entry' id='ARR.ERASE'>
+<tr>
+<td class='cmd'>
+ARR.ERASE
+</td>
+<td class='params'>
+name, index
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Remove array item from index. This also reduces the size of the array by 1
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Data - Variables and arrays
+</td>
+</tr>
+</table>
+<table class='entry' id='ARR.LEN'>
+<tr>
+<td class='cmd'>
+ARR.LEN
+</td>
+<td class='params'>
+name, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the length of the array
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Data - Variables and arrays
+</td>
+</tr>
+</table>
+<table class='entry' id='ARR.NEW'>
+<tr>
+<td class='cmd'>
+ARR.NEW
+</td>
+<td class='params'>
+name, size?
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Create a new array (with optional initial size)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Data - Variables and arrays
+</td>
+</tr>
+</table>
+<table class='entry' id='ARR.PUSH'>
+<tr>
+<td class='cmd'>
+ARR.PUSH
+</td>
+<td class='params'>
+name, value, value_2?, value_3?, ...
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Add one or more new values to end of array
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Data - Variables and arrays
+</td>
+</tr>
+</table>
+<table class='entry' id='ARR.SET'>
+<tr>
+<td class='cmd'>
+ARR.SET
+</td>
+<td class='params'>
+name[index], x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store x at array index
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Data - Variables and arrays
+</td>
+</tr>
+</table>
+<table class='entry' id='DEF'>
+<tr>
+<td class='cmd'>
+DEF
+</td>
+<td class='params'>
+name, value
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Define a constant
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Data - Variables and arrays
+</td>
+</tr>
+</table>
+<table class='entry' id='VAR'>
+<tr>
+<td class='cmd'>
+VAR
+</td>
+<td class='params'>
+name, value
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Set value for a new or existing variable
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Data - Variables and arrays
+</td>
+</tr>
+</table>
+<table class='entry' id='ASSERT'>
+<tr>
+<td class='cmd'>
+ASSERT
+</td>
+<td class='params'>
+x, y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Abort program execution if x is not equal to y
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Debugging
+</td>
+</tr>
+</table>
+<table class='entry' id='DEBUG'>
+<tr>
+<td class='cmd'>
+DEBUG
+</td>
+<td class='params'>
+path
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Save detailed information about the current machine state into a text file
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Debugging
+</td>
+</tr>
+</table>
+<table class='entry' id='MSGBOX'>
+<tr>
+<td class='cmd'>
+MSGBOX
+</td>
+<td class='params'>
+text
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Show a modal message box, program is interrupted until OK button is pressed
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Debugging
+</td>
+</tr>
+</table>
+<table class='entry' id='CALL'>
+<tr>
+<td class='cmd'>
+CALL
+</td>
+<td class='params'>
+label
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Transfer execution to subroutine at label. Can return to the caller using the RET command
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution flow
+</td>
+</tr>
+</table>
+<table class='entry' id='ENDIF'>
+<tr>
+<td class='cmd'>
+ENDIF
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Mark the end of a conditional code block
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution flow
+</td>
+</tr>
+</table>
+<table class='entry' id='EXIT'>
+<tr>
+<td class='cmd'>
+EXIT
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Terminate program and close window
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution flow
+</td>
+</tr>
+</table>
+<table class='entry' id='GOTO'>
+<tr>
+<td class='cmd'>
+GOTO
+</td>
+<td class='params'>
+label
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Transfer execution to code at label
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution flow
+</td>
+</tr>
+</table>
+<table class='entry' id='HALT'>
+<tr>
+<td class='cmd'>
+HALT
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Terminate program but keep window open
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution flow
+</td>
+</tr>
+</table>
+<table class='entry' id='IF.CALL'>
+<tr>
+<td class='cmd'>
+IF.CALL
+</td>
+<td class='params'>
+x, y, label
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Transfer execution to subroutine at label only if x = y
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution flow
+</td>
+</tr>
+</table>
+<table class='entry' id='IF.EQ'>
+<tr>
+<td class='cmd'>
+IF.EQ
+</td>
+<td class='params'>
+x, y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Begin a code block that will execute only if x = y
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution flow
+</td>
+</tr>
+</table>
+<table class='entry' id='IF.FALSE'>
+<tr>
+<td class='cmd'>
+IF.FALSE
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Begin a code block that will execute only if x <= 0
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution flow
+</td>
+</tr>
+</table>
+<table class='entry' id='IF.GOTO'>
+<tr>
+<td class='cmd'>
+IF.GOTO
+</td>
+<td class='params'>
+x, y, label
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Transfer execution to code at label only if x = y
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution flow
+</td>
+</tr>
+</table>
+<table class='entry' id='IF.GT'>
+<tr>
+<td class='cmd'>
+IF.GT
+</td>
+<td class='params'>
+x, y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Begin a code block that will execute only if x > y
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution flow
+</td>
+</tr>
+</table>
+<table class='entry' id='IF.GTE'>
+<tr>
+<td class='cmd'>
+IF.GTE
+</td>
+<td class='params'>
+x, y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Begin a code block that will execute only if x >= y
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution flow
+</td>
+</tr>
+</table>
+<table class='entry' id='IF.LT'>
+<tr>
+<td class='cmd'>
+IF.LT
+</td>
+<td class='params'>
+x, y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Begin a code block that will execute only if x < y
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution flow
+</td>
+</tr>
+</table>
+<table class='entry' id='IF.LTE'>
+<tr>
+<td class='cmd'>
+IF.LTE
+</td>
+<td class='params'>
+x, y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Begin a code block that will execute only if x <= y
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution flow
+</td>
+</tr>
+</table>
+<table class='entry' id='IF.NEQ'>
+<tr>
+<td class='cmd'>
+IF.NEQ
+</td>
+<td class='params'>
+x, y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Begin a code block that will execute only if x does not equal y
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution flow
+</td>
+</tr>
+</table>
+<table class='entry' id='IF.TRUE'>
+<tr>
+<td class='cmd'>
+IF.TRUE
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Begin a code block that will execute only if x > 0
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution flow
+</td>
+</tr>
+</table>
+<table class='entry' id='PAUSE'>
+<tr>
+<td class='cmd'>
+PAUSE
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Pause program execution for x frames
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution flow
+</td>
+</tr>
+</table>
+<table class='entry' id='RESET'>
+<tr>
+<td class='cmd'>
+RESET
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Restart machine and program
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution flow
+</td>
+</tr>
+</table>
+<table class='entry' id='RET'>
+<tr>
+<td class='cmd'>
+RET
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Return from subroutine
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution flow
+</td>
+</tr>
+</table>
+<table class='entry' id='RUN'>
+<tr>
+<td class='cmd'>
+RUN
+</td>
+<td class='params'>
+program_path
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Launch a separate instance of the PTM to run the specified program file. The program path must be relative to the PTM executable
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution flow
+</td>
+</tr>
+</table>
+<table class='entry' id='ARR.FOR'>
+<tr>
+<td class='cmd'>
+ARR.FOR
+</td>
+<td class='params'>
+name, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Begin a code block that will execute repeatedly for each item in the array. Current value will be assigned to x and will begin with the first array item. Code block ends with the NEXT command
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution loops
+</td>
+</tr>
+</table>
+<table class='entry' id='BRK'>
+<tr>
+<td class='cmd'>
+BRK
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Force exit loop prematurely
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution loops
+</td>
+</tr>
+</table>
+<table class='entry' id='FOR'>
+<tr>
+<td class='cmd'>
+FOR
+</td>
+<td class='params'>
+x, first, last_exclusive, step?
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Begin a code block that will execute repeatedly as long as x < last. Current value will be assigned to x and will begin with the first value. X will be incremented by 1 (or by step, if specified) on every iteration
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution loops
+</td>
+</tr>
+</table>
+<table class='entry' id='NEXT'>
+<tr>
+<td class='cmd'>
+NEXT
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Mark the end of a code block loop
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution loops
+</td>
+</tr>
+</table>
+<table class='entry' id='SKIP'>
+<tr>
+<td class='cmd'>
+SKIP
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Skip current code block loop iteration
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Execution loops
+</td>
+</tr>
+</table>
+<table class='entry' id='BLOAD'>
+<tr>
+<td class='cmd'>
+BLOAD
+</td>
+<td class='params'>
+path, arr_id
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Load binary file at path and store bytes into array
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Filesystem
+</td>
+</tr>
+</table>
+<table class='entry' id='BSAVE'>
+<tr>
+<td class='cmd'>
+BSAVE
+</td>
+<td class='params'>
+path, arr_id
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Write array bytes into binary file at path
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Filesystem
+</td>
+</tr>
+</table>
+<table class='entry' id='CLOAD'>
+<tr>
+<td class='cmd'>
+CLOAD
+</td>
+<td class='params'>
+path, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Load text file at path and store contents into x
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Filesystem
+</td>
+</tr>
+</table>
+<table class='entry' id='CSAVE'>
+<tr>
+<td class='cmd'>
+CSAVE
+</td>
+<td class='params'>
+path, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Write x into text file at path
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Filesystem
+</td>
+</tr>
+</table>
+<table class='entry' id='FCHK'>
+<tr>
+<td class='cmd'>
+FCHK
+</td>
+<td class='params'>
+path, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store into x whether specified file exists. 1 means yes, 0 means no
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Filesystem
+</td>
+</tr>
+</table>
+<table class='entry' id='FEOF'>
+<tr>
+<td class='cmd'>
+FEOF
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store into x whether the record file pointer is past end of file. 1 means yes, 0 means no
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Filesystem
+</td>
+</tr>
+</table>
+<table class='entry' id='FILES'>
+<tr>
+<td class='cmd'>
+FILES
+</td>
+<td class='params'>
+arr_id, root_path?
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in an array the list of files/folders within a directory relative to the PTM executable file. If not specified, root_path means the same folder where the PTM executable file is located
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Filesystem
+</td>
+</tr>
+</table>
+<table class='entry' id='FOPEN.R'>
+<tr>
+<td class='cmd'>
+FOPEN.R
+</td>
+<td class='params'>
+path
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Open a record file for reading
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Filesystem
+</td>
+</tr>
+</table>
+<table class='entry' id='FOPEN.W'>
+<tr>
+<td class='cmd'>
+FOPEN.W
+</td>
+<td class='params'>
+path
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Open a record file for writing
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Filesystem
+</td>
+</tr>
+</table>
+<table class='entry' id='FREAD'>
+<tr>
+<td class='cmd'>
+FREAD
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the value of the current record in the record file and advance pointer to the next one
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Filesystem
+</td>
+</tr>
+</table>
+<table class='entry' id='FSAVE'>
+<tr>
+<td class='cmd'>
+FSAVE
+</td>
+<td class='params'>
+path
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Write contents of the record file to the specified path
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Filesystem
+</td>
+</tr>
+</table>
+<table class='entry' id='FSIZE'>
+<tr>
+<td class='cmd'>
+FSIZE
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the number of records in the record file
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Filesystem
+</td>
+</tr>
+</table>
+<table class='entry' id='FWRITE'>
+<tr>
+<td class='cmd'>
+FWRITE
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Write a new record to the end of the record file
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Filesystem
+</td>
+</tr>
+</table>
+<table class='entry' id='LLOAD'>
+<tr>
+<td class='cmd'>
+LLOAD
+</td>
+<td class='params'>
+path, arr_id
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Load text file at path and store lines into array
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Filesystem
+</td>
+</tr>
+</table>
+<table class='entry' id='LSAVE'>
+<tr>
+<td class='cmd'>
+LSAVE
+</td>
+<td class='params'>
+path, arr_id
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Save text file at path with lines from array
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Filesystem
+</td>
+</tr>
+</table>
+<table class='entry' id='PAL'>
+<tr>
+<td class='cmd'>
+PAL
+</td>
+<td class='params'>
+index, rgb
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Set RGB for color at palette index. RGB must be a color encoded in a 24-bit integer, i.e. from &h000000 (pure black) to &hffffff (pure white)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Color palette
+</td>
+</tr>
+</table>
+<table class='entry' id='PAL'>
+<tr>
+<td class='cmd'>
+PAL
+</td>
+<td class='params'>
+index, constant, rgb
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Variant of PAL command, but with an additional parameter being a constant identifier that will be created and to which the index will be assigned
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Color palette
+</td>
+</tr>
+</table>
+<table class='entry' id='PAL.GET'>
+<tr>
+<td class='cmd'>
+PAL.GET
+</td>
+<td class='params'>
+index, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the RGB value of color at palette index
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Color palette
+</td>
+</tr>
+</table>
+<table class='entry' id='PAL.GETB'>
+<tr>
+<td class='cmd'>
+PAL.GETB
+</td>
+<td class='params'>
+index, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the blue component from color at palette index
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Color palette
+</td>
+</tr>
+</table>
+<table class='entry' id='PAL.GETG'>
+<tr>
+<td class='cmd'>
+PAL.GETG
+</td>
+<td class='params'>
+index, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the green component from color at palette index
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Color palette
+</td>
+</tr>
+</table>
+<table class='entry' id='PAL.GETR'>
+<tr>
+<td class='cmd'>
+PAL.GETR
+</td>
+<td class='params'>
+index, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the red component from color at palette index
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Color palette
+</td>
+</tr>
+</table>
+<table class='entry' id='PAL.LEN'>
+<tr>
+<td class='cmd'>
+PAL.LEN
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the size of palette
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Color palette
+</td>
+</tr>
+</table>
+<table class='entry' id='PAL.LOAD'>
+<tr>
+<td class='cmd'>
+PAL.LOAD
+</td>
+<td class='params'>
+file
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Load palette from file
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Color palette
+</td>
+</tr>
+</table>
+<table class='entry' id='PAL.NEW'>
+<tr>
+<td class='cmd'>
+PAL.NEW
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Clear entire palette to black, then set default black and white colors at indices 0 and 1
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Color palette
+</td>
+</tr>
+</table>
+<table class='entry' id='PAL.SAVE'>
+<tr>
+<td class='cmd'>
+PAL.SAVE
+</td>
+<td class='params'>
+file
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Save palette to file
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Color palette
+</td>
+</tr>
+</table>
+<table class='entry' id='PAL.SETB'>
+<tr>
+<td class='cmd'>
+PAL.SETB
+</td>
+<td class='params'>
+index, b
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Adjust the blue component for color at palette index
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Color palette
+</td>
+</tr>
+</table>
+<table class='entry' id='PAL.SETG'>
+<tr>
+<td class='cmd'>
+PAL.SETG
+</td>
+<td class='params'>
+index, g
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Adjust the green component for color at palette index
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Color palette
+</td>
+</tr>
+</table>
+<table class='entry' id='PAL.SETR'>
+<tr>
+<td class='cmd'>
+PAL.SETR
+</td>
+<td class='params'>
+index, r
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Adjust the red component for color at palette index
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Color palette
+</td>
+</tr>
+</table>
+<table class='entry' id='ANIM'>
+<tr>
+<td class='cmd'>
+ANIM
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Set tile animation speed (0 to 100; 0 disables animation)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Core
+</td>
+</tr>
+</table>
+<table class='entry' id='FRAMES'>
+<tr>
+<td class='cmd'>
+FRAMES
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the number of frames rendered since machine started
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Core
+</td>
+</tr>
+</table>
+<table class='entry' id='TITLE'>
+<tr>
+<td class='cmd'>
+TITLE
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Set x as the title of the window
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Core
+</td>
+</tr>
+</table>
+<table class='entry' id='UPDATE'>
+<tr>
+<td class='cmd'>
+UPDATE
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Draw all visible tilebuffers and sprites then update window and process window events
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Core
+</td>
+</tr>
+</table>
+<table class='entry' id='WCOL'>
+<tr>
+<td class='cmd'>
+WCOL
+</td>
+<td class='params'>
+palette_index
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Clear window background to specified color
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Core
+</td>
+</tr>
+</table>
+<table class='entry' id='WINDOW'>
+<tr>
+<td class='cmd'>
+WINDOW
+</td>
+<td class='params'>
+width, height, size, default_layers
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Override the default window settings. Width and height are in pixel units. Size is used as a multiplier for both width and height. Default_layers defines the number of layers in the "default" tilebuffer
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Core
+</td>
+</tr>
+</table>
+<table class='entry' id='PRTSCR'>
+<tr>
+<td class='cmd'>
+PRTSCR
+</td>
+<td class='params'>
+file
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Save a screenshot to a bitmap file
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Core
+</td>
+</tr>
+</table>
+<table class='entry' id='SPR.BUF'>
+<tr>
+<td class='cmd'>
+SPR.BUF
+</td>
+<td class='params'>
+id, buf_id
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Assign sprite to a tilebuffer. The tilebuffer becomes the "owner" of the sprite. The sprite will then be drawn inside its viewport
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Sprites
+</td>
+</tr>
+</table>
+<table class='entry' id='SPR.CLR'>
+<tr>
+<td class='cmd'>
+SPR.CLR
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Delete all sprites
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Sprites
+</td>
+</tr>
+</table>
+<table class='entry' id='SPR.DEL'>
+<tr>
+<td class='cmd'>
+SPR.DEL
+</td>
+<td class='params'>
+id
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Delete sprite with id
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Sprites
+</td>
+</tr>
+</table>
+<table class='entry' id='SPR.GETX'>
+<tr>
+<td class='cmd'>
+SPR.GETX
+</td>
+<td class='params'>
+id, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the x coordinate of sprite (in pixel units)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Sprites
+</td>
+</tr>
+</table>
+<table class='entry' id='SPR.GETY'>
+<tr>
+<td class='cmd'>
+SPR.GETY
+</td>
+<td class='params'>
+id, y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in y the y coordinate of sprite (in pixel units)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Sprites
+</td>
+</tr>
+</table>
+<table class='entry' id='SPR.HIDE'>
+<tr>
+<td class='cmd'>
+SPR.HIDE
+</td>
+<td class='params'>
+id
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Hide sprite
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Sprites
+</td>
+</tr>
+</table>
+<table class='entry' id='SPR.HIT'>
+<tr>
+<td class='cmd'>
+SPR.HIT
+</td>
+<td class='params'>
+x, id_sprite_1, id_sprite_2
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x whether there is any collision (overlap) between two sprites’ hitboxes. 1 means yes; 0 means no
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Sprites
+</td>
+</tr>
+</table>
+<table class='entry' id='SPR.MOVE'>
+<tr>
+<td class='cmd'>
+SPR.MOVE
+</td>
+<td class='params'>
+id, dx, dy
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Move sprite by specified distance (in pixel units)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Sprites
+</td>
+</tr>
+</table>
+<table class='entry' id='SPR.NEW'>
+<tr>
+<td class='cmd'>
+SPR.NEW
+</td>
+<td class='params'>
+id
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Create a new sprite using tile in the TILE register
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Sprites
+</td>
+</tr>
+</table>
+<table class='entry' id='SPR.POS'>
+<tr>
+<td class='cmd'>
+SPR.POS
+</td>
+<td class='params'>
+id, x, y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Set x and y coordinates of sprite (in pixel units)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Sprites
+</td>
+</tr>
+</table>
+<table class='entry' id='SPR.SHOW'>
+<tr>
+<td class='cmd'>
+SPR.SHOW
+</td>
+<td class='params'>
+id
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Show sprite
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Sprites
+</td>
+</tr>
+</table>
+<table class='entry' id='SPR.TGET'>
+<tr>
+<td class='cmd'>
+SPR.TGET
+</td>
+<td class='params'>
+id
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store sprite tile in the TILE register
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Sprites
+</td>
+</tr>
+</table>
+<table class='entry' id='SPR.TGETX'>
+<tr>
+<td class='cmd'>
+SPR.TGETX
+</td>
+<td class='params'>
+id, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the x coordinate of sprite (in tile units)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Sprites
+</td>
+</tr>
+</table>
+<table class='entry' id='SPR.TGETY'>
+<tr>
+<td class='cmd'>
+SPR.TGETY
+</td>
+<td class='params'>
+id, y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in y the y coordinate of sprite (in tile units)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Sprites
+</td>
+</tr>
+</table>
+<table class='entry' id='SPR.TMOVE'>
+<tr>
+<td class='cmd'>
+SPR.TMOVE
+</td>
+<td class='params'>
+id, dx, dy
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Move sprite by specified distance (in tile units)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Sprites
+</td>
+</tr>
+</table>
+<table class='entry' id='SPR.TPOS'>
+<tr>
+<td class='cmd'>
+SPR.TPOS
+</td>
+<td class='params'>
+id, x, y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Set x and y coordinates of sprite (in tile units)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Sprites
+</td>
+</tr>
+</table>
+<table class='entry' id='SPR.TSET'>
+<tr>
+<td class='cmd'>
+SPR.TSET
+</td>
+<td class='params'>
+id
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Set sprite tile equal to the TILE register
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Sprites
+</td>
+</tr>
+</table>
+<table class='entry' id='SPR.TX'>
+<tr>
+<td class='cmd'>
+SPR.TX
+</td>
+<td class='params'>
+id, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Set x coordinate of sprite (in tile units)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Sprites
+</td>
+</tr>
+</table>
+<table class='entry' id='SPR.TY'>
+<tr>
+<td class='cmd'>
+SPR.TY
+</td>
+<td class='params'>
+id, y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Set y coordinate of sprite (in tile units)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Sprites
+</td>
+</tr>
+</table>
+<table class='entry' id='SPR.VISBL'>
+<tr>
+<td class='cmd'>
+SPR.VISBL
+</td>
+<td class='params'>
+id, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x whether sprite is visible. 1 means yes; 0 means no
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Sprites
+</td>
+</tr>
+</table>
+<table class='entry' id='SPR.X'>
+<tr>
+<td class='cmd'>
+SPR.X
+</td>
+<td class='params'>
+id, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Set x coordinate of sprite (in pixel units)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Sprites
+</td>
+</tr>
+</table>
+<table class='entry' id='SPR.Y'>
+<tr>
+<td class='cmd'>
+SPR.Y
+</td>
+<td class='params'>
+id, y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Set y coordinate of sprite (in pixel units)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Sprites
+</td>
+</tr>
+</table>
+<table class='entry' id='COPY'>
+<tr>
+<td class='cmd'>
+COPY
+</td>
+<td class='params'>
+x1, y1, x2, y2
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Copy to internal clipboard all tiles within specified rectangle from selected tilebuffer layer
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile output/input
+</td>
+</tr>
+</table>
+<table class='entry' id='CUT'>
+<tr>
+<td class='cmd'>
+CUT
+</td>
+<td class='params'>
+x1, y1, x2, y2
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Copy to internal clipboard all tiles within specified rectangle from selected tilebuffer layer, then delete them
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile output/input
+</td>
+</tr>
+</table>
+<table class='entry' id='DEL'>
+<tr>
+<td class='cmd'>
+DEL
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Delete tile from selected tilebuffer at current cursor position
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile output/input
+</td>
+</tr>
+</table>
+<table class='entry' id='DELR'>
+<tr>
+<td class='cmd'>
+DELR
+</td>
+<td class='params'>
+x1, y1, x2, y2
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Delete all tiles within specified rectangle from selected tilebuffer layer
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile output/input
+</td>
+</tr>
+</table>
+<table class='entry' id='FILL'>
+<tr>
+<td class='cmd'>
+FILL
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Fill entire selected tilebuffer layer with TILE register
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile output/input
+</td>
+</tr>
+</table>
+<table class='entry' id='GET'>
+<tr>
+<td class='cmd'>
+GET
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Make tile sequence in TILE register equal to tile sequence at current cursor position in selected tilebuffer
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile output/input
+</td>
+</tr>
+</table>
+<table class='entry' id='GETS'>
+<tr>
+<td class='cmd'>
+GETS
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Add the tile sequence at current cursor position in selected tilebuffer to tile sequence in TILE register
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile output/input
+</td>
+</tr>
+</table>
+<table class='entry' id='MOV'>
+<tr>
+<td class='cmd'>
+MOV
+</td>
+<td class='params'>
+x, y, dx, dy
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Move tile in selected tilebuffer, from specified position to specified distance
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile output/input
+</td>
+</tr>
+</table>
+<table class='entry' id='MOVR'>
+<tr>
+<td class='cmd'>
+MOVR
+</td>
+<td class='params'>
+x1, y1, x2, y2, dx, dy
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Move rectangle of tiles in selected tilebuffer, from specified area towards specified distance
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile output/input
+</td>
+</tr>
+</table>
+<table class='entry' id='PASTE'>
+<tr>
+<td class='cmd'>
+PASTE
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Paste all tiles from internal clipboard into selected tilebuffer layer starting at current cursor position
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile output/input
+</td>
+</tr>
+</table>
+<table class='entry' id='PUT'>
+<tr>
+<td class='cmd'>
+PUT
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Put tile sequence from the TILE register at current cursor position in selected tilebuffer. This will overwrite the existing tile sequence at that position
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile output/input
+</td>
+</tr>
+</table>
+<table class='entry' id='PUTS'>
+<tr>
+<td class='cmd'>
+PUTS
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Almost the same as PUT, but will add the tiles to the existing tile sequence at that position instead of overwriting them
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile output/input
+</td>
+</tr>
+</table>
+<table class='entry' id='RECT'>
+<tr>
+<td class='cmd'>
+RECT
+</td>
+<td class='params'>
+x1, y1, x2, y2
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Fill rectangle in selected tilebuffer layer with TILE register
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile output/input
+</td>
+</tr>
+</table>
+<table class='entry' id='TILE.ADD'>
+<tr>
+<td class='cmd'>
+TILE.ADD
+</td>
+<td class='params'>
+tileset_ix, fgc_pal_ix, bgc_pal_ix?
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Add an animation frame to the TILE register with the specified tileset index and colors. If bgc_pal_ix is not specified, then the background color for this tile will not be rendered
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - TILE register
+</td>
+</tr>
+</table>
+<table class='entry' id='TILE.COLOR'>
+<tr>
+<td class='cmd'>
+TILE.COLOR
+</td>
+<td class='params'>
+frame_ix, fgc_pal_ix, bgc_pal_ix
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Change palette references for both colors at specified frame in the TILE register
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - TILE register
+</td>
+</tr>
+</table>
+<table class='entry' id='TILE.GETB'>
+<tr>
+<td class='cmd'>
+TILE.GETB
+</td>
+<td class='params'>
+frame_ix, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the palette reference for background color at a frame in the TILE register
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - TILE register
+</td>
+</tr>
+</table>
+<table class='entry' id='TILE.GETC'>
+<tr>
+<td class='cmd'>
+TILE.GETC
+</td>
+<td class='params'>
+frame_ix, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the tileset reference at a frame in the TILE register
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - TILE register
+</td>
+</tr>
+</table>
+<table class='entry' id='TILE.GETF'>
+<tr>
+<td class='cmd'>
+TILE.GETF
+</td>
+<td class='params'>
+frame_ix, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the palette reference for foreground color at a frame in the TILE register
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - TILE register
+</td>
+</tr>
+</table>
+<table class='entry' id='TILE.GETP'>
+<tr>
+<td class='cmd'>
+TILE.GETP
+</td>
+<td class='params'>
+name, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the value of a property in the TILE register
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - TILE register
+</td>
+</tr>
+</table>
+<table class='entry' id='TILE.LEN'>
+<tr>
+<td class='cmd'>
+TILE.LEN
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the number of animation frames in the TILE register
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - TILE register
+</td>
+</tr>
+</table>
+<table class='entry' id='TILE.LOAD'>
+<tr>
+<td class='cmd'>
+TILE.LOAD
+</td>
+<td class='params'>
+id
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Load TILE register from memory with id
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - TILE register
+</td>
+</tr>
+</table>
+<table class='entry' id='TILE.NEW'>
+<tr>
+<td class='cmd'>
+TILE.NEW
+</td>
+<td class='params'>
+tileset_ix?, fgc_pal_ix?, bgc_pal_ix?
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Remove all tiles from TILE register. If arguments are given, add a single animation frame with the specified tileset index and colors. If bgc_pal_ix is not specified, then the background color for this tile will not be rendered
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - TILE register
+</td>
+</tr>
+</table>
+<table class='entry' id='TILE.PARSE'>
+<tr>
+<td class='cmd'>
+TILE.PARSE
+</td>
+<td class='params'>
+string
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Parse the specified string as data into the TILE register. Format: "tileset_index,fgc_palette_index,bgc_palette_index;..."
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - TILE register
+</td>
+</tr>
+</table>
+<table class='entry' id='TILE.SETB'>
+<tr>
+<td class='cmd'>
+TILE.SETB
+</td>
+<td class='params'>
+frame_ix, bgc_pal_ix
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Change palette reference for background color at specified frame in the TILE register
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - TILE register
+</td>
+</tr>
+</table>
+<table class='entry' id='TILE.SETC'>
+<tr>
+<td class='cmd'>
+TILE.SETC
+</td>
+<td class='params'>
+frame_ix, tileset_ix
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Change tileset reference at specified frame in the TILE register
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - TILE register
+</td>
+</tr>
+</table>
+<table class='entry' id='TILE.SETF'>
+<tr>
+<td class='cmd'>
+TILE.SETF
+</td>
+<td class='params'>
+frame_ix, fgc_pal_ix
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Change palette reference for foreground color at specified frame in the TILE register
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - TILE register
+</td>
+</tr>
+</table>
+<table class='entry' id='TILE.SETP'>
+<tr>
+<td class='cmd'>
+TILE.SETP
+</td>
+<td class='params'>
+name, value
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Set value for a property in the TILE register
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - TILE register
+</td>
+</tr>
+</table>
+<table class='entry' id='TILE.STORE'>
+<tr>
+<td class='cmd'>
+TILE.STORE
+</td>
+<td class='params'>
+id
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store TILE register into memory and assign id
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - TILE register
+</td>
+</tr>
+</table>
+<table class='entry' id='TILE.STR'>
+<tr>
+<td class='cmd'>
+TILE.STR
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x a string representing the TILE register (uses the same format as TILE.PARSE)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - TILE register
+</td>
+</tr>
+</table>
+<table class='entry' id='COLOR'>
+<tr>
+<td class='cmd'>
+COLOR
+</td>
+<td class='params'>
+fgc_pal_ix, bgc_pal_ix?
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Set colors for subsequently printed text
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile string output
+</td>
+</tr>
+</table>
+<table class='entry' id='COLOR.B'>
+<tr>
+<td class='cmd'>
+COLOR.B
+</td>
+<td class='params'>
+bgc_pal_ix
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Set background color for subsequently printed text
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile string output
+</td>
+</tr>
+</table>
+<table class='entry' id='COLOR.F'>
+<tr>
+<td class='cmd'>
+COLOR.F
+</td>
+<td class='params'>
+fgc_pal_ix
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Set foreground color for subsequently printed text
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile string output
+</td>
+</tr>
+</table>
+<table class='entry' id='PRINT'>
+<tr>
+<td class='cmd'>
+PRINT
+</td>
+<td class='params'>
+text
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Print text starting at current cursor position in the selected tilebuffer. This will override the existing tiles at the same character positions
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile string output
+</td>
+</tr>
+</table>
+<table class='entry' id='PRINT.ADD'>
+<tr>
+<td class='cmd'>
+PRINT.ADD
+</td>
+<td class='params'>
+text
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Print text starting at current cursor position in the selected tilebuffer. This will add new frames on top of the existing tiles at the same character positions (useful for e.g. blinking or animated text)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile string output
+</td>
+</tr>
+</table>
+<table class='entry' id='PRINTF'>
+<tr>
+<td class='cmd'>
+PRINTF
+</td>
+<td class='params'>
+format
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Almost the same as PRINT, but will interpret escape sequences delimited by curly brackets. This will override the existing tiles at the same character positions. List of recognized escape sequences: {f…} change text foreground color; {/f} revert text foreground to previous color; {b…} change text background color; {/b} revert text background to previous color; {c…} output tile with specified tileset index; {%x} output value stored in variable x; {%x[ix]} output value stored in array x at index ix
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile string output
+</td>
+</tr>
+</table>
+<table class='entry' id='PRINTF.ADD'>
+<tr>
+<td class='cmd'>
+PRINTF.ADD
+</td>
+<td class='params'>
+format
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Almost the same as PRINTF, but will add new frames on top of the existing tiles at the same character positions (useful for e.g. blinking or animated text)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile string output
+</td>
+</tr>
+</table>
+<table class='entry' id='PRINTL'>
+<tr>
+<td class='cmd'>
+PRINTL
+</td>
+<td class='params'>
+text
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Almost the same as PRINT, but automatically append a "\n" (newline character) at the end of the text
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile string output
+</td>
+</tr>
+</table>
+<table class='entry' id='PUTC'>
+<tr>
+<td class='cmd'>
+PUTC
+</td>
+<td class='params'>
+tileset_ix
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Print character at current cursor position in the selected tilebuffer. This will override the existing tile at the same character position
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile string output
+</td>
+</tr>
+</table>
+<table class='entry' id='PUTC.ADD'>
+<tr>
+<td class='cmd'>
+PUTC.ADD
+</td>
+<td class='params'>
+tileset_ix
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Print character at current cursor position in the selected tilebuffer. This will add a new frame on top of the existing tile at the same character position
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile string output
+</td>
+</tr>
+</table>
+<table class='entry' id='TXT.BGOFF'>
+<tr>
+<td class='cmd'>
+TXT.BGOFF
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Disable rendering text background
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile string output
+</td>
+</tr>
+</table>
+<table class='entry' id='TXT.BGON'>
+<tr>
+<td class='cmd'>
+TXT.BGON
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Enable rendering text background
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tile string output
+</td>
+</tr>
+</table>
+<table class='entry' id='CSR.GETX'>
+<tr>
+<td class='cmd'>
+CSR.GETX
+</td>
+<td class='params'>
+var
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in var the x coordinate of cursor
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tilebuffer cursor
+</td>
+</tr>
+</table>
+<table class='entry' id='CSR.GETY'>
+<tr>
+<td class='cmd'>
+CSR.GETY
+</td>
+<td class='params'>
+var
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in var the y coordinate of cursor
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tilebuffer cursor
+</td>
+</tr>
+</table>
+<table class='entry' id='CSR.X'>
+<tr>
+<td class='cmd'>
+CSR.X
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Set x coordinate of cursor
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tilebuffer cursor
+</td>
+</tr>
+</table>
+<table class='entry' id='CSR.Y'>
+<tr>
+<td class='cmd'>
+CSR.Y
+</td>
+<td class='params'>
+y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Set y coordinate of cursor
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tilebuffer cursor
+</td>
+</tr>
+</table>
+<table class='entry' id='LAYER'>
+<tr>
+<td class='cmd'>
+LAYER
+</td>
+<td class='params'>
+index
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Set cursor at layer index of the currently selected tilebuffer
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tilebuffer cursor
+</td>
+</tr>
+</table>
+<table class='entry' id='LOCATE'>
+<tr>
+<td class='cmd'>
+LOCATE
+</td>
+<td class='params'>
+x, y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Set cursor at specified column and row in the currently selected tilebuffer
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tilebuffer cursor
+</td>
+</tr>
+</table>
+<table class='entry' id='BUF.BGCOL'>
+<tr>
+<td class='cmd'>
+BUF.BGCOL
+</td>
+<td class='params'>
+id, bgc_pal_ix
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Enable rendering tilebuffer background and set the background color
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tilebuffer manipulation
+</td>
+</tr>
+</table>
+<table class='entry' id='BUF.BGOFF'>
+<tr>
+<td class='cmd'>
+BUF.BGOFF
+</td>
+<td class='params'>
+id
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Disable rendering tilebuffer background
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tilebuffer manipulation
+</td>
+</tr>
+</table>
+<table class='entry' id='BUF.CLL'>
+<tr>
+<td class='cmd'>
+BUF.CLL
+</td>
+<td class='params'>
+id, layer
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Delete all tiles from layer in the tilebuffer. This will also reset the tilebuffer cursor to the top-left corner of the current buffer layer (X0 Y0)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tilebuffer manipulation
+</td>
+</tr>
+</table>
+<table class='entry' id='BUF.CLS'>
+<tr>
+<td class='cmd'>
+BUF.CLS
+</td>
+<td class='params'>
+id
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Delete all tiles from all layers in specified tilebuffer. This will also reset the tilebuffer cursor to the top-left corner of the current buffer layer (X0 Y0)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tilebuffer manipulation
+</td>
+</tr>
+</table>
+<table class='entry' id='BUF.COLS'>
+<tr>
+<td class='cmd'>
+BUF.COLS
+</td>
+<td class='params'>
+id, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the number of columns (width in tile units) in the tilebuffer
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tilebuffer manipulation
+</td>
+</tr>
+</table>
+<table class='entry' id='BUF.HIDE'>
+<tr>
+<td class='cmd'>
+BUF.HIDE
+</td>
+<td class='params'>
+id
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Hide a tilebuffer
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tilebuffer manipulation
+</td>
+</tr>
+</table>
+<table class='entry' id='BUF.NEW'>
+<tr>
+<td class='cmd'>
+BUF.NEW
+</td>
+<td class='params'>
+id, layers, columns, rows, order
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Create a new tilebuffer (columns and rows are in tile units). Order 0 is reserved for the default buffer. Higher order buffers are drawn on top of lower order buffers
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tilebuffer manipulation
+</td>
+</tr>
+</table>
+<table class='entry' id='BUF.LOAD'>
+<tr>
+<td class='cmd'>
+BUF.LOAD
+</td>
+<td class='params'>
+id, file
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Load tilebuffer data from file
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tilebuffer manipulation
+</td>
+</tr>
+</table>
+<table class='entry' id='BUF.ROWS'>
+<tr>
+<td class='cmd'>
+BUF.ROWS
+</td>
+<td class='params'>
+id, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the number of rows (height in tile units) in the tilebuffer
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tilebuffer manipulation
+</td>
+</tr>
+</table>
+<table class='entry' id='BUF.SCRL'>
+<tr>
+<td class='cmd'>
+BUF.SCRL
+</td>
+<td class='params'>
+id, dx, dy
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Smoothly scroll tilebuffer viewport contents by the specified distance (in pixels)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tilebuffer manipulation
+</td>
+</tr>
+</table>
+<table class='entry' id='BUF.SEL'>
+<tr>
+<td class='cmd'>
+BUF.SEL
+</td>
+<td class='params'>
+id
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Select tilebuffer that will be used for all subsequent tile operations
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tilebuffer manipulation
+</td>
+</tr>
+</table>
+<table class='entry' id='BUF.SHOW'>
+<tr>
+<td class='cmd'>
+BUF.SHOW
+</td>
+<td class='params'>
+id
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Show a tilebuffer
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tilebuffer manipulation
+</td>
+</tr>
+</table>
+<table class='entry' id='BUF.TOGL'>
+<tr>
+<td class='cmd'>
+BUF.TOGL
+</td>
+<td class='params'>
+id
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+If tilebuffer is visible, hide it; if it's hidden, show it
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tilebuffer manipulation
+</td>
+</tr>
+</table>
+<table class='entry' id='BUF.VIEW'>
+<tr>
+<td class='cmd'>
+BUF.VIEW
+</td>
+<td class='params'>
+id, x1, y1, x2, y2
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Set tilebuffer viewport rectangle on the screen
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tilebuffer manipulation
+</td>
+</tr>
+</table>
+<table class='entry' id='CLS'>
+<tr>
+<td class='cmd'>
+CLS
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Delete all tiles from all tilebuffers. This will also reset the tilebuffer cursor to the top-left corner of the current buffer layer (X0 Y0)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tilebuffer manipulation
+</td>
+</tr>
+</table>
+<table class='entry' id='CHR'>
+<tr>
+<td class='cmd'>
+CHR
+</td>
+<td class='params'>
+index, binary
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Define pixel pattern (binary string) at tileset index. A binary string is just a string containing 64 characters, each character being either 0 or 1. 0 means pixel represents the background; 1 means pixel represents the foreground
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tileset
+</td>
+</tr>
+</table>
+<table class='entry' id='CHR'>
+<tr>
+<td class='cmd'>
+CHR
+</td>
+<td class='params'>
+index, constant, binary
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Variant of CHR command, but with an additional parameter being a constant identifier that will be created and to which the index will be assigned
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tileset
+</td>
+</tr>
+</table>
+<table class='entry' id='CHR.ADD'>
+<tr>
+<td class='cmd'>
+CHR.ADD
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Add x blank tiles to the tileset (total max. must not exceed 65536)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tileset
+</td>
+</tr>
+</table>
+<table class='entry' id='CHR.GET'>
+<tr>
+<td class='cmd'>
+CHR.GET
+</td>
+<td class='params'>
+index, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the pixel pattern (binary string) at tileset index
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tileset
+</td>
+</tr>
+</table>
+<table class='entry' id='CHR.ILOAD'>
+<tr>
+<td class='cmd'>
+CHR.ILOAD
+</td>
+<td class='params'>
+file, fgc, bgc
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Load tileset from image file. Both the image width and height must be multiples of 8. Fgc_rgb is the color in the image that will be converted to pixel code 1 (foreground color). Bgc_rgb is the color in the image that will be converted to pixel code 0 (background color)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tileset
+</td>
+</tr>
+</table>
+<table class='entry' id='CHR.LEN'>
+<tr>
+<td class='cmd'>
+CHR.LEN
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the size of tileset
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tileset
+</td>
+</tr>
+</table>
+<table class='entry' id='CHR.LOAD'>
+<tr>
+<td class='cmd'>
+CHR.LOAD
+</td>
+<td class='params'>
+file
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Load tileset from text file
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tileset
+</td>
+</tr>
+</table>
+<table class='entry' id='CHR.NEW'>
+<tr>
+<td class='cmd'>
+CHR.NEW
+</td>
+<td class='params'>
+tile_count
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Initialize tileset (tile_count min. 256; max. 65536)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tileset
+</td>
+</tr>
+</table>
+<table class='entry' id='CHR.SAVE'>
+<tr>
+<td class='cmd'>
+CHR.SAVE
+</td>
+<td class='params'>
+file
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Save tileset to text file
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Graphics - Tileset
+</td>
+</tr>
+</table>
+<table class='entry' id='IF.KEY'>
+<tr>
+<td class='cmd'>
+IF.KEY
+</td>
+<td class='params'>
+keyname
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Begin a code block that will execute only if the specified named key is pressed. List of recognized key names: SHIFT, CTRL, ALT, CAPS, NUMLOCK, SCRLOCK, RIGHT, LEFT, UP, DOWN, SPACE, ENTER, RETURN, ESC, TAB, BS, INS, DEL, HOME, END, PGUP, PGDN, PAUSE, BREAK, PRINT, F1 through F12, A through Z, 0 through 9, , (comma), . (period), <, >, /, *, +, -
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Input - Keyboard
+</td>
+</tr>
+</table>
+<table class='entry' id='INKEY'>
+<tr>
+<td class='cmd'>
+INKEY
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the numeric code of the last key that was pressed
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Input - Keyboard
+</td>
+</tr>
+</table>
+<table class='entry' id='INPUT'>
+<tr>
+<td class='cmd'>
+INPUT
+</td>
+<td class='params'>
+x, max_length
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Show a text input field and waits for user to type a string. When user presses the ENTER or ESCAPE key, the string gets stored in x
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Input - Keyboard
+</td>
+</tr>
+</table>
+<table class='entry' id='MOUSE.L'>
+<tr>
+<td class='cmd'>
+MOUSE.L
+</td>
+<td class='params'>
+var
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in var whether the left mouse button is pressed
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Input - Mouse
+</td>
+</tr>
+</table>
+<table class='entry' id='MOUSE.M'>
+<tr>
+<td class='cmd'>
+MOUSE.M
+</td>
+<td class='params'>
+var
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in var whether the middle mouse button is pressed
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Input - Mouse
+</td>
+</tr>
+</table>
+<table class='entry' id='MOUSE.OFF'>
+<tr>
+<td class='cmd'>
+MOUSE.OFF
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Hide the mouse pointer
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Input - Mouse
+</td>
+</tr>
+</table>
+<table class='entry' id='MOUSE.ON'>
+<tr>
+<td class='cmd'>
+MOUSE.ON
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Show the mouse pointer
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Input - Mouse
+</td>
+</tr>
+</table>
+<table class='entry' id='MOUSE.R'>
+<tr>
+<td class='cmd'>
+MOUSE.R
+</td>
+<td class='params'>
+var
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in var whether the right mouse button is pressed
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Input - Mouse
+</td>
+</tr>
+</table>
+<table class='entry' id='MOUSE.X'>
+<tr>
+<td class='cmd'>
+MOUSE.X
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the x coordinate of the mouse pointer
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Input - Mouse
+</td>
+</tr>
+</table>
+<table class='entry' id='MOUSE.Y'>
+<tr>
+<td class='cmd'>
+MOUSE.Y
+</td>
+<td class='params'>
+y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in y the y coordinate of the mouse pointer
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Input - Mouse
+</td>
+</tr>
+</table>
+<table class='entry' id='ADD'>
+<tr>
+<td class='cmd'>
+ADD
+</td>
+<td class='params'>
+result, x, y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+result = x + y
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Math
+</td>
+</tr>
+</table>
+<table class='entry' id='DEC'>
+<tr>
+<td class='cmd'>
+DEC
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+x = x - 1
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Math
+</td>
+</tr>
+</table>
+<table class='entry' id='DIV'>
+<tr>
+<td class='cmd'>
+DIV
+</td>
+<td class='params'>
+result, x, y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+result = x / y
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Math
+</td>
+</tr>
+</table>
+<table class='entry' id='DIVR'>
+<tr>
+<td class='cmd'>
+DIVR
+</td>
+<td class='params'>
+remainder, x, y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+result = x % y (remainder of division)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Math
+</td>
+</tr>
+</table>
+<table class='entry' id='INC'>
+<tr>
+<td class='cmd'>
+INC
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+x = x + 1
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Math
+</td>
+</tr>
+</table>
+<table class='entry' id='MUL'>
+<tr>
+<td class='cmd'>
+MUL
+</td>
+<td class='params'>
+result, x, y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+result = x * y
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Math
+</td>
+</tr>
+</table>
+<table class='entry' id='NEG'>
+<tr>
+<td class='cmd'>
+NEG
+</td>
+<td class='params'>
+result, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+result = x * -1 (invert sign)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Math
+</td>
+</tr>
+</table>
+<table class='entry' id='POW'>
+<tr>
+<td class='cmd'>
+POW
+</td>
+<td class='params'>
+result, base, power
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+result = base ^ power (exponentiation)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Math
+</td>
+</tr>
+</table>
+<table class='entry' id='RND'>
+<tr>
+<td class='cmd'>
+RND
+</td>
+<td class='params'>
+x, min, max
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x a random number between min and max (inclusive)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Math
+</td>
+</tr>
+</table>
+<table class='entry' id='SQRT'>
+<tr>
+<td class='cmd'>
+SQRT
+</td>
+<td class='params'>
+result, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+result = square root of x
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Math
+</td>
+</tr>
+</table>
+<table class='entry' id='SUB'>
+<tr>
+<td class='cmd'>
+SUB
+</td>
+<td class='params'>
+result, x, y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+result = x - y
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Math
+</td>
+</tr>
+</table>
+<table class='entry' id='BEEP'>
+<tr>
+<td class='cmd'>
+BEEP
+</td>
+<td class='params'>
+frequency, length
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Play a beeping sound with the specified frequency and length
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Sound
+</td>
+</tr>
+</table>
+<table class='entry' id='MML.LOOP'>
+<tr>
+<td class='cmd'>
+MML.LOOP
+</td>
+<td class='params'>
+mml
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Play asynchronously the notes specified in the MML string, in a loop. See MML.PLAY for more info
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Sound
+</td>
+</tr>
+</table>
+<table class='entry' id='MML.PLAY'>
+<tr>
+<td class='cmd'>
+MML.PLAY
+</td>
+<td class='params'>
+mml
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Play asynchronously the notes specified in the MML string, only once. Notes: C,C#,D,D#,E,F,F#,G,G#,A,A#,B; Control: P = pause; L = set length for all following notes (min. length: 30); O = set octave for all following notes (valid octaves: 1 through 8)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Sound
+</td>
+</tr>
+</table>
+<table class='entry' id='MML.STOP'>
+<tr>
+<td class='cmd'>
+MML.STOP
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Stop all MML sounds
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Sound
+</td>
+</tr>
+</table>
+<table class='entry' id='MML.VOL'>
+<tr>
+<td class='cmd'>
+MML.VOL
+</td>
+<td class='params'>
+volume
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Set volume for MML sounds
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Sound
+</td>
+</tr>
+</table>
+<table class='entry' id='SND.LOAD'>
+<tr>
+<td class='cmd'>
+SND.LOAD
+</td>
+<td class='params'>
+id, file
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Load a WAV sound file and assign id
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Sound
+</td>
+</tr>
+</table>
+<table class='entry' id='SND.PLAY'>
+<tr>
+<td class='cmd'>
+SND.PLAY
+</td>
+<td class='params'>
+id
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Play asynchronously the WAV sound associated with id, only once
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Sound
+</td>
+</tr>
+</table>
+<table class='entry' id='SND.STOP'>
+<tr>
+<td class='cmd'>
+SND.STOP
+</td>
+<td class='params'>
+
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Stop all WAV sounds currently playing
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Sound
+</td>
+</tr>
+</table>
+<table class='entry' id='INCL'>
+<tr>
+<td class='cmd'>
+INCL
+</td>
+<td class='params'>
+path
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Insert PTML code from a different file at the same point where this command is used. This command is only valid inside the file that started the machine. Paths must be relative to the PTM executable file (PTM.exe)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: Source code
+</td>
+</tr>
+</table>
+<table class='entry' id='SPRINTF'>
+<tr>
+<td class='cmd'>
+SPRINTF
+</td>
+<td class='params'>
+x, format
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Almost the same as PRINTF, but will store the result in x instead of printing to the screen
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: String handling
+</td>
+</tr>
+</table>
+<table class='entry' id='STR.CAT'>
+<tr>
+<td class='cmd'>
+STR.CAT
+</td>
+<td class='params'>
+result, x, y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Concatenate strings x and y
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: String handling
+</td>
+</tr>
+</table>
+<table class='entry' id='STR.FIND'>
+<tr>
+<td class='cmd'>
+STR.FIND
+</td>
+<td class='params'>
+result, x, y, begin?
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Search x for substring y and store index of first occurrence starting from index (or from 0 if begin is omitted)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: String handling
+</td>
+</tr>
+</table>
+<table class='entry' id='STR.FMT'>
+<tr>
+<td class='cmd'>
+STR.FMT
+</td>
+<td class='params'>
+result, format, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Embed the number x into a string using the specified format. The format used by this command is closely related to the C/C++ printf function format, and has no relation to the format used by the commands PRINTF or SPRINTF
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: String handling
+</td>
+</tr>
+</table>
+<table class='entry' id='STR.GETC'>
+<tr>
+<td class='cmd'>
+STR.GETC
+</td>
+<td class='params'>
+result, x, index
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Get character at index of x
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: String handling
+</td>
+</tr>
+</table>
+<table class='entry' id='STR.HAS'>
+<tr>
+<td class='cmd'>
+STR.HAS
+</td>
+<td class='params'>
+result, x, y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Search x for substring y and store 1 if any occurrence found, 0 otherwise
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: String handling
+</td>
+</tr>
+</table>
+<table class='entry' id='STR.JOIN'>
+<tr>
+<td class='cmd'>
+STR.JOIN
+</td>
+<td class='params'>
+array, x, delimiter
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Join array of strings into a single string in x
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: String handling
+</td>
+</tr>
+</table>
+<table class='entry' id='STR.LCASE'>
+<tr>
+<td class='cmd'>
+STR.LCASE
+</td>
+<td class='params'>
+result, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Convert string x to lowercase
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: String handling
+</td>
+</tr>
+</table>
+<table class='entry' id='STR.LEN'>
+<tr>
+<td class='cmd'>
+STR.LEN
+</td>
+<td class='params'>
+result, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Get length of x
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: String handling
+</td>
+</tr>
+</table>
+<table class='entry' id='STR.PFX'>
+<tr>
+<td class='cmd'>
+STR.PFX
+</td>
+<td class='params'>
+result, x, prefix
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Get 1 if x starts with prefix, 0 otherwise
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: String handling
+</td>
+</tr>
+</table>
+<table class='entry' id='STR.REPL'>
+<tr>
+<td class='cmd'>
+STR.REPL
+</td>
+<td class='params'>
+result, x, y, z
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Search x for all occurrences of substring y and replace them with z
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: String handling
+</td>
+</tr>
+</table>
+<table class='entry' id='STR.REPT'>
+<tr>
+<td class='cmd'>
+STR.REPT
+</td>
+<td class='params'>
+result, x, count
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Repeat string x for specified number of times
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: String handling
+</td>
+</tr>
+</table>
+<table class='entry' id='STR.SETC'>
+<tr>
+<td class='cmd'>
+STR.SETC
+</td>
+<td class='params'>
+result, x, index, y
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Set character y at index of x
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: String handling
+</td>
+</tr>
+</table>
+<table class='entry' id='STR.SFX'>
+<tr>
+<td class='cmd'>
+STR.SFX
+</td>
+<td class='params'>
+result, x, suffix
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Get 1 if x ends with suffix, 0 otherwise
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: String handling
+</td>
+</tr>
+</table>
+<table class='entry' id='STR.SPLIT'>
+<tr>
+<td class='cmd'>
+STR.SPLIT
+</td>
+<td class='params'>
+array, x, delimiter
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Split string x into an array of strings
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: String handling
+</td>
+</tr>
+</table>
+<table class='entry' id='STR.SUB'>
+<tr>
+<td class='cmd'>
+STR.SUB
+</td>
+<td class='params'>
+result, x, first_index, last_index
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Get substring from x starting from first_index until last_index (inclusive)
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: String handling
+</td>
+</tr>
+</table>
+<table class='entry' id='STR.TRIM'>
+<tr>
+<td class='cmd'>
+STR.TRIM
+</td>
+<td class='params'>
+result, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Remove leading and trailing spaces from x
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: String handling
+</td>
+</tr>
+</table>
+<table class='entry' id='STR.UCASE'>
+<tr>
+<td class='cmd'>
+STR.UCASE
+</td>
+<td class='params'>
+result, x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Convert string x to uppercase
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: String handling
+</td>
+</tr>
+</table>
+<table class='entry' id='CLIP.GET'>
+<tr>
+<td class='cmd'>
+CLIP.GET
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Get string from the Windows clipboard and store into x
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: System - Clipboard
+</td>
+</tr>
+</table>
+<table class='entry' id='CLIP.SET'>
+<tr>
+<td class='cmd'>
+CLIP.SET
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Copy string x to the Windows clipboard
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: System - Clipboard
+</td>
+</tr>
+</table>
+<table class='entry' id='DATE'>
+<tr>
+<td class='cmd'>
+DATE
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the current system date in the format: YYYY-MM-DD
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: System - Date and time
+</td>
+</tr>
+</table>
+<table class='entry' id='TIME'>
+<tr>
+<td class='cmd'>
+TIME
+</td>
+<td class='params'>
+x
+</td>
+</tr>
+<tr>
+<td class='description' colspan=2>
+Store in x the current system time in the format: HH:MM:SS
+</td>
+</tr>
+<tr>
+<td class='category' colspan=2>
+Category: System - Date and time
+</td>
+</tr>
+</table>
+</div>
+</body>
+</html>
