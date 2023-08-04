@@ -100,7 +100,7 @@
     <Compile Include="TilebufferEditPanel.Designer.cs">
       <DependentUpon>TilebufferEditPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="TilebufferExporter.cs" />
+    <Compile Include="TilebufferFile.cs" />
     <Compile Include="TileEditWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,9 +173,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\script_code.png" />
     <None Include="Resources\color_wheel.png" />
     <None Include="Resources\fill_color.png" />
     <None Include="Resources\broom.png" />
+    <None Include="Resources\large_tiles.png" />
+    <None Include="Resources\cancel.png" />
+    <None Include="Resources\layer_add.png" />
+    <None Include="Resources\layer_delete.png" />
+    <None Include="Resources\eye.png" />
     <Content Include="Resources\ptm_icon.ico" />
     <None Include="Resources\page_white_paste.png" />
     <None Include="Resources\update.png" />

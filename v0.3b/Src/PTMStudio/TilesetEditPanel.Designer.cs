@@ -36,6 +36,7 @@
             this.LblIndicator = new System.Windows.Forms.ToolStripLabel();
             this.PnlTileset = new System.Windows.Forms.Panel();
             this.TxtFilename = new System.Windows.Forms.TextBox();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -63,6 +64,7 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BtnSave,
+            this.toolStripSeparator1,
             this.BtnPrev,
             this.BtnNext,
             this.LblIndicator});
@@ -132,6 +134,11 @@
             this.TxtFilename.TabIndex = 2;
             this.TxtFilename.Text = "<Unsaved>";
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // TilesetEditPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -158,5 +165,6 @@
         private System.Windows.Forms.ToolStripButton BtnPrev;
         private System.Windows.Forms.ToolStripLabel LblIndicator;
         private System.Windows.Forms.ToolStripButton BtnSave;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }

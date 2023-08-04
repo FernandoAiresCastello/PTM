@@ -31,16 +31,21 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.TxtFilename = new System.Windows.Forms.TextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.CmbLayer = new System.Windows.Forms.ToolStripComboBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.LbSize = new System.Windows.Forms.ToolStripStatusLabel();
+            this.LbPos = new System.Windows.Forms.ToolStripStatusLabel();
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.DisplayPanel = new System.Windows.Forms.Panel();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnSave = new System.Windows.Forms.ToolStripButton();
+            this.BtnViewAllLayers = new System.Windows.Forms.ToolStripButton();
+            this.BtnAddLayer = new System.Windows.Forms.ToolStripButton();
+            this.BtnDeleteLayer = new System.Windows.Forms.ToolStripButton();
             this.BtnSetBgColor = new System.Windows.Forms.ToolStripButton();
             this.BtnFill = new System.Windows.Forms.ToolStripButton();
             this.BtnClear = new System.Windows.Forms.ToolStripButton();
-            this.LbPos = new System.Windows.Forms.ToolStripStatusLabel();
-            this.LbSize = new System.Windows.Forms.ToolStripStatusLabel();
-            this.CmbLayer = new System.Windows.Forms.ToolStripComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -87,7 +92,12 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BtnSave,
+            this.toolStripSeparator2,
             this.CmbLayer,
+            this.BtnViewAllLayers,
+            this.BtnAddLayer,
+            this.BtnDeleteLayer,
+            this.toolStripSeparator1,
             this.BtnSetBgColor,
             this.BtnFill,
             this.BtnClear});
@@ -96,6 +106,14 @@
             this.toolStrip1.Size = new System.Drawing.Size(404, 25);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // CmbLayer
+            // 
+            this.CmbLayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CmbLayer.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
+            this.CmbLayer.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.CmbLayer.Name = "CmbLayer";
+            this.CmbLayer.Size = new System.Drawing.Size(121, 25);
             // 
             // statusStrip1
             // 
@@ -108,6 +126,19 @@
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 6;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // LbSize
+            // 
+            this.LbSize.Name = "LbSize";
+            this.LbSize.Size = new System.Drawing.Size(27, 19);
+            this.LbSize.Text = "Size";
+            // 
+            // LbPos
+            // 
+            this.LbPos.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.LbPos.Name = "LbPos";
+            this.LbPos.Size = new System.Drawing.Size(30, 19);
+            this.LbPos.Text = "Pos";
             // 
             // LayoutPanel
             // 
@@ -134,6 +165,16 @@
             this.DisplayPanel.Size = new System.Drawing.Size(404, 271);
             this.DisplayPanel.TabIndex = 8;
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
             // BtnSave
             // 
             this.BtnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -142,6 +183,36 @@
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Size = new System.Drawing.Size(23, 22);
             this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
+            // 
+            // BtnViewAllLayers
+            // 
+            this.BtnViewAllLayers.Checked = true;
+            this.BtnViewAllLayers.CheckOnClick = true;
+            this.BtnViewAllLayers.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.BtnViewAllLayers.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnViewAllLayers.Image = global::PTMStudio.Properties.Resources.eye;
+            this.BtnViewAllLayers.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnViewAllLayers.Name = "BtnViewAllLayers";
+            this.BtnViewAllLayers.Size = new System.Drawing.Size(23, 22);
+            this.BtnViewAllLayers.Click += new System.EventHandler(this.BtnViewAllLayers_Click);
+            // 
+            // BtnAddLayer
+            // 
+            this.BtnAddLayer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnAddLayer.Image = global::PTMStudio.Properties.Resources.layer_add;
+            this.BtnAddLayer.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnAddLayer.Name = "BtnAddLayer";
+            this.BtnAddLayer.Size = new System.Drawing.Size(23, 22);
+            this.BtnAddLayer.Click += new System.EventHandler(this.BtnAddLayer_Click);
+            // 
+            // BtnDeleteLayer
+            // 
+            this.BtnDeleteLayer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnDeleteLayer.Image = global::PTMStudio.Properties.Resources.layer_delete;
+            this.BtnDeleteLayer.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnDeleteLayer.Name = "BtnDeleteLayer";
+            this.BtnDeleteLayer.Size = new System.Drawing.Size(23, 22);
+            this.BtnDeleteLayer.Click += new System.EventHandler(this.BtnDeleteLayer_Click);
             // 
             // BtnSetBgColor
             // 
@@ -169,27 +240,6 @@
             this.BtnClear.Name = "BtnClear";
             this.BtnClear.Size = new System.Drawing.Size(23, 22);
             this.BtnClear.Click += new System.EventHandler(this.BtnClear_Click);
-            // 
-            // LbPos
-            // 
-            this.LbPos.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-            this.LbPos.Name = "LbPos";
-            this.LbPos.Size = new System.Drawing.Size(30, 19);
-            this.LbPos.Text = "Pos";
-            // 
-            // LbSize
-            // 
-            this.LbSize.Name = "LbSize";
-            this.LbSize.Size = new System.Drawing.Size(27, 19);
-            this.LbSize.Text = "Size";
-            // 
-            // CmbLayer
-            // 
-            this.CmbLayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CmbLayer.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
-            this.CmbLayer.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.CmbLayer.Name = "CmbLayer";
-            this.CmbLayer.Size = new System.Drawing.Size(121, 25);
             // 
             // TilebufferEditPanel
             // 
@@ -225,5 +275,10 @@
         private System.Windows.Forms.ToolStripStatusLabel LbPos;
         private System.Windows.Forms.ToolStripStatusLabel LbSize;
         private System.Windows.Forms.ToolStripComboBox CmbLayer;
+        private System.Windows.Forms.ToolStripButton BtnAddLayer;
+        private System.Windows.Forms.ToolStripButton BtnDeleteLayer;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton BtnViewAllLayers;
     }
 }

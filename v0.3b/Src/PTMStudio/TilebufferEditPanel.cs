@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -23,7 +24,7 @@ namespace PTMStudio
         private MapRenderer Renderer;
         private ObjectMap TileBuffer;
         private Project Proj;
-        private int ActiveLayer;
+        private string Filename;
 
         private TilebufferEditPanel()
         {
@@ -51,11 +52,17 @@ namespace PTMStudio
 
             TileBuffer = new ObjectMap(Proj, 1, 45, 25);
             Renderer = new MapRenderer(TileBuffer, Display);
-            ActiveLayer = 0;
             UpdateLayerComboBox(0);
+            CmbLayer.SelectedIndexChanged += CmbLayer_SelectedIndexChanged;
 
             LbPos.Text = "";
             UpdateSizeLabel();
+        }
+
+        private void CmbLayer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Renderer.SetSingleLayerToRender(GetSelectedLayer());
+            UpdateDisplay();
         }
 
         private void UpdateSizeLabel()
@@ -171,6 +178,35 @@ namespace PTMStudio
 
         private void SaveFile()
         {
+            if (string.IsNullOrWhiteSpace(Filename))
+            {
+                SaveFileDialog dialog = new SaveFileDialog();
+                dialog.InitialDirectory = Path.Combine(MainWindow.WorkingDir, "files");
+                dialog.Filter = "PTM Tilebuffer File (*.ptm.buf)|*.ptm.buf";
+                if (dialog.ShowDialog() == DialogResult.OK)
+                    Filename = dialog.FileName;
+                else
+                    return;
+            }
+
+            TilebufferFile.Save(TileBuffer, Filename);
+            Filename = FilesystemPanel.NormalizePath(Filename);
+            TxtFilename.Text = FilesystemPanel.RemoveAbsoluteRoot(Filename);
+            TxtFilename.Text = FilesystemPanel.RemoveFilesPrefix(TxtFilename.Text);
+            MainWindow.UpdateFilePanel();
+            MessageBox.Show("Tilebuffer saved in: " + TxtFilename.Text, "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        public void LoadFile(string file)
+        {
+            TileBuffer = TilebufferFile.Load(Proj, file);
+            Filename = file;
+            TxtFilename.Text = FilesystemPanel.RemoveFilesPrefix(file);
+            Renderer.Map = TileBuffer;
+            UpdateDisplay();
+            UpdateSizeLabel();
+            UpdateLayerComboBox(0);
+            MainWindow.ShowTilebufferEditor();
         }
 
         private void SelectBackColor()
@@ -215,6 +251,48 @@ namespace PTMStudio
             {
                 TileBuffer.Clear(GetSelectedLayer());
             }
+        }
+
+        private void BtnAddLayer_Click(object sender, EventArgs e)
+        {
+            AddLayer();
+        }
+
+        private void BtnDeleteLayer_Click(object sender, EventArgs e)
+        {
+            DeleteLayer();
+        }
+
+        private void AddLayer()
+        {
+            TileBuffer.AddLayer();
+            UpdateLayerComboBox(TileBuffer.Layers.Count - 1);
+            UpdateDisplay();
+        }
+
+        private void DeleteLayer()
+        {
+            if (TileBuffer.Layers.Count == 1)
+            {
+                MessageBox.Show("Layer 0 cannot be removed", "Warning",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int layer = GetSelectedLayer();
+            TileBuffer.RemoveLayer(layer);
+            UpdateLayerComboBox(0);
+            UpdateDisplay();
+        }
+
+        private void BtnViewAllLayers_Click(object sender, EventArgs e)
+        {
+            if (BtnViewAllLayers.Checked)
+                Renderer.SetRenderSingleLayer(false, 0);
+            else
+                Renderer.SetRenderSingleLayer(true, GetSelectedLayer());
+
+            UpdateDisplay();
         }
     }
 }

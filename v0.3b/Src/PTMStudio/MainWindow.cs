@@ -125,6 +125,10 @@ namespace PTMStudio
             {
                 PalettePanel.LoadFile(file);
             }
+            else if (ext == ".buf")
+            {
+                TilebufferPanel.LoadFile(file);
+            }
         }
 
         public void UpdateFilePanel()
@@ -162,7 +166,7 @@ namespace PTMStudio
             TileRegPanel.UpdateDisplay();
         }
 
-        private void ShowProgramEditor()
+        public void ShowProgramEditor()
         {
             ProgramPanel.Visible = true;
             LabelsPanel.Visible = true;
@@ -171,7 +175,7 @@ namespace PTMStudio
             ProgramPanel.Focus();
         }
 
-        private void ShowTilebufferEditor()
+        public void ShowTilebufferEditor()
         {
             TilebufferPanel.Visible = true;
             TileRegPanel.Visible = true;
@@ -225,6 +229,11 @@ namespace PTMStudio
         {
             TileRegPanel.SetTileRegister(tile);
             CacheTileRegister();
+        }
+
+        private void BtnQuit_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

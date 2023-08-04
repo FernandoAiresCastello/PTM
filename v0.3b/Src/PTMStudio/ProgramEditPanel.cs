@@ -41,6 +41,7 @@ namespace PTMStudio
         {
             Scintilla.Text = File.ReadAllText(file);
             LoadedFile = file;
+            MainWindow.ShowProgramEditor();
         }
 
         public void SaveFile()
