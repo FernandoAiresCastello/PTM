@@ -30,6 +30,15 @@ namespace PTMStudio
         private TileRegisterPanel TileRegPanel;
         private HelpWindow HelpWindow;
 
+        private class ChangeTracker
+        {
+            public bool Program { set; get; } = false;
+            public bool Tileset { set; get; } = false;
+            public bool Palette { set; get; } = false;
+            public bool TileBuffer { set; get; } = false;
+        }
+        private ChangeTracker Changes { get; set; }
+
         public MainWindow(string workingDir, string ptmExe)
         {
             InitializeComponent();
@@ -74,6 +83,8 @@ namespace PTMStudio
             if (!File.Exists(MainProgramFile))
                 File.Create(MainProgramFile).Close();
 
+            Changes = new ChangeTracker();
+            UpdateChangesLabel();
             LoadFile(MainProgramFile);
 
             //ResizeEnd += MainWindow_ResizeEnd;
@@ -247,6 +258,75 @@ namespace PTMStudio
 
             HelpWindow.WindowState = FormWindowState.Normal;
             HelpWindow.BringToFront();
+        }
+
+        private void BtnAbout_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(
+                "PTM Studio\n\nVersion 0.3b\n\n(C) 2023 Developed by Fernando Aires Castello\n\n" +
+                "https://fernandoairescastello.itch.io/ptm\n" +
+                "https://github.com/FernandoAiresCastello/PTM",
+                "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void BtnSaveEverything_Click(object sender, EventArgs e)
+        {
+            ProgramPanel.SaveFile();
+            TilesetPanel.SaveFile();
+            PalettePanel.SaveFile();
+            TilebufferPanel.SaveFile();
+        }
+
+        public void ProgramChanged(bool changed)
+        {
+            Changes.Program = changed;
+            UpdateChangesLabel();
+        }
+
+        public void TilesetChanged(bool changed)
+        {
+            Changes.Tileset = changed;
+            UpdateChangesLabel();
+        }
+
+        public void PaletteChanged(bool changed)
+        {
+            Changes.Palette = changed;
+            UpdateChangesLabel();
+        }
+
+        public void TilebufferChanged(bool changed)
+        {
+            Changes.TileBuffer = changed;
+            UpdateChangesLabel();
+        }
+
+        private void UpdateChangesLabel()
+        {
+            List<string> entries = new List<string>();
+
+            if (Changes.Program)
+                entries.Add("Program");
+            if (Changes.Tileset)
+                entries.Add("Tileset");
+            if (Changes.Palette)
+                entries.Add("Palette");
+            if (Changes.TileBuffer)
+                entries.Add("Tilebuffer");
+
+            if (entries.Count == 0)
+            {
+                LbChanges.Text = "";
+            }
+            else
+            {
+                LbChanges.Text = "Unsaved data: " + string.Join(", ", entries);
+            }
+        }
+
+        private void BtnSaveProgram_Click(object sender, EventArgs e)
+        {
+            ProgramPanel.SaveFile();
         }
     }
 }

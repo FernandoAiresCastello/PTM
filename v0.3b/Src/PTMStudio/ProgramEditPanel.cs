@@ -35,6 +35,12 @@ namespace PTMStudio
             Scintilla.HScrollBar = true;
             Scintilla.VScrollBar = true;
             Scintilla.Margins[0].Width = 40;
+            Scintilla.KeyDown += Scintilla_KeyDown;
+        }
+
+        private void Scintilla_KeyDown(object sender, KeyEventArgs e)
+        {
+            MainWindow.ProgramChanged(true);
         }
 
         public void LoadFile(string file)
@@ -42,11 +48,13 @@ namespace PTMStudio
             Scintilla.Text = File.ReadAllText(file);
             LoadedFile = file;
             MainWindow.ShowProgramEditor();
+            MainWindow.ProgramChanged(false);
         }
 
         public void SaveFile()
         {
             File.WriteAllText(LoadedFile, Scintilla.Text);
+            MainWindow.ProgramChanged(false);
         }
 
         private void BtnRun_Click(object sender, EventArgs e)

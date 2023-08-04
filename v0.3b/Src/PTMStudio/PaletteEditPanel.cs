@@ -95,6 +95,7 @@ namespace PTMStudio
             FirstColor = 0;
             Filename = file;
             TxtFilename.Text = FilesystemPanel.RemoveFilesPrefix(file);
+            MainWindow.PaletteChanged(false);
             UpdateDisplay();
         }
 
@@ -198,6 +199,7 @@ namespace PTMStudio
                 UpdateDisplay();
                 MainWindow.UpdateTilebufferEditorDisplay();
                 MainWindow.UpdateTileRegisterPanelDisplay();
+                MainWindow.PaletteChanged(true);
             }
         }
 
@@ -206,7 +208,7 @@ namespace PTMStudio
             SaveFile();
         }
 
-        private void SaveFile()
+        public void SaveFile()
         {
             if (string.IsNullOrWhiteSpace(Filename))
             {
@@ -224,7 +226,7 @@ namespace PTMStudio
             TxtFilename.Text = FilesystemPanel.RemoveAbsoluteRoot(Filename);
             TxtFilename.Text = FilesystemPanel.RemoveFilesPrefix(TxtFilename.Text);
             MainWindow.UpdateFilePanel();
-            MessageBox.Show("Palette saved in: " + TxtFilename.Text, "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MainWindow.PaletteChanged(false);
         }
     }
 }

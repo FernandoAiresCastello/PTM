@@ -44,12 +44,18 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.BtmLeftPanel = new System.Windows.Forms.Panel();
             this.TopLeftPanel = new System.Windows.Forms.Panel();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.BtnSaveEverything = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnQuit = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnRun = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnViewPrgEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnViewTilebufEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.LbChanges = new System.Windows.Forms.ToolStripStatusLabel();
+            this.BtnSaveProgram = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -71,6 +77,9 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BtnSaveProgram,
+            this.BtnSaveEverything,
+            this.toolStripSeparator1,
             this.BtnQuit});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -105,13 +114,16 @@
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.BtnHelp});
+            this.BtnHelp,
+            this.BtnAbout});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // statusStrip1
             // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LbChanges});
             this.statusStrip1.Location = new System.Drawing.Point(0, 489);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(884, 22);
@@ -201,30 +213,44 @@
             // BtmLeftPanel
             // 
             this.BtmLeftPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BtmLeftPanel.Location = new System.Drawing.Point(3, 223);
-            this.BtmLeftPanel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
+            this.BtmLeftPanel.Location = new System.Drawing.Point(3, 226);
+            this.BtmLeftPanel.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
             this.BtmLeftPanel.Name = "BtmLeftPanel";
             this.BtmLeftPanel.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.BtmLeftPanel.Size = new System.Drawing.Size(197, 217);
+            this.BtmLeftPanel.Size = new System.Drawing.Size(197, 214);
             this.BtmLeftPanel.TabIndex = 1;
             // 
             // TopLeftPanel
             // 
             this.TopLeftPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TopLeftPanel.Location = new System.Drawing.Point(3, 3);
-            this.TopLeftPanel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.TopLeftPanel.Name = "TopLeftPanel";
             this.TopLeftPanel.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.TopLeftPanel.Size = new System.Drawing.Size(197, 217);
+            this.TopLeftPanel.Size = new System.Drawing.Size(197, 214);
             this.TopLeftPanel.TabIndex = 0;
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(226, 6);
+            // 
+            // BtnSaveEverything
+            // 
+            this.BtnSaveEverything.Image = global::PTMStudio.Properties.Resources.disk_multiple;
+            this.BtnSaveEverything.Name = "BtnSaveEverything";
+            this.BtnSaveEverything.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.BtnSaveEverything.Size = new System.Drawing.Size(229, 22);
+            this.BtnSaveEverything.Text = "Save everything";
+            this.BtnSaveEverything.Click += new System.EventHandler(this.BtnSaveEverything_Click);
             // 
             // BtnQuit
             // 
             this.BtnQuit.Image = global::PTMStudio.Properties.Resources.cancel;
             this.BtnQuit.Name = "BtnQuit";
-            this.BtnQuit.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            this.BtnQuit.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.Q)));
-            this.BtnQuit.Size = new System.Drawing.Size(163, 22);
+            this.BtnQuit.Size = new System.Drawing.Size(229, 22);
             this.BtnQuit.Text = "Quit";
             this.BtnQuit.Click += new System.EventHandler(this.BtnQuit_Click);
             // 
@@ -233,8 +259,8 @@
             this.BtnRun.Image = global::PTMStudio.Properties.Resources.control_play_blue;
             this.BtnRun.Name = "BtnRun";
             this.BtnRun.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.BtnRun.Size = new System.Drawing.Size(163, 22);
-            this.BtnRun.Text = "Run program";
+            this.BtnRun.Size = new System.Drawing.Size(134, 22);
+            this.BtnRun.Text = "Execute";
             this.BtnRun.Click += new System.EventHandler(this.BtnRun_Click);
             // 
             // BtnViewPrgEdit
@@ -247,7 +273,7 @@
             // 
             // BtnViewTilebufEdit
             // 
-            this.BtnViewTilebufEdit.Image = global::PTMStudio.Properties.Resources.large_tiles;
+            this.BtnViewTilebufEdit.Image = global::PTMStudio.Properties.Resources.table_edit;
             this.BtnViewTilebufEdit.Name = "BtnViewTilebufEdit";
             this.BtnViewTilebufEdit.Size = new System.Drawing.Size(215, 22);
             this.BtnViewTilebufEdit.Text = "Tilebuffer Editor";
@@ -261,6 +287,29 @@
             this.BtnHelp.Size = new System.Drawing.Size(238, 22);
             this.BtnHelp.Text = "PTML Command Reference";
             this.BtnHelp.Click += new System.EventHandler(this.BtnHelp_Click);
+            // 
+            // BtnAbout
+            // 
+            this.BtnAbout.Image = global::PTMStudio.Properties.Resources.information;
+            this.BtnAbout.Name = "BtnAbout";
+            this.BtnAbout.Size = new System.Drawing.Size(238, 22);
+            this.BtnAbout.Text = "About";
+            this.BtnAbout.Click += new System.EventHandler(this.BtnAbout_Click);
+            // 
+            // LbChanges
+            // 
+            this.LbChanges.Name = "LbChanges";
+            this.LbChanges.Size = new System.Drawing.Size(99, 17);
+            this.LbChanges.Text = "Unsaved changes";
+            // 
+            // BtnSaveProgram
+            // 
+            this.BtnSaveProgram.Image = global::PTMStudio.Properties.Resources.diskette;
+            this.BtnSaveProgram.Name = "BtnSaveProgram";
+            this.BtnSaveProgram.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.BtnSaveProgram.Size = new System.Drawing.Size(229, 22);
+            this.BtnSaveProgram.Text = "Save program";
+            this.BtnSaveProgram.Click += new System.EventHandler(this.BtnSaveProgram_Click);
             // 
             // MainWindow
             // 
@@ -277,6 +326,8 @@
             this.Text = "PTM Studio";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -307,6 +358,11 @@
         private System.Windows.Forms.ToolStripMenuItem BtnQuit;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem BtnHelp;
+        private System.Windows.Forms.ToolStripMenuItem BtnAbout;
+        private System.Windows.Forms.ToolStripMenuItem BtnSaveEverything;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripStatusLabel LbChanges;
+        private System.Windows.Forms.ToolStripMenuItem BtnSaveProgram;
     }
 }
 

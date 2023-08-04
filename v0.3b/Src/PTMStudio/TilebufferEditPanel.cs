@@ -139,6 +139,7 @@ namespace PTMStudio
             {
                 TileBuffer.SetObject(tile, new ObjectPosition(GetSelectedLayer(), x, y));
                 UpdateDisplay();
+                MainWindow.TilebufferChanged(true);
             }
             else
             {
@@ -149,6 +150,7 @@ namespace PTMStudio
         private void DeleteTile(int x, int y)
         {
             TileBuffer.DeleteObject(new ObjectPosition(GetSelectedLayer(), x, y));
+            MainWindow.TilebufferChanged(true);
         }
 
         private void GrabTile(int x, int y)
@@ -176,7 +178,7 @@ namespace PTMStudio
             SelectBackColor();
         }
 
-        private void SaveFile()
+        public void SaveFile()
         {
             if (string.IsNullOrWhiteSpace(Filename))
             {
@@ -194,7 +196,7 @@ namespace PTMStudio
             TxtFilename.Text = FilesystemPanel.RemoveAbsoluteRoot(Filename);
             TxtFilename.Text = FilesystemPanel.RemoveFilesPrefix(TxtFilename.Text);
             MainWindow.UpdateFilePanel();
-            MessageBox.Show("Tilebuffer saved in: " + TxtFilename.Text, "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MainWindow.TilebufferChanged(false);
         }
 
         public void LoadFile(string file)
@@ -207,6 +209,7 @@ namespace PTMStudio
             UpdateSizeLabel();
             UpdateLayerComboBox(0);
             MainWindow.ShowTilebufferEditor();
+            MainWindow.TilebufferChanged(false);
         }
 
         private void SelectBackColor()
@@ -218,6 +221,7 @@ namespace PTMStudio
             {
                 TileBuffer.BackColorIndex = wnd.SelectedIndex;
                 UpdateDisplay();
+                MainWindow.TilebufferChanged(true);
             }
         }
 
@@ -237,6 +241,7 @@ namespace PTMStudio
                 if (result == DialogResult.Yes)
                 {
                     TileBuffer.Fill(tile, GetSelectedLayer());
+                    MainWindow.TilebufferChanged(true);
                 }
             }
             else
@@ -258,6 +263,7 @@ namespace PTMStudio
             if (result == DialogResult.Yes)
             {
                 TileBuffer.Clear(GetSelectedLayer());
+                MainWindow.TilebufferChanged(true);
             }
         }
 
@@ -276,6 +282,7 @@ namespace PTMStudio
             TileBuffer.AddLayer();
             UpdateLayerComboBox(TileBuffer.Layers.Count - 1);
             UpdateDisplay();
+            MainWindow.TilebufferChanged(true);
         }
 
         private void DeleteLayer()
@@ -291,6 +298,7 @@ namespace PTMStudio
             TileBuffer.RemoveLayer(layer);
             UpdateLayerComboBox(0);
             UpdateDisplay();
+            MainWindow.TilebufferChanged(true);
         }
 
         private void BtnViewAllLayers_Click(object sender, EventArgs e)

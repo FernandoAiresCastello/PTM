@@ -143,6 +143,7 @@ namespace PTMStudio
             FirstTile = 0;
             Filename = file;
             TxtFilename.Text = FilesystemPanel.RemoveFilesPrefix(file);
+            MainWindow.TilesetChanged(false);
             UpdateDisplay();
         }
 
@@ -184,6 +185,7 @@ namespace PTMStudio
 
             MainWindow.UpdateTilebufferEditorDisplay();
             MainWindow.UpdateTileRegisterPanelDisplay();
+            MainWindow.TilesetChanged(true);
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
@@ -191,7 +193,7 @@ namespace PTMStudio
             SaveFile();
         }
 
-        private void SaveFile()
+        public void SaveFile()
         {
             if (string.IsNullOrWhiteSpace(Filename))
             {
@@ -209,7 +211,7 @@ namespace PTMStudio
             TxtFilename.Text = FilesystemPanel.RemoveAbsoluteRoot(Filename);
             TxtFilename.Text = FilesystemPanel.RemoveFilesPrefix(TxtFilename.Text);
             MainWindow.UpdateFilePanel();
-            MessageBox.Show("Tileset saved in: " + TxtFilename.Text, "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MainWindow.TilesetChanged(false);
         }
     }
 }

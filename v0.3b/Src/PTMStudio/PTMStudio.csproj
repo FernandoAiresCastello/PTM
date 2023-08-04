@@ -191,6 +191,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\table_edit.png" />
     <None Include="Resources\script_code.png" />
     <None Include="Resources\color_wheel.png" />
     <None Include="Resources\fill_color.png" />
@@ -201,6 +202,9 @@
     <None Include="Resources\layer_delete.png" />
     <None Include="Resources\eye.png" />
     <None Include="Resources\help.png" />
+    <None Include="Resources\info_rhombus.png" />
+    <None Include="Resources\information.png" />
+    <None Include="Resources\disk_multiple.png" />
     <Content Include="Resources\ptm_icon.ico" />
     <None Include="Resources\page_white_paste.png" />
     <None Include="Resources\update.png" />

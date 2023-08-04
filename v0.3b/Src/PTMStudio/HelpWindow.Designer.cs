@@ -41,8 +41,8 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 400F));
             this.tableLayoutPanel1.Controls.Add(this.TxtHelp, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -50,20 +50,20 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(510, 450);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(757, 320);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // TxtHelp
             // 
             this.TxtHelp.BackColor = System.Drawing.SystemColors.Window;
             this.TxtHelp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TxtHelp.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtHelp.Location = new System.Drawing.Point(156, 3);
+            this.TxtHelp.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TxtHelp.Location = new System.Drawing.Point(360, 3);
             this.TxtHelp.Multiline = true;
             this.TxtHelp.Name = "TxtHelp";
             this.TxtHelp.ReadOnly = true;
             this.TxtHelp.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.TxtHelp.Size = new System.Drawing.Size(351, 444);
+            this.TxtHelp.Size = new System.Drawing.Size(394, 314);
             this.TxtHelp.TabIndex = 1;
             this.TxtHelp.TabStop = false;
             // 
@@ -82,37 +82,38 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(150, 444);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(354, 314);
             this.tableLayoutPanel2.TabIndex = 2;
             // 
             // LstCommands
             // 
             this.LstCommands.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.LstCommands.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LstCommands.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LstCommands.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LstCommands.FormattingEnabled = true;
-            this.LstCommands.Location = new System.Drawing.Point(1, 25);
+            this.LstCommands.ItemHeight = 14;
+            this.LstCommands.Location = new System.Drawing.Point(1, 27);
             this.LstCommands.Margin = new System.Windows.Forms.Padding(0);
             this.LstCommands.Name = "LstCommands";
-            this.LstCommands.Size = new System.Drawing.Size(148, 418);
+            this.LstCommands.Size = new System.Drawing.Size(352, 286);
             this.LstCommands.TabIndex = 2;
             // 
             // TxtSearch
             // 
             this.TxtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.TxtSearch.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.TxtSearch.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TxtSearch.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtSearch.Location = new System.Drawing.Point(4, 6);
             this.TxtSearch.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.TxtSearch.Name = "TxtSearch";
-            this.TxtSearch.Size = new System.Drawing.Size(142, 13);
+            this.TxtSearch.Size = new System.Drawing.Size(346, 15);
             this.TxtSearch.TabIndex = 3;
             // 
             // HelpWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(510, 450);
+            this.ClientSize = new System.Drawing.Size(757, 320);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "HelpWindow";
