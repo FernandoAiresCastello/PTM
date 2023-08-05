@@ -22,7 +22,15 @@ namespace PTMStudio
 
             if (File.Exists(ptmExe))
             {
-                Application.Run(new MainWindow(ptmExe));
+                try
+                {
+                    Application.Run(new MainWindow(ptmExe));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "Unexpected Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
