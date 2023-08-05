@@ -45,6 +45,8 @@
             this.BtmLeftPanel = new System.Windows.Forms.Panel();
             this.TopLeftPanel = new System.Windows.Forms.Panel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.LbChanges = new System.Windows.Forms.ToolStripStatusLabel();
+            this.BtnSaveProgram = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnSaveEverything = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnQuit = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnRun = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,8 +54,6 @@
             this.BtnViewTilebufEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.LbChanges = new System.Windows.Forms.ToolStripStatusLabel();
-            this.BtnSaveProgram = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -169,19 +169,18 @@
             // BtmRightPanel
             // 
             this.BtmRightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BtmRightPanel.Location = new System.Drawing.Point(3, 220);
-            this.BtmRightPanel.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+            this.BtmRightPanel.Location = new System.Drawing.Point(3, 226);
+            this.BtmRightPanel.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.BtmRightPanel.Name = "BtmRightPanel";
-            this.BtmRightPanel.Size = new System.Drawing.Size(194, 217);
+            this.BtmRightPanel.Size = new System.Drawing.Size(194, 211);
             this.BtmRightPanel.TabIndex = 2;
             // 
             // TopRightPanel
             // 
             this.TopRightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TopRightPanel.Location = new System.Drawing.Point(3, 3);
-            this.TopRightPanel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.TopRightPanel.Name = "TopRightPanel";
-            this.TopRightPanel.Size = new System.Drawing.Size(194, 217);
+            this.TopRightPanel.Size = new System.Drawing.Size(194, 214);
             this.TopRightPanel.TabIndex = 1;
             // 
             // CenterPanel
@@ -233,6 +232,21 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(226, 6);
+            // 
+            // LbChanges
+            // 
+            this.LbChanges.Name = "LbChanges";
+            this.LbChanges.Size = new System.Drawing.Size(99, 17);
+            this.LbChanges.Text = "Unsaved changes";
+            // 
+            // BtnSaveProgram
+            // 
+            this.BtnSaveProgram.Image = global::PTMStudio.Properties.Resources.diskette;
+            this.BtnSaveProgram.Name = "BtnSaveProgram";
+            this.BtnSaveProgram.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.BtnSaveProgram.Size = new System.Drawing.Size(229, 22);
+            this.BtnSaveProgram.Text = "Save program";
+            this.BtnSaveProgram.Click += new System.EventHandler(this.BtnSaveProgram_Click);
             // 
             // BtnSaveEverything
             // 
@@ -295,21 +309,6 @@
             this.BtnAbout.Size = new System.Drawing.Size(238, 22);
             this.BtnAbout.Text = "About";
             this.BtnAbout.Click += new System.EventHandler(this.BtnAbout_Click);
-            // 
-            // LbChanges
-            // 
-            this.LbChanges.Name = "LbChanges";
-            this.LbChanges.Size = new System.Drawing.Size(99, 17);
-            this.LbChanges.Text = "Unsaved changes";
-            // 
-            // BtnSaveProgram
-            // 
-            this.BtnSaveProgram.Image = global::PTMStudio.Properties.Resources.diskette;
-            this.BtnSaveProgram.Name = "BtnSaveProgram";
-            this.BtnSaveProgram.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.BtnSaveProgram.Size = new System.Drawing.Size(229, 22);
-            this.BtnSaveProgram.Text = "Save program";
-            this.BtnSaveProgram.Click += new System.EventHandler(this.BtnSaveProgram_Click);
             // 
             // MainWindow
             // 

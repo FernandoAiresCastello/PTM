@@ -9,13 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace PTMStudio
 {
     public partial class FilesystemPanel : UserControl
     {
         private MainWindow MainWindow;
-        private static string RootDir;
 
         private FilesystemPanel()
         {
@@ -26,75 +26,103 @@ namespace PTMStudio
         {
             InitializeComponent();
             MainWindow = mainWnd;
-            RootDir = Path.Combine(MainWindow.WorkingDir, "files/").Replace("\\", "/");
+            FileTree.DoubleClick += FileTree_DoubleClick;
             UpdateFileList();
-
-            LstFiles.DoubleClick += LstFiles_DoubleClick;
         }
 
-        private void LstFiles_DoubleClick(object sender, EventArgs e)
+        private void FileTree_DoubleClick(object sender, EventArgs e)
         {
-            string file = LstFiles.SelectedItem as string;
-            if (file == null)
-                return;
-
-            MainWindow.LoadFile("files/" + file);
+            if (FileTree.SelectedNode != null)
+                OnDoubleClickEntry(FileTree.SelectedNode.Tag as FilesystemEntry);
         }
 
         public void UpdateFileList()
         {
-            LstFiles.Items.Clear();
-            var files = Directory.EnumerateFiles(RootDir, "*.*", SearchOption.AllDirectories);
-            foreach (string path in files)
+            ListDirectory(FileTree, "files");
+            FileTree.Nodes[0].Expand();
+        }
+
+        private void ListDirectory(TreeView treeView, string path)
+        {
+            treeView.Nodes.Clear();
+            var rootDirectoryInfo = new DirectoryInfo(path);
+            treeView.Nodes.Add(CreateDirectoryNode(rootDirectoryInfo));
+        }
+
+        private static TreeNode CreateDirectoryNode(DirectoryInfo directoryInfo)
+        {
+            var directoryNode = new TreeNode(directoryInfo.Name, 0, 0);
+            FilesystemEntry directoryEntry = new FilesystemEntry();
+            directoryEntry.IsDirectory = true;
+            directoryEntry.AbsolutePath = Filesystem.NormalizePath(directoryInfo.FullName);
+            directoryEntry.RelativePath = Filesystem.RemoveFilesPrefix(Filesystem.RemoveAbsoluteRoot(directoryEntry.AbsolutePath));
+            directoryNode.Tag = directoryEntry;
+
+            foreach (var directory in directoryInfo.GetDirectories())
             {
-                string file = path.Replace("\\", "/").Replace(RootDir, "");
-                LstFiles.Items.Add(file);
+                directoryNode.Nodes.Add(CreateDirectoryNode(directory));
             }
+            foreach (var file in directoryInfo.GetFiles())
+            {
+                var fileNode = new TreeNode(file.Name, 1, 1);
+                FilesystemEntry fileEntry = new FilesystemEntry();
+                fileEntry.IsDirectory = false;
+                fileEntry.AbsolutePath = Filesystem.NormalizePath(file.FullName);
+                fileEntry.RelativePath = Filesystem.RemoveFilesPrefix(Filesystem.RemoveAbsoluteRoot(fileEntry.AbsolutePath));
+                fileNode.Tag = fileEntry;
+                directoryNode.Nodes.Add(fileNode);
+            }
+
+            return directoryNode;
         }
 
-        public static string NormalizePath(string path)
+        private void OnDoubleClickEntry(FilesystemEntry entry)
         {
-            return path.Replace("\\", "/");
-        }
-
-        public static string RemoveAbsoluteRoot(string path)
-        {
-            return path.Replace(RootDir, "");
-        }
-
-        public static string RemoveFilesPrefix(string path)
-        {
-            if (path.StartsWith("files/"))
-                path = path.Substring(6);
-
-            return path;
+            if (!entry.IsDirectory)
+                MainWindow.LoadFile(entry.AbsolutePath);
         }
 
         private void BtnExplorer_Click(object sender, EventArgs e)
         {
-            Process.Start(RootDir);
-        }
-
-        private void BtnDelete_Click(object sender, EventArgs e)
-        {
-            string file = LstFiles.SelectedItem as string;
-            if (file == null)
-                return;
-
-            DialogResult result = MessageBox.Show("Delete this file?\n\n" + file, 
-                "Confirm delete file", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-
-            if (result == DialogResult.OK)
-            {
-                string path = RootDir + file;
-                File.Delete(path);
-                UpdateFileList();
-            }
+            Process.Start(Filesystem.AbsoluteRootFilesPath);
         }
 
         private void BtnRefresh_Click(object sender, EventArgs e)
         {
             UpdateFileList();
+        }
+
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
+            if (FileTree.SelectedNode == null)
+                return;
+
+            FilesystemEntry file = FileTree.SelectedNode.Tag as FilesystemEntry;
+            if (file == null)
+                return;
+
+            DialogResult result = MessageBox.Show("Delete this file?\n\n" + file.RelativePath,
+                "Confirm delete file", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+            if (result == DialogResult.OK)
+            {
+                string path = file.AbsolutePath;
+                File.Delete(path);
+                UpdateFileList();
+            }
+        }
+    }
+
+    public class FilesystemEntry
+    {
+        public string AbsolutePath { get; set; }
+        public string RelativePath { get; set; }
+        public string DisplayPath { get; set; }
+        public bool IsDirectory { get; set; }
+
+        public override string ToString()
+        {
+            return DisplayPath;
         }
     }
 }

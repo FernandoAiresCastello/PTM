@@ -142,7 +142,7 @@ namespace PTMStudio
 
             FirstTile = 0;
             Filename = file;
-            TxtFilename.Text = FilesystemPanel.RemoveFilesPrefix(file);
+            TxtFilename.Text = Filesystem.RemoveAbsoluteRootAndFilesPrefix(file);
             MainWindow.TilesetChanged(false);
             UpdateDisplay();
         }
@@ -198,7 +198,7 @@ namespace PTMStudio
             if (string.IsNullOrWhiteSpace(Filename))
             {
                 SaveFileDialog dialog = new SaveFileDialog();
-                dialog.InitialDirectory = Path.Combine(MainWindow.WorkingDir, "files");
+                dialog.InitialDirectory = Path.Combine(Filesystem.AbsoluteRootPath, "files");
                 dialog.Filter = "PTM Tileset File (*.ptm.chr)|*.ptm.chr";
                 if (dialog.ShowDialog() == DialogResult.OK)
                     Filename = dialog.FileName;
@@ -207,9 +207,9 @@ namespace PTMStudio
             }
 
             TilesetFile.SaveAsBinaryStrings(Display.Graphics.Tileset, Filename);
-            Filename = FilesystemPanel.NormalizePath(Filename);
-            TxtFilename.Text = FilesystemPanel.RemoveAbsoluteRoot(Filename);
-            TxtFilename.Text = FilesystemPanel.RemoveFilesPrefix(TxtFilename.Text);
+            Filename = Filesystem.NormalizePath(Filename);
+            TxtFilename.Text = Filesystem.RemoveAbsoluteRoot(Filename);
+            TxtFilename.Text = Filesystem.RemoveFilesPrefix(TxtFilename.Text);
             MainWindow.UpdateFilePanel();
             MainWindow.TilesetChanged(false);
         }

@@ -30,14 +30,15 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.LstLabels = new System.Windows.Forms.ListBox();
             this.BtnRefresh = new System.Windows.Forms.ToolStripButton();
+            this.LstLabels = new System.Windows.Forms.ListBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.toolStrip1, 0, 0);
@@ -56,21 +57,11 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BtnRefresh});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Location = new System.Drawing.Point(1, 1);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(195, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(193, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // LstLabels
-            // 
-            this.LstLabels.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LstLabels.FormattingEnabled = true;
-            this.LstLabels.Location = new System.Drawing.Point(0, 25);
-            this.LstLabels.Margin = new System.Windows.Forms.Padding(0);
-            this.LstLabels.Name = "LstLabels";
-            this.LstLabels.Size = new System.Drawing.Size(195, 218);
-            this.LstLabels.TabIndex = 1;
             // 
             // BtnRefresh
             // 
@@ -80,6 +71,19 @@
             this.BtnRefresh.Name = "BtnRefresh";
             this.BtnRefresh.Size = new System.Drawing.Size(23, 22);
             this.BtnRefresh.Click += new System.EventHandler(this.BtnRefresh_Click);
+            // 
+            // LstLabels
+            // 
+            this.LstLabels.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.LstLabels.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LstLabels.FormattingEnabled = true;
+            this.LstLabels.HorizontalScrollbar = true;
+            this.LstLabels.Location = new System.Drawing.Point(1, 27);
+            this.LstLabels.Margin = new System.Windows.Forms.Padding(0);
+            this.LstLabels.Name = "LstLabels";
+            this.LstLabels.ScrollAlwaysVisible = true;
+            this.LstLabels.Size = new System.Drawing.Size(193, 215);
+            this.LstLabels.TabIndex = 1;
             // 
             // ProgramLabelsPanel
             // 

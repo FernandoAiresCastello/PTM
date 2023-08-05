@@ -17,7 +17,6 @@ namespace PTMStudio
 {
     public partial class MainWindow : Form
     {
-        public string WorkingDir { get; private set; }
         private string PtmExe;
         private string ProgramFile = "";
         private readonly string MainProgramFile = "files/main.ptm";
@@ -39,13 +38,11 @@ namespace PTMStudio
         }
         private ChangeTracker Changes { get; set; }
 
-        public MainWindow(string workingDir, string ptmExe)
+        public MainWindow(string ptmExe)
         {
             InitializeComponent();
             Size = new Size(1024, 605);
             MinimumSize = Size;
-
-            WorkingDir = workingDir;
             PtmExe = ptmExe;
 
             ProgramPanel = new ProgramEditPanel(this);
@@ -126,7 +123,7 @@ namespace PTMStudio
             {
                 ProgramPanel.LoadFile(file);
                 ProgramFile = file;
-                Text = "PTM Studio - " + FilesystemPanel.RemoveFilesPrefix(file);
+                Text = "PTM Studio - " + Filesystem.RemoveAbsoluteRootAndFilesPrefix(file);
                 LabelsPanel.UpdateLabels();
             }
             else if (ext == ".chr")
@@ -140,6 +137,12 @@ namespace PTMStudio
             else if (ext == ".buf")
             {
                 TilebufferPanel.LoadFile(file);
+            }
+            else
+            {
+                MessageBox.Show(this,
+                    "Unsupported file format", 
+                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

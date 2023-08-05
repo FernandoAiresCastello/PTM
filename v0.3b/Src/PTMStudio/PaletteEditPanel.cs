@@ -94,7 +94,7 @@ namespace PTMStudio
 
             FirstColor = 0;
             Filename = file;
-            TxtFilename.Text = FilesystemPanel.RemoveFilesPrefix(file);
+            TxtFilename.Text = Filesystem.RemoveAbsoluteRootAndFilesPrefix(file);
             MainWindow.PaletteChanged(false);
             UpdateDisplay();
         }
@@ -213,7 +213,7 @@ namespace PTMStudio
             if (string.IsNullOrWhiteSpace(Filename))
             {
                 SaveFileDialog dialog = new SaveFileDialog();
-                dialog.InitialDirectory = Path.Combine(MainWindow.WorkingDir, "files");
+                dialog.InitialDirectory = Path.Combine(Filesystem.AbsoluteRootPath, "files");
                 dialog.Filter = "PTM Palette File (*.ptm.pal)|*.ptm.pal";
                 if (dialog.ShowDialog() == DialogResult.OK)
                     Filename = dialog.FileName;
@@ -222,9 +222,9 @@ namespace PTMStudio
             }
 
             PaletteFile.SaveAsHexadecimalRgb(Display.Graphics.Palette, Filename);
-            Filename = FilesystemPanel.NormalizePath(Filename);
-            TxtFilename.Text = FilesystemPanel.RemoveAbsoluteRoot(Filename);
-            TxtFilename.Text = FilesystemPanel.RemoveFilesPrefix(TxtFilename.Text);
+            Filename = Filesystem.NormalizePath(Filename);
+            TxtFilename.Text = Filesystem.RemoveAbsoluteRoot(Filename);
+            TxtFilename.Text = Filesystem.RemoveFilesPrefix(TxtFilename.Text);
             MainWindow.UpdateFilePanel();
             MainWindow.PaletteChanged(false);
         }
