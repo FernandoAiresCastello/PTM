@@ -9,9 +9,12 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 using ScintillaNET;
 using TileGameLib.GameElements;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+using Timer = System.Windows.Forms.Timer;
 
 namespace PTMStudio
 {
@@ -28,6 +31,7 @@ namespace PTMStudio
         private PaletteEditPanel PalettePanel;
         private TileRegisterPanel TileRegPanel;
         private HelpWindow HelpWindow;
+        private string ProjectFile;
 
         private class ChangeTracker
         {
@@ -122,9 +126,6 @@ namespace PTMStudio
             if (ext == ".ptm")
             {
                 ProgramPanel.LoadFile(file);
-                ProgramFile = file;
-                Text = "PTM Studio - " + Filesystem.RemoveAbsoluteRootAndFilesPrefix(file);
-                LabelsPanel.UpdateLabels();
             }
             else if (ext == ".chr")
             {
@@ -137,6 +138,10 @@ namespace PTMStudio
             else if (ext == ".buf")
             {
                 TilebufferPanel.LoadFile(file);
+            }
+            else if (ext == ".ptms")
+            {
+                LoadProject(file);
             }
             else
             {
@@ -327,9 +332,93 @@ namespace PTMStudio
             }
         }
 
+        private void AlertOnStatusBar(string msg, int seconds)
+        {
+            string prevText = LbChanges.Text;
+
+            LbChanges.Text = msg;
+
+            Timer timer = new Timer();
+            timer.Interval = seconds * 1000;
+            timer.Tick += Timer_Tick;
+            timer.Tag = prevText;
+            timer.Start();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            Timer timer = sender as Timer;
+            timer.Stop();
+            LbChanges.Text = timer.Tag.ToString();
+        }
+
         private void BtnSaveProgram_Click(object sender, EventArgs e)
         {
             ProgramPanel.SaveFile();
+        }
+
+        private void BtnSaveProject_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(ProjectFile))
+            {
+                SaveFileDialog dialog = new SaveFileDialog();
+                dialog.InitialDirectory = Path.Combine(Filesystem.AbsoluteRootPath, "files");
+                dialog.Filter = "PTM Studio Project File (*.ptms)|*.ptms";
+                if (dialog.ShowDialog() == DialogResult.OK)
+                    ProjectFile = dialog.FileName;
+                else
+                    return;
+            }
+
+            List<string> lines = new List<string>
+            {
+                ProgramPanel.LoadedFile,
+                TilesetPanel.Filename,
+                PalettePanel.Filename,
+                TilebufferPanel.Filename
+            };
+
+            File.WriteAllLines(ProjectFile, lines);
+
+            FilePanel.UpdateFileList();
+            AlertOnStatusBar("Project saved to: " + ProjectFile, 2);
+        }
+
+        private void BtnLoadProject_Click(object sender, EventArgs e)
+        {
+            LoadProject();
+        }
+
+        private void LoadProject()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.InitialDirectory = Path.Combine(Filesystem.AbsoluteRootPath, "files");
+            dialog.Filter = "PTM Studio Project File (*.ptms)|*.ptms";
+            if (dialog.ShowDialog() != DialogResult.OK)
+                return;
+
+            LoadProject(dialog.FileName);
+        }
+
+        public void LoadProject(string file)
+        {
+            ProjectFile = file;
+
+            var lines = File.ReadAllLines(ProjectFile);
+
+            ProgramPanel.LoadFile(lines[0]);
+            TilesetPanel.LoadFile(lines[1]);
+            PalettePanel.LoadFile(lines[2]);
+            TilebufferPanel.LoadFile(lines[3]);
+
+            AlertOnStatusBar("Project loaded from: " + ProjectFile, 2);
+        }
+
+        public void NewProgramLoaded(string file)
+        {
+            ProgramFile = file;
+            Text = "PTM Studio - " + Filesystem.RemoveAbsoluteRootAndFilesPrefix(file);
+            LabelsPanel.UpdateLabels();
         }
     }
 }

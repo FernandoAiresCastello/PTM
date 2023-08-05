@@ -16,7 +16,8 @@ namespace PTMStudio
     {
         private MainWindow MainWindow;
         private Scintilla Scintilla;
-        private string LoadedFile = "";
+        
+        public string LoadedFile { get; private set; }
 
         private ProgramEditPanel()
         {
@@ -49,6 +50,7 @@ namespace PTMStudio
             LoadedFile = file;
             MainWindow.ShowProgramEditor();
             MainWindow.ProgramChanged(false);
+            MainWindow.NewProgramLoaded(file);
         }
 
         public void SaveFile()

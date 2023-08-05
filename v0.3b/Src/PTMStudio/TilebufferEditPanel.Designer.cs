@@ -31,14 +31,14 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.TxtFilename = new System.Windows.Forms.TextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.CmbLayer = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.LbSize = new System.Windows.Forms.ToolStripStatusLabel();
             this.LbPos = new System.Windows.Forms.ToolStripStatusLabel();
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.DisplayPanel = new System.Windows.Forms.Panel();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnSave = new System.Windows.Forms.ToolStripButton();
             this.BtnViewAllLayers = new System.Windows.Forms.ToolStripButton();
             this.BtnAddLayer = new System.Windows.Forms.ToolStripButton();
@@ -46,6 +46,8 @@
             this.BtnSetBgColor = new System.Windows.Forms.ToolStripButton();
             this.BtnFill = new System.Windows.Forms.ToolStripButton();
             this.BtnClear = new System.Windows.Forms.ToolStripButton();
+            this.BtnZoomIn = new System.Windows.Forms.ToolStripButton();
+            this.BtnZoomOut = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -100,12 +102,19 @@
             this.toolStripSeparator1,
             this.BtnSetBgColor,
             this.BtnFill,
-            this.BtnClear});
+            this.BtnClear,
+            this.BtnZoomIn,
+            this.BtnZoomOut});
             this.toolStrip1.Location = new System.Drawing.Point(1, 1);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(404, 25);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // CmbLayer
             // 
@@ -114,6 +123,11 @@
             this.CmbLayer.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.CmbLayer.Name = "CmbLayer";
             this.CmbLayer.Size = new System.Drawing.Size(121, 25);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // statusStrip1
             // 
@@ -164,16 +178,6 @@
             this.DisplayPanel.Name = "DisplayPanel";
             this.DisplayPanel.Size = new System.Drawing.Size(404, 271);
             this.DisplayPanel.TabIndex = 8;
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // BtnSave
             // 
@@ -241,6 +245,24 @@
             this.BtnClear.Size = new System.Drawing.Size(23, 22);
             this.BtnClear.Click += new System.EventHandler(this.BtnClear_Click);
             // 
+            // BtnZoomIn
+            // 
+            this.BtnZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnZoomIn.Image = global::PTMStudio.Properties.Resources.magnifier_zoom_in;
+            this.BtnZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnZoomIn.Name = "BtnZoomIn";
+            this.BtnZoomIn.Size = new System.Drawing.Size(23, 22);
+            this.BtnZoomIn.Click += new System.EventHandler(this.BtnZoomIn_Click);
+            // 
+            // BtnZoomOut
+            // 
+            this.BtnZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnZoomOut.Image = global::PTMStudio.Properties.Resources.magnifier_zoom_out;
+            this.BtnZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnZoomOut.Name = "BtnZoomOut";
+            this.BtnZoomOut.Size = new System.Drawing.Size(23, 22);
+            this.BtnZoomOut.Click += new System.EventHandler(this.BtnZoomOut_Click);
+            // 
             // TilebufferEditPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -280,5 +302,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton BtnViewAllLayers;
+        private System.Windows.Forms.ToolStripButton BtnZoomIn;
+        private System.Windows.Forms.ToolStripButton BtnZoomOut;
     }
 }

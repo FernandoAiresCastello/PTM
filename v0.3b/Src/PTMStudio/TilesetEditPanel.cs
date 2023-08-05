@@ -20,7 +20,8 @@ namespace PTMStudio
         private TiledDisplay Display;
         private readonly int MaxTiles;
         private int FirstTile = 0;
-        private string Filename;
+        
+        public string Filename { get; private set; }
 
         public Tileset Tileset { get => Display.Graphics.Tileset; }
 

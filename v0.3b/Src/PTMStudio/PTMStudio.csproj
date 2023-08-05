@@ -206,6 +206,9 @@
     <None Include="Resources\info_rhombus.png" />
     <None Include="Resources\information.png" />
     <None Include="Resources\disk_multiple.png" />
+    <None Include="Resources\magnifier_zoom_in.png" />
+    <None Include="Resources\magnifier_zoom_out.png" />
+    <None Include="Resources\file_save_as.png" />
     <Content Include="Resources\ptm_icon.ico" />
     <None Include="Resources\page_white_paste.png" />
     <None Include="Resources\update.png" />

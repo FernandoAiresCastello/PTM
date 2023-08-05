@@ -22,7 +22,8 @@ namespace PTMStudio
         private TiledDisplay Display;
         private int FirstColor = 0;
         private readonly int MaxColors;
-        private string Filename;
+
+        public string Filename { get; private set; }
 
         public Palette Palette { get => Display.Graphics.Palette; }
 

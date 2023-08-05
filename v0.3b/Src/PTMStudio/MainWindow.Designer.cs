@@ -48,6 +48,7 @@
             this.LbChanges = new System.Windows.Forms.ToolStripStatusLabel();
             this.BtnSaveProgram = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnSaveEverything = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnSaveProject = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnQuit = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnRun = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnViewPrgEdit = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,6 +80,7 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BtnSaveProgram,
             this.BtnSaveEverything,
+            this.BtnSaveProject,
             this.toolStripSeparator1,
             this.BtnQuit});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -258,6 +260,14 @@
             this.BtnSaveEverything.Text = "Save everything";
             this.BtnSaveEverything.Click += new System.EventHandler(this.BtnSaveEverything_Click);
             // 
+            // BtnSaveProject
+            // 
+            this.BtnSaveProject.Image = global::PTMStudio.Properties.Resources.file_save_as;
+            this.BtnSaveProject.Name = "BtnSaveProject";
+            this.BtnSaveProject.Size = new System.Drawing.Size(229, 22);
+            this.BtnSaveProject.Text = "Save as project";
+            this.BtnSaveProject.Click += new System.EventHandler(this.BtnSaveProject_Click);
+            // 
             // BtnQuit
             // 
             this.BtnQuit.Image = global::PTMStudio.Properties.Resources.cancel;
@@ -362,6 +372,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripStatusLabel LbChanges;
         private System.Windows.Forms.ToolStripMenuItem BtnSaveProgram;
+        private System.Windows.Forms.ToolStripMenuItem BtnSaveProject;
     }
 }
 

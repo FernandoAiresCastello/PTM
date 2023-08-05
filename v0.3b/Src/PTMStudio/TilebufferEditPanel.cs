@@ -24,7 +24,8 @@ namespace PTMStudio
         private MapRenderer Renderer;
         private ObjectMap TileBuffer;
         private Project Proj;
-        private string Filename;
+
+        public string Filename { get; private set; }
 
         private TilebufferEditPanel()
         {
@@ -309,6 +310,16 @@ namespace PTMStudio
                 Renderer.SetRenderSingleLayer(true, GetSelectedLayer());
 
             UpdateDisplay();
+        }
+
+        private void BtnZoomIn_Click(object sender, EventArgs e)
+        {
+            Display.ZoomIn();
+        }
+
+        private void BtnZoomOut_Click(object sender, EventArgs e)
+        {
+            Display.ZoomOut();
         }
     }
 }
