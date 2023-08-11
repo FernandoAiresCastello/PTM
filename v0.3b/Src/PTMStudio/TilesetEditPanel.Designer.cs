@@ -31,12 +31,13 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.BtnSave = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnPrev = new System.Windows.Forms.ToolStripButton();
             this.BtnNext = new System.Windows.Forms.ToolStripButton();
             this.LblIndicator = new System.Windows.Forms.ToolStripLabel();
             this.PnlTileset = new System.Windows.Forms.Panel();
             this.TxtFilename = new System.Windows.Forms.TextBox();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.BtnNew = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -57,12 +58,13 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(200, 253);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(227, 253);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BtnNew,
             this.BtnSave,
             this.toolStripSeparator1,
             this.BtnPrev,
@@ -70,7 +72,7 @@
             this.LblIndicator});
             this.toolStrip1.Location = new System.Drawing.Point(1, 1);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(198, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(225, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -82,6 +84,11 @@
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Size = new System.Drawing.Size(23, 22);
             this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // BtnPrev
             // 
@@ -117,7 +124,7 @@
             this.PnlTileset.Location = new System.Drawing.Point(1, 47);
             this.PnlTileset.Margin = new System.Windows.Forms.Padding(0);
             this.PnlTileset.Name = "PnlTileset";
-            this.PnlTileset.Size = new System.Drawing.Size(198, 205);
+            this.PnlTileset.Size = new System.Drawing.Size(225, 205);
             this.PnlTileset.TabIndex = 1;
             // 
             // TxtFilename
@@ -130,14 +137,18 @@
             this.TxtFilename.Margin = new System.Windows.Forms.Padding(5, 3, 3, 3);
             this.TxtFilename.Name = "TxtFilename";
             this.TxtFilename.ReadOnly = true;
-            this.TxtFilename.Size = new System.Drawing.Size(190, 13);
+            this.TxtFilename.Size = new System.Drawing.Size(217, 13);
             this.TxtFilename.TabIndex = 2;
             this.TxtFilename.Text = "<Unsaved>";
             // 
-            // toolStripSeparator1
+            // BtnNew
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.BtnNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnNew.Image = global::PTMStudio.Properties.Resources.page_white;
+            this.BtnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnNew.Name = "BtnNew";
+            this.BtnNew.Size = new System.Drawing.Size(23, 22);
+            this.BtnNew.Click += new System.EventHandler(this.BtnNew_Click);
             // 
             // TilesetEditPanel
             // 
@@ -146,7 +157,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "TilesetEditPanel";
-            this.Size = new System.Drawing.Size(200, 253);
+            this.Size = new System.Drawing.Size(227, 253);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
@@ -166,5 +177,6 @@
         private System.Windows.Forms.ToolStripLabel LblIndicator;
         private System.Windows.Forms.ToolStripButton BtnSave;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton BtnNew;
     }
 }

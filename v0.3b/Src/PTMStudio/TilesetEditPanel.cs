@@ -169,8 +169,7 @@ namespace PTMStudio
 
         private void AlertIndexOutOfBounds()
         {
-            MessageBox.Show("Tile index out of bounds", "Warning", 
-                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MainWindow.Warning("Tile index out of bounds");
         }
 
         private void EditTile(int index)
@@ -213,6 +212,16 @@ namespace PTMStudio
             TxtFilename.Text = Filesystem.RemoveFilesPrefix(TxtFilename.Text);
             MainWindow.UpdateFilePanel();
             MainWindow.TilesetChanged(false);
+        }
+
+        private void BtnNew_Click(object sender, EventArgs e)
+        {
+            DefaultTileset.Init(Display.Graphics.Tileset);
+            Filename = null;
+            TxtFilename.Text = "<Unsaved>";
+            FirstTile = 0;
+            MainWindow.TilesetChanged(false);
+            UpdateDisplay();
         }
     }
 }

@@ -51,9 +51,7 @@ namespace PTMStudio
             Proj.Palette = palette;
             Proj.Tileset = tileset;
 
-            TileBuffer = new ObjectMap(Proj, 1, 45, 25);
-            Renderer = new MapRenderer(TileBuffer, Display);
-            UpdateLayerComboBox(0);
+            CreateNewBuffer();
             CmbLayer.SelectedIndexChanged += CmbLayer_SelectedIndexChanged;
 
             LbPos.Text = "";
@@ -129,8 +127,7 @@ namespace PTMStudio
 
         private void AlertEmptyTileRegister()
         {
-            MessageBox.Show("Tile register is empty", "Warning",
-                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MainWindow.Warning("Tile register is empty");
         }
 
         private void PutTile(int x, int y)
@@ -164,8 +161,7 @@ namespace PTMStudio
             }
             else
             {
-                MessageBox.Show("No tile found at this buffer position", "Warning",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MainWindow.Warning("No tile found at this buffer position");
             }
         }
 
@@ -236,10 +232,9 @@ namespace PTMStudio
             GameObject tile = MainWindow.GetTileRegister();
             if (tile.Animation.Frames.Count > 0)
             {
-                DialogResult result = MessageBox.Show("Fill entire layer with the tile register data?",
-                    "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                bool ok = MainWindow.Confirm("Fill entire layer with the tile register data?");
 
-                if (result == DialogResult.Yes)
+                if (ok)
                 {
                     TileBuffer.Fill(tile, GetSelectedLayer());
                     MainWindow.TilebufferChanged(true);
@@ -258,10 +253,9 @@ namespace PTMStudio
 
         private void ClearLayer()
         {
-            DialogResult result = MessageBox.Show("Delete all tiles from this layer?",
-                            "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            bool ok = MainWindow.Confirm("Delete all tiles from this layer?");
 
-            if (result == DialogResult.Yes)
+            if (ok)
             {
                 TileBuffer.Clear(GetSelectedLayer());
                 MainWindow.TilebufferChanged(true);
@@ -290,8 +284,7 @@ namespace PTMStudio
         {
             if (TileBuffer.Layers.Count == 1)
             {
-                MessageBox.Show("Layer 0 cannot be removed", "Warning",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MainWindow.Warning("Layer 0 cannot be removed");
                 return;
             }
 
@@ -320,6 +313,28 @@ namespace PTMStudio
         private void BtnZoomOut_Click(object sender, EventArgs e)
         {
             Display.ZoomOut();
+        }
+
+        private void BtnNew_Click(object sender, EventArgs e)
+        {
+            CreateNewBuffer();
+        }
+
+        private void CreateNewBuffer()
+        {
+            TileBuffer = new ObjectMap(Proj, 1, 45, 25);
+            if (Renderer == null)
+                Renderer = new MapRenderer(TileBuffer, Display);
+            else
+                Renderer.Map = TileBuffer;
+
+            Filename = null;
+            TxtFilename.Text = "<Unsaved>";
+
+            UpdateDisplay();
+            UpdateSizeLabel();
+            UpdateLayerComboBox(0);
+            MainWindow.TilebufferChanged(false);
         }
     }
 }

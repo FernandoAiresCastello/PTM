@@ -248,8 +248,7 @@ namespace PTMStudio
 
         private void AlertInvalidBinaryString()
         {
-            MessageBox.Show("Invalid binary string", "Warning",
-                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MainWindow.Warning("Invalid binary string");
         }
 
         private void TileEditWindow_KeyDown(object sender, KeyEventArgs e)

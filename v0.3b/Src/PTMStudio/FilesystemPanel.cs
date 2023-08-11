@@ -101,10 +101,9 @@ namespace PTMStudio
             if (file == null)
                 return;
 
-            DialogResult result = MessageBox.Show("Delete this file?\n\n" + file.RelativePath,
-                "Confirm delete file", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            bool ok = MainWindow.Confirm("Delete this file?\n\n" + file.RelativePath);
 
-            if (result == DialogResult.OK)
+            if (ok)
             {
                 string path = file.AbsolutePath;
                 File.Delete(path);

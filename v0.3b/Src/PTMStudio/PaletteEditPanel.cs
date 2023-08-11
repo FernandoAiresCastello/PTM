@@ -38,9 +38,7 @@ namespace PTMStudio
             MainWindow = mainWnd;
 
             Display = new TiledDisplay(PnlPalette, 8, 8, 3);
-            Display.Graphics.Palette.Clear(256, 0x000000);
-            Display.Graphics.Palette.Set(0, 0x101010);
-            Display.Graphics.Palette.Set(1, 0xf0f0f0);
+            InitDefaultPalette();
             Display.Graphics.Tileset.ClearToSize(0);
             Display.Graphics.Tileset.Add("1111111111111111111111111111111111111111111111111111111111111111");
             Display.ShowGrid = true;
@@ -55,6 +53,13 @@ namespace PTMStudio
             MaxColors = Display.Graphics.Cols * Display.Graphics.Rows;
 
             UpdateDisplay();
+        }
+
+        private void InitDefaultPalette()
+        {
+            Display.Graphics.Palette.Clear(256, 0x000000);
+            Display.Graphics.Palette.Set(0, 0x101010);
+            Display.Graphics.Palette.Set(1, 0xf0f0f0);
         }
 
         private void Display_MouseWheel(object sender, MouseEventArgs e)
@@ -180,8 +185,7 @@ namespace PTMStudio
 
         private void AlertIndexOutOfBounds()
         {
-            MessageBox.Show("Color index out of bounds", "Warning",
-                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MainWindow.Warning("Color index out of bounds");
         }
 
         private void EditColor(int index, Point windowPos)
@@ -228,6 +232,16 @@ namespace PTMStudio
             TxtFilename.Text = Filesystem.RemoveFilesPrefix(TxtFilename.Text);
             MainWindow.UpdateFilePanel();
             MainWindow.PaletteChanged(false);
+        }
+
+        private void BtnNew_Click(object sender, EventArgs e)
+        {
+            InitDefaultPalette();
+            Filename = null;
+            TxtFilename.Text = "<Unsaved>";
+            FirstColor = 0;
+            MainWindow.PaletteChanged(false);
+            UpdateDisplay();
         }
     }
 }

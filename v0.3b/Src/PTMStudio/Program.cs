@@ -28,14 +28,12 @@ namespace PTMStudio
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.ToString(), "Unexpected Error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MainWindow.UnexpectedError(ex.ToString());
                 }
             }
             else
             {
-                MessageBox.Show("PTM.exe not found", "Fatal Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MainWindow.FatalError("PTM.exe not found");
             }
         }
     }

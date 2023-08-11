@@ -83,8 +83,7 @@ namespace PTMStudio
 
         private void AlertIndexOutOfBounds()
         {
-            MessageBox.Show("Color index out of bounds", "Warning",
-                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MainWindow.Warning("Color index out of bounds");
         }
 
         private void Display_MouseWheel(object sender, MouseEventArgs e)

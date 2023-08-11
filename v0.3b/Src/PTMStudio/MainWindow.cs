@@ -96,18 +96,6 @@ namespace PTMStudio
             Text = Size.ToString();
         }
 
-        public void Abort(string message)
-        {
-            ErrorMessage(message);
-            Application.Exit();
-        }
-
-        public void ErrorMessage(string message)
-        {
-            MessageBox.Show(this,
-                message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
         private void BtnRun_Click(object sender, EventArgs e)
         {
             RunProgram();
@@ -145,9 +133,7 @@ namespace PTMStudio
             }
             else
             {
-                MessageBox.Show(this,
-                    "Unsupported file format", 
-                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MainWindow.Warning("Unsupported file format");
             }
         }
 
@@ -305,8 +291,11 @@ namespace PTMStudio
 
         public void TilebufferChanged(bool changed)
         {
-            Changes.TileBuffer = changed;
-            UpdateChangesLabel();
+            if (Changes != null)
+            {
+                Changes.TileBuffer = changed;
+                UpdateChangesLabel();
+            }
         }
 
         private void UpdateChangesLabel()
@@ -419,6 +408,39 @@ namespace PTMStudio
             ProgramFile = file;
             Text = "PTM Studio - " + Filesystem.RemoveAbsoluteRootAndFilesPrefix(file);
             LabelsPanel.UpdateLabels();
+        }
+
+        public static bool Confirm(string message)
+        {
+            return Confirm("Confirm", message);
+        }
+
+        public static bool Confirm(string title, string message)
+        {
+            DialogResult result = MessageBox.Show(message, title, 
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            return result == DialogResult.Yes;
+        }
+
+        public static void Warning(string message)
+        {
+            Warning("Warning", message);
+        }
+
+        public static void Warning(string title, string message)
+        {
+            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        public static void FatalError(string message)
+        {
+            MessageBox.Show(message, "Fatal error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        public static void UnexpectedError(string message)
+        {
+            MessageBox.Show(message, "Unexpected error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }
