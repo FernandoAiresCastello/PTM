@@ -406,7 +406,10 @@ namespace PTMStudio
         public void NewProgramLoaded(string file)
         {
             ProgramFile = file;
-            Text = "PTM Studio - " + Filesystem.RemoveAbsoluteRootAndFilesPrefix(file);
+            Text = "PTM Studio - " + 
+                Filesystem.RemoveAbsoluteRootAndFilesPrefix(
+                Filesystem.NormalizePath(file));
+
             LabelsPanel.UpdateLabels();
         }
 
@@ -441,6 +444,19 @@ namespace PTMStudio
         public static void UnexpectedError(string message)
         {
             MessageBox.Show(message, "Unexpected error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void BtnNewProgram_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.InitialDirectory = Path.Combine(Filesystem.AbsoluteRootPath, "files");
+            dialog.Filter = "PTM Program File (*.ptm)|*.ptm";
+
+            if (dialog.ShowDialog(this) == DialogResult.OK)
+            {
+                File.Create(dialog.FileName).Close();
+                ProgramPanel.LoadFile(dialog.FileName);
+            }
         }
     }
 }

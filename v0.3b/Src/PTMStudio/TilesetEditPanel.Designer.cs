@@ -30,6 +30,7 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.BtnNew = new System.Windows.Forms.ToolStripButton();
             this.BtnSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnPrev = new System.Windows.Forms.ToolStripButton();
@@ -37,7 +38,6 @@
             this.LblIndicator = new System.Windows.Forms.ToolStripLabel();
             this.PnlTileset = new System.Windows.Forms.Panel();
             this.TxtFilename = new System.Windows.Forms.TextBox();
-            this.BtnNew = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -76,6 +76,15 @@
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // BtnNew
+            // 
+            this.BtnNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnNew.Image = global::PTMStudio.Properties.Resources.page_white;
+            this.BtnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnNew.Name = "BtnNew";
+            this.BtnNew.Size = new System.Drawing.Size(23, 22);
+            this.BtnNew.Click += new System.EventHandler(this.BtnNew_Click);
+            // 
             // BtnSave
             // 
             this.BtnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -98,6 +107,7 @@
             this.BtnPrev.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BtnPrev.Name = "BtnPrev";
             this.BtnPrev.Size = new System.Drawing.Size(23, 22);
+            this.BtnPrev.Visible = false;
             this.BtnPrev.Click += new System.EventHandler(this.BtnPrev_Click);
             // 
             // BtnNext
@@ -108,6 +118,7 @@
             this.BtnNext.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BtnNext.Name = "BtnNext";
             this.BtnNext.Size = new System.Drawing.Size(23, 22);
+            this.BtnNext.Visible = false;
             this.BtnNext.Click += new System.EventHandler(this.BtnNext_Click);
             // 
             // LblIndicator
@@ -140,15 +151,6 @@
             this.TxtFilename.Size = new System.Drawing.Size(217, 13);
             this.TxtFilename.TabIndex = 2;
             this.TxtFilename.Text = "<Unsaved>";
-            // 
-            // BtnNew
-            // 
-            this.BtnNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.BtnNew.Image = global::PTMStudio.Properties.Resources.page_white;
-            this.BtnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.BtnNew.Name = "BtnNew";
-            this.BtnNew.Size = new System.Drawing.Size(23, 22);
-            this.BtnNew.Click += new System.EventHandler(this.BtnNew_Click);
             // 
             // TilesetEditPanel
             // 
