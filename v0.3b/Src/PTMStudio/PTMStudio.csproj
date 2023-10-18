@@ -192,6 +192,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\select.png" />
     <None Include="Resources\table_edit.png" />
     <None Include="Resources\script_code.png" />
     <None Include="Resources\color_wheel.png" />

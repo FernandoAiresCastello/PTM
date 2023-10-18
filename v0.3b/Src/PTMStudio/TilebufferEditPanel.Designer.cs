@@ -31,24 +31,26 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.TxtFilename = new System.Windows.Forms.TextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.BtnSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.CmbLayer = new System.Windows.Forms.ToolStripComboBox();
-            this.BtnViewAllLayers = new System.Windows.Forms.ToolStripButton();
-            this.BtnAddLayer = new System.Windows.Forms.ToolStripButton();
-            this.BtnDeleteLayer = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.BtnSetBgColor = new System.Windows.Forms.ToolStripButton();
-            this.BtnFill = new System.Windows.Forms.ToolStripButton();
-            this.BtnClear = new System.Windows.Forms.ToolStripButton();
-            this.BtnZoomIn = new System.Windows.Forms.ToolStripButton();
-            this.BtnZoomOut = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.LbSize = new System.Windows.Forms.ToolStripStatusLabel();
             this.LbPos = new System.Windows.Forms.ToolStripStatusLabel();
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.DisplayPanel = new System.Windows.Forms.Panel();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnNew = new System.Windows.Forms.ToolStripButton();
+            this.BtnSave = new System.Windows.Forms.ToolStripButton();
+            this.BtnViewAllLayers = new System.Windows.Forms.ToolStripButton();
+            this.BtnAddLayer = new System.Windows.Forms.ToolStripButton();
+            this.BtnDeleteLayer = new System.Windows.Forms.ToolStripButton();
+            this.BtnSetBgColor = new System.Windows.Forms.ToolStripButton();
+            this.BtnFill = new System.Windows.Forms.ToolStripButton();
+            this.BtnClear = new System.Windows.Forms.ToolStripButton();
+            this.BtnZoomIn = new System.Windows.Forms.ToolStripButton();
+            this.BtnZoomOut = new System.Windows.Forms.ToolStripButton();
+            this.BtnSelectMode = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -73,7 +75,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(466, 345);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(604, 345);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // TxtFilename
@@ -87,7 +89,7 @@
             this.TxtFilename.Margin = new System.Windows.Forms.Padding(5, 3, 3, 3);
             this.TxtFilename.Name = "TxtFilename";
             this.TxtFilename.ReadOnly = true;
-            this.TxtFilename.Size = new System.Drawing.Size(456, 13);
+            this.TxtFilename.Size = new System.Drawing.Size(594, 13);
             this.TxtFilename.TabIndex = 4;
             this.TxtFilename.Text = "<Unsaved>";
             // 
@@ -106,21 +108,14 @@
             this.BtnFill,
             this.BtnClear,
             this.BtnZoomIn,
-            this.BtnZoomOut});
+            this.BtnZoomOut,
+            this.toolStripSeparator3,
+            this.BtnSelectMode});
             this.toolStrip1.Location = new System.Drawing.Point(1, 1);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(464, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(602, 25);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // BtnSave
-            // 
-            this.BtnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.BtnSave.Image = global::PTMStudio.Properties.Resources.diskette;
-            this.BtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.BtnSave.Name = "BtnSave";
-            this.BtnSave.Size = new System.Drawing.Size(23, 22);
-            this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // toolStripSeparator2
             // 
@@ -134,6 +129,84 @@
             this.CmbLayer.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.CmbLayer.Name = "CmbLayer";
             this.CmbLayer.Size = new System.Drawing.Size(121, 25);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LbSize,
+            this.LbPos});
+            this.statusStrip1.Location = new System.Drawing.Point(1, 320);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(602, 24);
+            this.statusStrip1.SizingGrip = false;
+            this.statusStrip1.TabIndex = 6;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // LbSize
+            // 
+            this.LbSize.Name = "LbSize";
+            this.LbSize.Size = new System.Drawing.Size(27, 19);
+            this.LbSize.Text = "Size";
+            // 
+            // LbPos
+            // 
+            this.LbPos.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.LbPos.Name = "LbPos";
+            this.LbPos.Size = new System.Drawing.Size(30, 19);
+            this.LbPos.Text = "Pos";
+            // 
+            // LayoutPanel
+            // 
+            this.LayoutPanel.ColumnCount = 1;
+            this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.LayoutPanel.Controls.Add(this.DisplayPanel, 0, 0);
+            this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LayoutPanel.Location = new System.Drawing.Point(1, 47);
+            this.LayoutPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.LayoutPanel.Name = "LayoutPanel";
+            this.LayoutPanel.RowCount = 1;
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.LayoutPanel.Size = new System.Drawing.Size(602, 271);
+            this.LayoutPanel.TabIndex = 7;
+            // 
+            // DisplayPanel
+            // 
+            this.DisplayPanel.AutoScroll = true;
+            this.DisplayPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DisplayPanel.Location = new System.Drawing.Point(0, 0);
+            this.DisplayPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.DisplayPanel.Name = "DisplayPanel";
+            this.DisplayPanel.Size = new System.Drawing.Size(602, 271);
+            this.DisplayPanel.TabIndex = 8;
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // BtnNew
+            // 
+            this.BtnNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnNew.Image = global::PTMStudio.Properties.Resources.page_white;
+            this.BtnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnNew.Name = "BtnNew";
+            this.BtnNew.Size = new System.Drawing.Size(23, 22);
+            this.BtnNew.Click += new System.EventHandler(this.BtnNew_Click);
+            // 
+            // BtnSave
+            // 
+            this.BtnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnSave.Image = global::PTMStudio.Properties.Resources.diskette;
+            this.BtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnSave.Name = "BtnSave";
+            this.BtnSave.Size = new System.Drawing.Size(23, 22);
+            this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // BtnViewAllLayers
             // 
@@ -164,11 +237,6 @@
             this.BtnDeleteLayer.Name = "BtnDeleteLayer";
             this.BtnDeleteLayer.Size = new System.Drawing.Size(23, 22);
             this.BtnDeleteLayer.Click += new System.EventHandler(this.BtnDeleteLayer_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // BtnSetBgColor
             // 
@@ -215,64 +283,15 @@
             this.BtnZoomOut.Size = new System.Drawing.Size(23, 22);
             this.BtnZoomOut.Click += new System.EventHandler(this.BtnZoomOut_Click);
             // 
-            // statusStrip1
+            // BtnSelectMode
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.LbSize,
-            this.LbPos});
-            this.statusStrip1.Location = new System.Drawing.Point(1, 320);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(464, 24);
-            this.statusStrip1.SizingGrip = false;
-            this.statusStrip1.TabIndex = 6;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // LbSize
-            // 
-            this.LbSize.Name = "LbSize";
-            this.LbSize.Size = new System.Drawing.Size(27, 19);
-            this.LbSize.Text = "Size";
-            // 
-            // LbPos
-            // 
-            this.LbPos.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-            this.LbPos.Name = "LbPos";
-            this.LbPos.Size = new System.Drawing.Size(30, 19);
-            this.LbPos.Text = "Pos";
-            // 
-            // LayoutPanel
-            // 
-            this.LayoutPanel.ColumnCount = 1;
-            this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.LayoutPanel.Controls.Add(this.DisplayPanel, 0, 0);
-            this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LayoutPanel.Location = new System.Drawing.Point(1, 47);
-            this.LayoutPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.LayoutPanel.Name = "LayoutPanel";
-            this.LayoutPanel.RowCount = 1;
-            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.LayoutPanel.Size = new System.Drawing.Size(464, 271);
-            this.LayoutPanel.TabIndex = 7;
-            // 
-            // DisplayPanel
-            // 
-            this.DisplayPanel.AutoScroll = true;
-            this.DisplayPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DisplayPanel.Location = new System.Drawing.Point(0, 0);
-            this.DisplayPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.DisplayPanel.Name = "DisplayPanel";
-            this.DisplayPanel.Size = new System.Drawing.Size(464, 271);
-            this.DisplayPanel.TabIndex = 8;
-            // 
-            // BtnNew
-            // 
-            this.BtnNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.BtnNew.Image = global::PTMStudio.Properties.Resources.page_white;
-            this.BtnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.BtnNew.Name = "BtnNew";
-            this.BtnNew.Size = new System.Drawing.Size(23, 22);
-            this.BtnNew.Click += new System.EventHandler(this.BtnNew_Click);
+            this.BtnSelectMode.CheckOnClick = true;
+            this.BtnSelectMode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnSelectMode.Image = global::PTMStudio.Properties.Resources.select;
+            this.BtnSelectMode.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnSelectMode.Name = "BtnSelectMode";
+            this.BtnSelectMode.Size = new System.Drawing.Size(23, 22);
+            this.BtnSelectMode.Click += new System.EventHandler(this.BtnSelectMode_Click);
             // 
             // TilebufferEditPanel
             // 
@@ -281,7 +300,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "TilebufferEditPanel";
-            this.Size = new System.Drawing.Size(466, 345);
+            this.Size = new System.Drawing.Size(604, 345);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
@@ -316,5 +335,7 @@
         private System.Windows.Forms.ToolStripButton BtnZoomIn;
         private System.Windows.Forms.ToolStripButton BtnZoomOut;
         private System.Windows.Forms.ToolStripButton BtnNew;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton BtnSelectMode;
     }
 }

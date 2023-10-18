@@ -336,5 +336,10 @@ namespace PTMStudio
             UpdateLayerComboBox(0);
             MainWindow.TilebufferChanged(false);
         }
+
+        private void BtnSelectMode_Click(object sender, EventArgs e)
+        {
+            // todo
+        }
     }
 }
