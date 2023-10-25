@@ -211,6 +211,8 @@
     <None Include="Resources\magnifier_zoom_out.png" />
     <None Include="Resources\file_save_as.png" />
     <None Include="Resources\page_white_add.png" />
+    <None Include="Resources\font_size_increase.png" />
+    <None Include="Resources\font_size_decrease.png" />
     <Content Include="Resources\ptm_icon.ico" />
     <None Include="Resources\page_white_paste.png" />
     <None Include="Resources\update.png" />

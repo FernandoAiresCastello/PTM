@@ -37,6 +37,9 @@ namespace PTMStudio
             Scintilla.VScrollBar = true;
             Scintilla.Margins[0].Width = 40;
             Scintilla.KeyDown += Scintilla_KeyDown;
+
+            SetFont("Consolas");
+            SetFontSize(11);
         }
 
         private void Scintilla_KeyDown(object sender, KeyEventArgs e)
@@ -91,6 +94,40 @@ namespace PTMStudio
                     return;
                 }
             }
+        }
+
+        public void SetFont(string name)
+        {
+            for (int i = 0; i < Scintilla.Styles.Count; i++)
+                Scintilla.Styles[i].Font = name;
+        }
+
+        public void SetFontSize(int size)
+        {
+            for (int i = 0; i < Scintilla.Styles.Count; i++)
+                Scintilla.Styles[i].Size = size;
+        }
+
+        public void IncreaseFontSize()
+        {
+            for (int i = 0; i < Scintilla.Styles.Count; i++)
+                Scintilla.Styles[i].Size++;
+        }
+
+        public void DecreaseFontSize()
+        {
+            for (int i = 0; i < Scintilla.Styles.Count; i++)
+                Scintilla.Styles[i].Size--;
+        }
+
+        private void BtnIncFont_Click(object sender, EventArgs e)
+        {
+            IncreaseFontSize();
+        }
+
+        private void BtnDecFont_Click(object sender, EventArgs e)
+        {
+            DecreaseFontSize();
         }
     }
 }

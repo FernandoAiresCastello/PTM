@@ -1,7 +1,7 @@
 #include "ptm_keyboard.h"
 
 #define KBMAP(x, y) kbmap[x] = y;
-std::map<string, SDL_Scancode> kbmap;
+map<string, SDL_Scancode> kbmap;
 int last_key = 0;
 
 bool ptm_kb_pressed(SDL_Scancode key)

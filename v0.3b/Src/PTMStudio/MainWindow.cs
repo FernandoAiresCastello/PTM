@@ -87,8 +87,6 @@ namespace PTMStudio
             Changes = new ChangeTracker();
             UpdateChangesLabel();
             LoadFile(MainProgramFile);
-
-            //ResizeEnd += MainWindow_ResizeEnd;
         }
 
         private void MainWindow_ResizeEnd(object sender, EventArgs e)

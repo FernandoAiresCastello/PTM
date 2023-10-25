@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PTM", "PTM.vcxproj", "{DD6F5822-D1AB-4473-BB41-7D631F7926B3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTMStudio", "Src\PTMStudio\PTMStudio.csproj", "{C62401D3-ADF8-477B-9295-B1C468F60D75}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DD6F5822-D1AB-4473-BB41-7D631F7926B3} = {DD6F5822-D1AB-4473-BB41-7D631F7926B3}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -31,11 +31,21 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnNewProgram = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnSaveProgram = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnSaveEverything = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnSaveProject = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.BtnQuit = new System.Windows.Forms.ToolStripMenuItem();
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnRun = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnViewPrgEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnViewTilebufEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnAlternateEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.LbChanges = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -46,16 +56,6 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.BtmLeftPanel = new System.Windows.Forms.Panel();
             this.TopLeftPanel = new System.Windows.Forms.Panel();
-            this.BtnNewProgram = new System.Windows.Forms.ToolStripMenuItem();
-            this.BtnSaveProgram = new System.Windows.Forms.ToolStripMenuItem();
-            this.BtnSaveEverything = new System.Windows.Forms.ToolStripMenuItem();
-            this.BtnSaveProject = new System.Windows.Forms.ToolStripMenuItem();
-            this.BtnQuit = new System.Windows.Forms.ToolStripMenuItem();
-            this.BtnRun = new System.Windows.Forms.ToolStripMenuItem();
-            this.BtnViewPrgEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.BtnViewTilebufEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.BtnHelp = new System.Windows.Forms.ToolStripMenuItem();
-            this.BtnAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -89,10 +89,56 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // BtnNewProgram
+            // 
+            this.BtnNewProgram.Image = global::PTMStudio.Properties.Resources.page_white_add;
+            this.BtnNewProgram.Name = "BtnNewProgram";
+            this.BtnNewProgram.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.BtnNewProgram.Size = new System.Drawing.Size(229, 22);
+            this.BtnNewProgram.Text = "New program";
+            this.BtnNewProgram.Click += new System.EventHandler(this.BtnNewProgram_Click);
+            // 
+            // BtnSaveProgram
+            // 
+            this.BtnSaveProgram.Image = global::PTMStudio.Properties.Resources.diskette;
+            this.BtnSaveProgram.Name = "BtnSaveProgram";
+            this.BtnSaveProgram.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.BtnSaveProgram.Size = new System.Drawing.Size(229, 22);
+            this.BtnSaveProgram.Text = "Save program";
+            this.BtnSaveProgram.Click += new System.EventHandler(this.BtnSaveProgram_Click);
+            // 
+            // BtnSaveEverything
+            // 
+            this.BtnSaveEverything.Image = global::PTMStudio.Properties.Resources.disk_multiple;
+            this.BtnSaveEverything.Name = "BtnSaveEverything";
+            this.BtnSaveEverything.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.BtnSaveEverything.Size = new System.Drawing.Size(229, 22);
+            this.BtnSaveEverything.Text = "Save everything";
+            this.BtnSaveEverything.Click += new System.EventHandler(this.BtnSaveEverything_Click);
+            // 
+            // BtnSaveProject
+            // 
+            this.BtnSaveProject.Image = global::PTMStudio.Properties.Resources.file_save_as;
+            this.BtnSaveProject.Name = "BtnSaveProject";
+            this.BtnSaveProject.Size = new System.Drawing.Size(229, 22);
+            this.BtnSaveProject.Text = "Save as project";
+            this.BtnSaveProject.Click += new System.EventHandler(this.BtnSaveProject_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(226, 6);
+            // 
+            // BtnQuit
+            // 
+            this.BtnQuit.Image = global::PTMStudio.Properties.Resources.cancel;
+            this.BtnQuit.Name = "BtnQuit";
+            this.BtnQuit.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.Q)));
+            this.BtnQuit.Size = new System.Drawing.Size(229, 22);
+            this.BtnQuit.Text = "Quit";
+            this.BtnQuit.Click += new System.EventHandler(this.BtnQuit_Click);
             // 
             // runToolStripMenuItem
             // 
@@ -101,6 +147,15 @@
             this.runToolStripMenuItem.Name = "runToolStripMenuItem";
             this.runToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.runToolStripMenuItem.Text = "Execute";
+            // 
+            // BtnRun
+            // 
+            this.BtnRun.Image = global::PTMStudio.Properties.Resources.control_play_blue;
+            this.BtnRun.Name = "BtnRun";
+            this.BtnRun.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.BtnRun.Size = new System.Drawing.Size(163, 22);
+            this.BtnRun.Text = "Run program";
+            this.BtnRun.Click += new System.EventHandler(this.BtnRun_Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -111,6 +166,22 @@
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "View";
+            // 
+            // BtnViewPrgEdit
+            // 
+            this.BtnViewPrgEdit.Image = global::PTMStudio.Properties.Resources.script_code;
+            this.BtnViewPrgEdit.Name = "BtnViewPrgEdit";
+            this.BtnViewPrgEdit.Size = new System.Drawing.Size(215, 22);
+            this.BtnViewPrgEdit.Text = "Program editor";
+            this.BtnViewPrgEdit.Click += new System.EventHandler(this.BtnViewPrgEdit_Click);
+            // 
+            // BtnViewTilebufEdit
+            // 
+            this.BtnViewTilebufEdit.Image = global::PTMStudio.Properties.Resources.table_edit;
+            this.BtnViewTilebufEdit.Name = "BtnViewTilebufEdit";
+            this.BtnViewTilebufEdit.Size = new System.Drawing.Size(215, 22);
+            this.BtnViewTilebufEdit.Text = "Tilebuffer editor";
+            this.BtnViewTilebufEdit.Click += new System.EventHandler(this.BtnViewTilebufEdit_Click);
             // 
             // BtnAlternateEditor
             // 
@@ -128,6 +199,23 @@
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // BtnHelp
+            // 
+            this.BtnHelp.Image = global::PTMStudio.Properties.Resources.help;
+            this.BtnHelp.Name = "BtnHelp";
+            this.BtnHelp.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.BtnHelp.Size = new System.Drawing.Size(233, 22);
+            this.BtnHelp.Text = "PTML command reference";
+            this.BtnHelp.Click += new System.EventHandler(this.BtnHelp_Click);
+            // 
+            // BtnAbout
+            // 
+            this.BtnAbout.Image = global::PTMStudio.Properties.Resources.information;
+            this.BtnAbout.Name = "BtnAbout";
+            this.BtnAbout.Size = new System.Drawing.Size(233, 22);
+            this.BtnAbout.Text = "About";
+            this.BtnAbout.Click += new System.EventHandler(this.BtnAbout_Click);
             // 
             // statusStrip1
             // 
@@ -242,94 +330,6 @@
             this.TopLeftPanel.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.TopLeftPanel.Size = new System.Drawing.Size(197, 214);
             this.TopLeftPanel.TabIndex = 0;
-            // 
-            // BtnNewProgram
-            // 
-            this.BtnNewProgram.Image = global::PTMStudio.Properties.Resources.page_white_add;
-            this.BtnNewProgram.Name = "BtnNewProgram";
-            this.BtnNewProgram.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.BtnNewProgram.Size = new System.Drawing.Size(229, 22);
-            this.BtnNewProgram.Text = "New program";
-            this.BtnNewProgram.Click += new System.EventHandler(this.BtnNewProgram_Click);
-            // 
-            // BtnSaveProgram
-            // 
-            this.BtnSaveProgram.Image = global::PTMStudio.Properties.Resources.diskette;
-            this.BtnSaveProgram.Name = "BtnSaveProgram";
-            this.BtnSaveProgram.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.BtnSaveProgram.Size = new System.Drawing.Size(229, 22);
-            this.BtnSaveProgram.Text = "Save program";
-            this.BtnSaveProgram.Click += new System.EventHandler(this.BtnSaveProgram_Click);
-            // 
-            // BtnSaveEverything
-            // 
-            this.BtnSaveEverything.Image = global::PTMStudio.Properties.Resources.disk_multiple;
-            this.BtnSaveEverything.Name = "BtnSaveEverything";
-            this.BtnSaveEverything.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.S)));
-            this.BtnSaveEverything.Size = new System.Drawing.Size(229, 22);
-            this.BtnSaveEverything.Text = "Save everything";
-            this.BtnSaveEverything.Click += new System.EventHandler(this.BtnSaveEverything_Click);
-            // 
-            // BtnSaveProject
-            // 
-            this.BtnSaveProject.Image = global::PTMStudio.Properties.Resources.file_save_as;
-            this.BtnSaveProject.Name = "BtnSaveProject";
-            this.BtnSaveProject.Size = new System.Drawing.Size(229, 22);
-            this.BtnSaveProject.Text = "Save as project";
-            this.BtnSaveProject.Click += new System.EventHandler(this.BtnSaveProject_Click);
-            // 
-            // BtnQuit
-            // 
-            this.BtnQuit.Image = global::PTMStudio.Properties.Resources.cancel;
-            this.BtnQuit.Name = "BtnQuit";
-            this.BtnQuit.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.Q)));
-            this.BtnQuit.Size = new System.Drawing.Size(229, 22);
-            this.BtnQuit.Text = "Quit";
-            this.BtnQuit.Click += new System.EventHandler(this.BtnQuit_Click);
-            // 
-            // BtnRun
-            // 
-            this.BtnRun.Image = global::PTMStudio.Properties.Resources.control_play_blue;
-            this.BtnRun.Name = "BtnRun";
-            this.BtnRun.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.BtnRun.Size = new System.Drawing.Size(180, 22);
-            this.BtnRun.Text = "Run program";
-            this.BtnRun.Click += new System.EventHandler(this.BtnRun_Click);
-            // 
-            // BtnViewPrgEdit
-            // 
-            this.BtnViewPrgEdit.Image = global::PTMStudio.Properties.Resources.script_code;
-            this.BtnViewPrgEdit.Name = "BtnViewPrgEdit";
-            this.BtnViewPrgEdit.Size = new System.Drawing.Size(215, 22);
-            this.BtnViewPrgEdit.Text = "Program editor";
-            this.BtnViewPrgEdit.Click += new System.EventHandler(this.BtnViewPrgEdit_Click);
-            // 
-            // BtnViewTilebufEdit
-            // 
-            this.BtnViewTilebufEdit.Image = global::PTMStudio.Properties.Resources.table_edit;
-            this.BtnViewTilebufEdit.Name = "BtnViewTilebufEdit";
-            this.BtnViewTilebufEdit.Size = new System.Drawing.Size(215, 22);
-            this.BtnViewTilebufEdit.Text = "Tilebuffer editor";
-            this.BtnViewTilebufEdit.Click += new System.EventHandler(this.BtnViewTilebufEdit_Click);
-            // 
-            // BtnHelp
-            // 
-            this.BtnHelp.Image = global::PTMStudio.Properties.Resources.help;
-            this.BtnHelp.Name = "BtnHelp";
-            this.BtnHelp.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.BtnHelp.Size = new System.Drawing.Size(233, 22);
-            this.BtnHelp.Text = "PTML command reference";
-            this.BtnHelp.Click += new System.EventHandler(this.BtnHelp_Click);
-            // 
-            // BtnAbout
-            // 
-            this.BtnAbout.Image = global::PTMStudio.Properties.Resources.information;
-            this.BtnAbout.Name = "BtnAbout";
-            this.BtnAbout.Size = new System.Drawing.Size(233, 22);
-            this.BtnAbout.Text = "About";
-            this.BtnAbout.Click += new System.EventHandler(this.BtnAbout_Click);
             // 
             // MainWindow
             // 

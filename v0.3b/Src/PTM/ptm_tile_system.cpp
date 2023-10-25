@@ -832,6 +832,7 @@ string ptm_text_input(int maxlen)
 	}
 
 	last_key = 0; // Clear last key, so as not to interfere with the kb_inkey function
+
 	t_tilebuf_layer& buf = ptm_get_selected_tilebuf_layer();
 	buf.put(tilebuf_csr.x - 1, tilebuf_csr.y, 0, scr.text_style.fgc, scr.text_style.bgc); // Delete cursor character
 	tilebuf_csr.x = initial_x;

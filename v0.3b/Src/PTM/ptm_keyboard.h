@@ -1,7 +1,7 @@
 #pragma once
 #include "../Common/common.h"
 
-extern std::map<string, SDL_Scancode> kbmap;
+extern map<string, SDL_Scancode> kbmap;
 extern int last_key;
 
 bool ptm_kb_pressed(SDL_Scancode key);

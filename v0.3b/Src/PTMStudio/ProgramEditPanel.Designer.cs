@@ -31,6 +31,9 @@
             this.ScintillaPanel = new System.Windows.Forms.Panel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.BtnRun = new System.Windows.Forms.ToolStripButton();
+            this.BtnIncFont = new System.Windows.Forms.ToolStripButton();
+            this.BtnDecFont = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,7 +49,10 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.BtnRun});
+            this.BtnRun,
+            this.toolStripSeparator1,
+            this.BtnIncFont,
+            this.BtnDecFont});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(406, 25);
@@ -61,6 +67,29 @@
             this.BtnRun.Name = "BtnRun";
             this.BtnRun.Size = new System.Drawing.Size(23, 22);
             this.BtnRun.Click += new System.EventHandler(this.BtnRun_Click);
+            // 
+            // BtnIncFont
+            // 
+            this.BtnIncFont.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnIncFont.Image = global::PTMStudio.Properties.Resources.font_size_decrease;
+            this.BtnIncFont.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnIncFont.Name = "BtnIncFont";
+            this.BtnIncFont.Size = new System.Drawing.Size(23, 22);
+            this.BtnIncFont.Click += new System.EventHandler(this.BtnIncFont_Click);
+            // 
+            // BtnDecFont
+            // 
+            this.BtnDecFont.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BtnDecFont.Image = global::PTMStudio.Properties.Resources.font_size_increase;
+            this.BtnDecFont.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BtnDecFont.Name = "BtnDecFont";
+            this.BtnDecFont.Size = new System.Drawing.Size(23, 22);
+            this.BtnDecFont.Click += new System.EventHandler(this.BtnDecFont_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // ProgramEditPanel
             // 
@@ -81,5 +110,8 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         public System.Windows.Forms.Panel ScintillaPanel;
         private System.Windows.Forms.ToolStripButton BtnRun;
+        private System.Windows.Forms.ToolStripButton BtnIncFont;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton BtnDecFont;
     }
 }
