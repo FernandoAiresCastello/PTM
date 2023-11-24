@@ -1,7 +1,6 @@
 #pragma once
 #include "../Common/common.h"
-#include "../PTM/ptm_tile_system.h"
-#include "../PTM/ptm_color_palette.h"
+#include "ptm_api.h"
 
 class ptm_system
 {
@@ -12,12 +11,7 @@ public:
 	void run();
 
 private:
-	t_tileset saved_tileset;
-	t_palette saved_palette;
-	t_tilebuf saved_default_tilebuf;
+	ptm_api api;
 
-	void init_window();
-	void halt();
-	void set_pal(int index, rgb color);
-	void set_tilebuf_bgc(string id, int pal_index);
+	void show_intro();
 };

@@ -77,6 +77,9 @@
     <ClCompile Include="Src\System\ptm_system.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="Src\System\ptm_api.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Common\common.h">
@@ -170,6 +173,9 @@
       <Filter>Docgen</Filter>
     </ClInclude>
     <ClInclude Include="Src\System\ptm_system.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\System\ptm_api.h">
       <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>

@@ -10,22 +10,19 @@ ptm_system::~ptm_system()
 }
 void ptm_system::run()
 {
-	init_window();
-	halt();
+	api.init_window();
+	show_intro();
+
+	api.halt();
 }
-void ptm_system::init_window()
+void ptm_system::show_intro()
 {
-	ptm_init_window(360, 200, 3, 0x000000, 1);
-}
-void ptm_system::halt()
-{
-	ptm_halt();
-}
-void ptm_system::set_pal(int index, rgb color)
-{
-	palette.set(index, color);
-}
-void ptm_system::set_tilebuf_bgc(string id, int pal_index)
-{
-	tilebufs.get(id)->set_bgcol(pal_index);
+	api.default_buf();
+	api.layer(0);
+	api.cls();
+	api.color(1, 0);
+	api.print(1, 1, "PTM 0.3b");
+	api.beep();
+	api.pause(2000);
+	api.cls();
 }
