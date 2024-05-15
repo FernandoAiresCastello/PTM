@@ -20,19 +20,28 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\t_char.cpp" />
+    <ClCompile Include="src\t_color.cpp" />
     <ClCompile Include="src\t_data.cpp" />
+    <ClCompile Include="src\t_dict.cpp" />
+    <ClCompile Include="src\t_list.cpp" />
+    <ClCompile Include="src\t_string.cpp" />
     <ClCompile Include="src\t_tests.cpp" />
     <ClCompile Include="src\t_tile.cpp" />
+    <ClCompile Include="src\t_util.cpp" />
     <ClCompile Include="src\t_window.cpp" />
     <ClCompile Include="src\t_keyboard.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\t_ptm.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\common.h" />
+    <ClInclude Include="src\t_color.h" />
     <ClInclude Include="src\t_data.h" />
+    <ClInclude Include="src\t_dict.h" />
+    <ClInclude Include="src\t_list.h" />
+    <ClInclude Include="src\t_string.h" />
     <ClInclude Include="src\t_tests.h" />
     <ClInclude Include="src\t_tile.h" />
+    <ClInclude Include="src\t_util.h" />
     <ClInclude Include="src\t_window.h" />
     <ClInclude Include="src\t_keyboard.h" />
     <ClInclude Include="src\t_ptm.h" />
@@ -132,7 +141,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <CompileAs>CompileAsCpp</CompileAs>

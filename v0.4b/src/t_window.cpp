@@ -1,4 +1,5 @@
 #include "t_window.h"
+#include "t_util.h"
 
 const char* charset[] = {
 	"0000000000000000000000000000000000000000000000000000000000000000",
@@ -260,7 +261,7 @@ const char* charset[] = {
 };
 
 #define is_valid_pixel(x, y)		x >= 0 && y >= 0 && x < SCR_W && y < SCR_H
-#define set_pixel(x, y, color)		if (is_valid_pixel(x, y)) { scrbuf[y * SCR_W + x] = color; }
+#define set_pixel(x, y, color)		if (is_valid_pixel(x, y)) { scrbuf[y * SCR_W + x] = color.to_rgb(); }
 
 void t_window::create(const char* title)
 {
@@ -310,10 +311,10 @@ void t_window::toggle_fullscreen()
 	update();
 }
 
-void t_window::clear(rgb color)
+void t_window::clear(t_color color)
 {
 	for (int i = 0; i < BUFLEN; i++) {
-		scrbuf[i] = color;
+		scrbuf[i] = color.to_rgb();
 	}
 }
 
@@ -329,26 +330,7 @@ void t_window::update()
 	SDL_RenderPresent(rend);
 }
 
-int t_window::get_random_int(int min, int max)
-{
-	return min + rand() % (max - min + 1);
-}
-
-rgb t_window::pack_rgb(int r, int g, int b)
-{
-	return (r << 16) | (g << 8) | b;
-}
-
-rgb t_window::get_random_color()
-{
-	int r = get_random_int(0, 255);
-	int g = get_random_int(0, 255);
-	int b = get_random_int(0, 255);
-
-	return pack_rgb(r, g, b);
-}
-
-void t_window::draw_tile(const char* bits, int x, int y, rgb color1, rgb color0, bool grid)
+void t_window::draw_tile(t_string bits, int x, int y, t_color color1, t_color color0, bool grid)
 {
 	if (grid) {
 		x *= TILE_W;
@@ -360,7 +342,7 @@ void t_window::draw_tile(const char* bits, int x, int y, rgb color1, rgb color0,
 	const int MAX_X = x + TILE_W;
 
 	for (int i = 0; i < TILESIZE; i++) {
-		set_pixel(px, py, bits[i] == '1' ? color1 : color0);
+		set_pixel(px, py, (bits[i] == '1' ? color1 : color0));
 		px++;
 		if (px >= MAX_X) {
 			px = x;
@@ -369,29 +351,30 @@ void t_window::draw_tile(const char* bits, int x, int y, rgb color1, rgb color0,
 	}
 }
 
-void t_window::draw_text(const char* text, int x, int y, rgb color1, rgb color0, bool grid)
+void t_window::draw_text(t_string text, int x, int y, t_color color1, t_color color0, bool grid)
 {
 	if (grid) {
 		x *= TILE_W;
 		y *= TILE_H;
 	}
 
-	for (int i = 0; i < strlen(text); i++) {
-		draw_tile(charset[text[i]], x, y, color1, color0, false);
+	const char* ctext = text.c_str();
+	for (int i = 0; i < strlen(ctext); i++) {
+		draw_tile(charset[ctext[i]], x, y, color1, color0, false);
 		x += TILE_W;
 	}
 }
 
 void t_window::draw_test_frame_colors()
 {
-	clear(get_random_color());
+	clear(t_color::get_random());
 }
 
 void t_window::draw_test_frame_pixels()
 {
 	for (int y = 0; y < SCR_H; y++) {
 		for (int x = 0; x < SCR_W; x++) {
-			set_pixel(x, y, get_random_color());
+			set_pixel(x, y, t_color::get_random());
 		}
 	}
 }
@@ -400,8 +383,8 @@ void t_window::draw_test_frame_tiles()
 {
 	for (int y = 0; y < SCR_ROWS; y++) {
 		for (int x = 0; x < SCR_COLS; x++) {
-			draw_tile(charset[get_random_int(0, 255)],
-				x, y, get_random_color(), get_random_color(), true);
+			draw_tile(charset[t_util::rnd(0, 255)],
+				x, y, t_color::get_random(), t_color::get_random(), true);
 		}
 	}
 }

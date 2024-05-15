@@ -76,8 +76,7 @@ void t_tests::t_data_tests()
 
 	// get string value
 	auto string_data = data.get("string_data");
-	assert(string_data.has_value());
-	assert(string_data.value() == "abcd");
+	assert(string_data == "abcd");
 
 	// set int value
 	data.set("int_data", 1234);
@@ -86,12 +85,13 @@ void t_tests::t_data_tests()
 
 	// get int value
 	auto int_data = data.get_int("int_data");
-	assert(int_data.has_value());
-	assert(int_data.value() == 1234);
+	assert(int_data == 1234);
 
-	// get nullopt
-	auto nonsense = data.get("asdfasf");
-	assert(!nonsense.has_value());
+	// get non-existent data
+	auto nonsense1 = data.get("asdfasf");
+	assert(nonsense1 == t_data::null);
+	auto nonsense2 = data.get_int("asdfasf");
+	assert(nonsense2 == t_data::null_int);
 
 	// copy constructor
 	t_data first_copied_data(data);

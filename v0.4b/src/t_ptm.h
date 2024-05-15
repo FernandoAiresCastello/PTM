@@ -1,5 +1,5 @@
 #pragma once
-#include "common.h"
+#include <SDL.h>
 #include "t_window.h"
 #include "t_keyboard.h"
 
@@ -16,4 +16,5 @@ private:
 	void quit();
 	void loop();
 	void update();
+	void handle_keyboard(SDL_Keycode key);
 };

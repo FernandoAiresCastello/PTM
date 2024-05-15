@@ -2,18 +2,22 @@
 #include "t_window.h"
 #include "t_keyboard.h"
 
+#define APP_TITLE	"PTM"
+
 void t_ptm::run()
 {
 	init();
-	while (wnd.is_open()) loop();
+	
+	while (wnd.is_open())
+		loop();
+
 	quit();
 }
 
 void t_ptm::init()
 {
-	srand((unsigned int)time(NULL));
 	SDL_Init(SDL_INIT_EVERYTHING);
-	wnd.create("PTM");
+	wnd.create(APP_TITLE);
 }
 
 void t_ptm::quit()
@@ -24,8 +28,6 @@ void t_ptm::quit()
 
 void t_ptm::loop()
 {
-	wnd.draw_test_frame_tiles();
-	wnd.draw_text("Hello World!", 1, 1, 0x000000, 0xffffff, true);
 	update();
 }
 
@@ -34,14 +36,20 @@ void t_ptm::update()
 	wnd.update();
 
 	SDL_Event e = { 0 };
+
 	while (SDL_PollEvent(&e)) {
 		if (e.type == SDL_QUIT) {
 			wnd.close();
 		}
 		else if (e.type == SDL_KEYDOWN) {
-			if (e.key.keysym.sym == SDLK_RETURN && kb.alt()) {
-				wnd.toggle_fullscreen();
-			}
+			handle_keyboard(e.key.keysym.sym);
 		}
+	}
+}
+
+void t_ptm::handle_keyboard(SDL_Keycode key)
+{
+	if (kb.alt() && key == SDLK_RETURN) {
+		wnd.toggle_fullscreen();
 	}
 }

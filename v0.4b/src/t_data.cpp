@@ -1,5 +1,8 @@
 #include "t_data.h"
 
+const t_string t_data::null = "<null>";
+const int t_data::null_int = INT_MIN;
+
 t_data::t_data()
 {
 }
@@ -42,42 +45,42 @@ void t_data::clear()
 	entries.clear();
 }
 
-void t_data::set(std::string key, std::string value)
+void t_data::set(t_string key, t_string value)
 {
 	entries[key] = value;
 }
 
-void t_data::set(std::string key, int value)
+void t_data::set(t_string key, int value)
 {
 	entries[key] = std::to_string(value);
 }
 
-std::optional<std::string> t_data::get(std::string key)
+t_string t_data::get(t_string key)
 {
-	return has(key) ? std::make_optional(entries[key]) : std::nullopt;
+	return has(key) ? entries[key] : t_data::null;
 }
 
-std::optional<int> t_data::get_int(std::string key)
+int t_data::get_int(t_string key)
 {
-	return has(key) ? std::make_optional(std::stoi(entries[key])) : std::nullopt;
+	return has(key) ? entries[key].to_int() : t_data::null_int;
 }
 
-bool t_data::has(std::string key)
+bool t_data::has(t_string key)
 {
 	return entries.contains(key);
 }
 
-bool t_data::has(std::string key, std::string value)
+bool t_data::has(t_string key, t_string value)
 {
 	return has(key) && entries[key] == value;
 }
 
-bool t_data::has(std::string key, int value)
+bool t_data::has(t_string key, int value)
 {
-	return has(key) && std::stoi(entries[key]) == value;
+	return has(key) && entries[key].to_int() == value;
 }
 
-std::unordered_map<std::string, std::string> t_data::get_all()
+std::unordered_map<t_string, t_string> t_data::get_all()
 {
 	return entries;
 }

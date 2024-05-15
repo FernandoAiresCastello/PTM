@@ -2,22 +2,90 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\t_window.cpp" />
-    <ClCompile Include="src\t_ptm.cpp" />
-    <ClCompile Include="src\t_keyboard.cpp" />
-    <ClCompile Include="src\t_char.cpp" />
-    <ClCompile Include="src\t_tile.cpp" />
-    <ClCompile Include="src\t_data.cpp" />
-    <ClCompile Include="src\t_tests.cpp" />
+    <ClCompile Include="src\t_char.cpp">
+      <Filter>CORE</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_keyboard.cpp">
+      <Filter>CORE</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_ptm.cpp">
+      <Filter>CORE</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_tile.cpp">
+      <Filter>CORE</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_window.cpp">
+      <Filter>CORE</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_tests.cpp">
+      <Filter>TEST</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_data.cpp">
+      <Filter>UTIL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_list.cpp">
+      <Filter>UTIL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_string.cpp">
+      <Filter>UTIL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_util.cpp">
+      <Filter>UTIL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_dict.cpp">
+      <Filter>UTIL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_color.cpp">
+      <Filter>CORE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\t_window.h" />
-    <ClInclude Include="src\t_ptm.h" />
-    <ClInclude Include="src\common.h" />
-    <ClInclude Include="src\t_keyboard.h" />
-    <ClInclude Include="src\t_char.h" />
-    <ClInclude Include="src\t_tile.h" />
-    <ClInclude Include="src\t_data.h" />
-    <ClInclude Include="src\t_tests.h" />
+    <ClInclude Include="src\t_char.h">
+      <Filter>CORE</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_keyboard.h">
+      <Filter>CORE</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_ptm.h">
+      <Filter>CORE</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_tile.h">
+      <Filter>CORE</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_window.h">
+      <Filter>CORE</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_tests.h">
+      <Filter>TEST</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_data.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_list.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_string.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_util.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_dict.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_color.h">
+      <Filter>CORE</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CORE">
+      <UniqueIdentifier>{961497b1-2059-4e95-ac38-028ec93fc2ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TEST">
+      <UniqueIdentifier>{168de1f4-f122-4b53-972e-9fdd244f3b91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UTIL">
+      <UniqueIdentifier>{2e85d037-f1d0-49ea-b1f4-cb5709f989bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

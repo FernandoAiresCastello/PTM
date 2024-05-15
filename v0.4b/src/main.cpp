@@ -6,8 +6,8 @@ t_tests tests;
 
 int main(int argc, char* argv[])
 {
-	//ptm.run();
 	tests.run();
+	ptm.run();
 
 	return 0;
 }

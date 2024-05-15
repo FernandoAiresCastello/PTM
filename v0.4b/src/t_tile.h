@@ -1,5 +1,4 @@
 #pragma once
-#include "common.h"
 #include "t_char.h"
 #include "t_data.h"
 
@@ -26,7 +25,7 @@ public:
 	void set_blank();
 
 private:
-	std::vector<t_char> chars;
+	t_list<t_char> chars;
 
 	void add_blank_char();
 };

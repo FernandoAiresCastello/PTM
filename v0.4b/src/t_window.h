@@ -1,5 +1,7 @@
 #pragma once
-#include "common.h"
+#include <SDL.h>
+#include "t_color.h"
+#include "t_string.h"
 
 class t_window
 {
@@ -8,13 +10,10 @@ public:
 	void close();
 	bool is_open();
 	void toggle_fullscreen();
-	void clear(rgb color);
+	void clear(t_color color);
 	void update();
-	int get_random_int(int min, int max);
-	rgb pack_rgb(int r, int g, int b);
-	rgb get_random_color();
-	void draw_tile(const char* bits, int x, int y, rgb color1, rgb color0, bool grid);
-	void draw_text(const char* text, int x, int y, rgb color1, rgb color0, bool grid);
+	void draw_tile(t_string bits, int x, int y, t_color color1, t_color color0, bool grid);
+	void draw_text(t_string text, int x, int y, t_color color1, t_color color0, bool grid);
 	void draw_test_frame_colors();
 	void draw_test_frame_pixels();
 	void draw_test_frame_tiles();
