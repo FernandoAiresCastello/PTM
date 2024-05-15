@@ -2,8 +2,20 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\t_char.cpp">
-      <Filter>CORE</Filter>
+    <ClCompile Include="src\t_string.cpp">
+      <Filter>UTIL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_util.cpp">
+      <Filter>UTIL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_list.cpp">
+      <Filter>UTIL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_dict.cpp">
+      <Filter>UTIL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_data.cpp">
+      <Filter>UTIL</Filter>
     </ClCompile>
     <ClCompile Include="src\t_keyboard.cpp">
       <Filter>CORE</Filter>
@@ -17,31 +29,31 @@
     <ClCompile Include="src\t_window.cpp">
       <Filter>CORE</Filter>
     </ClCompile>
+    <ClCompile Include="src\t_char.cpp">
+      <Filter>CORE</Filter>
+    </ClCompile>
     <ClCompile Include="src\t_tests.cpp">
       <Filter>TEST</Filter>
-    </ClCompile>
-    <ClCompile Include="src\t_data.cpp">
-      <Filter>UTIL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\t_list.cpp">
-      <Filter>UTIL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\t_string.cpp">
-      <Filter>UTIL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\t_util.cpp">
-      <Filter>UTIL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\t_dict.cpp">
-      <Filter>UTIL</Filter>
     </ClCompile>
     <ClCompile Include="src\t_color.cpp">
       <Filter>CORE</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\t_char.h">
-      <Filter>CORE</Filter>
+    <ClInclude Include="src\t_string.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_util.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_list.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_dict.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_data.h">
+      <Filter>UTIL</Filter>
     </ClInclude>
     <ClInclude Include="src\t_keyboard.h">
       <Filter>CORE</Filter>
@@ -55,37 +67,25 @@
     <ClInclude Include="src\t_window.h">
       <Filter>CORE</Filter>
     </ClInclude>
+    <ClInclude Include="src\t_char.h">
+      <Filter>CORE</Filter>
+    </ClInclude>
     <ClInclude Include="src\t_tests.h">
       <Filter>TEST</Filter>
-    </ClInclude>
-    <ClInclude Include="src\t_data.h">
-      <Filter>UTIL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\t_list.h">
-      <Filter>UTIL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\t_string.h">
-      <Filter>UTIL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\t_util.h">
-      <Filter>UTIL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\t_dict.h">
-      <Filter>UTIL</Filter>
     </ClInclude>
     <ClInclude Include="src\t_color.h">
       <Filter>CORE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <Filter Include="UTIL">
+      <UniqueIdentifier>{1e5749d2-762f-4f97-b9eb-39d554790416}</UniqueIdentifier>
+    </Filter>
     <Filter Include="CORE">
-      <UniqueIdentifier>{961497b1-2059-4e95-ac38-028ec93fc2ff}</UniqueIdentifier>
+      <UniqueIdentifier>{c4069109-1c23-43c7-9c3b-f410a449ffa4}</UniqueIdentifier>
     </Filter>
     <Filter Include="TEST">
-      <UniqueIdentifier>{168de1f4-f122-4b53-972e-9fdd244f3b91}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="UTIL">
-      <UniqueIdentifier>{2e85d037-f1d0-49ea-b1f4-cb5709f989bf}</UniqueIdentifier>
+      <UniqueIdentifier>{a56445db-2f75-4346-b2cc-eee7843ce292}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

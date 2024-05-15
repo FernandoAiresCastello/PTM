@@ -55,6 +55,12 @@ void t_data::set(t_string key, int value)
 	entries[key] = std::to_string(value);
 }
 
+void t_data::remove(t_string key)
+{
+	if (has(key))
+		entries.erase(key);
+}
+
 t_string t_data::get(t_string key)
 {
 	return has(key) ? entries[key] : t_data::null;
@@ -80,7 +86,7 @@ bool t_data::has(t_string key, int value)
 	return has(key) && entries[key].to_int() == value;
 }
 
-std::unordered_map<t_string, t_string> t_data::get_all()
+std::unordered_map<t_string, t_string>& t_data::get_all()
 {
 	return entries;
 }

@@ -28,6 +28,7 @@ void t_ptm::quit()
 
 void t_ptm::loop()
 {
+	wnd.draw_test_frame_tiles();
 	update();
 }
 
