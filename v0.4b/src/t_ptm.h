@@ -11,6 +11,7 @@ public:
 private:
 	t_window wnd;
 	t_keyboard kb;
+	t_charset system_charset;
 
 	void init();
 	void quit();

@@ -28,7 +28,8 @@ void t_ptm::quit()
 
 void t_ptm::loop()
 {
-	wnd.draw_test_frame_tiles();
+	wnd.draw_test_frame_chars(&system_charset);
+	wnd.draw_text(&system_charset, "Hello World!", 1, 1, 0xff0000, 0xffff00, true);
 	update();
 }
 

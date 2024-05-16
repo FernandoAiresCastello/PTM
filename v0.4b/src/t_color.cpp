@@ -82,22 +82,22 @@ void t_color::set_b(int b)
     this->b = b;
 }
 
-int t_color::get_r()
+int t_color::get_r() const
 {
     return r;
 }
 
-int t_color::get_g()
+int t_color::get_g() const
 {
     return g;
 }
 
-int t_color::get_b()
+int t_color::get_b() const
 {
     return b;
 }
 
-rgb t_color::to_rgb()
+rgb t_color::to_rgb() const
 {
     return pack_rgb(r, g, b);
 }

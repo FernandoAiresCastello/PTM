@@ -22,10 +22,10 @@ public:
 	void set_r(int r);
 	void set_g(int g);
 	void set_b(int b);
-	int get_r();
-	int get_g();
-	int get_b();
-	rgb to_rgb();
+	int get_r() const;
+	int get_g() const;
+	int get_b() const;
+	rgb to_rgb() const;
 
 private:
 	int r = 0;

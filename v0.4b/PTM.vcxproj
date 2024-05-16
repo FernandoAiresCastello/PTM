@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\t_char.cpp" />
+    <ClCompile Include="src\t_charset.cpp" />
     <ClCompile Include="src\t_color.cpp" />
     <ClCompile Include="src\t_data.cpp" />
     <ClCompile Include="src\t_dict.cpp" />
@@ -34,7 +35,9 @@
     <ClCompile Include="src\t_window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\t_binary.h" />
     <ClInclude Include="src\t_char.h" />
+    <ClInclude Include="src\t_charset.h" />
     <ClInclude Include="src\t_color.h" />
     <ClInclude Include="src\t_data.h" />
     <ClInclude Include="src\t_dict.h" />

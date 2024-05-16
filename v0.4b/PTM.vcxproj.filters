@@ -38,6 +38,9 @@
     <ClCompile Include="src\t_color.cpp">
       <Filter>CORE</Filter>
     </ClCompile>
+    <ClCompile Include="src\t_charset.cpp">
+      <Filter>CORE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\t_string.h">
@@ -74,6 +77,12 @@
       <Filter>TEST</Filter>
     </ClInclude>
     <ClInclude Include="src\t_color.h">
+      <Filter>CORE</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_charset.h">
+      <Filter>CORE</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_binary.h">
       <Filter>CORE</Filter>
     </ClInclude>
   </ItemGroup>
