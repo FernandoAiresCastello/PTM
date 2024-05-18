@@ -11,11 +11,15 @@ public:
 private:
 	t_window wnd;
 	t_keyboard kb;
-	t_charset system_charset;
+	t_charset charset;
 
 	void init();
 	void quit();
 	void loop();
 	void update();
 	void handle_keyboard(SDL_Keycode key);
+
+	void draw_test_frame_colors();
+	void draw_test_frame_pixels();
+	void draw_test_frame_chars(t_charset* charset);
 };

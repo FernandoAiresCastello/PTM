@@ -17,29 +17,29 @@
     <ClCompile Include="src\t_data.cpp">
       <Filter>UTIL</Filter>
     </ClCompile>
-    <ClCompile Include="src\t_keyboard.cpp">
-      <Filter>CORE</Filter>
-    </ClCompile>
     <ClCompile Include="src\t_ptm.cpp">
       <Filter>CORE</Filter>
     </ClCompile>
     <ClCompile Include="src\t_tile.cpp">
       <Filter>CORE</Filter>
     </ClCompile>
-    <ClCompile Include="src\t_window.cpp">
-      <Filter>CORE</Filter>
-    </ClCompile>
-    <ClCompile Include="src\t_char.cpp">
-      <Filter>CORE</Filter>
-    </ClCompile>
     <ClCompile Include="src\t_tests.cpp">
       <Filter>TEST</Filter>
     </ClCompile>
-    <ClCompile Include="src\t_color.cpp">
-      <Filter>CORE</Filter>
+    <ClCompile Include="src\t_window.cpp">
+      <Filter>GRAPHICS</Filter>
     </ClCompile>
     <ClCompile Include="src\t_charset.cpp">
-      <Filter>CORE</Filter>
+      <Filter>GRAPHICS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_char.cpp">
+      <Filter>GRAPHICS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_color.cpp">
+      <Filter>GRAPHICS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_keyboard.cpp">
+      <Filter>INPUT</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -58,32 +58,32 @@
     <ClInclude Include="src\t_data.h">
       <Filter>UTIL</Filter>
     </ClInclude>
-    <ClInclude Include="src\t_keyboard.h">
-      <Filter>CORE</Filter>
-    </ClInclude>
     <ClInclude Include="src\t_ptm.h">
       <Filter>CORE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_tile.h">
       <Filter>CORE</Filter>
     </ClInclude>
-    <ClInclude Include="src\t_window.h">
-      <Filter>CORE</Filter>
-    </ClInclude>
-    <ClInclude Include="src\t_char.h">
-      <Filter>CORE</Filter>
-    </ClInclude>
     <ClInclude Include="src\t_tests.h">
       <Filter>TEST</Filter>
     </ClInclude>
-    <ClInclude Include="src\t_color.h">
-      <Filter>CORE</Filter>
+    <ClInclude Include="src\t_binary.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_window.h">
+      <Filter>GRAPHICS</Filter>
     </ClInclude>
     <ClInclude Include="src\t_charset.h">
-      <Filter>CORE</Filter>
+      <Filter>GRAPHICS</Filter>
     </ClInclude>
-    <ClInclude Include="src\t_binary.h">
-      <Filter>CORE</Filter>
+    <ClInclude Include="src\t_char.h">
+      <Filter>GRAPHICS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_color.h">
+      <Filter>GRAPHICS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_keyboard.h">
+      <Filter>INPUT</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +95,12 @@
     </Filter>
     <Filter Include="TEST">
       <UniqueIdentifier>{a56445db-2f75-4346-b2cc-eee7843ce292}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GRAPHICS">
+      <UniqueIdentifier>{cb589e47-33ae-43f4-b8bf-f0954d4be141}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="INPUT">
+      <UniqueIdentifier>{31c97c3a-1b06-47e4-9c67-9dbac0326a30}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

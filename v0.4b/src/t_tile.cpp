@@ -52,9 +52,9 @@ void t_tile::set_char(int ix, int fgc, int bgc)
 	chars[0].set(ix, fgc, bgc);
 }
 
-void t_tile::set_char(int ch_ix, int ix, int fgc, int bgc)
+void t_tile::set_char(int position, int ix, int fgc, int bgc)
 {
-	chars[ch_ix].set(ix, fgc, bgc);
+	chars[position].set(ix, fgc, bgc);
 }
 
 void t_tile::add_char(int ix, int fgc, int bgc)
@@ -62,22 +62,14 @@ void t_tile::add_char(int ix, int fgc, int bgc)
 	chars.emplace_back(ix, fgc, bgc);
 }
 
-int t_tile::char_count()
-{
-	return (int)chars.size();
-}
-
-void t_tile::set_blank()
-{
-	chars.clear();
-	chars.emplace_back(t_char::blank());
-
-	data.clear();
-}
-
 void t_tile::add_blank_char()
 {
 	chars.emplace_back(t_char::blank());
+}
+
+int t_tile::char_count()
+{
+	return (int)chars.size();
 }
 
 bool t_tile::is_blank() const
@@ -88,4 +80,17 @@ bool t_tile::is_blank() const
 bool t_tile::is_not_blank() const
 {
 	return !is_blank();
+}
+
+void t_tile::set_blank()
+{
+	chars.clear();
+	chars.emplace_back(t_char::blank());
+
+	data.clear();
+}
+
+t_list<t_char>& t_tile::get_all_chars()
+{
+	return chars;
 }

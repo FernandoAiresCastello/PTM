@@ -17,15 +17,15 @@ public:
 	t_char& get_char();
 	t_char& get_char(int index);
 	void set_char(int ix, int fgc, int bgc);
-	void set_char(int ch_ix, int ix, int fgc, int bgc);
+	void set_char(int position, int ix, int fgc, int bgc);
 	void add_char(int ix, int fgc, int bgc);
+	void add_blank_char();
 	int char_count();
 	bool is_blank() const;
 	bool is_not_blank() const;
 	void set_blank();
+	t_list<t_char>& get_all_chars();
 
 private:
 	t_list<t_char> chars;
-
-	void add_blank_char();
 };

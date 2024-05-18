@@ -14,14 +14,14 @@ public:
 	void toggle_fullscreen();
 	void clear(t_color color);
 	void update();
-	constexpr int cols() const;
-	constexpr int rows() const;
+	int width() const;
+	int height() const;
+	int cols() const;
+	int rows() const;
+	void draw_pixel(int x, int y, t_color color);
 	void draw_pixels(t_binary pixels, int x, int y, t_color color1, t_color color0, bool grid);
 	void draw_char(t_charset* charset, int char_index, int x, int y, t_color color1, t_color color0, bool grid);
 	void draw_text(t_charset* charset, t_string text, int x, int y, t_color color1, t_color color0, bool grid);
-	void draw_test_frame_colors();
-	void draw_test_frame_pixels();
-	void draw_test_frame_chars(t_charset* charset);
 
 private:
 	static constexpr int TILE_W = 8;

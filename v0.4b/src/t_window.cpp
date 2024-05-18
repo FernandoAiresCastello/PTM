@@ -71,14 +71,29 @@ void t_window::update()
 	SDL_RenderPresent(rend);
 }
 
-constexpr int t_window::cols() const
+int t_window::width() const
+{
+	return SCR_W;
+}
+
+int t_window::height() const
+{
+	return SCR_H;
+}
+
+int t_window::cols() const
 {
 	return SCR_COLS;
 }
 
-constexpr int t_window::rows() const
+int t_window::rows() const
 {
 	return SCR_ROWS;
+}
+
+void t_window::draw_pixel(int x, int y, t_color color)
+{
+	set_pixel(x, y, color);
 }
 
 void t_window::draw_pixels(t_binary pixels, int x, int y, t_color color1, t_color color0, bool grid)
@@ -122,29 +137,5 @@ void t_window::draw_text(t_charset* charset, t_string text, int x, int y, t_colo
 	for (int i = 0; i < strlen(ctext); i++) {
 		draw_pixels(charset->get(ctext[i]), x, y, color1, color0, false);
 		x += TILE_W;
-	}
-}
-
-void t_window::draw_test_frame_colors()
-{
-	clear(t_color::get_random());
-}
-
-void t_window::draw_test_frame_pixels()
-{
-	for (int y = 0; y < SCR_H; y++) {
-		for (int x = 0; x < SCR_W; x++) {
-			set_pixel(x, y, t_color::get_random());
-		}
-	}
-}
-
-void t_window::draw_test_frame_chars(t_charset* charset)
-{
-	for (int y = 0; y < SCR_ROWS; y++) {
-		for (int x = 0; x < SCR_COLS; x++) {
-			draw_char(charset, t_util::rnd(0, 255), 
-				x, y, t_color::get_random(), t_color::get_random(), true);
-		}
 	}
 }
