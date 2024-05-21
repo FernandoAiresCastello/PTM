@@ -5,7 +5,11 @@
 class t_tile
 {
 public:
+	static constexpr int width = 8;
+	static constexpr int height = 8;
+
 	t_data data;
+	int frame_delay = 0;
 
 	t_tile();
 	t_tile(int ix, int fgc, int bgc);

@@ -41,6 +41,9 @@
     <ClCompile Include="src\t_keyboard.cpp">
       <Filter>INPUT</Filter>
     </ClCompile>
+    <ClCompile Include="src\t_tilebuffer.cpp">
+      <Filter>CORE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\t_string.h">
@@ -84,6 +87,9 @@
     </ClInclude>
     <ClInclude Include="src\t_keyboard.h">
       <Filter>INPUT</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_tilebuffer.h">
+      <Filter>CORE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

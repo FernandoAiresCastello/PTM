@@ -65,8 +65,8 @@ void t_ptm::draw_test_frame_colors()
 
 void t_ptm::draw_test_frame_pixels()
 {
-	for (int y = 0; y < wnd.height(); y++) {
-		for (int x = 0; x < wnd.width(); x++) {
+	for (int y = 0; y < t_window::image_h; y++) {
+		for (int x = 0; x < t_window::image_w; x++) {
 			wnd.draw_pixel(x, y, t_color::get_random());
 		}
 	}
@@ -74,8 +74,8 @@ void t_ptm::draw_test_frame_pixels()
 
 void t_ptm::draw_test_frame_chars(t_charset* charset)
 {
-	for (int y = 0; y < wnd.rows(); y++) {
-		for (int x = 0; x < wnd.cols(); x++) {
+	for (int y = 0; y < t_window::rows; y++) {
+		for (int x = 0; x < t_window::cols; x++) {
 			wnd.draw_char(charset, t_util::rnd(0, 255),
 				x, y, t_color::get_random(), t_color::get_random(), true);
 		}
