@@ -47,6 +47,11 @@ t_char& t_tile::get_char(int index)
 	return chars[index];
 }
 
+t_char& t_tile::get_char_wraparound(int index)
+{
+	return chars[index % chars.size()];
+}
+
 void t_tile::set_char(int ix, int fgc, int bgc)
 {
 	chars[0].set(ix, fgc, bgc);

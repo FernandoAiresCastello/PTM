@@ -3,12 +3,15 @@
 #include "t_char.h"
 #include "t_tile.h"
 #include "t_data.h"
+#include "t_tilebuffer.h"
+#include "t_window.h"
 
 void t_tests::run()
 {
 	t_char_tests();
 	t_data_tests();
 	t_tile_tests();
+	t_tilebuf_tests();
 }
 
 void t_tests::t_char_tests()
@@ -165,4 +168,12 @@ void t_tests::t_tile_tests()
 	assert(second_copy.char_count() == 2);
 	assert(second_copy.get_char(1).is_not_blank());
 	assert(second_copy.get_char(1) == t_char(77, 88, 99));
+}
+
+void t_tests::t_tilebuf_tests()
+{
+	// constructor
+	t_tilebuffer buf(t_window::cols, t_window::rows);
+	assert(buf.cols == t_window::cols);
+	assert(buf.rows == t_window::rows);
 }

@@ -2,6 +2,9 @@
 #include <SDL.h>
 #include "t_window.h"
 #include "t_keyboard.h"
+#include "t_charset.h"
+#include "t_palette.h"
+#include "t_screen.h"
 
 class t_ptm
 {
@@ -12,6 +15,8 @@ private:
 	t_window wnd;
 	t_keyboard kb;
 	t_charset charset;
+	t_palette palette;
+	t_screen screen;
 
 	void init();
 	void quit();

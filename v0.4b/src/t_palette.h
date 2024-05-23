@@ -1,0 +1,23 @@
+#pragma once
+#include "t_list.h"
+#include "t_color.h"
+
+class t_palette
+{
+public:
+	t_palette();
+	t_palette(const t_palette& other);
+	t_palette& operator=(const t_palette& other);
+
+	void remove_all();
+	void add(t_color color);
+	t_color& get(int index);
+	void set(int index, t_color color);
+	int size() const;
+	void reset();
+
+private:
+	t_list<t_color> colors;
+
+	void copy_from(const t_palette& other);
+};

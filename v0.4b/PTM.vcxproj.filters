@@ -20,29 +20,35 @@
     <ClCompile Include="src\t_ptm.cpp">
       <Filter>CORE</Filter>
     </ClCompile>
-    <ClCompile Include="src\t_tile.cpp">
-      <Filter>CORE</Filter>
-    </ClCompile>
     <ClCompile Include="src\t_tests.cpp">
       <Filter>TEST</Filter>
     </ClCompile>
     <ClCompile Include="src\t_window.cpp">
-      <Filter>GRAPHICS</Filter>
+      <Filter>GRAPHICS - LOW-LEVEL</Filter>
     </ClCompile>
     <ClCompile Include="src\t_charset.cpp">
-      <Filter>GRAPHICS</Filter>
-    </ClCompile>
-    <ClCompile Include="src\t_char.cpp">
-      <Filter>GRAPHICS</Filter>
+      <Filter>GRAPHICS - LOW-LEVEL</Filter>
     </ClCompile>
     <ClCompile Include="src\t_color.cpp">
-      <Filter>GRAPHICS</Filter>
+      <Filter>GRAPHICS - LOW-LEVEL</Filter>
     </ClCompile>
     <ClCompile Include="src\t_keyboard.cpp">
       <Filter>INPUT</Filter>
     </ClCompile>
+    <ClCompile Include="src\t_tile.cpp">
+      <Filter>TILE SYSTEM</Filter>
+    </ClCompile>
     <ClCompile Include="src\t_tilebuffer.cpp">
-      <Filter>CORE</Filter>
+      <Filter>TILE SYSTEM</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_char.cpp">
+      <Filter>TILE SYSTEM</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_palette.cpp">
+      <Filter>GRAPHICS - LOW-LEVEL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_screen.cpp">
+      <Filter>GRAPHICS - HIGH-LEVEL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -64,9 +70,6 @@
     <ClInclude Include="src\t_ptm.h">
       <Filter>CORE</Filter>
     </ClInclude>
-    <ClInclude Include="src\t_tile.h">
-      <Filter>CORE</Filter>
-    </ClInclude>
     <ClInclude Include="src\t_tests.h">
       <Filter>TEST</Filter>
     </ClInclude>
@@ -74,22 +77,34 @@
       <Filter>UTIL</Filter>
     </ClInclude>
     <ClInclude Include="src\t_window.h">
-      <Filter>GRAPHICS</Filter>
+      <Filter>GRAPHICS - LOW-LEVEL</Filter>
     </ClInclude>
     <ClInclude Include="src\t_charset.h">
-      <Filter>GRAPHICS</Filter>
-    </ClInclude>
-    <ClInclude Include="src\t_char.h">
-      <Filter>GRAPHICS</Filter>
+      <Filter>GRAPHICS - LOW-LEVEL</Filter>
     </ClInclude>
     <ClInclude Include="src\t_color.h">
-      <Filter>GRAPHICS</Filter>
+      <Filter>GRAPHICS - LOW-LEVEL</Filter>
     </ClInclude>
     <ClInclude Include="src\t_keyboard.h">
       <Filter>INPUT</Filter>
     </ClInclude>
+    <ClInclude Include="src\t_tile.h">
+      <Filter>TILE SYSTEM</Filter>
+    </ClInclude>
     <ClInclude Include="src\t_tilebuffer.h">
-      <Filter>CORE</Filter>
+      <Filter>TILE SYSTEM</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_char.h">
+      <Filter>TILE SYSTEM</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_palette.h">
+      <Filter>GRAPHICS - LOW-LEVEL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_screen.h">
+      <Filter>GRAPHICS - HIGH-LEVEL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_tile_animation.h">
+      <Filter>TILE SYSTEM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -102,11 +117,17 @@
     <Filter Include="TEST">
       <UniqueIdentifier>{a56445db-2f75-4346-b2cc-eee7843ce292}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GRAPHICS">
-      <UniqueIdentifier>{cb589e47-33ae-43f4-b8bf-f0954d4be141}</UniqueIdentifier>
-    </Filter>
     <Filter Include="INPUT">
       <UniqueIdentifier>{31c97c3a-1b06-47e4-9c67-9dbac0326a30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TILE SYSTEM">
+      <UniqueIdentifier>{ae92eb0a-0819-44c8-9dc9-15dcf26417a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GRAPHICS - LOW-LEVEL">
+      <UniqueIdentifier>{cb589e47-33ae-43f4-b8bf-f0954d4be141}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GRAPHICS - HIGH-LEVEL">
+      <UniqueIdentifier>{9bf1640e-cf07-4d0e-858d-fcb727bebc0b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -9,7 +9,6 @@ public:
 	static constexpr int height = 8;
 
 	t_data data;
-	int frame_delay = 0;
 
 	t_tile();
 	t_tile(int ix, int fgc, int bgc);
@@ -20,6 +19,7 @@ public:
 
 	t_char& get_char();
 	t_char& get_char(int index);
+	t_char& get_char_wraparound(int index);
 	void set_char(int ix, int fgc, int bgc);
 	void set_char(int position, int ix, int fgc, int bgc);
 	void add_char(int ix, int fgc, int bgc);

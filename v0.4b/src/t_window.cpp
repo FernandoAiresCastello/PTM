@@ -60,6 +60,8 @@ void t_window::clear(t_color color)
 
 void t_window::update()
 {
+	tile_anim.update();
+
 	static int pitch;
 	static void* pixels;
 
@@ -68,6 +70,23 @@ void t_window::update()
 	SDL_UnlockTexture(tex);
 	SDL_RenderCopy(rend, tex, NULL, NULL);
 	SDL_RenderPresent(rend);
+
+	frame_counter++;
+}
+
+void t_window::reset_frame_counter()
+{
+	frame_counter = 0;
+}
+
+uint32_t t_window::get_frame_count() const
+{
+	return frame_counter;
+}
+
+int t_window::get_animation_frame() const
+{
+	return tile_anim.frame;
 }
 
 #define is_valid_pixel(x, y)		x >= 0 && y >= 0 && x < image_w && y < image_h

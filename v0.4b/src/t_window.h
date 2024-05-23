@@ -5,6 +5,7 @@
 #include "t_tile.h"
 #include "t_binary.h"
 #include "t_charset.h"
+#include "t_tile_animation.h"
 
 class t_window
 {
@@ -20,6 +21,10 @@ public:
 	void toggle_fullscreen();
 	void clear(t_color color);
 	void update();
+	void reset_frame_counter();
+	uint32_t get_frame_count() const;
+	int get_animation_frame() const;
+	
 	void draw_pixel(int x, int y, t_color color);
 	void draw_pixels(t_binary pixels, int x, int y, t_color color1, t_color color0, bool grid);
 	void draw_char(t_charset* charset, int char_index, int x, int y, t_color color1, t_color color0, bool grid);
@@ -37,4 +42,6 @@ private:
 	SDL_Texture* tex = NULL;
 	rgb scrbuf[buflen] = { 0 };
 	bool fullscreen = false;
+	t_tile_animation tile_anim;
+	uint32_t frame_counter = 0;
 };

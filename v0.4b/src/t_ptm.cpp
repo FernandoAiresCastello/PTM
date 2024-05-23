@@ -8,7 +8,8 @@
 void t_ptm::run()
 {
 	init();
-	
+	wnd.reset_frame_counter();
+
 	while (wnd.is_open())
 		loop();
 
@@ -29,14 +30,12 @@ void t_ptm::quit()
 
 void t_ptm::loop()
 {
-	draw_test_frame_chars(&charset);
-	wnd.draw_text(&charset, "Hello World!", 1, 1, 0xff0000, 0xffff00, true);
-
 	update();
 }
 
 void t_ptm::update()
 {
+	screen.draw(&wnd, &charset, &palette);
 	wnd.update();
 
 	SDL_Event e = { 0 };
