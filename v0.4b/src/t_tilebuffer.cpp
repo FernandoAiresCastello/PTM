@@ -18,6 +18,16 @@ t_tilebuffer::~t_tilebuffer()
 	tiles = nullptr;
 }
 
+void t_tilebuffer::draw(t_window* wnd, t_charset* chr, t_palette* pal)
+{
+	for (int y = 0; y < rows; y++) {
+		for (int x = 0; x < cols; x++) {
+			t_char& ch = tile_at(x, y).get_char_wraparound(wnd->get_animation_frame());
+			wnd->draw_pixels(chr->get(ch.ix), x, y, pal->get(ch.fgc), pal->get(ch.bgc), true);
+		}
+	}
+}
+
 void t_tilebuffer::set(t_tile tile, int x, int y)
 {
 	tile_at(x, y) = tile;
@@ -43,14 +53,4 @@ void t_tilebuffer::clear()
 {
 	for (int i = 0; i < length; i++)
 		tiles[i].set_blank();
-}
-
-void t_tilebuffer::draw(t_window* wnd, t_charset* chr, t_palette* pal)
-{
-	for (int y = 0; y < rows; y++) {
-		for (int x = 0; x < cols; x++) {
-			t_char& ch = tile_at(x, y).get_char_wraparound(wnd->get_animation_frame());
-			wnd->draw_pixels(chr->get(ch.ix), x, y, pal->get(ch.fgc), pal->get(ch.bgc), true);
-		}
-	}
 }

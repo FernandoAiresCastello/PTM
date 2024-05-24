@@ -15,7 +15,7 @@ public:
 	static constexpr int cols = image_w / t_tile::width;
 	static constexpr int rows = image_h / t_tile::height;
 
-	void create(const char* title);
+	void create(t_string title, int size);
 	void close();
 	bool is_open();
 	void toggle_fullscreen();
@@ -33,9 +33,6 @@ public:
 private:
 	static constexpr int tilesize = t_tile::width * t_tile::height;
 	static constexpr int buflen = image_w * image_h * sizeof(rgb);
-	static constexpr int wnd_zoom = 3;
-	static constexpr int wnd_w = image_w * wnd_zoom;
-	static constexpr int wnd_h = image_h * wnd_zoom;
 
 	SDL_Window* wnd = NULL;
 	SDL_Renderer* rend = NULL;

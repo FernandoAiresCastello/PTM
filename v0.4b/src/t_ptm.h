@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include "t_window.h"
+#include "t_string.h"
 #include "t_keyboard.h"
 #include "t_charset.h"
 #include "t_palette.h"
@@ -9,6 +10,8 @@
 class t_ptm
 {
 public:
+	static constexpr auto title = "PTM - Programmable Tile Machine";
+
 	void run();
 
 private:

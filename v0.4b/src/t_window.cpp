@@ -1,14 +1,20 @@
 #include "t_window.h"
 #include "t_util.h"
 
-void t_window::create(const char* title)
+void t_window::create(t_string title, int size)
 {
+	if (size < 1) size = 1;
+	else if (size > 5) size = 5;
+
+	int wnd_w = image_w * size;
+	int wnd_h = image_h * size;
+
 	SDL_SetHint(SDL_HINT_RENDER_DRIVER, "direct3d");
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
 
 	auto wnd_flags = (fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0) | SDL_WINDOW_HIDDEN;
 
-	wnd = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, wnd_w, wnd_h, wnd_flags);
+	wnd = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, wnd_w, wnd_h, wnd_flags);
 	rend = SDL_CreateRenderer(wnd, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
 	tex = SDL_CreateTexture(rend, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, image_w, image_h);
 

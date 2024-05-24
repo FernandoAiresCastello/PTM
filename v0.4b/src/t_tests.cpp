@@ -176,4 +176,33 @@ void t_tests::t_tilebuf_tests()
 	t_tilebuffer buf(t_window::cols, t_window::rows);
 	assert(buf.cols == t_window::cols);
 	assert(buf.rows == t_window::rows);
+
+	// assert all tiles are blank
+	for (int y = 0; y < buf.rows; y++) {
+		for (int x = 0; x < buf.cols; x++) {
+			assert(buf.get_ref(x, y).is_blank());
+		}
+	}
+
+	// alter tile by reference
+	t_tile& tile = buf.get_ref(11, 22);
+	tile.set_char('@', 33, 44);
+	tile.data.set("Test Data", "This is a test");
+	t_char& ch1 = buf.get_ref(11, 22).get_char();
+	assert(ch1.ix == '@');
+	assert(ch1.fgc == 33);
+	assert(ch1.bgc == 44);
+	t_tile& tile2 = buf.get_ref(11, 22);
+	assert(tile2.data.has("Test Data", "This is a test"));
+
+	// copy tile
+	t_tile copy = buf.get_copy(1, 2);
+	tile.set_char('#', 55, 66);
+	t_char& ch2 = buf.get_ref(1, 2).get_char();
+	assert(ch2.is_blank());
+
+	// set tile
+	buf.set(copy, 30, 10);
+	t_tile& tile3 = buf.get_ref(30, 10);
+	assert(tile3 == copy);
 }

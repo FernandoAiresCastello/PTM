@@ -3,8 +3,6 @@
 #include "t_keyboard.h"
 #include "t_util.h"
 
-#define APP_TITLE	"PTM"
-
 void t_ptm::run()
 {
 	init();
@@ -19,7 +17,7 @@ void t_ptm::run()
 void t_ptm::init()
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
-	wnd.create(APP_TITLE);
+	wnd.create(title, 3);
 }
 
 void t_ptm::quit()
