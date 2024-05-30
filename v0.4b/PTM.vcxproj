@@ -31,6 +31,9 @@
     <ClCompile Include="src\t_ptm.cpp" />
     <ClCompile Include="src\t_screen.cpp" />
     <ClCompile Include="src\t_string.cpp" />
+    <ClCompile Include="src\t_subsystem.cpp" />
+    <ClCompile Include="src\t_sys_main.cpp" />
+    <ClCompile Include="src\t_sys_runtime.cpp" />
     <ClCompile Include="src\t_tests.cpp" />
     <ClCompile Include="src\t_tile.cpp" />
     <ClCompile Include="src\t_tilebuffer.cpp" />
@@ -50,6 +53,9 @@
     <ClInclude Include="src\t_ptm.h" />
     <ClInclude Include="src\t_screen.h" />
     <ClInclude Include="src\t_string.h" />
+    <ClInclude Include="src\t_subsystem.h" />
+    <ClInclude Include="src\t_sys_main.h" />
+    <ClInclude Include="src\t_sys_runtime.h" />
     <ClInclude Include="src\t_tests.h" />
     <ClInclude Include="src\t_tile.h" />
     <ClInclude Include="src\t_tilebuffer.h" />

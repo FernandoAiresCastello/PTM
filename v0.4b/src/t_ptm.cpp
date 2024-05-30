@@ -6,10 +6,9 @@
 void t_ptm::run()
 {
 	init();
-	wnd.reset_frame_counter();
 
 	while (wnd.is_open())
-		loop();
+		main_loop();
 
 	quit();
 }
@@ -17,7 +16,12 @@ void t_ptm::run()
 void t_ptm::init()
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
+
 	wnd.create(title, 3);
+	wnd.reset_frame_counter();
+
+	sys_main.on_init();
+	sys_runtime.on_init();
 }
 
 void t_ptm::quit()
@@ -26,16 +30,23 @@ void t_ptm::quit()
 	SDL_Quit();
 }
 
-void t_ptm::loop()
+void t_ptm::main_loop()
 {
-	update();
+	if (mode == t_mode::sys_main) {
+		sys_main.on_loop();
+		sys_main.draw(&wnd, &charset, &palette);
+	}
+	else if (mode == t_mode::sys_runtime) {
+		sys_runtime.on_loop();
+		sys_runtime.draw(&wnd, &charset, &palette);
+	}
+
+	wnd.update();
+	process_sdl_events();
 }
 
-void t_ptm::update()
+void t_ptm::process_sdl_events()
 {
-	screen.draw(&wnd, &charset, &palette);
-	wnd.update();
-
 	SDL_Event e = { 0 };
 
 	while (SDL_PollEvent(&e)) {
@@ -50,8 +61,18 @@ void t_ptm::update()
 
 void t_ptm::handle_keyboard(SDL_Keycode key)
 {
+	kb.key = key;
+
 	if (kb.alt() && key == SDLK_RETURN) {
 		wnd.toggle_fullscreen();
+	}
+	else {
+		if (mode == t_mode::sys_main) {
+			sys_main.on_keypress(&kb);
+		}
+		else if (mode == t_mode::sys_runtime) {
+			sys_runtime.on_keypress(&kb);
+		}
 	}
 }
 

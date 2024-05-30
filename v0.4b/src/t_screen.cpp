@@ -1,13 +1,11 @@
 #include "t_screen.h"
-#include "t_window.h"
-#include "t_charset.h"
-#include "t_palette.h"
+#include "t_tilebuffer.h"
 
 t_screen::t_screen()
 {
 }
 
-void t_screen::draw(t_window* wnd, t_charset* chr, t_palette* pal)
+void t_screen::set_tilebuf(t_tilebuffer* buf)
 {
-	buf.draw(wnd, chr, pal);
+	this->buf = buf;
 }

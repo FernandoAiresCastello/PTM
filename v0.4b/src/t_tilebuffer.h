@@ -11,6 +11,7 @@ public:
 	const int cols;
 	const int rows;
 
+	t_tilebuffer();
 	t_tilebuffer(int cols, int rows);
 	~t_tilebuffer();
 

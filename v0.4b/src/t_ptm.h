@@ -5,12 +5,14 @@
 #include "t_keyboard.h"
 #include "t_charset.h"
 #include "t_palette.h"
-#include "t_screen.h"
+#include "t_sys_main.h"
+#include "t_sys_runtime.h"
 
 class t_ptm
 {
 public:
-	static constexpr auto title = "PTM - Programmable Tile Machine";
+	static constexpr auto 
+		title = "PTM - Programmable Tile Machine";
 
 	void run();
 
@@ -19,12 +21,18 @@ private:
 	t_keyboard kb;
 	t_charset charset;
 	t_palette palette;
-	t_screen screen;
+	t_sys_main sys_main;
+	t_sys_runtime sys_runtime;
+
+	enum class t_mode {
+		sys_main, sys_runtime
+	}
+	mode = t_mode::sys_main;
 
 	void init();
 	void quit();
-	void loop();
-	void update();
+	void main_loop();
+	void process_sdl_events();
 	void handle_keyboard(SDL_Keycode key);
 
 	void draw_test_frame_colors();

@@ -5,7 +5,11 @@
 
 #define tile_at(x, y)	tiles[y * cols + x]
 
-t_tilebuffer::t_tilebuffer(int cols, int rows) : 
+t_tilebuffer::t_tilebuffer() : t_tilebuffer(t_window::cols, t_window::rows)
+{
+}
+
+t_tilebuffer::t_tilebuffer(int cols, int rows) :
 	cols(cols), rows(rows), length(cols * rows)
 {
 	tiles = new t_tile[length];

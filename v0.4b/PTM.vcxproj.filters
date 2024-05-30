@@ -50,6 +50,15 @@
     <ClCompile Include="src\t_screen.cpp">
       <Filter>GRAPHICS - HIGH-LEVEL</Filter>
     </ClCompile>
+    <ClCompile Include="src\t_sys_main.cpp">
+      <Filter>SUBSYSTEMS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_sys_runtime.cpp">
+      <Filter>SUBSYSTEMS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_subsystem.cpp">
+      <Filter>SUBSYSTEMS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\t_string.h">
@@ -106,6 +115,15 @@
     <ClInclude Include="src\t_tile_animation.h">
       <Filter>TILE SYSTEM</Filter>
     </ClInclude>
+    <ClInclude Include="src\t_sys_main.h">
+      <Filter>SUBSYSTEMS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_sys_runtime.h">
+      <Filter>SUBSYSTEMS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_subsystem.h">
+      <Filter>SUBSYSTEMS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="UTIL">
@@ -128,6 +146,9 @@
     </Filter>
     <Filter Include="GRAPHICS - HIGH-LEVEL">
       <UniqueIdentifier>{9bf1640e-cf07-4d0e-858d-fcb727bebc0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SUBSYSTEMS">
+      <UniqueIdentifier>{c27a95b5-7353-4a28-b917-25ae257df820}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
