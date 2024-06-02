@@ -1,5 +1,4 @@
 #pragma once
-#include <SDL.h>
 #include "t_window.h"
 #include "t_string.h"
 #include "t_keyboard.h"
@@ -33,7 +32,7 @@ private:
 	void quit();
 	void main_loop();
 	void process_sdl_events();
-	void handle_keyboard(SDL_Keycode key);
+	void handle_keyboard(t_keycode key);
 
 	void draw_test_frame_colors();
 	void draw_test_frame_pixels();

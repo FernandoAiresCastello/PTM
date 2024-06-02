@@ -1,3 +1,4 @@
+#include <SDL.h>
 #include "t_ptm.h"
 #include "t_window.h"
 #include "t_keyboard.h"
@@ -59,7 +60,7 @@ void t_ptm::process_sdl_events()
 	}
 }
 
-void t_ptm::handle_keyboard(SDL_Keycode key)
+void t_ptm::handle_keyboard(t_keycode key)
 {
 	kb.key = key;
 

@@ -8,5 +8,5 @@ bool t_keyboard::alt()
 
 bool t_keyboard::enter()
 {
-    return SDL_GetKeyboardState(NULL)[SDL_SCANCODE_RETURN];
+    return SDL_GetKeyboardState(nullptr)[SDL_SCANCODE_RETURN];
 }

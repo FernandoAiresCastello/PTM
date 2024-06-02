@@ -1,3 +1,4 @@
+#include <SDL_main.h>
 #include "t_ptm.h"
 #include "t_tests.h"
 

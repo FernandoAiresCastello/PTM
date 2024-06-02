@@ -1,5 +1,4 @@
 #pragma once
-#include <SDL.h>
 #include "t_color.h"
 #include "t_string.h"
 #include "t_tile.h"
@@ -32,13 +31,13 @@ public:
 
 private:
 	static constexpr int tilesize = t_tile::width * t_tile::height;
-	static constexpr int buflen = image_w * image_h * sizeof(rgb);
+	static constexpr int buflen = image_w * image_h * sizeof(t_rgb);
 
-	SDL_Window* wnd = NULL;
-	SDL_Renderer* rend = NULL;
-	SDL_Texture* tex = NULL;
-	rgb scrbuf[buflen] = { 0 };
+	void* wnd = nullptr;
+	void* rend = nullptr;
+	void* tex = nullptr;
 	bool fullscreen = false;
+	t_rgb scrbuf[buflen] = { 0 };
 	t_tile_animation tile_anim;
 	uint32_t frame_counter = 0;
 };

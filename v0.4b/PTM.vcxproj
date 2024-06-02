@@ -29,7 +29,6 @@
     <ClCompile Include="src\t_list.cpp" />
     <ClCompile Include="src\t_palette.cpp" />
     <ClCompile Include="src\t_ptm.cpp" />
-    <ClCompile Include="src\t_screen.cpp" />
     <ClCompile Include="src\t_string.cpp" />
     <ClCompile Include="src\t_subsystem.cpp" />
     <ClCompile Include="src\t_sys_main.cpp" />
@@ -51,7 +50,6 @@
     <ClInclude Include="src\t_list.h" />
     <ClInclude Include="src\t_palette.h" />
     <ClInclude Include="src\t_ptm.h" />
-    <ClInclude Include="src\t_screen.h" />
     <ClInclude Include="src\t_string.h" />
     <ClInclude Include="src\t_subsystem.h" />
     <ClInclude Include="src\t_sys_main.h" />

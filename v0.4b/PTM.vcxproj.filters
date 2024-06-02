@@ -47,9 +47,6 @@
     <ClCompile Include="src\t_palette.cpp">
       <Filter>GRAPHICS - LOW-LEVEL</Filter>
     </ClCompile>
-    <ClCompile Include="src\t_screen.cpp">
-      <Filter>GRAPHICS - HIGH-LEVEL</Filter>
-    </ClCompile>
     <ClCompile Include="src\t_sys_main.cpp">
       <Filter>SUBSYSTEMS</Filter>
     </ClCompile>
@@ -109,9 +106,6 @@
     <ClInclude Include="src\t_palette.h">
       <Filter>GRAPHICS - LOW-LEVEL</Filter>
     </ClInclude>
-    <ClInclude Include="src\t_screen.h">
-      <Filter>GRAPHICS - HIGH-LEVEL</Filter>
-    </ClInclude>
     <ClInclude Include="src\t_tile_animation.h">
       <Filter>TILE SYSTEM</Filter>
     </ClInclude>
@@ -143,9 +137,6 @@
     </Filter>
     <Filter Include="GRAPHICS - LOW-LEVEL">
       <UniqueIdentifier>{cb589e47-33ae-43f4-b8bf-f0954d4be141}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GRAPHICS - HIGH-LEVEL">
-      <UniqueIdentifier>{9bf1640e-cf07-4d0e-858d-fcb727bebc0b}</UniqueIdentifier>
     </Filter>
     <Filter Include="SUBSYSTEMS">
       <UniqueIdentifier>{c27a95b5-7353-4a28-b917-25ae257df820}</UniqueIdentifier>

@@ -5,7 +5,7 @@ t_color::t_color() : r(0), g(0), b(0)
 {
 }
 
-t_color::t_color(rgb rgb)
+t_color::t_color(t_rgb rgb)
 {
     unpack_rgb(rgb, &r, &g, &b);
 }
@@ -38,12 +38,12 @@ t_color& t_color::operator=(const t_color& other)
     return *this;
 }
 
-rgb t_color::pack_rgb(int r, int g, int b)
+t_rgb t_color::pack_rgb(int r, int g, int b)
 {
     return (r << 16) | (g << 8) | b;
 }
 
-void t_color::unpack_rgb(rgb rgb, int* r, int* g, int* b)
+void t_color::unpack_rgb(t_rgb rgb, int* r, int* g, int* b)
 {
     *r = (rgb >> 16) & 0xFF;
     *g = (rgb >> 8) & 0xFF;
@@ -55,7 +55,7 @@ t_color t_color::get_random()
     return t_color(t_util::rnd(0, 255), t_util::rnd(0, 255), t_util::rnd(0, 255));
 }
 
-void t_color::set(rgb rgb)
+void t_color::set(t_rgb rgb)
 {
     unpack_rgb(rgb, &r, &g, &b);
 }
@@ -97,7 +97,7 @@ int t_color::get_b() const
     return b;
 }
 
-rgb t_color::to_rgb() const
+t_rgb t_color::to_rgb() const
 {
     return pack_rgb(r, g, b);
 }
