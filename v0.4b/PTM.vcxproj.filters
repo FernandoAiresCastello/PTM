@@ -24,13 +24,13 @@
       <Filter>TEST</Filter>
     </ClCompile>
     <ClCompile Include="src\t_window.cpp">
-      <Filter>GRAPHICS - LOW-LEVEL</Filter>
+      <Filter>GRAPHICS</Filter>
     </ClCompile>
     <ClCompile Include="src\t_charset.cpp">
-      <Filter>GRAPHICS - LOW-LEVEL</Filter>
+      <Filter>GRAPHICS</Filter>
     </ClCompile>
     <ClCompile Include="src\t_color.cpp">
-      <Filter>GRAPHICS - LOW-LEVEL</Filter>
+      <Filter>GRAPHICS</Filter>
     </ClCompile>
     <ClCompile Include="src\t_keyboard.cpp">
       <Filter>INPUT</Filter>
@@ -45,7 +45,7 @@
       <Filter>TILE SYSTEM</Filter>
     </ClCompile>
     <ClCompile Include="src\t_palette.cpp">
-      <Filter>GRAPHICS - LOW-LEVEL</Filter>
+      <Filter>GRAPHICS</Filter>
     </ClCompile>
     <ClCompile Include="src\t_sys_main.cpp">
       <Filter>SUBSYSTEMS</Filter>
@@ -83,13 +83,13 @@
       <Filter>UTIL</Filter>
     </ClInclude>
     <ClInclude Include="src\t_window.h">
-      <Filter>GRAPHICS - LOW-LEVEL</Filter>
+      <Filter>GRAPHICS</Filter>
     </ClInclude>
     <ClInclude Include="src\t_charset.h">
-      <Filter>GRAPHICS - LOW-LEVEL</Filter>
+      <Filter>GRAPHICS</Filter>
     </ClInclude>
     <ClInclude Include="src\t_color.h">
-      <Filter>GRAPHICS - LOW-LEVEL</Filter>
+      <Filter>GRAPHICS</Filter>
     </ClInclude>
     <ClInclude Include="src\t_keyboard.h">
       <Filter>INPUT</Filter>
@@ -104,7 +104,7 @@
       <Filter>TILE SYSTEM</Filter>
     </ClInclude>
     <ClInclude Include="src\t_palette.h">
-      <Filter>GRAPHICS - LOW-LEVEL</Filter>
+      <Filter>GRAPHICS</Filter>
     </ClInclude>
     <ClInclude Include="src\t_tile_animation.h">
       <Filter>TILE SYSTEM</Filter>
@@ -135,11 +135,11 @@
     <Filter Include="TILE SYSTEM">
       <UniqueIdentifier>{ae92eb0a-0819-44c8-9dc9-15dcf26417a3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GRAPHICS - LOW-LEVEL">
-      <UniqueIdentifier>{cb589e47-33ae-43f4-b8bf-f0954d4be141}</UniqueIdentifier>
-    </Filter>
     <Filter Include="SUBSYSTEMS">
       <UniqueIdentifier>{c27a95b5-7353-4a28-b917-25ae257df820}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GRAPHICS">
+      <UniqueIdentifier>{cb589e47-33ae-43f4-b8bf-f0954d4be141}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

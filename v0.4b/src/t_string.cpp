@@ -69,7 +69,18 @@ const char& t_string::operator[](size_t index) const
 {
 	return value[index];
 }
-	
+
+t_string& t_string::operator+=(const t_string& other)
+{
+	value += other.value;
+	return *this;
+}
+
+t_string t_string::operator+(const t_string& other) const
+{
+	return t_string(value + other.value);
+}
+
 const std::string& t_string::s_str() const noexcept
 {
 	return value;
