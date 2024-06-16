@@ -1,14 +1,10 @@
-#include <SDL_main.h>
-#include "t_ptm.h"
-#include "t_tests.h"
-
-t_tests tests;
-t_ptm ptm;
+#include "PTM.h"
 
 int main(int argc, char* argv[])
 {
-	tests.run();
-	ptm.run();
+	ptm::run_tests();
+	//ptm::run_graphics_test();
+	ptm::run_main();
 
 	return 0;
 }

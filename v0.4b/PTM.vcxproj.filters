@@ -17,9 +17,6 @@
     <ClCompile Include="src\t_data.cpp">
       <Filter>UTIL</Filter>
     </ClCompile>
-    <ClCompile Include="src\t_ptm.cpp">
-      <Filter>CORE</Filter>
-    </ClCompile>
     <ClCompile Include="src\t_tests.cpp">
       <Filter>TEST</Filter>
     </ClCompile>
@@ -47,14 +44,11 @@
     <ClCompile Include="src\t_palette.cpp">
       <Filter>GRAPHICS</Filter>
     </ClCompile>
-    <ClCompile Include="src\t_sys_main.cpp">
-      <Filter>SUBSYSTEMS</Filter>
+    <ClCompile Include="src\PTM.cpp">
+      <Filter>CORE</Filter>
     </ClCompile>
-    <ClCompile Include="src\t_sys_runtime.cpp">
-      <Filter>SUBSYSTEMS</Filter>
-    </ClCompile>
-    <ClCompile Include="src\t_subsystem.cpp">
-      <Filter>SUBSYSTEMS</Filter>
+    <ClCompile Include="src\t_screen.cpp">
+      <Filter>MACHINE</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -72,9 +66,6 @@
     </ClInclude>
     <ClInclude Include="src\t_data.h">
       <Filter>UTIL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\t_ptm.h">
-      <Filter>CORE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_tests.h">
       <Filter>TEST</Filter>
@@ -109,22 +100,22 @@
     <ClInclude Include="src\t_tile_animation.h">
       <Filter>TILE SYSTEM</Filter>
     </ClInclude>
-    <ClInclude Include="src\t_sys_main.h">
-      <Filter>SUBSYSTEMS</Filter>
+    <ClInclude Include="src\PTM.h">
+      <Filter>CORE</Filter>
     </ClInclude>
-    <ClInclude Include="src\t_sys_runtime.h">
-      <Filter>SUBSYSTEMS</Filter>
+    <ClInclude Include="src\t_screen.h">
+      <Filter>MACHINE</Filter>
     </ClInclude>
-    <ClInclude Include="src\t_subsystem.h">
-      <Filter>SUBSYSTEMS</Filter>
+    <ClInclude Include="src\t_index.h">
+      <Filter>GRAPHICS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_tileflags.h">
+      <Filter>TILE SYSTEM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="UTIL">
       <UniqueIdentifier>{1e5749d2-762f-4f97-b9eb-39d554790416}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CORE">
-      <UniqueIdentifier>{c4069109-1c23-43c7-9c3b-f410a449ffa4}</UniqueIdentifier>
     </Filter>
     <Filter Include="TEST">
       <UniqueIdentifier>{a56445db-2f75-4346-b2cc-eee7843ce292}</UniqueIdentifier>
@@ -135,11 +126,14 @@
     <Filter Include="TILE SYSTEM">
       <UniqueIdentifier>{ae92eb0a-0819-44c8-9dc9-15dcf26417a3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SUBSYSTEMS">
-      <UniqueIdentifier>{c27a95b5-7353-4a28-b917-25ae257df820}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GRAPHICS">
       <UniqueIdentifier>{cb589e47-33ae-43f4-b8bf-f0954d4be141}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CORE">
+      <UniqueIdentifier>{d5551f7b-30ed-4f80-aa0a-e1dc9a86334e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MACHINE">
+      <UniqueIdentifier>{1e5c2f8b-690e-4f1e-a849-f52336d15e66}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

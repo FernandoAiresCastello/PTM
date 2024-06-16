@@ -1,6 +1,7 @@
 #pragma once
 #include "t_list.h"
 #include "t_color.h"
+#include "t_index.h"
 
 class t_palette
 {
@@ -11,8 +12,8 @@ public:
 
 	void remove_all();
 	void add(t_color color);
-	t_color& get(int index);
-	void set(int index, t_color color);
+	t_color& get(t_index index);
+	void set(t_index index, t_color color);
 	int size() const;
 	void reset();
 

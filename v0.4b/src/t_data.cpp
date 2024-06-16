@@ -12,6 +12,11 @@ t_data::t_data(const t_data& other)
 	entries = other.entries;
 }
 
+t_data::~t_data()
+{
+	entries.clear();
+}
+
 bool t_data::operator==(const t_data& other) const
 {
 	if (entries.size() != other.entries.size())

@@ -10,6 +10,7 @@ public:
 
 	t_data();
 	t_data(const t_data& other);
+	~t_data();
 
 	bool operator==(const t_data& other) const;
 	t_data& operator=(const t_data& other);

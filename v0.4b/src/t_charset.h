@@ -1,6 +1,7 @@
 #pragma once
 #include "t_list.h"
 #include "t_binary.h"
+#include "t_index.h"
 
 class t_charset
 {
@@ -11,8 +12,8 @@ public:
 
 	void remove_all();
 	void add(t_binary bits);
-	t_binary& get(int index);
-	void set(int index, t_binary bits);
+	t_binary& get(t_index index);
+	void set(t_index index, t_binary bits);
 	int size() const;
 	void reset();
 

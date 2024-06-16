@@ -10,6 +10,7 @@ public:
 	t_string(const t_string& other);
 	t_string(const std::string& other);
 	t_string(char single_char);
+	~t_string();
 
 	operator std::string() const;
 	bool operator==(const t_string& other) const;

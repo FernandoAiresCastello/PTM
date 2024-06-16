@@ -5,7 +5,7 @@ t_tile::t_tile()
 	add_blank_char();
 }
 
-t_tile::t_tile(int ix, int fgc, int bgc)
+t_tile::t_tile(t_index ix, t_index fgc, t_index bgc)
 {
 	chars.emplace_back(ix, fgc, bgc);
 }
@@ -13,6 +13,12 @@ t_tile::t_tile(int ix, int fgc, int bgc)
 t_tile::t_tile(const t_tile& other)
 {
 	chars = other.chars;
+}
+
+t_tile::~t_tile()
+{
+	chars.clear();
+	data.clear();
 }
 
 bool t_tile::operator==(const t_tile& other) const
@@ -42,27 +48,27 @@ t_char& t_tile::get_char()
 	return chars[0];
 }
 
-t_char& t_tile::get_char(int index)
+t_char& t_tile::get_char(int position)
 {
-	return chars[index];
+	return chars[position];
 }
 
-t_char& t_tile::get_char_wraparound(int index)
+t_char& t_tile::get_char_wraparound(int position)
 {
-	return chars[index % chars.size()];
+	return chars[position % chars.size()];
 }
 
-void t_tile::set_char(int ix, int fgc, int bgc)
+void t_tile::set_char(t_index ix, t_index fgc, t_index bgc)
 {
 	chars[0].set(ix, fgc, bgc);
 }
 
-void t_tile::set_char(int position, int ix, int fgc, int bgc)
+void t_tile::set_char(int position, t_index ix, t_index fgc, t_index bgc)
 {
 	chars[position].set(ix, fgc, bgc);
 }
 
-void t_tile::add_char(int ix, int fgc, int bgc)
+void t_tile::add_char(t_index ix, t_index fgc, t_index bgc)
 {
 	chars.emplace_back(ix, fgc, bgc);
 }

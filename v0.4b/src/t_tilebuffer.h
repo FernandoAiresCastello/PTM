@@ -16,7 +16,9 @@ public:
 	~t_tilebuffer();
 
 	void draw(t_window* wnd, t_charset* chr, t_palette* pal);
+	void draw(t_window* wnd, t_charset* chr, t_palette* pal, int px, int py);
 	void set(t_tile tile, int x, int y);
+	void set_text(t_string text, int x, int y, t_index fgc, t_index bgc);
 	t_tile& get_ref(int x, int y);
 	t_tile get_copy(int x, int y) const;
 	void fill(t_tile tile);

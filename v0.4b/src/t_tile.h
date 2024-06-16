@@ -1,5 +1,6 @@
 #pragma once
 #include "t_char.h"
+#include "t_tileflags.h"
 #include "t_data.h"
 
 class t_tile
@@ -8,21 +9,23 @@ public:
 	static constexpr int width = 8;
 	static constexpr int height = 8;
 
+	t_tileflags flags;
 	t_data data;
 
 	t_tile();
-	t_tile(int ix, int fgc, int bgc);
+	t_tile(t_index ix, t_index fgc, t_index bgc);
 	t_tile(const t_tile& other);
+	~t_tile();
 
 	bool operator==(const t_tile& other) const;
 	t_tile& operator=(const t_tile& other);
 
 	t_char& get_char();
-	t_char& get_char(int index);
-	t_char& get_char_wraparound(int index);
-	void set_char(int ix, int fgc, int bgc);
-	void set_char(int position, int ix, int fgc, int bgc);
-	void add_char(int ix, int fgc, int bgc);
+	t_char& get_char(int position);
+	t_char& get_char_wraparound(int position);
+	void set_char(t_index ix, t_index fgc, t_index bgc);
+	void set_char(int position, t_index ix, t_index fgc, t_index bgc);
+	void add_char(t_index ix, t_index fgc, t_index bgc);
 	void add_blank_char();
 	int char_count();
 	bool is_blank() const;

@@ -1,12 +1,9 @@
 #pragma once
-
-using t_keycode = int32_t;
+#include <SDL.h>
 
 class t_keyboard
 {
 public:
-	t_keycode key = 0;
-
+	bool is_pressed(SDL_Scancode key);
 	bool alt();
-	bool enter();
 };

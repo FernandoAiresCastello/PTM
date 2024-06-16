@@ -14,7 +14,7 @@ public:
 	static constexpr int cols = image_w / t_tile::width;
 	static constexpr int rows = image_h / t_tile::height;
 
-	void create(t_string title, int size);
+	void open(t_string title, int size);
 	void close();
 	bool is_open();
 	void toggle_fullscreen();

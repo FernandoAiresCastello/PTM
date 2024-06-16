@@ -28,6 +28,12 @@ t_string::t_string(char single_char)
 	value = single_char;
 }
 
+t_string::~t_string()
+{
+	value.clear();
+	value.shrink_to_fit();
+}
+
 t_string::operator std::string() const
 {
 	return value;

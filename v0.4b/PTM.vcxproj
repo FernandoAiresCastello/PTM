@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\PTM.cpp" />
     <ClCompile Include="src\t_char.cpp" />
     <ClCompile Include="src\t_charset.cpp" />
     <ClCompile Include="src\t_color.cpp" />
@@ -28,11 +29,8 @@
     <ClCompile Include="src\t_keyboard.cpp" />
     <ClCompile Include="src\t_list.cpp" />
     <ClCompile Include="src\t_palette.cpp" />
-    <ClCompile Include="src\t_ptm.cpp" />
+    <ClCompile Include="src\t_screen.cpp" />
     <ClCompile Include="src\t_string.cpp" />
-    <ClCompile Include="src\t_subsystem.cpp" />
-    <ClCompile Include="src\t_sys_main.cpp" />
-    <ClCompile Include="src\t_sys_runtime.cpp" />
     <ClCompile Include="src\t_tests.cpp" />
     <ClCompile Include="src\t_tile.cpp" />
     <ClCompile Include="src\t_tilebuffer.cpp" />
@@ -40,23 +38,23 @@
     <ClCompile Include="src\t_window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\PTM.h" />
     <ClInclude Include="src\t_binary.h" />
     <ClInclude Include="src\t_char.h" />
     <ClInclude Include="src\t_charset.h" />
     <ClInclude Include="src\t_color.h" />
     <ClInclude Include="src\t_data.h" />
     <ClInclude Include="src\t_dict.h" />
+    <ClInclude Include="src\t_index.h" />
     <ClInclude Include="src\t_keyboard.h" />
     <ClInclude Include="src\t_list.h" />
     <ClInclude Include="src\t_palette.h" />
-    <ClInclude Include="src\t_ptm.h" />
+    <ClInclude Include="src\t_screen.h" />
     <ClInclude Include="src\t_string.h" />
-    <ClInclude Include="src\t_subsystem.h" />
-    <ClInclude Include="src\t_sys_main.h" />
-    <ClInclude Include="src\t_sys_runtime.h" />
     <ClInclude Include="src\t_tests.h" />
     <ClInclude Include="src\t_tile.h" />
     <ClInclude Include="src\t_tilebuffer.h" />
+    <ClInclude Include="src\t_tileflags.h" />
     <ClInclude Include="src\t_tile_animation.h" />
     <ClInclude Include="src\t_util.h" />
     <ClInclude Include="src\t_window.h" />

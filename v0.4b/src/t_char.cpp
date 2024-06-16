@@ -4,7 +4,7 @@ t_char::t_char() : ix(0), fgc(0), bgc(0)
 {
 }
 
-t_char::t_char(int ix, int fgc, int bgc) : ix(ix), fgc(fgc), bgc(bgc)
+t_char::t_char(t_index ix, t_index fgc, t_index bgc) : ix(ix), fgc(fgc), bgc(bgc)
 {
 }
 
@@ -29,7 +29,7 @@ t_char& t_char::operator=(const t_char& other)
     return *this;
 }
 
-void t_char::set(int ix, int fgc, int bgc)
+void t_char::set(t_index ix, t_index fgc, t_index bgc)
 {
     this->ix = ix;
     this->fgc = fgc;

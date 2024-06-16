@@ -6,7 +6,7 @@
 #define sdl_rend ((SDL_Renderer*)rend)
 #define sdl_tex ((SDL_Texture*)tex)
 
-void t_window::create(t_string title, int size)
+void t_window::open(t_string title, int size)
 {
 	if (size < 1) size = 1;
 	else if (size > 5) size = 5;
