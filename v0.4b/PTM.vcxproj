@@ -24,6 +24,7 @@
     <ClCompile Include="src\t_char.cpp" />
     <ClCompile Include="src\t_charset.cpp" />
     <ClCompile Include="src\t_color.cpp" />
+    <ClCompile Include="src\t_cursor.cpp" />
     <ClCompile Include="src\t_data.cpp" />
     <ClCompile Include="src\t_dict.cpp" />
     <ClCompile Include="src\t_keyboard.cpp" />
@@ -43,6 +44,7 @@
     <ClInclude Include="src\t_char.h" />
     <ClInclude Include="src\t_charset.h" />
     <ClInclude Include="src\t_color.h" />
+    <ClInclude Include="src\t_cursor.h" />
     <ClInclude Include="src\t_data.h" />
     <ClInclude Include="src\t_dict.h" />
     <ClInclude Include="src\t_index.h" />

@@ -3,7 +3,9 @@
 #include "t_charset.h"
 #include "t_palette.h"
 
-#define tile_at(x, y)	tiles[y * cols + x]
+#define tile_at(x, y)			tiles[y * cols + x]
+#define if_inside_bounds(x, y)	if (x >= 0 && y >= 0 && x < cols && y < rows)
+#define if_out_of_bounds(x, y)	if (x < 0 || y < 0 || x >= cols || y >= rows)
 
 t_tilebuffer::t_tilebuffer() : t_tilebuffer(t_window::cols, t_window::rows)
 {
@@ -16,6 +18,16 @@ t_tilebuffer::t_tilebuffer(int cols, int rows) :
 		tiles.emplace_back();
 
 	clear();
+}
+
+int t_tilebuffer::last_row() const
+{
+	return rows - 1;
+}
+
+int t_tilebuffer::last_col() const
+{
+	return cols - 1;
 }
 
 void t_tilebuffer::draw(t_window* wnd, t_charset* chr, t_palette* pal)
@@ -40,14 +52,43 @@ void t_tilebuffer::draw(t_window* wnd, t_charset* chr, t_palette* pal, int px, i
 
 void t_tilebuffer::set(const t_tile& tile, int x, int y)
 {
-	tile_at(x, y) = tile;
+	if_inside_bounds(x, y)
+		tile_at(x, y) = tile;
 }
 
 void t_tilebuffer::set_text(const t_string& text, int x, int y, t_index fgc, t_index bgc)
 {
 	for (auto& ch : text.s_str()) {
-		tile_at(x++, y) = t_tile(ch, fgc, bgc);
+		if_out_of_bounds(x, y)
+			break;
+		
+		tile_at(x, y) = t_tile(ch, fgc, bgc);
+		x++;
 	}
+}
+
+int t_tilebuffer::set_text_wrap(const t_string& text, int* xptr, int* yptr, t_index fgc, t_index bgc)
+{
+	int ix = 0;
+	for (auto& ch : text.s_str()) {
+		tile_at((*xptr), (*yptr)) = t_tile(ch, fgc, bgc);
+		ix++;
+		(*xptr)++;
+		if ((*xptr) >= cols) {
+			(*xptr) = 0;
+			(*yptr)++;
+			if ((*yptr) >= rows) {
+				break;
+			}
+		}
+	}
+	return ix;
+}
+
+void t_tilebuffer::set_blank(int x, int y)
+{
+	if_inside_bounds(x, y)
+		tile_at(x, y).set_blank();
 }
 
 t_tile& t_tilebuffer::get_ref(int x, int y)

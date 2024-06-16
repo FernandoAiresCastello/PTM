@@ -50,6 +50,9 @@
     <ClCompile Include="src\t_screen.cpp">
       <Filter>MACHINE</Filter>
     </ClCompile>
+    <ClCompile Include="src\t_cursor.cpp">
+      <Filter>MACHINE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\t_string.h">
@@ -111,6 +114,9 @@
     </ClInclude>
     <ClInclude Include="src\t_tileflags.h">
       <Filter>TILE SYSTEM</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_cursor.h">
+      <Filter>MACHINE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

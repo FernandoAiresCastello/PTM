@@ -6,6 +6,7 @@
 #include "t_palette.h"
 #include "t_tilebuffer.h"
 #include "t_screen.h"
+#include "t_util.h"
 
 namespace ptm
 {
@@ -36,7 +37,7 @@ void ptm::run_graphics_test()
 	int i = 0;
 	for (int y = 1; y < 1 + 16; y++) {
 		for (int x = 1; x < 1 + 16; x++) {
-			scr.put(t_tile(0, i, i), x, y);
+			scr.set_tile(t_tile(0, i, i), x, y);
 			i++;
 		}
 	}
@@ -44,7 +45,7 @@ void ptm::run_graphics_test()
 	i = 0;
 	for (int y = 1; y < 1 + 16; y++) {
 		for (int x = 20; x < 20 + 16; x++) {
-			scr.put(t_tile(i, 15, 0), x, y);
+			scr.set_tile(t_tile(i, 15, 0), x, y);
 			i++;
 		}
 	}
@@ -54,31 +55,49 @@ void ptm::run_graphics_test()
 
 void ptm::run_main()
 {
-	scr.color(0x3a, 0x38, 0x31);
-	scr.print("Hello World!", 0, 0);
+	scr.color(0xa8, 0xa3, 0xa2);
+
+	while (wnd.is_open()) {
+		scr.print(t_util::rnd_hex(8) + t_string(","));
+		update();
+	}
 
 	halt();
 }
 
 void ptm::halt()
 {
-	while (wnd.is_open()) {
-		scr.draw();
-		wnd.update();
+	while (wnd.is_open())
+		update();
+}
 
-		SDL_Event e;
-		SDL_PollEvent(&e);
-		if (e.type == SDL_QUIT) {
-			wnd.close();
+void ptm::pause(int frames)
+{
+	for (int i = 0; i < frames; i++) {
+		if (!wnd.is_open())
+			break;
+
+		update();
+	}
+}
+
+void ptm::update()
+{
+	scr.draw();
+	wnd.update();
+
+	SDL_Event e;
+	SDL_PollEvent(&e);
+	if (e.type == SDL_QUIT) {
+		wnd.close();
+	}
+	else if (e.type == SDL_KEYDOWN) {
+		SDL_Keycode key = e.key.keysym.sym;
+		if (key == SDLK_RETURN && kb.alt()) {
+			wnd.toggle_fullscreen();
 		}
-		else if (e.type == SDL_KEYDOWN) {
-			SDL_Keycode key = e.key.keysym.sym;
-			if (key == SDLK_RETURN && kb.alt()) {
-				wnd.toggle_fullscreen();
-			}
-			else if (key == SDLK_ESCAPE) {
-				wnd.close();
-			}
+		else if (key == SDLK_ESCAPE) {
+			wnd.close();
 		}
 	}
 }

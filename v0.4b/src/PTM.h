@@ -12,4 +12,6 @@ namespace ptm
 	void run_graphics_test();
 	void run_main();
 	void halt();
+	void pause(int frames);
+	void update();
 }

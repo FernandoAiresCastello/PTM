@@ -260,6 +260,11 @@ t_list<t_string> t_string::split_chunks(int chunk_size) const
 	return tokens;
 }
 
+t_string t_string::substr(int first) const
+{
+	return value.substr(first);
+}
+
 t_string t_string::substr(int first, int last) const
 {
 	last++;

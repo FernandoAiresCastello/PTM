@@ -57,6 +57,7 @@ public:
 	t_string get_last(int count) const;
 	t_list<t_string> split(char delim = ' ') const;
 	t_list<t_string> split_chunks(int chunk_size) const;
+	t_string substr(int first) const;
 	t_string substr(int first, int last) const;
 	t_string replace(const t_string& original, const t_string& replacement) const;
 	t_string remove_all(const t_string& chars) const;
