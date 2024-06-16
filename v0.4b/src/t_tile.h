@@ -15,7 +15,7 @@ public:
 	t_tile();
 	t_tile(t_index ix, t_index fgc, t_index bgc);
 	t_tile(const t_tile& other);
-	~t_tile();
+	~t_tile() = default;
 
 	bool operator==(const t_tile& other) const;
 	t_tile& operator=(const t_tile& other);

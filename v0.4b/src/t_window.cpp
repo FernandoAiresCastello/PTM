@@ -6,7 +6,7 @@
 #define sdl_rend ((SDL_Renderer*)rend)
 #define sdl_tex ((SDL_Texture*)tex)
 
-void t_window::open(t_string title, int size)
+void t_window::open(const t_string& title, int size)
 {
 	if (size < 1) size = 1;
 	else if (size > 5) size = 5;
@@ -62,7 +62,7 @@ void t_window::toggle_fullscreen()
 	update();
 }
 
-void t_window::clear(t_color color)
+void t_window::clear(const t_color& color)
 {
 	for (int i = 0; i < buflen; i++) {
 		scrbuf[i] = color.to_rgb();
@@ -104,12 +104,12 @@ int t_window::get_animation_frame() const
 #define set_pixel(x, y, color)		if (is_valid_pixel(x, y)) { scrbuf[y * image_w + x] = color.to_rgb(); }
 #define snap_to_grid(grid, x, y)	if (grid) { x *= t_tile::width; y *= t_tile::height; }
 
-void t_window::draw_pixel(int x, int y, t_color color)
+void t_window::draw_pixel(int x, int y, const t_color& color)
 {
 	set_pixel(x, y, color);
 }
 
-void t_window::draw_pixels(t_binary pixels, int x, int y, t_color color1, t_color color0, bool grid)
+void t_window::draw_pixels(const t_binary& pixels, int x, int y, const t_color& color1, const t_color& color0, bool grid)
 {
 	snap_to_grid(grid, x, y);
 
@@ -126,14 +126,14 @@ void t_window::draw_pixels(t_binary pixels, int x, int y, t_color color1, t_colo
 	}
 }
 
-void t_window::draw_char(t_charset* charset, int char_index, int x, int y, t_color color1, t_color color0, bool grid)
+void t_window::draw_char(t_charset* charset, int char_index, int x, int y, const t_color& color1, const t_color& color0, bool grid)
 {
 	snap_to_grid(grid, x, y);
 
 	draw_pixels(charset->get(char_index), x, y, color1, color0, false);
 }
 
-void t_window::draw_text(t_charset* charset, t_string text, int x, int y, t_color color1, t_color color0, bool grid)
+void t_window::draw_text(t_charset* charset, const t_string& text, int x, int y, const t_color& color1, const t_color& color0, bool grid)
 {
 	snap_to_grid(grid, x, y);
 

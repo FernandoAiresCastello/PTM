@@ -14,20 +14,20 @@ public:
 	static constexpr int cols = image_w / t_tile::width;
 	static constexpr int rows = image_h / t_tile::height;
 
-	void open(t_string title, int size);
+	void open(const t_string& title, int size);
 	void close();
 	bool is_open();
 	void toggle_fullscreen();
-	void clear(t_color color);
+	void clear(const t_color& color);
 	void update();
 	void reset_frame_counter();
 	uint32_t get_frame_count() const;
 	int get_animation_frame() const;
 	
-	void draw_pixel(int x, int y, t_color color);
-	void draw_pixels(t_binary pixels, int x, int y, t_color color1, t_color color0, bool grid);
-	void draw_char(t_charset* charset, int char_index, int x, int y, t_color color1, t_color color0, bool grid);
-	void draw_text(t_charset* charset, t_string text, int x, int y, t_color color1, t_color color0, bool grid);
+	void draw_pixel(int x, int y, const t_color& color);
+	void draw_pixels(const t_binary& pixels, int x, int y, const t_color& color1, const t_color& color0, bool grid);
+	void draw_char(t_charset* charset, int char_index, int x, int y, const t_color& color1, const t_color& color0, bool grid);
+	void draw_text(t_charset* charset, const t_string& text, int x, int y, const t_color& color1, const t_color& color0, bool grid);
 
 private:
 	static constexpr int tilesize = t_tile::width * t_tile::height;

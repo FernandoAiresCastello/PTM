@@ -42,7 +42,7 @@ t_string t_util::rnd_string(int length)
 	return rnd_string(length, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
 }
 
-t_string t_util::rnd_string(int length, t_string alphabet)
+t_string t_util::rnd_string(int length, const t_string& alphabet)
 {
 	std::stringbuf sb;
 
@@ -126,7 +126,7 @@ int t_util::get_digit_count(uint32_t number)
 	return number > 0 ? (int)log10((double)number) + 1 : 1;
 }
 
-t_string t_util::xor_encrypt(t_string str, char xor_key)
+t_string t_util::xor_encrypt(const t_string& str, char xor_key)
 {
 	std::string encrypted = str;
 
@@ -136,7 +136,7 @@ t_string t_util::xor_encrypt(t_string str, char xor_key)
 	return encrypted;
 }
 
-t_string t_util::xor_decrypt(t_string str, char xor_key)
+t_string t_util::xor_decrypt(const t_string& str, char xor_key)
 {
 	return xor_encrypt(str, xor_key);
 }
@@ -159,7 +159,7 @@ t_string t_util::size_to_string(uint64_t bytes)
 	return output;
 }
 
-t_string t_util::datetime(t_string format)
+t_string t_util::datetime(const t_string& format)
 {
 	auto now = std::chrono::system_clock::now();
 	auto in_time_t = std::chrono::system_clock::to_time_t(now);
@@ -184,7 +184,7 @@ t_string t_util::time()
 	return datetime("%H:%M:%S");
 }
 
-void t_util::set_clipboard(t_string text)
+void t_util::set_clipboard(const t_string& text)
 {
 	bool ok = OpenClipboard(nullptr);
 	if (ok) {

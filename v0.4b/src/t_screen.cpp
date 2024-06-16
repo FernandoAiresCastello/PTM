@@ -1,26 +1,22 @@
 #include "t_screen.h"
 #include "t_tilebuffer.h"
 
+#define border_tile		t_tile(0, border_color, border_color)
+
 t_screen::t_screen()
 {
-	buf = new t_tilebuffer(t_window::cols - 4, t_window::rows - 2);
-	buf_bdr = new t_tilebuffer();
+	buf = std::make_unique<t_tilebuffer>(t_window::cols - 4, t_window::rows - 2);
+	buf_bdr = std::make_unique<t_tilebuffer>();
 
-	for (int y = 0; y < t_window::rows; y++) {
-		for (int x = 0; x < t_window::cols; x++) {
+	for (int y = 0; y < buf->rows; y++) {
+		for (int x = 0; x < buf->cols; x++) {
 			buf->get_ref(x, y).flags.monochrome = true;
 		}
 	}
 
-	update_monochrome_tiles();
-}
+	buf_bdr->fill(border_tile);
 
-t_screen::~t_screen()
-{
-	delete buf;
-	buf = nullptr;
-	delete buf_bdr;
-	buf_bdr = nullptr;
+	update_monochrome_tiles();
 }
 
 void t_screen::set_window(t_window* wnd)
@@ -65,7 +61,18 @@ void t_screen::color(t_index fgc, t_index bgc, t_index bdrc)
 	back_color = bgc;
 	border_color = bdrc;
 
+	buf_bdr->fill(border_tile);
 	update_monochrome_tiles();
+}
+
+void t_screen::put(const t_tile& tile, int x, int y)
+{
+	buf->set(tile, x, y);
+}
+
+void t_screen::print(const t_string& str, int x, int y)
+{
+	buf->set_text(str, x, y, fore_color, back_color);
 }
 
 void t_screen::update_monochrome_tiles()

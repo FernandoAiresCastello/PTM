@@ -33,7 +33,7 @@ void t_palette::remove_all()
 	colors.clear();
 }
 
-void t_palette::add(t_color color)
+void t_palette::add(const t_color& color)
 {
 	colors.emplace_back(color);
 }
@@ -43,7 +43,7 @@ t_color& t_palette::get(t_index index)
 	return colors[index];
 }
 
-void t_palette::set(t_index index, t_color color)
+void t_palette::set(t_index index, const t_color& color)
 {
 	colors[index] = color;
 }

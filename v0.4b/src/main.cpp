@@ -2,6 +2,7 @@
 
 int main(int argc, char* argv[])
 {
+	ptm::init();
 	ptm::run_tests();
 	//ptm::run_graphics_test();
 	ptm::run_main();

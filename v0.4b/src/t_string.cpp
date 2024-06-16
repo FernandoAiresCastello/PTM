@@ -3,40 +3,33 @@
 #include <sstream>
 #include "t_string.h"
 
-t_string::t_string()
+t_string::t_string() : value("")
 {
-	value = "";
 }
 
-t_string::t_string(const char* str)
+t_string::t_string(const char* str) : value(str)
 {
-	value = std::string(str);
 }
 
-t_string::t_string(const t_string& other)
+t_string::t_string(const t_string& other) : value(other.value)
 {
-	value = other.value;
 }
 
-t_string::t_string(const std::string& other)
+t_string::t_string(const std::string& other) : value(other)
 {
-	value = other;
 }
 
-t_string::t_string(char single_char)
+t_string::t_string(const char& single_char) : value(1, single_char)
 {
-	value = single_char;
 }
 
-t_string::~t_string()
+t_string::t_string(t_string&& other) noexcept : value(std::move(other.value))
 {
-	value.clear();
-	value.shrink_to_fit();
 }
 
-t_string::operator std::string() const
+t_string::operator const std::string&() const
 {
-	return value;
+	return (const std::string&) value;
 }
 
 bool t_string::operator==(const t_string& other) const
@@ -52,10 +45,8 @@ t_string& t_string::operator=(const char* other)
 
 t_string& t_string::operator=(const t_string& other)
 {
-	if (this == &other)
-		return *this;
-
-	value = other.value;
+	if (this != &other)
+		value = other.value;
 
 	return *this;
 }
@@ -63,6 +54,14 @@ t_string& t_string::operator=(const t_string& other)
 t_string& t_string::operator=(const std::string& other)
 {
 	value = other;
+	return *this;
+}
+
+t_string& t_string::operator=(t_string&& other) noexcept
+{
+	if (this != &other)
+		value = std::move(other.value);
+
 	return *this;
 }
 
@@ -87,7 +86,7 @@ t_string t_string::operator+(const t_string& other) const
 	return t_string(value + other.value);
 }
 
-const std::string& t_string::s_str() const noexcept
+const std::string& t_string::s_str() const
 {
 	return value;
 }
@@ -273,7 +272,7 @@ t_string t_string::substr(int first, int last) const
 	return value.substr(first, last - first);
 }
 
-t_string t_string::replace(t_string original, t_string replacement) const
+t_string t_string::replace(const t_string& original, const t_string& replacement) const
 {
 	if (original.empty())
 		return "";
@@ -289,7 +288,7 @@ t_string t_string::replace(t_string original, t_string replacement) const
 	return replaced;
 }
 
-t_string t_string::remove_all(t_string chars) const
+t_string t_string::remove_all(const t_string& chars) const
 {
 	std::string result = value;
 
@@ -306,12 +305,12 @@ t_string t_string::reverse() const
 	return reversed;
 }
 
-bool t_string::starts_with(t_string prefix) const
+bool t_string::starts_with(const t_string& prefix) const
 {
 	return value.find(prefix) == 0;
 }
 
-bool t_string::ends_with(t_string suffix) const
+bool t_string::ends_with(const t_string& suffix) const
 {
 	std::string suffix_s = suffix;
 	auto it = suffix_s.begin();
@@ -320,32 +319,32 @@ bool t_string::ends_with(t_string suffix) const
 		[&it](const char& c) { return c == *(it++); });
 }
 
-bool t_string::starts_and_ends_with(t_string prefix, t_string suffix) const
+bool t_string::starts_and_ends_with(const t_string& prefix, const t_string& suffix) const
 {
 	return starts_with(prefix) && ends_with(suffix);
 }
 
-bool t_string::starts_and_ends_with(t_string same_preffix_and_suffix) const
+bool t_string::starts_and_ends_with(const t_string& same_preffix_and_suffix) const
 {
 	return starts_with(same_preffix_and_suffix) && ends_with(same_preffix_and_suffix);
 }
 
-bool t_string::contains(t_string other) const
+bool t_string::contains(const t_string& other) const
 {
 	return value.find(other) != std::string::npos;
 }
 
-int t_string::index_of(t_string str) const
+int t_string::index_of(const t_string& str) const
 {
 	return (int)value.find(str);
 }
 
-int t_string::last_index_of(t_string str) const
+int t_string::last_index_of(const t_string& str) const
 {
 	return (int)value.find_last_not_of(str);
 }
 
-t_list<int> t_string::find_all(char ch, size_t offset)
+t_list<int> t_string::find_all(const char& ch, size_t offset)
 {
 	t_list<int> indexes;
 
@@ -358,7 +357,7 @@ t_list<int> t_string::find_all(char ch, size_t offset)
 	return indexes;
 }
 
-int t_string::count(char ch)
+int t_string::count(const char& ch)
 {
 	return (int)find_all(ch).size();
 }
@@ -440,7 +439,7 @@ t_string t_string::to_binary(int value, int digits)
 	return padding + binary;
 }
 
-t_string t_string::join(t_list<t_string>& str_list, t_string separator)
+t_string t_string::join(const t_list<t_string>& str_list, const t_string& separator)
 {
 	std::string str = "";
 
@@ -459,7 +458,7 @@ t_string t_string::join(t_list<t_string>& str_list, t_string separator)
 	return str;
 }
 
-t_string t_string::repeat(t_string str, int count)
+t_string t_string::repeat(const t_string& str, int count)
 {
 	std::string result = "";
 	for (int i = 0; i < count; i++)

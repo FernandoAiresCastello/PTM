@@ -12,14 +12,10 @@ t_tilebuffer::t_tilebuffer() : t_tilebuffer(t_window::cols, t_window::rows)
 t_tilebuffer::t_tilebuffer(int cols, int rows) :
 	cols(cols), rows(rows), length(cols * rows)
 {
-	tiles = new t_tile[length];
-	clear();
-}
+	for (int i = 0; i < length; i++)
+		tiles.emplace_back();
 
-t_tilebuffer::~t_tilebuffer()
-{
-	delete[] tiles;
-	tiles = nullptr;
+	clear();
 }
 
 void t_tilebuffer::draw(t_window* wnd, t_charset* chr, t_palette* pal)
@@ -42,12 +38,12 @@ void t_tilebuffer::draw(t_window* wnd, t_charset* chr, t_palette* pal, int px, i
 	}
 }
 
-void t_tilebuffer::set(t_tile tile, int x, int y)
+void t_tilebuffer::set(const t_tile& tile, int x, int y)
 {
 	tile_at(x, y) = tile;
 }
 
-void t_tilebuffer::set_text(t_string text, int x, int y, t_index fgc, t_index bgc)
+void t_tilebuffer::set_text(const t_string& text, int x, int y, t_index fgc, t_index bgc)
 {
 	for (auto& ch : text.s_str()) {
 		tile_at(x++, y) = t_tile(ch, fgc, bgc);
@@ -64,7 +60,7 @@ t_tile t_tilebuffer::get_copy(int x, int y) const
 	return tile_at(x, y);
 }
 
-void t_tilebuffer::fill(t_tile tile)
+void t_tilebuffer::fill(const t_tile& tile)
 {
 	for (int i = 0; i < length; i++)
 		tiles[i] = tile;

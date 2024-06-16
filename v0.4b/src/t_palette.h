@@ -11,9 +11,9 @@ public:
 	t_palette& operator=(const t_palette& other);
 
 	void remove_all();
-	void add(t_color color);
+	void add(const t_color& color);
 	t_color& get(t_index index);
-	void set(t_index index, t_color color);
+	void set(t_index index, const t_color& color);
 	int size() const;
 	void reset();
 

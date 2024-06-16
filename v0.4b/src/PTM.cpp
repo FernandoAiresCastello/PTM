@@ -16,6 +16,15 @@ namespace ptm
 	t_screen scr;
 }
 
+void ptm::init()
+{
+	wnd.open(wnd_title, wnd_size);
+
+	scr.set_window(&wnd);
+	scr.set_charset(&chr);
+	scr.set_palette(&pal);
+}
+
 void ptm::run_tests()
 {
 	t_tests tests;
@@ -24,16 +33,10 @@ void ptm::run_tests()
 
 void ptm::run_graphics_test()
 {
-	wnd.open(wnd_title, wnd_size);
-
-	t_tilebuffer tilebuf;
-	tilebuf.clear();
-	tilebuf.set_text("Hello World!", 1, 20, 15, 0);
-
 	int i = 0;
 	for (int y = 1; y < 1 + 16; y++) {
 		for (int x = 1; x < 1 + 16; x++) {
-			tilebuf.set(t_tile(0, i, i), x, y);
+			scr.put(t_tile(0, i, i), x, y);
 			i++;
 		}
 	}
@@ -41,7 +44,7 @@ void ptm::run_graphics_test()
 	i = 0;
 	for (int y = 1; y < 1 + 16; y++) {
 		for (int x = 20; x < 20 + 16; x++) {
-			tilebuf.set(t_tile(i, 15, 0), x, y);
+			scr.put(t_tile(i, 15, 0), x, y);
 			i++;
 		}
 	}
@@ -51,11 +54,8 @@ void ptm::run_graphics_test()
 
 void ptm::run_main()
 {
-	wnd.open(wnd_title, wnd_size);
-
-	scr.set_window(&wnd);
-	scr.set_charset(&chr);
-	scr.set_palette(&pal);
+	scr.color(0x3a, 0x38, 0x31);
+	scr.print("Hello World!", 0, 0);
 
 	halt();
 }

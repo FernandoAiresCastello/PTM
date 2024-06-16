@@ -10,15 +10,8 @@ t_tile::t_tile(t_index ix, t_index fgc, t_index bgc)
 	chars.emplace_back(ix, fgc, bgc);
 }
 
-t_tile::t_tile(const t_tile& other)
+t_tile::t_tile(const t_tile& other) : chars(other.chars)
 {
-	chars = other.chars;
-}
-
-t_tile::~t_tile()
-{
-	chars.clear();
-	data.clear();
 }
 
 bool t_tile::operator==(const t_tile& other) const

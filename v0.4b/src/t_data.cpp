@@ -7,14 +7,8 @@ t_data::t_data()
 {
 }
 
-t_data::t_data(const t_data& other)
+t_data::t_data(const t_data& other) : entries(other.entries)
 {
-	entries = other.entries;
-}
-
-t_data::~t_data()
-{
-	entries.clear();
 }
 
 bool t_data::operator==(const t_data& other) const
@@ -50,43 +44,43 @@ void t_data::clear()
 	entries.clear();
 }
 
-void t_data::set(t_string key, t_string value)
+void t_data::set(const t_string& key, const t_string& value)
 {
 	entries[key] = value;
 }
 
-void t_data::set(t_string key, int value)
+void t_data::set(const t_string& key, int value)
 {
 	entries[key] = std::to_string(value);
 }
 
-void t_data::remove(t_string key)
+void t_data::remove(const t_string& key)
 {
 	if (has(key))
 		entries.erase(key);
 }
 
-t_string t_data::get(t_string key)
+t_string t_data::get(const t_string& key)
 {
 	return has(key) ? entries[key] : t_data::null;
 }
 
-int t_data::get_int(t_string key)
+int t_data::get_int(const t_string& key)
 {
 	return has(key) ? entries[key].to_int() : t_data::null_int;
 }
 
-bool t_data::has(t_string key)
+bool t_data::has(const t_string& key)
 {
 	return entries.contains(key);
 }
 
-bool t_data::has(t_string key, t_string value)
+bool t_data::has(const t_string& key, const t_string& value)
 {
 	return has(key) && entries[key] == value;
 }
 
-bool t_data::has(t_string key, int value)
+bool t_data::has(const t_string& key, int value)
 {
 	return has(key) && entries[key].to_int() == value;
 }

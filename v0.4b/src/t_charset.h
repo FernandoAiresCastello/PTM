@@ -11,9 +11,9 @@ public:
 	t_charset& operator=(const t_charset& other);
 
 	void remove_all();
-	void add(t_binary bits);
+	void add(const t_binary& bits);
 	t_binary& get(t_index index);
-	void set(t_index index, t_binary bits);
+	void set(t_index index, const t_binary& bits);
 	int size() const;
 	void reset();
 
