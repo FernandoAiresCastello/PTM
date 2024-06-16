@@ -59,6 +59,7 @@ void ptm::run_main()
 
 	while (wnd.is_open()) {
 		scr.print(t_util::rnd_hex(8) + t_string(","));
+		scr.print(t_tile(t_util::rnd('0', '9'), t_util::rnd(0, 255), t_util::rnd(0, 255)));
 		update();
 	}
 

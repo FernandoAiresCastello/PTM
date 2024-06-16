@@ -90,10 +90,36 @@ void t_screen::set_blank_tile(int x, int y)
 	buf->get_ref(x, y).set_char(0, fore_color, back_color);
 }
 
+void t_screen::print(const t_tile& tile)
+{
+	buf->set(tile, csr.x, csr.y);
+	csr.x++;
+
+	if (csr.x > last_col()) {
+		csr.x = 0;
+		csr.y++;
+		if (csr.y > last_row()) {
+			csr.y = last_row();
+			csr.x = 0;
+			scroll_up();
+		}
+	}
+}
+
 void t_screen::print(const char& ch)
 {
 	buf->set(t_tile(ch, fore_color, back_color), csr.x, csr.y);
 	csr.x++;
+
+	if (csr.x > last_col()) {
+		csr.x = 0;
+		csr.y++;
+		if (csr.y > last_row()) {
+			csr.y = last_row();
+			csr.x = 0;
+			scroll_up();
+		}
+	}
 }
 
 void t_screen::print(const t_string& str)
