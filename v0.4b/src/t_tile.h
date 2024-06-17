@@ -1,6 +1,5 @@
 #pragma once
 #include "t_char.h"
-#include "t_tileflags.h"
 #include "t_data.h"
 
 class t_tile
@@ -9,11 +8,11 @@ public:
 	static constexpr int width = 8;
 	static constexpr int height = 8;
 
-	t_tileflags flags;
 	t_data data;
+	bool monochrome = false;
 
 	t_tile();
-	t_tile(t_index ix, t_index fgc, t_index bgc);
+	t_tile(t_index ix, t_index fgc, t_index bgc, bool monochrome = false);
 	t_tile(const t_tile& other);
 	~t_tile() = default;
 

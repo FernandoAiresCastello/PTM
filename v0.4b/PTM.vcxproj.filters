@@ -112,9 +112,6 @@
     <ClInclude Include="src\t_index.h">
       <Filter>GRAPHICS</Filter>
     </ClInclude>
-    <ClInclude Include="src\t_tileflags.h">
-      <Filter>TILE SYSTEM</Filter>
-    </ClInclude>
     <ClInclude Include="src\t_cursor.h">
       <Filter>MACHINE</Filter>
     </ClInclude>

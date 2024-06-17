@@ -11,7 +11,7 @@ t_screen::t_screen()
 
 	for (int y = 0; y < buf->rows; y++) {
 		for (int x = 0; x < buf->cols; x++) {
-			buf->get_ref(x, y).flags.monochrome = true;
+			buf->get_ref(x, y).monochrome = true;
 		}
 	}
 
@@ -84,10 +84,12 @@ void t_screen::set_tile(const t_tile& tile, int x, int y)
 	buf->set(tile, x, y);
 }
 
-void t_screen::set_blank_tile(int x, int y)
+void t_screen::set_blank_tile(int x, int y, bool monochrome)
 {
-	buf->get_ref(x, y).set_blank();
-	buf->get_ref(x, y).set_char(0, fore_color, back_color);
+	auto& tile = buf->get_ref(x, y);
+	tile.set_blank();
+	tile.set_char(0, fore_color, back_color);
+	tile.monochrome = monochrome;
 }
 
 void t_screen::print(const t_tile& tile)
@@ -156,7 +158,7 @@ void t_screen::scroll_up()
 
 	int row = last_row();
 	for (int col = 0; col <= last_col(); col++) {
-		set_blank_tile(col, row);
+		set_blank_tile(col, row, true);
 	}
 }
 
@@ -165,7 +167,7 @@ void t_screen::update_monochrome_tiles()
 	for (int y = 0; y < buf->rows; y++) {
 		for (int x = 0; x < buf->cols; x++) {
 			auto& tile = buf->get_ref(x, y);
-			if (tile.flags.monochrome) {
+			if (tile.monochrome) {
 				for (auto& ch : tile.get_all_chars()) {
 					ch.fgc = fore_color;
 					ch.bgc = back_color;
