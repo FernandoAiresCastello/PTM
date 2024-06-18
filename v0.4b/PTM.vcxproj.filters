@@ -53,6 +53,12 @@
     <ClCompile Include="src\t_cursor.cpp">
       <Filter>MACHINE</Filter>
     </ClCompile>
+    <ClCompile Include="src\t_pos.cpp">
+      <Filter>UTIL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_sprite.cpp">
+      <Filter>TILE SYSTEM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\t_string.h">
@@ -114,6 +120,15 @@
     </ClInclude>
     <ClInclude Include="src\t_cursor.h">
       <Filter>MACHINE</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_pointers.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_pos.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_sprite.h">
+      <Filter>TILE SYSTEM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

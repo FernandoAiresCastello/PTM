@@ -5,12 +5,14 @@ t_tile::t_tile()
 	add_blank_char();
 }
 
-t_tile::t_tile(t_index ix, t_index fgc, t_index bgc, bool monochrome) : monochrome(monochrome)
+t_tile::t_tile(t_index ix, t_index fgc, t_index bgc)
 {
 	chars.emplace_back(ix, fgc, bgc);
 }
 
-t_tile::t_tile(const t_tile& other) : chars(other.chars), data(other.data), monochrome(other.monochrome)
+t_tile::t_tile(const t_tile& other) : 
+	chars(other.chars), data(other.data), 
+	visible(other.visible), monochrome(other.monochrome), hide_bgc(other.hide_bgc)
 {
 }
 
@@ -21,7 +23,11 @@ bool t_tile::operator==(const t_tile& other) const
 
 	bool chars_equal = std::equal(chars.begin(), chars.end(), other.chars.begin());
 	bool data_equal = data == other.data;
-	bool flags_equal = monochrome == other.monochrome;
+
+	bool flags_equal = 
+		visible == other.visible &&
+		monochrome == other.monochrome && 
+		hide_bgc == other.hide_bgc;
 
 	return chars_equal && data_equal && flags_equal;
 }
@@ -33,7 +39,9 @@ t_tile& t_tile::operator=(const t_tile& other)
 
 	chars = other.chars;
 	data = other.data;
+	visible = other.visible;
 	monochrome = other.monochrome;
+	hide_bgc = other.hide_bgc;
 
 	return *this;
 }

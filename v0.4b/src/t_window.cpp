@@ -1,6 +1,8 @@
 #include <SDL.h>
 #include "t_window.h"
 #include "t_util.h"
+#include "t_charset.h"
+#include "t_palette.h"
 
 #define sdl_wnd ((SDL_Window*)wnd)
 #define sdl_rend ((SDL_Renderer*)rend)
@@ -109,7 +111,7 @@ void t_window::draw_pixel(int x, int y, const t_color& color)
 	set_pixel(x, y, color);
 }
 
-void t_window::draw_pixels(const t_binary& pixels, int x, int y, const t_color& color1, const t_color& color0, bool grid)
+void t_window::draw_pixels(const t_binary& pixels, int x, int y, const t_color& color1, const t_color& color0, bool grid, bool hide_color0)
 {
 	snap_to_grid(grid, x, y);
 
@@ -118,7 +120,14 @@ void t_window::draw_pixels(const t_binary& pixels, int x, int y, const t_color& 
 	const int MAX_X = x + t_tile::width;
 
 	for (int i = 0; i < tilesize; i++) {
-		set_pixel(px, py, (pixels[i] == '1' ? color1 : color0));
+		if (hide_color0) {
+			if (pixels[i] == '1') {
+				set_pixel(px, py, color1);
+			}
+		}
+		else {
+			set_pixel(px, py, (pixels[i] == '1' ? color1 : color0));
+		}
 		if (++px >= MAX_X) {
 			px = x;
 			py++;
@@ -126,20 +135,20 @@ void t_window::draw_pixels(const t_binary& pixels, int x, int y, const t_color& 
 	}
 }
 
-void t_window::draw_char(t_charset* charset, int char_index, int x, int y, const t_color& color1, const t_color& color0, bool grid)
+void t_window::draw_char(t_charset* chr, t_palette* pal, t_index char_index, int x, int y, t_index color1, t_index color0, bool grid, bool hide_color0)
 {
 	snap_to_grid(grid, x, y);
 
-	draw_pixels(charset->get(char_index), x, y, color1, color0, false);
+	draw_pixels(chr->get(char_index), x, y, pal->get(color1), pal->get(color0), false, hide_color0);
 }
 
-void t_window::draw_text(t_charset* charset, const t_string& text, int x, int y, const t_color& color1, const t_color& color0, bool grid)
+void t_window::draw_text(t_charset* chr, t_palette* pal, const t_string& text, int x, int y, t_index color1, t_index color0, bool grid, bool hide_color0)
 {
 	snap_to_grid(grid, x, y);
 
 	const char* ctext = text.c_str();
 	for (int i = 0; i < strlen(ctext); i++) {
-		draw_pixels(charset->get(ctext[i]), x, y, color1, color0, false);
+		draw_pixels(chr->get(ctext[i]), x, y, pal->get(color1), pal->get(color0), false, hide_color0);
 		x += t_tile::width;
 	}
 }

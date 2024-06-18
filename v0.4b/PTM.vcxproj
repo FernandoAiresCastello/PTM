@@ -30,7 +30,9 @@
     <ClCompile Include="src\t_keyboard.cpp" />
     <ClCompile Include="src\t_list.cpp" />
     <ClCompile Include="src\t_palette.cpp" />
+    <ClCompile Include="src\t_pos.cpp" />
     <ClCompile Include="src\t_screen.cpp" />
+    <ClCompile Include="src\t_sprite.cpp" />
     <ClCompile Include="src\t_string.cpp" />
     <ClCompile Include="src\t_tests.cpp" />
     <ClCompile Include="src\t_tile.cpp" />
@@ -51,7 +53,10 @@
     <ClInclude Include="src\t_keyboard.h" />
     <ClInclude Include="src\t_list.h" />
     <ClInclude Include="src\t_palette.h" />
+    <ClInclude Include="src\t_pointers.h" />
+    <ClInclude Include="src\t_pos.h" />
     <ClInclude Include="src\t_screen.h" />
+    <ClInclude Include="src\t_sprite.h" />
     <ClInclude Include="src\t_string.h" />
     <ClInclude Include="src\t_tests.h" />
     <ClInclude Include="src\t_tile.h" />

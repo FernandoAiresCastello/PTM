@@ -4,18 +4,23 @@
 #include "t_palette.h"
 
 #define tile_at(x, y)			tiles[y * cols + x]
+#define tile_at_overlay(x, y)	overlay[y * cols + x]
 #define if_inside_bounds(x, y)	if (x >= 0 && y >= 0 && x < cols && y < rows)
 #define if_out_of_bounds(x, y)	if (x < 0 || y < 0 || x >= cols || y >= rows)
 
-t_tilebuffer::t_tilebuffer() : t_tilebuffer(t_window::cols, t_window::rows)
+t_tilebuffer::t_tilebuffer() : t_tilebuffer(t_window::cols, t_window::rows, false)
 {
 }
 
-t_tilebuffer::t_tilebuffer(int cols, int rows) :
-	cols(cols), rows(rows), length(cols * rows)
+t_tilebuffer::t_tilebuffer(int cols, int rows, bool enable_overlay) :
+	cols(cols), rows(rows), length(cols * rows), has_overlay(enable_overlay)
 {
-	for (int i = 0; i < length; i++)
+	for (int i = 0; i < length; i++) {
 		tiles.emplace_back();
+		if (has_overlay) {
+			overlay.emplace_back();
+		}
+	}
 
 	clear();
 }
@@ -32,21 +37,30 @@ int t_tilebuffer::last_col() const
 
 void t_tilebuffer::draw(t_window* wnd, t_charset* chr, t_palette* pal)
 {
-	for (int y = 0; y < rows; y++) {
-		for (int x = 0; x < cols; x++) {
-			t_char& ch = tile_at(x, y).get_char_wraparound(wnd->get_animation_frame());
-			wnd->draw_pixels(chr->get(ch.ix), x, y, pal->get(ch.fgc), pal->get(ch.bgc), true);
-		}
-	}
+	draw(wnd, chr, pal, 0, 0);
 }
 
 void t_tilebuffer::draw(t_window* wnd, t_charset* chr, t_palette* pal, int px, int py)
 {
 	for (int y = 0; y < rows; y++) {
 		for (int x = 0; x < cols; x++) {
-			t_char& ch = tile_at(x, y).get_char_wraparound(wnd->get_animation_frame());
-			wnd->draw_pixels(chr->get(ch.ix), px + x, py + y, pal->get(ch.fgc), pal->get(ch.bgc), true);
+			t_tile& tile = tile_at(x, y);
+			draw_tile(tile, wnd, chr, pal, px + x, py + y);
+			if (has_overlay) {
+				t_tile& tile = tile_at_overlay(x, y);
+				if (tile.is_not_blank()) {
+					draw_tile(tile, wnd, chr, pal, px + x, py + y);
+				}
+			}
 		}
+	}
+}
+
+void t_tilebuffer::draw_tile(t_tile& tile, t_window* wnd, t_charset* chr, t_palette* pal, int x, int y) const
+{
+	if (tile.visible) {
+		t_char& ch = tile.get_char_wraparound(wnd->get_animation_frame());
+		wnd->draw_pixels(chr->get(ch.ix), x, y, pal->get(ch.fgc), pal->get(ch.bgc), true, tile.hide_bgc);
 	}
 }
 
@@ -56,22 +70,33 @@ void t_tilebuffer::set(const t_tile& tile, int x, int y)
 		tile_at(x, y) = tile;
 }
 
-void t_tilebuffer::set_text(const t_string& text, int x, int y, t_index fgc, t_index bgc)
+void t_tilebuffer::set_overlay(const t_tile& tile, int x, int y)
+{
+	if_inside_bounds(x, y)
+		tile_at_overlay(x, y) = tile;
+}
+
+void t_tilebuffer::set_text(const t_string& text, int x, int y, t_index fgc, t_index bgc, bool monochrome, bool hide_bg)
 {
 	for (auto& ch : text.s_str()) {
 		if_out_of_bounds(x, y)
 			break;
 		
 		tile_at(x, y) = t_tile(ch, fgc, bgc);
+		tile_at(x, y).monochrome = monochrome;
+		tile_at(x, y).hide_bgc = hide_bg;
+
 		x++;
 	}
 }
 
-int t_tilebuffer::set_text_wrap(const t_string& text, int* xptr, int* yptr, t_index fgc, t_index bgc)
+int t_tilebuffer::set_text_wrap(const t_string& text, int* xptr, int* yptr, t_index fgc, t_index bgc, bool monochrome, bool hide_bg)
 {
 	int ix = 0;
 	for (auto& ch : text.s_str()) {
 		tile_at((*xptr), (*yptr)) = t_tile(ch, fgc, bgc);
+		tile_at((*xptr), (*yptr)).monochrome = monochrome;
+		tile_at((*xptr), (*yptr)).hide_bgc = hide_bg;
 		ix++;
 		(*xptr)++;
 		if ((*xptr) >= cols) {
@@ -96,6 +121,11 @@ t_tile& t_tilebuffer::get_ref(int x, int y)
 	return tile_at(x, y);
 }
 
+t_tile& t_tilebuffer::get_ref_overlay(int x, int y)
+{
+	return tile_at_overlay(x, y);
+}
+
 t_tile t_tilebuffer::get_copy(int x, int y) const
 {
 	return tile_at(x, y);
@@ -109,6 +139,10 @@ void t_tilebuffer::fill(const t_tile& tile)
 
 void t_tilebuffer::clear()
 {
-	for (int i = 0; i < length; i++)
+	for (int i = 0; i < length; i++) {
 		tiles[i].set_blank();
+		if (has_overlay) {
+			overlay[i].set_blank();
+		}
+	}
 }

@@ -1,11 +1,13 @@
 #include "t_screen.h"
 #include "t_tilebuffer.h"
+#include "t_palette.h"
+#include "t_charset.h"
 
 #define border_tile		t_tile(0, border_color, border_color)
 
 t_screen::t_screen()
 {
-	buf = std::make_unique<t_tilebuffer>(t_window::cols - 4, t_window::rows - 2);
+	buf = std::make_unique<t_tilebuffer>(t_window::cols - 4, t_window::rows - 2, true);
 	buf_bdr = std::make_unique<t_tilebuffer>();
 	buf_bdr->fill(border_tile);
 
@@ -36,7 +38,8 @@ void t_screen::set_palette(t_palette* pal)
 void t_screen::draw()
 {
 	buf_bdr->draw(wnd, chr, pal);
-	buf->draw(wnd, chr, pal, 2, 1);
+	buf->draw(wnd, chr, pal, pos.x, pos.y);
+	draw_sprites();
 }
 
 void t_screen::color(t_index fgc)
@@ -84,6 +87,11 @@ void t_screen::set_tile(const t_tile& tile, int x, int y)
 	buf->set(tile, x, y);
 }
 
+void t_screen::set_tile_overlay(const t_tile& tile, int x, int y)
+{
+	buf->set_overlay(tile, x, y);
+}
+
 void t_screen::set_blank_tile(int x, int y, bool monochrome)
 {
 	auto& tile = buf->get_ref(x, y);
@@ -126,7 +134,7 @@ void t_screen::print(const char& ch)
 
 void t_screen::print(const t_string& str)
 {
-	int ix = buf->set_text_wrap(str, &csr.x, &csr.y, fore_color, back_color);
+	int ix = buf->set_text_wrap(str, &csr.x, &csr.y, fore_color, back_color, true);
 
 	if (csr.y > last_row()) {
 		csr.y = last_row();
@@ -162,17 +170,44 @@ void t_screen::scroll_up()
 	}
 }
 
+t_sptr<t_sprite> t_screen::create_sprite(const t_tile& tile, const t_pos& pos)
+{
+	t_sptr<t_sprite> sprite = sprites.emplace_back(std::make_shared<t_sprite>(tile, pos));
+	update_monochrome_tile(sprite->tile);
+	return sprite;
+}
+
+void t_screen::draw_sprites()
+{
+	for (auto& spr : sprites) {
+		t_tile& tile = spr->tile;
+		if (tile.visible) {
+			t_char& ch = tile.get_char_wraparound(wnd->get_animation_frame());
+			wnd->draw_char(chr, pal, ch.ix, spr->pos.x, spr->pos.y, ch.fgc, ch.bgc, false, spr->tile.hide_bgc);
+		}
+	}
+}
+
 void t_screen::update_monochrome_tiles()
 {
 	for (int y = 0; y < buf->rows; y++) {
 		for (int x = 0; x < buf->cols; x++) {
-			auto& tile = buf->get_ref(x, y);
-			if (tile.monochrome) {
-				for (auto& ch : tile.get_all_chars()) {
-					ch.fgc = fore_color;
-					ch.bgc = back_color;
-				}
-			}
+			update_monochrome_tile(buf->get_ref(x, y));
+			update_monochrome_tile(buf->get_ref_overlay(x, y));
+		}
+	}
+
+	for (auto& spr : sprites) {
+		update_monochrome_tile(spr->tile);
+	}
+}
+
+void t_screen::update_monochrome_tile(t_tile& tile) const
+{
+	if (tile.monochrome) {
+		for (auto& ch : tile.get_all_chars()) {
+			ch.fgc = fore_color;
+			ch.bgc = back_color;
 		}
 	}
 }

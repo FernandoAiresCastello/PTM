@@ -173,7 +173,7 @@ void t_tests::t_tile_tests()
 void t_tests::t_tilebuf_tests()
 {
 	// constructor
-	t_tilebuffer buf(t_window::cols, t_window::rows);
+	t_tilebuffer buf(t_window::cols, t_window::rows, false);
 	assert(buf.cols == t_window::cols);
 	assert(buf.rows == t_window::rows);
 
