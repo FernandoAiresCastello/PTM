@@ -23,8 +23,8 @@ public:
 	void draw(t_window* wnd, t_charset* chr, t_palette* pal, int px, int py);
 	void set(const t_tile& tile, int x, int y);
 	void set_overlay(const t_tile& tile, int x, int y);
-	void set_text(const t_string& text, int x, int y, t_index fgc, t_index bgc, bool monochrome = false, bool hide_bg = false);
-	int set_text_wrap(const t_string& text, int* xptr, int* yptr, t_index fgc, t_index bgc, bool monochrome = false, bool hide_bg = false);
+	void set_text(const t_string& text, int x, int y, t_index fgc, t_index bgc, t_tileflags flags = t_tileflags());
+	int set_text_wrap(const t_string& text, int* xptr, int* yptr, t_index fgc, t_index bgc, t_tileflags flags = t_tileflags());
 	void set_blank(int x, int y);
 	t_tile& get_ref(int x, int y);
 	t_tile& get_ref_overlay(int x, int y);

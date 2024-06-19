@@ -2,6 +2,7 @@
 #include "t_pointers.h"
 #include "t_char.h"
 #include "t_data.h"
+#include "t_tileflags.h"
 
 class t_tile
 {
@@ -10,13 +11,10 @@ public:
 	static constexpr int height = 8;
 
 	t_data data;
-
-	bool visible = true;
-	bool monochrome = false;
-	bool hide_bgc = false;
+	t_tileflags flags;
 
 	t_tile();
-	t_tile(t_index ix, t_index fgc, t_index bgc);
+	t_tile(t_index ix, t_index fgc, t_index bgc, t_tileflags flags = t_tileflags());
 	t_tile(const t_tile& other);
 	~t_tile() = default;
 

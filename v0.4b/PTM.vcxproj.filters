@@ -59,6 +59,9 @@
     <ClCompile Include="src\t_sprite.cpp">
       <Filter>TILE SYSTEM</Filter>
     </ClCompile>
+    <ClCompile Include="src\t_tileflags.cpp">
+      <Filter>TILE SYSTEM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\t_string.h">
@@ -128,6 +131,9 @@
       <Filter>UTIL</Filter>
     </ClInclude>
     <ClInclude Include="src\t_sprite.h">
+      <Filter>TILE SYSTEM</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_tileflags.h">
       <Filter>TILE SYSTEM</Filter>
     </ClInclude>
   </ItemGroup>

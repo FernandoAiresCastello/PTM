@@ -13,7 +13,7 @@ t_screen::t_screen()
 
 	for (int y = 0; y < buf->rows; y++) {
 		for (int x = 0; x < buf->cols; x++) {
-			buf->get_ref(x, y).monochrome = true;
+			buf->get_ref(x, y).flags.monochrome = true;
 		}
 	}
 
@@ -92,12 +92,12 @@ void t_screen::set_tile_overlay(const t_tile& tile, int x, int y)
 	buf->set_overlay(tile, x, y);
 }
 
-void t_screen::set_blank_tile(int x, int y, bool monochrome)
+void t_screen::set_blank_tile(int x, int y, t_tileflags flags)
 {
 	auto& tile = buf->get_ref(x, y);
 	tile.set_blank();
 	tile.set_char(0, fore_color, back_color);
-	tile.monochrome = monochrome;
+	tile.flags = flags;
 }
 
 void t_screen::print(const t_tile& tile)
@@ -134,7 +134,10 @@ void t_screen::print(const char& ch)
 
 void t_screen::print(const t_string& str)
 {
-	int ix = buf->set_text_wrap(str, &csr.x, &csr.y, fore_color, back_color, true);
+	t_tileflags flags = t_tileflags();
+	flags.monochrome = true;
+
+	int ix = buf->set_text_wrap(str, &csr.x, &csr.y, fore_color, back_color, flags);
 
 	if (csr.y > last_row()) {
 		csr.y = last_row();
@@ -166,7 +169,9 @@ void t_screen::scroll_up()
 
 	int row = last_row();
 	for (int col = 0; col <= last_col(); col++) {
-		set_blank_tile(col, row, true);
+		t_tileflags flags = t_tileflags();
+		flags.monochrome = true;
+		set_blank_tile(col, row, flags);
 	}
 }
 
@@ -181,9 +186,9 @@ void t_screen::draw_sprites()
 {
 	for (auto& spr : sprites) {
 		t_tile& tile = spr->tile;
-		if (tile.visible) {
+		if (tile.flags.visible) {
 			t_char& ch = tile.get_char_wraparound(wnd->get_animation_frame());
-			wnd->draw_char(chr, pal, ch.ix, spr->pos.x, spr->pos.y, ch.fgc, ch.bgc, false, spr->tile.hide_bgc);
+			wnd->draw_char(chr, pal, ch.ix, spr->pos.x, spr->pos.y, ch.fgc, ch.bgc, false, spr->tile.flags.hide_bgc);
 		}
 	}
 }
@@ -204,7 +209,7 @@ void t_screen::update_monochrome_tiles()
 
 void t_screen::update_monochrome_tile(t_tile& tile) const
 {
-	if (tile.monochrome) {
+	if (tile.flags.monochrome) {
 		for (auto& ch : tile.get_all_chars()) {
 			ch.fgc = fore_color;
 			ch.bgc = back_color;

@@ -37,6 +37,7 @@
     <ClCompile Include="src\t_tests.cpp" />
     <ClCompile Include="src\t_tile.cpp" />
     <ClCompile Include="src\t_tilebuffer.cpp" />
+    <ClCompile Include="src\t_tileflags.cpp" />
     <ClCompile Include="src\t_util.cpp" />
     <ClCompile Include="src\t_window.cpp" />
   </ItemGroup>
@@ -61,6 +62,7 @@
     <ClInclude Include="src\t_tests.h" />
     <ClInclude Include="src\t_tile.h" />
     <ClInclude Include="src\t_tilebuffer.h" />
+    <ClInclude Include="src\t_tileflags.h" />
     <ClInclude Include="src\t_tile_animation.h" />
     <ClInclude Include="src\t_util.h" />
     <ClInclude Include="src\t_window.h" />

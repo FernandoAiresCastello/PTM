@@ -56,8 +56,8 @@ void ptm::run_graphics_test()
 void ptm::run_main()
 {
 	t_tile cursor_tile;
-	cursor_tile.monochrome = true;
-	cursor_tile.hide_bgc = true;
+	cursor_tile.flags.monochrome = true;
+	cursor_tile.flags.hide_bgc = true;
 	cursor_tile.add_char(127, 0, 0);
 	cursor_tile.add_char(0, 0, 0);
 
