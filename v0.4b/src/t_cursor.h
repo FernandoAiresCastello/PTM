@@ -1,10 +1,10 @@
 #pragma once
+#include "t_pos.h"
 
 class t_cursor
 {
 public:
-	int x = 0;
-	int y = 0;
+	t_pos pos;
 
 	void locate(int x, int y);
 };

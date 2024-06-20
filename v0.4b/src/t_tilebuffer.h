@@ -26,11 +26,15 @@ public:
 	void set_text(const t_string& text, int x, int y, t_index fgc, t_index bgc, t_tileflags flags = t_tileflags());
 	int set_text_wrap(const t_string& text, int* xptr, int* yptr, t_index fgc, t_index bgc, t_tileflags flags = t_tileflags());
 	void set_blank(int x, int y);
+	void set_overlay_blank(int x, int y);
 	t_tile& get_ref(int x, int y);
 	t_tile& get_ref_overlay(int x, int y);
 	t_tile get_copy(int x, int y) const;
+	t_tile get_copy_overlay(int x, int y) const;
 	void fill(const t_tile& tile);
+	void fill_overlay(const t_tile& tile);
 	void clear();
+	void clear_overlay();
 
 private:
 	const int length;

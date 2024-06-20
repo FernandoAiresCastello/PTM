@@ -117,6 +117,12 @@ void t_tilebuffer::set_blank(int x, int y)
 		tile_at(x, y).set_blank();
 }
 
+void t_tilebuffer::set_overlay_blank(int x, int y)
+{
+	if_inside_bounds(x, y)
+		tile_at_overlay(x, y).set_blank();
+}
+
 t_tile& t_tilebuffer::get_ref(int x, int y)
 {
 	return tile_at(x, y);
@@ -132,18 +138,31 @@ t_tile t_tilebuffer::get_copy(int x, int y) const
 	return tile_at(x, y);
 }
 
+t_tile t_tilebuffer::get_copy_overlay(int x, int y) const
+{
+	return tile_at_overlay(x, y);
+}
+
 void t_tilebuffer::fill(const t_tile& tile)
 {
 	for (int i = 0; i < length; i++)
 		tiles[i] = tile;
 }
 
+void t_tilebuffer::fill_overlay(const t_tile& tile)
+{
+	for (int i = 0; i < overlay.size(); i++)
+		overlay[i] = tile;
+}
+
 void t_tilebuffer::clear()
 {
-	for (int i = 0; i < length; i++) {
+	for (int i = 0; i < length; i++)
 		tiles[i].set_blank();
-		if (has_overlay) {
-			overlay[i].set_blank();
-		}
-	}
+}
+
+void t_tilebuffer::clear_overlay()
+{
+	for (int i = 0; i < overlay.size(); i++)
+		overlay[i].set_blank();
 }

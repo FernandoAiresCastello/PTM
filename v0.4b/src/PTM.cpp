@@ -61,13 +61,11 @@ void ptm::run_main()
 	cursor_tile.add_char(127, 0, 0);
 	cursor_tile.add_char(0, 0, 0);
 
-	scr.set_tile_overlay(cursor_tile, 0, 0);
+	scr.println("PTM 0.4");
+	scr.println("Ok");
+	scr.set_tile_overlay(cursor_tile, 0, 2);
 
 	scr.color(0xa8, 0xa3, 0xa2);
-	scr.locate(0, 0);
-	scr.println("Ok");
-
-	scr.color(0x72, 0xa3, 0xa2);
 
 	while (wnd.is_open()) {
 		update();

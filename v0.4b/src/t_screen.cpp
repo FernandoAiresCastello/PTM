@@ -102,15 +102,15 @@ void t_screen::set_blank_tile(int x, int y, t_tileflags flags)
 
 void t_screen::print(const t_tile& tile)
 {
-	buf->set(tile, csr.x, csr.y);
-	csr.x++;
+	buf->set(tile, csr.pos.x, csr.pos.y);
+	csr.pos.x++;
 
-	if (csr.x > last_col()) {
-		csr.x = 0;
-		csr.y++;
-		if (csr.y > last_row()) {
-			csr.y = last_row();
-			csr.x = 0;
+	if (csr.pos.x > last_col()) {
+		csr.pos.x = 0;
+		csr.pos.y++;
+		if (csr.pos.y > last_row()) {
+			csr.pos.y = last_row();
+			csr.pos.x = 0;
 			scroll_up();
 		}
 	}
@@ -118,15 +118,15 @@ void t_screen::print(const t_tile& tile)
 
 void t_screen::print(const char& ch)
 {
-	buf->set(t_tile(ch, fore_color, back_color), csr.x, csr.y);
-	csr.x++;
+	buf->set(t_tile(ch, fore_color, back_color), csr.pos.x, csr.pos.y);
+	csr.pos.x++;
 
-	if (csr.x > last_col()) {
-		csr.x = 0;
-		csr.y++;
-		if (csr.y > last_row()) {
-			csr.y = last_row();
-			csr.x = 0;
+	if (csr.pos.x > last_col()) {
+		csr.pos.x = 0;
+		csr.pos.y++;
+		if (csr.pos.y > last_row()) {
+			csr.pos.y = last_row();
+			csr.pos.x = 0;
 			scroll_up();
 		}
 	}
@@ -137,11 +137,11 @@ void t_screen::print(const t_string& str)
 	t_tileflags flags = t_tileflags();
 	flags.monochrome = true;
 
-	int ix = buf->set_text_wrap(str, &csr.x, &csr.y, fore_color, back_color, flags);
+	int ix = buf->set_text_wrap(str, &csr.pos.x, &csr.pos.y, fore_color, back_color, flags);
 
-	if (csr.y > last_row()) {
-		csr.y = last_row();
-		csr.x = 0;
+	if (csr.pos.y > last_row()) {
+		csr.pos.y = last_row();
+		csr.pos.x = 0;
 		scroll_up();
 		print(str.substr(ix));
 	}
@@ -151,10 +151,10 @@ void t_screen::println(const t_string& str)
 {
 	print(str);
 	
-	csr.x = 0;
-	csr.y++;
-	if (csr.y > last_row()) {
-		csr.y = last_row();
+	csr.pos.x = 0;
+	csr.pos.y++;
+	if (csr.pos.y > last_row()) {
+		csr.pos.y = last_row();
 		scroll_up();
 	}
 }

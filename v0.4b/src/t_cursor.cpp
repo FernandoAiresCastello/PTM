@@ -2,6 +2,5 @@
 
 void t_cursor::locate(int x, int y)
 {
-	this->x = x;
-	this->y = y;
+	pos.set(x, y);
 }
