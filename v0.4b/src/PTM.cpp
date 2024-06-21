@@ -8,52 +8,31 @@
 #include "t_screen.h"
 #include "t_util.h"
 
-namespace ptm
+t_window wnd;
+t_keyboard kb;
+t_charset chr;
+t_palette pal;
+t_screen scr;
+
+int wnd_size = 3;
+
+void PTM::run()
 {
-	t_window wnd;
-	t_keyboard kb;
-	t_charset chr;
-	t_palette pal;
-	t_screen scr;
+	init();
+	run_tests();
+	run_main();
 }
 
-void ptm::init()
+void PTM::init()
 {
-	wnd.open(wnd_title, wnd_size);
+	wnd.open(title, wnd_size);
 
 	scr.set_window(&wnd);
 	scr.set_charset(&chr);
 	scr.set_palette(&pal);
 }
 
-void ptm::run_tests()
-{
-	t_tests tests;
-	tests.run();
-}
-
-void ptm::run_graphics_test()
-{
-	int i = 0;
-	for (int y = 1; y < 1 + 16; y++) {
-		for (int x = 1; x < 1 + 16; x++) {
-			scr.set_tile(t_tile(0, i, i), x, y);
-			i++;
-		}
-	}
-
-	i = 0;
-	for (int y = 1; y < 1 + 16; y++) {
-		for (int x = 20; x < 20 + 16; x++) {
-			scr.set_tile(t_tile(i, 15, 0), x, y);
-			i++;
-		}
-	}
-
-	halt();
-}
-
-void ptm::run_main()
+void PTM::run_main()
 {
 	t_tile cursor_tile(127, 0, 0);
 	cursor_tile.flags.monochrome = true;
@@ -70,13 +49,13 @@ void ptm::run_main()
 	}
 }
 
-void ptm::halt()
+void PTM::halt()
 {
 	while (wnd.is_open())
 		update();
 }
 
-void ptm::pause(int frames)
+void PTM::pause(int frames)
 {
 	for (int i = 0; i < frames; i++) {
 		if (!wnd.is_open())
@@ -86,7 +65,7 @@ void ptm::pause(int frames)
 	}
 }
 
-void ptm::update()
+void PTM::update()
 {
 	scr.draw();
 	wnd.update();
@@ -105,4 +84,31 @@ void ptm::update()
 			wnd.close();
 		}
 	}
+}
+
+void PTM::run_tests()
+{
+	t_tests tests;
+	tests.run();
+}
+
+void PTM::run_graphics_test()
+{
+	int i = 0;
+	for (int y = 1; y < 1 + 16; y++) {
+		for (int x = 1; x < 1 + 16; x++) {
+			scr.set_tile(t_tile(0, i, i), x, y);
+			i++;
+		}
+	}
+
+	i = 0;
+	for (int y = 1; y < 1 + 16; y++) {
+		for (int x = 20; x < 20 + 16; x++) {
+			scr.set_tile(t_tile(i, 15, 0), x, y);
+			i++;
+		}
+	}
+
+	halt();
 }

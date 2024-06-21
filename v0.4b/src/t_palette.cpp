@@ -313,12 +313,4 @@ void t_palette::reset()
 	add(0xf6e46f);
 	add(0xfffa84);
 	add(0xffff99);
-
-	/*
-	for (int i = 0; i < 256; i++)
-		add(0x000000);
-
-	set(0, 0x101010);
-	set(1, 0xe0e0e0);
-	*/
 }

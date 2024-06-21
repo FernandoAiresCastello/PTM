@@ -1,11 +1,10 @@
 #include "PTM.h"
 
+PTM ptm;
+
 int main(int argc, char* argv[])
 {
-	ptm::init();
-	ptm::run_tests();
-	//ptm::run_graphics_test();
-	ptm::run_main();
+	ptm.run();
 
 	return 0;
 }

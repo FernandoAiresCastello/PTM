@@ -2,16 +2,19 @@
 #include <SDL.h>
 #include "t_string.h"
 
-namespace ptm
+class PTM
 {
-	const t_string wnd_title = "PTM - Programmable Tile Machine";
-	const int wnd_size = 3;
+public:
+	const t_string title = "PTM - Programmable Tile Machine";
 
+	void run();
+	void halt();
+	void pause(int frames);
+	void update();
+
+private:
 	void init();
 	void run_tests();
 	void run_graphics_test();
 	void run_main();
-	void halt();
-	void pause(int frames);
-	void update();
-}
+};
