@@ -55,15 +55,13 @@ void ptm::run_graphics_test()
 
 void ptm::run_main()
 {
-	t_tile cursor_tile;
+	t_tile cursor_tile(127, 0, 0);
 	cursor_tile.flags.monochrome = true;
 	cursor_tile.flags.hide_bgc = true;
-	cursor_tile.add_char(127, 0, 0);
-	cursor_tile.add_char(0, 0, 0);
 
 	scr.println("PTM 0.4");
 	scr.println("Ok");
-	scr.set_tile_overlay(cursor_tile, 0, 2);
+	scr.add_tiled_sprite(cursor_tile, 0, 2);
 
 	scr.color(0xa8, 0xa3, 0xa2);
 

@@ -175,20 +175,33 @@ void t_screen::scroll_up()
 	}
 }
 
-t_sptr<t_sprite> t_screen::create_sprite(const t_tile& tile, const t_pos& pos)
+t_sptr<t_sprite> t_screen::add_free_sprite(const t_tile& tile, int x, int y)
 {
-	t_sptr<t_sprite> sprite = sprites.emplace_back(std::make_shared<t_sprite>(tile, pos));
-	update_monochrome_tile(sprite->tile);
+	return add_sprite(tile, t_pos(x, y), false);
+}
+
+t_sptr<t_sprite> t_screen::add_tiled_sprite(const t_tile& tile, int x, int y)
+{
+	return add_sprite(tile, t_pos(x, y), true);
+}
+
+t_sptr<t_sprite> t_screen::add_sprite(const t_tile& tile, const t_pos& pos, bool grid)
+{
+	t_sptr<t_sprite> sprite = sprites.emplace_back(std::make_shared<t_sprite>(tile, pos, grid));
+	update_monochrome_tile(sprite->get_tile());
 	return sprite;
 }
 
 void t_screen::draw_sprites()
 {
 	for (auto& spr : sprites) {
-		t_tile& tile = spr->tile;
+		t_tile& tile = spr->get_tile();
 		if (tile.flags.visible) {
 			t_char& ch = tile.get_char_wraparound(wnd->get_animation_frame());
-			wnd->draw_char(chr, pal, ch.ix, spr->pos.x, spr->pos.y, ch.fgc, ch.bgc, false, spr->tile.flags.hide_bgc);
+			bool grid = spr->align_to_grid();
+			int x = grid ? (spr->get_x() + pos.x) * t_tile::width : spr->get_x(); 
+			int y = grid ? (spr->get_y() + pos.y) * t_tile::height : spr->get_y();
+			wnd->draw_char(chr, pal, ch.ix, x, y, ch.fgc, ch.bgc, false, spr->get_tile().flags.hide_bgc);
 		}
 	}
 }
@@ -203,7 +216,7 @@ void t_screen::update_monochrome_tiles()
 	}
 
 	for (auto& spr : sprites) {
-		update_monochrome_tile(spr->tile);
+		update_monochrome_tile(spr->get_tile());
 	}
 }
 

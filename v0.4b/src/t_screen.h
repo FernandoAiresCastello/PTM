@@ -35,7 +35,8 @@ public:
 	void print(const t_string& str);
 	void println(const t_string& str);
 	void scroll_up();
-	t_sptr<t_sprite> create_sprite(const t_tile& tile, const t_pos& pos);
+	t_sptr<t_sprite> add_free_sprite(const t_tile& tile, int x, int y);
+	t_sptr<t_sprite> add_tiled_sprite(const t_tile& tile, int x, int y);
 
 private:
 	t_window* wnd = nullptr;
@@ -53,4 +54,5 @@ private:
 	void draw_sprites();
 	void update_monochrome_tiles();
 	void update_monochrome_tile(t_tile& tile) const;
+	t_sptr<t_sprite> add_sprite(const t_tile& tile, const t_pos& pos, bool grid);
 };
