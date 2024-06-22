@@ -19,7 +19,7 @@ t_screen::t_screen()
 
 	t_tile cursor_tile = t_tile(127, 0, 0);
 	cursor_tile.flags.monochrome = true;
-	cursor_tile.flags.hide_bgc = true;
+	cursor_tile.flags.hide_bgc = false;
 	csr = add_tiled_sprite(cursor_tile, t_pos(0, 0));
 	csr->set_visible(false);
 
@@ -46,6 +46,19 @@ void t_screen::draw()
 	buf_bdr->draw(wnd, chr, pal);
 	buf->draw(wnd, chr, pal, pos.x, pos.y);
 	draw_sprites();
+}
+
+void t_screen::clear()
+{
+	for (int y = 0; y < buf->rows; y++) {
+		for (int x = 0; x < buf->cols; x++) {
+			t_tile& tile = buf->get_ref(x, y);
+			tile.set_blank();
+			tile.set_char(0, fore_color, back_color);
+		}
+	}
+
+	update_cursor();
 }
 
 void t_screen::color(t_index fgc)
@@ -77,20 +90,31 @@ void t_screen::locate(int x, int y)
 {
 	csr->move_to(x, y);
 	fix_cursor_pos();
+	update_cursor();
 }
 
 void t_screen::move_cursor(int dx, int dy)
 {
 	csr->move_dist(dx, dy);
 	fix_cursor_pos();
+	update_cursor();
 }
 
 void t_screen::fix_cursor_pos()
 {
-	if (csr->get_x() < 0)			csr->set_x(0);
-	if (csr->get_x() > last_col())	csr->set_x(last_col());
-	if (csr->get_y() < 0)			csr->set_y(0);
-	if (csr->get_y() > last_row())	csr->set_y(last_row());
+	if (csr->get_x() < 0)				csr->set_x(0);
+	else if (csr->get_x() > last_col())	csr->set_x(last_col());
+	if (csr->get_y() < 0)				csr->set_y(0);
+	else if (csr->get_y() > last_row())	csr->set_y(last_row());
+}
+
+void t_screen::update_cursor()
+{
+	t_char& char_under = get_tile_at_csr().get_char();
+	t_char& csr_char = csr->tile.get_char();
+	csr_char.ix = char_under.ix;
+	csr_char.fgc = back_color;
+	csr_char.bgc = fore_color;
 }
 
 int t_screen::last_row() const
@@ -113,6 +137,20 @@ int t_screen::csry() const
 	return csr->get_y();
 }
 
+int t_screen::eol() const
+{
+	int x = 0;
+	int y = csr->get_y();
+
+	for (x; x < buf->cols; x++) {
+		t_tile& tile = buf->get_ref(x, y);
+		if (tile.get_char().ix == 0 && tile.data.is_empty())
+			break;
+	}
+
+	return x;
+}
+
 t_pos t_screen::csr_pos() const
 {
 	return csr->get_pos();
@@ -121,6 +159,7 @@ t_pos t_screen::csr_pos() const
 void t_screen::show_cursor(bool visible)
 {
 	csr->set_visible(visible);
+	update_cursor();
 }
 
 void t_screen::set_tile(const t_tile& tile, int x, int y)
@@ -237,6 +276,21 @@ void t_screen::remove_sprite(t_sptr<t_sprite> sprite)
 	sprites.erase(it, sprites.end());
 }
 
+t_tile& t_screen::get_tile(const t_pos& pos)
+{
+	return buf->get_ref(pos.x, pos.y);
+}
+
+t_tile& t_screen::get_tile_at_csr()
+{
+	return buf->get_ref(csr->pos.x, csr->pos.y);
+}
+
+void t_screen::set_csr_char_ix(t_index ch)
+{
+	csr->tile.get_char().ix = ch;
+}
+
 t_sptr<t_sprite> t_screen::add_sprite(const t_tile& tile, const t_pos& pos, bool grid)
 {
 	t_sptr<t_sprite> sprite = sprites.emplace_back(std::make_shared<t_sprite>(tile, pos, grid));
@@ -270,6 +324,8 @@ void t_screen::update_monochrome_tiles()
 	for (auto& spr : sprites) {
 		update_monochrome_tile(spr->get_tile());
 	}
+
+	update_cursor();
 }
 
 void t_screen::update_monochrome_tile(t_tile& tile) const

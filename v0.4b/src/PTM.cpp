@@ -84,7 +84,7 @@ void PTM::update()
 		else if (key == SDLK_ESCAPE) {
 			wnd.close();
 		}
-		else {
+		else if (!kb.alt()) {
 			kb.key = key;
 			main_editor.on_keydown();
 		}

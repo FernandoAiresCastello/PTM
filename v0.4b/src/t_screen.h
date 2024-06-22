@@ -21,6 +21,7 @@ public:
 	void set_charset(t_charset* chr);
 	void set_palette(t_palette* pal);
 	void draw();
+	void clear();
 	void color(t_index fgc);
 	void color(t_index fgc, t_index bgc);
 	void color(t_index fgc, t_index bgc, t_index bdrc);
@@ -30,6 +31,7 @@ public:
 	int last_col() const;
 	int csrx() const;
 	int csry() const;
+	int eol() const;
 	t_pos csr_pos() const;
 	void show_cursor(bool visible);
 	void set_tile(const t_tile& tile, int x, int y);
@@ -43,6 +45,9 @@ public:
 	t_sptr<t_sprite> add_free_sprite(const t_tile& tile, const t_pos& pos);
 	t_sptr<t_sprite> add_tiled_sprite(const t_tile& tile, const t_pos& pos);
 	void remove_sprite(t_sptr<t_sprite> sprite);
+	t_tile& get_tile(const t_pos& pos);
+	t_tile& get_tile_at_csr();
+	void set_csr_char_ix(t_index ch);
 
 private:
 	t_window* wnd = nullptr;
@@ -62,4 +67,5 @@ private:
 	void update_monochrome_tile(t_tile& tile) const;
 	t_sptr<t_sprite> add_sprite(const t_tile& tile, const t_pos& pos, bool grid);
 	void fix_cursor_pos();
+	void update_cursor();
 };
