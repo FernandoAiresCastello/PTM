@@ -32,10 +32,10 @@ bool t_main_editor::handle_control_key()
 {
 	switch (kb->key)
 	{
-		case SDLK_RIGHT:	scr->move_cursor(1, 0);		return true;
-		case SDLK_LEFT:		scr->move_cursor(-1, 0);	return true;
-		case SDLK_DOWN:		scr->move_cursor(0, 1);		return true;
-		case SDLK_UP:		scr->move_cursor(0, -1);	return true;
+		case SDLK_RIGHT:	scr->move_cursor_wrap_x(1);		return true;
+		case SDLK_LEFT:		scr->move_cursor_wrap_x(-1);	return true;
+		case SDLK_DOWN:		scr->move_cursor_dist(0, 1);	return true;
+		case SDLK_UP:		scr->move_cursor_dist(0, -1);	return true;
 
 		case SDLK_HOME: {
 			if (kb->shift()) {
@@ -62,15 +62,10 @@ bool t_main_editor::handle_control_key()
 		}
 
 		case SDLK_BACKSPACE: {
+			scr->move_cursor_wrap_x(-1);
 			t_tileflags flags;
 			flags.monochrome = true;
 			scr->set_blank_tile(scr->csrx(), scr->csry(), flags);
-			if (scr->csrx() > 0) {
-				scr->move_cursor(-1, 0);
-			}
-			else if (scr->csry() > 0) {
-				scr->locate(scr->last_col(), scr->csry() - 1);
-			}
 			return true;
 		}
 

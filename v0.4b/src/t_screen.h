@@ -27,7 +27,8 @@ public:
 	void color(t_index fgc, t_index bgc);
 	void color(t_index fgc, t_index bgc, t_index bdrc);
 	void locate(int x, int y);
-	void move_cursor(int dx, int dy);
+	void move_cursor_dist(int dx, int dy);
+	void move_cursor_wrap_x(int dx);
 	int last_row() const;
 	int last_col() const;
 	int csrx() const;
@@ -64,6 +65,7 @@ private:
 	t_list<t_sptr<t_sprite>> sprites;
 	t_sptr<t_sprite> csr;
 
+	void init_cursor();
 	void draw_sprites();
 	void update_monochrome_tiles();
 	void update_monochrome_tile(t_tile& tile) const;

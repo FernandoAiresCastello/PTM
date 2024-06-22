@@ -82,7 +82,7 @@ void t_tilebuffer::set_text(const t_string& text, int x, int y, t_index fgc, t_i
 		if_out_of_bounds(x, y)
 			break;
 		
-		tile_at(x, y) = t_tile(ch, fgc, bgc);
+		tile_at(x, y) = t_tile(ch, fgc, bgc, flags);
 		tile_at(x, y).flags = flags;
 
 		x++;
@@ -96,7 +96,7 @@ int t_tilebuffer::set_text_wrap(const t_string& text, int* xptr, int* yptr, t_in
 	int ix = 0;
 
 	for (auto& ch : text.s_str()) {
-		tile_at(x, y) = t_tile(ch, fgc, bgc);
+		tile_at(x, y) = t_tile(ch, fgc, bgc, flags);
 		tile_at(x, y).flags = flags;
 		ix++;
 		x++;

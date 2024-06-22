@@ -3,7 +3,7 @@
 #include "t_palette.h"
 #include "t_charset.h"
 
-#define border_tile		t_tile(0, border_color, border_color)
+#define border_tile		t_tile(0, border_color, border_color, t_tileflags())
 
 t_screen::t_screen()
 {
@@ -17,13 +17,17 @@ t_screen::t_screen()
 		}
 	}
 
-	t_tile cursor_tile = t_tile(127, 0, 0);
-	cursor_tile.flags.monochrome = true;
-	cursor_tile.flags.hide_bgc = false;
+	init_cursor();
+	update_monochrome_tiles();
+}
+
+void t_screen::init_cursor()
+{
+	auto flags = t_tileflags();
+	flags.monochrome = true;
+	t_tile cursor_tile = t_tile(127, 0, 0, flags);
 	csr = add_tiled_sprite(cursor_tile, t_pos(0, 0));
 	csr->set_visible(false);
-
-	update_monochrome_tiles();
 }
 
 void t_screen::set_window(t_window* wnd)
@@ -96,9 +100,28 @@ void t_screen::locate(int x, int y)
 	fix_cursor_pos();
 }
 
-void t_screen::move_cursor(int dx, int dy)
+void t_screen::move_cursor_dist(int dx, int dy)
 {
 	csr->move_dist(dx, dy);
+	fix_cursor_pos();
+}
+
+void t_screen::move_cursor_wrap_x(int dx)
+{
+	if (dx < 0 && csr->pos.x == 0 && csr->pos.y == 0)
+		return;
+	if (dx > 0 && csr->pos.x == last_col() && csr->pos.y == last_row())
+		return;
+
+	csr->move_dist(dx, 0);
+	
+	if (csr->pos.x > last_col()) {
+		csr->move_to(0, csr->pos.y + 1);
+	}
+	else if (csr->pos.x < 0) {
+		csr->move_to(last_col(), csr->pos.y - 1);
+	}
+
 	fix_cursor_pos();
 }
 
@@ -198,25 +221,15 @@ void t_screen::print(const t_tile& tile)
 
 void t_screen::print(t_index ch)
 {
-	buf->set(t_tile(ch, fore_color, back_color), csr->pos.x, csr->pos.y);
-	csr->move_dist(1, 0);
-
-	if (csr->pos.x > last_col()) {
-		csr->pos.x = 0;
-		csr->pos.y++;
-		if (csr->pos.y > last_row()) {
-			csr->pos.y = last_row();
-			csr->pos.x = 0;
-			scroll_up();
-		}
-	}
+	auto flags = t_tileflags();
+	flags.monochrome = true;
+	print(t_tile(ch, fore_color, back_color, flags));
 }
 
 void t_screen::print(const t_string& str)
 {
 	t_tileflags flags = t_tileflags();
 	flags.monochrome = true;
-
 	int ix = buf->set_text_wrap(str, &csr->pos.x, &csr->pos.y, fore_color, back_color, flags);
 
 	if (csr->pos.y > last_row()) {

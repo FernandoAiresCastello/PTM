@@ -107,7 +107,7 @@ void PTM::run_graphics_test()
 	int i = 0;
 	for (int y = 1; y < 1 + 16; y++) {
 		for (int x = 1; x < 1 + 16; x++) {
-			scr.set_tile(t_tile(0, i, i), x, y);
+			scr.set_tile(t_tile(0, i, i, t_tileflags()), x, y);
 			i++;
 		}
 	}
@@ -115,7 +115,7 @@ void PTM::run_graphics_test()
 	i = 0;
 	for (int y = 1; y < 1 + 16; y++) {
 		for (int x = 20; x < 20 + 16; x++) {
-			scr.set_tile(t_tile(i, 15, 0), x, y);
+			scr.set_tile(t_tile(i, 15, 0, t_tileflags()), x, y);
 			i++;
 		}
 	}
