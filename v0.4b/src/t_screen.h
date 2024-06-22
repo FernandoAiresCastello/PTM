@@ -20,6 +20,7 @@ public:
 	void set_window(t_window* wnd);
 	void set_charset(t_charset* chr);
 	void set_palette(t_palette* pal);
+	void on_every_machine_cycle();
 	void draw();
 	void clear();
 	void color(t_index fgc);
@@ -38,9 +39,10 @@ public:
 	void set_tile_overlay(const t_tile& tile, int x, int y);
 	void set_blank_tile(int x, int y, t_tileflags flags = t_tileflags());
 	void print(const t_tile& tile);
-	void print(const char& ch);
+	void print(t_index ch);
 	void print(const t_string& str);
 	void println(const t_string& str);
+	void newline();
 	void scroll_up();
 	t_sptr<t_sprite> add_free_sprite(const t_tile& tile, const t_pos& pos);
 	t_sptr<t_sprite> add_tiled_sprite(const t_tile& tile, const t_pos& pos);

@@ -41,6 +41,12 @@ void t_screen::set_palette(t_palette* pal)
 	this->pal = pal;
 }
 
+void t_screen::on_every_machine_cycle()
+{
+	update_cursor();
+	draw();
+}
+
 void t_screen::draw()
 {
 	buf_bdr->draw(wnd, chr, pal);
@@ -57,8 +63,6 @@ void t_screen::clear()
 			tile.set_char(0, fore_color, back_color);
 		}
 	}
-
-	update_cursor();
 }
 
 void t_screen::color(t_index fgc)
@@ -90,14 +94,12 @@ void t_screen::locate(int x, int y)
 {
 	csr->move_to(x, y);
 	fix_cursor_pos();
-	update_cursor();
 }
 
 void t_screen::move_cursor(int dx, int dy)
 {
 	csr->move_dist(dx, dy);
 	fix_cursor_pos();
-	update_cursor();
 }
 
 void t_screen::fix_cursor_pos()
@@ -110,9 +112,8 @@ void t_screen::fix_cursor_pos()
 
 void t_screen::update_cursor()
 {
-	t_char& char_under = get_tile_at_csr().get_char();
 	t_char& csr_char = csr->tile.get_char();
-	csr_char.ix = char_under.ix;
+	csr_char.ix = get_tile_at_csr().get_char().ix;
 	csr_char.fgc = back_color;
 	csr_char.bgc = fore_color;
 }
@@ -139,16 +140,16 @@ int t_screen::csry() const
 
 int t_screen::eol() const
 {
-	int x = 0;
+	int x = last_col();
 	int y = csr->get_y();
 
-	for (x; x < buf->cols; x++) {
+	for (x; x >= 0; x--) {
 		t_tile& tile = buf->get_ref(x, y);
-		if (tile.get_char().ix == 0 && tile.data.is_empty())
+		if (tile.get_char().ix != 0 || tile.data.is_not_empty())
 			break;
 	}
 
-	return x;
+	return x == last_col() ? x : x + 1;
 }
 
 t_pos t_screen::csr_pos() const
@@ -159,7 +160,6 @@ t_pos t_screen::csr_pos() const
 void t_screen::show_cursor(bool visible)
 {
 	csr->set_visible(visible);
-	update_cursor();
 }
 
 void t_screen::set_tile(const t_tile& tile, int x, int y)
@@ -196,7 +196,7 @@ void t_screen::print(const t_tile& tile)
 	}
 }
 
-void t_screen::print(const char& ch)
+void t_screen::print(t_index ch)
 {
 	buf->set(t_tile(ch, fore_color, back_color), csr->pos.x, csr->pos.y);
 	csr->move_dist(1, 0);
@@ -230,7 +230,11 @@ void t_screen::print(const t_string& str)
 void t_screen::println(const t_string& str)
 {
 	print(str);
-	
+	newline();
+}
+
+void t_screen::newline()
+{
 	csr->pos.x = 0;
 	csr->pos.y++;
 	if (csr->pos.y > last_row()) {
@@ -324,8 +328,6 @@ void t_screen::update_monochrome_tiles()
 	for (auto& spr : sprites) {
 		update_monochrome_tile(spr->get_tile());
 	}
-
-	update_cursor();
 }
 
 void t_screen::update_monochrome_tile(t_tile& tile) const

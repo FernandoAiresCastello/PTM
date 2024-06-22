@@ -10,7 +10,7 @@ public:
 	void run();
 	void halt();
 	void pause(int frames);
-	void update();
+	void debug(t_string msg);
 
 private:
 	bool running = false;
@@ -19,4 +19,5 @@ private:
 	void run_tests();
 	void run_graphics_test();
 	void run_main();
+	void on_machine_cycle();
 };

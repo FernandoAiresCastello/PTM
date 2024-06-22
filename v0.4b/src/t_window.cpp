@@ -64,6 +64,11 @@ void t_window::toggle_fullscreen()
 	update();
 }
 
+void t_window::set_title(const t_string& title)
+{
+	SDL_SetWindowTitle(sdl_wnd, title.c_str());
+}
+
 void t_window::clear(const t_color& color)
 {
 	for (int i = 0; i < buflen; i++) {

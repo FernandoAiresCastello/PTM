@@ -1,4 +1,5 @@
 #pragma once
+#include <SDL.h>
 
 class PTM;
 class t_screen;
@@ -15,4 +16,7 @@ private:
 	PTM* ptm = nullptr;
 	t_screen* scr = nullptr;
 	t_keyboard* kb = nullptr;
+
+	bool handle_control_key();
+	bool handle_character_key();
 };

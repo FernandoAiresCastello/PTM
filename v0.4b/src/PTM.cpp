@@ -46,14 +46,14 @@ void PTM::run_main()
 	main_editor.print_welcome();
 
 	while (wnd.is_open()) {
-		update();
+		on_machine_cycle();
 	}
 }
 
 void PTM::halt()
 {
 	while (wnd.is_open())
-		update();
+		on_machine_cycle();
 }
 
 void PTM::pause(int frames)
@@ -62,13 +62,18 @@ void PTM::pause(int frames)
 		if (!wnd.is_open())
 			break;
 
-		update();
+		on_machine_cycle();
 	}
 }
 
-void PTM::update()
+void PTM::debug(t_string msg)
 {
-	scr.draw();
+	wnd.set_title(msg);
+}
+
+void PTM::on_machine_cycle()
+{
+	scr.on_every_machine_cycle();
 	wnd.update();
 
 	SDL_Event e;

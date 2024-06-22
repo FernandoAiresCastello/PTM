@@ -27,6 +27,10 @@ t_string::t_string(t_string&& other) noexcept : value(std::move(other.value))
 {
 }
 
+t_string::t_string(int value) : value(from_int(value))
+{
+}
+
 t_string::operator const std::string&() const
 {
 	return (const std::string&) value;

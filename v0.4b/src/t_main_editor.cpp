@@ -22,12 +22,20 @@ void t_main_editor::print_welcome()
 
 void t_main_editor::on_keydown()
 {
+	ptm->debug(kb->key);
+
+	if (!handle_control_key())
+		handle_character_key();
+}
+
+bool t_main_editor::handle_control_key()
+{
 	switch (kb->key)
 	{
-		case SDLK_RIGHT:	scr->move_cursor(1, 0); break;
-		case SDLK_LEFT:		scr->move_cursor(-1, 0); break;
-		case SDLK_DOWN:		scr->move_cursor(0, 1); break;
-		case SDLK_UP:		scr->move_cursor(0, -1); break;
+		case SDLK_RIGHT:	scr->move_cursor(1, 0);		return true;
+		case SDLK_LEFT:		scr->move_cursor(-1, 0);	return true;
+		case SDLK_DOWN:		scr->move_cursor(0, 1);		return true;
+		case SDLK_UP:		scr->move_cursor(0, -1);	return true;
 
 		case SDLK_HOME: {
 			if (kb->shift()) {
@@ -40,7 +48,7 @@ void t_main_editor::on_keydown()
 			else {
 				scr->locate(0, scr->csry());
 			}
-			break;
+			return true;
 		}
 
 		case SDLK_END: {
@@ -50,7 +58,37 @@ void t_main_editor::on_keydown()
 			else {
 				scr->locate(scr->eol(), scr->csry());
 			}
-			break;
+			return true;
+		}
+
+		case SDLK_BACKSPACE: {
+			t_tileflags flags;
+			flags.monochrome = true;
+			scr->set_blank_tile(scr->csrx(), scr->csry(), flags);
+			if (scr->csrx() > 0) {
+				scr->move_cursor(-1, 0);
+			}
+			else if (scr->csry() > 0) {
+				scr->locate(scr->last_col(), scr->csry() - 1);
+			}
+			return true;
+		}
+
+		case SDLK_RETURN: {
+			scr->newline();
+			return true;
 		}
 	}
+
+	return false;
+}
+
+bool t_main_editor::handle_character_key()
+{
+	int ch = kb->keycode_to_char(kb->key);
+	if (ch > 0) {
+		scr->print(ch);
+		return true;
+	}
+	return false;
 }

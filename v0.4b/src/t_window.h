@@ -21,6 +21,7 @@ public:
 	void close();
 	bool is_open();
 	void toggle_fullscreen();
+	void set_title(const t_string& title);
 	void clear(const t_color& color);
 	void update();
 	void reset_frame_counter();

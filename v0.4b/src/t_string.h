@@ -11,6 +11,7 @@ public:
 	t_string(const std::string& other);
 	t_string(const char& single_char);
 	t_string(t_string&& other) noexcept;
+	t_string(int value);
 	~t_string() = default;
 
 	operator const std::string&() const;

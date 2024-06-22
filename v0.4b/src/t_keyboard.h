@@ -11,4 +11,5 @@ public:
 	bool ctrl();
 	bool alt();
 	bool capslock();
+	int keycode_to_char(SDL_Keycode key);
 };
