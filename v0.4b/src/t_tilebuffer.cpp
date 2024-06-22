@@ -98,6 +98,9 @@ int t_tilebuffer::set_text_wrap(const t_string& text, int* xptr, int* yptr, t_in
 	for (auto& ch : text.s_str()) {
 		tile_at(x, y) = t_tile(ch, fgc, bgc, flags);
 		tile_at(x, y).flags = flags;
+		if (x == last_col()) {
+			tile_at(x, y).flags.line_wrap = true;
+		}
 		ix++;
 		x++;
 		if (x >= cols) {

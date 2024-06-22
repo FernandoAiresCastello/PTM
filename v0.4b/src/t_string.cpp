@@ -85,6 +85,12 @@ t_string& t_string::operator+=(const t_string& other)
 	return *this;
 }
 
+t_string& t_string::operator+=(const int& ch)
+{
+	value.push_back(ch);
+	return *this;
+}
+
 t_string t_string::operator+(const t_string& other) const
 {
 	return t_string(value + other.value);

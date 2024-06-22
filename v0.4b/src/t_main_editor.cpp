@@ -25,7 +25,8 @@ void t_main_editor::on_keydown()
 	ptm->debug(kb->key);
 
 	if (!handle_control_key())
-		handle_character_key();
+		if (!handle_function_key())
+			handle_character_key();
 }
 
 bool t_main_editor::handle_control_key()
@@ -70,9 +71,21 @@ bool t_main_editor::handle_control_key()
 		}
 
 		case SDLK_RETURN: {
-			scr->newline();
+			on_enter_pressed();
 			return true;
 		}
+	}
+
+	return false;
+}
+
+bool t_main_editor::handle_function_key()
+{
+	switch (kb->key)
+	{
+		case SDLK_F1:
+			highlight_line_wrap();
+			return true;
 	}
 
 	return false;
@@ -86,4 +99,25 @@ bool t_main_editor::handle_character_key()
 		return true;
 	}
 	return false;
+}
+
+void t_main_editor::highlight_line_wrap()
+{
+	for (int y = 0; y <= scr->last_row(); y++) {
+		for (int x = 0; x <= scr->last_col(); x++) {
+			t_tile& tile = scr->get_tile(t_pos(x, y));
+			if (tile.flags.line_wrap) {
+				tile.flags.monochrome = false;
+				tile.get_char().fgc = 1;
+				tile.get_char().bgc = 15;
+			}
+		}
+	}
+}
+
+void t_main_editor::on_enter_pressed()
+{
+	t_string line = scr->get_current_logical_line();
+	scr->newline();
+
 }

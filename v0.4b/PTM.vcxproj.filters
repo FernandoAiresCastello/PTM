@@ -56,9 +56,6 @@
     <ClCompile Include="src\t_screen.cpp">
       <Filter>GRAPHICS</Filter>
     </ClCompile>
-    <ClCompile Include="src\t_cursor.cpp">
-      <Filter>GRAPHICS</Filter>
-    </ClCompile>
     <ClCompile Include="src\t_main_editor.cpp">
       <Filter>CORE</Filter>
     </ClCompile>
@@ -131,9 +128,6 @@
       <Filter>TILESYSTEM</Filter>
     </ClInclude>
     <ClInclude Include="src\t_screen.h">
-      <Filter>GRAPHICS</Filter>
-    </ClInclude>
-    <ClInclude Include="src\t_cursor.h">
       <Filter>GRAPHICS</Filter>
     </ClInclude>
     <ClInclude Include="src\t_main_editor.h">

@@ -206,8 +206,10 @@ void t_screen::set_blank_tile(int x, int y, t_tileflags flags)
 void t_screen::print(const t_tile& tile)
 {
 	buf->set(tile, csr->get_x(), csr->get_y());
+	if (csr->pos.x == last_col()) {
+		buf->get_ref(csr->get_x(), csr->get_y()).flags.line_wrap = true;
+	}
 	csr->move_dist(1, 0);
-
 	if (csr->pos.x > last_col()) {
 		csr->pos.x = 0;
 		csr->pos.y++;
@@ -351,4 +353,54 @@ void t_screen::update_monochrome_tile(t_tile& tile) const
 			ch.bgc = back_color;
 		}
 	}
+}
+
+t_string t_screen::get_current_logical_line()
+{
+	t_string last_half;
+
+	int y = csry();
+	for (int x = csrx(); x <= last_col(); x++) {
+		t_tile& tile = get_tile(t_pos(x, y));
+		t_index ch = tile.get_char().ix;
+		if (ch <= 0)
+			ch = ' ';
+
+		last_half += ch;
+		if (tile.flags.line_wrap) {
+			x = -1;
+			y++;
+			if (y > last_row()) {
+				break;
+			}
+		}
+	}
+
+	t_string first_half;
+
+	y = csry();
+	int x = csrx() - 1;
+	for (x; x >= -1; x--) {
+		if (x == -1) {
+			x = last_col();
+			y--;
+			if (y < 0) {
+				break;
+			}
+			t_tile& tile = get_tile(t_pos(x, y));
+			if (!tile.flags.line_wrap) {
+				break;
+			}
+		}
+		t_tile& tile = get_tile(t_pos(x, y));
+		t_index ch = tile.get_char().ix;
+		if (ch <= 0)
+			ch = ' ';
+
+		first_half += ch;
+	}
+
+	first_half = first_half.reverse();
+
+	return t_string(first_half + last_half).trim();
 }

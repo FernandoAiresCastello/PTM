@@ -2,7 +2,6 @@
 #include "t_pointers.h"
 #include "t_window.h"
 #include "t_index.h"
-#include "t_cursor.h"
 #include "t_pos.h"
 #include "t_list.h"
 #include "t_sprite.h"
@@ -51,6 +50,7 @@ public:
 	t_tile& get_tile(const t_pos& pos);
 	t_tile& get_tile_at_csr();
 	void set_csr_char_ix(t_index ch);
+	t_string get_current_logical_line();
 
 private:
 	t_window* wnd = nullptr;

@@ -18,5 +18,8 @@ private:
 	t_keyboard* kb = nullptr;
 
 	bool handle_control_key();
+	bool handle_function_key();
 	bool handle_character_key();
+	void highlight_line_wrap();
+	void on_enter_pressed();
 };

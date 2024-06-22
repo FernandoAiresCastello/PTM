@@ -23,6 +23,7 @@ public:
 	char& operator[](size_t index);
 	const char& operator[](size_t index) const;
 	t_string& operator+=(const t_string& other);
+	t_string& operator+=(const int& ch);
 	t_string operator+(const t_string& other) const;
 		
 	static t_string fmt(const char* str, ...);
