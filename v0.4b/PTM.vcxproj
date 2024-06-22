@@ -29,6 +29,7 @@
     <ClCompile Include="src\t_dict.cpp" />
     <ClCompile Include="src\t_keyboard.cpp" />
     <ClCompile Include="src\t_list.cpp" />
+    <ClCompile Include="src\t_main_editor.cpp" />
     <ClCompile Include="src\t_palette.cpp" />
     <ClCompile Include="src\t_pos.cpp" />
     <ClCompile Include="src\t_screen.cpp" />
@@ -53,6 +54,7 @@
     <ClInclude Include="src\t_index.h" />
     <ClInclude Include="src\t_keyboard.h" />
     <ClInclude Include="src\t_list.h" />
+    <ClInclude Include="src\t_main_editor.h" />
     <ClInclude Include="src\t_palette.h" />
     <ClInclude Include="src\t_pointers.h" />
     <ClInclude Include="src\t_pos.h" />

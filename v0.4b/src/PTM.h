@@ -13,6 +13,8 @@ public:
 	void update();
 
 private:
+	bool running = false;
+
 	void init();
 	void run_tests();
 	void run_graphics_test();

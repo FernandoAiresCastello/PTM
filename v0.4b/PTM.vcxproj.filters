@@ -33,13 +33,13 @@
       <Filter>INPUT</Filter>
     </ClCompile>
     <ClCompile Include="src\t_tile.cpp">
-      <Filter>TILE SYSTEM</Filter>
+      <Filter>TILESYSTEM</Filter>
     </ClCompile>
     <ClCompile Include="src\t_tilebuffer.cpp">
-      <Filter>TILE SYSTEM</Filter>
+      <Filter>TILESYSTEM</Filter>
     </ClCompile>
     <ClCompile Include="src\t_char.cpp">
-      <Filter>TILE SYSTEM</Filter>
+      <Filter>TILESYSTEM</Filter>
     </ClCompile>
     <ClCompile Include="src\t_palette.cpp">
       <Filter>GRAPHICS</Filter>
@@ -47,20 +47,23 @@
     <ClCompile Include="src\PTM.cpp">
       <Filter>CORE</Filter>
     </ClCompile>
-    <ClCompile Include="src\t_screen.cpp">
-      <Filter>MACHINE</Filter>
-    </ClCompile>
-    <ClCompile Include="src\t_cursor.cpp">
-      <Filter>MACHINE</Filter>
-    </ClCompile>
     <ClCompile Include="src\t_pos.cpp">
       <Filter>UTIL</Filter>
     </ClCompile>
-    <ClCompile Include="src\t_sprite.cpp">
-      <Filter>TILE SYSTEM</Filter>
-    </ClCompile>
     <ClCompile Include="src\t_tileflags.cpp">
-      <Filter>TILE SYSTEM</Filter>
+      <Filter>TILESYSTEM</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_screen.cpp">
+      <Filter>GRAPHICS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_cursor.cpp">
+      <Filter>GRAPHICS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_main_editor.cpp">
+      <Filter>CORE</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_sprite.cpp">
+      <Filter>GRAPHICS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -98,31 +101,25 @@
       <Filter>INPUT</Filter>
     </ClInclude>
     <ClInclude Include="src\t_tile.h">
-      <Filter>TILE SYSTEM</Filter>
+      <Filter>TILESYSTEM</Filter>
     </ClInclude>
     <ClInclude Include="src\t_tilebuffer.h">
-      <Filter>TILE SYSTEM</Filter>
+      <Filter>TILESYSTEM</Filter>
     </ClInclude>
     <ClInclude Include="src\t_char.h">
-      <Filter>TILE SYSTEM</Filter>
+      <Filter>TILESYSTEM</Filter>
     </ClInclude>
     <ClInclude Include="src\t_palette.h">
       <Filter>GRAPHICS</Filter>
     </ClInclude>
     <ClInclude Include="src\t_tile_animation.h">
-      <Filter>TILE SYSTEM</Filter>
+      <Filter>TILESYSTEM</Filter>
     </ClInclude>
     <ClInclude Include="src\PTM.h">
       <Filter>CORE</Filter>
     </ClInclude>
-    <ClInclude Include="src\t_screen.h">
-      <Filter>MACHINE</Filter>
-    </ClInclude>
     <ClInclude Include="src\t_index.h">
       <Filter>GRAPHICS</Filter>
-    </ClInclude>
-    <ClInclude Include="src\t_cursor.h">
-      <Filter>MACHINE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_pointers.h">
       <Filter>UTIL</Filter>
@@ -130,11 +127,20 @@
     <ClInclude Include="src\t_pos.h">
       <Filter>UTIL</Filter>
     </ClInclude>
-    <ClInclude Include="src\t_sprite.h">
-      <Filter>TILE SYSTEM</Filter>
-    </ClInclude>
     <ClInclude Include="src\t_tileflags.h">
-      <Filter>TILE SYSTEM</Filter>
+      <Filter>TILESYSTEM</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_screen.h">
+      <Filter>GRAPHICS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_cursor.h">
+      <Filter>GRAPHICS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_main_editor.h">
+      <Filter>CORE</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_sprite.h">
+      <Filter>GRAPHICS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -147,17 +153,14 @@
     <Filter Include="INPUT">
       <UniqueIdentifier>{31c97c3a-1b06-47e4-9c67-9dbac0326a30}</UniqueIdentifier>
     </Filter>
-    <Filter Include="TILE SYSTEM">
-      <UniqueIdentifier>{ae92eb0a-0819-44c8-9dc9-15dcf26417a3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GRAPHICS">
       <UniqueIdentifier>{cb589e47-33ae-43f4-b8bf-f0954d4be141}</UniqueIdentifier>
     </Filter>
     <Filter Include="CORE">
       <UniqueIdentifier>{d5551f7b-30ed-4f80-aa0a-e1dc9a86334e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MACHINE">
-      <UniqueIdentifier>{1e5c2f8b-690e-4f1e-a849-f52336d15e66}</UniqueIdentifier>
+    <Filter Include="TILESYSTEM">
+      <UniqueIdentifier>{ae92eb0a-0819-44c8-9dc9-15dcf26417a3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

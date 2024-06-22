@@ -13,6 +13,16 @@ t_tile& t_sprite::get_tile()
 	return tile;
 }
 
+void t_sprite::set_visible(bool visible)
+{
+	tile.flags.visible = visible;
+}
+
+bool t_sprite::align_to_grid() const
+{
+	return grid;
+}
+
 const t_pos& t_sprite::get_pos() const
 {
 	return pos;
@@ -28,7 +38,24 @@ int t_sprite::get_y() const
 	return pos.y;
 }
 
-bool t_sprite::align_to_grid() const
+void t_sprite::set_x(int x)
 {
-	return grid;
+	pos.x = x;
+}
+
+void t_sprite::set_y(int y)
+{
+	pos.y = y;
+}
+
+void t_sprite::move_to(int x, int y)
+{
+	pos.x = x;
+	pos.y = y;
+}
+
+void t_sprite::move_dist(int dx, int dy)
+{
+	pos.x += dx;
+	pos.y += dy;
 }

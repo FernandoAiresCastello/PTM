@@ -5,14 +5,21 @@
 class t_sprite
 {
 public:
+	friend class t_screen;
+
 	t_sprite(bool grid);
 	t_sprite(const t_tile& tile, const t_pos& pos, bool grid);
 
 	t_tile& get_tile();
+	void set_visible(bool visible);
+	bool align_to_grid() const;
 	const t_pos& get_pos() const;
 	int get_x() const;
 	int get_y() const;
-	bool align_to_grid() const;
+	void set_x(int x);
+	void set_y(int y);
+	void move_to(int x, int y);
+	void move_dist(int dx, int dy);
 
 private:
 	t_tile tile;

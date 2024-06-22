@@ -7,17 +7,24 @@
 #include "t_tilebuffer.h"
 #include "t_screen.h"
 #include "t_util.h"
+#include "t_main_editor.h"
 
 t_window wnd;
 t_keyboard kb;
 t_charset chr;
 t_palette pal;
 t_screen scr;
+t_main_editor main_editor;
 
 int wnd_size = 3;
 
 void PTM::run()
 {
+	if (running)
+		return;
+
+	running = true;
+
 	init();
 	run_tests();
 	run_main();
@@ -30,19 +37,13 @@ void PTM::init()
 	scr.set_window(&wnd);
 	scr.set_charset(&chr);
 	scr.set_palette(&pal);
+
+	main_editor.init(this, &scr, &kb);
 }
 
 void PTM::run_main()
 {
-	t_tile cursor_tile(127, 0, 0);
-	cursor_tile.flags.monochrome = true;
-	cursor_tile.flags.hide_bgc = true;
-
-	scr.println("PTM 0.4");
-	scr.println("Ok");
-	scr.add_tiled_sprite(cursor_tile, 0, 2);
-
-	scr.color(0xa8, 0xa3, 0xa2);
+	main_editor.print_welcome();
 
 	while (wnd.is_open()) {
 		update();
@@ -82,6 +83,10 @@ void PTM::update()
 		}
 		else if (key == SDLK_ESCAPE) {
 			wnd.close();
+		}
+		else {
+			kb.key = key;
+			main_editor.on_keydown();
 		}
 	}
 }
