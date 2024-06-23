@@ -4,12 +4,14 @@
 #include "t_screen.h"
 #include "t_keyboard.h"
 #include "t_util.h"
+#include "t_interpreter.h"
 
-void t_main_editor::init(PTM* ptm, t_screen* scr, t_keyboard* kb)
+void t_main_editor::init(PTM* ptm, t_screen* scr, t_keyboard* kb, t_interpreter* intp)
 {
 	this->ptm = ptm;
 	this->scr = scr;
 	this->kb = kb;
+	this->intp = intp;
 }
 
 void t_main_editor::print_welcome()
@@ -84,7 +86,14 @@ bool t_main_editor::handle_function_key()
 	switch (kb->key)
 	{
 		case SDLK_F1:
-			highlight_line_wrap();
+			return true;
+		case SDLK_F2:
+			return true;
+		case SDLK_F3:
+			return true;
+		case SDLK_F4:
+			return true;
+		case SDLK_F5:
 			return true;
 	}
 
@@ -119,5 +128,5 @@ void t_main_editor::on_enter_pressed()
 {
 	t_string line = scr->get_current_logical_line();
 	scr->newline();
-
+	intp->exec_immediate(line);
 }

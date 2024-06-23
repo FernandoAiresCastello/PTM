@@ -25,6 +25,8 @@ public:
 	void color(t_index fgc);
 	void color(t_index fgc, t_index bgc);
 	void color(t_index fgc, t_index bgc, t_index bdrc);
+	void color_bg(t_index bg);
+	void color_bdr(t_index bdr);
 	void locate(int x, int y);
 	void move_cursor_dist(int dx, int dy);
 	void move_cursor_wrap_x(int dx);

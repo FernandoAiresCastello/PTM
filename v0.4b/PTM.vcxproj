@@ -26,6 +26,7 @@
     <ClCompile Include="src\t_color.cpp" />
     <ClCompile Include="src\t_data.cpp" />
     <ClCompile Include="src\t_dict.cpp" />
+    <ClCompile Include="src\t_interpreter.cpp" />
     <ClCompile Include="src\t_keyboard.cpp" />
     <ClCompile Include="src\t_list.cpp" />
     <ClCompile Include="src\t_main_editor.cpp" />
@@ -50,6 +51,7 @@
     <ClInclude Include="src\t_data.h" />
     <ClInclude Include="src\t_dict.h" />
     <ClInclude Include="src\t_index.h" />
+    <ClInclude Include="src\t_interpreter.h" />
     <ClInclude Include="src\t_keyboard.h" />
     <ClInclude Include="src\t_list.h" />
     <ClInclude Include="src\t_main_editor.h" />

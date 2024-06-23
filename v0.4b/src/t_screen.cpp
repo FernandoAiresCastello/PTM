@@ -94,6 +94,21 @@ void t_screen::color(t_index fgc, t_index bgc, t_index bdrc)
 	update_monochrome_tiles();
 }
 
+void t_screen::color_bg(t_index bg)
+{
+	back_color = bg;
+
+	update_monochrome_tiles();
+}
+
+void t_screen::color_bdr(t_index bdr)
+{
+	border_color = bdr;
+
+	buf_bdr->fill(border_tile);
+	update_monochrome_tiles();
+}
+
 void t_screen::locate(int x, int y)
 {
 	csr->move_to(x, y);

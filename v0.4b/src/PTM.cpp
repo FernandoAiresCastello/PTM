@@ -8,6 +8,7 @@
 #include "t_screen.h"
 #include "t_util.h"
 #include "t_main_editor.h"
+#include "t_interpreter.h"
 
 t_window wnd;
 t_keyboard kb;
@@ -15,6 +16,7 @@ t_charset chr;
 t_palette pal;
 t_screen scr;
 t_main_editor main_editor;
+t_interpreter intp;
 
 int wnd_size = 3;
 
@@ -38,7 +40,8 @@ void PTM::init()
 	scr.set_charset(&chr);
 	scr.set_palette(&pal);
 
-	main_editor.init(this, &scr, &kb);
+	intp.init(this, &scr, &kb);
+	main_editor.init(this, &scr, &kb, &intp);
 }
 
 void PTM::run_main()
