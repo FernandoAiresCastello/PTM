@@ -378,7 +378,7 @@ t_string t_screen::get_current_logical_line()
 	for (int x = csrx(); x <= last_col(); x++) {
 		t_tile& tile = get_tile(t_pos(x, y));
 		t_index ch = tile.get_char().ix;
-		if (ch <= 0)
+		if (ch <= 0 || ch > 255)
 			ch = ' ';
 
 		last_half += ch;
@@ -409,7 +409,7 @@ t_string t_screen::get_current_logical_line()
 		}
 		t_tile& tile = get_tile(t_pos(x, y));
 		t_index ch = tile.get_char().ix;
-		if (ch <= 0)
+		if (ch <= 0 || ch > 255)
 			ch = ' ';
 
 		first_half += ch;

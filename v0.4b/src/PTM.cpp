@@ -125,3 +125,8 @@ void PTM::run_graphics_test()
 
 	halt();
 }
+
+void PTM::save_program_line(const t_list<t_token>& tokens)
+{
+	// TODO
+}

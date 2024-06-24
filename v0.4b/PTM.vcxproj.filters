@@ -63,7 +63,16 @@
       <Filter>GRAPHICS</Filter>
     </ClCompile>
     <ClCompile Include="src\t_interpreter.cpp">
-      <Filter>INTERPRETER</Filter>
+      <Filter>PTML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_lexer.cpp">
+      <Filter>PTML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_parser.cpp">
+      <Filter>PTML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_token.cpp">
+      <Filter>PTML</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -140,7 +149,19 @@
       <Filter>GRAPHICS</Filter>
     </ClInclude>
     <ClInclude Include="src\t_interpreter.h">
-      <Filter>INTERPRETER</Filter>
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_lexer.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_parser.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_token.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_token_type.h">
+      <Filter>PTML</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -162,7 +183,7 @@
     <Filter Include="TILESYSTEM">
       <UniqueIdentifier>{ae92eb0a-0819-44c8-9dc9-15dcf26417a3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="INTERPRETER">
+    <Filter Include="PTML">
       <UniqueIdentifier>{d73b4aac-b700-424b-8ae1-15ba947d5ef1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

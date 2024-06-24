@@ -128,5 +128,6 @@ void t_main_editor::on_enter_pressed()
 {
 	t_string line = scr->get_current_logical_line();
 	scr->newline();
-	intp->exec_immediate(line);
+	if (!line.trim().empty())
+		intp->interpret(line);
 }

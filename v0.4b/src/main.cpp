@@ -1,3 +1,4 @@
+#include <SDL.h>
 #include "PTM.h"
 
 PTM ptm;

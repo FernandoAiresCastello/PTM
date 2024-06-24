@@ -28,9 +28,11 @@
     <ClCompile Include="src\t_dict.cpp" />
     <ClCompile Include="src\t_interpreter.cpp" />
     <ClCompile Include="src\t_keyboard.cpp" />
+    <ClCompile Include="src\t_lexer.cpp" />
     <ClCompile Include="src\t_list.cpp" />
     <ClCompile Include="src\t_main_editor.cpp" />
     <ClCompile Include="src\t_palette.cpp" />
+    <ClCompile Include="src\t_parser.cpp" />
     <ClCompile Include="src\t_pos.cpp" />
     <ClCompile Include="src\t_screen.cpp" />
     <ClCompile Include="src\t_sprite.cpp" />
@@ -39,6 +41,7 @@
     <ClCompile Include="src\t_tile.cpp" />
     <ClCompile Include="src\t_tilebuffer.cpp" />
     <ClCompile Include="src\t_tileflags.cpp" />
+    <ClCompile Include="src\t_token.cpp" />
     <ClCompile Include="src\t_util.cpp" />
     <ClCompile Include="src\t_window.cpp" />
   </ItemGroup>
@@ -53,9 +56,11 @@
     <ClInclude Include="src\t_index.h" />
     <ClInclude Include="src\t_interpreter.h" />
     <ClInclude Include="src\t_keyboard.h" />
+    <ClInclude Include="src\t_lexer.h" />
     <ClInclude Include="src\t_list.h" />
     <ClInclude Include="src\t_main_editor.h" />
     <ClInclude Include="src\t_palette.h" />
+    <ClInclude Include="src\t_parser.h" />
     <ClInclude Include="src\t_pointers.h" />
     <ClInclude Include="src\t_pos.h" />
     <ClInclude Include="src\t_screen.h" />
@@ -66,6 +71,8 @@
     <ClInclude Include="src\t_tilebuffer.h" />
     <ClInclude Include="src\t_tileflags.h" />
     <ClInclude Include="src\t_tile_animation.h" />
+    <ClInclude Include="src\t_token.h" />
+    <ClInclude Include="src\t_token_type.h" />
     <ClInclude Include="src\t_util.h" />
     <ClInclude Include="src\t_window.h" />
   </ItemGroup>

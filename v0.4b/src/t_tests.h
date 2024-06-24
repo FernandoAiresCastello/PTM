@@ -10,4 +10,5 @@ private:
 	void t_data_tests();
 	void t_tile_tests();
 	void t_tilebuf_tests();
+	void interpreter_tests();
 };

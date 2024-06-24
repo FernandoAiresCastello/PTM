@@ -1,6 +1,7 @@
 #pragma once
-#include <SDL.h>
 #include "t_string.h"
+#include "t_list.h"
+#include "t_token.h"
 
 class PTM
 {
@@ -11,6 +12,7 @@ public:
 	void halt();
 	void pause(int frames);
 	void debug(t_string msg);
+	void save_program_line(const t_list<t_token>& tokens);
 
 private:
 	bool running = false;

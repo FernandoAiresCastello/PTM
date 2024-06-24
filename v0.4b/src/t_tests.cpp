@@ -5,6 +5,7 @@
 #include "t_data.h"
 #include "t_tilebuffer.h"
 #include "t_window.h"
+#include "t_interpreter.h"
 
 void t_tests::run()
 {
@@ -12,6 +13,7 @@ void t_tests::run()
 	t_data_tests();
 	t_tile_tests();
 	t_tilebuf_tests();
+	interpreter_tests();
 }
 
 void t_tests::t_char_tests()
@@ -205,4 +207,8 @@ void t_tests::t_tilebuf_tests()
 	buf.set(copy, 30, 10);
 	t_tile& tile3 = buf.get_ref(30, 10);
 	assert(tile3 == copy);
+}
+
+void t_tests::interpreter_tests()
+{
 }

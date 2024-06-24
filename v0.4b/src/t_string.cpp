@@ -117,18 +117,20 @@ int t_string::to_int() const
 
 	t_string str = t_string(value).trim();
 
-	bool sign = str[0] == '-';
-	if (sign)
+	bool negative = str[0] == '-';
+	bool positive = str[0] == '+';
+
+	if (negative || positive)
 		str = str.skip(1);
 
-	if (str[0] == '0' && str[1] == 'x')
+	if ((str[0] == '0' && str[1] == 'x') || (str[0] == '&' && toupper(str[1]) == 'H'))
 		int_value = std::stoi(str.skip(2), nullptr, 16);
-	else if (str[0] == '0' && str[1] == 'b')
+	else if ((str[0] == '0' && str[1] == 'b') || (str[0] == '&' && toupper(str[1]) == 'B'))
 		int_value = std::stoi(str.skip(2), nullptr, 2);
-	else
+	else if (isdigit(str[0]))
 		int_value = std::stoi(str);
 
-	return sign ? -int_value : int_value;
+	return negative ? -int_value : int_value;
 }
 
 float t_string::to_float() const
@@ -347,6 +349,13 @@ bool t_string::starts_and_ends_with(const t_string& same_preffix_and_suffix) con
 bool t_string::contains(const t_string& other) const
 {
 	return value.find(other) != std::string::npos;
+}
+
+bool t_string::contains_only(const t_string& chars) const
+{
+	return std::all_of(value.begin(), value.end(), [&chars](char c) {
+		return chars.s_str().find(c) != std::string::npos;
+	});
 }
 
 int t_string::index_of(const t_string& str) const
