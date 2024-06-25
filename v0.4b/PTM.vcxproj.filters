@@ -74,6 +74,9 @@
     <ClCompile Include="src\t_token.cpp">
       <Filter>PTML</Filter>
     </ClCompile>
+    <ClCompile Include="src\PTML.cpp">
+      <Filter>PTML</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\t_string.h">
@@ -161,6 +164,18 @@
       <Filter>PTML</Filter>
     </ClInclude>
     <ClInclude Include="src\t_token_type.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_program_line.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_function_ptr.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_param.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PTML.h">
       <Filter>PTML</Filter>
     </ClInclude>
   </ItemGroup>

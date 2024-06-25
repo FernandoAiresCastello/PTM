@@ -24,8 +24,6 @@ void t_main_editor::print_welcome()
 
 void t_main_editor::on_keydown()
 {
-	ptm->debug(kb->key);
-
 	if (!handle_control_key())
 		if (!handle_function_key())
 			handle_character_key();
@@ -129,5 +127,5 @@ void t_main_editor::on_enter_pressed()
 	t_string line = scr->get_current_logical_line();
 	scr->newline();
 	if (!line.trim().empty())
-		intp->interpret(line);
+		intp->interpret_line(line);
 }

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\PTM.cpp" />
+    <ClCompile Include="src\PTML.cpp" />
     <ClCompile Include="src\t_char.cpp" />
     <ClCompile Include="src\t_charset.cpp" />
     <ClCompile Include="src\t_color.cpp" />
@@ -47,12 +48,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\PTM.h" />
+    <ClInclude Include="src\PTML.h" />
     <ClInclude Include="src\t_binary.h" />
     <ClInclude Include="src\t_char.h" />
     <ClInclude Include="src\t_charset.h" />
     <ClInclude Include="src\t_color.h" />
     <ClInclude Include="src\t_data.h" />
     <ClInclude Include="src\t_dict.h" />
+    <ClInclude Include="src\t_function_ptr.h" />
     <ClInclude Include="src\t_index.h" />
     <ClInclude Include="src\t_interpreter.h" />
     <ClInclude Include="src\t_keyboard.h" />
@@ -60,9 +63,11 @@
     <ClInclude Include="src\t_list.h" />
     <ClInclude Include="src\t_main_editor.h" />
     <ClInclude Include="src\t_palette.h" />
+    <ClInclude Include="src\t_param.h" />
     <ClInclude Include="src\t_parser.h" />
     <ClInclude Include="src\t_pointers.h" />
     <ClInclude Include="src\t_pos.h" />
+    <ClInclude Include="src\t_program_line.h" />
     <ClInclude Include="src\t_screen.h" />
     <ClInclude Include="src\t_sprite.h" />
     <ClInclude Include="src\t_string.h" />

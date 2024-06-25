@@ -69,42 +69,30 @@ void t_screen::clear()
 	}
 }
 
-void t_screen::color(t_index fgc)
-{
-	fore_color = fgc;
-
-	update_monochrome_tiles();
-}
-
-void t_screen::color(t_index fgc, t_index bgc)
-{
-	fore_color = fgc;
-	back_color = bgc;
-
-	update_monochrome_tiles();
-}
-
 void t_screen::color(t_index fgc, t_index bgc, t_index bdrc)
 {
 	fore_color = fgc;
 	back_color = bgc;
 	border_color = bdrc;
-
 	buf_bdr->fill(border_tile);
+	update_monochrome_tiles();
+}
+
+void t_screen::color_fg(t_index fg)
+{
+	fore_color = fg;
 	update_monochrome_tiles();
 }
 
 void t_screen::color_bg(t_index bg)
 {
 	back_color = bg;
-
 	update_monochrome_tiles();
 }
 
 void t_screen::color_bdr(t_index bdr)
 {
 	border_color = bdr;
-
 	buf_bdr->fill(border_tile);
 	update_monochrome_tiles();
 }

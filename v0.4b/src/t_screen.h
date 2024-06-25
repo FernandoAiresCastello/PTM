@@ -22,9 +22,8 @@ public:
 	void on_every_machine_cycle();
 	void draw();
 	void clear();
-	void color(t_index fgc);
-	void color(t_index fgc, t_index bgc);
 	void color(t_index fgc, t_index bgc, t_index bdrc);
+	void color_fg(t_index fg);
 	void color_bg(t_index bg);
 	void color_bdr(t_index bdr);
 	void locate(int x, int y);
