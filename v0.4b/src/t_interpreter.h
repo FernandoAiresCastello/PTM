@@ -13,10 +13,11 @@ class t_interpreter
 public:
 	void init(PTM* ptm, t_screen* scr, t_keyboard* kb);
 	void interpret_line(const t_string& line);
-	void execute_line(t_program_line& line);
 
 private:
 	PTM* ptm = nullptr;
 	t_screen* scr = nullptr;
 	t_keyboard* kb = nullptr;
+
+	void execute_line(t_program_line& line);
 };

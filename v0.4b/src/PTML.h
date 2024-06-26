@@ -13,4 +13,8 @@ namespace PTML
 	void set_line(t_program_line* _line);
 
 	void COLOR();
+	void VARS();
+	void PEEK();
+	void VAR();
+	void EXIT();
 }

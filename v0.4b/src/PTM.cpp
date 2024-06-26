@@ -32,6 +32,11 @@ void PTM::run()
 	run_main();
 }
 
+void PTM::exit()
+{
+	wnd.close();
+}
+
 void PTM::init()
 {
 	wnd.open(title, wnd_size);
@@ -55,8 +60,9 @@ void PTM::run_main()
 
 void PTM::halt()
 {
-	while (wnd.is_open())
+	while (wnd.is_open()) {
 		on_machine_cycle();
+	}
 }
 
 void PTM::pause(int frames)
@@ -129,4 +135,34 @@ void PTM::run_graphics_test()
 void PTM::save_program_line(const t_list<t_token>& tokens)
 {
 	// TODO
+}
+
+void PTM::set_var(const t_string& var, const t_string& value)
+{
+	vars[var] = value;
+}
+
+void PTM::set_var(const t_string& var, int value)
+{
+	vars[var] = value;
+}
+
+const t_string& PTM::get_var_str(const t_string& var)
+{
+	return vars[var];
+}
+
+int PTM::get_var_num(const t_string& var)
+{
+	return vars[var].to_int();
+}
+
+const t_dict<t_string, t_string>& PTM::get_vars()
+{
+	return vars;
+}
+
+bool PTM::has_var(const t_string& var)
+{
+	return vars.contains(var);
 }

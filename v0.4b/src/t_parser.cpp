@@ -48,6 +48,10 @@ t_program_line t_parser::parse_line(const t_list<t_token>& tokens)
 t_function_ptr t_parser::get_fn_by_cmd(const t_string& cmd)
 {
 	CMD(COLOR);
+	CMD(VARS);
+	CMD(PEEK);
+	CMD(VAR);
+	CMD(EXIT);
 
 	return nullptr;
 }

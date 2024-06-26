@@ -113,9 +113,9 @@ size_t t_string::length() const noexcept
 
 int t_string::to_int() const
 {
-	int int_value = 0;
-
 	t_string str = t_string(value).trim();
+	if (str.empty())
+		return 0;
 
 	bool negative = str[0] == '-';
 	bool positive = str[0] == '+';
@@ -123,6 +123,7 @@ int t_string::to_int() const
 	if (negative || positive)
 		str = str.skip(1);
 
+	int int_value = 0;
 	if ((str[0] == '0' && str[1] == 'x') || (str[0] == '&' && toupper(str[1]) == 'H'))
 		int_value = std::stoi(str.skip(2), nullptr, 16);
 	else if ((str[0] == '0' && str[1] == 'b') || (str[0] == '&' && toupper(str[1]) == 'B'))
