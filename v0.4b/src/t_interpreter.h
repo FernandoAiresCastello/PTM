@@ -3,6 +3,7 @@
 #include "t_list.h"
 #include "t_token.h"
 #include "t_program_line.h"
+#include "t_function_ptr.h"
 
 class PTM;
 class t_screen;
@@ -20,4 +21,6 @@ private:
 	t_keyboard* kb = nullptr;
 
 	void execute_line(t_program_line& line);
+	t_program_line make_program_line(const t_list<t_token>& tokens);
+	t_function_ptr get_fn_by_cmd(const t_string& cmd);
 };

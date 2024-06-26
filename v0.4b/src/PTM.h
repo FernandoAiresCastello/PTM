@@ -3,6 +3,8 @@
 #include "t_list.h"
 #include "t_dict.h"
 #include "t_token.h"
+#include "t_charset.h"
+#include "t_palette.h"
 
 class PTM
 {
@@ -21,6 +23,8 @@ public:
 	int get_var_num(const t_string& var);
 	const t_dict<t_string, t_string>& get_vars();
 	bool has_var(const t_string& var);
+	t_palette& get_pal();
+	t_charset& get_chr();
 
 private:
 	bool running = false;

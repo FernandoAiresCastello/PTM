@@ -14,7 +14,17 @@ namespace PTML
 
 	void COLOR();
 	void VARS();
-	void PEEK();
+	void PRINT();
 	void VAR();
 	void EXIT();
+	void CLS();
+	void PAL();
+	void LOCATE();
+	void INC();
+	void DEC();
+	void ADD();
+	void SUB();
+	void MUL();
+	void DIV();
+	void MOD();
 }

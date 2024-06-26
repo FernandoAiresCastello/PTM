@@ -56,9 +56,7 @@ void t_lexer::tokenize_line(const t_string& src, t_list<t_token>& tokens) const
 		const char ch = src[i++];
 
 		if (ch == sym_comma && !inside_double_quote && !inside_single_quote) {
-			if (!arg.empty())
-				args.push_back(arg.trim());
-
+			args.push_back(arg.trim());
 			arg = "";
 			continue;
 		}
@@ -93,7 +91,10 @@ void t_lexer::build_tokens(const t_string& cmd, const t_list<t_string>& args, t_
 	for (auto& arg : args) {
 		t_string arg_upper = arg.to_upper();
 
-		if (isdigit(arg[0]) || arg[0] == sym_positive || arg[0] == sym_negative || 
+		if (arg.empty()) {
+			tokens.push_back(t_token(t_token_type::empty, arg));
+		}
+		else if (isdigit(arg[0]) || arg[0] == sym_positive || arg[0] == sym_negative || 
 			arg_upper.starts_with(sym_base_hex) || arg_upper.starts_with(sym_base_bin)) {
 
 			tokens.push_back(t_token(t_token_type::literal_num, arg));

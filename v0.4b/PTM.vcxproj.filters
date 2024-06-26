@@ -68,9 +68,6 @@
     <ClCompile Include="src\t_lexer.cpp">
       <Filter>PTML</Filter>
     </ClCompile>
-    <ClCompile Include="src\t_parser.cpp">
-      <Filter>PTML</Filter>
-    </ClCompile>
     <ClCompile Include="src\t_token.cpp">
       <Filter>PTML</Filter>
     </ClCompile>
@@ -155,9 +152,6 @@
       <Filter>PTML</Filter>
     </ClInclude>
     <ClInclude Include="src\t_lexer.h">
-      <Filter>PTML</Filter>
-    </ClInclude>
-    <ClInclude Include="src\t_parser.h">
       <Filter>PTML</Filter>
     </ClInclude>
     <ClInclude Include="src\t_token.h">

@@ -1,15 +1,20 @@
-#include <cassert>
 #include "t_interpreter.h"
-#include "PTM.h"
-#include "PTML.h"
 #include "t_lexer.h"
-#include "t_parser.h"
 #include "t_program_line.h"
 #include "t_screen.h"
 #include "t_keyboard.h"
+#include "PTM.h"
+#include "PTML.h"
+
+#define CMD(keyword)	if (cmd == #keyword) return PTML::keyword;
+
+#define ASSIGN_ARG(n) \
+	line.arg##n.is_empty = tokens[n].type == t_token_type::empty; \
+	line.arg##n.is_identifier = tokens[n].type == t_token_type::identifier; \
+	line.arg##n.string_val = tokens[n].string_value; \
+	line.arg##n.numeric_val = tokens[n].numeric_value;
 
 t_lexer lexer;
-t_parser parser;
 
 void t_interpreter::init(PTM* ptm, t_screen* scr, t_keyboard* kb)
 {
@@ -31,13 +36,8 @@ void t_interpreter::interpret_line(const t_string& line)
 		ptm->save_program_line(tokens);
 	}
 	else {
-		t_program_line line = parser.parse_line(tokens);
-		if (parser.errors.empty()) {
-			execute_line(line);
-		}
-		else {
-			__debugbreak();
-		}
+		t_program_line line = make_program_line(tokens);
+		execute_line(line);
 	}
 }
 
@@ -49,10 +49,51 @@ void t_interpreter::execute_line(t_program_line& line)
 	if (line.fn)
 		line.fn();
 	else
-		PTML::error = "Unknown command";
+		PTML::error = "Syntax error";
 
 	if (!PTML::error.empty())
 		scr->println(PTML::error);
 
 	scr->println("Ok");
+}
+
+t_program_line t_interpreter::make_program_line(const t_list<t_token>& tokens)
+{
+	t_program_line line;
+	const t_token_type& type = tokens[0].type;
+
+	if (type == t_token_type::command) {
+		const t_string& cmd = tokens[0].string_value;
+		line.fn = get_fn_by_cmd(cmd);
+		line.argc = int(tokens.size() - 1);
+
+		if (line.argc > 0) { ASSIGN_ARG(1); }
+		if (line.argc > 1) { ASSIGN_ARG(2); }
+		if (line.argc > 2) { ASSIGN_ARG(3); }
+		if (line.argc > 3) { ASSIGN_ARG(4); }
+		if (line.argc > 4) { ASSIGN_ARG(5); }
+	}
+
+	return line;
+}
+
+t_function_ptr t_interpreter::get_fn_by_cmd(const t_string& cmd)
+{
+	CMD(COLOR);
+	CMD(VARS);
+	CMD(PRINT);
+	CMD(VAR);
+	CMD(EXIT);
+	CMD(CLS);
+	CMD(PAL);
+	CMD(LOCATE);
+	CMD(INC);
+	CMD(DEC);
+	CMD(ADD);
+	CMD(SUB);
+	CMD(MUL);
+	CMD(DIV);
+	CMD(MOD);
+
+	return nullptr;
 }

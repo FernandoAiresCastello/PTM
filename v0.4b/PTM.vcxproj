@@ -33,7 +33,6 @@
     <ClCompile Include="src\t_list.cpp" />
     <ClCompile Include="src\t_main_editor.cpp" />
     <ClCompile Include="src\t_palette.cpp" />
-    <ClCompile Include="src\t_parser.cpp" />
     <ClCompile Include="src\t_pos.cpp" />
     <ClCompile Include="src\t_screen.cpp" />
     <ClCompile Include="src\t_sprite.cpp" />
@@ -64,7 +63,6 @@
     <ClInclude Include="src\t_main_editor.h" />
     <ClInclude Include="src\t_palette.h" />
     <ClInclude Include="src\t_param.h" />
-    <ClInclude Include="src\t_parser.h" />
     <ClInclude Include="src\t_pointers.h" />
     <ClInclude Include="src\t_pos.h" />
     <ClInclude Include="src\t_program_line.h" />

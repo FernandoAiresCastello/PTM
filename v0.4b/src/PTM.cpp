@@ -166,3 +166,13 @@ bool PTM::has_var(const t_string& var)
 {
 	return vars.contains(var);
 }
+
+t_palette& PTM::get_pal()
+{
+	return pal;
+}
+
+t_charset& PTM::get_chr()
+{
+	return chr;
+}
