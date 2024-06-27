@@ -24,6 +24,7 @@ t_string PTML::error;
 #define NUM(n)					resolve_num(line->arg##n)
 #define REQUIRE_IDENT(n)		if (!line->arg##n.is_identifier) { error = err_varname_expected; return; }
 #define IDENT(n)				line->arg##n.string_val
+#define BOOL(n)					NUM(n) > 0
 
 void PTML::set_env(PTM* _ptm, t_screen* _scr) {
 	ptm = _ptm; scr = _scr;
@@ -147,92 +148,90 @@ void PTML::DEC()
 void PTML::ADD()
 {
 	ARGC_MIN_MAX(2, 3);
+	REQUIRE_IDENT(1);
 
-	if (COUNT(2)) {
-		REQUIRE_IDENT(1);
-		ptm->set_var(IDENT(1), ptm->get_var_num(IDENT(1)) + NUM(2));
-	}
-	else if (COUNT(3)) {
-		REQUIRE_IDENT(1);
-		REQUIRE_IDENT(2);
-		ptm->set_var(IDENT(1), ptm->get_var_num(IDENT(2)) + NUM(3));
-	}
+	if (COUNT(2))
+		ptm->set_var(IDENT(1), NUM(1) + NUM(2));
+	else if (COUNT(3))
+		ptm->set_var(IDENT(1), NUM(2) + NUM(3));
 }
 
 void PTML::SUB()
 {
 	ARGC_MIN_MAX(2, 3);
+	REQUIRE_IDENT(1);
 
-	if (COUNT(2)) {
-		REQUIRE_IDENT(1);
-		ptm->set_var(IDENT(1), ptm->get_var_num(IDENT(1)) - NUM(2));
-	}
-	else if (COUNT(3)) {
-		REQUIRE_IDENT(1);
-		REQUIRE_IDENT(2);
-		ptm->set_var(IDENT(1), ptm->get_var_num(IDENT(2)) - NUM(3));
-	}
+	if (COUNT(2))
+		ptm->set_var(IDENT(1), NUM(1) - NUM(2));
+	else if (COUNT(3))
+		ptm->set_var(IDENT(1), NUM(2) - NUM(3));
 }
 
 void PTML::MUL()
 {
 	ARGC_MIN_MAX(2, 3);
+	REQUIRE_IDENT(1);
 
-	if (COUNT(2)) {
-		REQUIRE_IDENT(1);
-		ptm->set_var(IDENT(1), ptm->get_var_num(IDENT(1)) * NUM(2));
-	}
-	else if (COUNT(3)) {
-		REQUIRE_IDENT(1);
-		REQUIRE_IDENT(2);
-		ptm->set_var(IDENT(1), ptm->get_var_num(IDENT(2)) * NUM(3));
-	}
+	if (COUNT(2))
+		ptm->set_var(IDENT(1), NUM(1) * NUM(2));
+	else if (COUNT(3))
+		ptm->set_var(IDENT(1), NUM(2) * NUM(3));
 }
 
 void PTML::DIV()
 {
 	ARGC_MIN_MAX(2, 3);
+	REQUIRE_IDENT(1);
 
 	if (COUNT(2)) {
-		REQUIRE_IDENT(1);
 		int divisor = NUM(2);
 		if (divisor == 0)
 			error = err_division_by_zero;
 		else
-			ptm->set_var(IDENT(1), ptm->get_var_num(IDENT(1)) / divisor);
+			ptm->set_var(IDENT(1), NUM(1) / divisor);
 	}
 	else if (COUNT(3)) {
-		REQUIRE_IDENT(1);
-		REQUIRE_IDENT(2);
 		int divisor = NUM(3);
 		if (divisor == 0)
 			error = err_division_by_zero;
 		else
-			ptm->set_var(IDENT(1), ptm->get_var_num(IDENT(2)) / divisor);
+			ptm->set_var(IDENT(1), NUM(2) / divisor);
 	}
 }
 
-void PTML::MOD()
+void PTML::DIVR()
 {
 	ARGC_MIN_MAX(2, 3);
+	REQUIRE_IDENT(1);
 
 	if (COUNT(2)) {
-		REQUIRE_IDENT(1);
 		int divisor = NUM(2);
 		if (divisor == 0)
 			error = err_division_by_zero;
 		else
-			ptm->set_var(IDENT(1), ptm->get_var_num(IDENT(1)) % divisor);
+			ptm->set_var(IDENT(1), NUM(1) % divisor);
 	}
 	else if (COUNT(3)) {
-		REQUIRE_IDENT(1);
-		REQUIRE_IDENT(2);
 		int divisor = NUM(3);
 		if (divisor == 0)
 			error = err_division_by_zero;
 		else
-			ptm->set_var(IDENT(1), ptm->get_var_num(IDENT(2)) % divisor);
+			ptm->set_var(IDENT(1), NUM(2) % divisor);
 	}
+}
+
+void PTML::POW()
+{
+	ARGC(3);
+	REQUIRE_IDENT(1);
+	ptm->set_var(IDENT(1), (int)pow((float)NUM(2), (float)NUM(3)));
+}
+
+void PTML::SQRT()
+{
+	ARGC(2);
+	REQUIRE_IDENT(1);
+	ptm->set_var(IDENT(1), (int)sqrt((float)NUM(2)));
 }
 
 void PTML::RND()
@@ -245,7 +244,7 @@ void PTML::RND()
 	else if (COUNT(2))
 		ptm->set_var(IDENT(1), t_util::rnd(NUM(2)));
 	else if (COUNT(1))
-		ptm->set_var(IDENT(1), t_util::rnd(INT_MIN, INT_MAX));
+		ptm->set_var(IDENT(1), t_util::rnd(0, INT_MAX));
 }
 
 void PTML::FSCR()
@@ -253,7 +252,13 @@ void PTML::FSCR()
 	ARGC_MIN_MAX(0, 1);
 
 	if (COUNT(1))
-		ptm->get_wnd().set_fullscreen(NUM(1) > 0);
+		ptm->get_wnd().set_fullscreen(BOOL(1));
 	else if (COUNT(0))
 		ptm->get_wnd().toggle_fullscreen();
+}
+
+void PTML::CSR()
+{
+	ARGC(1);
+	scr->show_cursor(BOOL(1));
 }

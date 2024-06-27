@@ -251,6 +251,13 @@ void t_screen::println(const t_string& str)
 	newline();
 }
 
+void t_screen::print_lines(const t_list<t_string>& lines)
+{
+	for (auto& str : lines) {
+		println(str);
+	}
+}
+
 void t_screen::newline()
 {
 	csr->pos.x = 0;

@@ -106,9 +106,12 @@ t_function_ptr t_interpreter::get_fn_by_cmd(const t_string& cmd)
 	CMD(SUB);
 	CMD(MUL);
 	CMD(DIV);
-	CMD(MOD);
+	CMD(DIVR);
+	CMD(POW);
+	CMD(SQRT);
 	CMD(RND);
 	CMD(FSCR);
+	CMD(CSR);
 
 	return nullptr;
 }

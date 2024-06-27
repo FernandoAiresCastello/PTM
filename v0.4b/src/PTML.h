@@ -29,7 +29,10 @@ namespace PTML
 	void SUB();
 	void MUL();
 	void DIV();
-	void MOD();
+	void DIVR();
+	void POW();
+	void SQRT();
 	void RND();
 	void FSCR();
+	void CSR();
 }

@@ -43,6 +43,7 @@ public:
 	void print(t_index ch);
 	void print(const t_string& str);
 	void println(const t_string& str);
+	void print_lines(const t_list<t_string>& lines);
 	void newline();
 	void scroll_up();
 	t_sptr<t_sprite> add_free_sprite(const t_tile& tile, const t_pos& pos);
