@@ -8,6 +8,7 @@ public:
 	const int undefined_line_nr = -1;
 
 	int src_line_nr = undefined_line_nr;
+	bool has_error = false;
 	t_function_ptr fn = nullptr;
 	int argc = 0;
 	t_param arg1;

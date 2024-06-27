@@ -21,13 +21,13 @@ public:
 	void close();
 	bool is_open();
 	void toggle_fullscreen();
+	void set_fullscreen(bool full);
 	void set_title(const t_string& title);
 	void clear(const t_color& color);
 	void update();
 	void reset_frame_counter();
 	uint32_t get_frame_count() const;
 	int get_animation_frame() const;
-	
 	void draw_pixel(int x, int y, const t_color& color);
 	void draw_pixels(const t_binary& pixels, int x, int y, const t_color& color1, const t_color& color0, bool grid, bool hide_color0);
 	void draw_char(t_charset* chr, t_palette* pal, t_index char_index, int x, int y, t_index color1, t_index color0, bool grid, bool hide_color0);

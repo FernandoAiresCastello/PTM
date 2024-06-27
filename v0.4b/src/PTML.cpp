@@ -1,6 +1,8 @@
 #include "PTML.h"
 #include "PTM.h"
+#include "t_util.h"
 #include "t_screen.h"
+#include "t_window.h"
 #include "t_program_line.h"
 
 const t_string err_invalid_argc = "Invalid argument count";
@@ -58,6 +60,13 @@ void PTML::COLOR()
 	}
 }
 
+void PTML::VAR()
+{
+	ARGC(2);
+	REQUIRE_IDENT(1);
+	ptm->set_var(IDENT(1), STR(2));
+}
+
 void PTML::VARS()
 {
 	ARGC(0);
@@ -69,23 +78,31 @@ void PTML::VARS()
 void PTML::PRINT()
 {
 	ARGC(1);
+	auto&& value = STR(1);
+
 	if (IMM)
-		scr->println(STR(1));
+		scr->println(value);
 	else
-		scr->print(STR(1));
+		scr->print(value);
 }
 
-void PTML::VAR()
+void PTML::PRINTL()
 {
-	ARGC(2);
-	REQUIRE_IDENT(1);
-	ptm->set_var(IDENT(1), STR(2));
+	ARGC(1);
+	auto&& value = STR(1);
+	scr->println(value);
 }
 
 void PTML::EXIT()
 {
 	ARGC(0);
 	ptm->exit();
+}
+
+void PTML::HALT()
+{
+	ARGC(0);
+	ptm->halt();
 }
 
 void PTML::CLS()
@@ -99,6 +116,12 @@ void PTML::PAL()
 {
 	ARGC(2);
 	ptm->get_pal().set(NUM(1), NUM(2));
+}
+
+void PTML::CHR()
+{
+	ARGC(3);
+	ptm->get_chr().set_row(NUM(1), NUM(2), STR(3));
 }
 
 void PTML::LOCATE()
@@ -210,4 +233,27 @@ void PTML::MOD()
 		else
 			ptm->set_var(IDENT(1), ptm->get_var_num(IDENT(2)) % divisor);
 	}
+}
+
+void PTML::RND()
+{
+	ARGC_MIN_MAX(1, 3);
+	REQUIRE_IDENT(1);
+
+	if (COUNT(3))
+		ptm->set_var(IDENT(1), t_util::rnd(NUM(2), NUM(3)));
+	else if (COUNT(2))
+		ptm->set_var(IDENT(1), t_util::rnd(NUM(2)));
+	else if (COUNT(1))
+		ptm->set_var(IDENT(1), t_util::rnd(INT_MIN, INT_MAX));
+}
+
+void PTML::FSCR()
+{
+	ARGC_MIN_MAX(0, 1);
+
+	if (COUNT(1))
+		ptm->get_wnd().set_fullscreen(NUM(1) > 0);
+	else if (COUNT(0))
+		ptm->get_wnd().toggle_fullscreen();
 }

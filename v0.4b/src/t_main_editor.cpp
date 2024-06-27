@@ -70,6 +70,19 @@ bool t_main_editor::handle_control_key()
 			return true;
 		}
 
+		case SDLK_DELETE: {
+			t_tileflags flags;
+			flags.monochrome = true;
+			scr->set_blank_tile(scr->csrx(), scr->csry(), flags);
+			return true;
+		}
+
+		case SDLK_TAB: {
+			for (int i = 0; i < 8; i++)
+				scr->print(" ");
+			return true;
+		}
+
 		case SDLK_RETURN: {
 			on_enter_pressed();
 			return true;

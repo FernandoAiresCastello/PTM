@@ -48,6 +48,13 @@ void t_charset::set(t_index index, const t_binary& bits)
 	chars[index] = bits;
 }
 
+void t_charset::set_row(t_index chr_index, t_index row, const t_binary& bits)
+{
+	auto rows = chars[chr_index].split_chunks(8);
+	rows[row] = bits.get_first(8);
+	chars[chr_index] = t_string::join(rows, "");
+}
+
 int t_charset::size() const
 {
 	return (int)chars.size();

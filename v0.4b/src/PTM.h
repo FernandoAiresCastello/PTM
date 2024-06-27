@@ -5,6 +5,7 @@
 #include "t_token.h"
 #include "t_charset.h"
 #include "t_palette.h"
+#include "t_window.h"
 
 class PTM
 {
@@ -25,14 +26,16 @@ public:
 	bool has_var(const t_string& var);
 	t_palette& get_pal();
 	t_charset& get_chr();
+	t_window& get_wnd();
 
 private:
 	bool running = false;
+	bool halted = false;
 	t_dict<t_string, t_string> vars;
 
 	void init();
 	void run_tests();
 	void run_graphics_test();
 	void run_main();
-	void on_machine_cycle();
+	void on_machine_cycle() const;
 };

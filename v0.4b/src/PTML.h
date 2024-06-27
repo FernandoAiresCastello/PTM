@@ -15,10 +15,13 @@ namespace PTML
 	void COLOR();
 	void VARS();
 	void PRINT();
+	void PRINTL();
 	void VAR();
 	void EXIT();
+	void HALT();
 	void CLS();
 	void PAL();
+	void CHR();
 	void LOCATE();
 	void INC();
 	void DEC();
@@ -27,4 +30,6 @@ namespace PTML
 	void MUL();
 	void DIV();
 	void MOD();
+	void RND();
+	void FSCR();
 }

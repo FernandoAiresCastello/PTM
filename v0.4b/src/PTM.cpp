@@ -26,6 +26,7 @@ void PTM::run()
 		return;
 
 	running = true;
+	halted = false;
 
 	init();
 	run_tests();
@@ -60,6 +61,7 @@ void PTM::run_main()
 
 void PTM::halt()
 {
+	halted = true;
 	while (wnd.is_open()) {
 		on_machine_cycle();
 	}
@@ -80,7 +82,7 @@ void PTM::debug(t_string msg)
 	wnd.set_title(msg);
 }
 
-void PTM::on_machine_cycle()
+void PTM::on_machine_cycle() const
 {
 	scr.on_every_machine_cycle();
 	wnd.update();
@@ -98,7 +100,7 @@ void PTM::on_machine_cycle()
 		else if (key == SDLK_ESCAPE) {
 			wnd.close();
 		}
-		else if (!kb.alt()) {
+		else if (!kb.alt() && !halted) {
 			kb.key = key;
 			main_editor.on_keydown();
 		}
@@ -175,4 +177,9 @@ t_palette& PTM::get_pal()
 t_charset& PTM::get_chr()
 {
 	return chr;
+}
+
+t_window& PTM::get_wnd()
+{
+	return wnd;
 }

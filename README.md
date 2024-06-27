@@ -10,11 +10,14 @@ __PTML__ is an interpreted, imperative, semi-structured, loosely typed, low-leve
 
 ## Downloads
 
-The latest released version is __v0.2b.__  
-You can download pre-built PTM releases on Itch.io, on this page: https://fernandoairescastello.itch.io/ptm
+You can download pre-built PTM releases on Itch.io here: https://fernandoairescastello.itch.io/ptm
 
-The latest development build for version __v0.3b__ is available [here](https://github.com/FernandoAiresCastello/PTM/tree/master/v0.3b/Build).  
-You'll want to download the *"PTM_v0.3b.zip"* file which bundles everything.  
+The latest released version is __v0.2b__.
+The current development version is __v0.4b__.
+
+![PTM v0.4b](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_v0.4b.png?raw=true)
+
+__Note:__ Version __v0.3b__ is no longer being actively developed. Version __v0.4b__ is now the current one, it's a completely new project (developed from scratch) and is drastically different from any previous version. It has a built-in line editor which is seamlessly integrated with the interpreter (very similar to the Atari 800 BASIC interpreter). PTML for v0.4b is an almost completely different language, although it shares most of the syntax and simplicity of the previous installments.
 
 *Note: development builds can be *very* unstable since they are being actively worked on and change frequently, so use at your own risk!*
 

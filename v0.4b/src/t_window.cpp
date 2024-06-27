@@ -64,6 +64,12 @@ void t_window::toggle_fullscreen()
 	update();
 }
 
+void t_window::set_fullscreen(bool full)
+{
+	SDL_SetWindowFullscreen(sdl_wnd, full ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
+	update();
+}
+
 void t_window::set_title(const t_string& title)
 {
 	SDL_SetWindowTitle(sdl_wnd, title.c_str());

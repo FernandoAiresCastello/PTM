@@ -46,7 +46,7 @@ void t_interpreter::execute_line(t_program_line& line)
 	PTML::set_line(&line);
 	PTML::error = "";
 
-	if (line.fn)
+	if (line.fn && !line.has_error)
 		line.fn();
 	else
 		PTML::error = "Syntax error";
@@ -60,6 +60,7 @@ void t_interpreter::execute_line(t_program_line& line)
 t_program_line t_interpreter::make_program_line(const t_list<t_token>& tokens)
 {
 	t_program_line line;
+
 	const t_token_type& type = tokens[0].type;
 
 	if (type == t_token_type::command) {
@@ -73,6 +74,15 @@ t_program_line t_interpreter::make_program_line(const t_list<t_token>& tokens)
 		if (line.argc > 3) { ASSIGN_ARG(4); }
 		if (line.argc > 4) { ASSIGN_ARG(5); }
 	}
+	else if (type == t_token_type::label) {
+	}
+
+	for (auto& token : tokens) {
+		if (token.type == t_token_type::invalid) {
+			line.has_error = true;
+			break;
+		}
+	}
 
 	return line;
 }
@@ -80,12 +90,15 @@ t_program_line t_interpreter::make_program_line(const t_list<t_token>& tokens)
 t_function_ptr t_interpreter::get_fn_by_cmd(const t_string& cmd)
 {
 	CMD(COLOR);
+	CMD(VAR);
 	CMD(VARS);
 	CMD(PRINT);
-	CMD(VAR);
+	CMD(PRINTL);
 	CMD(EXIT);
+	CMD(HALT);
 	CMD(CLS);
 	CMD(PAL);
+	CMD(CHR);
 	CMD(LOCATE);
 	CMD(INC);
 	CMD(DEC);
@@ -94,6 +107,8 @@ t_function_ptr t_interpreter::get_fn_by_cmd(const t_string& cmd)
 	CMD(MUL);
 	CMD(DIV);
 	CMD(MOD);
+	CMD(RND);
+	CMD(FSCR);
 
 	return nullptr;
 }
