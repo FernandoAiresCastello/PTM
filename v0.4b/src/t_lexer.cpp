@@ -103,7 +103,9 @@ void t_lexer::build_tokens(const t_string& cmd, const t_list<t_string>& args, t_
 			tokens.push_back(t_token(t_token_type::literal_str, arg.remove_first_and_last()));
 		}
 		else if (arg.starts_and_ends_with(sym_single_quote) && arg.length() == 3) {
-			tokens.push_back(t_token(t_token_type::literal_char, arg[1], arg[1]));
+			int ascii_int = arg[1];
+			t_string ascii_str = t_string(ascii_int);
+			tokens.push_back(t_token(t_token_type::literal_char, ascii_str, ascii_int));
 		}
 		else if (arg.to_upper().contains_only(valid_identifier_chars)) {
 			tokens.push_back(t_token(t_token_type::identifier, arg));

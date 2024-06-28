@@ -193,6 +193,11 @@ void t_screen::set_tile(const t_tile& tile, int x, int y)
 	buf->set(tile, x, y);
 }
 
+void t_screen::set_tile_at_csr(const t_tile& tile)
+{
+	buf->set(tile, csr->pos.x, csr->pos.y);
+}
+
 void t_screen::set_tile_overlay(const t_tile& tile, int x, int y)
 {
 	buf->set_overlay(tile, x, y);

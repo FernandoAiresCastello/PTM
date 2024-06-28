@@ -17,6 +17,7 @@ t_palette pal;
 t_screen scr;
 t_main_editor main_editor;
 t_interpreter intp;
+t_tile tilereg;
 
 int wnd_size = 3;
 
@@ -27,6 +28,7 @@ void PTM::run()
 
 	running = true;
 	halted = false;
+	tilereg.set_empty();
 
 	init();
 	run_tests();
@@ -182,4 +184,14 @@ t_charset& PTM::get_chr()
 t_window& PTM::get_wnd()
 {
 	return wnd;
+}
+
+t_tile& PTM::get_tilereg()
+{
+	return tilereg;
+}
+
+void PTM::set_tilereg(const t_tile& tile)
+{
+	tilereg = tile;
 }

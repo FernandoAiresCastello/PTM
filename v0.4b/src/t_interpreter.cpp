@@ -6,11 +6,10 @@
 #include "PTM.h"
 #include "PTML.h"
 
-#define CMD(keyword)	if (cmd == #keyword) return PTML::keyword;
+#define CMD(k, fn)		if (cmd == k) return PTML::fn;
 
 #define ASSIGN_ARG(n) \
-	line.arg##n.is_empty = tokens[n].type == t_token_type::empty; \
-	line.arg##n.is_identifier = tokens[n].type == t_token_type::identifier; \
+	line.arg##n.type = tokens[n].type; \
 	line.arg##n.string_val = tokens[n].string_value; \
 	line.arg##n.numeric_val = tokens[n].numeric_value;
 
@@ -89,29 +88,35 @@ t_program_line t_interpreter::make_program_line(const t_list<t_token>& tokens)
 
 t_function_ptr t_interpreter::get_fn_by_cmd(const t_string& cmd)
 {
-	CMD(COLOR);
-	CMD(VAR);
-	CMD(VARS);
-	CMD(PRINT);
-	CMD(PRINTL);
-	CMD(EXIT);
-	CMD(HALT);
-	CMD(CLS);
-	CMD(PAL);
-	CMD(CHR);
-	CMD(LOCATE);
-	CMD(INC);
-	CMD(DEC);
-	CMD(ADD);
-	CMD(SUB);
-	CMD(MUL);
-	CMD(DIV);
-	CMD(DIVR);
-	CMD(POW);
-	CMD(SQRT);
-	CMD(RND);
-	CMD(FSCR);
-	CMD(CSR);
+	CMD("VAR", VAR);
+	CMD("VARS", VARS);
+	CMD("COLOR", COLOR);
+	CMD("PRINT", PRINT);
+	CMD("PRINTL", PRINTL);
+	CMD("EXIT", EXIT);
+	CMD("HALT", HALT);
+	CMD("CLS", CLS);
+	CMD("PAL", PAL);
+	CMD("CHR", CHR);
+	CMD("LOCATE", LOCATE);
+	CMD("INC", INC);
+	CMD("DEC", DEC);
+	CMD("ADD", ADD);
+	CMD("SUB", SUB);
+	CMD("MUL", MUL);
+	CMD("DIV", DIV);
+	CMD("DIVR", DIVR);
+	CMD("POW", POW);
+	CMD("SQRT", SQRT);
+	CMD("RND", RND);
+	CMD("SWAP", SWAP);
+	CMD("FSCR", FSCR);
+	CMD("CSR.ON", CSR_ON);
+	CMD("TILE.NEW", TILE_NEW);
+	CMD("TILE.ADD", TILE_ADD);
+	CMD("TILE.LIST", TILE_LIST);
+	CMD("GET", GET);
+	CMD("PUT", PUT);
 
 	return nullptr;
 }

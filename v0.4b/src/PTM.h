@@ -1,4 +1,5 @@
 #pragma once
+#include "t_tile.h"
 #include "t_string.h"
 #include "t_list.h"
 #include "t_dict.h"
@@ -27,6 +28,8 @@ public:
 	t_palette& get_pal();
 	t_charset& get_chr();
 	t_window& get_wnd();
+	t_tile& get_tilereg();
+	void set_tilereg(const t_tile& tile);
 
 private:
 	bool running = false;

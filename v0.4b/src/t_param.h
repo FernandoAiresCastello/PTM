@@ -3,8 +3,7 @@
 
 struct t_param
 {
-	bool is_empty = false;
-	bool is_identifier = false;
+	t_token_type type = t_token_type::undefined;
 	t_string string_val = "";
 	int numeric_val = 0;
 };

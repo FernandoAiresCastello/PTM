@@ -19,8 +19,6 @@ private:
 	const char sym_negative = '-';
 	const char sym_string_var = '$';
 	const char sym_label = ':';
-	const char sym_array_open = '[';
-	const char sym_array_close = ']';
 	const t_string valid_identifier_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._";
 	const t_string valid_digits = "0123456789";
 

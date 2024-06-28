@@ -29,9 +29,13 @@ public:
 	void add_char(t_index ix, t_index fgc, t_index bgc);
 	void add_blank_char();
 	int char_count();
+	bool has_any_char();
 	bool is_blank() const;
 	bool is_not_blank() const;
 	void set_blank();
+	bool is_empty() const;
+	bool is_not_empty() const;
+	void set_empty();
 	t_list<t_char>& get_all_chars();
 
 private:

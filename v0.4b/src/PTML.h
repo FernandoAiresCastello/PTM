@@ -33,6 +33,12 @@ namespace PTML
 	void POW();
 	void SQRT();
 	void RND();
+	void SWAP();
 	void FSCR();
-	void CSR();
+	void CSR_ON();
+	void TILE_NEW();
+	void TILE_ADD();
+	void TILE_LIST();
+	void PUT();
+	void GET();
 }

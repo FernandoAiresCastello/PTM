@@ -78,6 +78,11 @@ int t_tile::char_count()
 	return (int)chars.size();
 }
 
+bool t_tile::has_any_char()
+{
+	return !chars.empty();
+}
+
 bool t_tile::is_blank() const
 {
 	return chars.size() == 1 && chars[0].is_blank() && data.is_empty();
@@ -90,8 +95,23 @@ bool t_tile::is_not_blank() const
 
 void t_tile::set_blank()
 {
-	chars.clear();
+	set_empty();
 	chars.emplace_back(t_char::blank());
+}
+
+bool t_tile::is_empty() const
+{
+	return chars.empty() && data.is_empty();
+}
+
+bool t_tile::is_not_empty() const
+{
+	return !is_empty();
+}
+
+void t_tile::set_empty()
+{
+	chars.clear();
 	data.clear();
 }
 

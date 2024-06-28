@@ -11,5 +11,5 @@ enum class t_token_type
 	identifier,
 	literal_num,
 	literal_str,
-	literal_char,
+	literal_char
 };
