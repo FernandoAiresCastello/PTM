@@ -41,4 +41,5 @@ namespace PTML
 	void TILE_LIST();
 	void PUT();
 	void GET();
+	void LIST();
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "t_string.h"
+#include "t_token_type.h"
 
 struct t_param
 {

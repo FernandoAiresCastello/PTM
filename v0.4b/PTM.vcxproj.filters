@@ -74,6 +74,12 @@
     <ClCompile Include="src\PTML.cpp">
       <Filter>PTML</Filter>
     </ClCompile>
+    <ClCompile Include="src\t_program.cpp">
+      <Filter>PTML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_program_line.cpp">
+      <Filter>PTML</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\t_string.h">
@@ -170,6 +176,9 @@
       <Filter>PTML</Filter>
     </ClInclude>
     <ClInclude Include="src\PTML.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_program.h">
       <Filter>PTML</Filter>
     </ClInclude>
   </ItemGroup>

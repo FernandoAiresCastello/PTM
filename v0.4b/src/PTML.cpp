@@ -341,3 +341,14 @@ void PTML::GET()
 	else
 		error = err_invalid_argc;
 }
+
+void PTML::LIST()
+{
+	ARGC(0);
+
+	for (auto& stored_line : ptm->get_prg().lines) {
+		int line_number = stored_line.first;
+		t_string src = stored_line.second.src;
+		scr->println(src);
+	}
+}

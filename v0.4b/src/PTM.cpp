@@ -9,6 +9,8 @@
 #include "t_util.h"
 #include "t_main_editor.h"
 #include "t_interpreter.h"
+#include "t_program.h"
+#include "t_program_line.h"
 
 t_window wnd;
 t_keyboard kb;
@@ -18,6 +20,7 @@ t_screen scr;
 t_main_editor main_editor;
 t_interpreter intp;
 t_tile tilereg;
+t_program prg;
 
 int wnd_size = 3;
 
@@ -29,6 +32,7 @@ void PTM::run()
 	running = true;
 	halted = false;
 	tilereg.set_empty();
+	prg.lines.clear();
 
 	init();
 	run_tests();
@@ -136,9 +140,9 @@ void PTM::run_graphics_test()
 	halt();
 }
 
-void PTM::save_program_line(const t_list<t_token>& tokens)
+void PTM::save_program_line(t_program_line& line)
 {
-	// TODO
+	prg.set_line(line);
 }
 
 void PTM::set_var(const t_string& var, const t_string& value)
@@ -194,4 +198,9 @@ t_tile& PTM::get_tilereg()
 void PTM::set_tilereg(const t_tile& tile)
 {
 	tilereg = tile;
+}
+
+t_program& PTM::get_prg()
+{
+	return prg;
 }

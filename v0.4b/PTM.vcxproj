@@ -34,6 +34,8 @@
     <ClCompile Include="src\t_main_editor.cpp" />
     <ClCompile Include="src\t_palette.cpp" />
     <ClCompile Include="src\t_pos.cpp" />
+    <ClCompile Include="src\t_program.cpp" />
+    <ClCompile Include="src\t_program_line.cpp" />
     <ClCompile Include="src\t_screen.cpp" />
     <ClCompile Include="src\t_sprite.cpp" />
     <ClCompile Include="src\t_string.cpp" />
@@ -65,6 +67,7 @@
     <ClInclude Include="src\t_param.h" />
     <ClInclude Include="src\t_pointers.h" />
     <ClInclude Include="src\t_pos.h" />
+    <ClInclude Include="src\t_program.h" />
     <ClInclude Include="src\t_program_line.h" />
     <ClInclude Include="src\t_screen.h" />
     <ClInclude Include="src\t_sprite.h" />

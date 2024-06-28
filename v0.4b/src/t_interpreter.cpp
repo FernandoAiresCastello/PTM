@@ -24,15 +24,20 @@ void t_interpreter::init(PTM* ptm, t_screen* scr, t_keyboard* kb)
 	PTML::set_env(ptm, scr);
 }
 
-void t_interpreter::interpret_line(const t_string& line)
+void t_interpreter::interpret_line(const t_string& src)
 {
 	t_list<t_token> tokens;
-	lexer.tokenize_line(line, tokens);
+	lexer.tokenize_line(src, tokens);
 	if (tokens.empty())
 		return;
 
 	if (tokens[0].type == t_token_type::line_number) {
-		ptm->save_program_line(tokens);
+		int line_number = tokens[0].numeric_value;
+		tokens.erase(tokens.begin());
+		t_program_line line = make_program_line(tokens);
+		line.src_line_nr = line_number;
+		line.src = src;
+		ptm->save_program_line(line);
 	}
 	else {
 		t_program_line line = make_program_line(tokens);
@@ -117,6 +122,7 @@ t_function_ptr t_interpreter::get_fn_by_cmd(const t_string& cmd)
 	CMD("TILE.LIST", TILE_LIST);
 	CMD("GET", GET);
 	CMD("PUT", PUT);
+	CMD("LIST", LIST);
 
 	return nullptr;
 }

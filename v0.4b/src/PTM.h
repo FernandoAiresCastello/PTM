@@ -7,6 +7,8 @@
 #include "t_charset.h"
 #include "t_palette.h"
 #include "t_window.h"
+#include "t_program.h"
+#include "t_program_line.h"
 
 class PTM
 {
@@ -18,7 +20,7 @@ public:
 	void halt();
 	void pause(int frames);
 	void debug(t_string msg);
-	void save_program_line(const t_list<t_token>& tokens);
+	void save_program_line(t_program_line& line);
 	void set_var(const t_string& var, const t_string& value);
 	void set_var(const t_string& var, int value);
 	const t_string& get_var_str(const t_string& var);
@@ -30,6 +32,7 @@ public:
 	t_window& get_wnd();
 	t_tile& get_tilereg();
 	void set_tilereg(const t_tile& tile);
+	t_program& get_prg();
 
 private:
 	bool running = false;
