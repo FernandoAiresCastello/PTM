@@ -9,20 +9,20 @@ const t_string err_invalid_argc = "Invalid argument count";
 const t_string err_varname_expected = "Variable name expected";
 const t_string err_undefined_var = "Undefined variable";
 const t_string err_division_by_zero = "Division by zero";
+const t_string err_undefined_line_nr = "Undefined line number";
 
 PTM* ptm = nullptr;
 t_screen* scr = nullptr;
 t_program_line* line = nullptr;
 t_string PTML::error;
 
-#define IMM						line->src_line_nr <= line->undefined_line_nr
-#define NOT_IMM					line->src_line_nr > line->undefined_line_nr
+#define IMM						line->immediate
+#define NOT_IMM					!line->immediate
 #define COUNT(count)			line->argc == count
 #define ARGC(count)				if (line->argc != count) { error = err_invalid_argc; return; }
 #define ARGC_MIN_MAX(min, max)	if (line->argc < min || line->argc > max) { error = err_invalid_argc; return; }
 #define TYPE(n, t)				line->arg##n.type == t
 #define NOT_TYPE(n, t)			line->arg##n.type != t
-#define HAS(n)					NOT_TYPE(n, t_token_type::empty)
 #define STR(n)					resolve_str(line->arg##n)
 #define NUM(n)					resolve_num(line->arg##n)
 #define REQUIRE_IDENT(n)		if (NOT_TYPE(n, t_token_type::identifier)) { error = err_varname_expected; return; }
@@ -51,16 +51,16 @@ void PTML::COLOR()
 	ARGC_MIN_MAX(1, 3);
 
 	if (COUNT(3)) {
-		if (HAS(1)) scr->color_fg(NUM(1));
-		if (HAS(2)) scr->color_bg(NUM(2));
-		if (HAS(3)) scr->color_bdr(NUM(3));
+		scr->color_fg(NUM(1));
+		scr->color_bg(NUM(2));
+		scr->color_bdr(NUM(3));
 	}
 	else if (COUNT(2)) {
-		if (HAS(1)) scr->color_fg(NUM(1));
-		if (HAS(2)) scr->color_bg(NUM(2));
+		scr->color_fg(NUM(1));
+		scr->color_bg(NUM(2));
 	}
 	else if (COUNT(1)) {
-		if (HAS(1)) scr->color_fg(NUM(1));
+		scr->color_fg(NUM(1));
 	}
 }
 
@@ -344,11 +344,43 @@ void PTML::GET()
 
 void PTML::LIST()
 {
-	ARGC(0);
+	ARGC_MIN_MAX(0, 2);
 
-	for (auto& stored_line : ptm->get_prg().lines) {
-		int line_number = stored_line.first;
-		t_string src = stored_line.second.src;
-		scr->println(src);
+	if (COUNT(0)) {
+		for (auto& stored_line : ptm->get_prg().lines) {
+			scr->println(stored_line.second.to_string());
+		}
 	}
+	else if (COUNT(1)) {
+		t_program& prg = ptm->get_prg();
+		int line_nr = NUM(1);
+		if (prg.has_line(line_nr)) {
+			scr->println(prg.get_line(line_nr)->to_string());
+		}
+		else {
+			error = err_undefined_line_nr;
+		}
+	}
+	else if (COUNT(2)) {
+		auto& lines = ptm->get_prg().lines;
+		int first = NUM(1);
+		int last = NUM(2);
+		auto itLower = lines.lower_bound(first);
+		auto itUpper = lines.upper_bound(last);
+		for (auto& it = itLower; it != itUpper; ++it) {
+			scr->println(it->second.to_string());
+		}
+	}
+}
+
+void PTML::RUN()
+{
+	ARGC(0);
+	ptm->run_program();
+}
+
+void PTML::END()
+{
+	ARGC(0);
+	ptm->end_program();
 }

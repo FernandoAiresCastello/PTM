@@ -16,10 +16,10 @@ void t_main_editor::init(PTM* ptm, t_screen* scr, t_keyboard* kb, t_interpreter*
 
 void t_main_editor::print_welcome()
 {
-	scr->color(0xa8, 0xa3, 0xa2);
+	scr->color(default_fg, default_bg, default_bdr);
+	scr->show_cursor(true);
 	scr->println("PTM 0.4");
 	scr->println("Ok");
-	scr->show_cursor(true);
 }
 
 void t_main_editor::on_keydown()
@@ -94,17 +94,30 @@ bool t_main_editor::handle_control_key()
 
 bool t_main_editor::handle_function_key()
 {
+	bool shift = kb->shift();
+
 	switch (kb->key)
 	{
 		case SDLK_F1:
+			if (shift) {
+				scr->print(t_string::fmt("color %i,%i,%i", default_fg, default_bg, default_bdr));
+				on_enter_pressed();
+			}
+			else {
+				scr->print("color ");
+			}
 			return true;
 		case SDLK_F2:
 			return true;
 		case SDLK_F3:
 			return true;
 		case SDLK_F4:
+			scr->print("list ");
+			if (kb->shift()) on_enter_pressed();
 			return true;
 		case SDLK_F5:
+			scr->print("run");
+			on_enter_pressed();
 			return true;
 	}
 

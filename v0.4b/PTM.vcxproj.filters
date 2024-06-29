@@ -65,9 +65,6 @@
     <ClCompile Include="src\t_interpreter.cpp">
       <Filter>PTML</Filter>
     </ClCompile>
-    <ClCompile Include="src\t_lexer.cpp">
-      <Filter>PTML</Filter>
-    </ClCompile>
     <ClCompile Include="src\t_token.cpp">
       <Filter>PTML</Filter>
     </ClCompile>
@@ -78,6 +75,12 @@
       <Filter>PTML</Filter>
     </ClCompile>
     <ClCompile Include="src\t_program_line.cpp">
+      <Filter>PTML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_program_runner.cpp">
+      <Filter>CORE</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_tokenizer.cpp">
       <Filter>PTML</Filter>
     </ClCompile>
   </ItemGroup>
@@ -157,9 +160,6 @@
     <ClInclude Include="src\t_interpreter.h">
       <Filter>PTML</Filter>
     </ClInclude>
-    <ClInclude Include="src\t_lexer.h">
-      <Filter>PTML</Filter>
-    </ClInclude>
     <ClInclude Include="src\t_token.h">
       <Filter>PTML</Filter>
     </ClInclude>
@@ -179,6 +179,12 @@
       <Filter>PTML</Filter>
     </ClInclude>
     <ClInclude Include="src\t_program.h">
+      <Filter>PTML</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_program_runner.h">
+      <Filter>CORE</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_tokenizer.h">
       <Filter>PTML</Filter>
     </ClInclude>
   </ItemGroup>

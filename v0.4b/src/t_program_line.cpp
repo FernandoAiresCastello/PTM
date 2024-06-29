@@ -5,7 +5,11 @@ t_program_line& t_program_line::operator=(const t_program_line& other)
     if (this == &other)
         return *this;
 
-    src_line_nr = other.src_line_nr;
+    immediate = other.immediate;
+    is_label = other.is_label;
+    is_comment = other.is_comment;
+    label = other.label;
+    line_nr = other.line_nr;
     src = other.src;
     has_error = other.has_error;
     fn = other.fn;
@@ -17,4 +21,9 @@ t_program_line& t_program_line::operator=(const t_program_line& other)
     arg5 = other.arg5;
 
     return *this;
+}
+
+t_string t_program_line::to_string() const
+{
+    return src;
 }

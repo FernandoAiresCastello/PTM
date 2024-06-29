@@ -21,6 +21,7 @@ public:
 	void pause(int frames);
 	void debug(t_string msg);
 	void save_program_line(t_program_line& line);
+	bool delete_program_line(int line_nr);
 	void set_var(const t_string& var, const t_string& value);
 	void set_var(const t_string& var, int value);
 	const t_string& get_var_str(const t_string& var);
@@ -33,6 +34,8 @@ public:
 	t_tile& get_tilereg();
 	void set_tilereg(const t_tile& tile);
 	t_program& get_prg();
+	void run_program();
+	void end_program();
 
 private:
 	bool running = false;

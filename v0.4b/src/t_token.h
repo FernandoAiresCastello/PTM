@@ -4,9 +4,10 @@
 
 struct t_token
 {
-	t_token_type type = t_token_type::undefined;
-	t_string string_value;
-	int numeric_value;
+	t_token_type type = t_token_type::invalid;
+	t_string src;
+	t_string string_val;
+	int numeric_val;
 
 	t_token();
 	t_token(t_token_type type, const t_string& value);

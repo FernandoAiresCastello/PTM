@@ -2,12 +2,11 @@
 
 enum class t_token_type
 {
-	invalid = -1,
-	undefined,
-	empty,
+	invalid,
 	line_number,
-	command,
+	comment,
 	label,
+	command_or_identifier,
 	identifier,
 	literal_num,
 	literal_str,

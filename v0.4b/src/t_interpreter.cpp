@@ -1,19 +1,15 @@
 #include "t_interpreter.h"
-#include "t_lexer.h"
+#include "PTM.h"
+#include "PTML.h"
+#include "t_tokenizer.h"
 #include "t_program_line.h"
 #include "t_screen.h"
 #include "t_keyboard.h"
-#include "PTM.h"
-#include "PTML.h"
 
-#define CMD(k, fn)		if (cmd == k) return PTML::fn;
+#define CMD(k, fn)		if (cmd == k) return PTML::fn
 
-#define ASSIGN_ARG(n) \
-	line.arg##n.type = tokens[n].type; \
-	line.arg##n.string_val = tokens[n].string_value; \
-	line.arg##n.numeric_val = tokens[n].numeric_value;
-
-t_lexer lexer;
+t_tokenizer tokenizer;
+t_list<t_token> tokens;
 
 void t_interpreter::init(PTM* ptm, t_screen* scr, t_keyboard* kb)
 {
@@ -24,28 +20,38 @@ void t_interpreter::init(PTM* ptm, t_screen* scr, t_keyboard* kb)
 	PTML::set_env(ptm, scr);
 }
 
-void t_interpreter::interpret_line(const t_string& src)
+void t_interpreter::interpret_line(t_string& src)
 {
-	t_list<t_token> tokens;
-	lexer.tokenize_line(src, tokens);
+	tokenizer.tokenize_line(src, tokens);
 	if (tokens.empty())
 		return;
 
 	if (tokens[0].type == t_token_type::line_number) {
-		int line_number = tokens[0].numeric_value;
-		tokens.erase(tokens.begin());
-		t_program_line line = make_program_line(tokens);
-		line.src_line_nr = line_number;
-		line.src = src;
-		ptm->save_program_line(line);
+		int line_number = tokens[0].numeric_val;
+		if (tokens.size() == 1) {
+			bool ok = ptm->delete_program_line(line_number);
+			if (!ok) {
+				scr->println("Undefined line number");
+				scr->println("Ok");
+			}
+		}
+		else {
+			tokens.erase(tokens.begin());
+			t_program_line line = make_program_line(tokens);
+			line.line_nr = line_number;
+			line.immediate = false;
+			line.src = src;
+			ptm->save_program_line(line);
+		}
 	}
 	else {
 		t_program_line line = make_program_line(tokens);
+		line.immediate = true;
 		execute_line(line);
 	}
 }
 
-void t_interpreter::execute_line(t_program_line& line)
+bool t_interpreter::execute_line(t_program_line& line)
 {
 	PTML::set_line(&line);
 	PTML::error = "";
@@ -55,30 +61,49 @@ void t_interpreter::execute_line(t_program_line& line)
 	else
 		PTML::error = "Syntax error";
 
-	if (!PTML::error.empty())
-		scr->println(PTML::error);
+	bool has_error = !PTML::error.empty();
 
-	scr->println("Ok");
+	if (has_error) {
+		if (line.immediate)
+			scr->println(PTML::error);
+		else
+			scr->println(t_string::fmt("%s in %i", PTML::error.c_str(), line.line_nr));
+	}
+
+	if (line.immediate)
+		scr->println("Ok");
+
+	PTML::error = "";
+	return !has_error;
+}
+
+const t_string& t_interpreter::get_last_error()
+{
+	return PTML::error;
 }
 
 t_program_line t_interpreter::make_program_line(const t_list<t_token>& tokens)
 {
 	t_program_line line;
-
 	const t_token_type& type = tokens[0].type;
 
-	if (type == t_token_type::command) {
-		const t_string& cmd = tokens[0].string_value;
+	if (type == t_token_type::command_or_identifier) {
+		const t_string& cmd = tokens[0].string_val.to_upper();
 		line.fn = get_fn_by_cmd(cmd);
 		line.argc = int(tokens.size() - 1);
 
-		if (line.argc > 0) { ASSIGN_ARG(1); }
-		if (line.argc > 1) { ASSIGN_ARG(2); }
-		if (line.argc > 2) { ASSIGN_ARG(3); }
-		if (line.argc > 3) { ASSIGN_ARG(4); }
-		if (line.argc > 4) { ASSIGN_ARG(5); }
+		if (line.argc > 0) line.arg1 = t_param(tokens[1]);
+		if (line.argc > 1) line.arg2 = t_param(tokens[2]);
+		if (line.argc > 2) line.arg3 = t_param(tokens[3]);
+		if (line.argc > 3) line.arg4 = t_param(tokens[4]);
+		if (line.argc > 4) line.arg5 = t_param(tokens[5]);
 	}
 	else if (type == t_token_type::label) {
+		line.is_label = true;
+		line.label = tokens[0].string_val;
+	}
+	else if (type == t_token_type::comment) {
+		line.is_comment = true;
 	}
 
 	for (auto& token : tokens) {
@@ -123,6 +148,8 @@ t_function_ptr t_interpreter::get_fn_by_cmd(const t_string& cmd)
 	CMD("GET", GET);
 	CMD("PUT", PUT);
 	CMD("LIST", LIST);
+	CMD("RUN", RUN);
+	CMD("END", END);
 
 	return nullptr;
 }

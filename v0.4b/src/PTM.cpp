@@ -11,6 +11,7 @@
 #include "t_interpreter.h"
 #include "t_program.h"
 #include "t_program_line.h"
+#include "t_program_runner.h"
 
 t_window wnd;
 t_keyboard kb;
@@ -21,6 +22,7 @@ t_main_editor main_editor;
 t_interpreter intp;
 t_tile tilereg;
 t_program prg;
+t_program_runner prg_runner;
 
 int wnd_size = 3;
 
@@ -145,6 +147,11 @@ void PTM::save_program_line(t_program_line& line)
 	prg.set_line(line);
 }
 
+bool PTM::delete_program_line(int line_nr)
+{
+	return prg.delete_line(line_nr);
+}
+
 void PTM::set_var(const t_string& var, const t_string& value)
 {
 	vars[var] = value;
@@ -175,32 +182,23 @@ bool PTM::has_var(const t_string& var)
 	return vars.contains(var);
 }
 
-t_palette& PTM::get_pal()
-{
-	return pal;
-}
-
-t_charset& PTM::get_chr()
-{
-	return chr;
-}
-
-t_window& PTM::get_wnd()
-{
-	return wnd;
-}
-
-t_tile& PTM::get_tilereg()
-{
-	return tilereg;
-}
-
-void PTM::set_tilereg(const t_tile& tile)
-{
-	tilereg = tile;
-}
+t_palette& PTM::get_pal() { return pal; }
+t_charset& PTM::get_chr() { return chr; }
+t_window& PTM::get_wnd() { return wnd; }
+t_tile& PTM::get_tilereg() { return tilereg; }
+void PTM::set_tilereg(const t_tile& tile) { tilereg = tile; }
 
 t_program& PTM::get_prg()
 {
 	return prg;
+}
+
+void PTM::run_program()
+{
+	prg_runner.run(&prg, &intp);
+}
+
+void PTM::end_program()
+{
+	prg_runner.stop();
 }

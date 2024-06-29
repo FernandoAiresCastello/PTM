@@ -6,11 +6,13 @@
 class t_program_line
 {
 public:
-	const int undefined_line_nr = -1;
-
-	int src_line_nr = undefined_line_nr;
-	t_string src;
+	bool immediate = false;
+	bool is_label = false;
+	bool is_comment = false;
 	bool has_error = false;
+	int line_nr = -1;
+	t_string label;
+	t_string src;
 	t_function_ptr fn = nullptr;
 	int argc = 0;
 	t_param arg1;
@@ -20,4 +22,6 @@ public:
 	t_param arg5;
 
 	t_program_line& operator=(const t_program_line& other);
+
+	t_string to_string() const;
 };

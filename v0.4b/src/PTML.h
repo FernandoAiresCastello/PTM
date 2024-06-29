@@ -42,4 +42,6 @@ namespace PTML
 	void PUT();
 	void GET();
 	void LIST();
+	void RUN();
+	void END();
 }
