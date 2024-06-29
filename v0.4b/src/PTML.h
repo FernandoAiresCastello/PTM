@@ -44,4 +44,5 @@ namespace PTML
 	void LIST();
 	void RUN();
 	void END();
+	void GOTO();
 }

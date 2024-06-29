@@ -19,6 +19,8 @@ public:
 	void exit();
 	void halt();
 	void pause(int frames);
+	void on_machine_cycle() const;
+	bool is_window_open() const;
 	void debug(t_string msg);
 	void save_program_line(t_program_line& line);
 	bool delete_program_line(int line_nr);
@@ -36,6 +38,8 @@ public:
 	t_program& get_prg();
 	void run_program();
 	void end_program();
+	bool has_program_label(const t_string& label);
+	void goto_program_label(const t_string& label);
 
 private:
 	bool running = false;
@@ -46,5 +50,4 @@ private:
 	void run_tests();
 	void run_graphics_test();
 	void run_main();
-	void on_machine_cycle() const;
 };

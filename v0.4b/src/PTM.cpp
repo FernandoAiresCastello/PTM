@@ -92,6 +92,9 @@ void PTM::debug(t_string msg)
 
 void PTM::on_machine_cycle() const
 {
+	if (!wnd.is_open())
+		return;
+
 	scr.on_every_machine_cycle();
 	wnd.update();
 
@@ -108,11 +111,16 @@ void PTM::on_machine_cycle() const
 		else if (key == SDLK_ESCAPE) {
 			wnd.close();
 		}
-		else if (!kb.alt() && !halted) {
+		else if (!kb.alt() && !halted && !prg_runner.is_running()) {
 			kb.key = key;
 			main_editor.on_keydown();
 		}
 	}
+}
+
+bool PTM::is_window_open() const
+{
+	return wnd.is_open();
 }
 
 void PTM::run_tests()
@@ -195,10 +203,20 @@ t_program& PTM::get_prg()
 
 void PTM::run_program()
 {
-	prg_runner.run(&prg, &intp);
+	prg_runner.run(this, &prg, &intp);
 }
 
 void PTM::end_program()
 {
 	prg_runner.stop();
+}
+
+bool PTM::has_program_label(const t_string& label)
+{
+	return prg_runner.labels.contains(label);
+}
+
+void PTM::goto_program_label(const t_string& label)
+{
+	prg_runner.go_to(label);
 }

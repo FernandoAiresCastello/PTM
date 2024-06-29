@@ -10,6 +10,8 @@ const t_string err_varname_expected = "Variable name expected";
 const t_string err_undefined_var = "Undefined variable";
 const t_string err_division_by_zero = "Division by zero";
 const t_string err_undefined_line_nr = "Undefined line number";
+const t_string err_label_not_found = "Label not found";
+const t_string err_cmd_not_available = "Command not available";
 
 PTM* ptm = nullptr;
 t_screen* scr = nullptr;
@@ -383,4 +385,20 @@ void PTML::END()
 {
 	ARGC(0);
 	ptm->end_program();
+}
+
+void PTML::GOTO()
+{
+	if (IMM) {
+		error = err_cmd_not_available;
+		return;
+	}
+
+	ARGC(1);
+	REQUIRE_IDENT(1);
+	auto& label = IDENT(1);
+	if (ptm->has_program_label(label))
+		ptm->goto_program_label(label);
+	else
+		error = err_label_not_found;
 }

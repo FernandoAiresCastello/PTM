@@ -150,6 +150,7 @@ t_function_ptr t_interpreter::get_fn_by_cmd(const t_string& cmd)
 	CMD("LIST", LIST);
 	CMD("RUN", RUN);
 	CMD("END", END);
+	CMD("GOTO", GOTO);
 
 	return nullptr;
 }
