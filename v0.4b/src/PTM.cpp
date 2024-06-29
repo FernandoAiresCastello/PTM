@@ -90,7 +90,7 @@ void PTM::debug(t_string msg)
 	wnd.set_title(msg);
 }
 
-void PTM::on_machine_cycle() const
+void PTM::on_machine_cycle()
 {
 	if (!wnd.is_open())
 		return;
@@ -109,7 +109,10 @@ void PTM::on_machine_cycle() const
 			wnd.toggle_fullscreen();
 		}
 		else if (key == SDLK_ESCAPE) {
-			wnd.close();
+			if (prg_runner.is_running()) {
+				prg_runner.stop();
+				intp.on_user_interrupt(prg_runner.get_current_line());
+			}
 		}
 		else if (!kb.alt() && !halted && !prg_runner.is_running()) {
 			kb.key = key;

@@ -16,6 +16,7 @@ public:
 	void interpret_line(t_string& line);
 	bool execute_line(t_program_line& line);
 	const t_string& get_last_error();
+	void on_user_interrupt(t_program_line* line);
 
 private:
 	PTM* ptm = nullptr;

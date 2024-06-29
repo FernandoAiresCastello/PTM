@@ -13,12 +13,14 @@ void t_program_runner::run(PTM* ptm, t_program* prg, t_interpreter* intp)
 	stop_requested = false;
 	branch_requested = false;
 	branch_target = -1;
+	cur_line = nullptr;
 
 	find_labels();
 
 	running = true;
 
 	for (auto it = prg->lines.begin(); it != prg->lines.end(); ) {
+		cur_line = &it->second;
 		auto& line = it->second;
 		if (line.is_label || line.is_comment) {
 			++it;
@@ -26,10 +28,9 @@ void t_program_runner::run(PTM* ptm, t_program* prg, t_interpreter* intp)
 		}
 
 		bool ok = intp->execute_line(line);
+		ptm->on_machine_cycle();
 		if (!ok || stop_requested || !ptm->is_window_open())
 			break;
-
-		ptm->on_machine_cycle();
 
 		if (branch_requested) {
 			it = prg->lines.find(branch_target);
@@ -52,6 +53,11 @@ void t_program_runner::stop()
 bool t_program_runner::is_running() const
 {
 	return running;
+}
+
+t_program_line* t_program_runner::get_current_line()
+{
+	return cur_line;
 }
 
 void t_program_runner::go_to(const t_string& label)

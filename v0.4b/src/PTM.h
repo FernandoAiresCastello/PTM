@@ -19,7 +19,7 @@ public:
 	void exit();
 	void halt();
 	void pause(int frames);
-	void on_machine_cycle() const;
+	void on_machine_cycle();
 	bool is_window_open() const;
 	void debug(t_string msg);
 	void save_program_line(t_program_line& line);

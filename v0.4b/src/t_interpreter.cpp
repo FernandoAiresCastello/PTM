@@ -82,6 +82,11 @@ const t_string& t_interpreter::get_last_error()
 	return PTML::error;
 }
 
+void t_interpreter::on_user_interrupt(t_program_line* line)
+{
+	scr->println(t_string::fmt("Break in %i", line->line_nr));
+}
+
 t_program_line t_interpreter::make_program_line(const t_list<t_token>& tokens)
 {
 	t_program_line line;
