@@ -2,6 +2,7 @@
 
 t_tileflags::t_tileflags()
 {
+    clear();
 }
 
 t_tileflags::t_tileflags(const t_tileflags& other) :
@@ -30,4 +31,12 @@ t_tileflags& t_tileflags::operator=(const t_tileflags& other)
     line_wrap = other.line_wrap;
 
     return *this;
+}
+
+void t_tileflags::clear()
+{
+    visible = true;
+    monochrome = false;
+    hide_bgc = false;
+    line_wrap = false;
 }

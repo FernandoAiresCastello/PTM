@@ -64,6 +64,8 @@ void t_screen::clear()
 		for (int x = 0; x < buf->cols; x++) {
 			t_tile& tile = buf->get_ref(x, y);
 			tile.set_blank();
+			tile.flags.clear();
+			tile.flags.monochrome = true;
 			tile.set_char(0, fore_color, back_color);
 		}
 	}

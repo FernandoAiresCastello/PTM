@@ -99,13 +99,7 @@ bool t_main_editor::handle_function_key()
 	switch (kb->key)
 	{
 		case SDLK_F1:
-			if (shift) {
-				scr->print(t_string::fmt("color %i,%i,%i", default_fg, default_bg, default_bdr));
-				on_enter_pressed();
-			}
-			else {
-				scr->print("color ");
-			}
+			highlight_line_wrap();
 			return true;
 		case SDLK_F2:
 			return true;
