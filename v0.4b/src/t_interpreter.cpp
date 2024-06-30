@@ -20,7 +20,7 @@ void t_interpreter::init(PTM* ptm, t_screen* scr, t_keyboard* kb)
 	PTML::set_env(ptm, scr);
 }
 
-void t_interpreter::interpret_line(t_string& src)
+void t_interpreter::interpret_line(t_string& src, bool from_file)
 {
 	tokenizer.tokenize_line(src, tokens);
 	if (tokens.empty())
@@ -28,20 +28,25 @@ void t_interpreter::interpret_line(t_string& src)
 
 	if (tokens[0].type == t_token_type::line_number) {
 		int line_number = tokens[0].numeric_val;
-		if (tokens.size() == 1) {
+		if (tokens.size() == 1 && !from_file) {
 			bool ok = ptm->delete_program_line(line_number);
 			if (!ok) {
 				scr->println("Undefined line number");
-				scr->println("Ok");
+				scr->println(prompt);
 			}
 		}
 		else {
 			tokens.erase(tokens.begin());
-			t_program_line line = make_program_line(tokens);
-			line.line_nr = line_number;
-			line.immediate = false;
-			line.src = src;
-			ptm->save_program_line(line);
+			if (tokens.empty()) {
+				PTML::error = t_string::fmt("Invalid program line at %i", line_number);
+			}
+			else {
+				t_program_line line = make_program_line(tokens);
+				line.line_nr = line_number;
+				line.immediate = false;
+				line.src = src;
+				ptm->save_program_line(line);
+			}
 		}
 	}
 	else {
@@ -71,7 +76,7 @@ bool t_interpreter::execute_line(t_program_line& line)
 	}
 
 	if (line.immediate)
-		scr->println("Ok");
+		scr->println(prompt);
 
 	PTML::error = "";
 	return !has_error;
@@ -146,7 +151,7 @@ t_function_ptr t_interpreter::get_fn_by_cmd(const t_string& cmd)
 	CMD("RND", RND);
 	CMD("SWAP", SWAP);
 	CMD("FSCR", FSCR);
-	CMD("CSR.ON", CSR_ON);
+	CMD("CSR.SET", CSR_SET);
 	CMD("TILE.NEW", TILE_NEW);
 	CMD("TILE.ADD", TILE_ADD);
 	CMD("TILE.LIST", TILE_LIST);
@@ -155,7 +160,11 @@ t_function_ptr t_interpreter::get_fn_by_cmd(const t_string& cmd)
 	CMD("LIST", LIST);
 	CMD("RUN", RUN);
 	CMD("END", END);
+	CMD("NEW", NEW);
+	CMD("SAVE", SAVE);
+	CMD("LOAD", LOAD);
 	CMD("GOTO", GOTO);
+	CMD("FILES", FILES);
 
 	return nullptr;
 }

@@ -99,8 +99,16 @@ t_token t_tokenizer::parse_token(int token_index, t_string& src)
 			token.string_val = val;
 		}
 	}
-	else {
+	else if (src_upper.contains_only(sym.valid_identifier_chars)) {
 		token.type = t_token_type::command_or_identifier;
+		token.string_val = src;
+	}
+	else if (src.starts_with(sym.system_id_prefix)) {
+		token.type = t_token_type::system_identifier;
+		token.string_val = src;
+	}
+	else {
+		token.type = t_token_type::invalid;
 		token.string_val = src;
 	}
 

@@ -12,6 +12,7 @@
 #include "t_program.h"
 #include "t_program_line.h"
 #include "t_program_runner.h"
+#include "t_filesystem.h"
 
 t_window wnd;
 t_keyboard kb;
@@ -23,6 +24,7 @@ t_interpreter intp;
 t_tile tilereg;
 t_program prg;
 t_program_runner prg_runner;
+t_filesystem filesys;
 
 int wnd_size = 3;
 
@@ -193,6 +195,27 @@ bool PTM::has_var(const t_string& var)
 	return vars.contains(var);
 }
 
+int PTM::get_system_var_num(const t_string& var)
+{
+	return get_system_var_str(var).to_int();
+}
+
+#define SYSVAR(x, y)	if (var == ##x) return y;
+
+t_string PTM::get_system_var_str(const t_string& var)
+{
+	SYSVAR("$version", version_string);
+	SYSVAR("$cols", scr.cols());
+	SYSVAR("$rows", scr.rows());
+	SYSVAR("$fgcol", scr.get_fg_color());
+	SYSVAR("$bgcol", scr.get_bg_color());
+	SYSVAR("$bdrcol", scr.get_bdr_color());
+	SYSVAR("$csrx", scr.csrx());
+	SYSVAR("$csry", scr.csry());
+
+	return "";
+}
+
 t_palette& PTM::get_pal() { return pal; }
 t_charset& PTM::get_chr() { return chr; }
 t_window& PTM::get_wnd() { return wnd; }
@@ -212,6 +235,21 @@ void PTM::run_program()
 void PTM::end_program()
 {
 	prg_runner.stop();
+}
+
+void PTM::new_program()
+{
+	prg.lines.clear();
+}
+
+void PTM::save_program(const t_string& filename)
+{
+	filesys.save_program(&prg, filename);
+}
+
+void PTM::load_program(const t_string& filename)
+{
+	filesys.load_program(&intp, &prg, filename);
 }
 
 bool PTM::has_program_label(const t_string& label)

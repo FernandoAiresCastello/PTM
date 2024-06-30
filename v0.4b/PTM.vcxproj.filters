@@ -83,6 +83,9 @@
     <ClCompile Include="src\t_tokenizer.cpp">
       <Filter>PTML</Filter>
     </ClCompile>
+    <ClCompile Include="src\t_filesystem.cpp">
+      <Filter>FILESYSTEM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\t_string.h">
@@ -187,6 +190,9 @@
     <ClInclude Include="src\t_tokenizer.h">
       <Filter>PTML</Filter>
     </ClInclude>
+    <ClInclude Include="src\t_filesystem.h">
+      <Filter>FILESYSTEM</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="UTIL">
@@ -209,6 +215,9 @@
     </Filter>
     <Filter Include="PTML">
       <UniqueIdentifier>{d73b4aac-b700-424b-8ae1-15ba947d5ef1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FILESYSTEM">
+      <UniqueIdentifier>{b8433b10-7259-4f24-af1b-097839dcaa62}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

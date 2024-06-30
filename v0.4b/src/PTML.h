@@ -35,7 +35,7 @@ namespace PTML
 	void RND();
 	void SWAP();
 	void FSCR();
-	void CSR_ON();
+	void CSR_SET();
 	void TILE_NEW();
 	void TILE_ADD();
 	void TILE_LIST();
@@ -44,5 +44,9 @@ namespace PTML
 	void LIST();
 	void RUN();
 	void END();
+	void NEW();
+	void SAVE();
+	void LOAD();
+	void FILES();
 	void GOTO();
 }

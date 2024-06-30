@@ -18,8 +18,8 @@ void t_main_editor::print_welcome()
 {
 	scr->color(default_fg, default_bg, default_bdr);
 	scr->show_cursor(true);
-	scr->println("PTM 0.4");
-	scr->println("Ok");
+	scr->println(ptm->version_string);
+	scr->println(intp->prompt);
 }
 
 void t_main_editor::on_keydown()

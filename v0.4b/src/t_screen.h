@@ -29,6 +29,8 @@ public:
 	void locate(int x, int y);
 	void move_cursor_dist(int dx, int dy);
 	void move_cursor_wrap_x(int dx);
+	int rows() const;
+	int cols() const;
 	int last_row() const;
 	int last_col() const;
 	int csrx() const;
@@ -54,6 +56,9 @@ public:
 	t_tile& get_tile_at_csr();
 	void set_csr_char_ix(t_index ch);
 	t_string get_current_logical_line();
+	t_index get_fg_color() const;
+	t_index get_bg_color() const;
+	t_index get_bdr_color() const;
 
 private:
 	t_window* wnd = nullptr;

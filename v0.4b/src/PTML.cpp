@@ -4,6 +4,7 @@
 #include "t_screen.h"
 #include "t_window.h"
 #include "t_program_line.h"
+#include "t_filesystem.h"
 
 const t_string err_invalid_argc = "Invalid argument count";
 const t_string err_varname_expected = "Variable name expected";
@@ -12,6 +13,7 @@ const t_string err_division_by_zero = "Division by zero";
 const t_string err_undefined_line_nr = "Undefined line number";
 const t_string err_label_not_found = "Label not found";
 const t_string err_cmd_not_available = "Command not available";
+const t_string err_file_not_found = "File not found";
 
 PTM* ptm = nullptr;
 t_screen* scr = nullptr;
@@ -20,6 +22,8 @@ t_string PTML::error;
 
 #define IMM						line->immediate
 #define NOT_IMM					!line->immediate
+#define REQUIRE_IMM				if (!IMM) { error = err_cmd_not_available; return; }
+#define REQUIRE_NOT_IMM			if (IMM) { error = err_cmd_not_available; return; }
 #define COUNT(count)			line->argc == count
 #define ARGC(count)				if (line->argc != count) { error = err_invalid_argc; return; }
 #define ARGC_MIN_MAX(min, max)	if (line->argc < min || line->argc > max) { error = err_invalid_argc; return; }
@@ -30,6 +34,8 @@ t_string PTML::error;
 #define REQUIRE_IDENT(n)		if (NOT_TYPE(n, t_token_type::identifier)) { error = err_varname_expected; return; }
 #define IDENT(n)				line->arg##n.string_val
 #define BOOL(n)					NUM(n) > 0
+#define EMPTY_STR				""
+#define EMPTY_NUM				0
 
 void PTML::set_env(PTM* _ptm, t_screen* _scr) {
 	ptm = _ptm; scr = _scr;
@@ -37,11 +43,26 @@ void PTML::set_env(PTM* _ptm, t_screen* _scr) {
 void PTML::set_line(t_program_line* _line) {
 	line = _line;
 }
-static const t_string& resolve_str(const t_param& arg) {
-	return arg.type == t_token_type::identifier ? ptm->get_var_str(arg.string_val) : arg.string_val;
+
+static const t_string resolve_str(const t_param& arg) {
+	if (arg.type == t_token_type::invalid)
+		return EMPTY_STR;
+	if (arg.type == t_token_type::identifier)
+		return ptm->has_var(arg.string_val) ? ptm->get_var_str(arg.string_val) : EMPTY_STR;
+	if (arg.type == t_token_type::system_identifier)
+		return ptm->get_system_var_str(arg.string_val);
+
+	return arg.string_val;
 }
 static int resolve_num(const t_param& arg) {
-	return arg.type == t_token_type::identifier ? ptm->get_var_num(arg.string_val) : arg.numeric_val;
+	if (arg.type == t_token_type::invalid)
+		return EMPTY_NUM;
+	if (arg.type == t_token_type::identifier)
+		return ptm->has_var(arg.string_val) ? ptm->get_var_num(arg.string_val) : EMPTY_NUM;
+	if (arg.type == t_token_type::system_identifier)
+		return ptm->get_system_var_num(arg.string_val);
+
+	return arg.numeric_val;
 }
 
 //=============================================================================
@@ -86,7 +107,7 @@ void PTML::PRINT()
 	ARGC(1);
 	auto&& value = STR(1);
 
-	if (IMM)
+	if (IMM && !value.empty())
 		scr->println(value);
 	else
 		scr->print(value);
@@ -273,7 +294,7 @@ void PTML::FSCR()
 		ptm->get_wnd().toggle_fullscreen();
 }
 
-void PTML::CSR_ON()
+void PTML::CSR_SET()
 {
 	ARGC(1);
 	scr->show_cursor(BOOL(1));
@@ -377,6 +398,7 @@ void PTML::LIST()
 
 void PTML::RUN()
 {
+	REQUIRE_IMM;
 	ARGC(0);
 	ptm->run_program();
 }
@@ -387,15 +409,47 @@ void PTML::END()
 	ptm->end_program();
 }
 
+void PTML::NEW()
+{
+	REQUIRE_IMM;
+	ARGC(0);
+	ptm->new_program();
+}
+
+void PTML::SAVE()
+{
+	REQUIRE_IMM;
+	ARGC(1);
+
+	auto&& filename = STR(1);
+	ptm->save_program(filename);
+}
+
+void PTML::LOAD()
+{
+	REQUIRE_IMM;
+	ARGC(1);
+
+	auto&& filename = STR(1);
+	if (t_filesystem::file_exists(filename))
+		ptm->load_program(filename);
+	else
+		error = err_file_not_found;
+}
+
+void PTML::FILES()
+{
+	ARGC(0);
+	for (auto& file : t_filesystem::list_files())
+		scr->println(file);
+}
+
 void PTML::GOTO()
 {
-	if (IMM) {
-		error = err_cmd_not_available;
-		return;
-	}
-
+	REQUIRE_NOT_IMM;
 	ARGC(1);
 	REQUIRE_IDENT(1);
+
 	auto& label = IDENT(1);
 	if (ptm->has_program_label(label))
 		ptm->goto_program_label(label);

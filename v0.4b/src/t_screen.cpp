@@ -130,6 +130,16 @@ void t_screen::move_cursor_wrap_x(int dx)
 	fix_cursor_pos();
 }
 
+int t_screen::rows() const
+{
+	return buf->rows;
+}
+
+int t_screen::cols() const
+{
+	return buf->cols;
+}
+
 void t_screen::fix_cursor_pos()
 {
 	if (csr->get_x() < 0)				csr->set_x(0);
@@ -420,4 +430,19 @@ t_string t_screen::get_current_logical_line()
 	first_half = first_half.reverse();
 
 	return t_string(first_half + last_half).trim();
+}
+
+t_index t_screen::get_fg_color() const
+{
+	return fore_color;
+}
+
+t_index t_screen::get_bg_color() const
+{
+	return back_color;
+}
+
+t_index t_screen::get_bdr_color() const
+{
+	return border_color;
 }

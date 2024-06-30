@@ -13,7 +13,9 @@
 class PTM
 {
 public:
+	const t_string version_string = "PTM 0.4";
 	const t_string title = "PTM - Programmable Tile Machine";
+	static const char sys_var_prefix = '$';
 
 	void run();
 	void exit();
@@ -30,6 +32,8 @@ public:
 	int get_var_num(const t_string& var);
 	const t_dict<t_string, t_string>& get_vars();
 	bool has_var(const t_string& var);
+	t_string get_system_var_str(const t_string& var);
+	int get_system_var_num(const t_string& var);
 	t_palette& get_pal();
 	t_charset& get_chr();
 	t_window& get_wnd();
@@ -38,6 +42,9 @@ public:
 	t_program& get_prg();
 	void run_program();
 	void end_program();
+	void new_program();
+	void save_program(const t_string& filename);
+	void load_program(const t_string& filename);
 	bool has_program_label(const t_string& label);
 	void goto_program_label(const t_string& label);
 
