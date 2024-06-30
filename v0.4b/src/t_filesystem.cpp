@@ -5,17 +5,42 @@
 #include "t_program_line.h"
 #include "t_interpreter.h"
 
-#define ROOT    "root\\"
+#define ROOT        "root\\"
+#define PATH(x)     (ROOT + filename.trim().to_upper().s_str())
 
 namespace fs = std::filesystem;
 
+t_list<t_string> t_filesystem::illegal_filenames = {
+    "CON", "PRN", "AUX", "NUL", 
+    "COM0", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "COM¹", "COM²", "COM³", 
+    "LPT0", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9", "LPT¹", "LPT²", "LPT³"
+};
+
+bool t_filesystem::is_valid_filename(const t_string& filename)
+{
+    t_string trimmed_filename = filename.trim();
+
+    if (trimmed_filename.empty())
+        return false;
+    if (trimmed_filename == "." || trimmed_filename == "..")
+        return false;
+    if (trimmed_filename.ends_with("."))
+        return false;
+    if (trimmed_filename.in(illegal_filenames))
+        return false;
+    if (filename.contains_any(" <>:\"/\\|?*"))
+        return false;
+
+    return true;
+}
+
 bool t_filesystem::file_exists(const t_string& filename)
 {
-    if (filename.trim().empty())
+    if (!is_valid_filename(filename))
         return false;
 
     struct stat buffer;
-    return (stat((ROOT + filename.s_str()).c_str(), &buffer) == 0);
+    return (stat(PATH(filename).c_str(), &buffer) == 0);
 }
 
 t_list<t_string> t_filesystem::list_files()
@@ -34,7 +59,7 @@ t_list<t_string> t_filesystem::list_files()
 
 t_string t_filesystem::read_all_text(const t_string& filename)
 {
-    std::ifstream file(ROOT + filename.s_str(), std::ios::in | std::ios::binary | std::ios::ate);
+    std::ifstream file(PATH(filename), std::ios::in | std::ios::binary | std::ios::ate);
     if (!file)
         throw std::runtime_error("Could not open file");
 
@@ -61,7 +86,7 @@ t_list<t_string> t_filesystem::read_all_lines(const t_string& filename)
 
 void t_filesystem::write_all_text(t_string text, const t_string& filename)
 {
-    std::ofstream file(ROOT + filename.s_str(), std::ios::out | std::ios::binary);
+    std::ofstream file(PATH(filename), std::ios::out | std::ios::binary);
     if (!file)
         throw std::runtime_error("Could not open file");
 

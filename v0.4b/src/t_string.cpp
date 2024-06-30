@@ -359,6 +359,16 @@ bool t_string::contains_only(const t_string& chars) const
 	});
 }
 
+bool t_string::contains_any(const t_string& chars) const
+{
+	return value.find_first_of(chars.s_str()) != std::string::npos;
+}
+
+bool t_string::in(const t_list<t_string>& strings) const
+{
+	return std::find(strings.begin(), strings.end(), value) != strings.end();
+}
+
 int t_string::index_of(const t_string& str) const
 {
 	return (int)value.find(str);

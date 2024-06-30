@@ -14,6 +14,7 @@ const t_string err_undefined_line_nr = "Undefined line number";
 const t_string err_label_not_found = "Label not found";
 const t_string err_cmd_not_available = "Command not available";
 const t_string err_file_not_found = "File not found";
+const t_string err_invalid_filename = "Illegal filename";
 
 PTM* ptm = nullptr;
 t_screen* scr = nullptr;
@@ -34,6 +35,7 @@ t_string PTML::error;
 #define REQUIRE_IDENT(n)		if (NOT_TYPE(n, t_token_type::identifier)) { error = err_varname_expected; return; }
 #define IDENT(n)				line->arg##n.string_val
 #define BOOL(n)					NUM(n) > 0
+#define VALIDATE_FILENAME(x)	if (!t_filesystem::is_valid_filename(x)) { error = err_invalid_filename; return; }
 #define EMPTY_STR				""
 #define EMPTY_NUM				0
 
@@ -422,6 +424,8 @@ void PTML::SAVE()
 	ARGC(1);
 
 	auto&& filename = STR(1);
+	VALIDATE_FILENAME(filename);
+
 	ptm->save_program(filename);
 }
 
@@ -431,6 +435,8 @@ void PTML::LOAD()
 	ARGC(1);
 
 	auto&& filename = STR(1);
+	VALIDATE_FILENAME(filename);
+
 	if (t_filesystem::file_exists(filename))
 		ptm->load_program(filename);
 	else

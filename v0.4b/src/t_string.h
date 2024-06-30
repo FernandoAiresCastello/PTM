@@ -70,6 +70,8 @@ public:
 	bool starts_and_ends_with(const t_string& same_preffix_and_suffix) const;
 	bool contains(const t_string& other) const;
 	bool contains_only(const t_string& chars) const;
+	bool contains_any(const t_string& chars) const;
+	bool in(const t_list<t_string>& strings) const;
 	int index_of(const t_string& str) const;
 	int last_index_of(const t_string& str) const;
 	t_list<int> find_all(const char& ch, size_t offset = 0U);
