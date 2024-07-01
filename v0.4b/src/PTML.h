@@ -1,5 +1,6 @@
 #pragma once
 #include "t_string.h"
+#include "t_param.h"
 
 class PTM;
 class t_screen;
@@ -9,8 +10,15 @@ namespace PTML
 {
 	extern t_string error;
 
+	enum class t_comparison { eq, neq, gt, gte, lt, lte };
+	enum class t_branch_mode { go_to, call };
+
 	void set_env(PTM* _ptm, t_screen* _scr);
 	void set_line(t_program_line* _line);
+	t_string resolve_str(const t_param& arg);
+	int resolve_num(const t_param& arg);
+	void branch_unconditional(t_branch_mode mode);
+	void branch_conditional(t_comparison cp, t_branch_mode mode);
 
 	void COLOR();
 	void COLOR_F();

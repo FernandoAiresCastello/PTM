@@ -4,6 +4,4 @@
 40 printl x
 50 inc x
 60 goto.e x,10,end
-70 goto loop
-80 :end
 90 halt

@@ -17,6 +17,7 @@ public:
 	bool is_running() const;
 	t_program_line* get_current_line();
 	void go_to(const t_string& label);
+	void call(const t_string& label);
 
 private:
 	PTM* ptm = nullptr;

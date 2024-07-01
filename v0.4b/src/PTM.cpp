@@ -243,3 +243,8 @@ void PTM::goto_program_label(const t_string& label)
 {
 	prg_runner.go_to(label);
 }
+
+void PTM::call_program_label(const t_string& label)
+{
+	prg_runner.call(label);
+}

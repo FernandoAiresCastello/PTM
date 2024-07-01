@@ -169,6 +169,11 @@ t_function_ptr t_interpreter::get_fn_by_cmd(const t_string& cmd)
 	CMD("FILES", FILES);
 	CMD("GOTO", GOTO);
 	CMD("GOTO.E", GOTO_IFE);
+	CMD("GOTO.NE", GOTO_IFNE);
+	CMD("GOTO.GT", GOTO_IFG);
+	CMD("GOTO.GTE", GOTO_IFGE);
+	CMD("GOTO.LT", GOTO_IFL);
+	CMD("GOTO.LTE", GOTO_IFLE);
 
 	return nullptr;
 }

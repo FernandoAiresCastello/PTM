@@ -66,6 +66,14 @@ void t_program_runner::go_to(const t_string& label)
 	branch_target = labels[label];
 }
 
+void t_program_runner::call(const t_string& label)
+{
+	branch_requested = true;
+	branch_target = labels[label];
+
+	// todo: push current line index to stack
+}
+
 void t_program_runner::find_labels()
 {
 	labels.clear();

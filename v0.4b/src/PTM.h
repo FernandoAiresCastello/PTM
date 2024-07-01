@@ -44,6 +44,7 @@ public:
 	void load_program(const t_string& filename);
 	bool has_program_label(const t_string& label);
 	void goto_program_label(const t_string& label);
+	void call_program_label(const t_string& label);
 
 private:
 	bool running = false;

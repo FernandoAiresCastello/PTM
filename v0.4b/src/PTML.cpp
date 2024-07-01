@@ -42,7 +42,7 @@ t_string PTML::error;
 void PTML::set_env(PTM* _ptm, t_screen* _scr) { ptm = _ptm; scr = _scr;}
 void PTML::set_line(t_program_line* _line) { line = _line; }
 
-static const t_string resolve_str(const t_param& arg)
+t_string PTML::resolve_str(const t_param& arg)
 {
 	if (arg.type == t_token_type::invalid)
 		return EMPTY_STR;
@@ -52,7 +52,7 @@ static const t_string resolve_str(const t_param& arg)
 	return arg.string_val;
 }
 
-static int resolve_num(const t_param& arg)
+int PTML::resolve_num(const t_param& arg)
 {
 	if (arg.type == t_token_type::invalid)
 		return EMPTY_NUM;
@@ -60,6 +60,51 @@ static int resolve_num(const t_param& arg)
 		return ptm->has_var(arg.string_val) ? ptm->get_var_num(arg.string_val) : EMPTY_NUM;
 
 	return arg.numeric_val;
+}
+
+void PTML::branch_unconditional(t_branch_mode mode)
+{
+	REQUIRE_NOT_IMM;
+	ARGC(1);
+	REQUIRE_IDENT(1);
+
+	auto& label = IDENT(1);
+	if (ptm->has_program_label(label))
+		ptm->goto_program_label(label);
+	else
+		error = err_label_not_found;
+}
+
+void PTML::branch_conditional(t_comparison cp, t_branch_mode mode)
+{
+	REQUIRE_NOT_IMM;
+	ARGC(3);
+
+	auto&& str_a = STR(1);
+	auto&& str_b = STR(2);
+
+	bool pass = false;
+
+		 if (cp == t_comparison::eq)	pass = str_a == str_b;
+	else if (cp == t_comparison::neq)	pass = str_a != str_b;
+	else if (cp == t_comparison::gt)	pass = str_a.to_int() > str_b.to_int();
+	else if (cp == t_comparison::gte)	pass = str_a.to_int() >= str_b.to_int();
+	else if (cp == t_comparison::lt)	pass = str_a.to_int() < str_b.to_int();
+	else if (cp == t_comparison::lte)	pass = str_a.to_int() <= str_b.to_int();
+
+	if (pass) {
+
+		REQUIRE_IDENT(3);
+		auto&& label = IDENT(3);
+		if (ptm->has_program_label(label)) {
+			mode == t_branch_mode::go_to ?
+				ptm->goto_program_label(label) :
+				ptm->call_program_label(label);
+		}
+		else {
+			error = err_label_not_found;
+		}
+	}
 }
 
 //=============================================================================
@@ -465,51 +510,35 @@ void PTML::FILES()
 
 void PTML::GOTO()
 {
-	REQUIRE_NOT_IMM;
-	ARGC(1);
-	REQUIRE_IDENT(1);
-
-	auto& label = IDENT(1);
-	if (ptm->has_program_label(label))
-		ptm->goto_program_label(label);
-	else
-		error = err_label_not_found;
+	branch_unconditional(t_branch_mode::go_to);
 }
 
 void PTML::GOTO_IFE()
 {
-	REQUIRE_NOT_IMM;
-	ARGC(3);
-
-	auto&& a = STR(1);
-	auto&& b = STR(2);
-
-	if (a == b) {
-		REQUIRE_IDENT(3);
-		auto&& label = IDENT(3);
-		if (ptm->has_program_label(label))
-			ptm->goto_program_label(label);
-		else
-			error = err_label_not_found;
-	}
+	branch_conditional(t_comparison::eq, t_branch_mode::go_to);
 }
 
 void PTML::GOTO_IFNE()
 {
+	branch_conditional(t_comparison::neq, t_branch_mode::go_to);
 }
 
 void PTML::GOTO_IFG()
 {
+	branch_conditional(t_comparison::gt, t_branch_mode::go_to);
 }
 
 void PTML::GOTO_IFGE()
 {
+	branch_conditional(t_comparison::gte, t_branch_mode::go_to);
 }
 
 void PTML::GOTO_IFL()
 {
+	branch_conditional(t_comparison::lt, t_branch_mode::go_to);
 }
 
 void PTML::GOTO_IFLE()
 {
+	branch_conditional(t_comparison::lte, t_branch_mode::go_to);
 }
