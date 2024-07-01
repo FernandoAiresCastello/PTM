@@ -72,7 +72,7 @@ void PTM::run_main()
 void PTM::halt()
 {
 	halted = true;
-	while (wnd.is_open()) {
+	while (wnd.is_open() && halted) {
 		on_machine_cycle();
 	}
 }
@@ -111,6 +111,9 @@ void PTM::on_machine_cycle()
 			wnd.toggle_fullscreen();
 		}
 		else if (key == SDLK_ESCAPE) {
+			if (halted) {
+				halted = false;
+			}
 			if (prg_runner.is_running()) {
 				prg_runner.stop();
 				intp.on_user_interrupt(prg_runner.get_current_line());
@@ -193,27 +196,6 @@ const t_dict<t_string, t_string>& PTM::get_vars()
 bool PTM::has_var(const t_string& var)
 {
 	return vars.contains(var);
-}
-
-int PTM::get_system_var_num(const t_string& var)
-{
-	return get_system_var_str(var).to_int();
-}
-
-#define SYSVAR(x, y)	if (var == ##x) return y;
-
-t_string PTM::get_system_var_str(const t_string& var)
-{
-	SYSVAR("$version", version_string);
-	SYSVAR("$cols", scr.cols());
-	SYSVAR("$rows", scr.rows());
-	SYSVAR("$fgcol", scr.get_fg_color());
-	SYSVAR("$bgcol", scr.get_bg_color());
-	SYSVAR("$bdrcol", scr.get_bdr_color());
-	SYSVAR("$csrx", scr.csrx());
-	SYSVAR("$csry", scr.csry());
-
-	return "";
 }
 
 t_palette& PTM::get_pal() { return pal; }

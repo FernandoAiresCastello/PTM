@@ -39,30 +39,25 @@ t_string PTML::error;
 #define EMPTY_STR				""
 #define EMPTY_NUM				0
 
-void PTML::set_env(PTM* _ptm, t_screen* _scr) {
-	ptm = _ptm; scr = _scr;
-}
-void PTML::set_line(t_program_line* _line) {
-	line = _line;
-}
+void PTML::set_env(PTM* _ptm, t_screen* _scr) { ptm = _ptm; scr = _scr;}
+void PTML::set_line(t_program_line* _line) { line = _line; }
 
-static const t_string resolve_str(const t_param& arg) {
+static const t_string resolve_str(const t_param& arg)
+{
 	if (arg.type == t_token_type::invalid)
 		return EMPTY_STR;
 	if (arg.type == t_token_type::identifier)
 		return ptm->has_var(arg.string_val) ? ptm->get_var_str(arg.string_val) : EMPTY_STR;
-	if (arg.type == t_token_type::system_identifier)
-		return ptm->get_system_var_str(arg.string_val);
 
 	return arg.string_val;
 }
-static int resolve_num(const t_param& arg) {
+
+static int resolve_num(const t_param& arg)
+{
 	if (arg.type == t_token_type::invalid)
 		return EMPTY_NUM;
 	if (arg.type == t_token_type::identifier)
 		return ptm->has_var(arg.string_val) ? ptm->get_var_num(arg.string_val) : EMPTY_NUM;
-	if (arg.type == t_token_type::system_identifier)
-		return ptm->get_system_var_num(arg.string_val);
 
 	return arg.numeric_val;
 }
@@ -87,6 +82,24 @@ void PTML::COLOR()
 	else if (COUNT(1)) {
 		scr->color_fg(NUM(1));
 	}
+}
+
+void PTML::COLOR_F()
+{
+	ARGC(1);
+	scr->color_fg(NUM(1));
+}
+
+void PTML::COLOR_B()
+{
+	ARGC(1);
+	scr->color_bg(NUM(1));
+}
+
+void PTML::COLOR_BD()
+{
+	ARGC(1);
+	scr->color_bdr(NUM(1));
 }
 
 void PTML::VAR()
@@ -461,4 +474,42 @@ void PTML::GOTO()
 		ptm->goto_program_label(label);
 	else
 		error = err_label_not_found;
+}
+
+void PTML::GOTO_IFE()
+{
+	REQUIRE_NOT_IMM;
+	ARGC(3);
+
+	auto&& a = STR(1);
+	auto&& b = STR(2);
+
+	if (a == b) {
+		REQUIRE_IDENT(3);
+		auto&& label = IDENT(3);
+		if (ptm->has_program_label(label))
+			ptm->goto_program_label(label);
+		else
+			error = err_label_not_found;
+	}
+}
+
+void PTML::GOTO_IFNE()
+{
+}
+
+void PTML::GOTO_IFG()
+{
+}
+
+void PTML::GOTO_IFGE()
+{
+}
+
+void PTML::GOTO_IFL()
+{
+}
+
+void PTML::GOTO_IFLE()
+{
 }

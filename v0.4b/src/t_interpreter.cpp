@@ -131,6 +131,9 @@ t_function_ptr t_interpreter::get_fn_by_cmd(const t_string& cmd)
 	CMD("VAR", VAR);
 	CMD("VARS", VARS);
 	CMD("COLOR", COLOR);
+	CMD("COLOR.F", COLOR_F);
+	CMD("COLOR.B", COLOR_B);
+	CMD("COLOR.BD", COLOR_BD);
 	CMD("PRINT", PRINT);
 	CMD("PRINTL", PRINTL);
 	CMD("EXIT", EXIT);
@@ -163,8 +166,9 @@ t_function_ptr t_interpreter::get_fn_by_cmd(const t_string& cmd)
 	CMD("NEW", NEW);
 	CMD("SAVE", SAVE);
 	CMD("LOAD", LOAD);
-	CMD("GOTO", GOTO);
 	CMD("FILES", FILES);
+	CMD("GOTO", GOTO);
+	CMD("GOTO.E", GOTO_IFE);
 
 	return nullptr;
 }

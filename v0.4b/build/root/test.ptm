@@ -1,3 +1,9 @@
-10 CLS
-20 PRINTL "Hello World!!"
-30 END
+10 cls
+20 var x,0
+30 :loop
+40 printl x
+50 inc x
+60 goto.e x,10,end
+70 goto loop
+80 :end
+90 halt

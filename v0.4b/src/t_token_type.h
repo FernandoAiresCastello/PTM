@@ -8,7 +8,6 @@ enum class t_token_type
 	label,
 	command_or_identifier,
 	identifier,
-	system_identifier,
 	literal_num,
 	literal_str,
 	literal_char

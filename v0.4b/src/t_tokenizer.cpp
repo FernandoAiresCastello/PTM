@@ -3,8 +3,11 @@
 void t_tokenizer::tokenize_line(t_string& src, t_list<t_token>& tokens)
 {
 	ptr = 0;
+	squote = false;
+	dquote = false;
 	tokens.clear();
 	src = src.trim();
+
 	if (src.empty())
 		return;
 
@@ -101,10 +104,6 @@ t_token t_tokenizer::parse_token(int token_index, t_string& src)
 	}
 	else if (src_upper.contains_only(sym.valid_identifier_chars)) {
 		token.type = t_token_type::command_or_identifier;
-		token.string_val = src;
-	}
-	else if (src.starts_with(sym.system_id_prefix)) {
-		token.type = t_token_type::system_identifier;
 		token.string_val = src;
 	}
 	else {

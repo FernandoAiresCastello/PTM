@@ -13,6 +13,9 @@ namespace PTML
 	void set_line(t_program_line* _line);
 
 	void COLOR();
+	void COLOR_F();
+	void COLOR_B();
+	void COLOR_BD();
 	void VARS();
 	void PRINT();
 	void PRINTL();
@@ -49,4 +52,10 @@ namespace PTML
 	void LOAD();
 	void FILES();
 	void GOTO();
+	void GOTO_IFE();
+	void GOTO_IFNE();
+	void GOTO_IFG();
+	void GOTO_IFGE();
+	void GOTO_IFL();
+	void GOTO_IFLE();
 }
