@@ -1,4 +1,7 @@
-#include "PTML.h"
+#include "PTML_commands.h"
+#include "PTML_macros.h"
+#include "PTML_errors.h"
+#include "PTML_runtime.h"
 #include "PTM.h"
 #include "t_util.h"
 #include "t_screen.h"
@@ -6,114 +9,65 @@
 #include "t_program_line.h"
 #include "t_filesystem.h"
 
-const t_string err_invalid_argc = "Invalid argument count";
-const t_string err_varname_expected = "Variable name expected";
-const t_string err_undefined_var = "Undefined variable";
-const t_string err_division_by_zero = "Division by zero";
-const t_string err_undefined_line_nr = "Undefined line number";
-const t_string err_label_not_found = "Label not found";
-const t_string err_cmd_not_available = "Command not available";
-const t_string err_file_not_found = "File not found";
-const t_string err_invalid_filename = "Illegal filename";
-
-PTM* ptm = nullptr;
-t_screen* scr = nullptr;
-t_program_line* line = nullptr;
-t_string PTML::error;
-
-#define IMM						line->immediate
-#define NOT_IMM					!line->immediate
-#define REQUIRE_IMM				if (!IMM) { error = err_cmd_not_available; return; }
-#define REQUIRE_NOT_IMM			if (IMM) { error = err_cmd_not_available; return; }
-#define COUNT(count)			line->argc == count
-#define ARGC(count)				if (line->argc != count) { error = err_invalid_argc; return; }
-#define ARGC_MIN_MAX(min, max)	if (line->argc < min || line->argc > max) { error = err_invalid_argc; return; }
-#define TYPE(n, t)				line->arg##n.type == t
-#define NOT_TYPE(n, t)			line->arg##n.type != t
-#define STR(n)					resolve_str(line->arg##n)
-#define NUM(n)					resolve_num(line->arg##n)
-#define REQUIRE_IDENT(n)		if (NOT_TYPE(n, t_token_type::identifier)) { error = err_varname_expected; return; }
-#define IDENT(n)				line->arg##n.string_val
-#define BOOL(n)					NUM(n) > 0
-#define VALIDATE_FILENAME(x)	if (!t_filesystem::is_valid_filename(x)) { error = err_invalid_filename; return; }
-#define EMPTY_STR				""
-#define EMPTY_NUM				0
-
-void PTML::set_env(PTM* _ptm, t_screen* _scr) { ptm = _ptm; scr = _scr;}
-void PTML::set_line(t_program_line* _line) { line = _line; }
-
-t_string PTML::resolve_str(const t_param& arg)
+t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 {
-	if (arg.type == t_token_type::invalid)
-		return EMPTY_STR;
-	if (arg.type == t_token_type::identifier)
-		return ptm->has_var(arg.string_val) ? ptm->get_var_str(arg.string_val) : EMPTY_STR;
+	CMD("VAR", VAR);
+	CMD("VARS", VARS);
+	CMD("COLOR", COLOR);
+	CMD("COLOR.F", COLOR_F);
+	CMD("COLOR.B", COLOR_B);
+	CMD("COLOR.BD", COLOR_BD);
+	CMD("PRINT", PRINT);
+	CMD("PRINTL", PRINTL);
+	CMD("EXIT", EXIT);
+	CMD("HALT", HALT);
+	CMD("CLS", CLS);
+	CMD("PAL", PAL);
+	CMD("CHR", CHR);
+	CMD("LOCATE", LOCATE);
+	CMD("INC", INC);
+	CMD("DEC", DEC);
+	CMD("ADD", ADD);
+	CMD("SUB", SUB);
+	CMD("MUL", MUL);
+	CMD("DIV", DIV);
+	CMD("DIVR", DIVR);
+	CMD("POW", POW);
+	CMD("SQRT", SQRT);
+	CMD("RND", RND);
+	CMD("SWAP", SWAP);
+	CMD("FSCR", FSCR);
+	CMD("CSR.SET", CSR_SET);
+	CMD("TILE.NEW", TILE_NEW);
+	CMD("TILE.ADD", TILE_ADD);
+	CMD("TILE.LIST", TILE_LIST);
+	CMD("GET", GET);
+	CMD("PUT", PUT);
+	CMD("LIST", LIST);
+	CMD("RUN", RUN);
+	CMD("END", END);
+	CMD("NEW", NEW);
+	CMD("SAVE", SAVE);
+	CMD("LOAD", LOAD);
+	CMD("FILES", FILES);
+	CMD("GOTO", GOTO);
+	CMD("GOTO.E", GOTO_IFE);
+	CMD("GOTO.NE", GOTO_IFNE);
+	CMD("GOTO.GT", GOTO_IFG);
+	CMD("GOTO.GTE", GOTO_IFGE);
+	CMD("GOTO.LT", GOTO_IFL);
+	CMD("GOTO.LTE", GOTO_IFLE);
+	CMD("CALL", CALL);
+	CMD("CALL.E", CALL_IFE);
+	CMD("CALL.NE", CALL_IFNE);
+	CMD("CALL.GT", CALL_IFG);
+	CMD("CALL.GTE", CALL_IFGE);
+	CMD("CALL.LT", CALL_IFL);
+	CMD("CALL.LTE", CALL_IFLE);
+	CMD("RET", RET);
 
-	return arg.string_val;
+	return nullptr;
 }
-
-int PTML::resolve_num(const t_param& arg)
-{
-	if (arg.type == t_token_type::invalid)
-		return EMPTY_NUM;
-	if (arg.type == t_token_type::identifier)
-		return ptm->has_var(arg.string_val) ? ptm->get_var_num(arg.string_val) : EMPTY_NUM;
-
-	return arg.numeric_val;
-}
-
-void PTML::branch_unconditional(t_branch_mode mode)
-{
-	REQUIRE_NOT_IMM;
-	ARGC(1);
-	REQUIRE_IDENT(1);
-
-	auto& label = IDENT(1);
-	if (ptm->has_program_label(label)) {
-		mode == t_branch_mode::go_to ?
-			ptm->goto_program_label(label) :
-			ptm->call_program_label(label);
-	}
-	else {
-		error = err_label_not_found;
-	}
-}
-
-void PTML::branch_conditional(t_comparison cp, t_branch_mode mode)
-{
-	REQUIRE_NOT_IMM;
-	ARGC(3);
-
-	auto&& str_a = STR(1);
-	auto&& str_b = STR(2);
-
-	bool pass = false;
-
-		 if (cp == t_comparison::eq)	pass = str_a == str_b;
-	else if (cp == t_comparison::neq)	pass = str_a != str_b;
-	else if (cp == t_comparison::gt)	pass = str_a.to_int() > str_b.to_int();
-	else if (cp == t_comparison::gte)	pass = str_a.to_int() >= str_b.to_int();
-	else if (cp == t_comparison::lt)	pass = str_a.to_int() < str_b.to_int();
-	else if (cp == t_comparison::lte)	pass = str_a.to_int() <= str_b.to_int();
-
-	if (pass) {
-
-		REQUIRE_IDENT(3);
-		auto&& label = IDENT(3);
-		if (ptm->has_program_label(label)) {
-			mode == t_branch_mode::go_to ?
-				ptm->goto_program_label(label) :
-				ptm->call_program_label(label);
-		}
-		else {
-			error = err_label_not_found;
-		}
-	}
-}
-
-//=============================================================================
-//									COMMANDS
-//=============================================================================
 
 void PTML::COLOR()
 {
@@ -367,7 +321,7 @@ void PTML::CSR_SET()
 void PTML::TILE_NEW()
 {
 	ARGC_MIN_MAX(0, 3);
-	
+
 	ptm->get_tilereg().set_empty();
 
 	if (COUNT(0))
@@ -550,6 +504,36 @@ void PTML::GOTO_IFLE()
 void PTML::CALL()
 {
 	branch_unconditional(t_branch_mode::call);
+}
+
+void PTML::CALL_IFE()
+{
+	branch_conditional(t_comparison::eq, t_branch_mode::call);
+}
+
+void PTML::CALL_IFNE()
+{
+	branch_conditional(t_comparison::neq, t_branch_mode::call);
+}
+
+void PTML::CALL_IFG()
+{
+	branch_conditional(t_comparison::gt, t_branch_mode::call);
+}
+
+void PTML::CALL_IFGE()
+{
+	branch_conditional(t_comparison::gte, t_branch_mode::call);
+}
+
+void PTML::CALL_IFL()
+{
+	branch_conditional(t_comparison::lt, t_branch_mode::call);
+}
+
+void PTML::CALL_IFLE()
+{
+	branch_conditional(t_comparison::lte, t_branch_mode::call);
 }
 
 void PTML::RET()

@@ -21,7 +21,8 @@
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\PTM.cpp" />
-    <ClCompile Include="src\PTML.cpp" />
+    <ClCompile Include="src\PTML_runtime.cpp" />
+    <ClCompile Include="src\PTML_commands.cpp" />
     <ClCompile Include="src\t_char.cpp" />
     <ClCompile Include="src\t_charset.cpp" />
     <ClCompile Include="src\t_color.cpp" />
@@ -51,7 +52,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\PTM.h" />
-    <ClInclude Include="src\PTML.h" />
+    <ClInclude Include="src\PTML_runtime.h" />
+    <ClInclude Include="src\PTML_commands.h" />
+    <ClInclude Include="src\PTML_errors.h" />
+    <ClInclude Include="src\PTML_macros.h" />
     <ClInclude Include="src\t_binary.h" />
     <ClInclude Include="src\t_char.h" />
     <ClInclude Include="src\t_charset.h" />

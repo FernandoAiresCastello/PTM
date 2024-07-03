@@ -1,12 +1,12 @@
 #include "t_interpreter.h"
-#include "PTM.h"
-#include "PTML.h"
 #include "t_tokenizer.h"
 #include "t_program_line.h"
 #include "t_screen.h"
 #include "t_keyboard.h"
-
-#define CMD(k, fn)		if (cmd == k) return PTML::fn
+#include "PTM.h"
+#include "PTML_runtime.h"
+#include "PTML_commands.h"
+#include "PTML_errors.h"
 
 t_tokenizer tokenizer;
 t_list<t_token> tokens;
@@ -64,7 +64,7 @@ bool t_interpreter::execute_line(t_program_line& line)
 	if (line.fn && !line.has_error)
 		line.fn();
 	else
-		PTML::error = "Syntax error";
+		PTML::error = PTML::err_syntax_error;
 
 	bool has_error = !PTML::error.empty();
 
@@ -99,7 +99,7 @@ t_program_line t_interpreter::make_program_line(const t_list<t_token>& tokens)
 
 	if (type == t_token_type::command_or_identifier) {
 		const t_string& cmd = tokens[0].string_val.to_upper();
-		line.fn = get_fn_by_cmd(cmd);
+		line.fn = PTML::get_cmd_pointer(cmd);
 		line.argc = int(tokens.size() - 1);
 
 		if (line.argc > 0) line.arg1 = t_param(tokens[1]);
@@ -124,58 +124,4 @@ t_program_line t_interpreter::make_program_line(const t_list<t_token>& tokens)
 	}
 
 	return line;
-}
-
-t_function_ptr t_interpreter::get_fn_by_cmd(const t_string& cmd)
-{
-	CMD("VAR", VAR);
-	CMD("VARS", VARS);
-	CMD("COLOR", COLOR);
-	CMD("COLOR.F", COLOR_F);
-	CMD("COLOR.B", COLOR_B);
-	CMD("COLOR.BD", COLOR_BD);
-	CMD("PRINT", PRINT);
-	CMD("PRINTL", PRINTL);
-	CMD("EXIT", EXIT);
-	CMD("HALT", HALT);
-	CMD("CLS", CLS);
-	CMD("PAL", PAL);
-	CMD("CHR", CHR);
-	CMD("LOCATE", LOCATE);
-	CMD("INC", INC);
-	CMD("DEC", DEC);
-	CMD("ADD", ADD);
-	CMD("SUB", SUB);
-	CMD("MUL", MUL);
-	CMD("DIV", DIV);
-	CMD("DIVR", DIVR);
-	CMD("POW", POW);
-	CMD("SQRT", SQRT);
-	CMD("RND", RND);
-	CMD("SWAP", SWAP);
-	CMD("FSCR", FSCR);
-	CMD("CSR.SET", CSR_SET);
-	CMD("TILE.NEW", TILE_NEW);
-	CMD("TILE.ADD", TILE_ADD);
-	CMD("TILE.LIST", TILE_LIST);
-	CMD("GET", GET);
-	CMD("PUT", PUT);
-	CMD("LIST", LIST);
-	CMD("RUN", RUN);
-	CMD("END", END);
-	CMD("NEW", NEW);
-	CMD("SAVE", SAVE);
-	CMD("LOAD", LOAD);
-	CMD("FILES", FILES);
-	CMD("GOTO", GOTO);
-	CMD("GOTO.E", GOTO_IFE);
-	CMD("GOTO.NE", GOTO_IFNE);
-	CMD("GOTO.GT", GOTO_IFG);
-	CMD("GOTO.GTE", GOTO_IFGE);
-	CMD("GOTO.LT", GOTO_IFL);
-	CMD("GOTO.LTE", GOTO_IFLE);
-	CMD("CALL", CALL);
-	CMD("RET", RET);
-
-	return nullptr;
 }

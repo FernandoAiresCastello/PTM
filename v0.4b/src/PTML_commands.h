@@ -1,24 +1,10 @@
 #pragma once
 #include "t_string.h"
-#include "t_param.h"
-
-class PTM;
-class t_screen;
-class t_program_line;
+#include "t_function_ptr.h"
 
 namespace PTML
 {
-	extern t_string error;
-
-	enum class t_comparison { eq, neq, gt, gte, lt, lte };
-	enum class t_branch_mode { go_to, call };
-
-	void set_env(PTM* _ptm, t_screen* _scr);
-	void set_line(t_program_line* _line);
-	t_string resolve_str(const t_param& arg);
-	int resolve_num(const t_param& arg);
-	void branch_unconditional(t_branch_mode mode);
-	void branch_conditional(t_comparison cp, t_branch_mode mode);
+	t_function_ptr get_cmd_pointer(const t_string& cmd);
 
 	void COLOR();
 	void COLOR_F();
@@ -67,5 +53,11 @@ namespace PTML
 	void GOTO_IFL();
 	void GOTO_IFLE();
 	void CALL();
+	void CALL_IFE();
+	void CALL_IFNE();
+	void CALL_IFG();
+	void CALL_IFGE();
+	void CALL_IFL();
+	void CALL_IFLE();
 	void RET();
 }
