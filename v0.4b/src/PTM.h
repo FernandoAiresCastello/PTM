@@ -45,6 +45,8 @@ public:
 	bool has_program_label(const t_string& label);
 	void goto_program_label(const t_string& label);
 	void call_program_label(const t_string& label);
+	bool is_callstack_empty();
+	void return_from_call();
 
 private:
 	bool running = false;

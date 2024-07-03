@@ -248,3 +248,13 @@ void PTM::call_program_label(const t_string& label)
 {
 	prg_runner.call(label);
 }
+
+bool PTM::is_callstack_empty()
+{
+	return prg_runner.callstack.empty();
+}
+
+void PTM::return_from_call()
+{
+	prg_runner.return_from_call();
+}

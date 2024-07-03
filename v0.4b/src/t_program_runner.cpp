@@ -10,11 +10,13 @@ void t_program_runner::run(PTM* ptm, t_program* prg, t_interpreter* intp)
 	this->prg = prg;
 	this->intp = intp;
 
-	stop_requested = false;
-	branch_requested = false;
-	branch_target = -1;
 	cur_line = nullptr;
+	stop_requested = false;
+	branch_request.active = false;
+	branch_request.returning_from_call = false;
+	branch_request.target_line = -1;
 
+	clear_callstack();
 	find_labels();
 
 	running = true;
@@ -32,10 +34,16 @@ void t_program_runner::run(PTM* ptm, t_program* prg, t_interpreter* intp)
 		if (!ok || stop_requested || !ptm->is_window_open())
 			break;
 
-		if (branch_requested) {
-			it = prg->lines.find(branch_target);
-			branch_requested = false;
-			branch_target = -1;
+		if (branch_request.active) {
+			it = prg->lines.find(branch_request.target_line);
+
+			branch_request.active = false;
+			branch_request.target_line = -1;
+
+			if (branch_request.returning_from_call) {
+				branch_request.returning_from_call = false;
+				++it;
+			}
 		}
 		else {
 			++it;
@@ -60,18 +68,30 @@ t_program_line* t_program_runner::get_current_line()
 	return cur_line;
 }
 
+void t_program_runner::go_to(int line_nr)
+{
+	branch_request.active = true;
+	branch_request.target_line = line_nr;
+}
+
 void t_program_runner::go_to(const t_string& label)
 {
-	branch_requested = true;
-	branch_target = labels[label];
+	branch_request.active = true;
+	branch_request.target_line = labels[label];
 }
 
 void t_program_runner::call(const t_string& label)
 {
-	branch_requested = true;
-	branch_target = labels[label];
+	callstack.push(cur_line->line_nr);
+	go_to(label);
+}
 
-	// todo: push current line index to stack
+void t_program_runner::return_from_call()
+{
+	branch_request.returning_from_call = true;
+	int line_to_return = callstack.top();
+	callstack.pop();
+	go_to(line_to_return);
 }
 
 void t_program_runner::find_labels()
@@ -84,4 +104,10 @@ void t_program_runner::find_labels()
 			labels[line.label] = line.line_nr;
 		}
 	}
+}
+
+void t_program_runner::clear_callstack()
+{
+	while (!callstack.empty())
+		callstack.pop();
 }

@@ -193,6 +193,9 @@
     <ClInclude Include="src\t_filesystem.h">
       <Filter>FILESYSTEM</Filter>
     </ClInclude>
+    <ClInclude Include="src\t_stack.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="UTIL">

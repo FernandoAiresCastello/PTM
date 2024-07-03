@@ -174,6 +174,8 @@ t_function_ptr t_interpreter::get_fn_by_cmd(const t_string& cmd)
 	CMD("GOTO.GTE", GOTO_IFGE);
 	CMD("GOTO.LT", GOTO_IFL);
 	CMD("GOTO.LTE", GOTO_IFLE);
+	CMD("CALL", CALL);
+	CMD("RET", RET);
 
 	return nullptr;
 }

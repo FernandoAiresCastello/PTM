@@ -1,7 +1,12 @@
 10 cls
-20 var x,0
-30 :loop
-40 printl x
-50 inc x
-60 goto.e x,10,end
-90 halt
+20 printl "start"
+30 call test_sub
+35 call test_sub_2
+40 printl "end!"
+50 end
+60 :test_sub
+70 printl "inside subroutine 1"
+80 ret
+82 :test_sub_2
+85 printl "inside subroutine 2"
+90 ret

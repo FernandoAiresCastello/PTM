@@ -69,10 +69,14 @@ void PTML::branch_unconditional(t_branch_mode mode)
 	REQUIRE_IDENT(1);
 
 	auto& label = IDENT(1);
-	if (ptm->has_program_label(label))
-		ptm->goto_program_label(label);
-	else
+	if (ptm->has_program_label(label)) {
+		mode == t_branch_mode::go_to ?
+			ptm->goto_program_label(label) :
+			ptm->call_program_label(label);
+	}
+	else {
 		error = err_label_not_found;
+	}
 }
 
 void PTML::branch_conditional(t_comparison cp, t_branch_mode mode)
@@ -541,4 +545,17 @@ void PTML::GOTO_IFL()
 void PTML::GOTO_IFLE()
 {
 	branch_conditional(t_comparison::lte, t_branch_mode::go_to);
+}
+
+void PTML::CALL()
+{
+	branch_unconditional(t_branch_mode::call);
+}
+
+void PTML::RET()
+{
+	if (ptm->is_callstack_empty())
+		error = "Call stack empty";
+	else
+		ptm->return_from_call();
 }

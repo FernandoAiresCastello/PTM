@@ -66,4 +66,6 @@ namespace PTML
 	void GOTO_IFGE();
 	void GOTO_IFL();
 	void GOTO_IFLE();
+	void CALL();
+	void RET();
 }

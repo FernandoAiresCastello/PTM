@@ -74,6 +74,7 @@
     <ClInclude Include="src\t_program_runner.h" />
     <ClInclude Include="src\t_screen.h" />
     <ClInclude Include="src\t_sprite.h" />
+    <ClInclude Include="src\t_stack.h" />
     <ClInclude Include="src\t_string.h" />
     <ClInclude Include="src\t_tests.h" />
     <ClInclude Include="src\t_tile.h" />
