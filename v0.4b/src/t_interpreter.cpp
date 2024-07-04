@@ -4,8 +4,8 @@
 #include "t_screen.h"
 #include "t_keyboard.h"
 #include "PTM.h"
+#include "PTML_ALL.h"
 #include "PTML_runtime.h"
-#include "PTML_commands.h"
 #include "PTML_errors.h"
 
 t_tokenizer tokenizer;

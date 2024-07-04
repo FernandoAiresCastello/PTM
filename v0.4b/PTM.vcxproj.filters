@@ -63,7 +63,7 @@
       <Filter>GRAPHICS</Filter>
     </ClCompile>
     <ClCompile Include="src\PTML_runtime.cpp">
-      <Filter>PTML</Filter>
+      <Filter>PTML - RUNTIME ENVIRONMENT</Filter>
     </ClCompile>
     <ClCompile Include="src\t_program_runner.cpp">
       <Filter>CORE</Filter>
@@ -71,23 +71,38 @@
     <ClCompile Include="src\t_filesystem.cpp">
       <Filter>FILESYSTEM</Filter>
     </ClCompile>
-    <ClCompile Include="src\PTML_commands.cpp">
-      <Filter>PTML</Filter>
-    </ClCompile>
-    <ClCompile Include="src\t_interpreter.cpp">
-      <Filter>LANG</Filter>
-    </ClCompile>
     <ClCompile Include="src\t_program.cpp">
-      <Filter>LANG</Filter>
+      <Filter>PTML - PROGRAM STRUCTURE</Filter>
     </ClCompile>
     <ClCompile Include="src\t_program_line.cpp">
-      <Filter>LANG</Filter>
+      <Filter>PTML - PROGRAM STRUCTURE</Filter>
     </ClCompile>
     <ClCompile Include="src\t_token.cpp">
-      <Filter>LANG</Filter>
+      <Filter>PTML - PROGRAM STRUCTURE</Filter>
     </ClCompile>
     <ClCompile Include="src\t_tokenizer.cpp">
-      <Filter>LANG</Filter>
+      <Filter>PTML - PROGRAM STRUCTURE</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PTML_CTFLOW.cpp">
+      <Filter>PTML - COMMANDS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PTML_GRAPHICS.cpp">
+      <Filter>PTML - COMMANDS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PTML_MATH.cpp">
+      <Filter>PTML - COMMANDS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PTML_PROGRAM.cpp">
+      <Filter>PTML - COMMANDS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PTML_VARS.cpp">
+      <Filter>PTML - COMMANDS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PTML_ALL.cpp">
+      <Filter>PTML - COMMANDS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_interpreter.cpp">
+      <Filter>CORE</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -167,7 +182,7 @@
       <Filter>UTIL</Filter>
     </ClInclude>
     <ClInclude Include="src\PTML_runtime.h">
-      <Filter>PTML</Filter>
+      <Filter>PTML - RUNTIME ENVIRONMENT</Filter>
     </ClInclude>
     <ClInclude Include="src\t_program_runner.h">
       <Filter>CORE</Filter>
@@ -178,35 +193,53 @@
     <ClInclude Include="src\t_stack.h">
       <Filter>UTIL</Filter>
     </ClInclude>
-    <ClInclude Include="src\PTML_commands.h">
-      <Filter>PTML</Filter>
-    </ClInclude>
     <ClInclude Include="src\PTML_macros.h">
-      <Filter>PTML</Filter>
+      <Filter>PTML - RUNTIME ENVIRONMENT</Filter>
     </ClInclude>
     <ClInclude Include="src\PTML_errors.h">
-      <Filter>PTML</Filter>
-    </ClInclude>
-    <ClInclude Include="src\t_interpreter.h">
-      <Filter>LANG</Filter>
+      <Filter>PTML - RUNTIME ENVIRONMENT</Filter>
     </ClInclude>
     <ClInclude Include="src\t_param.h">
-      <Filter>LANG</Filter>
+      <Filter>PTML - PROGRAM STRUCTURE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_program.h">
-      <Filter>LANG</Filter>
+      <Filter>PTML - PROGRAM STRUCTURE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_program_line.h">
-      <Filter>LANG</Filter>
+      <Filter>PTML - PROGRAM STRUCTURE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_token.h">
-      <Filter>LANG</Filter>
+      <Filter>PTML - PROGRAM STRUCTURE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_token_type.h">
-      <Filter>LANG</Filter>
+      <Filter>PTML - PROGRAM STRUCTURE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_tokenizer.h">
-      <Filter>LANG</Filter>
+      <Filter>PTML - PROGRAM STRUCTURE</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PTML_shared_headers.h">
+      <Filter>PTML - RUNTIME ENVIRONMENT</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PTML_CTFLOW.h">
+      <Filter>PTML - COMMANDS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PTML_GRAPHICS.h">
+      <Filter>PTML - COMMANDS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PTML_MATH.h">
+      <Filter>PTML - COMMANDS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PTML_PROGRAM.h">
+      <Filter>PTML - COMMANDS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PTML_VARS.h">
+      <Filter>PTML - COMMANDS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PTML_ALL.h">
+      <Filter>PTML - COMMANDS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_interpreter.h">
+      <Filter>CORE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -228,13 +261,16 @@
     <Filter Include="TILESYSTEM">
       <UniqueIdentifier>{ae92eb0a-0819-44c8-9dc9-15dcf26417a3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PTML">
-      <UniqueIdentifier>{d73b4aac-b700-424b-8ae1-15ba947d5ef1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="FILESYSTEM">
       <UniqueIdentifier>{b8433b10-7259-4f24-af1b-097839dcaa62}</UniqueIdentifier>
     </Filter>
-    <Filter Include="LANG">
+    <Filter Include="PTML - COMMANDS">
+      <UniqueIdentifier>{8919dff3-c9d1-49e7-8660-75b7b037409a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PTML - RUNTIME ENVIRONMENT">
+      <UniqueIdentifier>{d73b4aac-b700-424b-8ae1-15ba947d5ef1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PTML - PROGRAM STRUCTURE">
       <UniqueIdentifier>{e19b315d-17da-4bd4-84a4-6f6c7092ee77}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

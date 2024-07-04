@@ -1,7 +1,5 @@
 #include "PTML_runtime.h"
-#include "PTML_macros.h"
-#include "PTML_errors.h"
-#include "PTM.h"
+#include "PTML_shared_headers.h"
 
 PTM*			PTML::ptm = nullptr;
 t_screen*		PTML::scr = nullptr;

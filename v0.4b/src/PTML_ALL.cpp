@@ -1,0 +1,67 @@
+#include "PTML_shared_headers.h"
+#include "PTML_ALL.h"
+#include "PTML_PROGRAM.h"
+#include "PTML_VARS.h"
+#include "PTML_CTFLOW.h"
+#include "PTML_MATH.h"
+#include "PTML_GRAPHICS.h"
+
+t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
+{
+	CMD("VAR", VAR);
+	CMD("VARS", VARS);
+	CMD("COLOR", COLOR);
+	CMD("COLOR.F", COLOR_F);
+	CMD("COLOR.B", COLOR_B);
+	CMD("COLOR.BD", COLOR_BD);
+	CMD("PRINT", PRINT);
+	CMD("PRINTL", PRINTL);
+	CMD("EXIT", EXIT);
+	CMD("HALT", HALT);
+	CMD("CLS", CLS);
+	CMD("PAL", PAL);
+	CMD("CHR", CHR);
+	CMD("LOCATE", LOCATE);
+	CMD("INC", INC);
+	CMD("DEC", DEC);
+	CMD("ADD", ADD);
+	CMD("SUB", SUB);
+	CMD("MUL", MUL);
+	CMD("DIV", DIV);
+	CMD("DIVR", DIVR);
+	CMD("POW", POW);
+	CMD("SQRT", SQRT);
+	CMD("RND", RND);
+	CMD("SWAP", SWAP);
+	CMD("FSCR", FSCR);
+	CMD("CSR.SET", CSR_SET);
+	CMD("TILE.NEW", TILE_NEW);
+	CMD("TILE.ADD", TILE_ADD);
+	CMD("TILE.LIST", TILE_LIST);
+	CMD("GET", GET);
+	CMD("PUT", PUT);
+	CMD("LIST", LIST);
+	CMD("RUN", RUN);
+	CMD("END", END);
+	CMD("NEW", NEW);
+	CMD("SAVE", SAVE);
+	CMD("LOAD", LOAD);
+	CMD("FILES", FILES);
+	CMD("GOTO", GOTO);
+	CMD("GOTO.E", GOTO_IFE);
+	CMD("GOTO.NE", GOTO_IFNE);
+	CMD("GOTO.GT", GOTO_IFG);
+	CMD("GOTO.GTE", GOTO_IFGE);
+	CMD("GOTO.LT", GOTO_IFL);
+	CMD("GOTO.LTE", GOTO_IFLE);
+	CMD("CALL", CALL);
+	CMD("CALL.E", CALL_IFE);
+	CMD("CALL.NE", CALL_IFNE);
+	CMD("CALL.GT", CALL_IFG);
+	CMD("CALL.GTE", CALL_IFGE);
+	CMD("CALL.LT", CALL_IFL);
+	CMD("CALL.LTE", CALL_IFLE);
+	CMD("RET", RET);
+
+	return nullptr;
+}
