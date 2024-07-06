@@ -7,7 +7,7 @@
 
 t_screen::t_screen()
 {
-	buf = std::make_unique<t_tilebuffer>(t_window::cols - 4, t_window::rows - 2, true);
+	buf = std::make_unique<t_tilebuffer>(t_window::cols - 4, t_window::rows - 2);
 	buf_bdr = std::make_unique<t_tilebuffer>();
 	buf_bdr->fill(border_tile);
 
@@ -210,11 +210,6 @@ void t_screen::set_tile_at_csr(const t_tile& tile)
 	buf->set(tile, csr->pos.x, csr->pos.y);
 }
 
-void t_screen::set_tile_overlay(const t_tile& tile, int x, int y)
-{
-	buf->set_overlay(tile, x, y);
-}
-
 void t_screen::set_blank_tile(int x, int y, t_tileflags flags)
 {
 	auto& tile = buf->get_ref(x, y);
@@ -360,16 +355,12 @@ void t_screen::draw_sprites()
 
 void t_screen::update_monochrome_tiles()
 {
-	for (int y = 0; y < buf->rows; y++) {
-		for (int x = 0; x < buf->cols; x++) {
+	for (int y = 0; y < buf->rows; y++)
+		for (int x = 0; x < buf->cols; x++)
 			update_monochrome_tile(buf->get_ref(x, y));
-			update_monochrome_tile(buf->get_ref_overlay(x, y));
-		}
-	}
 
-	for (auto& spr : sprites) {
+	for (auto& spr : sprites)
 		update_monochrome_tile(spr->get_tile());
-	}
 }
 
 void t_screen::update_monochrome_tile(t_tile& tile) const
