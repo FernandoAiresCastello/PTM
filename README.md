@@ -15,7 +15,7 @@ You can download pre-built PTM releases on Itch.io here: https://fernandoairesca
 The latest released version is __v0.2b__.  
 The current development version is __v0.4b__.
 
-![PTM v0.4b](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_v0.4b.png?raw=true)
+![PTM v0.4b](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptml_example_01.png?raw=true)
 
 __Note:__ Version __v0.3b__ is no longer being actively developed. Version __v0.4b__ is now the current one, it's a completely new project (developed from scratch) and is drastically different from any previous version. PTML for v0.4b is an almost completely different language, although it shares most of the syntax and simplicity of the previous installments.
 

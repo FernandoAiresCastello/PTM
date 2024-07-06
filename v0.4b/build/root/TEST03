@@ -5,7 +5,7 @@
 20 var y,0
 30 var i,0
 40 :loop
-50 tile.new i,15,0
+50 tile.new 0,i,i
 60 locate x,y
 70 put
 75 inc x
