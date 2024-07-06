@@ -306,6 +306,20 @@ t_string t_string::replace(const t_string& original, const t_string& replacement
 	return replaced;
 }
 
+t_string t_string::replace(const char& original, const char& replacement) const
+{
+	t_string replaced;
+
+	for (auto& current : value) {
+		if (current == original)
+			replaced += replacement;
+		else
+			replaced += current;
+	}
+
+	return replaced;
+}
+
 t_string t_string::remove_all(const t_string& chars) const
 {
 	std::string result = value;

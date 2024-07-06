@@ -24,3 +24,16 @@ t_program_line* t_program::get_line(int line_nr)
 {
 	return has_line(line_nr) ? &lines[line_nr] : nullptr;
 }
+
+t_string t_program::all_lines_to_single_string()
+{
+	t_string output;
+
+	for (auto& raw_line : lines) {
+		const auto& line = raw_line.second.src;
+		output += line;
+		output += "\r\n";
+	}
+
+	return output;
+}

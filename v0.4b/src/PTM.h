@@ -43,8 +43,8 @@ public:
 	void run_program();
 	void end_program();
 	void new_program();
-	void save_program(const t_string& filename);
-	void load_program(const t_string& filename);
+	void save_program(const t_string& filename, bool hex);
+	bool load_program(const t_string& filename, bool hex);
 	bool has_program_label(const t_string& label);
 	void goto_program_label(const t_string& label);
 	void call_program_label(const t_string& label);

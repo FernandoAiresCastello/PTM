@@ -62,6 +62,7 @@ public:
 	t_string substr(int first) const;
 	t_string substr(int first, int last) const;
 	t_string replace(const t_string& original, const t_string& replacement) const;
+	t_string replace(const char& original, const char& replacement) const;
 	t_string remove_all(const t_string& chars) const;
 	t_string reverse() const;
 	bool starts_with(const t_string& prefix) const;

@@ -230,14 +230,22 @@ void PTM::new_program()
 	prg.lines.clear();
 }
 
-void PTM::save_program(const t_string& filename)
+void PTM::save_program(const t_string& filename, bool hex)
 {
-	filesys.save_program(&prg, filename);
+	if (hex)
+		filesys.save_program_binary(&prg, filename);
+	else
+		filesys.save_program_plaintext(&prg, filename);
 }
 
-void PTM::load_program(const t_string& filename)
+bool PTM::load_program(const t_string& filename, bool hex)
 {
-	filesys.load_program(&intp, &prg, filename);
+	if (hex)
+		filesys.load_program_binary(&intp, &prg, filename);
+	else
+		filesys.load_program_plaintext(&intp, &prg, filename);
+
+	return !prg.lines.empty();
 }
 
 bool PTM::has_program_label(const t_string& label)

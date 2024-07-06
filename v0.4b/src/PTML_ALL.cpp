@@ -51,7 +51,9 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("END", END);
 	CMD("NEW", NEW);
 	CMD("SAVE", SAVE);
+	CMD("SAVE.SRC", SAVE_SRC);
 	CMD("LOAD", LOAD);
+	CMD("LOAD.SRC", LOAD_SRC);
 	CMD("FILES", FILES);
 	CMD("FILE.NAME", FILE_NAME);
 	CMD("GOTO", GOTO);

@@ -5,8 +5,11 @@
 #include "t_program_line.h"
 #include "t_interpreter.h"
 
+#define CRLF        "\r\n"
 #define ROOT        "root\\"
 #define PATH(x)     (ROOT + x.trim().to_upper().s_str())
+
+constexpr int bytes_per_line = 16;
 
 namespace fs = std::filesystem;
 
@@ -57,6 +60,60 @@ t_list<t_string> t_filesystem::list_files()
     return files;
 }
 
+void t_filesystem::write_hex_file(const t_string& data, const t_string& filename)
+{
+    t_string line;
+    t_list<t_string> lines;
+    int byte_count = 3;
+
+    line += t_string::fmt("%02X %02X %02X ", 'P', 'T', 'M');
+
+    for (const unsigned char& ch : data.s_str()) {
+        line += t_string::fmt("%02X", ch);
+        byte_count++;
+        if (byte_count < bytes_per_line) {
+            line += " ";
+        }
+        else {
+            lines.push_back(line);
+            line = "";
+            byte_count = 0;
+        }
+    }
+    
+    if (!line.empty())
+        lines.push_back(line);
+
+    write_all_lines(lines, filename);
+}
+
+t_string t_filesystem::read_hex_file(const t_string& filename)
+{
+    t_string text;
+    auto&& byte_lines = read_all_lines(filename);
+
+    for (const auto& line : byte_lines) {
+        const auto&& bytes_str = line.split(' ');
+        for (const auto& byte_str : bytes_str) {
+            unsigned char ch = 0;
+            try {
+                ch = std::stoi(byte_str.s_str(), nullptr, 16);
+            }
+            catch (std::exception ex) {
+                return "";
+            }
+            text += ch;
+        }
+    }
+
+    if (text.length() >= 3 && text[0] == 'P' && text[1] == 'T' && text[2] == 'M') {
+        text = text.skip(3);
+        return text;
+    }
+    
+    return "";
+}
+
 t_string t_filesystem::read_all_text(const t_string& filename)
 {
     std::ifstream file(PATH(filename), std::ios::in | std::ios::binary | std::ios::ate);
@@ -84,7 +141,7 @@ t_list<t_string> t_filesystem::read_all_lines(const t_string& filename)
     return lines;
 }
 
-void t_filesystem::write_all_text(t_string text, const t_string& filename)
+void t_filesystem::write_all_text(const t_string& text, const t_string& filename)
 {
     std::ofstream file(PATH(filename), std::ios::out | std::ios::binary);
     if (!file)
@@ -93,20 +150,29 @@ void t_filesystem::write_all_text(t_string text, const t_string& filename)
     file.write(text.s_str().data(), text.s_str().size());
 }
 
-void t_filesystem::save_program(t_program* prg, const t_string& filename)
+void t_filesystem::write_all_lines(const t_list<t_string>& lines, const t_string& filename)
 {
-    t_string output;
+    t_string text;
 
-    for (auto& raw_line : prg->lines) {
-        const auto& line = raw_line.second.src;
-        output += line;
-        output += "\r\n";
+    for (auto& line : lines) {
+        text += line;
+        text += CRLF;
     }
 
-    write_all_text(output, filename);
+    write_all_text(text, filename);
 }
 
-void t_filesystem::load_program(t_interpreter* intp, t_program* prg, const t_string& filename)
+void t_filesystem::rename_file(const t_string& old_name, const t_string& new_name)
+{
+    fs::rename(PATH(old_name), PATH(new_name));
+}
+
+void t_filesystem::save_program_plaintext(t_program* prg, const t_string& filename)
+{
+    write_all_text(prg->all_lines_to_single_string(), filename);
+}
+
+void t_filesystem::load_program_plaintext(t_interpreter* intp, t_program* prg, const t_string& filename)
 {
     auto src_lines = read_all_lines(filename);
 
@@ -121,7 +187,23 @@ void t_filesystem::load_program(t_interpreter* intp, t_program* prg, const t_str
     }
 }
 
-void t_filesystem::rename_file(const t_string& old_name, const t_string& new_name)
+void t_filesystem::save_program_binary(t_program* prg, const t_string& filename)
 {
-    fs::rename(PATH(old_name), PATH(new_name));
+    write_hex_file(prg->all_lines_to_single_string(), filename);
+}
+
+void t_filesystem::load_program_binary(t_interpreter* intp, t_program* prg, const t_string& filename)
+{
+    auto&& file = read_hex_file(filename);
+    auto&& src_lines = file.split('\n');
+
+    prg->lines.clear();
+
+    for (auto& src_line : src_lines) {
+        intp->interpret_line(src_line, true);
+        if (!intp->get_last_error().empty()) {
+            prg->lines.clear();
+            break;
+        }
+    }
 }
