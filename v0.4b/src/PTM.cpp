@@ -272,3 +272,8 @@ void PTM::return_from_call()
 {
 	prg_runner.return_from_call();
 }
+
+void PTM::renumber_program(int interval)
+{
+	prg.renumber_lines(interval);
+}

@@ -50,6 +50,7 @@ public:
 	void call_program_label(const t_string& label);
 	bool is_callstack_empty();
 	void return_from_call();
+	void renumber_program(int interval);
 
 private:
 	bool running = false;

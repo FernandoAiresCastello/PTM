@@ -50,6 +50,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("RUN", RUN);
 	CMD("END", END);
 	CMD("NEW", NEW);
+	CMD("RENUM", RENUM);
 	CMD("SAVE", SAVE);
 	CMD("SAVE.SRC", SAVE_SRC);
 	CMD("LOAD", LOAD);

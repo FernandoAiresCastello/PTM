@@ -109,3 +109,20 @@ void PTML::LOAD_SRC()
 		error = err.file_not_found;
 	}
 }
+
+void PTML::RENUM()
+{
+	REQUIRE_IMM;
+	ARGC_MIN_MAX(0, 1);
+
+	if (COUNT(0)) {
+		ptm->renumber_program(10);
+	}
+	else if (COUNT(1)) {
+		int&& interval = NUM(1);
+		if (interval <= 0)
+			error = err.arg_out_of_range;
+		else
+			ptm->renumber_program(interval);
+	}
+}

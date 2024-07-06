@@ -14,7 +14,7 @@ namespace PTML
 		const t_string cmd_not_available = "Command not available";
 		const t_string file_not_found = "File not found";
 		const t_string invalid_filename = "Illegal filename";
-		const t_string arg_out_of_range = "Argument out of range";
+		const t_string arg_out_of_range = "Out of range";
 		const t_string invalid_program = "Invalid program";
 	}
 	err;
