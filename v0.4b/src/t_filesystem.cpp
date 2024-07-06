@@ -6,7 +6,7 @@
 #include "t_interpreter.h"
 
 #define ROOT        "root\\"
-#define PATH(x)     (ROOT + filename.trim().to_upper().s_str())
+#define PATH(x)     (ROOT + x.trim().to_upper().s_str())
 
 namespace fs = std::filesystem;
 
@@ -119,4 +119,9 @@ void t_filesystem::load_program(t_interpreter* intp, t_program* prg, const t_str
             break;
         }
     }
+}
+
+void t_filesystem::rename_file(const t_string& old_name, const t_string& new_name)
+{
+    fs::rename(PATH(old_name), PATH(new_name));
 }

@@ -1,0 +1,15 @@
+5 cls
+10 var x,0
+20 var y,0
+30 var i,0
+40 :loop
+50 tile.new i,15,0
+60 locate x,y
+70 put
+75 inc x
+76 inc i
+80 goto.lte x,15,loop
+85 var x,0
+87 inc y
+90 goto.lte y,15,loop
+95 locate 0,16

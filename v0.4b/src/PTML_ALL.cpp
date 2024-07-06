@@ -5,6 +5,7 @@
 #include "PTML_CTFLOW.h"
 #include "PTML_MATH.h"
 #include "PTML_GRAPHICS.h"
+#include "PTML_FILESYSTEM.h"
 
 t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 {
@@ -34,12 +35,17 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("RND", RND);
 	CMD("SWAP", SWAP);
 	CMD("SCR.FULL", SCR_FULL);
+	CMD("SCR.ON", SCR_ON);
+	CMD("SCR.OFF", SCR_OFF);
+	CMD("REFRESH", REFRESH);
 	CMD("CSR.ON", CSR_ON);
+	CMD("CSR.OFF", CSR_OFF);
 	CMD("TILE.NEW", TILE_NEW);
 	CMD("TILE.ADD", TILE_ADD);
 	CMD("TILE.LIST", TILE_LIST);
 	CMD("GET", GET);
 	CMD("PUT", PUT);
+	CMD("DEL", DEL);
 	CMD("LIST", LIST);
 	CMD("RUN", RUN);
 	CMD("END", END);
@@ -47,6 +53,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("SAVE", SAVE);
 	CMD("LOAD", LOAD);
 	CMD("FILES", FILES);
+	CMD("FILE.NAME", FILE_NAME);
 	CMD("GOTO", GOTO);
 	CMD("GOTO.E", GOTO_IFE);
 	CMD("GOTO.NE", GOTO_IFNE);

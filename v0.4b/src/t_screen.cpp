@@ -11,21 +11,13 @@ t_screen::t_screen()
 	buf_bdr = std::make_unique<t_tilebuffer>();
 	buf_bdr->fill(border_tile);
 
-	for (int y = 0; y < buf->rows; y++) {
-		for (int x = 0; x < buf->cols; x++) {
-			buf->get_ref(x, y).flags.monochrome = true;
-		}
-	}
-
 	init_cursor();
 	update_monochrome_tiles();
 }
 
 void t_screen::init_cursor()
 {
-	auto flags = t_tileflags();
-	flags.monochrome = true;
-	t_tile cursor_tile = t_tile(127, 0, 0, flags);
+	t_tile cursor_tile = t_tile(127, 0, 0, t_tileflags());
 	csr = add_tiled_sprite(cursor_tile, t_pos(0, 0));
 	csr->set_visible(false);
 }
@@ -45,7 +37,7 @@ void t_screen::set_palette(t_palette* pal)
 	this->pal = pal;
 }
 
-void t_screen::on_every_machine_cycle()
+void t_screen::refresh()
 {
 	update_cursor();
 	draw();
@@ -65,7 +57,6 @@ void t_screen::clear()
 			t_tile& tile = buf->get_ref(x, y);
 			tile.set_blank();
 			tile.flags.clear();
-			tile.flags.monochrome = true;
 			tile.set_char(0, fore_color, back_color);
 		}
 	}
@@ -238,16 +229,12 @@ void t_screen::print(const t_tile& tile)
 
 void t_screen::print(t_index ch)
 {
-	auto flags = t_tileflags();
-	flags.monochrome = true;
-	print(t_tile(ch, fore_color, back_color, flags));
+	print(t_tile(ch, fore_color, back_color));
 }
 
 void t_screen::print(const t_string& str)
 {
-	t_tileflags flags = t_tileflags();
-	flags.monochrome = true;
-	int ix = buf->set_text_wrap(str, &csr->pos.x, &csr->pos.y, fore_color, back_color, flags);
+	int ix = buf->set_text_wrap(str, &csr->pos.x, &csr->pos.y, fore_color, back_color);
 
 	if (csr->pos.y > last_row()) {
 		csr->pos.y = last_row();
@@ -290,9 +277,7 @@ void t_screen::scroll_up()
 
 	int row = last_row();
 	for (int col = 0; col <= last_col(); col++) {
-		t_tileflags flags = t_tileflags();
-		flags.monochrome = true;
-		set_blank_tile(col, row, flags);
+		set_blank_tile(col, row, t_tileflags());
 	}
 }
 

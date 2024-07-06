@@ -24,7 +24,7 @@ public:
 	void set_fullscreen(bool full);
 	void set_title(const t_string& title);
 	void clear(const t_color& color);
-	void update();
+	void refresh();
 	void reset_frame_counter();
 	uint32_t get_frame_count() const;
 	int get_animation_frame() const;

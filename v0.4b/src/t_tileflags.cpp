@@ -36,7 +36,7 @@ t_tileflags& t_tileflags::operator=(const t_tileflags& other)
 void t_tileflags::clear()
 {
     visible = true;
-    monochrome = false;
+    monochrome = true;
     hide_bgc = false;
     line_wrap = false;
 }

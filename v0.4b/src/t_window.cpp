@@ -31,7 +31,7 @@ void t_window::open(const t_string& title, int size)
 	SDL_SetWindowPosition(sdl_wnd, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 
 	clear(0x000000);
-	update();
+	refresh();
 
 	SDL_ShowWindow(sdl_wnd);
 	SDL_RaiseWindow(sdl_wnd);
@@ -61,13 +61,13 @@ void t_window::toggle_fullscreen()
 	Uint32 flag = SDL_WINDOW_FULLSCREEN_DESKTOP;
 	Uint32 is_full = SDL_GetWindowFlags(sdl_wnd) & flag;
 	SDL_SetWindowFullscreen(sdl_wnd, is_full ? 0 : flag);
-	update();
+	refresh();
 }
 
 void t_window::set_fullscreen(bool full)
 {
 	SDL_SetWindowFullscreen(sdl_wnd, full ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
-	update();
+	refresh();
 }
 
 void t_window::set_title(const t_string& title)
@@ -82,7 +82,7 @@ void t_window::clear(const t_color& color)
 	}
 }
 
-void t_window::update()
+void t_window::refresh()
 {
 	tile_anim.update();
 

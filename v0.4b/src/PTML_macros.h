@@ -16,5 +16,6 @@
 #define IDENT(n)				line->arg##n.string_val
 #define BOOL(n)					NUM(n) > 0
 #define VALIDATE_FILENAME(x)	if (!t_filesystem::is_valid_filename(x)) { error = err_invalid_filename; return; }
+#define REQUIRE_FILE(x)			if (!t_filesystem::file_exists(x)) { error = err_file_not_found; return; }
 #define EMPTY_STR				""
 #define EMPTY_NUM				0

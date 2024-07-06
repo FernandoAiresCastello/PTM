@@ -19,7 +19,7 @@ public:
 	void set_window(t_window* wnd);
 	void set_charset(t_charset* chr);
 	void set_palette(t_palette* pal);
-	void on_every_machine_cycle();
+	void refresh();
 	void draw();
 	void clear();
 	void color(t_index fgc, t_index bgc, t_index bdrc);

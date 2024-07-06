@@ -14,9 +14,14 @@ namespace PTML
 	void LOCATE();
 	void SCR_FULL();
 	void CSR_ON();
+	void CSR_OFF();
 	void TILE_NEW();
 	void TILE_ADD();
 	void TILE_LIST();
 	void PUT();
 	void GET();
+	void DEL();
+	void SCR_ON();
+	void SCR_OFF();
+	void REFRESH();
 }

@@ -97,8 +97,8 @@ void PTM::on_machine_cycle()
 	if (!wnd.is_open())
 		return;
 
-	scr.on_every_machine_cycle();
-	wnd.update();
+	if (auto_screen_update)
+		refresh_screen();
 
 	SDL_Event e;
 	SDL_PollEvent(&e);
@@ -124,6 +124,12 @@ void PTM::on_machine_cycle()
 			main_editor.on_keydown();
 		}
 	}
+}
+
+void PTM::refresh_screen()
+{
+	scr.refresh();
+	wnd.refresh();
 }
 
 bool PTM::is_window_open() const

@@ -14,7 +14,7 @@ public:
 	t_tileflags flags;
 
 	t_tile();
-	t_tile(t_index ix, t_index fgc, t_index bgc, t_tileflags flags);
+	t_tile(t_index ix, t_index fgc, t_index bgc, t_tileflags flags = t_tileflags());
 	t_tile(const t_tile& other);
 	~t_tile() = default;
 

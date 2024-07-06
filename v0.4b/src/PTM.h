@@ -16,11 +16,14 @@ public:
 	const t_string version_string = "PTM 0.4";
 	const t_string title = "PTM - Programmable Tile Machine";
 
+	bool auto_screen_update = true;
+
 	void run();
 	void exit();
 	void halt();
 	void pause(int frames);
 	void on_machine_cycle();
+	void refresh_screen();
 	bool is_window_open() const;
 	void debug(t_string msg);
 	void save_program_line(t_program_line& line);

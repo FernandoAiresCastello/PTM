@@ -24,6 +24,10 @@ void PTML::LIST()
 		auto& lines = ptm->get_prg().lines;
 		int first = NUM(1);
 		int last = NUM(2);
+		if (last < first) {
+			error = err_arg_out_of_range;
+			return;
+		}
 		auto itLower = lines.lower_bound(first);
 		auto itUpper = lines.upper_bound(last);
 		for (auto& it = itLower; it != itUpper; ++it) {
@@ -63,17 +67,10 @@ void PTML::LOAD()
 	ARGC(1);
 
 	auto&& filename = STR(1);
-	VALIDATE_FILENAME(filename);
+	REQUIRE_FILE(filename);
 
 	if (t_filesystem::file_exists(filename))
 		ptm->load_program(filename);
 	else
 		error = err_file_not_found;
-}
-
-void PTML::FILES()
-{
-	ARGC(0);
-	for (auto& file : t_filesystem::list_files())
-		scr->println(file);
 }

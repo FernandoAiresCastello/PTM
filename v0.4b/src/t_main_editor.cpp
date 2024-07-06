@@ -64,16 +64,12 @@ bool t_main_editor::handle_control_key()
 
 		case SDLK_BACKSPACE: {
 			scr->move_cursor_wrap_x(-1);
-			t_tileflags flags;
-			flags.monochrome = true;
-			scr->set_blank_tile(scr->csrx(), scr->csry(), flags);
+			scr->set_blank_tile(scr->csrx(), scr->csry(), t_tileflags());
 			return true;
 		}
 
 		case SDLK_DELETE: {
-			t_tileflags flags;
-			flags.monochrome = true;
-			scr->set_blank_tile(scr->csrx(), scr->csry(), flags);
+			scr->set_blank_tile(scr->csrx(), scr->csry(), t_tileflags());
 			return true;
 		}
 

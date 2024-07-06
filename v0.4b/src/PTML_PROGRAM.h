@@ -7,5 +7,4 @@ namespace PTML
 	void NEW();
 	void SAVE();
 	void LOAD();
-	void FILES();
 }

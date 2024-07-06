@@ -93,7 +93,13 @@ void PTML::SCR_FULL()
 void PTML::CSR_ON()
 {
 	ARGC(1);
-	scr->show_cursor(BOOL(1));
+	scr->show_cursor(true);
+}
+
+void PTML::CSR_OFF()
+{
+	ARGC(1);
+	scr->show_cursor(false);
 }
 
 void PTML::TILE_NEW()
@@ -131,17 +137,20 @@ void PTML::PUT()
 
 	ARGC_MIN_MAX(0, 2);
 
+	auto& tile = ptm->get_tilereg();
+	tile.flags.monochrome = false;
+
 	if (COUNT(0)) {
 		if (IMM) {
 			scr->newline();
-			scr->set_tile(ptm->get_tilereg(), 0, scr->csry() - 1);
+			scr->set_tile(tile, 0, scr->csry() - 1);
 		}
 		else {
-			scr->set_tile_at_csr(ptm->get_tilereg());
+			scr->set_tile_at_csr(tile);
 		}
 	}
 	else if (COUNT(2))
-		scr->set_tile(ptm->get_tilereg(), NUM(1), NUM(2));
+		scr->set_tile(tile, NUM(1), NUM(2));
 	else
 		error = err_invalid_argc;
 }
@@ -159,4 +168,37 @@ void PTML::GET()
 		ptm->set_tilereg(scr->get_tile(t_pos(NUM(1), NUM(2))));
 	else
 		error = err_invalid_argc;
+}
+
+void PTML::DEL()
+{
+	ARGC_MIN_MAX(0, 2);
+
+	if (COUNT(0)) {
+		if (NOT_IMM) {
+			scr->set_blank_tile(scr->csrx(), scr->csry(), t_tileflags());
+		}
+	}
+	else if (COUNT(2))
+		scr->set_blank_tile(NUM(1), NUM(2));
+	else
+		error = err_invalid_argc;
+}
+
+void PTML::SCR_ON()
+{
+	ARGC(0);
+	ptm->auto_screen_update = true;
+}
+
+void PTML::SCR_OFF()
+{
+	ARGC(0);
+	ptm->auto_screen_update = false;
+}
+
+void PTML::REFRESH()
+{
+	ARGC(0);
+	ptm->refresh_screen();
 }

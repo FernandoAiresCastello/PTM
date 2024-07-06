@@ -104,6 +104,9 @@
     <ClCompile Include="src\t_sprite.cpp">
       <Filter>GRAPHICS - TILESYSTEM</Filter>
     </ClCompile>
+    <ClCompile Include="src\PTML_FILESYSTEM.cpp">
+      <Filter>PTML - COMMANDS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\t_string.h">
@@ -240,6 +243,9 @@
     </ClInclude>
     <ClInclude Include="src\t_sprite.h">
       <Filter>GRAPHICS - TILESYSTEM</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PTML_FILESYSTEM.h">
+      <Filter>PTML - COMMANDS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
