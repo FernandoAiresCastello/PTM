@@ -33,8 +33,8 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("SQRT", SQRT);
 	CMD("RND", RND);
 	CMD("SWAP", SWAP);
-	CMD("FSCR", FSCR);
-	CMD("CSR.SET", CSR_SET);
+	CMD("SCR.FULL", SCR_FULL);
+	CMD("CSR.ON", CSR_ON);
 	CMD("TILE.NEW", TILE_NEW);
 	CMD("TILE.ADD", TILE_ADD);
 	CMD("TILE.LIST", TILE_LIST);

@@ -12,8 +12,8 @@ namespace PTML
 	void PAL();
 	void CHR();
 	void LOCATE();
-	void FSCR();
-	void CSR_SET();
+	void SCR_FULL();
+	void CSR_ON();
 	void TILE_NEW();
 	void TILE_ADD();
 	void TILE_LIST();

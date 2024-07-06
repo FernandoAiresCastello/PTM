@@ -80,7 +80,7 @@ void PTML::LOCATE()
 	scr->locate(NUM(1), NUM(2));
 }
 
-void PTML::FSCR()
+void PTML::SCR_FULL()
 {
 	ARGC_MIN_MAX(0, 1);
 
@@ -90,7 +90,7 @@ void PTML::FSCR()
 		ptm->get_wnd().toggle_fullscreen();
 }
 
-void PTML::CSR_SET()
+void PTML::CSR_ON()
 {
 	ARGC(1);
 	scr->show_cursor(BOOL(1));

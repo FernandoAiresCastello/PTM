@@ -21,28 +21,28 @@
       <Filter>TEST</Filter>
     </ClCompile>
     <ClCompile Include="src\t_window.cpp">
-      <Filter>GRAPHICS</Filter>
+      <Filter>GRAPHICS - CORE</Filter>
     </ClCompile>
     <ClCompile Include="src\t_charset.cpp">
-      <Filter>GRAPHICS</Filter>
+      <Filter>GRAPHICS - CORE</Filter>
     </ClCompile>
     <ClCompile Include="src\t_color.cpp">
-      <Filter>GRAPHICS</Filter>
+      <Filter>GRAPHICS - CORE</Filter>
     </ClCompile>
     <ClCompile Include="src\t_keyboard.cpp">
       <Filter>INPUT</Filter>
     </ClCompile>
     <ClCompile Include="src\t_tile.cpp">
-      <Filter>TILESYSTEM</Filter>
+      <Filter>GRAPHICS - TILESYSTEM</Filter>
     </ClCompile>
     <ClCompile Include="src\t_tilebuffer.cpp">
-      <Filter>TILESYSTEM</Filter>
+      <Filter>GRAPHICS - TILESYSTEM</Filter>
     </ClCompile>
     <ClCompile Include="src\t_char.cpp">
-      <Filter>TILESYSTEM</Filter>
+      <Filter>GRAPHICS - TILESYSTEM</Filter>
     </ClCompile>
     <ClCompile Include="src\t_palette.cpp">
-      <Filter>GRAPHICS</Filter>
+      <Filter>GRAPHICS - CORE</Filter>
     </ClCompile>
     <ClCompile Include="src\PTM.cpp">
       <Filter>CORE</Filter>
@@ -51,16 +51,16 @@
       <Filter>UTIL</Filter>
     </ClCompile>
     <ClCompile Include="src\t_tileflags.cpp">
-      <Filter>TILESYSTEM</Filter>
+      <Filter>GRAPHICS - TILESYSTEM</Filter>
     </ClCompile>
     <ClCompile Include="src\t_screen.cpp">
-      <Filter>GRAPHICS</Filter>
+      <Filter>GRAPHICS - CORE</Filter>
     </ClCompile>
     <ClCompile Include="src\t_main_editor.cpp">
       <Filter>CORE</Filter>
     </ClCompile>
     <ClCompile Include="src\t_sprite.cpp">
-      <Filter>GRAPHICS</Filter>
+      <Filter>GRAPHICS - CORE</Filter>
     </ClCompile>
     <ClCompile Include="src\PTML_runtime.cpp">
       <Filter>PTML - RUNTIME ENVIRONMENT</Filter>
@@ -128,37 +128,37 @@
       <Filter>UTIL</Filter>
     </ClInclude>
     <ClInclude Include="src\t_window.h">
-      <Filter>GRAPHICS</Filter>
+      <Filter>GRAPHICS - CORE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_charset.h">
-      <Filter>GRAPHICS</Filter>
+      <Filter>GRAPHICS - CORE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_color.h">
-      <Filter>GRAPHICS</Filter>
+      <Filter>GRAPHICS - CORE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_keyboard.h">
       <Filter>INPUT</Filter>
     </ClInclude>
     <ClInclude Include="src\t_tile.h">
-      <Filter>TILESYSTEM</Filter>
+      <Filter>GRAPHICS - TILESYSTEM</Filter>
     </ClInclude>
     <ClInclude Include="src\t_tilebuffer.h">
-      <Filter>TILESYSTEM</Filter>
+      <Filter>GRAPHICS - TILESYSTEM</Filter>
     </ClInclude>
     <ClInclude Include="src\t_char.h">
-      <Filter>TILESYSTEM</Filter>
+      <Filter>GRAPHICS - TILESYSTEM</Filter>
     </ClInclude>
     <ClInclude Include="src\t_palette.h">
-      <Filter>GRAPHICS</Filter>
+      <Filter>GRAPHICS - CORE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_tile_animation.h">
-      <Filter>TILESYSTEM</Filter>
+      <Filter>GRAPHICS - TILESYSTEM</Filter>
     </ClInclude>
     <ClInclude Include="src\PTM.h">
       <Filter>CORE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_index.h">
-      <Filter>GRAPHICS</Filter>
+      <Filter>GRAPHICS - CORE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_pointers.h">
       <Filter>UTIL</Filter>
@@ -167,16 +167,16 @@
       <Filter>UTIL</Filter>
     </ClInclude>
     <ClInclude Include="src\t_tileflags.h">
-      <Filter>TILESYSTEM</Filter>
+      <Filter>GRAPHICS - TILESYSTEM</Filter>
     </ClInclude>
     <ClInclude Include="src\t_screen.h">
-      <Filter>GRAPHICS</Filter>
+      <Filter>GRAPHICS - CORE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_main_editor.h">
       <Filter>CORE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_sprite.h">
-      <Filter>GRAPHICS</Filter>
+      <Filter>GRAPHICS - CORE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_function_ptr.h">
       <Filter>UTIL</Filter>
@@ -252,14 +252,8 @@
     <Filter Include="INPUT">
       <UniqueIdentifier>{31c97c3a-1b06-47e4-9c67-9dbac0326a30}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GRAPHICS">
-      <UniqueIdentifier>{cb589e47-33ae-43f4-b8bf-f0954d4be141}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CORE">
       <UniqueIdentifier>{d5551f7b-30ed-4f80-aa0a-e1dc9a86334e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="TILESYSTEM">
-      <UniqueIdentifier>{ae92eb0a-0819-44c8-9dc9-15dcf26417a3}</UniqueIdentifier>
     </Filter>
     <Filter Include="FILESYSTEM">
       <UniqueIdentifier>{b8433b10-7259-4f24-af1b-097839dcaa62}</UniqueIdentifier>
@@ -272,6 +266,12 @@
     </Filter>
     <Filter Include="PTML - PROGRAM STRUCTURE">
       <UniqueIdentifier>{e19b315d-17da-4bd4-84a4-6f6c7092ee77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GRAPHICS - CORE">
+      <UniqueIdentifier>{cb589e47-33ae-43f4-b8bf-f0954d4be141}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GRAPHICS - TILESYSTEM">
+      <UniqueIdentifier>{ae92eb0a-0819-44c8-9dc9-15dcf26417a3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
