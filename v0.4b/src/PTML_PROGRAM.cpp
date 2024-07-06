@@ -17,7 +17,7 @@ void PTML::LIST()
 			scr->println(prg.get_line(line_nr)->to_string());
 		}
 		else {
-			error = err_undefined_line_nr;
+			error = err.undefined_line_nr;
 		}
 	}
 	else if (COUNT(2)) {
@@ -25,7 +25,7 @@ void PTML::LIST()
 		int first = NUM(1);
 		int last = NUM(2);
 		if (last < first) {
-			error = err_arg_out_of_range;
+			error = err.arg_out_of_range;
 			return;
 		}
 		auto itLower = lines.lower_bound(first);
@@ -72,11 +72,11 @@ void PTML::LOAD()
 	if (t_filesystem::file_exists(filename)) {
 		bool valid = ptm->load_program(filename, true);
 		if (!valid) {
-			error = err_invalid_program;
+			error = err.invalid_program;
 		}
 	}
 	else {
-		error = err_file_not_found;
+		error = err.file_not_found;
 	}
 }
 
@@ -102,10 +102,10 @@ void PTML::LOAD_SRC()
 	if (t_filesystem::file_exists(filename)) {
 		bool valid = ptm->load_program(filename, false);
 		if (!valid) {
-			error = err_invalid_program;
+			error = err.invalid_program;
 		}
 	}
 	else {
-		error = err_file_not_found;
+		error = err.file_not_found;
 	}
 }

@@ -113,7 +113,7 @@ void PTML::TILE_NEW()
 	else if (COUNT(3))
 		ptm->get_tilereg().add_char(NUM(1), NUM(2), NUM(3));
 	else
-		error = err_invalid_argc;
+		error = err.invalid_argc;
 }
 
 void PTML::TILE_ADD()
@@ -152,7 +152,7 @@ void PTML::PUT()
 	else if (COUNT(2))
 		scr->set_tile(tile, NUM(1), NUM(2));
 	else
-		error = err_invalid_argc;
+		error = err.invalid_argc;
 }
 
 void PTML::GET()
@@ -167,7 +167,7 @@ void PTML::GET()
 	else if (COUNT(2))
 		ptm->set_tilereg(scr->get_tile(t_pos(NUM(1), NUM(2))));
 	else
-		error = err_invalid_argc;
+		error = err.invalid_argc;
 }
 
 void PTML::DEL()
@@ -182,7 +182,7 @@ void PTML::DEL()
 	else if (COUNT(2))
 		scr->set_blank_tile(NUM(1), NUM(2));
 	else
-		error = err_invalid_argc;
+		error = err.invalid_argc;
 }
 
 void PTML::SCR_ON()

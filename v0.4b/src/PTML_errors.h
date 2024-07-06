@@ -3,16 +3,19 @@
 
 namespace PTML
 {
-	const t_string err_syntax_error = "Syntax error";
-	const t_string err_invalid_argc = "Invalid argument count";
-	const t_string err_varname_expected = "Variable name expected";
-	const t_string err_undefined_var = "Undefined variable";
-	const t_string err_division_by_zero = "Division by zero";
-	const t_string err_undefined_line_nr = "Undefined line number";
-	const t_string err_label_not_found = "Label not found";
-	const t_string err_cmd_not_available = "Command not available";
-	const t_string err_file_not_found = "File not found";
-	const t_string err_invalid_filename = "Illegal filename";
-	const t_string err_arg_out_of_range = "Argument out of range";
-	const t_string err_invalid_program = "Invalid program";
+	struct {
+		const t_string syntax_error = "Syntax error";
+		const t_string invalid_argc = "Invalid argument count";
+		const t_string varname_expected = "Variable name expected";
+		const t_string undefined_var = "Undefined variable";
+		const t_string division_by_zero = "Division by zero";
+		const t_string undefined_line_nr = "Undefined line number";
+		const t_string label_not_found = "Label not found";
+		const t_string cmd_not_available = "Command not available";
+		const t_string file_not_found = "File not found";
+		const t_string invalid_filename = "Illegal filename";
+		const t_string arg_out_of_range = "Argument out of range";
+		const t_string invalid_program = "Invalid program";
+	}
+	err;
 }

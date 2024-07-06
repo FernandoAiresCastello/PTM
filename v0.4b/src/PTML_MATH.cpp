@@ -56,14 +56,14 @@ void PTML::DIV()
 	if (COUNT(2)) {
 		int divisor = NUM(2);
 		if (divisor == 0)
-			error = err_division_by_zero;
+			error = err.division_by_zero;
 		else
 			ptm->set_var(IDENT(1), NUM(1) / divisor);
 	}
 	else if (COUNT(3)) {
 		int divisor = NUM(3);
 		if (divisor == 0)
-			error = err_division_by_zero;
+			error = err.division_by_zero;
 		else
 			ptm->set_var(IDENT(1), NUM(2) / divisor);
 	}
@@ -77,14 +77,14 @@ void PTML::DIVR()
 	if (COUNT(2)) {
 		int divisor = NUM(2);
 		if (divisor == 0)
-			error = err_division_by_zero;
+			error = err.division_by_zero;
 		else
 			ptm->set_var(IDENT(1), NUM(1) % divisor);
 	}
 	else if (COUNT(3)) {
 		int divisor = NUM(3);
 		if (divisor == 0)
-			error = err_division_by_zero;
+			error = err.division_by_zero;
 		else
 			ptm->set_var(IDENT(1), NUM(2) % divisor);
 	}

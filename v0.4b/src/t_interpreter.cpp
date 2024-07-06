@@ -64,7 +64,7 @@ bool t_interpreter::execute_line(t_program_line& line)
 	if (line.fn && !line.has_error)
 		line.fn();
 	else
-		PTML::error = PTML::err_syntax_error;
+		PTML::error = PTML::err.syntax_error;
 
 	bool has_error = !PTML::error.empty();
 

@@ -50,7 +50,7 @@ void PTML::branch_unconditional(t_branch_mode mode)
 			ptm->call_program_label(label);
 	}
 	else {
-		error = err_label_not_found;
+		error = err.label_not_found;
 	}
 }
 
@@ -81,7 +81,7 @@ void PTML::branch_conditional(t_comparison cp, t_branch_mode mode)
 				ptm->call_program_label(label);
 		}
 		else {
-			error = err_label_not_found;
+			error = err.label_not_found;
 		}
 	}
 }
