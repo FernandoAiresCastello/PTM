@@ -73,12 +73,11 @@ private:
 	t_window* wnd = nullptr;
 	t_charset* chr = nullptr;
 	t_palette* pal = nullptr;
-	t_uptr<t_tilebuffer> buf_bdr;
 	t_uptr<t_tilebuffer> buf;
 	t_index fore_color = 15;
 	t_index back_color = 1;
 	t_index border_color = 10;
-	t_pos pos = t_pos(2, 1);
+	t_pos buf_pos = t_pos(2, 1);
 	t_list<t_sptr<t_sprite>> sprites;
 	t_sptr<t_sprite> csr;
 
@@ -89,4 +88,5 @@ private:
 	t_sptr<t_sprite> add_sprite(const t_tile& tile, const t_pos& pos, bool grid);
 	void fix_cursor_pos();
 	void update_cursor();
+	void clear_background();
 };

@@ -3,10 +3,12 @@
 namespace PTML
 {
 	void COLOR();
-	void COLOR_F();
-	void COLOR_B();
-	void COLOR_BD();
-	void COLOR_GET();
+	void COLOR_SETF();
+	void COLOR_SETB();
+	void COLOR_SETBR();
+	void COLOR_GETF();
+	void COLOR_GETB();
+	void COLOR_GETBR();
 	void PRINT();
 	void PRINTL();
 	void PRINTF();

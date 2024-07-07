@@ -19,29 +19,43 @@ void PTML::COLOR()
 	}
 }
 
-void PTML::COLOR_F()
+void PTML::COLOR_SETF()
 {
 	ARGC(1);
 	scr->color_fg(NUM(1));
 }
 
-void PTML::COLOR_B()
+void PTML::COLOR_SETB()
 {
 	ARGC(1);
 	scr->color_bg(NUM(1));
 }
 
-void PTML::COLOR_BD()
+void PTML::COLOR_SETBR()
 {
 	ARGC(1);
 	scr->color_bdr(NUM(1));
 }
 
-void PTML::COLOR_GET()
+void PTML::COLOR_GETF()
 {
-	ARGC(0);
-	scr->println(t_string::fmt("%i,%i,%i", 
-		scr->get_fg_color(), scr->get_bg_color(), scr->get_bdr_color()));
+	ARGC(1);
+	REQUIRE_IDENT(1);
+	ptm->set_var(IDENT(1), scr->get_fg_color());
+}
+
+void PTML::COLOR_GETB()
+{
+	ARGC(1);
+	REQUIRE_IDENT(1);
+	ptm->set_var(IDENT(1), scr->get_bg_color());
+}
+
+void PTML::COLOR_GETBR()
+{
+	ARGC(1);
+	REQUIRE_IDENT(1);
+	ptm->set_var(IDENT(1), scr->get_bdr_color());
 }
 
 void PTML::PRINT()

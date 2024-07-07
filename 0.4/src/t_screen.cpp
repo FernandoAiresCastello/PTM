@@ -3,13 +3,9 @@
 #include "t_palette.h"
 #include "t_charset.h"
 
-#define border_tile		t_tile(0, border_color, border_color, t_tileflags())
-
 t_screen::t_screen()
 {
 	buf = std::make_unique<t_tilebuffer>(t_window::cols - 4, t_window::rows - 2);
-	buf_bdr = std::make_unique<t_tilebuffer>();
-
 	reset();
 }
 
@@ -22,7 +18,6 @@ void t_screen::init_cursor()
 void t_screen::reset()
 {
 	color(default_fg, default_bg, default_bdr);
-	buf_bdr->fill(border_tile);
 	clear();
 	sprites.clear();
 	init_cursor();
@@ -54,8 +49,8 @@ void t_screen::refresh()
 
 void t_screen::draw()
 {
-	buf_bdr->draw(wnd, chr, pal);
-	buf->draw(wnd, chr, pal, pos.x, pos.y);
+	clear_background();
+	buf->draw(wnd, chr, pal, buf_pos.x, buf_pos.y);
 	draw_sprites();
 }
 
@@ -71,12 +66,16 @@ void t_screen::clear()
 	}
 }
 
+void t_screen::clear_background()
+{
+	wnd->clear(pal->get(border_color));
+}
+
 void t_screen::color(t_index fgc, t_index bgc, t_index bdrc)
 {
 	fore_color = fgc;
 	back_color = bgc;
 	border_color = bdrc;
-	buf_bdr->fill(border_tile);
 	update_monochrome_tiles();
 }
 
@@ -95,7 +94,6 @@ void t_screen::color_bg(t_index bg)
 void t_screen::color_bdr(t_index bdr)
 {
 	border_color = bdr;
-	buf_bdr->fill(border_tile);
 	update_monochrome_tiles();
 }
 
@@ -120,12 +118,10 @@ void t_screen::move_cursor_wrap_x(int dx)
 
 	csr->move_dist(dx, 0);
 	
-	if (csr->pos.x > last_col()) {
+	if (csr->pos.x > last_col())
 		csr->move_to(0, csr->pos.y + 1);
-	}
-	else if (csr->pos.x < 0) {
+	else if (csr->pos.x < 0)
 		csr->move_to(last_col(), csr->pos.y - 1);
-	}
 
 	fix_cursor_pos();
 }
@@ -335,13 +331,13 @@ t_sptr<t_sprite> t_screen::add_sprite(const t_tile& tile, const t_pos& pos, bool
 
 void t_screen::draw_sprites()
 {
-	for (auto& spr : sprites) {
+	for (const auto& spr : sprites) {
 		t_tile& tile = spr->get_tile();
 		if (tile.flags.visible) {
 			t_char& ch = tile.get_char_wraparound(wnd->get_animation_frame());
 			bool grid = spr->align_to_grid();
-			int x = grid ? (spr->get_x() + pos.x) * t_tile::width : spr->get_x(); 
-			int y = grid ? (spr->get_y() + pos.y) * t_tile::height : spr->get_y();
+			int x = grid ? (spr->get_x() + buf_pos.x) * t_tile::width : spr->get_x();
+			int y = grid ? (spr->get_y() + buf_pos.y) * t_tile::height : spr->get_y();
 			wnd->draw_char(chr, pal, ch.ix, x, y, ch.fgc, ch.bgc, false, spr->get_tile().flags.hide_bgc);
 		}
 	}
@@ -353,17 +349,18 @@ void t_screen::update_monochrome_tiles()
 		for (int x = 0; x < buf->cols; x++)
 			update_monochrome_tile(buf->get_ref(x, y));
 
-	for (auto& spr : sprites)
+	for (const auto& spr : sprites)
 		update_monochrome_tile(spr->get_tile());
 }
 
 void t_screen::update_monochrome_tile(t_tile& tile) const
 {
-	if (tile.flags.monochrome) {
-		for (auto& ch : tile.get_all_chars()) {
-			ch.fgc = fore_color;
-			ch.bgc = back_color;
-		}
+	if (!tile.flags.monochrome)
+		return;
+
+	for (auto& ch : tile.get_all_chars()) {
+		ch.fgc = fore_color;
+		ch.bgc = back_color;
 	}
 }
 
