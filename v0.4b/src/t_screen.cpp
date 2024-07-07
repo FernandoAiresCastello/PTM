@@ -431,3 +431,34 @@ t_index t_screen::get_bdr_color() const
 {
 	return border_color;
 }
+
+void t_screen::fill(const t_tile& tile)
+{
+	buf->fill(tile);
+}
+
+void t_screen::rect_fill(const t_tile& tile, int x1, int y1, int x2, int y2)
+{
+	for (int y = y1; y <= y2; y++)
+		for (int x = x1; x <= x2; x++)
+			set_tile(tile, x, y);
+}
+
+void t_screen::rect_border(const t_tile& tile, int x1, int y1, int x2, int y2)
+{
+	for (int x = x1; x <= x2; x++) {
+		set_tile(tile, x, y1);
+		set_tile(tile, x, y2);
+	}
+	for (int y = y1; y <= y2; y++) {
+		set_tile(tile, x1, y);
+		set_tile(tile, x2, y);
+	}
+}
+
+void t_screen::rect_clear(int x1, int y1, int x2, int y2)
+{
+	for (int y = y1; y <= y2; y++)
+		for (int x = x1; x <= x2; x++)
+			set_blank_tile(x, y);
+}

@@ -37,6 +37,13 @@ void PTML::COLOR_BD()
 	scr->color_bdr(NUM(1));
 }
 
+void PTML::COLOR_GET()
+{
+	ARGC(0);
+	scr->println(t_string::fmt("%i,%i,%i", 
+		scr->get_fg_color(), scr->get_bg_color(), scr->get_bdr_color()));
+}
+
 void PTML::PRINT()
 {
 	ARGC(1);
@@ -106,12 +113,12 @@ void PTML::TILE_NEW()
 {
 	ARGC_MIN_MAX(0, 3);
 
-	ptm->get_tilereg().set_empty();
+	TILEREG.set_empty();
 
 	if (COUNT(0))
 		return;
 	else if (COUNT(3))
-		ptm->get_tilereg().add_char(NUM(1), NUM(2), NUM(3));
+		TILEREG.add_char(NUM(1), NUM(2), NUM(3));
 	else
 		error = err.invalid_argc;
 }
@@ -119,24 +126,22 @@ void PTML::TILE_NEW()
 void PTML::TILE_ADD()
 {
 	ARGC(3);
-	ptm->get_tilereg().add_char(NUM(1), NUM(2), NUM(3));
+	TILEREG.add_char(NUM(1), NUM(2), NUM(3));
 }
 
 void PTML::TILE_LIST()
 {
 	ARGC(0);
-	for (auto&& ch : ptm->get_tilereg().get_all_chars()) {
-		scr->println(t_string::fmt("%i, %i, %i", ch.ix, ch.fgc, ch.bgc));
+	for (auto&& ch : TILEREG.get_all_chars()) {
+		scr->println(t_string::fmt("%i,%i,%i", ch.ix, ch.fgc, ch.bgc));
 	}
 }
 
 void PTML::PUT()
 {
-	if (!ptm->get_tilereg().has_any_char())
-		return;
-
+	IF_TILEREG_EMPTY_RET;
 	ARGC_MIN_MAX(0, 2);
-	auto& tile = ptm->get_tilereg();
+	auto& tile = TILEREG;
 	tile.flags.monochrome = false;
 
 	if (COUNT(0)) {
@@ -156,14 +161,44 @@ void PTML::PUT()
 
 void PTML::PUTC()
 {
-	if (!ptm->get_tilereg().has_any_char())
-		return;
-
+	IF_TILEREG_EMPTY_RET;
 	ARGC(0);
-	auto& tile = ptm->get_tilereg();
+	auto& tile = TILEREG;
 	tile.flags.monochrome = false;
 	scr->set_tile_at_csr(tile);
 	scr->move_cursor_wrap_x(1);
+}
+
+void PTML::RECT()
+{
+	IF_TILEREG_EMPTY_RET;
+	ARGC(5);
+	int&& x1 = NUM(1);
+	int&& y1 = NUM(2);
+	int&& x2 = NUM(3);
+	int&& y2 = NUM(4);
+	bool&& fill = BOOL(5);
+	if (fill)
+		scr->rect_fill(TILEREG, x1, y1, x2, y2);
+	else
+		scr->rect_border(TILEREG, x1, y1, x2, y2);
+}
+
+void PTML::RECT_DEL()
+{
+	ARGC(4);
+	int&& x1 = NUM(1);
+	int&& y1 = NUM(2);
+	int&& x2 = NUM(3);
+	int&& y2 = NUM(4);
+	scr->rect_clear(x1, y1, x2, y2);
+}
+
+void PTML::FILL()
+{
+	IF_TILEREG_EMPTY_RET;
+	ARGC(0);
+	scr->fill(TILEREG);
 }
 
 void PTML::GET()

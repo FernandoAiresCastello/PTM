@@ -5,6 +5,7 @@
 #include "t_pos.h"
 #include "t_list.h"
 #include "t_sprite.h"
+#include "t_tile_painter.h"
 
 class t_charset;
 class t_palette;
@@ -63,6 +64,10 @@ public:
 	t_index get_fg_color() const;
 	t_index get_bg_color() const;
 	t_index get_bdr_color() const;
+	void fill(const t_tile& tile);
+	void rect_fill(const t_tile& tile, int x1, int y1, int x2, int y2);
+	void rect_border(const t_tile& tile, int x1, int y1, int x2, int y2);
+	void rect_clear(int x1, int y1, int x2, int y2);
 
 private:
 	t_window* wnd = nullptr;

@@ -19,3 +19,5 @@
 #define REQUIRE_FILE(x)			if (!t_filesystem::file_exists(x)) { error = err.file_not_found; return; }
 #define EMPTY_STR				""
 #define EMPTY_NUM				0
+#define TILEREG					ptm->get_tilereg()
+#define IF_TILEREG_EMPTY_RET	if (!TILEREG.has_any_char()) return

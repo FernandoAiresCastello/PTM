@@ -51,6 +51,7 @@
     <ClCompile Include="src\t_tile.cpp" />
     <ClCompile Include="src\t_tilebuffer.cpp" />
     <ClCompile Include="src\t_tileflags.cpp" />
+    <ClCompile Include="src\t_tile_painter.cpp" />
     <ClCompile Include="src\t_token.cpp" />
     <ClCompile Include="src\t_tokenizer.cpp" />
     <ClCompile Include="src\t_util.cpp" />
@@ -98,6 +99,7 @@
     <ClInclude Include="src\t_tilebuffer.h" />
     <ClInclude Include="src\t_tileflags.h" />
     <ClInclude Include="src\t_tile_animation.h" />
+    <ClInclude Include="src\t_tile_painter.h" />
     <ClInclude Include="src\t_token.h" />
     <ClInclude Include="src\t_tokenizer.h" />
     <ClInclude Include="src\t_token_type.h" />

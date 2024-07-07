@@ -107,6 +107,9 @@
     <ClCompile Include="src\PTML_FILESYSTEM.cpp">
       <Filter>PTML - COMMANDS</Filter>
     </ClCompile>
+    <ClCompile Include="src\t_tile_painter.cpp">
+      <Filter>GRAPHICS - SUBSYSTEMS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\t_string.h">
@@ -247,6 +250,9 @@
     <ClInclude Include="src\PTML_FILESYSTEM.h">
       <Filter>PTML - COMMANDS</Filter>
     </ClInclude>
+    <ClInclude Include="src\t_tile_painter.h">
+      <Filter>GRAPHICS - SUBSYSTEMS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="UTIL">
@@ -278,6 +284,9 @@
     </Filter>
     <Filter Include="GRAPHICS - TILESYSTEM">
       <UniqueIdentifier>{ae92eb0a-0819-44c8-9dc9-15dcf26417a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GRAPHICS - SUBSYSTEMS">
+      <UniqueIdentifier>{3278d1db-26c4-4f23-a291-84eb5259092f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
