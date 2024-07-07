@@ -51,6 +51,8 @@ void PTM::exit()
 void PTM::init()
 {
 	wnd.open(title, wnd_size);
+	
+	kb.init();
 
 	scr.set_window(&wnd);
 	scr.set_charset(&chr);
@@ -130,11 +132,14 @@ void PTM::on_machine_cycle()
 			if (prg_runner.is_running()) {
 				prg_runner.stop();
 				intp.on_user_interrupt(prg_runner.get_current_line());
+				scr.show_cursor(true);
 			}
 		}
-		else if (!kb.alt() && !halted && !prg_runner.is_running()) {
-			kb.key = key;
-			main_editor.on_keydown();
+		else if (!kb.alt() && !halted) {
+			kb.push_key(key);
+			if (!prg_runner.is_running()) {
+				main_editor.on_keydown();
+			}
 		}
 	}
 }
@@ -294,4 +299,26 @@ void PTM::return_from_call()
 void PTM::renumber_program(int interval)
 {
 	prg.renumber_lines(interval);
+}
+
+int PTM::get_last_key() const
+{
+	int key = kb.last_key;
+	kb.last_key = 0;
+	return key;
+}
+
+void PTM::flush_keyboard()
+{
+	kb.flush();
+}
+
+bool PTM::is_key_pressed(int scancode)
+{
+	return kb.is_pressed((SDL_Scancode)scancode);
+}
+
+bool PTM::is_key_pressed(const t_string& keyname)
+{
+	return kb.is_pressed(keyname);
 }

@@ -37,13 +37,8 @@ int PTML::resolve_num(const t_param& arg)
 	return arg.numeric_val;
 }
 
-void PTML::branch_unconditional(t_branch_mode mode)
+void PTML::branch_to(const t_string& label, t_branch_mode mode)
 {
-	REQUIRE_NOT_IMM;
-	ARGC(1);
-	REQUIRE_IDENT(1);
-
-	auto& label = IDENT(1);
 	if (ptm->has_program_label(label)) {
 		mode == t_branch_mode::go_to ?
 			ptm->goto_program_label(label) :
@@ -52,6 +47,14 @@ void PTML::branch_unconditional(t_branch_mode mode)
 	else {
 		error = err.label_not_found;
 	}
+}
+
+void PTML::branch_unconditional(t_branch_mode mode)
+{
+	REQUIRE_NOT_IMM;
+	ARGC(1);
+	REQUIRE_LABEL(1);
+	branch_to(IDENT(1), mode);
 }
 
 void PTML::branch_conditional(t_comparison cp, t_branch_mode mode)
@@ -72,16 +75,22 @@ void PTML::branch_conditional(t_comparison cp, t_branch_mode mode)
 	else if (cp == t_comparison::lte)	pass = str_a.to_int() <= str_b.to_int();
 
 	if (pass) {
+		REQUIRE_LABEL(3);
+		branch_to(IDENT(3), mode);
+	}
+}
 
-		REQUIRE_IDENT(3);
-		auto&& label = IDENT(3);
-		if (ptm->has_program_label(label)) {
-			mode == t_branch_mode::go_to ?
-				ptm->goto_program_label(label) :
-				ptm->call_program_label(label);
-		}
-		else {
-			error = err.label_not_found;
-		}
+void PTML::branch_if_keypress(t_branch_mode mode, bool positive)
+{
+	REQUIRE_NOT_IMM;
+	ARGC(2);
+	
+	auto&& key = STR(1).to_upper();
+	bool ok = positive ? ptm->is_key_pressed(key) : !ptm->is_key_pressed(key);
+
+	if (ok) {
+		REQUIRE_LABEL(2);
+		auto&& label = IDENT(2);
+		branch_to(label, mode);
 	}
 }

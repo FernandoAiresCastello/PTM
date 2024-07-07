@@ -62,6 +62,14 @@ void PTML::PRINTL()
 	scr->println(value);
 }
 
+void PTML::PRINTF()
+{
+	ARGC(2);
+	auto&& fmt = STR(1);
+	auto&& value = NUM(2);
+	scr->print(t_string::fmt(fmt.c_str(), value));
+}
+
 void PTML::CLS()
 {
 	ARGC(0);
@@ -99,13 +107,13 @@ void PTML::SCR_FULL()
 
 void PTML::CSR_ON()
 {
-	ARGC(1);
+	ARGC(0);
 	scr->show_cursor(true);
 }
 
 void PTML::CSR_OFF()
 {
-	ARGC(1);
+	ARGC(0);
 	scr->show_cursor(false);
 }
 

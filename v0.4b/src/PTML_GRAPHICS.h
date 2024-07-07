@@ -9,6 +9,7 @@ namespace PTML
 	void COLOR_GET();
 	void PRINT();
 	void PRINTL();
+	void PRINTF();
 	void CLS();
 	void PAL();
 	void CHR();

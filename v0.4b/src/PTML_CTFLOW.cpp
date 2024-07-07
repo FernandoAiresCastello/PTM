@@ -60,6 +60,16 @@ void PTML::GOTO_IFLE()
 	branch_conditional(t_comparison::lte, t_branch_mode::go_to);
 }
 
+void PTML::GOTO_IFKEY()
+{
+	branch_if_keypress(t_branch_mode::go_to, true);
+}
+
+void PTML::GOTO_IFNKEY()
+{
+	branch_if_keypress(t_branch_mode::go_to, false);
+}
+
 void PTML::CALL()
 {
 	branch_unconditional(t_branch_mode::call);
@@ -93,6 +103,16 @@ void PTML::CALL_IFL()
 void PTML::CALL_IFLE()
 {
 	branch_conditional(t_comparison::lte, t_branch_mode::call);
+}
+
+void PTML::CALL_IFKEY()
+{
+	branch_if_keypress(t_branch_mode::call, true);
+}
+
+void PTML::CALL_IFNKEY()
+{
+	branch_if_keypress(t_branch_mode::call, false);
 }
 
 void PTML::RET()

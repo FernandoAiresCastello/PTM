@@ -1,12 +1,22 @@
 #pragma once
 #include <SDL.h>
+#include "t_string.h"
+#include "t_stack.h"
 
 class t_keyboard
 {
 public:
-	SDL_Keycode key = 0;
+	t_stack<SDL_Keycode> keystack;
+	SDL_Keycode last_key = 0;
 
+	void init();
+	inline const Uint8* get_state();
+	void push_key(SDL_Keycode key);
+	SDL_Keycode peek_key();
+	SDL_Keycode pop_key();
+	void flush();
 	bool is_pressed(SDL_Scancode key);
+	bool is_pressed(const t_string& keyname);
 	bool shift();
 	bool ctrl();
 	bool alt();

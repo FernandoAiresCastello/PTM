@@ -25,11 +25,13 @@ void t_main_editor::on_keydown()
 	if (!handle_control_key())
 		if (!handle_function_key())
 			handle_character_key();
+
+	kb->pop_key();
 }
 
 bool t_main_editor::handle_control_key()
 {
-	switch (kb->key)
+	switch (kb->peek_key())
 	{
 		case SDLK_RIGHT:	scr->move_cursor_wrap_x(1);		return true;
 		case SDLK_LEFT:		scr->move_cursor_wrap_x(-1);	return true;
@@ -77,7 +79,8 @@ bool t_main_editor::handle_control_key()
 			return true;
 		}
 
-		case SDLK_RETURN: {
+		case SDLK_RETURN:
+		case SDLK_KP_ENTER: {
 			on_enter_pressed();
 			return true;
 		}
@@ -90,7 +93,7 @@ bool t_main_editor::handle_function_key()
 {
 	bool shift = kb->shift();
 
-	switch (kb->key)
+	switch (kb->peek_key())
 	{
 		case SDLK_F1:
 			highlight_line_wrap();
@@ -114,7 +117,7 @@ bool t_main_editor::handle_function_key()
 
 bool t_main_editor::handle_character_key()
 {
-	int ch = kb->keycode_to_char(kb->key);
+	int ch = kb->keycode_to_char(kb->peek_key());
 	if (ch > 0) {
 		scr->print(ch);
 		return true;

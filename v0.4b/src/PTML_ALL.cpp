@@ -6,6 +6,7 @@
 #include "PTML_MATH.h"
 #include "PTML_GRAPHICS.h"
 #include "PTML_FILESYSTEM.h"
+#include "PTML_INPUT.h"
 
 t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 {
@@ -19,6 +20,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("COLOR.GET", COLOR_GET);
 	CMD("PRINT", PRINT);
 	CMD("PRINTL", PRINTL);
+	CMD("PRINTF", PRINTF);
 	CMD("EXIT", EXIT);
 	CMD("HALT", HALT);
 	CMD("RESET", RESET);
@@ -71,6 +73,8 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("GOTO.GTE", GOTO_IFGE);
 	CMD("GOTO.LT", GOTO_IFL);
 	CMD("GOTO.LTE", GOTO_IFLE);
+	CMD("GOTO.K", GOTO_IFKEY);
+	CMD("GOTO.NK", GOTO_IFNKEY);
 	CMD("CALL", CALL);
 	CMD("CALL.E", CALL_IFE);
 	CMD("CALL.NE", CALL_IFNE);
@@ -78,7 +82,11 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("CALL.GTE", CALL_IFGE);
 	CMD("CALL.LT", CALL_IFL);
 	CMD("CALL.LTE", CALL_IFLE);
+	CMD("CALL.K", CALL_IFKEY);
+	CMD("CALL.NK", CALL_IFNKEY);
 	CMD("RET", RET);
+	CMD("INKEY", INKEY);
+	CMD("KB.FLUSH", KB_FLUSH);
 
 	return nullptr;
 }

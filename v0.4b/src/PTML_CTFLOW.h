@@ -13,6 +13,8 @@ namespace PTML
 	void GOTO_IFGE();
 	void GOTO_IFL();
 	void GOTO_IFLE();
+	void GOTO_IFKEY();
+	void GOTO_IFNKEY();
 	void CALL();
 	void CALL_IFE();
 	void CALL_IFNE();
@@ -20,5 +22,7 @@ namespace PTML
 	void CALL_IFGE();
 	void CALL_IFL();
 	void CALL_IFLE();
+	void CALL_IFKEY();
+	void CALL_IFNKEY();
 	void RET();
 }

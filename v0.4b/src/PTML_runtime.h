@@ -19,6 +19,8 @@ namespace PTML
 	void set_line(t_program_line* _line);
 	t_string resolve_str(const t_param& arg);
 	int resolve_num(const t_param& arg);
+	void branch_to(const t_string& label, t_branch_mode mode);
 	void branch_unconditional(t_branch_mode mode);
 	void branch_conditional(t_comparison cp, t_branch_mode mode);
+	void branch_if_keypress(t_branch_mode mode, bool positive);
 }

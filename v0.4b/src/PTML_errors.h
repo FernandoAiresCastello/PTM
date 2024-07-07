@@ -11,6 +11,7 @@ namespace PTML
 		const t_string division_by_zero = "Division by zero";
 		const t_string undefined_line_nr = "Undefined line number";
 		const t_string label_not_found = "Label not found";
+		const t_string label_expected = "Label expected";
 		const t_string cmd_not_available = "Command not available";
 		const t_string file_not_found = "File not found";
 		const t_string invalid_filename = "Illegal filename";

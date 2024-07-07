@@ -13,6 +13,7 @@
 #define STR(n)					resolve_str(line->arg##n)
 #define NUM(n)					resolve_num(line->arg##n)
 #define REQUIRE_IDENT(n)		if (NOT_TYPE(n, t_token_type::identifier)) { error = err.varname_expected; return; }
+#define REQUIRE_LABEL(n)		if (NOT_TYPE(n, t_token_type::identifier)) { error = err.label_expected; return; }
 #define IDENT(n)				line->arg##n.string_val
 #define BOOL(n)					NUM(n) > 0
 #define VALIDATE_FILENAME(x)	if (!t_filesystem::is_valid_filename(x)) { error = err.invalid_filename; return; }

@@ -110,6 +110,9 @@
     <ClCompile Include="src\t_tile_painter.cpp">
       <Filter>GRAPHICS - SUBSYSTEMS</Filter>
     </ClCompile>
+    <ClCompile Include="src\PTML_INPUT.cpp">
+      <Filter>PTML - COMMANDS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\t_string.h">
@@ -252,6 +255,9 @@
     </ClInclude>
     <ClInclude Include="src\t_tile_painter.h">
       <Filter>GRAPHICS - SUBSYSTEMS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PTML_INPUT.h">
+      <Filter>PTML - COMMANDS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

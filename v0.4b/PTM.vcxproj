@@ -24,6 +24,7 @@
     <ClCompile Include="src\PTML_CTFLOW.cpp" />
     <ClCompile Include="src\PTML_FILESYSTEM.cpp" />
     <ClCompile Include="src\PTML_GRAPHICS.cpp" />
+    <ClCompile Include="src\PTML_INPUT.cpp" />
     <ClCompile Include="src\PTML_MATH.cpp" />
     <ClCompile Include="src\PTML_PROGRAM.cpp" />
     <ClCompile Include="src\PTML_runtime.cpp" />
@@ -62,6 +63,7 @@
     <ClInclude Include="src\PTML_CTFLOW.h" />
     <ClInclude Include="src\PTML_FILESYSTEM.h" />
     <ClInclude Include="src\PTML_GRAPHICS.h" />
+    <ClInclude Include="src\PTML_INPUT.h" />
     <ClInclude Include="src\PTML_MATH.h" />
     <ClInclude Include="src\PTML_PROGRAM.h" />
     <ClInclude Include="src\PTML_runtime.h" />

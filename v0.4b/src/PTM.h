@@ -53,6 +53,10 @@ public:
 	bool is_callstack_empty();
 	void return_from_call();
 	void renumber_program(int interval);
+	int get_last_key() const;
+	void flush_keyboard();
+	bool is_key_pressed(int scancode);
+	bool is_key_pressed(const t_string& keyname);
 
 private:
 	bool running = false;
