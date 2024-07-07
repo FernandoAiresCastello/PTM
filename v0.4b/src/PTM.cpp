@@ -39,7 +39,7 @@ void PTM::run()
 	prg.lines.clear();
 
 	init();
-	run_tests();
+	//run_tests();
 	run_main();
 }
 

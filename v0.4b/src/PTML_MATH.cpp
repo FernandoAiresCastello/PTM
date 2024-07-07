@@ -106,13 +106,11 @@ void PTML::SQRT()
 
 void PTML::RND()
 {
-	ARGC_MIN_MAX(1, 3);
+	ARGC_MIN_MAX(2, 3);
 	REQUIRE_IDENT(1);
 
 	if (COUNT(3))
 		ptm->set_var(IDENT(1), t_util::rnd(NUM(2), NUM(3)));
 	else if (COUNT(2))
 		ptm->set_var(IDENT(1), t_util::rnd(NUM(2)));
-	else if (COUNT(1))
-		ptm->set_var(IDENT(1), t_util::rnd(0, INT_MAX));
 }

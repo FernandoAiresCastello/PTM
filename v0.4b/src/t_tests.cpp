@@ -187,14 +187,14 @@ void t_tests::t_tilebuf_tests()
 	}
 
 	// alter tile by reference
-	t_tile& tile = buf.get_ref(11, 22);
+	t_tile& tile = buf.get_ref(11, 20);
 	tile.set_char('@', 33, 44);
 	tile.data.set("Test Data", "This is a test");
-	t_char& ch1 = buf.get_ref(11, 22).get_char();
+	t_char& ch1 = buf.get_ref(11, 20).get_char();
 	assert(ch1.ix == '@');
 	assert(ch1.fgc == 33);
 	assert(ch1.bgc == 44);
-	t_tile& tile2 = buf.get_ref(11, 22);
+	t_tile& tile2 = buf.get_ref(11, 20);
 	assert(tile2.data.has("Test Data", "This is a test"));
 
 	// copy tile
