@@ -21,7 +21,6 @@ t_palette pal;
 t_screen scr;
 t_main_editor main_editor;
 t_interpreter intp;
-t_tile tilereg;
 t_program prg;
 t_program_runner prg_runner;
 t_filesystem filesys;
@@ -102,7 +101,7 @@ void PTM::pause(int frames)
 	}
 }
 
-void PTM::debug(t_string msg)
+void PTM::debug(const t_string& msg)
 {
 	wnd.set_title(msg);
 }
@@ -230,8 +229,6 @@ void PTM::delete_all_vars()
 t_palette& PTM::get_pal() { return pal; }
 t_charset& PTM::get_chr() { return chr; }
 t_window& PTM::get_wnd() { return wnd; }
-t_tile& PTM::get_tilereg() { return tilereg; }
-void PTM::set_tilereg(const t_tile& tile) { tilereg = tile; }
 
 t_program& PTM::get_prg()
 {

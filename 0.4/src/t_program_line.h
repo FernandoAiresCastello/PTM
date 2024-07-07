@@ -23,5 +23,5 @@ public:
 
 	t_program_line& operator=(const t_program_line& other);
 
-	t_string to_string() const;
+	const t_string& to_string() const;
 };

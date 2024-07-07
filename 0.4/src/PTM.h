@@ -16,6 +16,7 @@ public:
 	const t_string version_string = "PTM 0.4";
 	const t_string title = "PTM - Programmable Tile Machine";
 
+	t_tile tilereg;
 	bool auto_screen_update = true;
 
 	void run();
@@ -26,7 +27,7 @@ public:
 	void on_machine_cycle();
 	void refresh_screen();
 	bool is_window_open() const;
-	void debug(t_string msg);
+	void debug(const t_string& msg);
 	void save_program_line(t_program_line& line);
 	bool delete_program_line(int line_nr);
 	void set_var(const t_string& var, const t_string& value);
@@ -39,8 +40,6 @@ public:
 	t_palette& get_pal();
 	t_charset& get_chr();
 	t_window& get_wnd();
-	t_tile& get_tilereg();
-	void set_tilereg(const t_tile& tile);
 	t_program& get_prg();
 	void run_program();
 	void end_program();

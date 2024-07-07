@@ -229,11 +229,11 @@ void PTML::GET()
 
 	if (COUNT(0)) {
 		if (NOT_IMM) {
-			ptm->set_tilereg(scr->get_tile_at_csr());
+			ptm->tilereg = scr->get_tile_at_csr();
 		}
 	}
 	else if (COUNT(2))
-		ptm->set_tilereg(scr->get_tile(t_pos(NUM(1), NUM(2))));
+		ptm->tilereg = scr->get_tile(t_pos(NUM(1), NUM(2)));
 	else
 		error = err.invalid_argc;
 }

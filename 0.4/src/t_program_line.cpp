@@ -23,7 +23,7 @@ t_program_line& t_program_line::operator=(const t_program_line& other)
     return *this;
 }
 
-t_string t_program_line::to_string() const
+const t_string& t_program_line::to_string() const
 {
     return src;
 }

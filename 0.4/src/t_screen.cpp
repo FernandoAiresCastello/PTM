@@ -3,9 +3,9 @@
 #include "t_palette.h"
 #include "t_charset.h"
 
-t_screen::t_screen()
+t_screen::t_screen() : 
+	buf(std::make_unique<t_tilebuffer>(t_window::cols - 4, t_window::rows - 2))
 {
-	buf = std::make_unique<t_tilebuffer>(t_window::cols - 4, t_window::rows - 2);
 	reset();
 }
 
