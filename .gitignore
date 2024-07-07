@@ -26,6 +26,6 @@ temp.ptm
 *.odt#
 *.ods#
 fernando/
-v0.3b/Build/files/main.ptm
-v0.4b/temp/
+0.3/Build/files/main.ptm
+temp/
 cppcheck
