@@ -21,6 +21,7 @@ public:
 	void run();
 	void exit();
 	void halt();
+	void reset();
 	void pause(int frames);
 	void on_machine_cycle();
 	void refresh_screen();
@@ -34,6 +35,7 @@ public:
 	int get_var_num(const t_string& var);
 	const t_dict<t_string, t_string>& get_vars();
 	bool has_var(const t_string& var);
+	void delete_all_vars();
 	t_palette& get_pal();
 	t_charset& get_chr();
 	t_window& get_wnd();

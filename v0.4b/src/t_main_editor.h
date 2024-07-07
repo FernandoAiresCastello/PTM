@@ -14,10 +14,6 @@ public:
 	void on_keydown();
 
 private:
-	int default_fg = 0xa8;
-	int default_bg = 0xa3;
-	int default_bdr = 0xa2;
-
 	PTM* ptm = nullptr;
 	t_screen* scr = nullptr;
 	t_keyboard* kb = nullptr;

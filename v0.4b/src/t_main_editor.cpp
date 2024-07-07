@@ -16,8 +16,6 @@ void t_main_editor::init(PTM* ptm, t_screen* scr, t_keyboard* kb, t_interpreter*
 
 void t_main_editor::print_welcome()
 {
-	scr->color(default_fg, default_bg, default_bdr);
-	scr->show_cursor(true);
 	scr->println(ptm->version_string);
 	scr->println(intp->prompt);
 }

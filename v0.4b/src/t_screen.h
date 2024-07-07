@@ -13,9 +13,14 @@ class t_tilebuffer;
 class t_screen
 {
 public:
+	const int default_fg = 0xa8;
+	const int default_bg = 0xa3;
+	const int default_bdr = 0xa2;
+
 	t_screen();
 	~t_screen() = default;
 
+	void reset();
 	void set_window(t_window* wnd);
 	void set_charset(t_charset* chr);
 	void set_palette(t_palette* pal);

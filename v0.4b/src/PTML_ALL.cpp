@@ -11,6 +11,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 {
 	CMD("VAR", VAR);
 	CMD("VARS", VARS);
+	CMD("VAR.CLR", VAR_CLR);
 	CMD("COLOR", COLOR);
 	CMD("COLOR.F", COLOR_F);
 	CMD("COLOR.B", COLOR_B);
@@ -19,6 +20,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("PRINTL", PRINTL);
 	CMD("EXIT", EXIT);
 	CMD("HALT", HALT);
+	CMD("RESET", RESET);
 	CMD("CLS", CLS);
 	CMD("PAL", PAL);
 	CMD("CHR", CHR);
@@ -45,6 +47,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("TILE.LIST", TILE_LIST);
 	CMD("GET", GET);
 	CMD("PUT", PUT);
+	CMD("PUTC", PUTC);
 	CMD("DEL", DEL);
 	CMD("LIST", LIST);
 	CMD("RUN", RUN);

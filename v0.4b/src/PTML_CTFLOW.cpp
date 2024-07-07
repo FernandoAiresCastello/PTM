@@ -19,6 +19,12 @@ void PTML::HALT()
 	ptm->halt();
 }
 
+void PTML::RESET()
+{
+	ARGC(0);
+	ptm->reset();
+}
+
 void PTML::GOTO()
 {
 	branch_unconditional(t_branch_mode::go_to);

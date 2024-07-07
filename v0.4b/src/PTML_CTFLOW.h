@@ -5,6 +5,7 @@ namespace PTML
 	void END();
 	void EXIT();
 	void HALT();
+	void RESET();
 	void GOTO();
 	void GOTO_IFE();
 	void GOTO_IFNE();

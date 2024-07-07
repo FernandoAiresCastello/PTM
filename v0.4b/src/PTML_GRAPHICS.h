@@ -19,6 +19,7 @@ namespace PTML
 	void TILE_ADD();
 	void TILE_LIST();
 	void PUT();
+	void PUTC();
 	void GET();
 	void DEL();
 	void SCR_ON();

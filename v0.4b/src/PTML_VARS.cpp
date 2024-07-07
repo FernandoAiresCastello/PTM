@@ -26,3 +26,9 @@ void PTML::SWAP()
 	ptm->set_var(IDENT(1), val2);
 	ptm->set_var(IDENT(2), val1);
 }
+
+void PTML::VAR_CLR()
+{
+	ARGC(0);
+	ptm->delete_all_vars();
+}

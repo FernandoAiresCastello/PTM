@@ -9,17 +9,26 @@ t_screen::t_screen()
 {
 	buf = std::make_unique<t_tilebuffer>(t_window::cols - 4, t_window::rows - 2);
 	buf_bdr = std::make_unique<t_tilebuffer>();
-	buf_bdr->fill(border_tile);
 
-	init_cursor();
-	update_monochrome_tiles();
+	reset();
 }
 
 void t_screen::init_cursor()
 {
 	t_tile cursor_tile = t_tile(127, 0, 0, t_tileflags());
 	csr = add_tiled_sprite(cursor_tile, t_pos(0, 0));
-	csr->set_visible(false);
+}
+
+void t_screen::reset()
+{
+	color(default_fg, default_bg, default_bdr);
+	buf_bdr->fill(border_tile);
+	clear();
+	sprites.clear();
+	init_cursor();
+	update_monochrome_tiles();
+	show_cursor(true);
+	locate(0, 0);
 }
 
 void t_screen::set_window(t_window* wnd)

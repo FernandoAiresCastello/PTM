@@ -77,6 +77,19 @@ void PTM::halt()
 	}
 }
 
+void PTM::reset()
+{
+	halted = false;
+	prg_runner.stop();
+	new_program();
+	delete_all_vars();
+	chr.reset();
+	pal.reset();
+	scr.reset();
+
+	main_editor.print_welcome();
+}
+
 void PTM::pause(int frames)
 {
 	for (int i = 0; i < frames; i++) {
@@ -202,6 +215,11 @@ const t_dict<t_string, t_string>& PTM::get_vars()
 bool PTM::has_var(const t_string& var)
 {
 	return vars.contains(var);
+}
+
+void PTM::delete_all_vars()
+{
+	vars.clear();
 }
 
 t_palette& PTM::get_pal() { return pal; }

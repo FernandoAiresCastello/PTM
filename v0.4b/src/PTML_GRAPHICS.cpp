@@ -136,7 +136,6 @@ void PTML::PUT()
 		return;
 
 	ARGC_MIN_MAX(0, 2);
-
 	auto& tile = ptm->get_tilereg();
 	tile.flags.monochrome = false;
 
@@ -153,6 +152,18 @@ void PTML::PUT()
 		scr->set_tile(tile, NUM(1), NUM(2));
 	else
 		error = err.invalid_argc;
+}
+
+void PTML::PUTC()
+{
+	if (!ptm->get_tilereg().has_any_char())
+		return;
+
+	ARGC(0);
+	auto& tile = ptm->get_tilereg();
+	tile.flags.monochrome = false;
+	scr->set_tile_at_csr(tile);
+	scr->move_cursor_wrap_x(1);
 }
 
 void PTML::GET()
