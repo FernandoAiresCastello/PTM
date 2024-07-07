@@ -111,6 +111,16 @@ size_t t_string::length() const noexcept
 	return value.length();
 }
 
+bool t_string::has_length(int len) const noexcept
+{
+	return value.length() == len;
+}
+
+bool t_string::has_length(int min, int max) const noexcept
+{
+	return value.length() >= min && value.length() <= max;
+}
+
 int t_string::to_int() const
 {
 	t_string str = t_string(value).trim();

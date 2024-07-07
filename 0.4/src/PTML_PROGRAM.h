@@ -10,4 +10,5 @@ namespace PTML
 	void SAVE_SRC();
 	void LOAD_SRC();
 	void RENUM();
+	void FN_SET();
 }

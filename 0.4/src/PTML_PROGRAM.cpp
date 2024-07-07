@@ -126,3 +126,14 @@ void PTML::RENUM()
 			ptm->renumber_program(interval);
 	}
 }
+
+void PTML::FN_SET()
+{
+	REQUIRE_IMM;
+	ARGC(2);
+	auto&& keyname = STR(1);
+	auto&& value = STR(2);
+	bool valid = keyname.has_length(2, 3) && (keyname.starts_with("F") || keyname.starts_with("f"));
+	if (!valid || !ptm->set_function_key(keyname, value))
+		error = err.unknown_fn_keyname;
+}

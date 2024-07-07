@@ -1,3 +1,4 @@
+#include <SDL.h>
 #include "t_main_editor.h"
 #include "PTM.h"
 #include "t_tile.h"
@@ -12,6 +13,33 @@ void t_main_editor::init(PTM* ptm, t_screen* scr, t_keyboard* kb, t_interpreter*
 	this->scr = scr;
 	this->kb = kb;
 	this->intp = intp;
+
+	reset();
+}
+
+void t_main_editor::reset()
+{
+	function_keys[SDLK_F1] = "";
+	function_keys[SDLK_F2] = "color ";
+	function_keys[SDLK_F3] = "vars\n";
+	function_keys[SDLK_F4] = "list ";
+	function_keys[SDLK_F5] = "run\n";
+	function_keys[SDLK_F6] = "files\n";
+	function_keys[SDLK_F7] = "save ";
+	function_keys[SDLK_F8] = "load ";
+	function_keys[SDLK_F9] = "fn.set ";
+	function_keys[SDLK_F10] = "";
+
+	function_keys_shifted[SDLK_F1] = "";
+	function_keys_shifted[SDLK_F2] = t_string::fmt("color %i,%i,%i\n", scr->default_fg, scr->default_bg, scr->default_bdr);
+	function_keys_shifted[SDLK_F3] = "";
+	function_keys_shifted[SDLK_F4] = "list\n";
+	function_keys_shifted[SDLK_F5] = "";
+	function_keys_shifted[SDLK_F6] = "";
+	function_keys_shifted[SDLK_F7] = "";
+	function_keys_shifted[SDLK_F8] = "";
+	function_keys_shifted[SDLK_F9] = "";
+	function_keys_shifted[SDLK_F10] = "";
 }
 
 void t_main_editor::print_welcome()
@@ -91,24 +119,20 @@ bool t_main_editor::handle_control_key()
 
 bool t_main_editor::handle_function_key()
 {
-	bool shift = kb->shift();
+	SDL_Keycode&& key = kb->peek_key();
 
-	switch (kb->peek_key())
-	{
+	switch (key) {
 		case SDLK_F1:
-			highlight_line_wrap();
-			return true;
 		case SDLK_F2:
-			return true;
 		case SDLK_F3:
-			return true;
 		case SDLK_F4:
-			scr->print("list ");
-			if (kb->shift()) on_enter_pressed();
-			return true;
 		case SDLK_F5:
-			scr->print("run");
-			on_enter_pressed();
+		case SDLK_F6:
+		case SDLK_F7:
+		case SDLK_F8:
+		case SDLK_F9:
+		case SDLK_F10:
+			trigger_function_key(key, kb->shift());
 			return true;
 	}
 
@@ -145,4 +169,17 @@ void t_main_editor::on_enter_pressed()
 	scr->newline();
 	if (!line.trim().empty())
 		intp->interpret_line(line);
+}
+
+void t_main_editor::trigger_function_key(SDL_Keycode key, bool shift)
+{
+	const t_string& text = shift ? function_keys_shifted[key] : function_keys[key];
+	if (text.ends_with("\n") || text.ends_with("\\n")) {
+		if (text.ends_with("\n")) scr->print(text.remove_last(1));
+		if (text.ends_with("\\n")) scr->print(text.remove_last(2));
+		on_enter_pressed();
+	}
+	else {
+		scr->print(text);
+	}
 }

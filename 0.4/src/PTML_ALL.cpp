@@ -89,6 +89,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("RET", RET);
 	CMD("INKEY", INKEY);
 	CMD("KB.FLUSH", KB_FLUSH);
+	CMD("FN.SET", FN_SET);
 
 	return nullptr;
 }

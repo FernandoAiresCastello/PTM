@@ -56,6 +56,7 @@ public:
 	void flush_keyboard();
 	bool is_key_pressed(int scancode);
 	bool is_key_pressed(const t_string& keyname);
+	bool set_function_key(const t_string& keyname, const t_string& value);
 
 private:
 	bool running = false;

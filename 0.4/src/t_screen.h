@@ -5,7 +5,6 @@
 #include "t_pos.h"
 #include "t_list.h"
 #include "t_sprite.h"
-#include "t_tile_painter.h"
 
 class t_charset;
 class t_palette;

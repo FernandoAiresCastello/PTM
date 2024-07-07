@@ -22,4 +22,5 @@ public:
 	bool alt();
 	bool capslock();
 	int keycode_to_char(SDL_Keycode key);
+	SDL_Keycode get_keycode_by_name(const t_string& name);
 };

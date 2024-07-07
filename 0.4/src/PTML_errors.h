@@ -17,6 +17,8 @@ namespace PTML
 		const t_string invalid_filename = "Illegal filename";
 		const t_string arg_out_of_range = "Out of range";
 		const t_string invalid_program = "Invalid program";
+		const t_string unknown_keyname = "Unknown key name";
+		const t_string unknown_fn_keyname = "Function key name expected";
 	}
 	err;
 }

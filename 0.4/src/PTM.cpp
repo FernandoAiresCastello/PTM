@@ -87,7 +87,7 @@ void PTM::reset()
 	chr.reset();
 	pal.reset();
 	scr.reset();
-
+	main_editor.reset();
 	main_editor.print_welcome();
 }
 
@@ -120,7 +120,7 @@ void PTM::on_machine_cycle()
 		wnd.close();
 	}
 	else if (e.type == SDL_KEYDOWN) {
-		SDL_Keycode key = e.key.keysym.sym;
+		SDL_Keycode& key = e.key.keysym.sym;
 		if (key == SDLK_RETURN && kb.alt()) {
 			wnd.toggle_fullscreen();
 		}
@@ -318,4 +318,14 @@ bool PTM::is_key_pressed(int scancode)
 bool PTM::is_key_pressed(const t_string& keyname)
 {
 	return kb.is_pressed(keyname);
+}
+
+bool PTM::set_function_key(const t_string& keyname, const t_string& value)
+{
+	auto&& keycode = kb.get_keycode_by_name(keyname);
+	if (keycode == SDLK_UNKNOWN)
+		return false;
+
+	main_editor.function_keys[keycode] = value;
+	return true;
 }

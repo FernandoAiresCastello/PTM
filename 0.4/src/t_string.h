@@ -43,6 +43,8 @@ public:
 	const std::string& s_str() const;
 	const char* c_str() const noexcept;
 	size_t length() const noexcept;
+	bool has_length(int len) const noexcept;
+	bool has_length(int min, int max) const noexcept;
 	int to_int() const;
 	float to_float() const;
 	void clear() noexcept;

@@ -148,3 +148,21 @@ int t_keyboard::keycode_to_char(SDL_Keycode key)
 
 	return 0;
 }
+
+SDL_Keycode t_keyboard::get_keycode_by_name(const t_string& name)
+{
+	const t_string&& keyname = name.to_upper();
+
+	if (keyname == "F1") return SDLK_F1;
+	if (keyname == "F2") return SDLK_F2;
+	if (keyname == "F3") return SDLK_F3;
+	if (keyname == "F4") return SDLK_F4;
+	if (keyname == "F5") return SDLK_F5;
+	if (keyname == "F6") return SDLK_F6;
+	if (keyname == "F7") return SDLK_F7;
+	if (keyname == "F8") return SDLK_F8;
+	if (keyname == "F9") return SDLK_F9;
+	if (keyname == "F10") return SDLK_F10;
+
+	return SDLK_UNKNOWN;
+}
