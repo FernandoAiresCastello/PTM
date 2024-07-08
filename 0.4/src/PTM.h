@@ -57,6 +57,7 @@ public:
 	bool is_key_pressed(int scancode);
 	bool is_key_pressed(const t_string& keyname);
 	bool set_function_key(const t_string& keyname, const t_string& value);
+	t_list<t_string> list_function_keys();
 
 private:
 	bool running = false;

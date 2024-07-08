@@ -92,12 +92,12 @@ bool t_main_editor::handle_control_key()
 
 		case SDLK_BACKSPACE: {
 			scr->move_cursor_wrap_x(-1);
-			scr->set_blank_tile(scr->csrx(), scr->csry(), t_tileflags());
+			scr->set_blank_tile(scr->csrx(), scr->csry());
 			return true;
 		}
 
 		case SDLK_DELETE: {
-			scr->set_blank_tile(scr->csrx(), scr->csry(), t_tileflags());
+			scr->set_blank_tile(scr->csrx(), scr->csry());
 			return true;
 		}
 
@@ -121,7 +121,8 @@ bool t_main_editor::handle_function_key()
 {
 	SDL_Keycode&& key = kb->peek_key();
 
-	switch (key) {
+	switch (key)
+	{
 		case SDLK_F1:
 		case SDLK_F2:
 		case SDLK_F3:
@@ -143,9 +144,42 @@ bool t_main_editor::handle_character_key()
 {
 	int ch = kb->keycode_to_char(kb->peek_key());
 	if (ch > 0) {
+		if (kb->ctrl())
+			return handle_ctrl_character_key();
+
 		scr->print(ch);
 		return true;
 	}
+
+	return false;
+}
+
+bool t_main_editor::handle_ctrl_character_key()
+{
+	switch (kb->peek_key())
+	{
+		case SDLK_c:
+			ptm->tilereg = scr->get_tile_at_csr();
+			return true;
+		case SDLK_x:
+			ptm->tilereg = scr->get_tile_at_csr();
+			scr->set_blank_tile_at_csr();
+			return true;
+		case SDLK_v:
+			if (ptm->tilereg.has_any_char())
+				scr->set_tile_at_csr(ptm->tilereg);
+			else
+				scr->set_blank_tile_at_csr();
+			return true;
+		case SDLK_b:
+			if (ptm->tilereg.has_any_char())
+				scr->set_tile_at_csr(ptm->tilereg);
+			else
+				scr->set_blank_tile_at_csr();
+			scr->move_cursor_wrap_x(1);
+			return true;
+	}
+
 	return false;
 }
 

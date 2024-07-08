@@ -51,6 +51,7 @@ SDL_Keycode t_keyboard::pop_key()
 
 void t_keyboard::flush()
 {
+	last_key = 0;
 	while (!keystack.empty())
 		keystack.pop();
 }
@@ -68,25 +69,10 @@ bool t_keyboard::is_pressed(const t_string& keyname)
 	return false;
 }
 
-bool t_keyboard::shift()
-{
-    return SDL_GetModState() & KMOD_SHIFT;
-}
-
-bool t_keyboard::ctrl()
-{
-    return SDL_GetModState() & KMOD_CTRL;
-}
-
-bool t_keyboard::alt()
-{
-    return SDL_GetModState() & KMOD_ALT;
-}
-
-bool t_keyboard::capslock()
-{
-    return SDL_GetModState() & KMOD_CAPS;
-}
+bool t_keyboard::shift()	{ return SDL_GetModState() & KMOD_SHIFT; }
+bool t_keyboard::ctrl()		{ return SDL_GetModState() & KMOD_CTRL;  }
+bool t_keyboard::alt()		{ return SDL_GetModState() & KMOD_ALT;   }
+bool t_keyboard::capslock()	{ return SDL_GetModState() & KMOD_CAPS;  }
 
 int t_keyboard::keycode_to_char(SDL_Keycode key)
 {
@@ -165,4 +151,22 @@ SDL_Keycode t_keyboard::get_keycode_by_name(const t_string& name)
 	if (keyname == "F10") return SDLK_F10;
 
 	return SDLK_UNKNOWN;
+}
+
+t_string t_keyboard::get_name_by_keycode(SDL_Keycode keycode)
+{
+	switch (keycode) {
+		case SDLK_F1: return "F1";
+		case SDLK_F2: return "F2";
+		case SDLK_F3: return "F3";
+		case SDLK_F4: return "F4";
+		case SDLK_F5: return "F5";
+		case SDLK_F6: return "F6";
+		case SDLK_F7: return "F7";
+		case SDLK_F8: return "F8";
+		case SDLK_F9: return "F9";
+		case SDLK_F10: return "F10";
+	}
+
+	return "UNKNOWN";
 }

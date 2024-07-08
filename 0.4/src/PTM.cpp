@@ -329,3 +329,19 @@ bool PTM::set_function_key(const t_string& keyname, const t_string& value)
 	main_editor.function_keys[keycode] = value;
 	return true;
 }
+
+t_list<t_string> PTM::list_function_keys()
+{
+	t_list<t_string> list;
+	for (auto& entry : main_editor.function_keys) {
+		auto&& keyname = kb.get_name_by_keycode(entry.first);
+		auto& value = entry.second;
+		list.push_back(t_string::fmt("%s: %s", keyname.c_str(), value.c_str()));
+	}
+	for (auto& entry : main_editor.function_keys_shifted) {
+		auto&& keyname = kb.get_name_by_keycode(entry.first);
+		auto& value = entry.second;
+		list.push_back(t_string::fmt("SHIFT+%s: %s", keyname.c_str(), value.c_str()));
+	}
+	return list;
+}

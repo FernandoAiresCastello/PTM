@@ -214,6 +214,11 @@ void t_screen::set_blank_tile(int x, int y, t_tileflags flags)
 	tile.flags = flags;
 }
 
+void t_screen::set_blank_tile_at_csr(t_tileflags flags)
+{
+	set_blank_tile(csr->pos.x, csr->pos.y, flags);
+}
+
 void t_screen::print(const t_tile& tile)
 {
 	buf->set(tile, csr->get_x(), csr->get_y());

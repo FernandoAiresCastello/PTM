@@ -46,6 +46,7 @@ public:
 	void set_tile(const t_tile& tile, int x, int y);
 	void set_tile_at_csr(const t_tile& tile);
 	void set_blank_tile(int x, int y, t_tileflags flags = t_tileflags());
+	void set_blank_tile_at_csr(t_tileflags flags = t_tileflags());
 	void print(const t_tile& tile);
 	void print(t_index ch);
 	void print(const t_string& str);
