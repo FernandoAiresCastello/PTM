@@ -23,7 +23,6 @@ namespace PTML
 	void TILE_ADD();
 	void TILE_LIST();
 	void PUT();
-	void PUTC();
 	void RECT();
 	void RECT_DEL();
 	void FILL();

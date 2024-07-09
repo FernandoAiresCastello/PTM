@@ -181,16 +181,6 @@ void PTML::PUT()
 		error = err.invalid_argc;
 }
 
-void PTML::PUTC()
-{
-	IF_TILEREG_EMPTY_RET;
-	ARGC(0);
-	auto& tile = TILEREG;
-	tile.flags.monochrome = false;
-	scr->set_tile_at_csr(tile);
-	scr->move_cursor_wrap_x(1);
-}
-
 void PTML::RECT()
 {
 	IF_TILEREG_EMPTY_RET;

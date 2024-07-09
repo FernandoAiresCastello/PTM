@@ -21,23 +21,23 @@ void t_main_editor::reset()
 {
 	function_keys[SDLK_F1] = "";
 	function_keys[SDLK_F2] = "color ";
-	function_keys[SDLK_F3] = "vars\n";
+	function_keys[SDLK_F3] = "var ";
 	function_keys[SDLK_F4] = "list ";
 	function_keys[SDLK_F5] = "run\n";
-	function_keys[SDLK_F6] = "files\n";
-	function_keys[SDLK_F7] = "save ";
-	function_keys[SDLK_F8] = "load ";
-	function_keys[SDLK_F9] = "fn.set ";
+	function_keys[SDLK_F6] = "save ";
+	function_keys[SDLK_F7] = "load ";
+	function_keys[SDLK_F8] = "fn.set ";
+	function_keys[SDLK_F9] = "";
 	function_keys[SDLK_F10] = "";
 
 	function_keys_shifted[SDLK_F1] = "";
 	function_keys_shifted[SDLK_F2] = t_string::fmt("color %i,%i,%i\n", scr->default_fg, scr->default_bg, scr->default_bdr);
-	function_keys_shifted[SDLK_F3] = "";
+	function_keys_shifted[SDLK_F3] = "vars\n";
 	function_keys_shifted[SDLK_F4] = "list\n";
-	function_keys_shifted[SDLK_F5] = "";
+	function_keys_shifted[SDLK_F5] = "files\n";
 	function_keys_shifted[SDLK_F6] = "";
 	function_keys_shifted[SDLK_F7] = "";
-	function_keys_shifted[SDLK_F8] = "";
+	function_keys_shifted[SDLK_F8] = "fn.list\n";
 	function_keys_shifted[SDLK_F9] = "";
 	function_keys_shifted[SDLK_F10] = "";
 }
@@ -82,7 +82,7 @@ bool t_main_editor::handle_control_key()
 
 		case SDLK_END: {
 			if (kb->ctrl()) {
-				scr->locate(scr->last_col(), scr->last_row());
+				scr->locate(scr->last_col, scr->last_row);
 			}
 			else {
 				scr->locate(scr->eol(), scr->csry());
@@ -170,12 +170,6 @@ bool t_main_editor::handle_ctrl_character_key()
 				scr->set_tile_at_csr(ptm->tilereg);
 			else
 				scr->set_blank_tile_at_csr();
-			return true;
-		case SDLK_b:
-			if (ptm->tilereg.has_any_char())
-				scr->set_tile_at_csr(ptm->tilereg);
-			else
-				scr->set_blank_tile_at_csr();
 			scr->move_cursor_wrap_x(1);
 			return true;
 	}
@@ -185,8 +179,8 @@ bool t_main_editor::handle_ctrl_character_key()
 
 void t_main_editor::highlight_line_wrap()
 {
-	for (int y = 0; y <= scr->last_row(); y++) {
-		for (int x = 0; x <= scr->last_col(); x++) {
+	for (int y = 0; y <= scr->last_row; y++) {
+		for (int x = 0; x <= scr->last_col; x++) {
 			t_tile& tile = scr->get_tile(t_pos(x, y));
 			if (tile.flags.line_wrap) {
 				tile.flags.monochrome = false;

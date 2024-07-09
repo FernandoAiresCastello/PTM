@@ -12,22 +12,12 @@ t_tilebuffer::t_tilebuffer() : t_tilebuffer(t_window::cols, t_window::rows)
 }
 
 t_tilebuffer::t_tilebuffer(int cols, int rows) : 
-	cols(cols), rows(rows), length(cols * rows)
+	cols(cols), rows(rows), last_col(cols - 1), last_row(rows-1), length(cols * rows)
 {
 	for (int i = 0; i < length; i++)
 		tiles.emplace_back();
 
 	clear();
-}
-
-int t_tilebuffer::last_row() const
-{
-	return rows - 1;
-}
-
-int t_tilebuffer::last_col() const
-{
-	return cols - 1;
 }
 
 void t_tilebuffer::draw(t_window* wnd, t_charset* chr, t_palette* pal)
@@ -80,7 +70,7 @@ int t_tilebuffer::set_text_wrap(const t_string& text, int* xptr, int* yptr, t_in
 
 	for (auto& ch : text.s_str()) {
 		tile_at(x, y) = t_tile(ch, fgc, bgc, flags);
-		if (x == last_col()) {
+		if (x == last_col) {
 			tile_at(x, y).flags.line_wrap = true;
 		}
 		ix++;

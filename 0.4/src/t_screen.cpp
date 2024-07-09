@@ -3,8 +3,9 @@
 #include "t_palette.h"
 #include "t_charset.h"
 
-t_screen::t_screen() : 
-	buf(std::make_unique<t_tilebuffer>(t_window::cols - 4, t_window::rows - 2))
+t_screen::t_screen() :
+	cols(t_window::cols - 4), rows(t_window::rows - 2), last_col(cols - 1), last_row(rows - 1),
+	buf(std::make_unique<t_tilebuffer>(cols, rows))
 {
 	reset();
 }
@@ -113,35 +114,25 @@ void t_screen::move_cursor_wrap_x(int dx)
 {
 	if (dx < 0 && csr->pos.x == 0 && csr->pos.y == 0)
 		return;
-	if (dx > 0 && csr->pos.x == last_col() && csr->pos.y == last_row())
+	if (dx > 0 && csr->pos.x == last_col && csr->pos.y == last_row)
 		return;
 
 	csr->move_dist(dx, 0);
 	
-	if (csr->pos.x > last_col())
+	if (csr->pos.x > last_col)
 		csr->move_to(0, csr->pos.y + 1);
 	else if (csr->pos.x < 0)
-		csr->move_to(last_col(), csr->pos.y - 1);
+		csr->move_to(last_col, csr->pos.y - 1);
 
 	fix_cursor_pos();
-}
-
-int t_screen::rows() const
-{
-	return buf->rows;
-}
-
-int t_screen::cols() const
-{
-	return buf->cols;
 }
 
 void t_screen::fix_cursor_pos()
 {
 	if (csr->get_x() < 0)				csr->set_x(0);
-	else if (csr->get_x() > last_col())	csr->set_x(last_col());
+	else if (csr->get_x() > last_col)	csr->set_x(last_col);
 	if (csr->get_y() < 0)				csr->set_y(0);
-	else if (csr->get_y() > last_row())	csr->set_y(last_row());
+	else if (csr->get_y() > last_row)	csr->set_y(last_row);
 }
 
 void t_screen::update_cursor()
@@ -150,16 +141,6 @@ void t_screen::update_cursor()
 	csr_char.ix = get_tile_at_csr().get_char().ix;
 	csr_char.fgc = back_color;
 	csr_char.bgc = fore_color;
-}
-
-int t_screen::last_row() const
-{
-	return buf->last_row();
-}
-
-int t_screen::last_col() const
-{
-	return buf->last_col();
 }
 
 int t_screen::csrx() const
@@ -174,7 +155,7 @@ int t_screen::csry() const
 
 int t_screen::eol() const
 {
-	int x = last_col();
+	int x = last_col;
 	int y = csr->get_y();
 
 	for (x; x >= 0; x--) {
@@ -183,7 +164,7 @@ int t_screen::eol() const
 			break;
 	}
 
-	return x == last_col() ? x : x + 1;
+	return x == last_col ? x : x + 1;
 }
 
 t_pos t_screen::csr_pos() const
@@ -222,15 +203,15 @@ void t_screen::set_blank_tile_at_csr(t_tileflags flags)
 void t_screen::print(const t_tile& tile)
 {
 	buf->set(tile, csr->get_x(), csr->get_y());
-	if (csr->pos.x == last_col()) {
+	if (csr->pos.x == last_col) {
 		buf->get_ref(csr->get_x(), csr->get_y()).flags.line_wrap = true;
 	}
 	csr->move_dist(1, 0);
-	if (csr->pos.x > last_col()) {
+	if (csr->pos.x > last_col) {
 		csr->pos.x = 0;
 		csr->pos.y++;
-		if (csr->pos.y > last_row()) {
-			csr->pos.y = last_row();
+		if (csr->pos.y > last_row) {
+			csr->pos.y = last_row;
 			csr->pos.x = 0;
 			scroll_up();
 		}
@@ -246,8 +227,8 @@ void t_screen::print(const t_string& str)
 {
 	int ix = buf->set_text_wrap(str, &csr->pos.x, &csr->pos.y, fore_color, back_color);
 
-	if (csr->pos.y > last_row()) {
-		csr->pos.y = last_row();
+	if (csr->pos.y > last_row) {
+		csr->pos.y = last_row;
 		csr->pos.x = 0;
 		scroll_up();
 		print(str.substr(ix));
@@ -271,22 +252,22 @@ void t_screen::newline()
 {
 	csr->pos.x = 0;
 	csr->pos.y++;
-	if (csr->pos.y > last_row()) {
-		csr->pos.y = last_row();
+	if (csr->pos.y > last_row) {
+		csr->pos.y = last_row;
 		scroll_up();
 	}
 }
 
 void t_screen::scroll_up()
 {
-	for (int row = 1; row <= last_row(); row++) {
-		for (int col = 0; col <= last_col(); col++) {
+	for (int row = 1; row <= last_row; row++) {
+		for (int col = 0; col <= last_col; col++) {
 			buf->set(buf->get_ref(col, row), col, row - 1);
 		}
 	}
 
-	int row = last_row();
-	for (int col = 0; col <= last_col(); col++) {
+	int row = last_row;
+	for (int col = 0; col <= last_col; col++) {
 		set_blank_tile(col, row, t_tileflags());
 	}
 }
@@ -374,7 +355,7 @@ t_string t_screen::get_current_logical_line()
 	t_string last_half;
 
 	int y = csry();
-	for (int x = csrx(); x <= last_col(); x++) {
+	for (int x = csrx(); x <= last_col; x++) {
 		t_tile& tile = get_tile(t_pos(x, y));
 		t_index ch = tile.get_char().ix;
 		if (ch <= 0 || ch > 255)
@@ -384,7 +365,7 @@ t_string t_screen::get_current_logical_line()
 		if (tile.flags.line_wrap) {
 			x = -1;
 			y++;
-			if (y > last_row()) {
+			if (y > last_row) {
 				break;
 			}
 		}
@@ -396,7 +377,7 @@ t_string t_screen::get_current_logical_line()
 	int x = csrx() - 1;
 	for (x; x >= -1; x--) {
 		if (x == -1) {
-			x = last_col();
+			x = last_col;
 			y--;
 			if (y < 0) {
 				break;

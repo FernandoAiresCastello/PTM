@@ -11,13 +11,13 @@ class t_tilebuffer
 public:
 	const int cols;
 	const int rows;
+	const int last_row;
+	const int last_col;
 
 	t_tilebuffer();
 	t_tilebuffer(int cols, int rows);
 	~t_tilebuffer() = default;
 
-	int last_row() const;
-	int last_col() const;
 	void draw(t_window* wnd, t_charset* chr, t_palette* pal);
 	void draw(t_window* wnd, t_charset* chr, t_palette* pal, int px, int py);
 	void set(const t_tile& tile, int x, int y);

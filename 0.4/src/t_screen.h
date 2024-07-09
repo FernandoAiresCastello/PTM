@@ -16,6 +16,10 @@ public:
 	const int default_fg = 0xa8;
 	const int default_bg = 0xa3;
 	const int default_bdr = 0xa2;
+	const int cols;
+	const int rows;
+	const int last_col;
+	const int last_row;
 
 	t_screen();
 	~t_screen() = default;
@@ -34,10 +38,6 @@ public:
 	void locate(int x, int y);
 	void move_cursor_dist(int dx, int dy);
 	void move_cursor_wrap_x(int dx);
-	int rows() const;
-	int cols() const;
-	int last_row() const;
-	int last_col() const;
 	int csrx() const;
 	int csry() const;
 	int eol() const;
