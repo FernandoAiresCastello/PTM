@@ -10,6 +10,11 @@ class t_charset;
 class t_palette;
 class t_tilebuffer;
 
+enum class t_color_mode
+{
+	mode0_monochrome, mode1_multicolor
+};
+
 class t_screen
 {
 public:
@@ -31,6 +36,7 @@ public:
 	void refresh();
 	void draw();
 	void clear();
+	void set_color_mode(t_color_mode color_mode);
 	void color(t_index fgc, t_index bgc, t_index bdrc);
 	void color_fg(t_index fg);
 	void color_bg(t_index bg);
@@ -80,6 +86,7 @@ private:
 	t_pos buf_pos = t_pos(2, 1);
 	t_list<t_sptr<t_sprite>> sprites;
 	t_sptr<t_sprite> csr;
+	t_color_mode color_mode = t_color_mode::mode0_monochrome;
 
 	void init_cursor();
 	void draw_sprites();

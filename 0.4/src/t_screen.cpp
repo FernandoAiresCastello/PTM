@@ -67,6 +67,11 @@ void t_screen::clear()
 	}
 }
 
+void t_screen::set_color_mode(t_color_mode color_mode)
+{
+	this->color_mode = color_mode;
+}
+
 void t_screen::clear_background()
 {
 	wnd->clear(pal->get(border_color));
@@ -331,6 +336,9 @@ void t_screen::draw_sprites()
 
 void t_screen::update_monochrome_tiles()
 {
+	if (color_mode != t_color_mode::mode0_monochrome)
+		return;
+
 	for (int y = 0; y < buf->rows; y++)
 		for (int x = 0; x < buf->cols; x++)
 			update_monochrome_tile(buf->get_ref(x, y));
@@ -342,6 +350,8 @@ void t_screen::update_monochrome_tiles()
 void t_screen::update_monochrome_tile(t_tile& tile) const
 {
 	if (!tile.flags.monochrome)
+		return;
+	if (color_mode != t_color_mode::mode0_monochrome)
 		return;
 
 	for (auto& ch : tile.get_all_chars()) {

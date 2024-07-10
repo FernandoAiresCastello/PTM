@@ -19,6 +19,18 @@ void PTML::COLOR()
 	}
 }
 
+void PTML::COLOR_MODE0()
+{
+	ARGC(0);
+	scr->set_color_mode(t_color_mode::mode0_monochrome);
+}
+
+void PTML::COLOR_MODE1()
+{
+	ARGC(0);
+	scr->set_color_mode(t_color_mode::mode1_multicolor);
+}
+
 void PTML::COLOR_SETF()
 {
 	ARGC(1);
