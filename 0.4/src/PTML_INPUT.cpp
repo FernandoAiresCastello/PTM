@@ -29,8 +29,5 @@ void PTML::FN_LIST()
 {
 	REQUIRE_IMM;
 	ARGC(0);
-	auto&& list = ptm->list_function_keys();
-	for (auto& key : list) {
-		scr->println(key);
-	}
+	scr->print_lines(ptm->list_function_keys());
 }

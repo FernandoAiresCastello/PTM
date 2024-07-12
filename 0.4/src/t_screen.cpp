@@ -70,6 +70,8 @@ void t_screen::clear()
 void t_screen::set_color_mode(t_color_mode color_mode)
 {
 	this->color_mode = color_mode;
+	if (color_mode == t_color_mode::mode0_monochrome)
+		update_monochrome_tiles();
 }
 
 void t_screen::clear_background()
@@ -105,18 +107,22 @@ void t_screen::color_bdr(t_index bdr)
 
 void t_screen::locate(int x, int y)
 {
+	set_insert_mode(false);
 	csr->move_to(x, y);
 	fix_cursor_pos();
 }
 
 void t_screen::move_cursor_dist(int dx, int dy)
 {
+	set_insert_mode(false);
 	csr->move_dist(dx, dy);
 	fix_cursor_pos();
 }
 
 void t_screen::move_cursor_wrap_x(int dx)
 {
+	set_insert_mode(false);
+
 	if (dx < 0 && csr->pos.x == 0 && csr->pos.y == 0)
 		return;
 	if (dx > 0 && csr->pos.x == last_col && csr->pos.y == last_row)
@@ -132,6 +138,33 @@ void t_screen::move_cursor_wrap_x(int dx)
 	fix_cursor_pos();
 }
 
+void t_screen::move_cursor_top_left()
+{
+	set_insert_mode(false);
+	csr->move_to(0, 0);
+}
+
+void t_screen::move_cursor_btm_right()
+{
+	locate(last_col, last_row);
+}
+
+void t_screen::move_cursor_line_start()
+{
+	locate(0, csry());
+}
+
+void t_screen::move_cursor_eol()
+{
+	locate(eol(), csry());
+}
+
+void t_screen::move_cursor_eol_logical()
+{
+	t_pos&& eol = eol_logical();
+	locate(eol.x, eol.y);
+}
+
 void t_screen::fix_cursor_pos()
 {
 	if (csr->get_x() < 0)				csr->set_x(0);
@@ -142,10 +175,12 @@ void t_screen::fix_cursor_pos()
 
 void t_screen::update_cursor()
 {
-	t_char& csr_char = csr->tile.get_char();
-	csr_char.ix = get_tile_at_csr().get_char().ix;
-	csr_char.fgc = back_color;
-	csr_char.bgc = fore_color;
+	if (!insert_mode) {
+		t_char& csr_char = csr->tile.get_char();
+		csr_char.ix = get_tile_at_csr().get_char().ix;
+		csr_char.fgc = back_color;
+		csr_char.bgc = fore_color;
+	}
 }
 
 int t_screen::csrx() const
@@ -170,6 +205,29 @@ int t_screen::eol() const
 	}
 
 	return x == last_col ? x : x + 1;
+}
+
+t_pos t_screen::eol_logical()
+{
+	int x = csrx();
+	int y = csry();
+
+	for (x; x <= last_col; x++) {
+		t_tile& tile = get_tile(t_pos(x, y));
+		if (tile.flags.line_wrap) {
+			x = -1;
+			y++;
+			if (y > last_row) {
+				x = 0;
+				break;
+			}
+		}
+		else if (tile.get_char().ix == 0) {
+			break;
+		}
+	}
+
+	return t_pos(x, y);
 }
 
 t_pos t_screen::csr_pos() const
@@ -205,9 +263,26 @@ void t_screen::set_blank_tile_at_csr(t_tileflags flags)
 	set_blank_tile(csr->pos.x, csr->pos.y, flags);
 }
 
-void t_screen::print(const t_tile& tile)
+void t_screen::set_whitespace_at_csr(t_tileflags flags)
+{
+	auto& tile = buf->get_ref(csr->pos.x, csr->pos.y);
+	tile.set_blank();
+	tile.set_char(' ', fore_color, back_color);
+	tile.flags = flags;
+}
+
+void t_screen::print_char(t_index ch)
+{
+	if (insert_mode)
+		displace_tiles_right();
+
+	print_tile(t_tile(ch, fore_color, back_color));
+}
+
+void t_screen::print_tile(const t_tile& tile)
 {
 	buf->set(tile, csr->get_x(), csr->get_y());
+
 	if (csr->pos.x == last_col) {
 		buf->get_ref(csr->get_x(), csr->get_y()).flags.line_wrap = true;
 	}
@@ -223,12 +298,7 @@ void t_screen::print(const t_tile& tile)
 	}
 }
 
-void t_screen::print(t_index ch)
-{
-	print(t_tile(ch, fore_color, back_color));
-}
-
-void t_screen::print(const t_string& str)
+void t_screen::print_string(const t_string& str)
 {
 	int ix = buf->set_text_wrap(str, &csr->pos.x, &csr->pos.y, fore_color, back_color);
 
@@ -236,25 +306,27 @@ void t_screen::print(const t_string& str)
 		csr->pos.y = last_row;
 		csr->pos.x = 0;
 		scroll_up();
-		print(str.substr(ix));
+		print_string(str.substr(ix));
 	}
 }
 
-void t_screen::println(const t_string& str)
+void t_screen::print_string_crlf(const t_string& str)
 {
-	print(str);
+	print_string(str);
 	newline();
 }
 
 void t_screen::print_lines(const t_list<t_string>& lines)
 {
 	for (auto& str : lines) {
-		println(str);
+		print_string_crlf(str);
 	}
 }
 
 void t_screen::newline()
 {
+	set_insert_mode(false);
+
 	csr->pos.x = 0;
 	csr->pos.y++;
 	if (csr->pos.y > last_row) {
@@ -454,4 +526,29 @@ void t_screen::rect_clear(int x1, int y1, int x2, int y2)
 	for (int y = y1; y <= y2; y++)
 		for (int x = x1; x <= x2; x++)
 			set_blank_tile(x, y);
+}
+
+void t_screen::toggle_insert_mode()
+{
+	set_insert_mode(!insert_mode);
+}
+
+void t_screen::set_insert_mode(bool state)
+{
+	insert_mode = state;
+
+	if (insert_mode) {
+		t_tile tile('_', fore_color, back_color);
+		tile.flags.hide_bgc = true;
+		csr->set_tile(tile);
+	}
+	else {
+		csr->set_tile(t_tile());
+	}
+
+	update_cursor();
+}
+
+void t_screen::displace_tiles_right()
+{
 }

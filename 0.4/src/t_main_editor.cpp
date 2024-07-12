@@ -44,8 +44,8 @@ void t_main_editor::reset()
 
 void t_main_editor::print_welcome()
 {
-	scr->println(ptm->version_string);
-	scr->println(intp->prompt);
+	scr->print_string_crlf(ptm->version_string);
+	scr->print_string_crlf(intp->prompt);
 }
 
 void t_main_editor::on_keydown()
@@ -68,42 +68,52 @@ bool t_main_editor::handle_control_key()
 
 		case SDLK_HOME: {
 			if (kb->shift()) {
-				scr->locate(0, 0);
+				scr->move_cursor_top_left();
 				scr->clear();
 			}
 			else if (kb->ctrl()) {
-				scr->locate(0, 0);
+				scr->move_cursor_top_left();
 			}
 			else {
-				scr->locate(0, scr->csry());
+				scr->move_cursor_line_start();
 			}
 			return true;
 		}
 
 		case SDLK_END: {
 			if (kb->ctrl()) {
-				scr->locate(scr->last_col, scr->last_row);
+				scr->move_cursor_btm_right();
 			}
 			else {
-				scr->locate(scr->eol(), scr->csry());
+				scr->move_cursor_eol();
 			}
+			return true;
+		}
+
+		case SDLK_PAGEDOWN: {
+			scr->move_cursor_eol_logical();
 			return true;
 		}
 
 		case SDLK_BACKSPACE: {
 			scr->move_cursor_wrap_x(-1);
-			scr->set_blank_tile(scr->csrx(), scr->csry());
+			scr->set_whitespace_at_csr();
 			return true;
 		}
 
 		case SDLK_DELETE: {
-			scr->set_blank_tile(scr->csrx(), scr->csry());
+			scr->set_whitespace_at_csr();
 			return true;
 		}
 
 		case SDLK_TAB: {
 			for (int i = 0; i < 8; i++)
-				scr->print(" ");
+				scr->print_string(" ");
+			return true;
+		}
+
+		case SDLK_INSERT: {
+			scr->toggle_insert_mode();
 			return true;
 		}
 
@@ -147,7 +157,7 @@ bool t_main_editor::handle_character_key()
 		if (kb->ctrl())
 			return handle_ctrl_character_key();
 
-		scr->print(ch);
+		scr->print_char(ch);
 		return true;
 	}
 
@@ -163,13 +173,13 @@ bool t_main_editor::handle_ctrl_character_key()
 			return true;
 		case SDLK_x:
 			ptm->tilereg = scr->get_tile_at_csr();
-			scr->set_blank_tile_at_csr();
+			scr->set_whitespace_at_csr();
 			return true;
 		case SDLK_v:
 			if (ptm->tilereg.has_any_char())
 				scr->set_tile_at_csr(ptm->tilereg);
 			else
-				scr->set_blank_tile_at_csr();
+				scr->set_whitespace_at_csr();
 			scr->move_cursor_wrap_x(1);
 			return true;
 	}
@@ -203,11 +213,11 @@ void t_main_editor::trigger_function_key(SDL_Keycode key, bool shift)
 {
 	const t_string& text = shift ? function_keys_shifted[key] : function_keys[key];
 	if (text.ends_with("\n") || text.ends_with("\\n")) {
-		if (text.ends_with("\n")) scr->print(text.remove_last(1));
-		if (text.ends_with("\\n")) scr->print(text.remove_last(2));
+		if (text.ends_with("\n")) scr->print_string(text.remove_last(1));
+		if (text.ends_with("\\n")) scr->print_string(text.remove_last(2));
 		on_enter_pressed();
 	}
 	else {
-		scr->print(text);
+		scr->print_string(text);
 	}
 }

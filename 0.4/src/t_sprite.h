@@ -10,6 +10,7 @@ public:
 	t_sprite(bool grid);
 	t_sprite(const t_tile& tile, const t_pos& pos, bool grid);
 
+	void set_tile(const t_tile& tile);
 	t_tile& get_tile();
 	void set_visible(bool visible);
 	bool align_to_grid() const;

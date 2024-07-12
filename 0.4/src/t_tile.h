@@ -16,6 +16,7 @@ public:
 	t_tile();
 	t_tile(t_index ix, t_index fgc, t_index bgc, t_tileflags flags = t_tileflags());
 	t_tile(const t_tile& other);
+	explicit t_tile(bool add_blank);
 	~t_tile() = default;
 
 	bool operator==(const t_tile& other) const;

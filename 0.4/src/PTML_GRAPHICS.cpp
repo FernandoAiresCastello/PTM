@@ -76,16 +76,16 @@ void PTML::PRINT()
 	auto&& value = STR(1);
 
 	if (IMM && !value.empty())
-		scr->println(value);
+		scr->print_string_crlf(value);
 	else
-		scr->print(value);
+		scr->print_string(value);
 }
 
 void PTML::PRINTL()
 {
 	ARGC(1);
 	auto&& value = STR(1);
-	scr->println(value);
+	scr->print_string_crlf(value);
 }
 
 void PTML::PRINTF()
@@ -93,7 +93,7 @@ void PTML::PRINTF()
 	ARGC(2);
 	auto&& fmt = STR(1);
 	auto&& value = NUM(2);
-	scr->print(t_string::fmt(fmt.c_str(), value));
+	scr->print_string(t_string::fmt(fmt.c_str(), value));
 }
 
 void PTML::CLS()
@@ -167,7 +167,7 @@ void PTML::TILE_LIST()
 {
 	ARGC(0);
 	for (auto&& ch : TILEREG.get_all_chars()) {
-		scr->println(t_string::fmt("%i,%i,%i", ch.ix, ch.fgc, ch.bgc));
+		scr->print_string_crlf(t_string::fmt("%i,%i,%i", ch.ix, ch.fgc, ch.bgc));
 	}
 }
 

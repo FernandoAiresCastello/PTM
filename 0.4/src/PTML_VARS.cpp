@@ -11,9 +11,11 @@ void PTML::VAR()
 void PTML::VARS()
 {
 	ARGC(0);
-	for (auto& var : ptm->get_vars()) {
-		scr->println(t_string::fmt("%s: %s", var.first.c_str(), var.second.c_str()));
-	}
+	t_list<t_string> vars;
+	for (auto& var : ptm->get_vars())
+		vars.push_back(t_string::fmt("%s: %s", var.first.c_str(), var.second.c_str()));
+	
+	scr->print_lines(vars);
 }
 
 void PTML::SWAP()

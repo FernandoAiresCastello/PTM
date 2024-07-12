@@ -4,8 +4,7 @@
 void PTML::FILES()
 {
 	ARGC(0);
-	for (auto& file : t_filesystem::list_files())
-		scr->println(file);
+	scr->print_lines(t_filesystem::list_files());
 }
 
 void PTML::FILE_NAME()

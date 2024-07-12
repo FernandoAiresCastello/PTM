@@ -5,6 +5,12 @@ t_tile::t_tile()
 	add_blank_char();
 }
 
+t_tile::t_tile(bool add_blank)
+{
+	if (add_blank)
+		add_blank_char();
+}
+
 t_tile::t_tile(t_index ix, t_index fgc, t_index bgc, t_tileflags flags) : flags(flags)
 {
 	chars.emplace_back(ix, fgc, bgc);
@@ -113,6 +119,7 @@ void t_tile::set_empty()
 {
 	chars.clear();
 	data.clear();
+	flags.clear();
 }
 
 t_list<t_char>& t_tile::get_all_chars()

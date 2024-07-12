@@ -7,14 +7,14 @@ void PTML::LIST()
 
 	if (COUNT(0)) {
 		for (auto& stored_line : ptm->get_prg().lines) {
-			scr->println(stored_line.second.to_string());
+			scr->print_string_crlf(stored_line.second.to_string());
 		}
 	}
 	else if (COUNT(1)) {
 		t_program& prg = ptm->get_prg();
 		int line_nr = NUM(1);
 		if (prg.has_line(line_nr)) {
-			scr->println(prg.get_line(line_nr)->to_string());
+			scr->print_string_crlf(prg.get_line(line_nr)->to_string());
 		}
 		else {
 			error = err.undefined_line_nr;
@@ -31,7 +31,7 @@ void PTML::LIST()
 		auto itLower = lines.lower_bound(first);
 		auto itUpper = lines.upper_bound(last);
 		for (auto& it = itLower; it != itUpper; ++it) {
-			scr->println(it->second.to_string());
+			scr->print_string_crlf(it->second.to_string());
 		}
 	}
 }

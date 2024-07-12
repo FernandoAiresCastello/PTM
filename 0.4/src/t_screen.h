@@ -44,19 +44,26 @@ public:
 	void locate(int x, int y);
 	void move_cursor_dist(int dx, int dy);
 	void move_cursor_wrap_x(int dx);
+	void move_cursor_top_left();
+	void move_cursor_btm_right();
+	void move_cursor_line_start();
+	void move_cursor_eol();
+	void move_cursor_eol_logical();
 	int csrx() const;
 	int csry() const;
 	int eol() const;
+	t_pos eol_logical();
 	t_pos csr_pos() const;
 	void show_cursor(bool visible);
 	void set_tile(const t_tile& tile, int x, int y);
 	void set_tile_at_csr(const t_tile& tile);
 	void set_blank_tile(int x, int y, t_tileflags flags = t_tileflags());
 	void set_blank_tile_at_csr(t_tileflags flags = t_tileflags());
-	void print(const t_tile& tile);
-	void print(t_index ch);
-	void print(const t_string& str);
-	void println(const t_string& str);
+	void set_whitespace_at_csr(t_tileflags flags = t_tileflags());
+	void print_char(t_index ch);
+	void print_tile(const t_tile& tile);
+	void print_string(const t_string& str);
+	void print_string_crlf(const t_string& str);
 	void print_lines(const t_list<t_string>& lines);
 	void newline();
 	void scroll_up();
@@ -74,6 +81,9 @@ public:
 	void rect_fill(const t_tile& tile, int x1, int y1, int x2, int y2);
 	void rect_border(const t_tile& tile, int x1, int y1, int x2, int y2);
 	void rect_clear(int x1, int y1, int x2, int y2);
+	void toggle_insert_mode();
+	void set_insert_mode(bool state);
+	void displace_tiles_right();
 
 private:
 	t_window* wnd = nullptr;
@@ -87,6 +97,7 @@ private:
 	t_list<t_sptr<t_sprite>> sprites;
 	t_sptr<t_sprite> csr;
 	t_color_mode color_mode = t_color_mode::mode0_monochrome;
+	bool insert_mode = false;
 
 	void init_cursor();
 	void draw_sprites();

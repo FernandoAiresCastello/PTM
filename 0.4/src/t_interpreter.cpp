@@ -31,8 +31,8 @@ void t_interpreter::interpret_line(t_string& src, bool from_file)
 		if (tokens.size() == 1 && !from_file) {
 			bool ok = ptm->delete_program_line(line_number);
 			if (!ok) {
-				scr->println("Undefined line number");
-				scr->println(prompt);
+				scr->print_string_crlf("Undefined line number");
+				scr->print_string_crlf(prompt);
 			}
 		}
 		else {
@@ -70,13 +70,13 @@ bool t_interpreter::execute_line(t_program_line& line)
 
 	if (has_error) {
 		if (line.immediate)
-			scr->println(PTML::error);
+			scr->print_string_crlf(PTML::error);
 		else
-			scr->println(t_string::fmt("%s in %i", PTML::error.c_str(), line.line_nr));
+			scr->print_string_crlf(t_string::fmt("%s in %i", PTML::error.c_str(), line.line_nr));
 	}
 
 	if (line.immediate)
-		scr->println(prompt);
+		scr->print_string_crlf(prompt);
 
 	PTML::error = "";
 	return !has_error;
@@ -89,7 +89,7 @@ const t_string& t_interpreter::get_last_error()
 
 void t_interpreter::on_user_interrupt(t_program_line* line)
 {
-	scr->println(t_string::fmt("Break in %i", line->line_nr));
+	scr->print_string_crlf(t_string::fmt("Break in %i", line->line_nr));
 }
 
 t_program_line t_interpreter::make_program_line(const t_list<t_token>& tokens)

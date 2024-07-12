@@ -8,6 +8,11 @@ t_sprite::t_sprite(const t_tile& tile, const t_pos& pos, bool grid) : tile(tile)
 {
 }
 
+void t_sprite::set_tile(const t_tile& tile)
+{
+	this->tile = tile;
+}
+
 t_tile& t_sprite::get_tile()
 {
 	return tile;
