@@ -29,7 +29,6 @@ private:
 	bool handle_function_key();
 	bool handle_character_key();
 	bool handle_ctrl_character_key();
-	void highlight_line_wrap();
 	void on_enter_pressed();
 	void trigger_function_key(SDL_Keycode key, bool shift);
 };

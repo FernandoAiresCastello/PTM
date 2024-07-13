@@ -7,17 +7,16 @@ t_tileflags::t_tileflags()
 
 t_tileflags::t_tileflags(const t_tileflags& other) :
     visible(other.visible), monochrome(other.monochrome), 
-    hide_bgc(other.hide_bgc), line_wrap(other.line_wrap)
+    hide_bgc(other.hide_bgc)
 {
 }
 
 bool t_tileflags::operator==(const t_tileflags& other) const
 {
-    return 
+    return
         visible == other.visible &&
         monochrome == other.monochrome &&
-        hide_bgc == other.hide_bgc &&
-        line_wrap == other.line_wrap;
+        hide_bgc == other.hide_bgc;
 }
 
 t_tileflags& t_tileflags::operator=(const t_tileflags& other)
@@ -28,7 +27,6 @@ t_tileflags& t_tileflags::operator=(const t_tileflags& other)
     visible = other.visible;
     monochrome = other.monochrome;
     hide_bgc = other.hide_bgc;
-    line_wrap = other.line_wrap;
 
     return *this;
 }
@@ -38,5 +36,4 @@ void t_tileflags::clear()
     visible = true;
     monochrome = true;
     hide_bgc = false;
-    line_wrap = false;
 }

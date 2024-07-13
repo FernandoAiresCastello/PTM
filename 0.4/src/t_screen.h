@@ -49,11 +49,9 @@ public:
 	void move_cursor_btm_right();
 	void move_cursor_line_start();
 	void move_cursor_eol();
-	void move_cursor_eol_logical();
 	int csrx() const;
 	int csry() const;
 	int eol() const;
-	t_pos eol_logical();
 	t_pos csr_pos() const;
 	void show_cursor(bool visible);
 	void set_tile(const t_tile& tile, int x, int y);
@@ -68,9 +66,7 @@ public:
 	void print_lines(const t_list<t_string>& lines);
 	void newline();
 	void scroll_up();
-	t_sptr<t_sprite> add_free_sprite(const t_tile& tile, const t_pos& pos);
-	t_sptr<t_sprite> add_tiled_sprite(const t_tile& tile, const t_pos& pos);
-	void remove_sprite(t_sptr<t_sprite> sprite);
+	void scroll_horizontal(int dist);
 	t_tile& get_tile(const t_pos& pos);
 	t_tile& get_tile_at_csr();
 	void set_csr_char_ix(t_index ch);
@@ -96,16 +92,14 @@ private:
 	t_index border_color = 10;
 	t_pos buf_pos = t_pos(2, 1);
 	t_tilebuffer_region buf_reg;
-	t_list<t_sptr<t_sprite>> sprites;
 	t_sptr<t_sprite> csr;
 	t_color_mode color_mode = t_color_mode::mode0_monochrome;
+	t_string logical_line;
 	bool insert_mode = false;
 
 	void init_cursor();
-	void draw_sprites();
 	void update_monochrome_tiles();
 	void update_monochrome_tile(t_tile& tile) const;
-	t_sptr<t_sprite> add_sprite(const t_tile& tile, const t_pos& pos, bool grid);
 	void fix_cursor_pos();
 	void update_cursor();
 	void clear_background();

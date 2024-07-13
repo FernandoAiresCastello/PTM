@@ -1,3 +1,4 @@
+#include <memory>
 #include "t_tilebuffer.h"
 #include "t_window.h"
 #include "t_charset.h"
@@ -27,7 +28,12 @@ void t_tilebuffer::draw(t_window* wnd, t_charset* chr, t_palette* pal, const t_p
 	for (int y = region.offset_y; y < region.offset_y + region.height; y++) {
 		for (int x = region.offset_x; x < region.offset_x + region.width; x++) {
 			t_tile& tile = tile_at(x, y);
-			draw_tile(tile, wnd, chr, pal, scr_pos.x + px, scr_pos.y + py);
+			draw_tile_absolute_pos(tile, wnd, chr, pal, scr_pos.x + px, scr_pos.y + py);
+			for (const auto& spr : sprites) {
+				if (spr->get_x() == x && spr->get_y() == y) {
+					draw_tile_absolute_pos(spr->get_tile(), wnd, chr, pal, scr_pos.x + px, scr_pos.y + py);
+				}
+			}
 			px++;
 		}
 		py++;
@@ -35,7 +41,7 @@ void t_tilebuffer::draw(t_window* wnd, t_charset* chr, t_palette* pal, const t_p
 	}
 }
 
-void t_tilebuffer::draw_tile(t_tile& tile, t_window* wnd, t_charset* chr, t_palette* pal, int x, int y) const
+void t_tilebuffer::draw_tile_absolute_pos(t_tile& tile, t_window* wnd, t_charset* chr, t_palette* pal, int x, int y) const
 {
 	if (tile.flags.visible) {
 		t_char& ch = tile.get_char_wraparound(wnd->get_animation_frame());
@@ -70,9 +76,6 @@ int t_tilebuffer::set_text_wrap(const t_string& text, int* xptr, int* yptr, t_in
 
 	for (auto& ch : text.s_str()) {
 		tile_at(x, y) = t_tile(ch, fgc, bgc, flags);
-		if (x == last_col) {
-			tile_at(x, y).flags.line_wrap = true;
-		}
 		ix++;
 		x++;
 		if (x >= cols) {
@@ -112,4 +115,26 @@ void t_tilebuffer::clear()
 {
 	for (int i = 0; i < length; i++)
 		tiles[i].set_blank();
+}
+
+t_sptr<t_sprite> t_tilebuffer::add_sprite(const t_tile& tile, const t_pos& pos)
+{
+	t_sptr<t_sprite> sprite = sprites.emplace_back(std::make_shared<t_sprite>(tile, pos, true));
+	return sprite;
+}
+
+t_list<t_sptr<t_sprite>>& t_tilebuffer::get_sprites()
+{
+	return sprites;
+}
+
+void t_tilebuffer::remove_sprite(t_sptr<t_sprite> sprite)
+{
+	auto it = std::remove_if(sprites.begin(), sprites.end(),
+		[&sprite](const std::shared_ptr<t_sprite>& ptr) {
+			return ptr == sprite;
+		}
+	);
+
+	sprites.erase(it, sprites.end());
 }

@@ -10,21 +10,21 @@ t_screen::t_screen() :
 	reset();
 }
 
-void t_screen::init_cursor()
-{
-	t_tile cursor_tile = t_tile(127, 0, 0, t_tileflags());
-	csr = add_tiled_sprite(cursor_tile, t_pos(0, 0));
-}
-
 void t_screen::reset()
 {
 	color(default_fg, default_bg, default_bdr);
 	clear();
-	sprites.clear();
 	init_cursor();
 	update_monochrome_tiles();
 	show_cursor(true);
 	locate(0, 0);
+	logical_line = t_string::repeat(" ", cols);
+}
+
+void t_screen::init_cursor()
+{
+	t_tile cursor_tile = t_tile(127, 0, 0, t_tileflags());
+	csr = buf->add_sprite(cursor_tile, t_pos(0, 0));
 }
 
 void t_screen::set_window(t_window* wnd)
@@ -52,9 +52,8 @@ void t_screen::draw()
 {
 	clear_background();
 	buf->draw(wnd, chr, pal, buf_pos, buf_reg);
-	draw_sprites();
 
-	wnd->set_title(t_string::fmt("X:%i Y:%i", csr->pos.x, csr->pos.y));
+	wnd->set_title(t_string::fmt("X:%i Y:%i O:%i", csr->pos.x, csr->pos.y, buf_reg.offset_x));
 }
 
 void t_screen::clear()
@@ -161,12 +160,6 @@ void t_screen::move_cursor_eol()
 	locate(eol(), csry());
 }
 
-void t_screen::move_cursor_eol_logical()
-{
-	t_pos&& eol = eol_logical();
-	locate(eol.x, eol.y);
-}
-
 void t_screen::fix_cursor_pos()
 {
 	if (csr->get_x() < 0)				csr->set_x(0);
@@ -207,29 +200,6 @@ int t_screen::eol() const
 	}
 
 	return x == last_col ? x : x + 1;
-}
-
-t_pos t_screen::eol_logical()
-{
-	int x = csrx();
-	int y = csry();
-
-	for (x; x <= last_col; x++) {
-		t_tile& tile = get_tile(t_pos(x, y));
-		if (tile.flags.line_wrap) {
-			x = -1;
-			y++;
-			if (y > last_row) {
-				x = 0;
-				break;
-			}
-		}
-		else if (tile.get_char().ix == 0) {
-			break;
-		}
-	}
-
-	return t_pos(x, y);
 }
 
 t_pos t_screen::csr_pos() const
@@ -285,9 +255,6 @@ void t_screen::print_tile(const t_tile& tile)
 {
 	buf->set(tile, csr->get_x(), csr->get_y());
 
-	if (csr->pos.x == last_col) {
-		buf->get_ref(csr->get_x(), csr->get_y()).flags.line_wrap = true;
-	}
 	csr->move_dist(1, 0);
 	if (csr->pos.x > last_col) {
 		csr->pos.x = 0;
@@ -351,25 +318,13 @@ void t_screen::scroll_up()
 	}
 }
 
-t_sptr<t_sprite> t_screen::add_free_sprite(const t_tile& tile, const t_pos& pos)
+void t_screen::scroll_horizontal(int dist)
 {
-	return add_sprite(tile, pos, false);
-}
-
-t_sptr<t_sprite> t_screen::add_tiled_sprite(const t_tile& tile, const t_pos& pos)
-{
-	return add_sprite(tile, pos, true);
-}
-
-void t_screen::remove_sprite(t_sptr<t_sprite> sprite)
-{
-	auto it = std::remove_if(sprites.begin(), sprites.end(),
-		[&sprite](const std::shared_ptr<t_sprite>& ptr) {
-			return ptr == sprite;
-		}
-	);
-
-	sprites.erase(it, sprites.end());
+	buf_reg.offset_x += dist;
+	if (buf_reg.offset_x < 0)
+		buf_reg.offset_x = 0;
+	else if (buf_reg.offset_x > cols - buf_reg.width)
+		buf_reg.offset_x = cols - buf_reg.width;
 }
 
 t_tile& t_screen::get_tile(const t_pos& pos)
@@ -387,27 +342,6 @@ void t_screen::set_csr_char_ix(t_index ch)
 	csr->tile.get_char().ix = ch;
 }
 
-t_sptr<t_sprite> t_screen::add_sprite(const t_tile& tile, const t_pos& pos, bool grid)
-{
-	t_sptr<t_sprite> sprite = sprites.emplace_back(std::make_shared<t_sprite>(tile, pos, grid));
-	update_monochrome_tile(sprite->get_tile());
-	return sprite;
-}
-
-void t_screen::draw_sprites()
-{
-	for (const auto& spr : sprites) {
-		t_tile& tile = spr->get_tile();
-		if (tile.flags.visible) {
-			t_char& ch = tile.get_char_wraparound(wnd->get_animation_frame());
-			bool grid = spr->align_to_grid();
-			int x = grid ? (spr->get_x() + buf_pos.x) * t_tile::width : spr->get_x();
-			int y = grid ? (spr->get_y() + buf_pos.y) * t_tile::height : spr->get_y();
-			wnd->draw_char(chr, pal, ch.ix, x, y, ch.fgc, ch.bgc, false, spr->get_tile().flags.hide_bgc);
-		}
-	}
-}
-
 void t_screen::update_monochrome_tiles()
 {
 	if (color_mode != t_color_mode::mode0_monochrome)
@@ -417,7 +351,7 @@ void t_screen::update_monochrome_tiles()
 		for (int x = 0; x < buf->cols; x++)
 			update_monochrome_tile(buf->get_ref(x, y));
 
-	for (const auto& spr : sprites)
+	for (const auto& spr : buf->get_sprites())
 		update_monochrome_tile(spr->get_tile());
 }
 
@@ -436,52 +370,16 @@ void t_screen::update_monochrome_tile(t_tile& tile) const
 
 t_string t_screen::get_current_logical_line()
 {
-	t_string last_half;
-
-	int y = csry();
-	for (int x = csrx(); x <= last_col; x++) {
-		t_tile& tile = get_tile(t_pos(x, y));
+	for (int x = 0; x < cols; x++) {
+		t_tile& tile = get_tile(t_pos(x, csr->pos.y));
 		t_index ch = tile.get_char().ix;
 		if (ch <= 0 || ch > 255)
 			ch = ' ';
 
-		last_half += ch;
-		if (tile.flags.line_wrap) {
-			x = -1;
-			y++;
-			if (y > last_row) {
-				break;
-			}
-		}
+		logical_line[x] = ch;
 	}
 
-	t_string first_half;
-
-	y = csry();
-	int x = csrx() - 1;
-	for (x; x >= -1; x--) {
-		if (x == -1) {
-			x = last_col;
-			y--;
-			if (y < 0) {
-				break;
-			}
-			t_tile& tile = get_tile(t_pos(x, y));
-			if (!tile.flags.line_wrap) {
-				break;
-			}
-		}
-		t_tile& tile = get_tile(t_pos(x, y));
-		t_index ch = tile.get_char().ix;
-		if (ch <= 0 || ch > 255)
-			ch = ' ';
-
-		first_half += ch;
-	}
-
-	first_half = first_half.reverse();
-
-	return t_string(first_half + last_half).trim();
+	return logical_line.trim();
 }
 
 t_index t_screen::get_fg_color() const

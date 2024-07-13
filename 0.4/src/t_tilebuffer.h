@@ -1,5 +1,6 @@
 #pragma once
-#include <memory>
+#include "t_pointers.h"
+#include "t_sprite.h"
 #include "t_tile.h"
 #include "t_pos.h"
 #include "t_tilebuffer_region.h"
@@ -29,11 +30,15 @@ public:
 	t_tile get_copy(int x, int y) const;
 	void fill(const t_tile& tile);
 	void clear();
+	t_sptr<t_sprite> add_sprite(const t_tile& tile, const t_pos& pos);
+	t_list<t_sptr<t_sprite>>& get_sprites();
+	void remove_sprite(t_sptr<t_sprite> sprite);
 
 private:
 	const int length;
 
 	t_list<t_tile> tiles;
+	t_list<t_sptr<t_sprite>> sprites;
 
-	void draw_tile(t_tile& tile, t_window* wnd, t_charset* chr, t_palette* pal, int x, int y) const;
+	void draw_tile_absolute_pos(t_tile& tile, t_window* wnd, t_charset* chr, t_palette* pal, int x, int y) const;
 };
