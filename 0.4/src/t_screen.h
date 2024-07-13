@@ -5,6 +5,7 @@
 #include "t_pos.h"
 #include "t_list.h"
 #include "t_sprite.h"
+#include "t_tilebuffer_region.h"
 
 class t_charset;
 class t_palette;
@@ -18,13 +19,13 @@ enum class t_color_mode
 class t_screen
 {
 public:
+	const int cols = 256;
+	const int rows = t_window::rows - 2;
+	const int last_col = cols - 1;
+	const int last_row = rows - 1;
 	const int default_fg = 0xa8;
 	const int default_bg = 0xa3;
 	const int default_bdr = 0xa2;
-	const int cols;
-	const int rows;
-	const int last_col;
-	const int last_row;
 
 	t_screen();
 	~t_screen() = default;
@@ -94,6 +95,7 @@ private:
 	t_index back_color = 1;
 	t_index border_color = 10;
 	t_pos buf_pos = t_pos(2, 1);
+	t_tilebuffer_region buf_reg;
 	t_list<t_sptr<t_sprite>> sprites;
 	t_sptr<t_sprite> csr;
 	t_color_mode color_mode = t_color_mode::mode0_monochrome;

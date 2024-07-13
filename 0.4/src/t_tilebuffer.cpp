@@ -20,18 +20,18 @@ t_tilebuffer::t_tilebuffer(int cols, int rows) :
 	clear();
 }
 
-void t_tilebuffer::draw(t_window* wnd, t_charset* chr, t_palette* pal)
+void t_tilebuffer::draw(t_window* wnd, t_charset* chr, t_palette* pal, const t_pos& scr_pos, const t_tilebuffer_region& region)
 {
-	draw(wnd, chr, pal, 0, 0);
-}
-
-void t_tilebuffer::draw(t_window* wnd, t_charset* chr, t_palette* pal, int px, int py)
-{
-	for (int y = 0; y < rows; y++) {
-		for (int x = 0; x < cols; x++) {
+	int px = 0;
+	int py = 0;
+	for (int y = region.offset_y; y < region.offset_y + region.height; y++) {
+		for (int x = region.offset_x; x < region.offset_x + region.width; x++) {
 			t_tile& tile = tile_at(x, y);
-			draw_tile(tile, wnd, chr, pal, px + x, py + y);
+			draw_tile(tile, wnd, chr, pal, scr_pos.x + px, scr_pos.y + py);
+			px++;
 		}
+		py++;
+		px = 0;
 	}
 }
 

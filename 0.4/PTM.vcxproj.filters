@@ -253,6 +253,9 @@
     <ClInclude Include="src\PTML_INPUT.h">
       <Filter>PTML - COMMANDS</Filter>
     </ClInclude>
+    <ClInclude Include="src\t_tilebuffer_region.h">
+      <Filter>GRAPHICS - TILESYSTEM</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="UTIL">

@@ -98,6 +98,7 @@
     <ClInclude Include="src\t_tests.h" />
     <ClInclude Include="src\t_tile.h" />
     <ClInclude Include="src\t_tilebuffer.h" />
+    <ClInclude Include="src\t_tilebuffer_region.h" />
     <ClInclude Include="src\t_tileflags.h" />
     <ClInclude Include="src\t_tile_animation.h" />
     <ClInclude Include="src\t_token.h" />

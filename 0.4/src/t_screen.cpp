@@ -3,9 +3,9 @@
 #include "t_palette.h"
 #include "t_charset.h"
 
-t_screen::t_screen() :
-	cols(t_window::cols - 4), rows(t_window::rows - 2), last_col(cols - 1), last_row(rows - 1),
-	buf(std::make_unique<t_tilebuffer>(cols, rows))
+t_screen::t_screen() : 
+	buf(std::make_unique<t_tilebuffer>(cols, rows)),
+	buf_reg(t_tilebuffer_region(0, 0, t_window::cols - 4, t_window::rows - 2))
 {
 	reset();
 }
@@ -51,8 +51,10 @@ void t_screen::refresh()
 void t_screen::draw()
 {
 	clear_background();
-	buf->draw(wnd, chr, pal, buf_pos.x, buf_pos.y);
+	buf->draw(wnd, chr, pal, buf_pos, buf_reg);
 	draw_sprites();
+
+	wnd->set_title(t_string::fmt("X:%i Y:%i", csr->pos.x, csr->pos.y));
 }
 
 void t_screen::clear()
