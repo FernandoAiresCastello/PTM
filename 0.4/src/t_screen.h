@@ -44,11 +44,11 @@ public:
 	void color_bdr(t_index bdr);
 	void locate(int x, int y);
 	void move_cursor_dist(int dx, int dy);
-	void move_cursor_wrap_x(int dx);
 	void move_cursor_top_left();
 	void move_cursor_btm_right();
 	void move_cursor_line_start();
 	void move_cursor_eol();
+	void move_cursor_next_logical_x(int dist);
 	int csrx() const;
 	int csry() const;
 	int eol() const;
@@ -59,11 +59,11 @@ public:
 	void set_blank_tile(int x, int y, t_tileflags flags = t_tileflags());
 	void set_blank_tile_at_csr(t_tileflags flags = t_tileflags());
 	void set_whitespace_at_csr(t_tileflags flags = t_tileflags());
-	void print_char(t_index ch);
-	void print_tile(const t_tile& tile);
+	void on_character_key_pressed(t_index ch);
 	void print_string(const t_string& str);
 	void print_string_crlf(const t_string& str);
 	void print_lines(const t_list<t_string>& lines);
+	void print_debug(const t_string& str);
 	void newline();
 	void scroll_up();
 	void scroll_horizontal(int dist);
@@ -80,7 +80,7 @@ public:
 	void rect_clear(int x1, int y1, int x2, int y2);
 	void toggle_insert_mode();
 	void set_insert_mode(bool state);
-	void displace_tiles_right();
+	bool displace_tiles_right();
 
 private:
 	t_window* wnd = nullptr;
@@ -103,4 +103,6 @@ private:
 	void fix_cursor_pos();
 	void update_cursor();
 	void clear_background();
+	void reset_horizontal_scroll();
+	void sync_horizontal_scroll();
 };

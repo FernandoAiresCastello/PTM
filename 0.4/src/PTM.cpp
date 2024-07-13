@@ -322,11 +322,26 @@ bool PTM::is_key_pressed(const t_string& keyname)
 
 bool PTM::set_function_key(const t_string& keyname, const t_string& value)
 {
-	auto&& keycode = kb.get_keycode_by_name(keyname);
+	bool shifted = false;
+	SDL_Keycode keycode = SDLK_UNKNOWN;
+
+	if (keyname.starts_with("S") || keyname.starts_with("s")) {
+		shifted = true;
+		t_string&& unshifted_keyname = keyname.skip(1);
+		keycode = kb.get_keycode_by_name(unshifted_keyname);
+	}
+	else {
+		keycode = kb.get_keycode_by_name(keyname);
+	}
+
 	if (keycode == SDLK_UNKNOWN)
 		return false;
 
-	main_editor.function_keys[keycode] = value;
+	if (shifted)
+		main_editor.function_keys_shifted[keycode] = value;
+	else
+		main_editor.function_keys[keycode] = value;
+
 	return true;
 }
 
@@ -341,7 +356,7 @@ t_list<t_string> PTM::list_function_keys()
 	for (auto& entry : main_editor.function_keys_shifted) {
 		auto&& keyname = kb.get_name_by_keycode(entry.first);
 		auto& value = entry.second;
-		list.push_back(t_string::fmt("SHIFT+%s: %s", keyname.c_str(), value.c_str()));
+		list.push_back(t_string::fmt("S%s: %s", keyname.c_str(), value.c_str()));
 	}
 	return list;
 }

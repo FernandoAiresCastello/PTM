@@ -32,7 +32,8 @@ public:
 	void clear();
 	t_sptr<t_sprite> add_sprite(const t_tile& tile, const t_pos& pos);
 	t_list<t_sptr<t_sprite>>& get_sprites();
-	void remove_sprite(t_sptr<t_sprite> sprite);
+	void delete_sprite(t_sptr<t_sprite> sprite);
+	void delete_all_sprites();
 
 private:
 	const int length;

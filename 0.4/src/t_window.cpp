@@ -163,3 +163,11 @@ void t_window::draw_text(t_charset* chr, t_palette* pal, const t_string& text, i
 		x += t_tile::width;
 	}
 }
+
+void t_window::draw_debug_text(t_charset* chr, const t_string& text, int x, int y)
+{
+	const char* ctext = text.c_str();
+	for (int i = 0; i < strlen(ctext); i++) {
+		draw_pixels(chr->get(ctext[i]), x++, y, 0xffffff, 0x000000, true, false);
+	}
+}

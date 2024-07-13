@@ -20,7 +20,11 @@ void PTML::FN_SET()
 	ARGC(2);
 	auto&& keyname = STR(1);
 	auto&& value = STR(2);
-	bool valid = keyname.has_length(2, 3) && (keyname.starts_with("F") || keyname.starts_with("f"));
+
+	bool valid = keyname.has_length(2, 3) && 
+		(keyname.starts_with("F") || keyname.starts_with("f") || 
+		 keyname.starts_with("S") || keyname.starts_with("s"));
+
 	if (!valid || !ptm->set_function_key(keyname, value))
 		error = err.unknown_fn_keyname;
 }

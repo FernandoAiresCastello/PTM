@@ -19,6 +19,7 @@ void t_screen::reset()
 	show_cursor(true);
 	locate(0, 0);
 	logical_line = t_string::repeat(" ", cols);
+	reset_horizontal_scroll();
 }
 
 void t_screen::init_cursor()
@@ -53,7 +54,7 @@ void t_screen::draw()
 	clear_background();
 	buf->draw(wnd, chr, pal, buf_pos, buf_reg);
 
-	wnd->set_title(t_string::fmt("X:%i Y:%i O:%i", csr->pos.x, csr->pos.y, buf_reg.offset_x));
+	print_debug(t_string::fmt("X:%i Y:%i O:%i", csr->pos.x, csr->pos.y, buf_reg.offset_x));
 }
 
 void t_screen::clear()
@@ -78,6 +79,19 @@ void t_screen::set_color_mode(t_color_mode color_mode)
 void t_screen::clear_background()
 {
 	wnd->clear(pal->get(border_color));
+}
+
+void t_screen::reset_horizontal_scroll()
+{
+	buf_reg.offset_x = 0;
+}
+
+void t_screen::sync_horizontal_scroll()
+{
+	if (csr->get_x() < buf_reg.offset_x)
+		buf_reg.offset_x = csr->get_x();
+	else if (csr->get_x() >= buf_reg.offset_x + buf_reg.width)
+		buf_reg.offset_x = csr->get_x() - buf_reg.width + 1;
 }
 
 void t_screen::color(t_index fgc, t_index bgc, t_index bdrc)
@@ -120,29 +134,9 @@ void t_screen::move_cursor_dist(int dx, int dy)
 	fix_cursor_pos();
 }
 
-void t_screen::move_cursor_wrap_x(int dx)
-{
-	set_insert_mode(false);
-
-	if (dx < 0 && csr->pos.x == 0 && csr->pos.y == 0)
-		return;
-	if (dx > 0 && csr->pos.x == last_col && csr->pos.y == last_row)
-		return;
-
-	csr->move_dist(dx, 0);
-	
-	if (csr->pos.x > last_col)
-		csr->move_to(0, csr->pos.y + 1);
-	else if (csr->pos.x < 0)
-		csr->move_to(last_col, csr->pos.y - 1);
-
-	fix_cursor_pos();
-}
-
 void t_screen::move_cursor_top_left()
 {
-	set_insert_mode(false);
-	csr->move_to(0, 0);
+	locate(0, 0);
 }
 
 void t_screen::move_cursor_btm_right()
@@ -160,12 +154,26 @@ void t_screen::move_cursor_eol()
 	locate(eol(), csry());
 }
 
+void t_screen::move_cursor_next_logical_x(int dist)
+{
+	while (true) {
+		move_cursor_dist(dist, 0);
+		const t_index& ch = get_tile_at_csr().get_char().ix;
+		if (ch == 0 || ch == ' ' || ch == ',')
+			break;
+		if (csr->get_x() == 0 || csr->get_x() == last_col)
+			break;
+	}
+}
+
 void t_screen::fix_cursor_pos()
 {
 	if (csr->get_x() < 0)				csr->set_x(0);
 	else if (csr->get_x() > last_col)	csr->set_x(last_col);
 	if (csr->get_y() < 0)				csr->set_y(0);
 	else if (csr->get_y() > last_row)	csr->set_y(last_row);
+
+	sync_horizontal_scroll();
 }
 
 void t_screen::update_cursor()
@@ -243,28 +251,18 @@ void t_screen::set_whitespace_at_csr(t_tileflags flags)
 	tile.flags = flags;
 }
 
-void t_screen::print_char(t_index ch)
+void t_screen::on_character_key_pressed(t_index ch)
 {
+	bool should_print = true;
 	if (insert_mode)
-		displace_tiles_right();
-
-	print_tile(t_tile(ch, fore_color, back_color));
-}
-
-void t_screen::print_tile(const t_tile& tile)
-{
-	buf->set(tile, csr->get_x(), csr->get_y());
-
-	csr->move_dist(1, 0);
-	if (csr->pos.x > last_col) {
-		csr->pos.x = 0;
-		csr->pos.y++;
-		if (csr->pos.y > last_row) {
-			csr->pos.y = last_row;
-			csr->pos.x = 0;
-			scroll_up();
+		should_print = displace_tiles_right();
+	if (should_print) {
+		if (csr->get_x() < last_col) {
+			buf->set(t_tile(ch, fore_color, back_color), csr->get_x(), csr->get_y());
+			csr->move_dist(1, 0);
 		}
 	}
+	sync_horizontal_scroll();
 }
 
 void t_screen::print_string(const t_string& str)
@@ -292,9 +290,15 @@ void t_screen::print_lines(const t_list<t_string>& lines)
 	}
 }
 
+void t_screen::print_debug(const t_string& str)
+{
+	wnd->draw_debug_text(chr, str, 0, wnd->last_row);
+}
+
 void t_screen::newline()
 {
 	set_insert_mode(false);
+	reset_horizontal_scroll();
 
 	csr->pos.x = 0;
 	csr->pos.y++;
@@ -316,6 +320,8 @@ void t_screen::scroll_up()
 	for (int col = 0; col <= last_col; col++) {
 		set_blank_tile(col, row, t_tileflags());
 	}
+
+	sync_horizontal_scroll();
 }
 
 void t_screen::scroll_horizontal(int dist)
@@ -438,7 +444,7 @@ void t_screen::set_insert_mode(bool state)
 	insert_mode = state;
 
 	if (insert_mode) {
-		t_tile tile('_', fore_color, back_color);
+		t_tile tile(126, fore_color, back_color);
 		tile.flags.hide_bgc = true;
 		csr->set_tile(tile);
 	}
@@ -449,6 +455,7 @@ void t_screen::set_insert_mode(bool state)
 	update_cursor();
 }
 
-void t_screen::displace_tiles_right()
+bool t_screen::displace_tiles_right()
 {
+	return false;
 }

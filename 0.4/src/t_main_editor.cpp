@@ -61,19 +61,20 @@ bool t_main_editor::handle_control_key()
 {
 	switch (kb->peek_key())
 	{
-		case SDLK_RIGHT:	scr->move_cursor_wrap_x(1);		return true;
-		case SDLK_LEFT:		scr->move_cursor_wrap_x(-1);	return true;
+		case SDLK_RIGHT:	
+			kb->ctrl() ? 
+				scr->move_cursor_next_logical_x(1) :
+				scr->move_cursor_dist(1, 0);
+			return true;
+
+		case SDLK_LEFT:		
+			kb->ctrl() ? 
+				scr->move_cursor_next_logical_x(-1) :
+				scr->move_cursor_dist(-1, 0);	
+			return true;
+
 		case SDLK_DOWN:		scr->move_cursor_dist(0, 1);	return true;
 		case SDLK_UP:		scr->move_cursor_dist(0, -1);	return true;
-
-		case SDLK_PAGEDOWN: {
-			scr->scroll_horizontal(1);
-			return true;
-		}
-		case SDLK_PAGEUP: {
-			scr->scroll_horizontal(-1);
-			return true;
-		}
 
 		case SDLK_HOME: {
 			if (kb->shift()) {
@@ -90,17 +91,12 @@ bool t_main_editor::handle_control_key()
 		}
 
 		case SDLK_END: {
-			if (kb->ctrl()) {
-				scr->move_cursor_btm_right();
-			}
-			else {
-				scr->move_cursor_eol();
-			}
+			scr->move_cursor_eol();
 			return true;
 		}
 
 		case SDLK_BACKSPACE: {
-			scr->move_cursor_wrap_x(-1);
+			scr->move_cursor_dist(-1, 0);
 			scr->set_whitespace_at_csr();
 			return true;
 		}
@@ -161,7 +157,7 @@ bool t_main_editor::handle_character_key()
 		if (kb->ctrl())
 			return handle_ctrl_character_key();
 
-		scr->print_char(ch);
+		scr->on_character_key_pressed(ch);
 		return true;
 	}
 
@@ -172,20 +168,23 @@ bool t_main_editor::handle_ctrl_character_key()
 {
 	switch (kb->peek_key())
 	{
-		case SDLK_c:
+		case SDLK_c: {
 			ptm->tilereg = scr->get_tile_at_csr();
 			return true;
-		case SDLK_x:
+		}
+		case SDLK_x: {
 			ptm->tilereg = scr->get_tile_at_csr();
 			scr->set_whitespace_at_csr();
 			return true;
-		case SDLK_v:
+		}
+		case SDLK_v: {
 			if (ptm->tilereg.has_any_char())
 				scr->set_tile_at_csr(ptm->tilereg);
 			else
 				scr->set_whitespace_at_csr();
-			scr->move_cursor_wrap_x(1);
+			scr->move_cursor_dist(1, 0);
 			return true;
+		}
 	}
 
 	return false;

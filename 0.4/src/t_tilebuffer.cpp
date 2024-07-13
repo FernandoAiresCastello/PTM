@@ -128,7 +128,7 @@ t_list<t_sptr<t_sprite>>& t_tilebuffer::get_sprites()
 	return sprites;
 }
 
-void t_tilebuffer::remove_sprite(t_sptr<t_sprite> sprite)
+void t_tilebuffer::delete_sprite(t_sptr<t_sprite> sprite)
 {
 	auto it = std::remove_if(sprites.begin(), sprites.end(),
 		[&sprite](const std::shared_ptr<t_sprite>& ptr) {
@@ -137,4 +137,9 @@ void t_tilebuffer::remove_sprite(t_sptr<t_sprite> sprite)
 	);
 
 	sprites.erase(it, sprites.end());
+}
+
+void t_tilebuffer::delete_all_sprites()
+{
+	sprites.clear();
 }

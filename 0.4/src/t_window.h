@@ -16,6 +16,8 @@ public:
 	static constexpr int image_h = 200;
 	static constexpr int cols = image_w / t_tile::width;
 	static constexpr int rows = image_h / t_tile::height;
+	static constexpr int last_col = cols - 1;
+	static constexpr int last_row = rows - 1;
 
 	void open(const t_string& title, int size);
 	void close();
@@ -32,6 +34,7 @@ public:
 	void draw_pixels(const t_binary& pixels, int x, int y, const t_color& color1, const t_color& color0, bool grid, bool hide_color0);
 	void draw_char(t_charset* chr, t_palette* pal, t_index char_index, int x, int y, t_index color1, t_index color0, bool grid, bool hide_color0);
 	void draw_text(t_charset* chr, t_palette* pal, const t_string& text, int x, int y, t_index color1, t_index color0, bool grid, bool hide_color0);
+	void draw_debug_text(t_charset* chr, const t_string& text, int x, int y);
 
 private:
 	static constexpr int tilesize = t_tile::width * t_tile::height;
