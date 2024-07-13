@@ -33,5 +33,5 @@ void PTML::FN_LIST()
 {
 	REQUIRE_IMM;
 	ARGC(0);
-	scr->print_lines(ptm->list_function_keys());
+	PRINT_LIST(ptm->list_function_keys());
 }

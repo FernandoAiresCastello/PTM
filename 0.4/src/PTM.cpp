@@ -143,6 +143,35 @@ void PTM::on_machine_cycle()
 	}
 }
 
+SDL_Keycode PTM::await_keypress()
+{
+	SDL_Keycode key_pressed = 0;
+	bool awaiting = true;
+
+	while (awaiting && wnd.is_open()) {
+		if (auto_screen_update)
+			refresh_screen();
+
+		SDL_Event e;
+		SDL_PollEvent(&e);
+		if (e.type == SDL_QUIT) {
+			wnd.close();
+		}
+		else if (e.type == SDL_KEYDOWN) {
+			SDL_Keycode& key = e.key.keysym.sym;
+			if (key == SDLK_RETURN && kb.alt()) {
+				wnd.toggle_fullscreen();
+			}
+			else if (!kb.alt()) {
+				key_pressed = key;
+				awaiting = false;
+			}
+		}
+	}
+
+	return key_pressed;
+}
+
 void PTM::refresh_screen()
 {
 	scr.refresh();

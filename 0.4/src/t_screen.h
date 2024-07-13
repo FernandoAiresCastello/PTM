@@ -7,9 +7,11 @@
 #include "t_sprite.h"
 #include "t_tilebuffer_region.h"
 
+class PTM;
 class t_charset;
 class t_palette;
 class t_tilebuffer;
+class t_keyboard;
 
 enum class t_color_mode
 {
@@ -62,7 +64,7 @@ public:
 	void on_character_key_pressed(t_index ch);
 	void print_string(const t_string& str);
 	void print_string_crlf(const t_string& str);
-	void print_lines(const t_list<t_string>& lines);
+	bool print_lines(const t_list<t_string>& lines, PTM* ptm);
 	void print_debug(const t_string& str);
 	void newline();
 	void scroll_up();

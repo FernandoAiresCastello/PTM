@@ -1,4 +1,5 @@
 #pragma once
+#include <SDL.h>
 #include "t_tile.h"
 #include "t_string.h"
 #include "t_list.h"
@@ -25,6 +26,7 @@ public:
 	void reset();
 	void pause(int frames);
 	void on_machine_cycle();
+	SDL_Keycode await_keypress();
 	void refresh_screen();
 	bool is_window_open() const;
 	void debug(const t_string& msg);

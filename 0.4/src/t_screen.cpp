@@ -1,4 +1,6 @@
+#include <SDL.h>
 #include "t_screen.h"
+#include "PTM.h"
 #include "t_tilebuffer.h"
 #include "t_palette.h"
 #include "t_charset.h"
@@ -53,8 +55,6 @@ void t_screen::draw()
 {
 	clear_background();
 	buf->draw(wnd, chr, pal, buf_pos, buf_reg);
-
-	print_debug(t_string::fmt("X:%i Y:%i O:%i", csr->pos.x, csr->pos.y, buf_reg.offset_x));
 }
 
 void t_screen::clear()
@@ -283,11 +283,29 @@ void t_screen::print_string_crlf(const t_string& str)
 	newline();
 }
 
-void t_screen::print_lines(const t_list<t_string>& lines)
+bool t_screen::print_lines(const t_list<t_string>& lines, PTM* ptm)
 {
-	for (auto& str : lines) {
-		print_string_crlf(str);
+	bool escaped = false;
+	int lines_printed = 0;
+	for (const auto& line : lines) {
+		print_string_crlf(line);
+		lines_printed++;
+		if (lines_printed >= last_row) {
+			SDL_Keycode key = 0;
+			while (key != SDLK_RETURN && key != SDLK_ESCAPE) {
+				key = ptm->await_keypress();
+				if (key == SDLK_RETURN)
+					continue;
+				if (key == SDLK_ESCAPE) {
+					escaped = true;
+					break;
+				}
+			}
+		}
+		if (escaped)
+			break;
 	}
+	return escaped;
 }
 
 void t_screen::print_debug(const t_string& str)

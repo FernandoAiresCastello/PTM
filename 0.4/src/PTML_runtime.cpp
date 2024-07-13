@@ -1,3 +1,4 @@
+#include <SDL.h>
 #include "PTML_runtime.h"
 #include "PTML_shared_headers.h"
 

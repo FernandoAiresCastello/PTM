@@ -4,36 +4,40 @@
 void PTML::LIST()
 {
 	ARGC_MIN_MAX(0, 2);
+	t_list<t_string> lines;
 
 	if (COUNT(0)) {
 		for (auto& stored_line : ptm->get_prg().lines) {
-			scr->print_string_crlf(stored_line.second.to_string());
+			lines.push_back(stored_line.second.to_string());
 		}
 	}
 	else if (COUNT(1)) {
 		t_program& prg = ptm->get_prg();
 		int line_nr = NUM(1);
 		if (prg.has_line(line_nr)) {
-			scr->print_string_crlf(prg.get_line(line_nr)->to_string());
+			lines.push_back(prg.get_line(line_nr)->to_string());
 		}
 		else {
 			error = err.undefined_line_nr;
+			return;
 		}
 	}
 	else if (COUNT(2)) {
-		auto& lines = ptm->get_prg().lines;
+		auto& prg_lines = ptm->get_prg().lines;
 		int first = NUM(1);
 		int last = NUM(2);
 		if (last < first) {
 			error = err.arg_out_of_range;
 			return;
 		}
-		auto itLower = lines.lower_bound(first);
-		auto itUpper = lines.upper_bound(last);
+		auto itLower = prg_lines.lower_bound(first);
+		auto itUpper = prg_lines.upper_bound(last);
 		for (auto& it = itLower; it != itUpper; ++it) {
-			scr->print_string_crlf(it->second.to_string());
+			lines.push_back(it->second.to_string());
 		}
 	}
+
+	PRINT_LIST(lines);
 }
 
 void PTML::RUN()
