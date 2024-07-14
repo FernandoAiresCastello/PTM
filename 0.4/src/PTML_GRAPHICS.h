@@ -12,11 +12,16 @@ namespace PTML
 	void COLOR_GETB();
 	void COLOR_GETBR();
 	void PRINT();
+	void PRINTC();
 	void PRINTL();
 	void PRINTF();
 	void CLS();
 	void PAL();
 	void CHR();
+	void PAL_OUT();
+	void CHR_OUT();
+	void PAL_RESET();
+	void CHR_RESET();
 	void LOCATE();
 	void SCR_FULL();
 	void CSR_ON();
@@ -24,6 +29,7 @@ namespace PTML
 	void TILE_NEW();
 	void TILE_ADD();
 	void TILE_LIST();
+	void TILE_LISTC();
 	void PUT();
 	void RECT();
 	void RECT_DEL();

@@ -74,18 +74,27 @@ void PTML::PRINT()
 {
 	ARGC(1);
 	auto&& value = STR(1);
-
 	if (IMM && !value.empty())
 		scr->print_string_crlf(value);
 	else
 		scr->print_string(value);
 }
 
-void PTML::PRINTL()
+void PTML::PRINTC()
 {
 	ARGC(1);
-	auto&& value = STR(1);
-	scr->print_string_crlf(value);
+	scr->print_char(NUM(1));
+}
+
+void PTML::PRINTL()
+{
+	ARGC_MIN_MAX(0, 1);
+	if (COUNT(0))
+		scr->newline();
+	else {
+		auto&& value = STR(1);
+		scr->print_string_crlf(value);
+	}
 }
 
 void PTML::PRINTF()
@@ -113,6 +122,37 @@ void PTML::CHR()
 {
 	ARGC(3);
 	ptm->get_chr().set_row(NUM(1), NUM(2), STR(3));
+}
+
+void PTML::PAL_OUT()
+{
+	ARGC(1);
+	t_index&& color = NUM(1);
+	t_tile tile(0, color, color);
+	tile.flags.monochrome = false;
+	scr->newline();
+	scr->set_tile(tile, 0, scr->csry() - 1);
+}
+
+void PTML::CHR_OUT()
+{
+	ARGC(1);
+	t_index&& ch = NUM(1);
+	t_tile tile(ch, scr->get_fg_color(), scr->get_bg_color());
+	scr->newline();
+	scr->set_tile(tile, 0, scr->csry() - 1);
+}
+
+void PTML::PAL_RESET()
+{
+	ARGC(0);
+	ptm->get_pal().reset();
+}
+
+void PTML::CHR_RESET()
+{
+	ARGC(0);
+	ptm->get_chr().reset();
 }
 
 void PTML::LOCATE()
@@ -166,8 +206,23 @@ void PTML::TILE_ADD()
 void PTML::TILE_LIST()
 {
 	ARGC(0);
+	t_list<t_string> tiles;
 	for (auto&& ch : TILEREG.get_all_chars()) {
-		scr->print_string_crlf(t_string::fmt("%i,%i,%i", ch.ix, ch.fgc, ch.bgc));
+		tiles.push_back(t_string::fmt("%i,%i,%i", ch.ix, ch.fgc, ch.bgc));
+	}
+	PRINT_LIST(tiles);
+}
+
+void PTML::TILE_LISTC()
+{
+	IF_TILEREG_EMPTY_RET;
+	ARGC(0);
+	int i = 0;
+	scr->newline();
+	for (auto&& ch : TILEREG.get_all_chars()) {
+		t_tile tile(ch);
+		tile.flags.monochrome = false;
+		scr->set_tile(tile, i++, scr->csry() - 1);
 	}
 }
 

@@ -248,13 +248,9 @@ void t_screen::on_character_key_pressed(t_index ch)
 	bool should_print = true;
 	if (insert_mode)
 		should_print = displace_tiles_right();
+	if (should_print)
+		print_char(ch);
 
-	if (should_print) {
-		if (csr->get_x() < last_col) {
-			buf->set(t_tile(ch, fore_color, back_color), csr->get_x(), csr->get_y());
-			csr->move_dist(1, 0);
-		}
-	}
 	sync_horizontal_scroll();
 }
 
@@ -263,7 +259,7 @@ void t_screen::on_backspace_pressed()
 	if (csr->get_x() == 0)
 		return;
 
-	move_cursor_dist(-1, 0);
+	csr->move_dist(-1, 0);
 	set_blank_tile_at_csr();
 	displace_tiles_left();
 }
@@ -272,6 +268,14 @@ void t_screen::on_delete_pressed()
 {
 	set_blank_tile_at_csr();
 	displace_tiles_left();
+}
+
+void t_screen::print_char(t_index ch)
+{
+	if (csr->get_x() < last_col) {
+		buf->set(t_tile(ch, fore_color, back_color), csr->pos.x, csr->pos.y);
+		csr->move_dist(1, 0);
+	}
 }
 
 void t_screen::print_string(const t_string& str)

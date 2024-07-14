@@ -63,6 +63,7 @@ public:
 	void on_character_key_pressed(t_index ch);
 	void on_backspace_pressed();
 	void on_delete_pressed();
+	void print_char(t_index ch);
 	void print_string(const t_string& str);
 	void print_string_crlf(const t_string& str);
 	bool print_lines(const t_list<t_string>& lines, PTM* ptm);
