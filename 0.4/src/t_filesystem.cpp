@@ -99,7 +99,7 @@ t_string t_filesystem::read_hex_file(const t_string& filename)
             try {
                 ch = std::stoi(byte_str.s_str(), nullptr, 16);
             }
-            catch (std::exception ex) {
+            catch (std::exception) {
                 return "";
             }
             text += ch;

@@ -243,19 +243,12 @@ void t_screen::set_blank_tile_at_csr(t_tileflags flags)
 	set_blank_tile(csr->pos.x, csr->pos.y, flags);
 }
 
-void t_screen::set_whitespace_at_csr(t_tileflags flags)
-{
-	auto& tile = buf->get_ref(csr->pos.x, csr->pos.y);
-	tile.set_blank();
-	tile.set_char(' ', fore_color, back_color);
-	tile.flags = flags;
-}
-
 void t_screen::on_character_key_pressed(t_index ch)
 {
 	bool should_print = true;
 	if (insert_mode)
 		should_print = displace_tiles_right();
+
 	if (should_print) {
 		if (csr->get_x() < last_col) {
 			buf->set(t_tile(ch, fore_color, back_color), csr->get_x(), csr->get_y());
@@ -263,6 +256,22 @@ void t_screen::on_character_key_pressed(t_index ch)
 		}
 	}
 	sync_horizontal_scroll();
+}
+
+void t_screen::on_backspace_pressed()
+{
+	if (csr->get_x() == 0)
+		return;
+
+	move_cursor_dist(-1, 0);
+	set_blank_tile_at_csr();
+	displace_tiles_left();
+}
+
+void t_screen::on_delete_pressed()
+{
+	set_blank_tile_at_csr();
+	displace_tiles_left();
 }
 
 void t_screen::print_string(const t_string& str)
@@ -475,5 +484,30 @@ void t_screen::set_insert_mode(bool state)
 
 bool t_screen::displace_tiles_right()
 {
-	return false;
+	int y = csr->get_y();
+	int x = eol() - 1;
+	if (x >= last_col - 1)
+		return false;
+
+	while (x >= csr->get_x()) {
+		auto&& tile_to_displace = buf->get_copy(x, y);
+		buf->set(tile_to_displace, x + 1, y);
+		x--;
+	}
+
+	return true;
+}
+
+bool t_screen::displace_tiles_left()
+{
+	int y = csr->get_y();
+	int x = csr->get_x() + 1;
+
+	while (x <= eol()) {
+		auto&& tile_to_displace = buf->get_copy(x, y);
+		buf->set(tile_to_displace, x - 1, y);
+		x++;
+	}
+
+	return true;
 }

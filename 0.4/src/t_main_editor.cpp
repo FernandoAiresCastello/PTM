@@ -96,19 +96,18 @@ bool t_main_editor::handle_control_key()
 		}
 
 		case SDLK_BACKSPACE: {
-			scr->move_cursor_dist(-1, 0);
-			scr->set_whitespace_at_csr();
+			scr->on_backspace_pressed();
 			return true;
 		}
 
 		case SDLK_DELETE: {
-			scr->set_whitespace_at_csr();
+			scr->on_delete_pressed();
 			return true;
 		}
 
 		case SDLK_TAB: {
 			for (int i = 0; i < 8; i++)
-				scr->print_string(" ");
+				scr->on_character_key_pressed(' ');
 			return true;
 		}
 
@@ -174,14 +173,14 @@ bool t_main_editor::handle_ctrl_character_key()
 		}
 		case SDLK_x: {
 			ptm->tilereg = scr->get_tile_at_csr();
-			scr->set_whitespace_at_csr();
+			scr->set_blank_tile_at_csr();
 			return true;
 		}
 		case SDLK_v: {
 			if (ptm->tilereg.has_any_char())
 				scr->set_tile_at_csr(ptm->tilereg);
 			else
-				scr->set_whitespace_at_csr();
+				scr->set_blank_tile_at_csr();
 			scr->move_cursor_dist(1, 0);
 			return true;
 		}

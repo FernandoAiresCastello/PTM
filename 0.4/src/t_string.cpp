@@ -134,12 +134,18 @@ int t_string::to_int() const
 		str = str.skip(1);
 
 	int int_value = 0;
-	if ((str[0] == '0' && str[1] == 'x') || (str[0] == '&' && toupper(str[1]) == 'H'))
-		int_value = std::stoi(str.skip(2), nullptr, 16);
-	else if ((str[0] == '0' && str[1] == 'b') || (str[0] == '&' && toupper(str[1]) == 'B'))
-		int_value = std::stoi(str.skip(2), nullptr, 2);
-	else if (isdigit(str[0]))
-		int_value = std::stoi(str);
+
+	try {
+		if ((str[0] == '0' && str[1] == 'x') || (str[0] == '&' && toupper(str[1]) == 'H'))
+			int_value = std::stoi(str.skip(2), nullptr, 16);
+		else if ((str[0] == '0' && str[1] == 'b') || (str[0] == '&' && toupper(str[1]) == 'B'))
+			int_value = std::stoi(str.skip(2), nullptr, 2);
+		else if (isdigit(str[0]))
+			int_value = std::stoi(str);
+	}
+	catch (std::out_of_range) {
+		int_value = 0;
+	}
 
 	return negative ? -int_value : int_value;
 }
