@@ -89,6 +89,7 @@ const t_string& t_interpreter::get_last_error()
 
 void t_interpreter::on_user_interrupt(t_program_line* line)
 {
+	scr->newline();
 	scr->print_string_crlf(t_string::fmt("Break in %i", line->line_nr));
 }
 

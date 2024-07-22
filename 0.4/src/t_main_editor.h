@@ -31,4 +31,5 @@ private:
 	bool handle_ctrl_character_key();
 	void on_enter_pressed();
 	void trigger_function_key(SDL_Keycode key, bool shift);
+	void auto_type(const t_string& str);
 };

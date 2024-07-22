@@ -14,8 +14,8 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("VARS", VARS);
 	CMD("VAR.CLR", VAR_CLR);
 	CMD("COLOR", COLOR);
-	CMD("COLOR.MODE0", COLOR_MODE0);
-	CMD("COLOR.MODE1", COLOR_MODE1);
+	CMD("COLOR.MONO", COLOR_MONO);
+	CMD("COLOR.MULTI", COLOR_MULTI);
 	CMD("COLOR.SETF", COLOR_SETF);
 	CMD("COLOR.SETB", COLOR_SETB);
 	CMD("COLOR.SETBR", COLOR_SETBR);
@@ -98,6 +98,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("KB.FLUSH", KB_FLUSH);
 	CMD("FN.SET", FN_SET);
 	CMD("FN.LIST", FN_LIST);
+	CMD("INPUT", INPUT);
 
 	return nullptr;
 }

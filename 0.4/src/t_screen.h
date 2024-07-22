@@ -47,7 +47,6 @@ public:
 	void locate(int x, int y);
 	void move_cursor_dist(int dx, int dy);
 	void move_cursor_top_left();
-	void move_cursor_btm_right();
 	void move_cursor_line_start();
 	void move_cursor_eol();
 	void move_cursor_next_logical_x(int dist);
@@ -86,6 +85,7 @@ public:
 	void set_insert_mode(bool state);
 	bool displace_tiles_right();
 	bool displace_tiles_left();
+	const t_tilebuffer_region& get_viewport();
 
 private:
 	t_window* wnd = nullptr;

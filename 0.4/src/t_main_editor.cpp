@@ -80,6 +80,7 @@ bool t_main_editor::handle_control_key()
 			if (kb->shift()) {
 				scr->move_cursor_top_left();
 				scr->clear();
+				scr->set_insert_mode(false);
 			}
 			else if (kb->ctrl()) {
 				scr->move_cursor_top_left();
@@ -168,20 +169,12 @@ bool t_main_editor::handle_ctrl_character_key()
 	switch (kb->peek_key())
 	{
 		case SDLK_c: {
-			ptm->tilereg = scr->get_tile_at_csr();
 			return true;
 		}
 		case SDLK_x: {
-			ptm->tilereg = scr->get_tile_at_csr();
-			scr->set_blank_tile_at_csr();
 			return true;
 		}
 		case SDLK_v: {
-			if (ptm->tilereg.has_any_char())
-				scr->set_tile_at_csr(ptm->tilereg);
-			else
-				scr->set_blank_tile_at_csr();
-			scr->move_cursor_dist(1, 0);
 			return true;
 		}
 	}
@@ -200,12 +193,24 @@ void t_main_editor::on_enter_pressed()
 void t_main_editor::trigger_function_key(SDL_Keycode key, bool shift)
 {
 	const t_string& text = shift ? function_keys_shifted[key] : function_keys[key];
+
 	if (text.ends_with("\n") || text.ends_with("\\n")) {
-		if (text.ends_with("\n")) scr->print_string(text.remove_last(1));
-		if (text.ends_with("\\n")) scr->print_string(text.remove_last(2));
+
+		if (text.ends_with("\n")) 
+			auto_type(text.remove_last(1));
+		if (text.ends_with("\\n")) 
+			auto_type(text.remove_last(2));
+
 		on_enter_pressed();
 	}
 	else {
-		scr->print_string(text);
+		auto_type(text);
+	}
+}
+
+void t_main_editor::auto_type(const t_string& str)
+{
+	for (auto& ch : str.s_str()) {
+		scr->on_character_key_pressed(ch);
 	}
 }

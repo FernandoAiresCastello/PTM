@@ -19,13 +19,13 @@ void PTML::COLOR()
 	}
 }
 
-void PTML::COLOR_MODE0()
+void PTML::COLOR_MONO()
 {
 	ARGC(0);
 	scr->set_color_mode(t_color_mode::mode0_monochrome);
 }
 
-void PTML::COLOR_MODE1()
+void PTML::COLOR_MULTI()
 {
 	ARGC(0);
 	scr->set_color_mode(t_color_mode::mode1_multicolor);
@@ -110,6 +110,7 @@ void PTML::CLS()
 	ARGC(0);
 	scr->clear();
 	scr->locate(0, 0);
+	scr->set_insert_mode(false);
 }
 
 void PTML::PAL()

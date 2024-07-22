@@ -68,27 +68,6 @@ void t_tilebuffer::set_text(const t_string& text, int x, int y, t_index fgc, t_i
 	}
 }
 
-int t_tilebuffer::set_text_wrap(const t_string& text, int* xptr, int* yptr, t_index fgc, t_index bgc, t_tileflags flags)
-{
-	int& x = *xptr;
-	int& y = *yptr;
-	int ix = 0;
-
-	for (auto& ch : text.s_str()) {
-		tile_at(x, y) = t_tile(ch, fgc, bgc, flags);
-		ix++;
-		x++;
-		if (x >= cols) {
-			x = 0;
-			y++;
-			if (y >= rows) {
-				break;
-			}
-		}
-	}
-	return ix;
-}
-
 void t_tilebuffer::set_blank(int x, int y)
 {
 	if_inside_bounds(x, y)

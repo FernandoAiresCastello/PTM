@@ -6,4 +6,5 @@ namespace PTML
 	void KB_FLUSH();
 	void FN_SET();
 	void FN_LIST();
+	void INPUT();
 }

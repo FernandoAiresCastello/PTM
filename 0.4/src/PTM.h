@@ -26,6 +26,7 @@ public:
 	void reset();
 	void pause(int frames);
 	void on_machine_cycle();
+	void on_escape_key_pressed();
 	SDL_Keycode await_keypress();
 	void refresh_screen();
 	bool is_window_open() const;
@@ -60,6 +61,7 @@ public:
 	bool is_key_pressed(const t_string& keyname);
 	bool set_function_key(const t_string& keyname, const t_string& value);
 	t_list<t_string> list_function_keys();
+	t_string input_string(const t_string& prompt, int maxlen);
 
 private:
 	bool running = false;

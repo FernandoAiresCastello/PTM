@@ -46,6 +46,7 @@
     <ClCompile Include="src\t_program_line.cpp" />
     <ClCompile Include="src\t_program_runner.cpp" />
     <ClCompile Include="src\t_screen.cpp" />
+    <ClCompile Include="src\t_sound.cpp" />
     <ClCompile Include="src\t_sprite.cpp" />
     <ClCompile Include="src\t_string.cpp" />
     <ClCompile Include="src\t_tests.cpp" />
@@ -92,6 +93,7 @@
     <ClInclude Include="src\t_program_line.h" />
     <ClInclude Include="src\t_program_runner.h" />
     <ClInclude Include="src\t_screen.h" />
+    <ClInclude Include="src\t_sound.h" />
     <ClInclude Include="src\t_sprite.h" />
     <ClInclude Include="src\t_stack.h" />
     <ClInclude Include="src\t_string.h" />
@@ -132,7 +134,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -199,7 +201,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level1</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
@@ -213,7 +215,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Lib\SDL2-2.30.2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

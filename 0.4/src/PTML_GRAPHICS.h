@@ -3,8 +3,8 @@
 namespace PTML
 {
 	void COLOR();
-	void COLOR_MODE0();
-	void COLOR_MODE1();
+	void COLOR_MONO();
+	void COLOR_MULTI();
 	void COLOR_SETF();
 	void COLOR_SETB();
 	void COLOR_SETBR();

@@ -35,3 +35,17 @@ void PTML::FN_LIST()
 	ARGC(0);
 	PRINT_LIST(ptm->list_function_keys());
 }
+
+void PTML::INPUT()
+{
+	ARGC_MIN_MAX(1, 2);
+	REQUIRE_IDENT(1);
+	
+	t_string value;
+	if (COUNT(1))
+		value = ptm->input_string("", 255);
+	else if (COUNT(2))
+		value = ptm->input_string("", NUM(2));
+
+	ptm->set_var(IDENT(1), value);
+}

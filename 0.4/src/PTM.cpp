@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "PTM.h"
 #include "t_tests.h"
 #include "t_window.h"
@@ -45,10 +46,13 @@ void PTM::run()
 void PTM::exit()
 {
 	wnd.close();
+	SDL_Quit();
 }
 
 void PTM::init()
 {
+	SDL_Init(SDL_INIT_EVERYTHING);
+
 	wnd.open(title, wnd_size);
 	
 	kb.init();
@@ -125,14 +129,7 @@ void PTM::on_machine_cycle()
 			wnd.toggle_fullscreen();
 		}
 		else if (key == SDLK_ESCAPE) {
-			if (halted) {
-				halted = false;
-			}
-			if (prg_runner.is_running()) {
-				prg_runner.stop();
-				intp.on_user_interrupt(prg_runner.get_current_line());
-				scr.show_cursor(true);
-			}
+			on_escape_key_pressed();
 		}
 		else if (!kb.alt() && !halted) {
 			kb.push_key(key);
@@ -140,6 +137,18 @@ void PTM::on_machine_cycle()
 				main_editor.on_keydown();
 			}
 		}
+	}
+}
+
+void PTM::on_escape_key_pressed()
+{
+	if (halted) {
+		halted = false;
+	}
+	if (prg_runner.is_running()) {
+		prg_runner.stop();
+		intp.on_user_interrupt(prg_runner.get_current_line());
+		scr.show_cursor(true);
 	}
 }
 
@@ -289,12 +298,19 @@ void PTM::save_program(const t_string& filename, bool hex)
 
 bool PTM::load_program(const t_string& filename, bool hex)
 {
-	if (hex)
-		filesys.load_program_binary(&intp, &prg, filename);
-	else
-		filesys.load_program_plaintext(&intp, &prg, filename);
+	try
+	{
+		if (hex)
+			filesys.load_program_binary(&intp, &prg, filename);
+		else
+			filesys.load_program_plaintext(&intp, &prg, filename);
 
-	return !prg.lines.empty();
+		return !prg.lines.empty();
+	}
+	catch (std::runtime_error error)
+	{
+		return false;
+	}
 }
 
 bool PTM::has_program_label(const t_string& label)
@@ -388,4 +404,46 @@ t_list<t_string> PTM::list_function_keys()
 		list.push_back(t_string::fmt("S%s: %s", keyname.c_str(), value.c_str()));
 	}
 	return list;
+}
+
+t_string PTM::input_string(const t_string& prompt, int maxlen)
+{
+	t_string value;
+	bool escaped = false;
+	const int initial_x = scr.csrx();
+
+	if (!prompt.empty())
+		scr.print_string(prompt);
+
+	while (wnd.is_open()) {
+		SDL_Keycode key = await_keypress();
+		if (key == SDLK_RETURN) {
+			scr.newline();
+			escaped = false;
+			break;
+		}
+		else if (key == SDLK_ESCAPE) {
+			on_escape_key_pressed();
+			escaped = true;
+			break;
+		}
+		else if (key == SDLK_BACKSPACE) {
+			if (scr.csrx() > initial_x) {
+				scr.move_cursor_dist(-1, 0);
+				scr.set_blank_tile_at_csr();
+				value = value.substr(0, value.length() - 2);
+			}
+		}
+		else {
+			if (value.length() < maxlen) {
+				int ch = kb.keycode_to_char(key);
+				if (ch > 0) {
+					scr.print_char(ch);
+					value += ch;
+				}
+			}
+		}
+	}
+
+	return value;
 }

@@ -122,14 +122,12 @@ void t_screen::color_bdr(t_index bdr)
 
 void t_screen::locate(int x, int y)
 {
-	set_insert_mode(false);
 	csr->move_to(x, y);
 	fix_cursor_pos();
 }
 
 void t_screen::move_cursor_dist(int dx, int dy)
 {
-	set_insert_mode(false);
 	csr->move_dist(dx, dy);
 	fix_cursor_pos();
 }
@@ -137,11 +135,6 @@ void t_screen::move_cursor_dist(int dx, int dy)
 void t_screen::move_cursor_top_left()
 {
 	locate(0, 0);
-}
-
-void t_screen::move_cursor_btm_right()
-{
-	locate(last_col, last_row);
 }
 
 void t_screen::move_cursor_line_start()
@@ -280,14 +273,8 @@ void t_screen::print_char(t_index ch)
 
 void t_screen::print_string(const t_string& str)
 {
-	int ix = buf->set_text_wrap(str, &csr->pos.x, &csr->pos.y, fore_color, back_color);
-
-	if (csr->pos.y > last_row) {
-		csr->pos.y = last_row;
-		csr->pos.x = 0;
-		scroll_up();
-		print_string(str.substr(ix));
-	}
+	buf->set_text(str, csr->pos.x, csr->pos.y, fore_color, back_color);
+	move_cursor_dist(str.length(), 0);
 }
 
 void t_screen::print_string_crlf(const t_string& str)
@@ -514,4 +501,9 @@ bool t_screen::displace_tiles_left()
 	}
 
 	return true;
+}
+
+const t_tilebuffer_region& t_screen::get_viewport()
+{
+	return buf_reg;
 }

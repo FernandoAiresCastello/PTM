@@ -43,8 +43,28 @@ void PTML::LIST()
 void PTML::RUN()
 {
 	REQUIRE_IMM;
-	ARGC(0);
-	ptm->run_program();
+	ARGC_MIN_MAX(0, 1);
+	
+	if (COUNT(0))
+	{
+		ptm->run_program();
+	}
+	else if (COUNT(1))
+	{
+		const t_string&& filename = STR(1);
+		if (t_filesystem::file_exists(filename)) {
+			bool valid = ptm->load_program(filename, true);
+			if (!valid) {
+				error = err.invalid_program;
+			}
+			else {
+				ptm->run_program();
+			}
+		}
+		else {
+			error = err.file_not_found;
+		}
+	}
 }
 
 void PTML::NEW()
