@@ -23,7 +23,7 @@ public:
 	void run();
 	void exit();
 	void halt();
-	void reset();
+	void reset(bool new_prg);
 	void pause(int frames);
 	void on_machine_cycle();
 	void on_escape_key_pressed();

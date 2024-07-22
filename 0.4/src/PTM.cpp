@@ -82,17 +82,18 @@ void PTM::halt()
 	}
 }
 
-void PTM::reset()
+void PTM::reset(bool new_prg)
 {
 	halted = false;
 	prg_runner.stop();
-	new_program();
 	delete_all_vars();
 	chr.reset();
 	pal.reset();
 	scr.reset();
 	main_editor.reset();
-	main_editor.print_welcome();
+
+	if (new_prg)
+		new_program();
 }
 
 void PTM::pause(int frames)

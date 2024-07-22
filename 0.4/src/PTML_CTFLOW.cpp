@@ -22,7 +22,7 @@ void PTML::HALT()
 void PTML::RESET()
 {
 	ARGC(0);
-	ptm->reset();
+	ptm->reset(true);
 }
 
 void PTML::GOTO()

@@ -12,7 +12,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 {
 	CMD("VAR", VAR);
 	CMD("VARS", VARS);
-	CMD("VAR.CLR", VAR_CLR);
+	CMD("VARS.CLR", VAR_CLR);
 	CMD("COLOR", COLOR);
 	CMD("COLOR.MONO", COLOR_MONO);
 	CMD("COLOR.MULTI", COLOR_MULTI);
