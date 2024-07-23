@@ -448,3 +448,18 @@ t_string PTM::input_string(const t_string& prompt, int maxlen)
 
 	return value;
 }
+
+void PTM::create_table(const t_string& name, int cols, int rows)
+{
+	tables[name].init(cols, rows);
+}
+
+bool PTM::has_table(const t_string& name)
+{
+	return tables.contains(name);
+}
+
+t_table& PTM::get_table(const t_string& name)
+{
+	return tables[name];
+}

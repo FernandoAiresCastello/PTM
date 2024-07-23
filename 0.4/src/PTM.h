@@ -10,6 +10,8 @@
 #include "t_window.h"
 #include "t_program.h"
 #include "t_program_line.h"
+#include "t_table.h"
+#include "t_namespace.h"
 
 class PTM
 {
@@ -62,11 +64,16 @@ public:
 	bool set_function_key(const t_string& keyname, const t_string& value);
 	t_list<t_string> list_function_keys();
 	t_string input_string(const t_string& prompt, int maxlen);
+	void create_table(const t_string& name, int cols, int rows);
+	bool has_table(const t_string& name);
+	t_table& get_table(const t_string& name);
 
 private:
 	bool running = false;
 	bool halted = false;
-	t_dict<t_string, t_string> vars;
+
+	t_namespace<t_string> vars;
+	t_namespace<t_table> tables;
 
 	void init();
 	void run_tests();

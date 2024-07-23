@@ -113,6 +113,9 @@
     <ClCompile Include="src\t_sound.cpp">
       <Filter>SOUND</Filter>
     </ClCompile>
+    <ClCompile Include="src\t_table.cpp">
+      <Filter>UTIL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\t_string.h">
@@ -261,6 +264,12 @@
     </ClInclude>
     <ClInclude Include="src\t_sound.h">
       <Filter>SOUND</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_table.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_namespace.h">
+      <Filter>UTIL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

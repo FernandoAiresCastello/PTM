@@ -8,6 +8,7 @@ namespace PTML
 		const t_string invalid_argc = "Invalid argument count";
 		const t_string varname_expected = "Variable name expected";
 		const t_string undefined_var = "Undefined variable";
+		const t_string undefined_table = "Undefined table";
 		const t_string division_by_zero = "Division by zero";
 		const t_string undefined_line_nr = "Undefined line number";
 		const t_string label_not_found = "Label not found";
@@ -15,7 +16,7 @@ namespace PTML
 		const t_string cmd_not_available = "Command not available";
 		const t_string file_not_found = "File not found";
 		const t_string invalid_filename = "Illegal filename";
-		const t_string arg_out_of_range = "Out of range";
+		const t_string arg_out_of_range = "Out of bounds";
 		const t_string invalid_program = "Invalid program";
 		const t_string unknown_keyname = "Unknown key name";
 		const t_string unknown_fn_keyname = "Function key name expected";

@@ -30,6 +30,7 @@
     <ClCompile Include="src\PTML_runtime.cpp" />
     <ClCompile Include="src\PTML_ALL.cpp" />
     <ClCompile Include="src\PTML_VARS.cpp" />
+    <ClCompile Include="src\t_table.cpp" />
     <ClCompile Include="src\t_char.cpp" />
     <ClCompile Include="src\t_charset.cpp" />
     <ClCompile Include="src\t_color.cpp" />
@@ -72,6 +73,8 @@
     <ClInclude Include="src\PTML_macros.h" />
     <ClInclude Include="src\PTML_shared_headers.h" />
     <ClInclude Include="src\PTML_VARS.h" />
+    <ClInclude Include="src\t_namespace.h" />
+    <ClInclude Include="src\t_table.h" />
     <ClInclude Include="src\t_binary.h" />
     <ClInclude Include="src\t_char.h" />
     <ClInclude Include="src\t_charset.h" />

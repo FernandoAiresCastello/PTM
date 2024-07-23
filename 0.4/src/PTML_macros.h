@@ -23,3 +23,5 @@
 #define TILEREG					ptm->tilereg
 #define IF_TILEREG_EMPTY_RET	if (!TILEREG.has_any_char()) return
 #define PRINT_LIST(x)			if (scr->print_lines(x, ptm)) scr->print_string_crlf("Break");
+#define CHK_TBL_BOUNDS(x, col, row)		if (col < 0 || row < 0 || col >= x.get_cols() || row >= x.get_rows()) { error = err.arg_out_of_range; return; }
+

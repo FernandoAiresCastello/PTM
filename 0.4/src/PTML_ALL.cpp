@@ -13,6 +13,9 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("VAR", VAR);
 	CMD("VARS", VARS);
 	CMD("VARS.CLR", VAR_CLR);
+	CMD("TBL.NEW", TBL_NEW);
+	CMD("TBL.SET", TBL_SET);
+	CMD("TBL.GET", TBL_GET);
 	CMD("COLOR", COLOR);
 	CMD("COLOR.MONO", COLOR_MONO);
 	CMD("COLOR.MULTI", COLOR_MULTI);
