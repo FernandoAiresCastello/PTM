@@ -29,10 +29,11 @@ public:
 	t_tile get_copy(int x, int y) const;
 	void fill(const t_tile& tile);
 	void clear();
-	t_sptr<t_sprite> add_sprite(const t_tile& tile, const t_pos& pos);
+	t_sptr<t_sprite> add_sprite(const t_tile& tile, const t_pos& pos, bool grid);
 	t_list<t_sptr<t_sprite>>& get_sprites();
 	void delete_sprite(t_sptr<t_sprite> sprite);
 	void delete_all_sprites();
+	void delete_all_sprites_except(t_sptr<t_sprite> sprite);
 
 private:
 	const int length;
@@ -40,5 +41,5 @@ private:
 	t_list<t_tile> tiles;
 	t_list<t_sptr<t_sprite>> sprites;
 
-	void draw_tile_absolute_pos(t_tile& tile, t_window* wnd, t_charset* chr, t_palette* pal, int x, int y) const;
+	void draw_tile_absolute_pos(t_tile& tile, t_window* wnd, t_charset* chr, t_palette* pal, int x, int y, bool grid) const;
 };

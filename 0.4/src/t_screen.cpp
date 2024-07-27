@@ -27,7 +27,7 @@ void t_screen::reset()
 void t_screen::init_cursor()
 {
 	t_tile cursor_tile = t_tile(127, 0, 0, t_tileflags());
-	csr = buf->add_sprite(cursor_tile, t_pos(0, 0));
+	csr = buf->add_sprite(cursor_tile, t_pos(0, 0), true);
 }
 
 void t_screen::set_window(t_window* wnd)
@@ -506,4 +506,14 @@ bool t_screen::displace_tiles_left()
 const t_tilebuffer_region& t_screen::get_viewport()
 {
 	return buf_reg;
+}
+
+t_sptr<t_sprite> t_screen::add_sprite(const t_tile& tile, const t_pos& pos)
+{
+	return buf->add_sprite(tile, pos, false);
+}
+
+void t_screen::delete_all_sprites()
+{
+	buf->delete_all_sprites_except(csr);
 }

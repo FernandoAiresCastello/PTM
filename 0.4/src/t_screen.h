@@ -86,6 +86,8 @@ public:
 	bool displace_tiles_right();
 	bool displace_tiles_left();
 	const t_tilebuffer_region& get_viewport();
+	t_sptr<t_sprite> add_sprite(const t_tile& tile, const t_pos& pos);
+	void delete_all_sprites();
 
 private:
 	t_window* wnd = nullptr;

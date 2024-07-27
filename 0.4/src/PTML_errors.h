@@ -20,6 +20,7 @@ namespace PTML
 		const t_string invalid_program = "Invalid program";
 		const t_string unknown_keyname = "Unknown key name";
 		const t_string unknown_fn_keyname = "Function key name expected";
+		const t_string sprite_not_found = "Sprite not found";
 	}
 	err;
 }

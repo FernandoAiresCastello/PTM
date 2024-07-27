@@ -4,6 +4,7 @@
 #include "t_screen.h"
 #include "t_param.h"
 #include "t_program_line.h"
+#include "t_pointers.h"
 
 namespace PTML
 {

@@ -68,7 +68,7 @@ t_list<t_string> t_filesystem::list_files(const char* prefix)
 
 t_list<t_string> t_filesystem::find_files(const t_string& namepart)
 {
-    return list_files(namepart.c_str());
+    return list_files(namepart.to_upper().c_str());
 }
 
 void t_filesystem::write_hex_file(const t_string& data, const t_string& filename)

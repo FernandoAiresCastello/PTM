@@ -12,6 +12,8 @@
 #include "t_program_line.h"
 #include "t_table.h"
 #include "t_namespace.h"
+#include "t_pointers.h"
+#include "t_sprite.h"
 
 class PTM
 {
@@ -67,6 +69,9 @@ public:
 	void create_table(const t_string& name, int cols, int rows);
 	bool has_table(const t_string& name);
 	t_table& get_table(const t_string& name);
+	void add_sprite(const t_string& name, int x, int y, bool visible);
+	t_sptr<t_sprite> get_sprite(const t_string& name);
+	void delete_all_sprites();
 
 private:
 	bool running = false;
@@ -74,6 +79,7 @@ private:
 
 	t_namespace<t_string> vars;
 	t_namespace<t_table> tables;
+	t_namespace<t_sptr<t_sprite>> sprites;
 
 	void init();
 	void run_tests();

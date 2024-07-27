@@ -150,6 +150,7 @@ void PTM::on_escape_key_pressed()
 		prg_runner.stop();
 		intp.on_user_interrupt(prg_runner.get_current_line());
 		scr.show_cursor(true);
+		auto_screen_update = true;
 	}
 }
 
@@ -462,4 +463,24 @@ bool PTM::has_table(const t_string& name)
 t_table& PTM::get_table(const t_string& name)
 {
 	return tables[name];
+}
+
+void PTM::add_sprite(const t_string& name, int x, int y, bool visible)
+{
+	sprites[name] = scr.add_sprite(tilereg, t_pos(x, y));
+	sprites[name]->set_visible(visible);
+}
+
+t_sptr<t_sprite> PTM::get_sprite(const t_string& name)
+{
+	if (sprites.contains(name))
+		return sprites[name];
+
+	return nullptr;
+}
+
+void PTM::delete_all_sprites()
+{
+	scr.delete_all_sprites();
+	sprites.clear();
 }

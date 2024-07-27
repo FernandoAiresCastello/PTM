@@ -28,10 +28,10 @@ void t_tilebuffer::draw(t_window* wnd, t_charset* chr, t_palette* pal, const t_p
 	for (int y = region.offset_y; y < region.offset_y + region.height; y++) {
 		for (int x = region.offset_x; x < region.offset_x + region.width; x++) {
 			t_tile& tile = tile_at(x, y);
-			draw_tile_absolute_pos(tile, wnd, chr, pal, scr_pos.x + px, scr_pos.y + py);
+			draw_tile_absolute_pos(tile, wnd, chr, pal, scr_pos.x + px, scr_pos.y + py, true);
 			for (const auto& spr : sprites) {
 				if (spr->get_x() == x && spr->get_y() == y) {
-					draw_tile_absolute_pos(spr->get_tile(), wnd, chr, pal, scr_pos.x + px, scr_pos.y + py);
+					draw_tile_absolute_pos(spr->get_tile(), wnd, chr, pal, scr_pos.x + px, scr_pos.y + py, true);
 				}
 			}
 			px++;
@@ -41,11 +41,11 @@ void t_tilebuffer::draw(t_window* wnd, t_charset* chr, t_palette* pal, const t_p
 	}
 }
 
-void t_tilebuffer::draw_tile_absolute_pos(t_tile& tile, t_window* wnd, t_charset* chr, t_palette* pal, int x, int y) const
+void t_tilebuffer::draw_tile_absolute_pos(t_tile& tile, t_window* wnd, t_charset* chr, t_palette* pal, int x, int y, bool grid) const
 {
 	if (tile.flags.visible) {
 		t_char& ch = tile.get_char_wraparound(wnd->get_animation_frame());
-		wnd->draw_pixels(chr->get(ch.ix), x, y, pal->get(ch.fgc), pal->get(ch.bgc), true, tile.flags.hide_bgc);
+		wnd->draw_pixels(chr->get(ch.ix), x, y, pal->get(ch.fgc), pal->get(ch.bgc), grid, tile.flags.hide_bgc);
 	}
 }
 
@@ -96,9 +96,9 @@ void t_tilebuffer::clear()
 		tiles[i].set_blank();
 }
 
-t_sptr<t_sprite> t_tilebuffer::add_sprite(const t_tile& tile, const t_pos& pos)
+t_sptr<t_sprite> t_tilebuffer::add_sprite(const t_tile& tile, const t_pos& pos, bool grid)
 {
-	t_sptr<t_sprite> sprite = sprites.emplace_back(std::make_shared<t_sprite>(tile, pos, true));
+	t_sptr<t_sprite> sprite = sprites.emplace_back(std::make_shared<t_sprite>(tile, pos, grid));
 	return sprite;
 }
 
@@ -114,11 +114,20 @@ void t_tilebuffer::delete_sprite(t_sptr<t_sprite> sprite)
 			return ptr == sprite;
 		}
 	);
-
 	sprites.erase(it, sprites.end());
 }
 
 void t_tilebuffer::delete_all_sprites()
 {
 	sprites.clear();
+}
+
+void t_tilebuffer::delete_all_sprites_except(t_sptr<t_sprite> sprite)
+{
+	auto it = std::remove_if(sprites.begin(), sprites.end(),
+		[&sprite](const std::shared_ptr<t_sprite>& ptr) {
+			return ptr != sprite;
+		}
+	);
+	sprites.erase(it, sprites.end());
 }
