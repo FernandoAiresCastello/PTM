@@ -46,18 +46,29 @@ bool t_filesystem::file_exists(const t_string& filename)
     return (stat(PATH(filename).c_str(), &buffer) == 0);
 }
 
-t_list<t_string> t_filesystem::list_files()
+t_list<t_string> t_filesystem::list_files(const char* prefix)
 {
     t_list<t_string> files;
 
     for (const auto& entry : fs::directory_iterator(ROOT)) {
         if (fs::is_regular_file(entry.status())) {
             const auto&& path = entry.path().filename().string();
-            files.emplace_back(path);
+            if (prefix) {
+                if (path.starts_with(prefix))
+                    files.emplace_back(path);
+            }
+            else {
+                files.emplace_back(path);
+            }
         }
     }
 
     return files;
+}
+
+t_list<t_string> t_filesystem::find_files(const t_string& namepart)
+{
+    return list_files(namepart.c_str());
 }
 
 void t_filesystem::write_hex_file(const t_string& data, const t_string& filename)

@@ -116,6 +116,9 @@
     <ClCompile Include="src\t_table.cpp">
       <Filter>UTIL</Filter>
     </ClCompile>
+    <ClCompile Include="src\PTML_SPRITES.cpp">
+      <Filter>PTML - COMMANDS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\t_string.h">
@@ -270,6 +273,9 @@
     </ClInclude>
     <ClInclude Include="src\t_namespace.h">
       <Filter>UTIL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PTML_SPRITES.h">
+      <Filter>PTML - COMMANDS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

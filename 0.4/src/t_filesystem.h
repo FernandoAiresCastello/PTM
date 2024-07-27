@@ -12,7 +12,8 @@ public:
 
 	static bool is_valid_filename(const t_string& filename);
 	static bool file_exists(const t_string& filename);
-	static t_list<t_string> list_files();
+	static t_list<t_string> list_files(const char* prefix = nullptr);
+	static t_list<t_string> find_files(const t_string& namepart);
 	static void write_hex_file(const t_string& data, const t_string& filename);
 	static t_string read_hex_file(const t_string& filename);
 	static t_string read_all_text(const t_string& filename);

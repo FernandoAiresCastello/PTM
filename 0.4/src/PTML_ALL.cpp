@@ -7,6 +7,7 @@
 #include "PTML_GRAPHICS.h"
 #include "PTML_FILESYSTEM.h"
 #include "PTML_INPUT.h"
+#include "PTML_SPRITES.h"
 
 t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 {

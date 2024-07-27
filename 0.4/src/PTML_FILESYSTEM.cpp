@@ -3,8 +3,13 @@
 
 void PTML::FILES()
 {
-	ARGC(0);
-	PRINT_LIST(t_filesystem::list_files());
+	ARGC_MIN_MAX(0, 1);
+	if (COUNT(0)) {
+		PRINT_LIST(t_filesystem::list_files());
+	}
+	else if (COUNT(1)) {
+		PRINT_LIST(t_filesystem::find_files(STR(1)));
+	}
 }
 
 void PTML::FILE_NAME()
@@ -16,4 +21,3 @@ void PTML::FILE_NAME()
 	VALIDATE_FILENAME(new_name);
 	t_filesystem::rename_file(old_name, new_name);
 }
-
