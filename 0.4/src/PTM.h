@@ -49,7 +49,8 @@ public:
 	t_charset& get_chr();
 	t_window& get_wnd();
 	t_program& get_prg();
-	void run_program();
+	void run_program_from_immediate_mode();
+	void run_program_from_another_program();
 	void end_program();
 	void new_program();
 	void save_program(const t_string& filename, bool hex);

@@ -4,58 +4,70 @@
 #include "t_program_line.h"
 #include "t_interpreter.h"
 
-void t_program_runner::run(PTM* ptm, t_program* prg, t_interpreter* intp)
+void t_program_runner::run_program_from_immediate_mode(PTM* ptm, t_program* prg, t_interpreter* intp)
 {
 	this->ptm = ptm;
 	this->prg = prg;
 	this->intp = intp;
 
-	cur_line = nullptr;
-	stop_requested = false;
-	branch_request.active = false;
-	branch_request.returning_from_call = false;
-	branch_request.target_line = -1;
+	do {
+		
+		cur_line = nullptr;
+		stop_requested = false;
+		branch_request.active = false;
+		branch_request.returning_from_call = false;
+		branch_request.target_line = -1;
+		new_program_loaded_at_runtime = false;
 
-	clear_callstack();
-	find_labels();
+		clear_callstack();
+		find_labels();
 
-	running = true;
+		running = true;
 
-	for (auto it = prg->lines.begin(); it != prg->lines.end(); ) {
-		cur_line = &it->second;
-		auto& line = it->second;
-		if (line.is_label || line.is_comment) {
-			++it;
-			continue;
-		}
+		for (auto it = prg->lines.begin(); it != prg->lines.end(); ) {
+			cur_line = &it->second;
+			auto& line = it->second;
+			if (line.is_label || line.is_comment) {
+				++it;
+				continue;
+			}
 
-		bool ok = intp->execute_line(line);
-		ptm->on_machine_cycle();
-		if (!ok || stop_requested || !ptm->is_window_open())
-			break;
+			bool ok = intp->execute_line(line);
+			ptm->on_machine_cycle();
+			if (!ok || stop_requested || !ptm->is_window_open())
+				break;
 
-		if (branch_request.active) {
-			it = prg->lines.find(branch_request.target_line);
+			if (branch_request.active) {
+				it = prg->lines.find(branch_request.target_line);
 
-			branch_request.active = false;
-			branch_request.target_line = -1;
+				branch_request.active = false;
+				branch_request.target_line = -1;
 
-			if (branch_request.returning_from_call) {
-				branch_request.returning_from_call = false;
+				if (branch_request.returning_from_call) {
+					branch_request.returning_from_call = false;
+					++it;
+				}
+			}
+			else {
 				++it;
 			}
 		}
-		else {
-			++it;
-		}
-	}
 
-	running = false;
+		running = false;
+	}
+	while (new_program_loaded_at_runtime);
+}
+
+void t_program_runner::run_program_from_another_program()
+{
+	stop_requested = true;
+	new_program_loaded_at_runtime = true;
 }
 
 void t_program_runner::stop()
 {
 	stop_requested = true;
+	new_program_loaded_at_runtime = false;
 }
 
 bool t_program_runner::is_running() const

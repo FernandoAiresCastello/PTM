@@ -3,6 +3,7 @@
 
 void PTML::LIST()
 {
+	REQUIRE_IMM;
 	ARGC_MIN_MAX(0, 2);
 	t_list<t_string> lines;
 
@@ -42,27 +43,30 @@ void PTML::LIST()
 
 void PTML::RUN()
 {
-	REQUIRE_IMM;
 	ARGC_MIN_MAX(0, 1);
-	
-	if (COUNT(0))
-	{
-		ptm->run_program();
-	}
-	else if (COUNT(1))
-	{
-		const t_string&& filename = STR(1);
-		if (t_filesystem::file_exists(filename)) {
-			bool valid = ptm->load_program(filename, true);
-			if (!valid) {
-				error = err.invalid_program;
-			}
-			else {
-				ptm->run_program();
-			}
+
+	if (IMM) {
+
+		if (COUNT(0)) {
+			ptm->run_program_from_immediate_mode();
 		}
-		else {
-			error = err.file_not_found;
+		else if (COUNT(1)) {
+			if (!try_load_program(STR(1)))
+				return;
+			
+			ptm->run_program_from_immediate_mode();
+		}
+	}
+	else {
+
+		if (COUNT(0)) {
+			ptm->run_program_from_another_program();
+		}
+		if (COUNT(1)) {
+			if (!try_load_program(STR(1)))
+				return;
+
+			ptm->run_program_from_another_program();
 		}
 	}
 }

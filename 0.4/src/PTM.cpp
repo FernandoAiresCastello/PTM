@@ -75,7 +75,7 @@ void PTM::run_main()
 		if (autoexec) {
 			autoexec = false;
 			load_program(autoexec_file, true);
-			run_program();
+			run_program_from_immediate_mode();
 			intp.print_prompt();
 		}
 		on_machine_cycle();
@@ -283,9 +283,14 @@ t_program& PTM::get_prg()
 	return prg;
 }
 
-void PTM::run_program()
+void PTM::run_program_from_immediate_mode()
 {
-	prg_runner.run(this, &prg, &intp);
+	prg_runner.run_program_from_immediate_mode(this, &prg, &intp);
+}
+
+void PTM::run_program_from_another_program()
+{
+	prg_runner.run_program_from_another_program();
 }
 
 void PTM::end_program()

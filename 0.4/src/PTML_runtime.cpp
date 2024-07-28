@@ -95,3 +95,23 @@ void PTML::branch_if_keypress(t_branch_mode mode, bool positive)
 		branch_to(label, mode);
 	}
 }
+
+bool PTML::try_load_program(const t_string& filename)
+{
+	if (t_filesystem::file_exists(filename)) {
+		bool valid = ptm->load_program(filename, true);
+		if (valid) {
+			return true;
+		}
+		else {
+			error = err.invalid_program;
+			return false;
+		}
+	}
+	else {
+		error = err.file_not_found;
+		return false;
+	}
+
+	return true;
+}

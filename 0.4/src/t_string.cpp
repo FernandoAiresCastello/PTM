@@ -355,16 +355,12 @@ t_string t_string::reverse() const
 
 bool t_string::starts_with(const t_string& prefix) const
 {
-	return value.find(prefix) == 0;
+	return value.starts_with(prefix.s_str());
 }
 
 bool t_string::ends_with(const t_string& suffix) const
 {
-	std::string suffix_s = suffix;
-	auto it = suffix_s.begin();
-	return value.size() >= suffix_s.size() && std::all_of(
-		std::next(value.begin(), value.size() - suffix_s.size()), value.end(),
-		[&it](const char& c) { return c == *(it++); });
+	return value.ends_with(suffix.s_str());
 }
 
 bool t_string::starts_and_ends_with(const t_string& prefix, const t_string& suffix) const

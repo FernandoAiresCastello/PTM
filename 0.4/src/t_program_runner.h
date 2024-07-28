@@ -14,7 +14,8 @@ public:
 	t_dict<t_string, int> labels;
 	t_stack<int> callstack;
 
-	void run(PTM* ptm, t_program* prg, t_interpreter* intp);
+	void run_program_from_immediate_mode(PTM* ptm, t_program* prg, t_interpreter* intp);
+	void run_program_from_another_program();
 	void stop();
 	bool is_running() const;
 	t_program_line* get_current_line();
@@ -30,6 +31,7 @@ private:
 	t_program_line* cur_line = nullptr;
 	bool running = false;
 	bool stop_requested = false;
+	bool new_program_loaded_at_runtime = false;
 	
 	struct {
 		bool active = false;
