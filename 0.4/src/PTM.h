@@ -20,6 +20,7 @@ class PTM
 public:
 	const t_string version_string = "PTM 0.4";
 	const t_string title = "PTM - Programmable Tile Machine";
+	const t_string autoexec_file = "AUTOEXEC";
 
 	t_tile tilereg;
 	bool auto_screen_update = true;

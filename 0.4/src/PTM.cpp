@@ -67,9 +67,17 @@ void PTM::init()
 
 void PTM::run_main()
 {
-	main_editor.print_welcome();
+	bool autoexec = t_filesystem::file_exists(autoexec_file);
+	if (!autoexec)
+		main_editor.print_welcome();
 
 	while (wnd.is_open()) {
+		if (autoexec) {
+			autoexec = false;
+			load_program(autoexec_file, true);
+			run_program();
+			intp.print_prompt();
+		}
 		on_machine_cycle();
 	}
 }

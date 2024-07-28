@@ -45,7 +45,7 @@ void t_main_editor::reset()
 void t_main_editor::print_welcome()
 {
 	scr->print_string_crlf(ptm->version_string);
-	scr->print_string_crlf(intp->prompt);
+	intp->print_prompt();
 }
 
 void t_main_editor::on_keydown()

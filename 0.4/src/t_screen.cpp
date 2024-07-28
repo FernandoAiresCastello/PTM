@@ -460,14 +460,17 @@ void t_screen::toggle_insert_mode()
 void t_screen::set_insert_mode(bool state)
 {
 	insert_mode = state;
+	bool csr_visible = csr->tile.flags.visible;
 
 	if (insert_mode) {
 		t_tile tile(126, fore_color, back_color);
 		tile.flags.hide_bgc = true;
+		tile.flags.visible = csr_visible;
 		csr->set_tile(tile);
 	}
 	else {
 		csr->set_tile(t_tile());
+		csr->set_visible(csr_visible);
 	}
 
 	update_cursor();

@@ -26,6 +26,7 @@ temp.ptm
 *.odt#
 *.ods#
 fernando/
-0.3/Build/files/main.ptm
 temp/
 cppcheck
+0.3/Build/files/main.ptm
+0.4/build/root/AUTOEXEC

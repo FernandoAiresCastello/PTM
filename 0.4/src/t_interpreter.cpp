@@ -20,6 +20,11 @@ void t_interpreter::init(PTM* ptm, t_screen* scr, t_keyboard* kb)
 	PTML::set_env(ptm, scr);
 }
 
+void t_interpreter::print_prompt()
+{
+	scr->print_string_crlf(prompt);
+}
+
 void t_interpreter::interpret_line(t_string& src, bool from_file)
 {
 	tokenizer.tokenize_line(src, tokens);
@@ -32,7 +37,7 @@ void t_interpreter::interpret_line(t_string& src, bool from_file)
 			bool ok = ptm->delete_program_line(line_number);
 			if (!ok) {
 				scr->print_string_crlf("Undefined line number");
-				scr->print_string_crlf(prompt);
+				print_prompt();
 			}
 		}
 		else {
@@ -76,7 +81,7 @@ bool t_interpreter::execute_line(t_program_line& line)
 	}
 
 	if (line.immediate)
-		scr->print_string_crlf(prompt);
+		print_prompt();
 
 	PTML::error = "";
 	return !has_error;
