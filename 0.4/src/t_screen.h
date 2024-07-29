@@ -87,6 +87,7 @@ public:
 	bool displace_tiles_left();
 	const t_tilebuffer_region& get_viewport();
 	t_sptr<t_sprite> add_sprite(const t_tile& tile, const t_pos& pos);
+	void delete_sprite(t_sptr<t_sprite> sprite);
 	void delete_all_sprites();
 
 private:
@@ -104,7 +105,6 @@ private:
 	t_string logical_line;
 	bool insert_mode = false;
 
-	void init_cursor();
 	void update_monochrome_tiles();
 	void update_monochrome_tile(t_tile& tile) const;
 	void fix_cursor_pos();

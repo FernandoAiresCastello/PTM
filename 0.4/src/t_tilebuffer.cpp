@@ -19,25 +19,39 @@ t_tilebuffer::t_tilebuffer(int cols, int rows) :
 		tiles.emplace_back();
 
 	clear();
+
+	cursor_sprite = std::make_shared<t_sprite>(
+		t_tile(127, 0, 0, t_tileflags()), t_pos(0, 0), true);
 }
 
 void t_tilebuffer::draw(t_window* wnd, t_charset* chr, t_palette* pal, const t_pos& scr_pos, const t_tilebuffer_region& region)
 {
 	int px = 0;
 	int py = 0;
+
 	for (int y = region.offset_y; y < region.offset_y + region.height; y++) {
 		for (int x = region.offset_x; x < region.offset_x + region.width; x++) {
+
 			t_tile& tile = tile_at(x, y);
 			draw_tile_absolute_pos(tile, wnd, chr, pal, scr_pos.x + px, scr_pos.y + py, true);
-			for (const auto& spr : sprites) {
-				if (spr->get_x() == x && spr->get_y() == y) {
-					draw_tile_absolute_pos(spr->get_tile(), wnd, chr, pal, scr_pos.x + px, scr_pos.y + py, true);
-				}
+
+			if (cursor_sprite->get_x() == x && cursor_sprite->get_y() == y) {
+				draw_tile_absolute_pos(cursor_sprite->get_tile(), wnd, chr, pal, scr_pos.x + px, scr_pos.y + py, true);
 			}
+
 			px++;
 		}
 		py++;
 		px = 0;
+	}
+
+	draw_sprites(wnd, chr, pal);
+}
+
+void t_tilebuffer::draw_sprites(t_window* wnd, t_charset* chr, t_palette* pal)
+{
+	for (const auto& spr : sprites) {
+		draw_tile_absolute_pos(spr->get_tile(), wnd, chr, pal, spr->get_x(), spr->get_y(), spr->align_to_grid());
 	}
 }
 
@@ -122,12 +136,7 @@ void t_tilebuffer::delete_all_sprites()
 	sprites.clear();
 }
 
-void t_tilebuffer::delete_all_sprites_except(t_sptr<t_sprite> sprite)
+t_sptr<t_sprite> t_tilebuffer::get_cursor()
 {
-	auto it = std::remove_if(sprites.begin(), sprites.end(),
-		[&sprite](const std::shared_ptr<t_sprite>& ptr) {
-			return ptr != sprite;
-		}
-	);
-	sprites.erase(it, sprites.end());
+	return cursor_sprite;
 }

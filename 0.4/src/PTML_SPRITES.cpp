@@ -28,6 +28,13 @@ void PTML::SPR_MOVE()
 	sprite->move_dist(NUM(2), NUM(3));
 }
 
+void PTML::SPR_DEL()
+{
+	ARGC(1);
+	SPRITE(STR(1));
+	scr->delete_sprite(sprite);
+}
+
 void PTML::SPR_CLR()
 {
 	ARGC(0);

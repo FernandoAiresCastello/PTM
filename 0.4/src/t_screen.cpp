@@ -9,6 +9,7 @@ t_screen::t_screen() :
 	buf(std::make_unique<t_tilebuffer>(cols, rows)),
 	buf_reg(t_tilebuffer_region(0, 0, t_window::cols - 4, t_window::rows - 2))
 {
+	csr = buf->get_cursor();
 	reset();
 }
 
@@ -16,18 +17,11 @@ void t_screen::reset()
 {
 	color(default_fg, default_bg, default_bdr);
 	clear();
-	init_cursor();
 	update_monochrome_tiles();
 	show_cursor(true);
 	locate(0, 0);
 	logical_line = t_string::repeat(" ", cols);
 	reset_horizontal_scroll();
-}
-
-void t_screen::init_cursor()
-{
-	t_tile cursor_tile = t_tile(127, 0, 0, t_tileflags());
-	csr = buf->add_sprite(cursor_tile, t_pos(0, 0), true);
 }
 
 void t_screen::set_window(t_window* wnd)
@@ -377,6 +371,8 @@ void t_screen::update_monochrome_tiles()
 
 	for (const auto& spr : buf->get_sprites())
 		update_monochrome_tile(spr->get_tile());
+
+	update_monochrome_tile(buf->get_cursor()->get_tile());
 }
 
 void t_screen::update_monochrome_tile(t_tile& tile) const
@@ -516,7 +512,12 @@ t_sptr<t_sprite> t_screen::add_sprite(const t_tile& tile, const t_pos& pos)
 	return buf->add_sprite(tile, pos, false);
 }
 
+void t_screen::delete_sprite(t_sptr<t_sprite> sprite)
+{
+	buf->delete_sprite(sprite);
+}
+
 void t_screen::delete_all_sprites()
 {
-	buf->delete_all_sprites_except(csr);
+	buf->delete_all_sprites();
 }

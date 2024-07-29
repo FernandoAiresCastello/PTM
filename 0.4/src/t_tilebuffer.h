@@ -33,13 +33,15 @@ public:
 	t_list<t_sptr<t_sprite>>& get_sprites();
 	void delete_sprite(t_sptr<t_sprite> sprite);
 	void delete_all_sprites();
-	void delete_all_sprites_except(t_sptr<t_sprite> sprite);
+	t_sptr<t_sprite> get_cursor();
 
 private:
 	const int length;
 
 	t_list<t_tile> tiles;
 	t_list<t_sptr<t_sprite>> sprites;
+	t_sptr<t_sprite> cursor_sprite;
 
+	void draw_sprites(t_window* wnd, t_charset* chr, t_palette* pal);
 	void draw_tile_absolute_pos(t_tile& tile, t_window* wnd, t_charset* chr, t_palette* pal, int x, int y, bool grid) const;
 };

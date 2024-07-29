@@ -107,6 +107,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("SPR.POS", SPR_POS);
 	CMD("SPR.SHOW", SPR_SHOW);
 	CMD("SPR.MOVE", SPR_MOVE);
+	CMD("SPR.DEL", SPR_DEL);
 	CMD("SPR.CLR", SPR_CLR);
 
 	return nullptr;
