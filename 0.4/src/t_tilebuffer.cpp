@@ -110,18 +110,18 @@ void t_tilebuffer::clear()
 		tiles[i].set_blank();
 }
 
-t_sptr<t_sprite> t_tilebuffer::add_sprite(const t_tile& tile, const t_pos& pos, bool grid)
+t_sprite_ptr t_tilebuffer::add_sprite(const t_tile& tile, const t_pos& pos, bool grid)
 {
-	t_sptr<t_sprite> sprite = sprites.emplace_back(std::make_shared<t_sprite>(tile, pos, grid));
+	t_sprite_ptr sprite = sprites.emplace_back(std::make_shared<t_sprite>(tile, pos, grid));
 	return sprite;
 }
 
-t_list<t_sptr<t_sprite>>& t_tilebuffer::get_sprites()
+t_list<t_sprite_ptr>& t_tilebuffer::get_sprites()
 {
 	return sprites;
 }
 
-void t_tilebuffer::delete_sprite(t_sptr<t_sprite> sprite)
+void t_tilebuffer::delete_sprite(t_sprite_ptr sprite)
 {
 	auto it = std::remove_if(sprites.begin(), sprites.end(),
 		[&sprite](const std::shared_ptr<t_sprite>& ptr) {
@@ -136,7 +136,7 @@ void t_tilebuffer::delete_all_sprites()
 	sprites.clear();
 }
 
-t_sptr<t_sprite> t_tilebuffer::get_cursor()
+t_sprite_ptr t_tilebuffer::get_cursor()
 {
 	return cursor_sprite;
 }

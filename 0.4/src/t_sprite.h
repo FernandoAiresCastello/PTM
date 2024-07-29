@@ -1,6 +1,7 @@
 #pragma once
 #include "t_tile.h"
 #include "t_pos.h"
+#include "t_pointers.h"
 
 class t_sprite
 {
@@ -27,3 +28,5 @@ private:
 	t_pos pos;
 	bool grid = false;
 };
+
+using t_sprite_ptr = t_sptr<t_sprite>;

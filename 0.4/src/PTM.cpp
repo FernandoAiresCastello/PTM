@@ -484,7 +484,7 @@ void PTM::add_sprite(const t_string& name, int x, int y, bool visible)
 	sprites[name]->set_visible(visible);
 }
 
-t_sptr<t_sprite> PTM::get_sprite(const t_string& name)
+t_sprite_ptr PTM::get_sprite(const t_string& name)
 {
 	if (sprites.contains(name))
 		return sprites[name];

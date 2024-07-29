@@ -72,7 +72,7 @@ public:
 	bool has_table(const t_string& name);
 	t_table& get_table(const t_string& name);
 	void add_sprite(const t_string& name, int x, int y, bool visible);
-	t_sptr<t_sprite> get_sprite(const t_string& name);
+	t_sprite_ptr get_sprite(const t_string& name);
 	void delete_all_sprites();
 
 private:
@@ -81,7 +81,7 @@ private:
 
 	t_namespace<t_string> vars;
 	t_namespace<t_table> tables;
-	t_namespace<t_sptr<t_sprite>> sprites;
+	t_namespace<t_sprite_ptr> sprites;
 
 	void init();
 	void run_tests();

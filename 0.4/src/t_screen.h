@@ -86,8 +86,8 @@ public:
 	bool displace_tiles_right();
 	bool displace_tiles_left();
 	const t_tilebuffer_region& get_viewport();
-	t_sptr<t_sprite> add_sprite(const t_tile& tile, const t_pos& pos);
-	void delete_sprite(t_sptr<t_sprite> sprite);
+	t_sprite_ptr add_sprite(const t_tile& tile, const t_pos& pos);
+	void delete_sprite(t_sprite_ptr sprite);
 	void delete_all_sprites();
 
 private:
@@ -100,7 +100,7 @@ private:
 	t_index border_color = 10;
 	t_pos buf_pos = t_pos(2, 1);
 	t_tilebuffer_region buf_reg;
-	t_sptr<t_sprite> csr;
+	t_sprite_ptr csr;
 	t_color_mode color_mode = t_color_mode::mode0_monochrome;
 	t_string logical_line;
 	bool insert_mode = false;

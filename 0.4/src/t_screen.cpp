@@ -507,12 +507,12 @@ const t_tilebuffer_region& t_screen::get_viewport()
 	return buf_reg;
 }
 
-t_sptr<t_sprite> t_screen::add_sprite(const t_tile& tile, const t_pos& pos)
+t_sprite_ptr t_screen::add_sprite(const t_tile& tile, const t_pos& pos)
 {
 	return buf->add_sprite(tile, pos, false);
 }
 
-void t_screen::delete_sprite(t_sptr<t_sprite> sprite)
+void t_screen::delete_sprite(t_sprite_ptr sprite)
 {
 	buf->delete_sprite(sprite);
 }
