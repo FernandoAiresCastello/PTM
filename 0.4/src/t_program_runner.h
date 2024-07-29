@@ -16,6 +16,7 @@ public:
 
 	void run_program_from_immediate_mode(PTM* ptm, t_program* prg, t_interpreter* intp);
 	void run_program_from_another_program();
+	bool has_new_program_loaded_at_runtime() const;
 	void stop();
 	bool is_running() const;
 	t_program_line* get_current_line();

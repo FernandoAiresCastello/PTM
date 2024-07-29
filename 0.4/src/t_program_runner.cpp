@@ -64,6 +64,11 @@ void t_program_runner::run_program_from_another_program()
 	new_program_loaded_at_runtime = true;
 }
 
+bool t_program_runner::has_new_program_loaded_at_runtime() const
+{
+	return new_program_loaded_at_runtime;
+}
+
 void t_program_runner::stop()
 {
 	stop_requested = true;

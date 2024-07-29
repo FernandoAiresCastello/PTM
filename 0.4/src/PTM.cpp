@@ -293,6 +293,11 @@ void PTM::run_program_from_another_program()
 	prg_runner.run_program_from_another_program();
 }
 
+bool PTM::has_new_program_loaded_at_runtime()
+{
+	return prg_runner.has_new_program_loaded_at_runtime();
+}
+
 void PTM::end_program()
 {
 	prg_runner.stop();

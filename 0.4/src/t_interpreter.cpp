@@ -73,6 +73,9 @@ bool t_interpreter::execute_line(t_program_line& line)
 
 	bool has_error = !PTML::error.empty();
 
+	if (ptm->has_new_program_loaded_at_runtime())
+		return has_error;
+
 	if (has_error) {
 		if (line.immediate)
 			scr->print_string_crlf(PTML::error);
