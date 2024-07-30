@@ -36,7 +36,7 @@ void t_interpreter::interpret_line(t_string& src, bool from_file)
 		if (tokens.size() == 1 && !from_file) {
 			bool ok = ptm->delete_program_line(line_number);
 			if (!ok) {
-				scr->print_string_crlf("Undefined line number");
+				scr->print_string_crlf(PTML::err.undefined_line_nr);
 				print_prompt();
 			}
 		}
@@ -77,6 +77,7 @@ bool t_interpreter::execute_line(t_program_line& line)
 		return has_error;
 
 	if (has_error) {
+		scr->move_cursor_line_start();
 		if (line.immediate)
 			scr->print_string_crlf(PTML::error);
 		else

@@ -45,6 +45,7 @@ void t_main_editor::reset()
 void t_main_editor::print_welcome()
 {
 	scr->print_string_crlf(ptm->version_string);
+	scr->print_string_crlf(ptm->copyright_notice);
 	intp->print_prompt();
 }
 
@@ -61,13 +62,13 @@ bool t_main_editor::handle_control_key()
 {
 	switch (kb->peek_key())
 	{
-		case SDLK_RIGHT:	
+		case SDLK_RIGHT:
 			kb->ctrl() ? 
 				scr->move_cursor_next_logical_x(1) :
 				scr->move_cursor_dist(1, 0);
 			return true;
 
-		case SDLK_LEFT:		
+		case SDLK_LEFT:
 			kb->ctrl() ? 
 				scr->move_cursor_next_logical_x(-1) :
 				scr->move_cursor_dist(-1, 0);	
@@ -184,6 +185,9 @@ bool t_main_editor::handle_ctrl_character_key()
 
 void t_main_editor::on_enter_pressed()
 {
+	if (!scr->is_cursor_on_logical_line())
+		return;
+
 	t_string&& line = scr->get_current_logical_line();
 	scr->newline();
 	if (!line.trim().empty())

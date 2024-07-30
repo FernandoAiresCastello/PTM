@@ -5,9 +5,10 @@
 #include "t_palette.h"
 #include "t_charset.h"
 
-t_screen::t_screen() : 
+t_screen::t_screen(int cols, int rows) :
+	cols(cols), rows(rows), last_col(cols - 1), last_row(rows - 1),
 	buf(std::make_unique<t_tilebuffer>(cols, rows)),
-	buf_reg(t_tilebuffer_region(0, 0, t_window::cols - 4, t_window::rows - 2))
+	viewport(t_tilebuffer_region(0, 0, t_window::cols - 4, t_window::rows - 2))
 {
 	csr = buf->get_cursor();
 	reset();
@@ -48,7 +49,7 @@ void t_screen::refresh()
 void t_screen::draw()
 {
 	clear_background();
-	buf->draw(wnd, chr, pal, buf_pos, buf_reg);
+	buf->draw(wnd, chr, pal, buf_pos, viewport);
 }
 
 void t_screen::clear()
@@ -77,15 +78,28 @@ void t_screen::clear_background()
 
 void t_screen::reset_horizontal_scroll()
 {
-	buf_reg.offset_x = 0;
+	viewport.offset_x = 0;
+}
+
+void t_screen::reset_vertical_scroll()
+{
+	viewport.offset_y = 0;
 }
 
 void t_screen::sync_horizontal_scroll()
 {
-	if (csr->get_x() < buf_reg.offset_x)
-		buf_reg.offset_x = csr->get_x();
-	else if (csr->get_x() >= buf_reg.offset_x + buf_reg.width)
-		buf_reg.offset_x = csr->get_x() - buf_reg.width + 1;
+	if (csr->get_x() < viewport.offset_x)
+		viewport.offset_x = csr->get_x();
+	else if (csr->get_x() >= viewport.offset_x + viewport.width)
+		viewport.offset_x = csr->get_x() - viewport.width + 1;
+}
+
+void t_screen::sync_vertical_scroll()
+{
+	if (csr->get_y() < viewport.offset_y)
+		viewport.offset_y = csr->get_y();
+	else if (csr->get_y() >= viewport.offset_y + viewport.height)
+		viewport.offset_y = csr->get_y() - viewport.height + 1;
 }
 
 void t_screen::color(t_index fgc, t_index bgc, t_index bdrc)
@@ -161,6 +175,7 @@ void t_screen::fix_cursor_pos()
 	else if (csr->get_y() > last_row)	csr->set_y(last_row);
 
 	sync_horizontal_scroll();
+	sync_vertical_scroll();
 }
 
 void t_screen::update_cursor()
@@ -316,11 +331,11 @@ void t_screen::newline()
 	csr->pos.y++;
 	if (csr->pos.y > last_row) {
 		csr->pos.y = last_row;
-		scroll_up();
+		scroll_up_for_text_editor();
 	}
 }
 
-void t_screen::scroll_up()
+void t_screen::scroll_up_for_text_editor()
 {
 	for (int row = 1; row <= last_row; row++) {
 		for (int col = 0; col <= last_col; col++) {
@@ -336,13 +351,40 @@ void t_screen::scroll_up()
 	sync_horizontal_scroll();
 }
 
+void t_screen::scroll_vertical(int dist)
+{
+	viewport.offset_y += dist;
+	fix_vertical_scroll();
+}
+
 void t_screen::scroll_horizontal(int dist)
 {
-	buf_reg.offset_x += dist;
-	if (buf_reg.offset_x < 0)
-		buf_reg.offset_x = 0;
-	else if (buf_reg.offset_x > cols - buf_reg.width)
-		buf_reg.offset_x = cols - buf_reg.width;
+	viewport.offset_x += dist;
+	fix_horizontal_scroll();
+}
+
+void t_screen::scroll_to(int x, int y)
+{
+	viewport.offset_x = x;
+	viewport.offset_y = y;
+	fix_horizontal_scroll();
+	fix_vertical_scroll();
+}
+
+void t_screen::fix_horizontal_scroll()
+{
+	if (viewport.offset_x < 0)
+		viewport.offset_x = 0;
+	else if (viewport.offset_x > cols - viewport.width)
+		viewport.offset_x = cols - viewport.width;
+}
+
+void t_screen::fix_vertical_scroll()
+{
+	if (viewport.offset_y < 0)
+		viewport.offset_y = 0;
+	else if (viewport.offset_y > rows - viewport.height)
+		viewport.offset_y = rows - viewport.height;
 }
 
 t_tile& t_screen::get_tile(const t_pos& pos)
@@ -358,6 +400,11 @@ t_tile& t_screen::get_tile_at_csr()
 void t_screen::set_csr_char_ix(t_index ch)
 {
 	csr->tile.get_char().ix = ch;
+}
+
+bool t_screen::is_cursor_on_logical_line()
+{
+	return csr->get_y() >= 0 && csr->get_y() <= last_row;
 }
 
 void t_screen::update_monochrome_tiles()
@@ -393,7 +440,7 @@ t_string t_screen::get_current_logical_line()
 	for (int x = 0; x < cols; x++) {
 		t_tile& tile = get_tile(t_pos(x, csr->pos.y));
 		t_index ch = tile.get_char().ix;
-		if (ch <= 0 || ch > 255)
+		if (ch < 32 || ch > 126)
 			ch = ' ';
 
 		logical_line[x] = ch;
@@ -504,7 +551,7 @@ bool t_screen::displace_tiles_left()
 
 const t_tilebuffer_region& t_screen::get_viewport()
 {
-	return buf_reg;
+	return viewport;
 }
 
 t_sprite_ptr t_screen::add_sprite(const t_tile& tile, const t_pos& pos)

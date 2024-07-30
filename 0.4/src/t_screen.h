@@ -21,15 +21,15 @@ enum class t_color_mode
 class t_screen
 {
 public:
-	const int cols = 256;
-	const int rows = t_window::rows - 2;
-	const int last_col = cols - 1;
-	const int last_row = rows - 1;
+	const int cols;
+	const int rows;
+	const int last_col;
+	const int last_row;
 	const int default_fg = 0xa8;
 	const int default_bg = 0xa3;
 	const int default_bdr = 0xa2;
 
-	t_screen();
+	t_screen(int cols, int rows);
 	~t_screen() = default;
 
 	void reset();
@@ -68,12 +68,19 @@ public:
 	bool print_lines(const t_list<t_string>& lines, PTM* ptm);
 	void print_debug(const t_string& str);
 	void newline();
-	void scroll_up();
+	void scroll_up_for_text_editor();
+	void scroll_vertical(int dist);
 	void scroll_horizontal(int dist);
+	void scroll_to(int x, int y);
 	t_tile& get_tile(const t_pos& pos);
 	t_tile& get_tile_at_csr();
 	void set_csr_char_ix(t_index ch);
+	bool is_cursor_on_logical_line();
 	t_string get_current_logical_line();
+	void reset_horizontal_scroll();
+	void reset_vertical_scroll();
+	void sync_horizontal_scroll();
+	void sync_vertical_scroll();
 	t_index get_fg_color() const;
 	t_index get_bg_color() const;
 	t_index get_bdr_color() const;
@@ -99,7 +106,7 @@ private:
 	t_index back_color = 1;
 	t_index border_color = 10;
 	t_pos buf_pos = t_pos(2, 1);
-	t_tilebuffer_region buf_reg;
+	t_tilebuffer_region viewport;
 	t_sprite_ptr csr;
 	t_color_mode color_mode = t_color_mode::mode0_monochrome;
 	t_string logical_line;
@@ -110,6 +117,6 @@ private:
 	void fix_cursor_pos();
 	void update_cursor();
 	void clear_background();
-	void reset_horizontal_scroll();
-	void sync_horizontal_scroll();
+	void fix_horizontal_scroll();
+	void fix_vertical_scroll();
 };

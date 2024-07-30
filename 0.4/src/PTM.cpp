@@ -19,7 +19,7 @@ t_window wnd;
 t_keyboard kb;
 t_charset chr;
 t_palette pal;
-t_screen scr;
+t_screen scr(256, t_window::rows - 2);
 t_main_editor main_editor;
 t_interpreter intp;
 t_program prg;

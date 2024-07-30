@@ -328,3 +328,45 @@ void PTML::REFRESH()
 	ARGC(0);
 	ptm->refresh_screen();
 }
+
+void PTML::SCRL()
+{
+	ARGC(2);
+	scr->scroll_to(NUM(1), NUM(2));
+}
+
+void PTML::SCRL_R()
+{
+	ARGC_MIN_MAX(0, 1);
+	if (COUNT(0))
+		scr->scroll_horizontal(1);
+	else if (COUNT(1))
+		scr->scroll_horizontal(NUM(1));
+}
+
+void PTML::SCRL_L()
+{
+	ARGC_MIN_MAX(0, 1);
+	if (COUNT(0))
+		scr->scroll_horizontal(-1);
+	else if (COUNT(1))
+		scr->scroll_horizontal(-NUM(1));
+}
+
+void PTML::SCRL_U()
+{
+	ARGC_MIN_MAX(0, 1);
+	if (COUNT(0))
+		scr->scroll_vertical(-1);
+	else if (COUNT(1))
+		scr->scroll_vertical(-NUM(1));
+}
+
+void PTML::SCRL_D()
+{
+	ARGC_MIN_MAX(0, 1);
+	if (COUNT(0))
+		scr->scroll_vertical(1);
+	else if (COUNT(1))
+		scr->scroll_vertical(NUM(1));
+}
