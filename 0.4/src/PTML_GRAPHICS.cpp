@@ -370,3 +370,49 @@ void PTML::SCRL_D()
 	else if (COUNT(1))
 		scr->scroll_vertical(NUM(1));
 }
+
+void PTML::BUF_NEW()
+{
+	ARGC(3);
+	ptm->create_tilebuf(STR(1), NUM(2), NUM(3));
+}
+
+void PTML::BUF_PUT()
+{
+	ARGC(3);
+	auto&& name = STR(1);
+
+	if (!ptm->has_tilebuf(name)) {
+		error = err.undefined_tilebuf;
+		return;
+	}
+
+	auto buf = ptm->get_tilebuf(name);
+
+	int col = NUM(2);
+	int row = NUM(3);
+	CHK_TBUF_BOUNDS(buf, col, row);
+
+	IF_TILEREG_EMPTY_RET;
+
+	buf->set(TILEREG, col, row);
+}
+
+void PTML::BUF_GET()
+{
+	ARGC(3);
+	auto&& name = STR(1);
+
+	if (!ptm->has_tilebuf(name)) {
+		error = err.undefined_tilebuf;
+		return;
+	}
+
+	auto buf = ptm->get_tilebuf(name);
+
+	int col = NUM(2);
+	int row = NUM(3);
+	CHK_TBUF_BOUNDS(buf, col, row);
+
+	TILEREG = buf->get_ref(col, row);
+}

@@ -14,9 +14,9 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("VAR", VAR);
 	CMD("VARS", VARS);
 	CMD("VARS.CLR", VAR_CLR);
-	CMD("TBL.NEW", TBL_NEW);
-	CMD("TBL.SET", TBL_SET);
-	CMD("TBL.GET", TBL_GET);
+	CMD("BUF.NEW", BUF_NEW);
+	CMD("BUF.PUT", BUF_PUT);
+	CMD("BUF.GET", BUF_GET);
 	CMD("COLOR", COLOR);
 	CMD("COLOR.MONO", COLOR_MONO);
 	CMD("COLOR.MULTI", COLOR_MULTI);
@@ -109,11 +109,6 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("SPR.MOVE", SPR_MOVE);
 	CMD("SPR.DEL", SPR_DEL);
 	CMD("SPR.CLR", SPR_CLR);
-	CMD("SCRL", SCRL);
-	CMD("SCRL.R", SCRL_R);
-	CMD("SCRL.L", SCRL_L);
-	CMD("SCRL.U", SCRL_U);
-	CMD("SCRL.D", SCRL_D);
 
 	return nullptr;
 }

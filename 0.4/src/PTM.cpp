@@ -16,15 +16,15 @@
 #include "t_filesystem.h"
 
 t_window wnd;
-t_keyboard kb;
-t_charset chr;
-t_palette pal;
-t_screen scr(256, t_window::rows - 2);
 t_main_editor main_editor;
 t_interpreter intp;
 t_program prg;
 t_program_runner prg_runner;
 t_filesystem filesys;
+t_keyboard kb;
+t_charset chr;
+t_palette pal;
+t_screen scr(256, t_window::rows - 2);
 
 int wnd_size = 3;
 
@@ -468,19 +468,19 @@ t_string PTM::input_string(const t_string& prompt, int maxlen)
 	return value;
 }
 
-void PTM::create_table(const t_string& name, int cols, int rows)
+void PTM::create_tilebuf(const t_string& name, int cols, int rows)
 {
-	tables[name].init(cols, rows);
+	tilebufs[name] = std::make_shared<t_tilebuffer>(cols, rows);
 }
 
-bool PTM::has_table(const t_string& name)
+bool PTM::has_tilebuf(const t_string& name)
 {
-	return tables.contains(name);
+	return tilebufs.contains(name);
 }
 
-t_table& PTM::get_table(const t_string& name)
+t_sptr<t_tilebuffer> PTM::get_tilebuf(const t_string& name)
 {
-	return tables[name];
+	return tilebufs[name];
 }
 
 void PTM::add_sprite(const t_string& name, int x, int y, bool visible)

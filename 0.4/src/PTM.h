@@ -14,6 +14,7 @@
 #include "t_namespace.h"
 #include "t_pointers.h"
 #include "t_sprite.h"
+#include "t_tilebuffer.h"
 
 class PTM
 {
@@ -70,9 +71,9 @@ public:
 	bool set_function_key(const t_string& keyname, const t_string& value);
 	t_list<t_string> list_function_keys();
 	t_string input_string(const t_string& prompt, int maxlen);
-	void create_table(const t_string& name, int cols, int rows);
-	bool has_table(const t_string& name);
-	t_table& get_table(const t_string& name);
+	void create_tilebuf(const t_string& name, int cols, int rows);
+	bool has_tilebuf(const t_string& name);
+	t_sptr<t_tilebuffer> get_tilebuf(const t_string& name);
 	void add_sprite(const t_string& name, int x, int y, bool visible);
 	t_sprite_ptr get_sprite(const t_string& name);
 	void delete_all_sprites();
@@ -82,9 +83,9 @@ private:
 	bool halted = false;
 
 	t_namespace<t_string> vars;
-	t_namespace<t_table> tables;
+	t_namespace<t_sptr<t_tilebuffer>> tilebufs;
 	t_namespace<t_sprite_ptr> sprites;
-
+	
 	void init();
 	void run_tests();
 	void run_graphics_test();

@@ -44,4 +44,7 @@ namespace PTML
 	void SCRL_L();
 	void SCRL_U();
 	void SCRL_D();
+	void BUF_NEW();
+	void BUF_PUT();
+	void BUF_GET();
 }
