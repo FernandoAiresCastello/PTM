@@ -329,48 +329,6 @@ void PTML::REFRESH()
 	ptm->refresh_screen();
 }
 
-void PTML::SCRL()
-{
-	ARGC(2);
-	scr->scroll_to(NUM(1), NUM(2));
-}
-
-void PTML::SCRL_R()
-{
-	ARGC_MIN_MAX(0, 1);
-	if (COUNT(0))
-		scr->scroll_horizontal(1);
-	else if (COUNT(1))
-		scr->scroll_horizontal(NUM(1));
-}
-
-void PTML::SCRL_L()
-{
-	ARGC_MIN_MAX(0, 1);
-	if (COUNT(0))
-		scr->scroll_horizontal(-1);
-	else if (COUNT(1))
-		scr->scroll_horizontal(-NUM(1));
-}
-
-void PTML::SCRL_U()
-{
-	ARGC_MIN_MAX(0, 1);
-	if (COUNT(0))
-		scr->scroll_vertical(-1);
-	else if (COUNT(1))
-		scr->scroll_vertical(-NUM(1));
-}
-
-void PTML::SCRL_D()
-{
-	ARGC_MIN_MAX(0, 1);
-	if (COUNT(0))
-		scr->scroll_vertical(1);
-	else if (COUNT(1))
-		scr->scroll_vertical(NUM(1));
-}
-
 void PTML::BUF_NEW()
 {
 	ARGC(3);
@@ -380,15 +338,7 @@ void PTML::BUF_NEW()
 void PTML::BUF_PUT()
 {
 	ARGC(3);
-	auto&& name = STR(1);
-
-	if (!ptm->has_tilebuf(name)) {
-		error = err.undefined_tilebuf;
-		return;
-	}
-
-	auto buf = ptm->get_tilebuf(name);
-
+	TILEBUF(STR(1));
 	int col = NUM(2);
 	int row = NUM(3);
 	CHK_TBUF_BOUNDS(buf, col, row);
@@ -401,15 +351,7 @@ void PTML::BUF_PUT()
 void PTML::BUF_GET()
 {
 	ARGC(3);
-	auto&& name = STR(1);
-
-	if (!ptm->has_tilebuf(name)) {
-		error = err.undefined_tilebuf;
-		return;
-	}
-
-	auto buf = ptm->get_tilebuf(name);
-
+	TILEBUF(STR(1));
 	int col = NUM(2);
 	int row = NUM(3);
 	CHK_TBUF_BOUNDS(buf, col, row);

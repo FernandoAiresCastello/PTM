@@ -5,6 +5,8 @@
 #include "t_param.h"
 #include "t_program_line.h"
 #include "t_pointers.h"
+#include "t_tilebuffer.h"
+#include "t_sprite.h"
 
 namespace PTML
 {
@@ -25,4 +27,6 @@ namespace PTML
 	void branch_conditional(t_comparison cp, t_branch_mode mode);
 	void branch_if_keypress(t_branch_mode mode, bool positive);
 	bool try_load_program(const t_string& filename);
+	t_sptr<t_sprite> get_sprite(const t_string& name);
+	t_sptr<t_tilebuffer> get_tilebuffer(const t_string& name);
 }

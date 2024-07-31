@@ -76,6 +76,7 @@
     <ClInclude Include="src\PTML_SPRITES.h" />
     <ClInclude Include="src\PTML_VARS.h" />
     <ClInclude Include="src\t_namespace.h" />
+    <ClInclude Include="src\t_rect.h" />
     <ClInclude Include="src\t_table.h" />
     <ClInclude Include="src\t_binary.h" />
     <ClInclude Include="src\t_char.h" />

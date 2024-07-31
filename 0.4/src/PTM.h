@@ -15,6 +15,7 @@
 #include "t_pointers.h"
 #include "t_sprite.h"
 #include "t_tilebuffer.h"
+#include "t_rect.h"
 
 class PTM
 {
@@ -83,8 +84,8 @@ private:
 	bool halted = false;
 
 	t_namespace<t_string> vars;
-	t_namespace<t_sptr<t_tilebuffer>> tilebufs;
 	t_namespace<t_sprite_ptr> sprites;
+	t_namespace<t_sptr<t_tilebuffer>> tilebufs;
 	
 	void init();
 	void run_tests();

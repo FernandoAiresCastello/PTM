@@ -8,7 +8,7 @@ namespace PTML
 		const t_string invalid_argc = "Invalid argument count";
 		const t_string varname_expected = "Variable name expected";
 		const t_string undefined_var = "Undefined variable";
-		const t_string undefined_tilebuf = "Undefined tile buffer";
+		const t_string tilebuf_not_found = "Tile buffer not found";
 		const t_string division_by_zero = "Division by zero";
 		const t_string undefined_line_nr = "Undefined line number";
 		const t_string label_not_found = "Label not found";

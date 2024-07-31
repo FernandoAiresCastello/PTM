@@ -115,3 +115,21 @@ bool PTML::try_load_program(const t_string& filename)
 
 	return true;
 }
+
+t_sptr<t_sprite> PTML::get_sprite(const t_string& name)
+{
+	auto spr = ptm->get_sprite(name);
+	if (spr == nullptr)
+		error = err.sprite_not_found;
+
+	return spr;
+}
+
+t_sptr<t_tilebuffer> PTML::get_tilebuffer(const t_string& name)
+{
+	auto buf = ptm->get_tilebuf(name);
+	if (buf == nullptr)
+		error = err.tilebuf_not_found;
+
+	return buf;
+}

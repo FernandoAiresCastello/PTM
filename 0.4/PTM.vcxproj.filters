@@ -277,6 +277,9 @@
     <ClInclude Include="src\PTML_SPRITES.h">
       <Filter>PTML - COMMANDS</Filter>
     </ClInclude>
+    <ClInclude Include="src\t_rect.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="UTIL">

@@ -15,6 +15,7 @@
 #include "t_program_runner.h"
 #include "t_filesystem.h"
 
+int wnd_size = 3;
 t_window wnd;
 t_main_editor main_editor;
 t_interpreter intp;
@@ -25,8 +26,6 @@ t_keyboard kb;
 t_charset chr;
 t_palette pal;
 t_screen scr(256, t_window::rows - 2);
-
-int wnd_size = 3;
 
 void PTM::run()
 {
@@ -480,7 +479,10 @@ bool PTM::has_tilebuf(const t_string& name)
 
 t_sptr<t_tilebuffer> PTM::get_tilebuf(const t_string& name)
 {
-	return tilebufs[name];
+	if (tilebufs.contains(name))
+		return tilebufs[name];
+
+	return nullptr;
 }
 
 void PTM::add_sprite(const t_string& name, int x, int y, bool visible)
