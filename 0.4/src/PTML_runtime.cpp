@@ -124,12 +124,3 @@ t_sptr<t_sprite> PTML::get_sprite(const t_string& name)
 
 	return spr;
 }
-
-t_sptr<t_tilebuffer> PTML::get_tilebuffer(const t_string& name)
-{
-	auto buf = ptm->get_tilebuf(name);
-	if (buf == nullptr)
-		error = err.tilebuf_not_found;
-
-	return buf;
-}

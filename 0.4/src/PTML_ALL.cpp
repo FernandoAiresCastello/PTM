@@ -14,9 +14,6 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("VAR", VAR);
 	CMD("VARS", VARS);
 	CMD("VARS.CLR", VAR_CLR);
-	CMD("BUF.NEW", BUF_NEW);
-	CMD("BUF.PUT", BUF_PUT);
-	CMD("BUF.GET", BUF_GET);
 	CMD("COLOR", COLOR);
 	CMD("COLOR.MONO", COLOR_MONO);
 	CMD("COLOR.MULTI", COLOR_MULTI);
@@ -78,7 +75,9 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("LOAD", LOAD);
 	CMD("LOAD.SRC", LOAD_SRC);
 	CMD("FILES", FILES);
-	CMD("FILE.NAME", FILE_NAME);
+	CMD("FILE.REN", FILE_REN);
+	CMD("FILE.DEL", FILE_DEL);
+	CMD("PROG", PROG);
 	CMD("GOTO", GOTO);
 	CMD("GOTO.E", GOTO_IFE);
 	CMD("GOTO.NE", GOTO_IFNE);

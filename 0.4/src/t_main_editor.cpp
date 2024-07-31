@@ -21,23 +21,23 @@ void t_main_editor::reset()
 {
 	function_keys[SDLK_F1] = "";
 	function_keys[SDLK_F2] = "color ";
-	function_keys[SDLK_F3] = "var ";
+	function_keys[SDLK_F3] = "files ";
 	function_keys[SDLK_F4] = "list ";
 	function_keys[SDLK_F5] = "run\n";
 	function_keys[SDLK_F6] = "save ";
 	function_keys[SDLK_F7] = "load ";
-	function_keys[SDLK_F8] = "fn.set ";
+	function_keys[SDLK_F8] = "";
 	function_keys[SDLK_F9] = "";
 	function_keys[SDLK_F10] = "";
 
 	function_keys_shifted[SDLK_F1] = "";
 	function_keys_shifted[SDLK_F2] = t_string::fmt("color %i,%i,%i\n", scr->default_fg, scr->default_bg, scr->default_bdr);
-	function_keys_shifted[SDLK_F3] = "vars\n";
+	function_keys_shifted[SDLK_F3] = "";
 	function_keys_shifted[SDLK_F4] = "list\n";
-	function_keys_shifted[SDLK_F5] = "files\n";
+	function_keys_shifted[SDLK_F5] = "";
 	function_keys_shifted[SDLK_F6] = "";
 	function_keys_shifted[SDLK_F7] = "";
-	function_keys_shifted[SDLK_F8] = "fn.list\n";
+	function_keys_shifted[SDLK_F8] = "";
 	function_keys_shifted[SDLK_F9] = "";
 	function_keys_shifted[SDLK_F10] = "";
 }

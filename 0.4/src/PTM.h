@@ -14,8 +14,6 @@
 #include "t_namespace.h"
 #include "t_pointers.h"
 #include "t_sprite.h"
-#include "t_tilebuffer.h"
-#include "t_rect.h"
 
 class PTM
 {
@@ -23,7 +21,8 @@ public:
 	const t_string title = "PTM - Programmable Tile Machine";
 	const t_string version_string = "PTM 0.4";
 	const t_string copyright_notice = "` 2023-2024 Fernando Aires Castello";
-	const t_string autoexec_file = "AUTOEXEC";
+	const t_string autoexec_file = "AUTORUN";
+	const t_string autosave_file = "AUTOSAVE";
 
 	t_tile tilereg;
 	bool auto_screen_update = true;
@@ -35,6 +34,7 @@ public:
 	void pause(int frames);
 	void on_machine_cycle();
 	void on_escape_key_pressed();
+	void on_exit();
 	SDL_Keycode await_keypress();
 	void refresh_screen();
 	bool is_window_open() const;
@@ -72,20 +72,19 @@ public:
 	bool set_function_key(const t_string& keyname, const t_string& value);
 	t_list<t_string> list_function_keys();
 	t_string input_string(const t_string& prompt, int maxlen);
-	void create_tilebuf(const t_string& name, int cols, int rows);
-	bool has_tilebuf(const t_string& name);
-	t_sptr<t_tilebuffer> get_tilebuf(const t_string& name);
 	void add_sprite(const t_string& name, int x, int y, bool visible);
 	t_sprite_ptr get_sprite(const t_string& name);
 	void delete_all_sprites();
+	const t_string& get_last_program_filename() const;
+	void autosave_program_file();
 
 private:
 	bool running = false;
 	bool halted = false;
 
+	t_string last_program_filename;
 	t_namespace<t_string> vars;
 	t_namespace<t_sprite_ptr> sprites;
-	t_namespace<t_sptr<t_tilebuffer>> tilebufs;
 	
 	void init();
 	void run_tests();

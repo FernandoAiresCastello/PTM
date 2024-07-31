@@ -21,6 +21,7 @@ public:
 	static void write_all_text(const t_string& text, const t_string& filename);
 	static void write_all_lines(const t_list<t_string>& lines, const t_string& filename);
 	static void rename_file(const t_string& old_name, const t_string& new_name);
+	static void delete_file(const t_string& name);
 	static void save_program_plaintext(t_program* prg, const t_string& filename);
 	static void load_program_plaintext(t_interpreter* intp, t_program* prg, const t_string& filename);
 	static void save_program_binary(t_program* prg, const t_string& filename);

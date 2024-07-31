@@ -178,6 +178,11 @@ void t_filesystem::rename_file(const t_string& old_name, const t_string& new_nam
     fs::rename(PATH(old_name), PATH(new_name));
 }
 
+void t_filesystem::delete_file(const t_string& name)
+{
+    fs::remove(PATH(name));
+}
+
 void t_filesystem::save_program_plaintext(t_program* prg, const t_string& filename)
 {
     write_all_text(prg->all_lines_to_single_string(), filename);

@@ -39,7 +39,4 @@ namespace PTML
 	void SCR_ON();
 	void SCR_OFF();
 	void REFRESH();
-	void BUF_NEW();
-	void BUF_PUT();
-	void BUF_GET();
 }

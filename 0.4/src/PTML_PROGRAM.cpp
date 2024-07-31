@@ -138,6 +138,13 @@ void PTML::LOAD_SRC()
 	}
 }
 
+void PTML::PROG()
+{
+	REQUIRE_IMM;
+	ARGC(0);
+	scr->print_string_crlf(ptm->get_last_program_filename());
+}
+
 void PTML::RENUM()
 {
 	REQUIRE_IMM;

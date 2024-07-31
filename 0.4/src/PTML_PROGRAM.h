@@ -9,5 +9,6 @@ namespace PTML
 	void LOAD();
 	void SAVE_SRC();
 	void LOAD_SRC();
+	void PROG();
 	void RENUM();
 }

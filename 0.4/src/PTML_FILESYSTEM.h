@@ -3,5 +3,6 @@
 namespace PTML
 {
 	void FILES();
-	void FILE_NAME();
+	void FILE_REN();
+	void FILE_DEL();
 }

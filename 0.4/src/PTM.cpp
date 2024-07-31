@@ -79,6 +79,8 @@ void PTM::run_main()
 		}
 		on_machine_cycle();
 	}
+
+	on_exit();
 }
 
 void PTM::halt()
@@ -159,6 +161,11 @@ void PTM::on_escape_key_pressed()
 		scr.show_cursor(true);
 		auto_screen_update = true;
 	}
+}
+
+void PTM::on_exit()
+{
+	autosave_program_file();
 }
 
 SDL_Keycode PTM::await_keypress()
@@ -284,6 +291,8 @@ t_program& PTM::get_prg()
 
 void PTM::run_program_from_immediate_mode()
 {
+	autosave_program_file();
+
 	prg_runner.run_program_from_immediate_mode(this, &prg, &intp);
 }
 
@@ -305,6 +314,7 @@ void PTM::end_program()
 void PTM::new_program()
 {
 	prg.lines.clear();
+	last_program_filename = "";
 }
 
 void PTM::save_program(const t_string& filename, bool hex)
@@ -313,6 +323,8 @@ void PTM::save_program(const t_string& filename, bool hex)
 		filesys.save_program_binary(&prg, filename);
 	else
 		filesys.save_program_plaintext(&prg, filename);
+
+	last_program_filename = filename.to_upper();
 }
 
 bool PTM::load_program(const t_string& filename, bool hex)
@@ -323,6 +335,9 @@ bool PTM::load_program(const t_string& filename, bool hex)
 			filesys.load_program_binary(&intp, &prg, filename);
 		else
 			filesys.load_program_plaintext(&intp, &prg, filename);
+		
+		if (!prg.lines.empty())
+			last_program_filename = filename.to_upper();
 
 		return !prg.lines.empty();
 	}
@@ -467,24 +482,6 @@ t_string PTM::input_string(const t_string& prompt, int maxlen)
 	return value;
 }
 
-void PTM::create_tilebuf(const t_string& name, int cols, int rows)
-{
-	tilebufs[name] = std::make_shared<t_tilebuffer>(cols, rows);
-}
-
-bool PTM::has_tilebuf(const t_string& name)
-{
-	return tilebufs.contains(name);
-}
-
-t_sptr<t_tilebuffer> PTM::get_tilebuf(const t_string& name)
-{
-	if (tilebufs.contains(name))
-		return tilebufs[name];
-
-	return nullptr;
-}
-
 void PTM::add_sprite(const t_string& name, int x, int y, bool visible)
 {
 	sprites[name] = scr.add_sprite(tilereg, t_pos(x, y));
@@ -503,4 +500,14 @@ void PTM::delete_all_sprites()
 {
 	scr.delete_all_sprites();
 	sprites.clear();
+}
+
+const t_string& PTM::get_last_program_filename() const
+{
+	return last_program_filename;
+}
+
+void PTM::autosave_program_file()
+{
+	filesys.save_program_binary(&prg, autosave_file);
 }

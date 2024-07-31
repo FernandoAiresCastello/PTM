@@ -328,33 +328,3 @@ void PTML::REFRESH()
 	ARGC(0);
 	ptm->refresh_screen();
 }
-
-void PTML::BUF_NEW()
-{
-	ARGC(3);
-	ptm->create_tilebuf(STR(1), NUM(2), NUM(3));
-}
-
-void PTML::BUF_PUT()
-{
-	ARGC(3);
-	TILEBUF(STR(1));
-	int col = NUM(2);
-	int row = NUM(3);
-	CHK_TBUF_BOUNDS(buf, col, row);
-
-	IF_TILEREG_EMPTY_RET;
-
-	buf->set(TILEREG, col, row);
-}
-
-void PTML::BUF_GET()
-{
-	ARGC(3);
-	TILEBUF(STR(1));
-	int col = NUM(2);
-	int row = NUM(3);
-	CHK_TBUF_BOUNDS(buf, col, row);
-
-	TILEREG = buf->get_ref(col, row);
-}
