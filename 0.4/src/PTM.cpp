@@ -513,3 +513,18 @@ void PTM::autosave_program_file()
 {
 	filesys.save_program_binary(&prg, autosave_file);
 }
+
+void PTM::create_table(const t_string& name, int cols, int rows)
+{
+	tables[name].init(cols, rows);
+}
+
+bool PTM::has_table(const t_string& name)
+{
+	return tables.contains(name);
+}
+
+t_table& PTM::get_table(const t_string& name)
+{
+	return tables[name];
+}

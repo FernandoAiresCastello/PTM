@@ -77,6 +77,9 @@ public:
 	void delete_all_sprites();
 	const t_string& get_last_program_filename() const;
 	void autosave_program_file();
+	void create_table(const t_string& name, int cols, int rows);
+	bool has_table(const t_string& name);
+	t_table& get_table(const t_string& name);
 
 private:
 	bool running = false;
@@ -85,7 +88,8 @@ private:
 	t_string last_program_filename;
 	t_namespace<t_string> vars;
 	t_namespace<t_sprite_ptr> sprites;
-	
+	t_namespace<t_table> tables;
+
 	void init();
 	void run_tests();
 	void run_graphics_test();

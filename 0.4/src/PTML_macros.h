@@ -26,3 +26,4 @@
 #define CHK_TBUF_BOUNDS(x, col, row)		if (col < 0 || row < 0 || col > x->last_col || row > x->last_row) { error = err.arg_out_of_range; return; }
 #define SPRITE(x)				auto&& sprite = ptm->get_sprite(x); if (sprite == nullptr) { return; }
 #define TILEBUF(x)				auto&& buf = get_tilebuffer(x); if (buf == nullptr) { return; }
+#define CHK_TBL_BOUNDS(x, col, row)		if (col < 0 || row < 0 || col >= x.get_cols() || row >= x.get_rows()) { error = err.arg_out_of_range; return; }
