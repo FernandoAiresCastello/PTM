@@ -4,6 +4,7 @@
 #include "t_tilebuffer.h"
 #include "t_palette.h"
 #include "t_charset.h"
+#include "predefined_charset_ix.h"
 
 t_screen::t_screen(int cols, int rows) :
 	cols(cols), rows(rows), last_col(cols - 1), last_row(rows - 1),
@@ -16,6 +17,7 @@ t_screen::t_screen(int cols, int rows) :
 
 void t_screen::reset()
 {
+	delete_all_sprites();
 	color(default_fg, default_bg, default_bdr);
 	clear();
 	update_monochrome_tiles();
@@ -506,7 +508,7 @@ void t_screen::set_insert_mode(bool state)
 	bool csr_visible = csr->tile.flags.visible;
 
 	if (insert_mode) {
-		t_tile tile(126, fore_color, back_color);
+		t_tile tile(predef_char.half_cursor, fore_color, back_color);
 		tile.flags.hide_bgc = true;
 		tile.flags.visible = csr_visible;
 		csr->set_tile(tile);

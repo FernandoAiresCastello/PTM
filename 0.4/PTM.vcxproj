@@ -61,6 +61,7 @@
     <ClCompile Include="src\t_window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\predefined_charset_ix.h" />
     <ClInclude Include="src\PTM.h" />
     <ClInclude Include="src\PTML_CTFLOW.h" />
     <ClInclude Include="src\PTML_FILESYSTEM.h" />

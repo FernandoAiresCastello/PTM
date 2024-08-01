@@ -38,7 +38,6 @@ void PTM::run()
 	prg.lines.clear();
 
 	init();
-	//run_tests();
 	run_main();
 }
 
@@ -68,7 +67,7 @@ void PTM::run_main()
 {
 	bool autoexec = t_filesystem::file_exists(autoexec_file);
 	if (!autoexec)
-		main_editor.print_welcome();
+		main_editor.print_welcome(true);
 
 	while (wnd.is_open()) {
 		if (autoexec) {
@@ -91,18 +90,21 @@ void PTM::halt()
 	}
 }
 
-void PTM::reset(bool new_prg)
+void PTM::reset()
 {
+	autosave_program_file();
+
 	halted = false;
 	prg_runner.stop();
-	delete_all_vars();
 	chr.reset();
 	pal.reset();
 	scr.reset();
+	tilereg.set_empty();
+	delete_all_vars();
+	delete_all_sprites();
+	new_program();
 	main_editor.reset();
-
-	if (new_prg)
-		new_program();
+	main_editor.print_welcome(false);
 }
 
 void PTM::pause(int frames)

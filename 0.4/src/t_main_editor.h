@@ -16,7 +16,7 @@ public:
 
 	void init(PTM* ptm, t_screen* scr, t_keyboard* kb, t_interpreter* intp);
 	void reset();
-	void print_welcome();
+	void print_welcome(bool show_prompt);
 	void on_keydown();
 
 private:

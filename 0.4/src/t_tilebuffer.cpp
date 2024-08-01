@@ -3,6 +3,7 @@
 #include "t_window.h"
 #include "t_charset.h"
 #include "t_palette.h"
+#include "predefined_charset_ix.h"
 
 #define tile_at(x, y)			tiles[y * cols + x]
 #define if_inside_bounds(x, y)	if (x >= 0 && y >= 0 && x < cols && y < rows)
@@ -21,7 +22,7 @@ t_tilebuffer::t_tilebuffer(int cols, int rows) :
 	clear();
 
 	cursor_sprite = std::make_shared<t_sprite>(
-		t_tile(127, 0, 0, t_tileflags()), t_pos(0, 0), true);
+		t_tile(predef_char.cursor, 0, 0, t_tileflags()), t_pos(0, 0), true);
 }
 
 void t_tilebuffer::draw(t_window* wnd, t_charset* chr, t_palette* pal, const t_pos& scr_pos, const t_tilebuffer_region& region)

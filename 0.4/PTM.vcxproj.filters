@@ -280,6 +280,9 @@
     <ClInclude Include="src\t_rect.h">
       <Filter>UTIL</Filter>
     </ClInclude>
+    <ClInclude Include="src\predefined_charset_ix.h">
+      <Filter>GRAPHICS - CORE</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="UTIL">

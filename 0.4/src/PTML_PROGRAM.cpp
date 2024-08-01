@@ -95,6 +95,7 @@ void PTML::LOAD()
 	ARGC(1);
 
 	auto&& filename = STR(1);
+	VALIDATE_FILENAME(filename);
 	REQUIRE_FILE(filename);
 
 	if (t_filesystem::file_exists(filename)) {
@@ -125,6 +126,7 @@ void PTML::LOAD_SRC()
 	ARGC(1);
 
 	auto&& filename = STR(1);
+	VALIDATE_FILENAME(filename);
 	REQUIRE_FILE(filename);
 
 	if (t_filesystem::file_exists(filename)) {

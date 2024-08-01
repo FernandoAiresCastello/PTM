@@ -17,8 +17,8 @@ void PTML::FILE_REN()
 	ARGC(2);
 	auto&& old_name = STR(1);
 	auto&& new_name = STR(2);
-	REQUIRE_FILE(old_name);
 	VALIDATE_FILENAME(new_name);
+	REQUIRE_FILE(old_name);
 	t_filesystem::rename_file(old_name, new_name);
 }
 
@@ -26,7 +26,7 @@ void PTML::FILE_DEL()
 {
 	ARGC(1);
 	auto&& name = STR(1);
-	REQUIRE_FILE(name);
 	VALIDATE_FILENAME(name);
+	REQUIRE_FILE(name);
 	t_filesystem::delete_file(name);
 }

@@ -20,7 +20,7 @@ class PTM
 public:
 	const t_string title = "PTM - Programmable Tile Machine";
 	const t_string version_string = "PTM 0.4";
-	const t_string copyright_notice = "` 2023-2024 Fernando Aires Castello";
+	const t_string copyright_notice = "`2023-2024 Fernando Aires Castello";
 	const t_string autoexec_file = "AUTORUN";
 	const t_string autosave_file = "AUTOSAVE";
 
@@ -30,7 +30,7 @@ public:
 	void run();
 	void exit();
 	void halt();
-	void reset(bool new_prg);
+	void reset();
 	void pause(int frames);
 	void on_machine_cycle();
 	void on_escape_key_pressed();

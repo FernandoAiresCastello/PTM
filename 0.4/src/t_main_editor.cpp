@@ -32,7 +32,7 @@ void t_main_editor::reset()
 
 	function_keys_shifted[SDLK_F1] = "";
 	function_keys_shifted[SDLK_F2] = t_string::fmt("color %i,%i,%i\n", scr->default_fg, scr->default_bg, scr->default_bdr);
-	function_keys_shifted[SDLK_F3] = "";
+	function_keys_shifted[SDLK_F3] = "files\n";
 	function_keys_shifted[SDLK_F4] = "list\n";
 	function_keys_shifted[SDLK_F5] = "";
 	function_keys_shifted[SDLK_F6] = "";
@@ -42,11 +42,12 @@ void t_main_editor::reset()
 	function_keys_shifted[SDLK_F10] = "";
 }
 
-void t_main_editor::print_welcome()
+void t_main_editor::print_welcome(bool show_prompt)
 {
 	scr->print_string_crlf(ptm->version_string);
 	scr->print_string_crlf(ptm->copyright_notice);
-	intp->print_prompt();
+	if (show_prompt)
+		intp->print_prompt();
 }
 
 void t_main_editor::on_keydown()
