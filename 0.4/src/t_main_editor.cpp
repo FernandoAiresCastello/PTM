@@ -6,6 +6,7 @@
 #include "t_keyboard.h"
 #include "t_util.h"
 #include "t_interpreter.h"
+#include "predefined_charset_ix.h"
 
 void t_main_editor::init(PTM* ptm, t_screen* scr, t_keyboard* kb, t_interpreter* intp)
 {
@@ -110,7 +111,7 @@ bool t_main_editor::handle_control_key()
 
 		case SDLK_TAB: {
 			for (int i = 0; i < 8; i++)
-				scr->on_character_key_pressed(' ');
+				scr->on_character_key_pressed(predef_char.whitespace);
 			return true;
 		}
 
@@ -154,7 +155,7 @@ bool t_main_editor::handle_function_key()
 
 bool t_main_editor::handle_character_key()
 {
-	int ch = kb->keycode_to_char(kb->peek_key());
+	unsigned char ch = kb->keycode_to_char(kb->peek_key());
 	if (ch > 0) {
 		if (kb->ctrl())
 			return handle_ctrl_character_key();

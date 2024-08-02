@@ -34,7 +34,7 @@ void PTM::run()
 
 	running = true;
 	halted = false;
-	tilereg.set_empty();
+	tilereg.set_blank();
 	prg.lines.clear();
 
 	init();
@@ -160,8 +160,6 @@ void PTM::on_escape_key_pressed()
 	if (prg_runner.is_running()) {
 		prg_runner.stop();
 		intp.on_user_interrupt(prg_runner.get_current_line());
-		scr.show_cursor(true);
-		auto_screen_update = true;
 	}
 }
 
@@ -313,6 +311,12 @@ void PTM::end_program()
 	prg_runner.stop();
 }
 
+void PTM::on_program_end()
+{
+	scr.show_cursor(true);
+	auto_screen_update = true;
+}
+
 void PTM::new_program()
 {
 	prg.lines.clear();
@@ -437,7 +441,7 @@ t_list<t_string> PTM::list_function_keys()
 	for (auto& entry : main_editor.function_keys_shifted) {
 		auto&& keyname = kb.get_name_by_keycode(entry.first);
 		auto& value = entry.second;
-		list.push_back(t_string::fmt("S%s: %s", keyname.c_str(), value.c_str()));
+		list.push_back(t_string::fmt("s%s: %s", keyname.c_str(), value.c_str()));
 	}
 	return list;
 }
@@ -527,4 +531,19 @@ bool PTM::has_table(const t_string& name)
 t_table& PTM::get_table(const t_string& name)
 {
 	return tables[name];
+}
+
+void PTM::save_tilereg(const t_string& name)
+{
+	tile_presets[name] = tilereg;
+}
+
+void PTM::load_tilereg(const t_string& name)
+{
+	tilereg = tile_presets[name];
+}
+
+bool PTM::has_tilereg(const t_string& name)
+{
+	return tile_presets.contains(name);
 }

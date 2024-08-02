@@ -56,6 +56,7 @@ public:
 	void run_program_from_another_program();
 	bool has_new_program_loaded_at_runtime();
 	void end_program();
+	void on_program_end();
 	void new_program();
 	void save_program(const t_string& filename, bool hex);
 	bool load_program(const t_string& filename, bool hex);
@@ -80,6 +81,9 @@ public:
 	void create_table(const t_string& name, int cols, int rows);
 	bool has_table(const t_string& name);
 	t_table& get_table(const t_string& name);
+	void save_tilereg(const t_string& name);
+	void load_tilereg(const t_string& name);
+	bool has_tilereg(const t_string& name);
 
 private:
 	bool running = false;
@@ -89,6 +93,7 @@ private:
 	t_namespace<t_string> vars;
 	t_namespace<t_sprite_ptr> sprites;
 	t_namespace<t_table> tables;
+	t_namespace<t_tile> tile_presets;
 
 	void init();
 	void run_tests();

@@ -1,7 +1,7 @@
 #include "PTML_VARS.h"
 #include "PTML_shared_headers.h"
 
-void PTML::VAR()
+void PTML::SET()
 {
 	ARGC(2);
 	REQUIRE_IDENT(1);

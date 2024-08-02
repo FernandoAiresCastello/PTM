@@ -19,6 +19,13 @@ void PTML::COLOR()
 	}
 }
 
+void PTML::COLOR_Q()
+{
+	ARGC(0);
+	scr->print_string_crlf(t_string::fmt("%i,%i,%i", 
+		scr->get_fg_color(), scr->get_bg_color(), scr->get_bdr_color()));
+}
+
 void PTML::COLOR_MONO()
 {
 	ARGC(0);
@@ -125,7 +132,7 @@ void PTML::CHR()
 	ptm->get_chr().set_row(NUM(1), NUM(2), STR(3));
 }
 
-void PTML::PAL_OUT()
+void PTML::PAL_Q()
 {
 	ARGC(1);
 	t_index&& color = NUM(1);
@@ -135,7 +142,7 @@ void PTML::PAL_OUT()
 	scr->set_tile(tile, 0, scr->csry() - 1);
 }
 
-void PTML::CHR_OUT()
+void PTML::CHR_Q()
 {
 	ARGC(1);
 	t_index&& ch = NUM(1);
@@ -204,7 +211,7 @@ void PTML::TILE_ADD()
 	TILEREG.add_char(NUM(1), NUM(2), NUM(3));
 }
 
-void PTML::TILE_LIST()
+void PTML::TILE_Q()
 {
 	ARGC(0);
 	t_list<t_string> tiles;
@@ -214,17 +221,37 @@ void PTML::TILE_LIST()
 	PRINT_LIST(tiles);
 }
 
-void PTML::TILE_LISTC()
+void PTML::TILE_SETP()
 {
 	IF_TILEREG_EMPTY_RET;
-	ARGC(0);
-	int i = 0;
-	scr->newline();
-	for (auto&& ch : TILEREG.get_all_chars()) {
-		t_tile tile(ch);
-		tile.flags.monochrome = false;
-		scr->set_tile(tile, i++, scr->csry() - 1);
+	ARGC(2);
+	TILEREG.data.set(STR(1), STR(2));
+}
+
+void PTML::TILE_GETP()
+{
+	IF_TILEREG_EMPTY_RET;
+	ARGC(2);
+	ptm->set_var(STR(1), TILEREG.data.get(STR(2)));
+}
+
+void PTML::TILE_SAVE()
+{
+	IF_TILEREG_EMPTY_RET;
+	ARGC(1);
+	ptm->save_tilereg(STR(1));
+}
+
+void PTML::TILE_LOAD()
+{
+	ARGC(1);
+	auto&& name = STR(1);
+	if (!ptm->has_tilereg(name)) {
+		error = err.tile_preset_not_found;
+		return;
 	}
+
+	ptm->load_tilereg(name);
 }
 
 void PTML::PUT()
@@ -247,6 +274,21 @@ void PTML::PUT()
 		scr->set_tile(tile, NUM(1), NUM(2));
 	else
 		error = err.invalid_argc;
+}
+
+void PTML::PUTS()
+{
+	IF_TILEREG_EMPTY_RET;
+	ARGC(0);
+	if (IMM)
+		scr->newline();
+
+	int x = 0;
+	for (auto&& ch : TILEREG.get_all_chars()) {
+		t_tile tile(ch);
+		tile.flags.monochrome = false;
+		scr->set_tile(tile, x++, scr->csry() - 1);
+	}
 }
 
 void PTML::RECT()

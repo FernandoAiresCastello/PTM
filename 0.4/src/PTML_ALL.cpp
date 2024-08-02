@@ -11,13 +11,14 @@
 
 t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 {
-	CMD("VAR", VAR);
+	CMD("SET", SET);
 	CMD("VARS", VARS);
 	CMD("VARS.CLR", VAR_CLR);
 	CMD("TBL.NEW", TBL_NEW);
 	CMD("TBL.SET", TBL_SET);
 	CMD("TBL.GET", TBL_GET);
 	CMD("COLOR", COLOR);
+	CMD("COLOR?", COLOR_Q);
 	CMD("COLOR.MONO", COLOR_MONO);
 	CMD("COLOR.MULTI", COLOR_MULTI);
 	CMD("COLOR.SETF", COLOR_SETF);
@@ -36,8 +37,8 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("CLS", CLS);
 	CMD("PAL", PAL);
 	CMD("CHR", CHR);
-	CMD("PAL.OUT", PAL_OUT);
-	CMD("CHR.OUT", CHR_OUT);
+	CMD("PAL?", PAL_Q);
+	CMD("CHR?", CHR_Q);
 	CMD("PAL.RESET", PAL_RESET);
 	CMD("CHR.RESET", CHR_RESET);
 	CMD("LOCATE", LOCATE);
@@ -60,10 +61,14 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("CSR.OFF", CSR_OFF);
 	CMD("TILE.NEW", TILE_NEW);
 	CMD("TILE.ADD", TILE_ADD);
-	CMD("TILE.LIST", TILE_LIST);
-	CMD("TILE.LISTC", TILE_LISTC);
+	CMD("TILE?", TILE_Q);
+	CMD("TILE.SETP", TILE_SETP);
+	CMD("TILE.GETP", TILE_GETP);
+	CMD("TILE.SAVE", TILE_SAVE);
+	CMD("TILE.LOAD", TILE_LOAD);
 	CMD("GET", GET);
 	CMD("PUT", PUT);
+	CMD("PUTS", PUTS);
 	CMD("RECT", RECT);
 	CMD("RECT.DEL", RECT_DEL);
 	CMD("FILL", FILL);

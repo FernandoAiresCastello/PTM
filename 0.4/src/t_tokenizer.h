@@ -21,8 +21,9 @@ private:
 		char positive = '+';
 		char negative = '-';
 		char label = ':';
-		t_string valid_identifier_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._";
+		t_string valid_identifier_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._?";
 		t_string valid_digits = "0123456789";
+
 	} sym;
 
 	int ptr = 0;

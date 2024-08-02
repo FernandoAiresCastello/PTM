@@ -2,7 +2,7 @@
 
 namespace PTML
 {
-	void VAR();
+	void SET();
 	void VARS();
 	void SWAP();
 	void VAR_CLR();

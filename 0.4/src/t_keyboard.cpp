@@ -74,7 +74,7 @@ bool t_keyboard::ctrl()		{ return SDL_GetModState() & KMOD_CTRL;  }
 bool t_keyboard::alt()		{ return SDL_GetModState() & KMOD_ALT;   }
 bool t_keyboard::capslock()	{ return SDL_GetModState() & KMOD_CAPS;  }
 
-int t_keyboard::keycode_to_char(SDL_Keycode key)
+unsigned char t_keyboard::keycode_to_char(SDL_Keycode key)
 {
 	const bool shifted = shift();
 
@@ -131,6 +131,10 @@ int t_keyboard::keycode_to_char(SDL_Keycode key)
 	if (key == SDLK_LEFTBRACKET) return shifted ? '{' : '[';
 	if (key == SDLK_RIGHTBRACKET) return shifted ? '}' : ']';
 	if (key == SDLK_BACKSLASH) return shifted ? '|' : '\\';
+
+	if (key == 231) /* c-cedilla */ return shifted ? 94 : 96;
+	if (key == 126) /* tilde */ return shifted ? 126 : 127;
+	if (key == 180) /* acute accent */ return shifted ? 2 : 1;
 
 	return 0;
 }

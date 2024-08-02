@@ -56,6 +56,8 @@ void t_program_runner::run_program_from_immediate_mode(PTM* ptm, t_program* prg,
 		running = false;
 	}
 	while (new_program_loaded_at_runtime);
+
+	ptm->on_program_end();
 }
 
 void t_program_runner::run_program_from_another_program()
