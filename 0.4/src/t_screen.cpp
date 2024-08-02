@@ -442,8 +442,8 @@ t_string t_screen::get_current_logical_line()
 	for (int x = 0; x < cols; x++) {
 		t_tile& tile = get_tile(t_pos(x, csr->pos.y));
 		t_index ch = tile.get_char().ix;
-		if (ch < 32 || ch > 126)
-			ch = ' ';
+		if (ch < 32 || ch > 127)
+			ch = predef_char.whitespace;
 
 		logical_line[x] = ch;
 	}

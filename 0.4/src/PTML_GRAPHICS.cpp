@@ -316,6 +316,26 @@ void PTML::RECT_DEL()
 	scr->rect_clear(x1, y1, x2, y2);
 }
 
+void PTML::LINE_H()
+{
+	IF_TILEREG_EMPTY_RET;
+	ARGC(3);
+	int&& y = NUM(1);
+	int&& x1 = NUM(2);
+	int&& x2 = NUM(3);
+	scr->rect_fill(TILEREG, x1, y, x2, y);
+}
+
+void PTML::LINE_V()
+{
+	IF_TILEREG_EMPTY_RET;
+	ARGC(3);
+	int&& x = NUM(1);
+	int&& y1 = NUM(2);
+	int&& y2 = NUM(3);
+	scr->rect_fill(TILEREG, x, y1, x, y2);
+}
+
 void PTML::FILL()
 {
 	IF_TILEREG_EMPTY_RET;

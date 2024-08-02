@@ -38,6 +38,8 @@ namespace PTML
 	void PUTS();
 	void RECT();
 	void RECT_DEL();
+	void LINE_H();
+	void LINE_V();
 	void FILL();
 	void GET();
 	void DEL();

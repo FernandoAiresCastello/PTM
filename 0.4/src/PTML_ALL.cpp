@@ -71,6 +71,8 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("PUTS", PUTS);
 	CMD("RECT", RECT);
 	CMD("RECT.DEL", RECT_DEL);
+	CMD("LINE.H", LINE_H);
+	CMD("LINE.V", LINE_V);
 	CMD("FILL", FILL);
 	CMD("DEL", DEL);
 	CMD("LIST", LIST);
