@@ -117,8 +117,15 @@ void PTML::CALL_IFNKEY()
 
 void PTML::RET()
 {
+	ARGC(0);
 	if (ptm->is_callstack_empty())
 		error = "Call stack empty";
 	else
 		ptm->return_from_call();
+}
+
+void PTML::PAUSE()
+{
+	ARGC(1);
+	ptm->pause(NUM(1));
 }

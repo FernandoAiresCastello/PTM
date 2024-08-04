@@ -34,7 +34,7 @@ void PTM::run()
 
 	running = true;
 	halted = false;
-	tilereg.set_blank();
+	tilereg.set_empty();
 	prg.lines.clear();
 
 	init();
@@ -110,8 +110,12 @@ void PTM::reset()
 void PTM::pause(int frames)
 {
 	for (int i = 0; i < frames; i++) {
-		if (!wnd.is_open())
+		if (!wnd.is_open() ||
+			!prg_runner.is_running() ||
+			prg_runner.is_stopping()) {
+
 			break;
+		}
 
 		on_machine_cycle();
 	}

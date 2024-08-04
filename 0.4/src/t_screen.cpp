@@ -282,6 +282,14 @@ void t_screen::print_char(t_index ch)
 	}
 }
 
+void t_screen::print_tile(const t_tile& tile)
+{
+	if (csr->get_x() < last_col) {
+		buf->set(tile, csr->pos.x, csr->pos.y);
+		csr->move_dist(1, 0);
+	}
+}
+
 void t_screen::print_string(const t_string& str)
 {
 	buf->set_text(str, csr->pos.x, csr->pos.y, fore_color, back_color);
@@ -299,6 +307,35 @@ bool t_screen::print_lines(const t_list<t_string>& lines, PTM* ptm)
 	bool escaped = false;
 	int lines_printed = 0;
 	for (const auto& line : lines) {
+		print_string_crlf(line);
+		lines_printed++;
+		if (lines_printed >= last_row) {
+			SDL_Keycode key = 0;
+			while (key != SDLK_RETURN && key != SDLK_ESCAPE) {
+				key = ptm->await_keypress();
+				if (key == SDLK_RETURN)
+					continue;
+				if (key == SDLK_ESCAPE) {
+					escaped = true;
+					break;
+				}
+			}
+		}
+		if (escaped)
+			break;
+	}
+	return escaped;
+}
+
+bool t_screen::print_lines_with_icon(const t_list<t_tile>& icons, const t_list<t_string>& lines, PTM* ptm)
+{
+	bool escaped = false;
+	int lines_printed = 0;
+	int icon_index = 0;
+	for (const auto& line : lines) {
+		if (icon_index < icons.size())
+			print_tile(icons[icon_index++]);
+
 		print_string_crlf(line);
 		lines_printed++;
 		if (lines_printed >= last_row) {

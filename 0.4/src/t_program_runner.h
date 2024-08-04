@@ -19,6 +19,7 @@ public:
 	bool has_new_program_loaded_at_runtime() const;
 	void stop();
 	bool is_running() const;
+	bool is_stopping() const;
 	t_program_line* get_current_line();
 	void go_to(int line_nr);
 	void go_to(const t_string& label);

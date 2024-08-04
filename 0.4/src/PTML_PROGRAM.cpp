@@ -144,7 +144,9 @@ void PTML::PROG()
 {
 	REQUIRE_IMM;
 	ARGC(0);
-	scr->print_string_crlf(ptm->get_last_program_filename());
+
+	if (!ptm->get_last_program_filename().empty())
+		scr->print_string_crlf(ptm->get_last_program_filename());
 }
 
 void PTML::RENUM()

@@ -82,6 +82,11 @@ bool t_program_runner::is_running() const
 	return running;
 }
 
+bool t_program_runner::is_stopping() const
+{
+	return stop_requested;
+}
+
 t_program_line* t_program_runner::get_current_line()
 {
 	return cur_line;

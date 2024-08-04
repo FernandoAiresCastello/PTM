@@ -110,7 +110,7 @@
     <ClCompile Include="src\PTML_INPUT.cpp">
       <Filter>PTML - COMMANDS</Filter>
     </ClCompile>
-    <ClCompile Include="src\t_sound.cpp">
+    <ClCompile Include="src\t_sound_gen.cpp">
       <Filter>SOUND</Filter>
     </ClCompile>
     <ClCompile Include="src\t_table.cpp">
@@ -118,6 +118,9 @@
     </ClCompile>
     <ClCompile Include="src\PTML_SPRITES.cpp">
       <Filter>PTML - COMMANDS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_sound_wav.cpp">
+      <Filter>SOUND</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -265,7 +268,7 @@
     <ClInclude Include="src\t_tilebuffer_region.h">
       <Filter>GRAPHICS - TILESYSTEM</Filter>
     </ClInclude>
-    <ClInclude Include="src\t_sound.h">
+    <ClInclude Include="src\t_sound_gen.h">
       <Filter>SOUND</Filter>
     </ClInclude>
     <ClInclude Include="src\t_table.h">
@@ -282,6 +285,9 @@
     </ClInclude>
     <ClInclude Include="src\predefined_charset_ix.h">
       <Filter>GRAPHICS - CORE</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_sound_wav.h">
+      <Filter>SOUND</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

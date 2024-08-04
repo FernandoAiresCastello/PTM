@@ -87,12 +87,6 @@ void PTML::PRINT()
 		scr->print_string(value);
 }
 
-void PTML::PRINTC()
-{
-	ARGC(1);
-	scr->print_char(NUM(1));
-}
-
 void PTML::PRINTL()
 {
 	ARGC_MIN_MAX(0, 1);
@@ -214,11 +208,17 @@ void PTML::TILE_ADD()
 void PTML::TILE_Q()
 {
 	ARGC(0);
-	t_list<t_string> tiles;
+	t_list<t_tile> tile_chars;
+	t_list<t_string> tile_values;
+
 	for (auto&& ch : TILEREG.get_all_chars()) {
-		tiles.push_back(t_string::fmt("%i,%i,%i", ch.ix, ch.fgc, ch.bgc));
+		tile_chars.push_back(ch);
+		tile_values.push_back(t_string::fmt(" %i,%i,%i", ch.ix, ch.fgc, ch.bgc));
 	}
-	PRINT_LIST(tiles);
+
+	if (scr->print_lines_with_icon(tile_chars, tile_values, ptm)) {
+		scr->print_string_crlf("Break"); 
+	}
 }
 
 void PTML::TILE_SETP()
@@ -274,21 +274,6 @@ void PTML::PUT()
 		scr->set_tile(tile, NUM(1), NUM(2));
 	else
 		error = err.invalid_argc;
-}
-
-void PTML::PUTS()
-{
-	IF_TILEREG_EMPTY_RET;
-	ARGC(0);
-	if (IMM)
-		scr->newline();
-
-	int x = 0;
-	for (auto&& ch : TILEREG.get_all_chars()) {
-		t_tile tile(ch);
-		tile.flags.monochrome = false;
-		scr->set_tile(tile, x++, scr->csry() - 1);
-	}
 }
 
 void PTML::RECT()

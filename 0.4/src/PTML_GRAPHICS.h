@@ -13,7 +13,6 @@ namespace PTML
 	void COLOR_GETB();
 	void COLOR_GETBR();
 	void PRINT();
-	void PRINTC();
 	void PRINTL();
 	void PRINTF();
 	void CLS();
@@ -35,7 +34,6 @@ namespace PTML
 	void TILE_SAVE();
 	void TILE_LOAD();
 	void PUT();
-	void PUTS();
 	void RECT();
 	void RECT_DEL();
 	void LINE_H();
