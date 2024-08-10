@@ -29,10 +29,10 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	// === VARIABLES ===
 	CMD("SET", SET);
 	CMD("VARS", VARS);
-	CMD("VARS.CLR", VAR_CLR);
-	CMD("TBL.NEW", TBL_NEW);
-	CMD("TBL.SET", TBL_SET);
-	CMD("TBL.GET", TBL_GET);
+	CMD("MEM.CLR", MEM_CLR);
+	CMD("TABLE", TBL_NEW);
+	CMD("POKE", TBL_SET);
+	CMD("PEEK", TBL_GET);
 
 	// === MATH ===
 	CMD("INC", INC);
@@ -137,7 +137,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("TILE.SAVE", TILE_SAVE);
 	CMD("TILE.LOAD", TILE_LOAD);
 
-	// === TILE INPUT/OUTPUT ===
+	// === TILEBUFFER ===
 	CMD("GET", GET);
 	CMD("PUT", PUT);
 	CMD("RECT", RECT);
@@ -150,6 +150,10 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	// === SPRITES ===
 	CMD("SPR.NEW", SPR_NEW);
 	CMD("SPR.POS", SPR_POS);
+	CMD("SPR.X", SPR_X);
+	CMD("SPR.Y", SPR_Y);
+	CMD("SPR.GETX", SPR_GETX);
+	CMD("SPR.GETY", SPR_GETY);
 	CMD("SPR.SHOW", SPR_SHOW);
 	CMD("SPR.MOVE", SPR_MOVE);
 	CMD("SPR.DEL", SPR_DEL);

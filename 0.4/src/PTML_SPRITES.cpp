@@ -14,6 +14,36 @@ void PTML::SPR_POS()
 	sprite->move_to(NUM(2), NUM(3));
 }
 
+void PTML::SPR_X()
+{
+	ARGC(2);
+	SPRITE(STR(1));
+	sprite->move_to(NUM(2), sprite->get_y());
+}
+
+void PTML::SPR_Y()
+{
+	ARGC(2);
+	SPRITE(STR(1));
+	sprite->move_to(sprite->get_x(), NUM(2));
+}
+
+void PTML::SPR_GETX()
+{
+	ARGC(2);
+	REQUIRE_IDENT(2);
+	SPRITE(STR(1));
+	ptm->set_var(IDENT(2), sprite->get_x());
+}
+
+void PTML::SPR_GETY()
+{
+	ARGC(2);
+	REQUIRE_IDENT(2);
+	SPRITE(STR(1));
+	ptm->set_var(IDENT(2), sprite->get_y());
+}
+
 void PTML::SPR_SHOW()
 {
 	ARGC(2);

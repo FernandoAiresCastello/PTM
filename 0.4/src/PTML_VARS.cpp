@@ -29,20 +29,18 @@ void PTML::SWAP()
 	ptm->set_var(IDENT(2), val1);
 }
 
-void PTML::VAR_CLR()
+void PTML::MEM_CLR()
 {
 	ARGC(0);
 	ptm->delete_all_vars();
+	ptm->delete_all_tables();
 }
 
 void PTML::TBL_NEW()
 {
-	ARGC_MIN_MAX(2, 3);
+	ARGC(3);
 	REQUIRE_IDENT(1);
-	if (COUNT(2))
-		ptm->create_table(IDENT(1), NUM(2), 1);
-	else if (COUNT(3))
-		ptm->create_table(IDENT(1), NUM(2), NUM(3));
+	ptm->create_table(IDENT(1), NUM(2), NUM(3));
 }
 
 void PTML::TBL_SET()

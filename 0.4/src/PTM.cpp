@@ -101,6 +101,7 @@ void PTM::reset()
 	scr.reset();
 	tilereg.set_empty();
 	delete_all_vars();
+	delete_all_tables();
 	delete_all_sprites();
 	new_program();
 	main_editor.reset();
@@ -282,6 +283,11 @@ bool PTM::has_var(const t_string& var)
 void PTM::delete_all_vars()
 {
 	vars.clear();
+}
+
+void PTM::delete_all_tables()
+{
+	tables.clear();
 }
 
 t_palette& PTM::get_pal() { return pal; }
