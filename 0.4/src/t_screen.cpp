@@ -17,6 +17,7 @@ t_screen::t_screen(int cols, int rows) :
 
 void t_screen::reset()
 {
+	color_mode = t_color_mode::mode0_monochrome;
 	delete_all_sprites();
 	color(default_fg, default_bg, default_bdr);
 	clear();

@@ -128,7 +128,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("PRINTL", PRINTL);
 	CMD("PRINTF", PRINTF);
 
-	// === TILE REGISTER
+	// === TILE REGISTER ===
 	CMD("TILE.NEW", TILE_NEW);
 	CMD("TILE.ADD", TILE_ADD);
 	CMD("TILE?", TILE_Q);
@@ -136,6 +136,8 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("TILE.GETP", TILE_GETP);
 	CMD("TILE.SAVE", TILE_SAVE);
 	CMD("TILE.LOAD", TILE_LOAD);
+
+	// === TILE INPUT/OUTPUT ===
 	CMD("GET", GET);
 	CMD("PUT", PUT);
 	CMD("RECT", RECT);

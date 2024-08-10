@@ -219,6 +219,14 @@ void PTML::TILE_Q()
 	if (scr->print_lines_with_icon(tile_chars, tile_values, ptm)) {
 		scr->print_string_crlf("Break"); 
 	}
+
+	if (TILEREG.data.is_not_empty()) {
+		t_list<t_string> props;
+		for (auto& prop : TILEREG.data.get_all())
+			props.push_back(t_string::fmt("%s: %s", prop.first.c_str(), prop.second.c_str()));
+
+		PRINT_LIST(props);
+	}
 }
 
 void PTML::TILE_SETP()
