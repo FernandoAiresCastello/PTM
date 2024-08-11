@@ -81,6 +81,11 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("FILES", FILES);
 	CMD("FILE.REN", FILE_REN);
 	CMD("FILE.DEL", FILE_DEL);
+	CMD("DIR.REN", DIR_REN);
+	CMD("DIR.DEL", DIR_DEL);
+	CMD("MKDIR", MKDIR);
+	CMD("CHDIR", CHDIR);
+	CMD("DIR?", DIR_Q);
 
 	// === KEYBOARD INPUT ===
 	CMD("INKEY", INKEY);

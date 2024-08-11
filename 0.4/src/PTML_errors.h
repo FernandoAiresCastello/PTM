@@ -15,6 +15,9 @@ namespace PTML
 		const t_string label_expected = "Label expected";
 		const t_string cmd_not_available = "Command not available";
 		const t_string file_not_found = "File not found";
+		const t_string directory_not_found = "Directory not found";
+		const t_string cant_create_directory = "Could not create directory";
+		const t_string cant_create_file = "Could not create file";
 		const t_string invalid_filename = "Illegal filename";
 		const t_string arg_out_of_range = "Out of bounds";
 		const t_string invalid_program = "Invalid program";
@@ -23,6 +26,7 @@ namespace PTML
 		const t_string sprite_not_found = "Sprite not found";
 		const t_string table_not_found = "Table not found";
 		const t_string tile_preset_not_found = "Tile preset not found";
+		const t_string filesystem_error = "Filesystem error";
 	}
 	err;
 }

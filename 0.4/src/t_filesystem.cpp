@@ -5,23 +5,27 @@
 #include "t_program_line.h"
 #include "t_interpreter.h"
 
+t_string directory = "";
+const t_string root_directory = "ROOT";
+
 #define CRLF        "\r\n"
 #define ROOT        "root\\"
-#define PATH(x)     (ROOT + x.trim().to_upper().s_str())
+#define PATH(x)     (ROOT + directory.trim().to_upper().s_str() + "\\" + x.trim().to_upper().s_str())
+#define ROOTPATH(x) (ROOT + x.trim().to_upper().s_str())
 
 constexpr int bytes_per_line = 16;
 
 namespace fs = std::filesystem;
 
 t_list<t_string> t_filesystem::illegal_filenames = {
-    "CON", "PRN", "AUX", "NUL", 
+    root_directory, "CON", "PRN", "AUX", "NUL",
     "COM0", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "COM¹", "COM²", "COM³", 
     "LPT0", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9", "LPT¹", "LPT²", "LPT³"
 };
 
 bool t_filesystem::is_valid_filename(const t_string& filename)
 {
-    t_string trimmed_filename = filename.trim();
+    t_string trimmed_filename = filename.trim().to_upper();
 
     if (trimmed_filename.empty())
         return false;
@@ -42,15 +46,40 @@ bool t_filesystem::file_exists(const t_string& filename)
     if (!is_valid_filename(filename))
         return false;
 
-    struct stat buffer;
-    return (stat(PATH(filename).c_str(), &buffer) == 0);
+    return 
+        fs::exists(fs::path(PATH(filename))) && 
+        fs::is_regular_file(fs::path(PATH(filename)));
+}
+
+bool t_filesystem::directory_exists(const t_string& name)
+{
+    if (!is_valid_filename(name))
+        return false;
+
+    return 
+        fs::exists(fs::path(ROOTPATH(name))) && 
+        fs::is_directory(fs::path(ROOTPATH(name)));
 }
 
 t_list<t_string> t_filesystem::list_files(const char* prefix)
 {
     t_list<t_string> files;
 
-    for (const auto& entry : fs::directory_iterator(ROOT)) {
+    for (const auto& entry : fs::directory_iterator(ROOT + directory.s_str())) {
+        if (fs::is_directory(entry.status())) {
+            const auto&& path = entry.path().filename().string();
+            const auto&& dir = path + "/";
+            if (prefix) {
+                if (path.starts_with(prefix))
+                    files.emplace_back(dir);
+            }
+            else {
+                files.emplace_back(dir);
+            }
+        }
+    }
+
+    for (const auto& entry : fs::directory_iterator(ROOT + directory.s_str())) {
         if (fs::is_regular_file(entry.status())) {
             const auto&& path = entry.path().filename().string();
             if (prefix) {
@@ -173,14 +202,56 @@ void t_filesystem::write_all_lines(const t_list<t_string>& lines, const t_string
     write_all_text(text, filename);
 }
 
-void t_filesystem::rename_file(const t_string& old_name, const t_string& new_name)
+bool t_filesystem::rename_file(const t_string& old_name, const t_string& new_name)
 {
-    fs::rename(PATH(old_name), PATH(new_name));
+    try
+    {
+        fs::rename(PATH(old_name), PATH(new_name));
+        return true;
+    }
+    catch (std::exception)
+    {
+        return false;
+    }
 }
 
-void t_filesystem::delete_file(const t_string& name)
+bool t_filesystem::delete_file(const t_string& name)
 {
-    fs::remove(PATH(name));
+    try
+    {
+        fs::remove(PATH(name));
+        return true;
+    }
+    catch (std::exception)
+    {
+        return false;
+    }
+}
+
+bool t_filesystem::rename_directory(const t_string& old_name, const t_string& new_name)
+{
+    try
+    {
+        fs::rename(ROOTPATH(old_name), ROOTPATH(new_name));
+        return true;
+    }
+    catch (std::exception)
+    {
+        return false;
+    }
+}
+
+bool t_filesystem::delete_directory(const t_string& name)
+{
+    try
+    {
+        fs::remove_all(ROOTPATH(name));
+        return true;
+    }
+    catch (std::exception)
+    {
+        return false;
+    }
 }
 
 void t_filesystem::save_program_plaintext(t_program* prg, const t_string& filename)
@@ -222,4 +293,27 @@ void t_filesystem::load_program_binary(t_interpreter* intp, t_program* prg, cons
             break;
         }
     }
+}
+
+void t_filesystem::create_directory(const t_string& dir)
+{
+    fs::create_directory(ROOTPATH(dir));
+}
+
+void t_filesystem::change_directory(const t_string& dir)
+{
+    if (dir == root_directory)
+        directory = "";
+    else
+        directory = dir.to_upper();
+}
+
+const t_string& t_filesystem::get_current_directory()
+{
+    return directory.empty() ? root_directory : directory;
+}
+
+const t_string& t_filesystem::get_root_directory()
+{
+    return root_directory;
 }

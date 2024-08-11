@@ -46,7 +46,9 @@ void t_main_editor::reset()
 void t_main_editor::print_welcome(bool show_prompt)
 {
 	scr->print_string_crlf(ptm->version_string);
+	scr->print_string_crlf(ptm->title_short);
 	scr->print_string_crlf(ptm->copyright_notice);
+
 	if (show_prompt)
 		intp->print_prompt();
 }

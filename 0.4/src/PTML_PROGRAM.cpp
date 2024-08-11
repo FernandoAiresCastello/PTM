@@ -86,6 +86,15 @@ void PTML::SAVE()
 	auto&& filename = STR(1);
 	VALIDATE_FILENAME(filename);
 
+	if (ptm->get_prg().lines.empty()) {
+		error = err.invalid_program;
+		return;
+	}
+	if (t_filesystem::directory_exists(filename)) {
+		error = err.cant_create_file;
+		return;
+	}
+
 	ptm->save_program(filename, true);
 }
 
@@ -116,6 +125,15 @@ void PTML::SAVE_SRC()
 
 	auto&& filename = STR(1);
 	VALIDATE_FILENAME(filename);
+
+	if (ptm->get_prg().lines.empty()) {
+		error = err.invalid_program;
+		return;
+	}
+	if (t_filesystem::directory_exists(filename)) {
+		error = err.cant_create_file;
+		return;
+	}
 
 	ptm->save_program(filename, false);
 }
