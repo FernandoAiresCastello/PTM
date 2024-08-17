@@ -44,4 +44,6 @@ namespace PTML
 	void SCR_ON();
 	void SCR_OFF();
 	void REFRESH();
+	void SCR_SAVE();
+	void SCR_LOAD();
 }

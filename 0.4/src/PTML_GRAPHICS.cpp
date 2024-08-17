@@ -383,3 +383,11 @@ void PTML::REFRESH()
 	ARGC(0);
 	ptm->refresh_screen();
 }
+
+void PTML::SCR_SAVE()
+{
+}
+
+void PTML::SCR_LOAD()
+{
+}
