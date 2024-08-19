@@ -14,7 +14,8 @@ public:
 	void set_tile(const t_tile& tile);
 	t_tile& get_tile();
 	void set_visible(bool visible);
-	bool align_to_grid() const;
+	void set_grid(bool grid);
+	bool has_grid() const;
 	const t_pos& get_pos() const;
 	int get_x() const;
 	int get_y() const;

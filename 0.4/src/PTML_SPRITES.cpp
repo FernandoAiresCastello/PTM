@@ -7,6 +7,13 @@ void PTML::SPR_NEW()
 	ptm->add_sprite(STR(1), 0, 0, false);
 }
 
+void PTML::SPR_GRID()
+{
+	ARGC(2);
+	SPRITE(STR(1));
+	sprite->set_grid(BOOL(2));
+}
+
 void PTML::SPR_POS()
 {
 	ARGC(3);

@@ -3,6 +3,7 @@
 namespace PTML
 {
 	void SPR_NEW();
+	void SPR_GRID();
 	void SPR_POS();
 	void SPR_X();
 	void SPR_Y();

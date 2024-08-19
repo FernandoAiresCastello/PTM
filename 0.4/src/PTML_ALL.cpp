@@ -120,8 +120,6 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("SCR.ON", SCR_ON);
 	CMD("SCR.OFF", SCR_OFF);
 	CMD("SCR.FULL", SCR_FULL);
-	CMD("SCR.SAVE", SCR_SAVE);
-	CMD("SCR.LOAD", SCR_LOAD);
 	CMD("REFRESH", REFRESH);
 	CMD("CLS", CLS);
 
@@ -156,6 +154,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 
 	// === SPRITES ===
 	CMD("SPR.NEW", SPR_NEW);
+	CMD("SPR.GRID", SPR_GRID);
 	CMD("SPR.POS", SPR_POS);
 	CMD("SPR.X", SPR_X);
 	CMD("SPR.Y", SPR_Y);

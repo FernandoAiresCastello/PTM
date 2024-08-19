@@ -118,6 +118,9 @@ void PTM::pause(int frames)
 			break;
 		}
 
+		if (!auto_screen_update)
+			refresh_screen();
+
 		on_machine_cycle();
 	}
 }

@@ -23,7 +23,12 @@ void t_sprite::set_visible(bool visible)
 	tile.flags.visible = visible;
 }
 
-bool t_sprite::align_to_grid() const
+void t_sprite::set_grid(bool grid)
+{
+	this->grid = grid;
+}
+
+bool t_sprite::has_grid() const
 {
 	return grid;
 }

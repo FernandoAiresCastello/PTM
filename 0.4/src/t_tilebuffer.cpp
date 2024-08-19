@@ -52,7 +52,7 @@ void t_tilebuffer::draw(t_window* wnd, t_charset* chr, t_palette* pal, const t_p
 void t_tilebuffer::draw_sprites(t_window* wnd, t_charset* chr, t_palette* pal)
 {
 	for (const auto& spr : sprites) {
-		draw_tile_absolute_pos(spr->get_tile(), wnd, chr, pal, spr->get_x(), spr->get_y(), spr->align_to_grid());
+		draw_tile_absolute_pos(spr->get_tile(), wnd, chr, pal, spr->get_x(), spr->get_y(), spr->has_grid());
 	}
 }
 
