@@ -29,8 +29,8 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	// === VARIABLES ===
 	CMD("SET", SET);
 	CMD("VARS", VARS);
-	CMD("MEM.CLR", MEM_CLR);
-	CMD("TABLE", TBL_NEW);
+	CMD("MEMCLR", MEM_CLR);
+	CMD("ALLOC", TBL_NEW);
 	CMD("POKE", TBL_SET);
 	CMD("PEEK", TBL_GET);
 
@@ -85,7 +85,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("DIR.DEL", DIR_DEL);
 	CMD("MKDIR", MKDIR);
 	CMD("CHDIR", CHDIR);
-	CMD("DIR?", DIR_Q);
+	CMD("DIR.Q", DIR_Q);
 
 	// === KEYBOARD INPUT ===
 	CMD("INKEY", INKEY);
@@ -97,17 +97,17 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	// === GRAPHICS CORE ===
 	CMD("PAL", PAL);
 	CMD("CHR", CHR);
-	CMD("PAL?", PAL_Q);
-	CMD("CHR?", CHR_Q);
+	CMD("PAL.Q", PAL_Q);
+	CMD("CHR.Q", CHR_Q);
 	CMD("PAL.RESET", PAL_RESET);
 	CMD("CHR.RESET", CHR_RESET);
 
 	// === COLOR REGISTER ===
 	CMD("COLOR", COLOR);
-	CMD("COLOR?", COLOR_Q);
-	CMD("COLOR.SETF", COLOR_SETF);
-	CMD("COLOR.SETB", COLOR_SETB);
-	CMD("COLOR.SETBR", COLOR_SETBR);
+	CMD("COLOR.Q", COLOR_Q);
+	CMD("COLOR.F", COLOR_SETF);
+	CMD("COLOR.B", COLOR_SETB);
+	CMD("COLOR.BR", COLOR_SETBR);
 	CMD("COLOR.GETF", COLOR_GETF);
 	CMD("COLOR.GETB", COLOR_GETB);
 	CMD("COLOR.GETBR", COLOR_GETBR);
@@ -136,7 +136,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	// === TILE REGISTER ===
 	CMD("TILE.NEW", TILE_NEW);
 	CMD("TILE.ADD", TILE_ADD);
-	CMD("TILE?", TILE_Q);
+	CMD("TILE.Q", TILE_Q);
 	CMD("TILE.SETP", TILE_SETP);
 	CMD("TILE.GETP", TILE_GETP);
 	CMD("TILE.SAVE", TILE_SAVE);
@@ -164,6 +164,8 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("SPR.MOVE", SPR_MOVE);
 	CMD("SPR.DEL", SPR_DEL);
 	CMD("SPR.CLR", SPR_CLR);
+	CMD("SPR.TGET", SPR_TGET);
+	CMD("SPR.TSET", SPR_TSET);
 
 	return nullptr;
 }

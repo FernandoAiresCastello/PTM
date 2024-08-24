@@ -77,3 +77,17 @@ void PTML::SPR_CLR()
 	ARGC(0);
 	ptm->delete_all_sprites();
 }
+
+void PTML::SPR_TGET()
+{
+	ARGC(1);
+	SPRITE(STR(1));
+	TILEREG = sprite->get_tile();
+}
+
+void PTML::SPR_TSET()
+{
+	ARGC(1);
+	SPRITE(STR(1));
+	sprite->set_tile(TILEREG);
+}

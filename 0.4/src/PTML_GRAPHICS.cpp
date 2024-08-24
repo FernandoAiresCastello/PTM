@@ -129,11 +129,13 @@ void PTML::CHR()
 void PTML::PAL_Q()
 {
 	ARGC(1);
-	t_index&& color = NUM(1);
-	t_tile tile(0, color, color);
+	t_index&& color_index = NUM(1);
+	t_tile tile(0, color_index, color_index);
 	tile.flags.monochrome = false;
 	scr->newline();
 	scr->set_tile(tile, 0, scr->csry() - 1);
+	t_rgb rgb = ptm->get_pal().get(color_index).to_rgb();
+	scr->print_string_at(t_string::fmt("&h%06X", rgb), 2, scr->csry() - 1);
 }
 
 void PTML::CHR_Q()
@@ -143,6 +145,13 @@ void PTML::CHR_Q()
 	t_tile tile(ch, scr->get_fg_color(), scr->get_bg_color());
 	scr->newline();
 	scr->set_tile(tile, 0, scr->csry() - 1);
+	
+	t_list<t_string> rows;
+	int row_index = 0;
+	for (auto& row : ptm->get_chr().get(ch).split_chunks(8)) {
+		rows.push_back(row);
+	}
+	PRINT_LIST(rows);
 }
 
 void PTML::PAL_RESET()

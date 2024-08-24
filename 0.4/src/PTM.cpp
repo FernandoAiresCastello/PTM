@@ -273,7 +273,7 @@ int PTM::get_var_num(const t_string& var)
 	return vars[var].to_int();
 }
 
-const t_dict<t_string, t_string>& PTM::get_vars()
+const t_namespace<t_string>& PTM::get_vars()
 {
 	return vars;
 }
@@ -544,6 +544,11 @@ bool PTM::has_table(const t_string& name)
 t_table& PTM::get_table(const t_string& name)
 {
 	return tables[name];
+}
+
+const t_namespace<t_table>& PTM::get_tables()
+{
+	return tables;
 }
 
 void PTM::save_tilereg(const t_string& name)

@@ -13,4 +13,6 @@ namespace PTML
 	void SPR_MOVE();
 	void SPR_DEL();
 	void SPR_CLR();
+	void SPR_TGET();
+	void SPR_TSET();
 }

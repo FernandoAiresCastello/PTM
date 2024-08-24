@@ -303,6 +303,11 @@ void t_screen::print_string_crlf(const t_string& str)
 	newline();
 }
 
+void t_screen::print_string_at(const t_string& str, int x, int y)
+{
+	buf->set_text(str, x, y, fore_color, back_color);
+}
+
 bool t_screen::print_lines(const t_list<t_string>& lines, PTM* ptm)
 {
 	bool escaped = false;

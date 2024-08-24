@@ -14,7 +14,10 @@ void PTML::VARS()
 	t_list<t_string> vars;
 	for (auto& var : ptm->get_vars())
 		vars.push_back(t_string::fmt("%s: %s", var.first.c_str(), var.second.c_str()));
-	
+	for (auto& tbl : ptm->get_tables())
+		vars.push_back(t_string::fmt("%s[%i,%i]", 
+			tbl.first.c_str(), tbl.second.get_cols(), tbl.second.get_rows()));
+
 	PRINT_LIST(vars);
 }
 

@@ -48,7 +48,7 @@ public:
 	void set_var(const t_string& var, int value);
 	const t_string& get_var_str(const t_string& var);
 	int get_var_num(const t_string& var);
-	const t_dict<t_string, t_string>& get_vars();
+	const t_namespace<t_string>& get_vars();
 	bool has_var(const t_string& var);
 	void delete_all_vars();
 	void delete_all_tables();
@@ -85,6 +85,7 @@ public:
 	void create_table(const t_string& name, int cols, int rows);
 	bool has_table(const t_string& name);
 	t_table& get_table(const t_string& name);
+	const t_namespace<t_table>& get_tables();
 	void save_tilereg(const t_string& name);
 	void load_tilereg(const t_string& name);
 	bool has_tilereg(const t_string& name);

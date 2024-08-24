@@ -66,6 +66,7 @@ public:
 	void print_tile(const t_tile& tile);
 	void print_string(const t_string& str);
 	void print_string_crlf(const t_string& str);
+	void print_string_at(const t_string& str, int x, int y);
 	bool print_lines(const t_list<t_string>& lines, PTM* ptm);
 	bool print_lines_with_icon(const t_list<t_tile>& icons, const t_list<t_string>& lines, PTM* ptm);
 	void print_debug(const t_string& str);
