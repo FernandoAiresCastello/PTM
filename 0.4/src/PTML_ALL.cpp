@@ -17,16 +17,16 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("NEW", NEW);
 	CMD("RENUM", RENUM);
 	CMD("SAVE", SAVE);
-	CMD("SAVE.SRC", SAVE_SRC);
 	CMD("LOAD", LOAD);
-	CMD("LOAD.SRC", LOAD_SRC);
+	CMD("CSAVE", SAVE_SRC);
+	CMD("CLOAD", LOAD_SRC);
 	CMD("PROG", PROG);
 
 	// === SYSTEM CONTROL ===
 	CMD("EXIT", EXIT);
 	CMD("RESET", RESET);
 
-	// === VARIABLES ===
+	// === MEMORY ===
 	CMD("SET", SET);
 	CMD("VARS", VARS);
 	CMD("MEMCLR", MEM_CLR);
@@ -51,7 +51,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("END", END);
 	CMD("HALT", HALT);
 
-	// === CONTROL FLOW - GOTO ===
+	// === GOTO ===
 	CMD("GOTO", GOTO);
 	CMD("GOTO.E", GOTO_IFE);
 	CMD("GOTO.NE", GOTO_IFNE);
@@ -62,7 +62,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("GOTO.K", GOTO_IFKEY);
 	CMD("GOTO.NK", GOTO_IFNKEY);
 
-	// === CONTROL FLOW - CALL/RET ===
+	// === CALL/RET ===
 	CMD("CALL", CALL);
 	CMD("CALL.E", CALL_IFE);
 	CMD("CALL.NE", CALL_IFNE);
@@ -85,7 +85,8 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("DIR.DEL", DIR_DEL);
 	CMD("MKDIR", MKDIR);
 	CMD("CHDIR", CHDIR);
-	CMD("DIR.Q", DIR_Q);
+	CMD("QDIR", DIR_Q);
+
 
 	// === KEYBOARD INPUT ===
 	CMD("INKEY", INKEY);
@@ -97,14 +98,14 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	// === GRAPHICS CORE ===
 	CMD("PAL", PAL);
 	CMD("CHR", CHR);
-	CMD("PAL.Q", PAL_Q);
-	CMD("CHR.Q", CHR_Q);
-	CMD("PAL.RESET", PAL_RESET);
-	CMD("CHR.RESET", CHR_RESET);
+	CMD("QPAL", PAL_Q);
+	CMD("QCHR", CHR_Q);
+	CMD("PAL.RST", PAL_RESET);
+	CMD("CHR.RST", CHR_RESET);
 
 	// === COLOR REGISTER ===
 	CMD("COLOR", COLOR);
-	CMD("COLOR.Q", COLOR_Q);
+	CMD("QCOLOR", COLOR_Q);
 	CMD("COLOR.F", COLOR_SETF);
 	CMD("COLOR.B", COLOR_SETB);
 	CMD("COLOR.BR", COLOR_SETBR);
@@ -136,7 +137,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	// === TILE REGISTER ===
 	CMD("TILE.NEW", TILE_NEW);
 	CMD("TILE.ADD", TILE_ADD);
-	CMD("TILE.Q", TILE_Q);
+	CMD("QTILE", TILE_Q);
 	CMD("TILE.SETP", TILE_SETP);
 	CMD("TILE.GETP", TILE_GETP);
 	CMD("TILE.SAVE", TILE_SAVE);
