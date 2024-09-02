@@ -4,10 +4,15 @@
 
 class t_program;
 class t_interpreter;
+class t_charset;
+class t_palette;
 
 class t_filesystem
 {
 public:
+	static const char read_mode = 'R';
+	static const char write_mode = 'W';
+
 	static t_list<t_string> illegal_filenames;
 	static bool is_valid_filename(const t_string& filename);
 	static bool file_exists(const t_string& filename);
@@ -36,4 +41,11 @@ public:
 	static void save_palette(t_palette* pal, const t_string& filename);
 	static void load_charset(t_charset* chr, const t_string& filename);
 	static void load_palette(t_palette* pal, const t_string& filename);
+	static bool is_record_file_open();
+	static char get_record_file_mode();
+	static void open_record_file(const t_string& filename, char mode);
+	static void close_record_file();
+	static void write_record_file(const t_string& data);
+	static t_string read_record_file();
+	static bool is_record_file_eof();
 };

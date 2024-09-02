@@ -86,7 +86,11 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("MKDIR", MKDIR);
 	CMD("CHDIR", CHDIR);
 	CMD("QDIR", DIR_Q);
-
+	CMD("OPEN.W", OPEN_W);
+	CMD("OPEN.R", OPEN_R);
+	CMD("CLOSE", CLOSE);
+	CMD("WRITE", WRITE);
+	CMD("READ", READ);
 
 	// === KEYBOARD INPUT ===
 	CMD("INKEY", INKEY);

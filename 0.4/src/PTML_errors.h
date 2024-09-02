@@ -27,6 +27,10 @@ namespace PTML
 		const t_string table_not_found = "Table not found";
 		const t_string tile_preset_not_found = "Tile preset not found";
 		const t_string filesystem_error = "Filesystem error";
+		const t_string file_already_open = "File already open";
+		const t_string file_not_open = "File not open";
+		const t_string bad_file_mode = "Bad file mode";
+		const t_string end_of_file = "End of file";
 	}
 	err;
 }

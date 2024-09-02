@@ -90,3 +90,67 @@ void PTML::DIR_Q()
 	ARGC(0);
 	scr->print_string_crlf(t_filesystem::get_current_directory());
 }
+
+void PTML::OPEN_W()
+{
+	ARGC(1);
+	auto&& name = STR(1);
+	VALIDATE_FILENAME(name);
+	if (t_filesystem::is_record_file_open()) {
+		error = err.file_already_open;
+		return;
+	}
+	t_filesystem::open_record_file(name, t_filesystem::write_mode);
+}
+
+void PTML::OPEN_R()
+{
+	ARGC(1);
+	auto&& name = STR(1);
+	VALIDATE_FILENAME(name);
+	REQUIRE_FILE(name);
+	if (t_filesystem::is_record_file_open()) {
+		error = err.file_already_open;
+		return;
+	}
+	t_filesystem::open_record_file(name, t_filesystem::read_mode);
+}
+
+void PTML::CLOSE()
+{
+	ARGC(0);
+	t_filesystem::close_record_file();
+}
+
+void PTML::WRITE()
+{
+	ARGC(1);
+	if (!t_filesystem::is_record_file_open()) {
+		error = err.file_not_open;
+		return;
+	}
+	if (t_filesystem::get_record_file_mode() != t_filesystem::write_mode) {
+		error = err.bad_file_mode;
+		return;
+	}
+	t_filesystem::write_record_file(STR(1));
+}
+
+void PTML::READ()
+{
+	ARGC(1);
+	REQUIRE_IDENT(1);
+	if (!t_filesystem::is_record_file_open()) {
+		error = err.file_not_open;
+		return;
+	}
+	if (t_filesystem::get_record_file_mode() != t_filesystem::read_mode) {
+		error = err.bad_file_mode;
+		return;
+	}
+	if (t_filesystem::is_record_file_eof()) {
+		error = err.end_of_file;
+		return;
+	}
+	ptm->set_var(IDENT(1), t_filesystem::read_record_file());
+}

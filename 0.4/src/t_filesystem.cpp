@@ -5,6 +5,7 @@
 #include "t_program.h"
 #include "t_program_line.h"
 #include "t_interpreter.h"
+#include "t_record_file.h"
 
 t_string directory = "";
 const t_string root_directory = "ROOT";
@@ -25,6 +26,8 @@ t_list<t_string> t_filesystem::illegal_filenames = {
     "COM0", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "COM¹", "COM²", "COM³", 
     "LPT0", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9", "LPT¹", "LPT²", "LPT³"
 };
+
+t_record_file record_file;
 
 bool t_filesystem::is_valid_filename(const t_string& filename)
 {
@@ -362,4 +365,39 @@ void t_filesystem::load_palette(t_palette* pal, const t_string& filename)
         t_string rgb = t_string("0x") + line;
         pal->add(rgb.to_int());
     }
+}
+
+bool t_filesystem::is_record_file_open()
+{
+    return record_file.is_open;
+}
+
+char t_filesystem::get_record_file_mode()
+{
+    return record_file.mode;
+}
+
+void t_filesystem::open_record_file(const t_string& filename, char mode)
+{
+    record_file.open(filename, mode);
+}
+
+void t_filesystem::close_record_file()
+{
+    record_file.close();
+}
+
+void t_filesystem::write_record_file(const t_string& data)
+{
+    record_file.write(data);
+}
+
+t_string t_filesystem::read_record_file()
+{
+    return record_file.read();
+}
+
+bool t_filesystem::is_record_file_eof()
+{
+    return record_file.is_eof();
 }
