@@ -1,5 +1,6 @@
 #include <fstream>
 #include <filesystem>
+#include "PTM.h"
 #include "t_filesystem.h"
 #include "t_program.h"
 #include "t_program_line.h"
@@ -31,7 +32,7 @@ bool t_filesystem::is_valid_filename(const t_string& filename)
         return false;
     if (trimmed_filename == "." || trimmed_filename == "..")
         return false;
-    if (trimmed_filename.ends_with("."))
+    if (trimmed_filename.contains("."))
         return false;
     if (trimmed_filename.in(illegal_filenames))
         return false;
@@ -68,6 +69,8 @@ t_list<t_string> t_filesystem::list_files(const char* prefix)
     for (const auto& entry : fs::directory_iterator(ROOT + directory.s_str())) {
         if (fs::is_directory(entry.status())) {
             const auto&& path = entry.path().filename().string();
+            if (path.contains('.'))
+                continue;
             const auto&& dir = path + "/";
             if (prefix) {
                 if (path.starts_with(prefix))
@@ -82,6 +85,8 @@ t_list<t_string> t_filesystem::list_files(const char* prefix)
     for (const auto& entry : fs::directory_iterator(ROOT + directory.s_str())) {
         if (fs::is_regular_file(entry.status())) {
             const auto&& path = entry.path().filename().string();
+            if (path.contains('.'))
+                continue;
             if (prefix) {
                 if (path.starts_with(prefix))
                     files.emplace_back(path);
@@ -257,6 +262,7 @@ bool t_filesystem::delete_directory(const t_string& name)
 void t_filesystem::save_program_plaintext(t_program* prg, const t_string& filename)
 {
     write_all_text(prg->all_lines_to_single_string(), filename);
+    after_program_save(filename);
 }
 
 void t_filesystem::load_program_plaintext(t_interpreter* intp, t_program* prg, const t_string& filename)
@@ -272,11 +278,14 @@ void t_filesystem::load_program_plaintext(t_interpreter* intp, t_program* prg, c
             break;
         }
     }
+
+    after_program_load(filename);
 }
 
 void t_filesystem::save_program_binary(t_program* prg, const t_string& filename)
 {
     write_hex_file(prg->all_lines_to_single_string(), filename);
+    after_program_save(filename);
 }
 
 void t_filesystem::load_program_binary(t_interpreter* intp, t_program* prg, const t_string& filename)
@@ -293,6 +302,8 @@ void t_filesystem::load_program_binary(t_interpreter* intp, t_program* prg, cons
             break;
         }
     }
+
+    after_program_load(filename);
 }
 
 void t_filesystem::create_directory(const t_string& dir)
@@ -316,4 +327,40 @@ const t_string& t_filesystem::get_current_directory()
 const t_string& t_filesystem::get_root_directory()
 {
     return root_directory;
+}
+
+void t_filesystem::after_program_save(const t_string& filename)
+{
+    t_charset& chr = PTM::get_chr();
+    t_list<t_string> chr_entries;
+    for (int i = 0; i < chr.size(); i++) {
+        t_binary& entry = chr.get(i);
+        chr_entries.push_back(entry);
+    }
+    write_all_lines(chr_entries, filename + ".CHR");
+
+    t_palette& pal = PTM::get_pal();
+    t_list<t_string> pal_entries;
+    for (int i = 0; i < pal.size(); i++) {
+        t_color& entry = pal.get(i);
+        pal_entries.push_back(t_string::fmt("%06X", entry.to_rgb()));
+    }
+    write_all_lines(pal_entries, filename + ".PAL");
+}
+
+void t_filesystem::after_program_load(const t_string& filename)
+{
+    t_charset& chr = PTM::get_chr();
+    auto chr_lines = read_all_lines(filename + ".CHR");
+    chr.remove_all();
+    for (auto& line : chr_lines) {
+        chr.add(line);
+    }
+    t_palette& pal = PTM::get_pal();
+    auto pal_lines = read_all_lines(filename + ".PAL");
+    pal.remove_all();
+    for (auto& line : pal_lines) {
+        t_string rgb = t_string("0x") + line;
+        pal.add(rgb.to_int());
+    }
 }

@@ -7,8 +7,8 @@ namespace PTML
 	void NEW();
 	void SAVE();
 	void LOAD();
-	void SAVE_SRC();
-	void LOAD_SRC();
+	void CSAVE();
+	void CLOAD();
 	void PROG();
 	void RENUM();
 }

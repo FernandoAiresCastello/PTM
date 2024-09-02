@@ -52,8 +52,8 @@ public:
 	bool has_var(const t_string& var);
 	void delete_all_vars();
 	void delete_all_tables();
-	t_palette& get_pal();
-	t_charset& get_chr();
+	static t_palette& get_pal();
+	static t_charset& get_chr();
 	t_window& get_wnd();
 	t_program& get_prg();
 	void run_program_from_immediate_mode();

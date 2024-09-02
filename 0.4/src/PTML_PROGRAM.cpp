@@ -118,7 +118,7 @@ void PTML::LOAD()
 	}
 }
 
-void PTML::SAVE_SRC()
+void PTML::CSAVE()
 {
 	REQUIRE_IMM;
 	ARGC(1);
@@ -138,7 +138,7 @@ void PTML::SAVE_SRC()
 	ptm->save_program(filename, false);
 }
 
-void PTML::LOAD_SRC()
+void PTML::CLOAD()
 {
 	REQUIRE_IMM;
 	ARGC(1);

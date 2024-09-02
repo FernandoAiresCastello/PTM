@@ -9,7 +9,6 @@ class t_filesystem
 {
 public:
 	static t_list<t_string> illegal_filenames;
-
 	static bool is_valid_filename(const t_string& filename);
 	static bool file_exists(const t_string& filename);
 	static bool directory_exists(const t_string& name);
@@ -33,4 +32,8 @@ public:
 	static void change_directory(const t_string& dir);
 	static const t_string& get_current_directory();
 	static const t_string& get_root_directory();
+
+private:
+	static void after_program_save(const t_string& filename);
+	static void after_program_load(const t_string& filename);
 };
