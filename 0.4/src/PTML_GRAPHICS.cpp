@@ -166,6 +166,40 @@ void PTML::CHR_RESET()
 	ptm->get_chr().reset();
 }
 
+void PTML::PAL_SAVE()
+{
+	ARGC(1);
+	auto&& filename = STR(1);
+	VALIDATE_FILENAME(filename);
+	t_filesystem::save_palette(&ptm->get_pal(), filename);
+}
+
+void PTML::PAL_LOAD()
+{
+	ARGC(1);
+	auto&& filename = STR(1);
+	VALIDATE_FILENAME(filename);
+	REQUIRE_FILE(filename);
+	t_filesystem::load_palette(&ptm->get_pal(), filename);
+}
+
+void PTML::CHR_SAVE()
+{
+	ARGC(1);
+	auto&& filename = STR(1);
+	VALIDATE_FILENAME(filename);
+	t_filesystem::save_charset(&ptm->get_chr(), filename);
+}
+
+void PTML::CHR_LOAD()
+{
+	ARGC(1);
+	auto&& filename = STR(1);
+	VALIDATE_FILENAME(filename);
+	REQUIRE_FILE(filename);
+	t_filesystem::load_charset(&ptm->get_chr(), filename);
+}
+
 void PTML::LOCATE()
 {
 	ARGC(2);

@@ -8,6 +8,8 @@
 
 t_string directory = "";
 const t_string root_directory = "ROOT";
+const t_string palette_ext = ".PAL";
+const t_string charset_ext = ".CHR";
 
 #define CRLF        "\r\n"
 #define ROOT        "root\\"
@@ -262,7 +264,6 @@ bool t_filesystem::delete_directory(const t_string& name)
 void t_filesystem::save_program_plaintext(t_program* prg, const t_string& filename)
 {
     write_all_text(prg->all_lines_to_single_string(), filename);
-    after_program_save(filename);
 }
 
 void t_filesystem::load_program_plaintext(t_interpreter* intp, t_program* prg, const t_string& filename)
@@ -278,14 +279,11 @@ void t_filesystem::load_program_plaintext(t_interpreter* intp, t_program* prg, c
             break;
         }
     }
-
-    after_program_load(filename);
 }
 
 void t_filesystem::save_program_binary(t_program* prg, const t_string& filename)
 {
     write_hex_file(prg->all_lines_to_single_string(), filename);
-    after_program_save(filename);
 }
 
 void t_filesystem::load_program_binary(t_interpreter* intp, t_program* prg, const t_string& filename)
@@ -302,8 +300,6 @@ void t_filesystem::load_program_binary(t_interpreter* intp, t_program* prg, cons
             break;
         }
     }
-
-    after_program_load(filename);
 }
 
 void t_filesystem::create_directory(const t_string& dir)
@@ -329,38 +325,41 @@ const t_string& t_filesystem::get_root_directory()
     return root_directory;
 }
 
-void t_filesystem::after_program_save(const t_string& filename)
+void t_filesystem::save_charset(t_charset* chr, const t_string& filename)
 {
-    t_charset& chr = PTM::get_chr();
     t_list<t_string> chr_entries;
-    for (int i = 0; i < chr.size(); i++) {
-        t_binary& entry = chr.get(i);
+    for (int i = 0; i < chr->size(); i++) {
+        t_binary& entry = chr->get(i);
         chr_entries.push_back(entry);
     }
-    write_all_lines(chr_entries, filename + ".CHR");
-
-    t_palette& pal = PTM::get_pal();
-    t_list<t_string> pal_entries;
-    for (int i = 0; i < pal.size(); i++) {
-        t_color& entry = pal.get(i);
-        pal_entries.push_back(t_string::fmt("%06X", entry.to_rgb()));
-    }
-    write_all_lines(pal_entries, filename + ".PAL");
+    write_all_lines(chr_entries, filename + charset_ext);
 }
 
-void t_filesystem::after_program_load(const t_string& filename)
+void t_filesystem::save_palette(t_palette* pal, const t_string& filename)
 {
-    t_charset& chr = PTM::get_chr();
-    auto chr_lines = read_all_lines(filename + ".CHR");
-    chr.remove_all();
-    for (auto& line : chr_lines) {
-        chr.add(line);
+    t_list<t_string> pal_entries;
+    for (int i = 0; i < pal->size(); i++) {
+        t_color& entry = pal->get(i);
+        pal_entries.push_back(t_string::fmt("%06X", entry.to_rgb()));
     }
-    t_palette& pal = PTM::get_pal();
-    auto pal_lines = read_all_lines(filename + ".PAL");
-    pal.remove_all();
+    write_all_lines(pal_entries, filename + palette_ext);
+}
+
+void t_filesystem::load_charset(t_charset* chr, const t_string& filename)
+{
+    auto chr_lines = read_all_lines(filename + charset_ext);
+    chr->remove_all();
+    for (auto& line : chr_lines) {
+        chr->add(line);
+    }
+}
+
+void t_filesystem::load_palette(t_palette* pal, const t_string& filename)
+{
+    auto pal_lines = read_all_lines(filename + palette_ext);
+    pal->remove_all();
     for (auto& line : pal_lines) {
         t_string rgb = t_string("0x") + line;
-        pal.add(rgb.to_int());
+        pal->add(rgb.to_int());
     }
 }

@@ -95,13 +95,24 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("FN.LIST", FN_LIST);
 	CMD("INPUT", INPUT);
 
-	// === GRAPHICS CORE ===
+	// === PALETTE & CHARSET ===
 	CMD("PAL", PAL);
 	CMD("CHR", CHR);
 	CMD("QPAL", PAL_Q);
 	CMD("QCHR", CHR_Q);
 	CMD("PAL.RST", PAL_RESET);
 	CMD("CHR.RST", CHR_RESET);
+	CMD("PAL.SAVE", PAL_SAVE);
+	CMD("CHR.SAVE", CHR_SAVE);
+	CMD("PAL.LOAD", PAL_LOAD);
+	CMD("CHR.LOAD", CHR_LOAD);
+
+	// === SCREEN ===
+	CMD("SCR.ON", SCR_ON);
+	CMD("SCR.OFF", SCR_OFF);
+	CMD("SCR.FULL", SCR_FULL);
+	CMD("REFRESH", REFRESH);
+	CMD("CLS", CLS);
 
 	// === COLOR REGISTER ===
 	CMD("COLOR", COLOR);
@@ -116,13 +127,6 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	// === COLOR MODES ===
 	CMD("COLOR.MONO", COLOR_MONO);
 	CMD("COLOR.MULTI", COLOR_MULTI);
-
-	// === SCREEN ===
-	CMD("SCR.ON", SCR_ON);
-	CMD("SCR.OFF", SCR_OFF);
-	CMD("SCR.FULL", SCR_FULL);
-	CMD("REFRESH", REFRESH);
-	CMD("CLS", CLS);
 
 	// === CURSOR ===
 	CMD("CSR.ON", CSR_ON);

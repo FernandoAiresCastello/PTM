@@ -22,6 +22,10 @@ namespace PTML
 	void CHR_Q();
 	void PAL_RESET();
 	void CHR_RESET();
+	void PAL_SAVE();
+	void PAL_LOAD();
+	void CHR_SAVE();
+	void CHR_LOAD();
 	void LOCATE();
 	void SCR_FULL();
 	void CSR_ON();

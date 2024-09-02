@@ -32,8 +32,8 @@ public:
 	static void change_directory(const t_string& dir);
 	static const t_string& get_current_directory();
 	static const t_string& get_root_directory();
-
-private:
-	static void after_program_save(const t_string& filename);
-	static void after_program_load(const t_string& filename);
+	static void save_charset(t_charset* chr, const t_string& filename);
+	static void save_palette(t_palette* pal, const t_string& filename);
+	static void load_charset(t_charset* chr, const t_string& filename);
+	static void load_palette(t_palette* pal, const t_string& filename);
 };
