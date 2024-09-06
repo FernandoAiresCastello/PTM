@@ -69,3 +69,12 @@ void t_sprite::move_dist(int dx, int dy)
 	pos.x += dx;
 	pos.y += dy;
 }
+
+bool t_sprite::collides_with(t_sprite* other) const
+{
+	if (grid)
+		return pos.x == other->pos.x && pos.y == other->pos.y;
+	
+	return pos.x + t_tile::width > other->pos.x && pos.x < other->pos.x + t_tile::width &&
+		   pos.y + t_tile::height > other->pos.y && pos.y < other->pos.y + t_tile::height;
+}

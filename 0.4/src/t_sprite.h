@@ -23,6 +23,7 @@ public:
 	void set_y(int y);
 	void move_to(int x, int y);
 	void move_dist(int dx, int dy);
+	bool collides_with(t_sprite* other) const;
 
 private:
 	t_tile tile;

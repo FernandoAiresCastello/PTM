@@ -175,6 +175,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("SPR.CLR", SPR_CLR);
 	CMD("SPR.TGET", SPR_TGET);
 	CMD("SPR.TSET", SPR_TSET);
+	CMD("SPR.CHK", SPR_CHK);
 
 	return nullptr;
 }

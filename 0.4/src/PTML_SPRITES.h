@@ -15,4 +15,5 @@ namespace PTML
 	void SPR_CLR();
 	void SPR_TGET();
 	void SPR_TSET();
+	void SPR_CHK();
 }

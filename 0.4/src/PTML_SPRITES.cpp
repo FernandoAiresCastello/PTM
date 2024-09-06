@@ -91,3 +91,13 @@ void PTML::SPR_TSET()
 	SPRITE(STR(1));
 	sprite->set_tile(TILEREG);
 }
+
+void PTML::SPR_CHK()
+{
+	ARGC(3);
+	REQUIRE_IDENT(3);
+	auto&& sprite1 = get_sprite(STR(1)); if (sprite1 == nullptr) return;
+	auto&& sprite2 = get_sprite(STR(2)); if (sprite2 == nullptr) return;
+	bool&& collision = sprite1->collides_with(sprite2.get());
+	ptm->set_var(IDENT(3), collision ? 1 : 0);
+}
