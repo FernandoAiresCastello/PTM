@@ -99,6 +99,8 @@ public:
 	t_sprite_ptr add_sprite(const t_tile& tile, const t_pos& pos);
 	void delete_sprite(t_sprite_ptr sprite);
 	void delete_all_sprites();
+	t_list<t_string> serialize();
+	void deserialize(const t_list<t_string>& data);
 
 private:
 	t_window* wnd = nullptr;

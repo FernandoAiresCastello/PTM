@@ -16,7 +16,7 @@ void t_record_file::open(const t_string& filename, char mode)
 
 void t_record_file::read_file_into_buffer()
 {
-	buffer = t_filesystem::read_all_text(filename).split(delimiter);
+	buffer = t_filesystem::read_hex_file(filename).split(delimiter);
 }
 
 void t_record_file::close()
@@ -25,7 +25,7 @@ void t_record_file::close()
 
 	if (mode == t_filesystem::write_mode) {
 		t_string&& data = t_string::join(buffer, delimiter);
-		t_filesystem::write_all_text(data, filename);
+		t_filesystem::write_hex_file(data, filename);
 	}
 
 	mode = 0;

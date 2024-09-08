@@ -54,6 +54,7 @@ public:
 	void delete_all_tables();
 	static t_palette& get_pal();
 	static t_charset& get_chr();
+	static t_screen& get_screen();
 	t_window& get_wnd();
 	t_program& get_prg();
 	void run_program_from_immediate_mode();

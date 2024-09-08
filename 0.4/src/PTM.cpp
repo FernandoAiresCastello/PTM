@@ -295,6 +295,7 @@ void PTM::delete_all_tables()
 
 t_palette& PTM::get_pal() { return pal; }
 t_charset& PTM::get_chr() { return chr; }
+t_screen& PTM::get_screen() { return scr; }
 t_window& PTM::get_wnd() { return wnd; }
 
 t_program& PTM::get_prg()

@@ -6,6 +6,7 @@ class t_program;
 class t_interpreter;
 class t_charset;
 class t_palette;
+class t_screen;
 
 class t_filesystem
 {
@@ -41,6 +42,8 @@ public:
 	static void save_palette(t_palette* pal, const t_string& filename);
 	static void load_charset(t_charset* chr, const t_string& filename);
 	static void load_palette(t_palette* pal, const t_string& filename);
+	static void save_screen(t_screen* scr, const t_string& filename);
+	static void load_screen(t_screen* scr, const t_string& filename);
 	static bool is_record_file_open();
 	static char get_record_file_mode();
 	static void open_record_file(const t_string& filename, char mode);

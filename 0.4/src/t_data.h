@@ -27,6 +27,7 @@ public:
 	bool has(const t_string& key, const t_string& value);
 	bool has(const t_string& key, int value);
 	t_dict<t_string, t_string>& get_all();
+	int size() const;
 
 private:
 	t_dict<t_string, t_string> entries;

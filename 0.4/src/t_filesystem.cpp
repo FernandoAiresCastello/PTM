@@ -6,11 +6,13 @@
 #include "t_program_line.h"
 #include "t_interpreter.h"
 #include "t_record_file.h"
+#include "t_screen.h"
 
 t_string directory = "";
 const t_string root_directory = "ROOT";
 const t_string palette_ext = ".PAL";
 const t_string charset_ext = ".CHR";
+const t_string screen_ext = ".SCR";
 
 #define CRLF        "\r\n"
 #define ROOT        "root\\"
@@ -365,6 +367,18 @@ void t_filesystem::load_palette(t_palette* pal, const t_string& filename)
         t_string rgb = t_string("0x") + line;
         pal->add(rgb.to_int());
     }
+}
+
+void t_filesystem::save_screen(t_screen* scr, const t_string& filename)
+{
+    t_string&& data = t_string::join(scr->serialize(), "§");
+    write_all_text(data, filename + screen_ext);
+}
+
+void t_filesystem::load_screen(t_screen* scr, const t_string& filename)
+{
+    t_string&& data = read_all_text(filename + screen_ext);
+    scr->deserialize(data.split('§'));
 }
 
 bool t_filesystem::is_record_file_open()

@@ -29,6 +29,7 @@ public:
 	t_tile get_copy(int x, int y) const;
 	void fill(const t_tile& tile);
 	void clear();
+	t_list<t_tile>& get_tiles();
 	t_sprite_ptr add_sprite(const t_tile& tile, const t_pos& pos, bool grid);
 	t_list<t_sprite_ptr>& get_sprites();
 	void delete_sprite(t_sprite_ptr sprite);

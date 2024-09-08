@@ -111,6 +111,11 @@ void t_tilebuffer::clear()
 		tiles[i].set_blank();
 }
 
+t_list<t_tile>& t_tilebuffer::get_tiles()
+{
+	return tiles;
+}
+
 t_sprite_ptr t_tilebuffer::add_sprite(const t_tile& tile, const t_pos& pos, bool grid)
 {
 	t_sprite_ptr sprite = sprites.emplace_back(std::make_shared<t_sprite>(tile, pos, grid));

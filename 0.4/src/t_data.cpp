@@ -89,3 +89,8 @@ std::unordered_map<t_string, t_string>& t_data::get_all()
 {
 	return entries;
 }
+
+int t_data::size() const
+{
+	return entries.size();
+}
