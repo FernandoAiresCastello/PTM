@@ -369,18 +369,6 @@ void t_filesystem::load_palette(t_palette* pal, const t_string& filename)
     }
 }
 
-void t_filesystem::save_screen(t_screen* scr, const t_string& filename)
-{
-    t_string&& data = t_string::join(scr->serialize(), "§");
-    write_all_text(data, filename + screen_ext);
-}
-
-void t_filesystem::load_screen(t_screen* scr, const t_string& filename)
-{
-    t_string&& data = read_all_text(filename + screen_ext);
-    scr->deserialize(data.split('§'));
-}
-
 bool t_filesystem::is_record_file_open()
 {
     return record_file.is_open;
@@ -398,7 +386,7 @@ void t_filesystem::open_record_file(const t_string& filename, char mode)
 
 void t_filesystem::close_record_file()
 {
-    record_file.close();
+    record_file.close_and_save_hex_file();
 }
 
 void t_filesystem::write_record_file(const t_string& data)

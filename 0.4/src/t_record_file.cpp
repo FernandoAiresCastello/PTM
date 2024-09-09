@@ -19,7 +19,7 @@ void t_record_file::read_file_into_buffer()
 	buffer = t_filesystem::read_hex_file(filename).split(delimiter);
 }
 
-void t_record_file::close()
+void t_record_file::close_and_save_hex_file()
 {
 	is_open = false;
 
@@ -31,9 +31,36 @@ void t_record_file::close()
 	mode = 0;
 }
 
+void t_record_file::close_and_save_text_file()
+{
+	is_open = false;
+
+	if (mode == t_filesystem::write_mode) {
+		t_string&& data = t_string::join(buffer, delimiter);
+		t_filesystem::write_all_text(data, filename);
+	}
+
+	mode = 0;
+}
+
 void t_record_file::write(const t_string& data)
 {
 	buffer.push_back(data);
+}
+
+void t_record_file::write(int data)
+{
+	buffer.push_back(t_string::from_int(data));
+}
+
+void t_record_file::write(bool data)
+{
+	buffer.push_back(t_string::from_int(data ? 1 : 0));
+}
+
+void t_record_file::write(const t_list<t_string>& data)
+{
+	buffer = data;
 }
 
 t_string t_record_file::read()

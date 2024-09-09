@@ -99,8 +99,7 @@ public:
 	t_sprite_ptr add_sprite(const t_tile& tile, const t_pos& pos);
 	void delete_sprite(t_sprite_ptr sprite);
 	void delete_all_sprites();
-	t_list<t_string> serialize();
-	void deserialize(const t_list<t_string>& data);
+	void draw_tile_path(const t_tile& tile, const t_string& path);
 
 private:
 	t_window* wnd = nullptr;
@@ -124,4 +123,5 @@ private:
 	void clear_background();
 	void fix_horizontal_scroll();
 	void fix_vertical_scroll();
+	void split_draw_tile_path(const t_string& path);
 };

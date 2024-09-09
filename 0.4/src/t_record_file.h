@@ -11,8 +11,12 @@ public:
 	char delimiter = '§';
 
 	void open(const t_string& filename, char mode);
-	void close();
+	void close_and_save_hex_file();
+	void close_and_save_text_file();
 	void write(const t_string& data);
+	void write(int data);
+	void write(bool data);
+	void write(const t_list<t_string>& data);
 	t_string read();
 	bool is_eof();
 

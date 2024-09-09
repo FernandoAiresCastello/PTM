@@ -426,20 +426,3 @@ void PTML::REFRESH()
 	ARGC(0);
 	ptm->refresh_screen();
 }
-
-void PTML::SCR_SAVE()
-{
-	ARGC(1);
-	auto&& filename = STR(1);
-	VALIDATE_FILENAME(filename);
-	t_filesystem::save_screen(&ptm->get_screen(), filename);
-}
-
-void PTML::SCR_LOAD()
-{
-	ARGC(1);
-	auto&& filename = STR(1);
-	VALIDATE_FILENAME(filename);
-	REQUIRE_FILE(filename);
-	t_filesystem::load_screen(&ptm->get_screen(), filename);
-}

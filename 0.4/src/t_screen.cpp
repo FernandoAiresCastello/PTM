@@ -614,72 +614,33 @@ void t_screen::delete_all_sprites()
 	buf->delete_all_sprites();
 }
 
-t_list<t_string> t_screen::serialize()
+t_list<t_string> draw_tile_path_cmd;
+
+void t_screen::draw_tile_path(const t_tile& tile, const t_string& path)
 {
-	t_list<t_string> data;
+	split_draw_tile_path(path);
 
-	// Basic attributes
-	data.push_back(t_string::from_int(fore_color));
-	data.push_back(t_string::from_int(back_color));
-	data.push_back(t_string::from_int(border_color));
-	data.push_back(t_string::from_int((int)color_mode));
-	data.push_back(t_string::from_int(csrx()));
-	data.push_back(t_string::from_int(csry()));
+	for (auto& cmd : draw_tile_path_cmd) {
 
-	// Tilebuffer
-	for (auto& tile : buf->get_tiles()) {
-		
-		// Tile flags
-		data.push_back(t_string::from_int(tile.flags.visible ? 1 : 0));
-		data.push_back(t_string::from_int(tile.flags.monochrome ? 1 : 0));
-		data.push_back(t_string::from_int(tile.flags.hide_bgc ? 1 : 0));
-
-		// Tile chars
-		data.push_back(t_string::from_int(tile.char_count()));
-		for (auto& ch : tile.get_all_chars()) {
-			data.push_back(t_string::from_int(ch.ix));
-			data.push_back(t_string::from_int(ch.fgc));
-			data.push_back(t_string::from_int(ch.bgc));
-		}
-
-		// Tile data
-		data.push_back(t_string::from_int(tile.data.size()));
-		for (auto& key_value : tile.data.get_all()) {
-			data.push_back(key_value.first);
-			data.push_back(key_value.second);
-		}
 	}
-
-	// Sprites
-	data.push_back(t_string::from_int(buf->get_sprites().size()));
-	for (auto& spr : buf->get_sprites()) {
-
-		// Sprite position
-		data.push_back(t_string::from_int(spr->get_x()));
-		data.push_back(t_string::from_int(spr->get_y()));
-		data.push_back(t_string::from_int(spr->has_grid() ? 1 : 0));
-		
-		// Sprite tile chars
-		auto& tile = spr->get_tile();
-		data.push_back(t_string::from_int(tile.char_count()));
-		for (auto& ch : tile.get_all_chars()) {
-			data.push_back(t_string::from_int(ch.ix));
-			data.push_back(t_string::from_int(ch.fgc));
-			data.push_back(t_string::from_int(ch.bgc));
-		}
-
-		// Sprite tile data
-		data.push_back(t_string::from_int(tile.data.size()));
-		for (auto& key_value : tile.data.get_all()) {
-			data.push_back(key_value.first);
-			data.push_back(key_value.second);
-		}
-	}
-
-	return data;
 }
 
-void t_screen::deserialize(const t_list<t_string>& data)
+void t_screen::split_draw_tile_path(const t_string& path)
 {
+	draw_tile_path_cmd.clear();
 
+	t_string current;
+
+	for (size_t i = 0; i < path.length(); ++i) {
+		current += path[i];
+		if (i + 1 < path.length() &&
+			(std::isdigit(path[i]) && std::isalpha(path[i + 1])) ||
+			(std::isalpha(path[i]) && std::isdigit(path[i + 1]))) {
+			draw_tile_path_cmd.push_back(current);
+			current.clear();
+		}
+	}
+
+	if (!current.empty())
+		draw_tile_path_cmd.push_back(current);
 }
