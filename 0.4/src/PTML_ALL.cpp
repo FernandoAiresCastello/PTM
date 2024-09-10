@@ -169,6 +169,8 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("SPR.Y", SPR_Y);
 	CMD("SPR.GETX", SPR_GETX);
 	CMD("SPR.GETY", SPR_GETY);
+	CMD("SPR.TGETX", SPR_TGETX);
+	CMD("SPR.TGETY", SPR_TGETY);
 	CMD("SPR.SHOW", SPR_SHOW);
 	CMD("SPR.MOVE", SPR_MOVE);
 	CMD("SPR.DEL", SPR_DEL);

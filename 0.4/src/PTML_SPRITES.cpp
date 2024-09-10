@@ -51,6 +51,28 @@ void PTML::SPR_GETY()
 	ptm->set_var(IDENT(2), sprite->get_y());
 }
 
+void PTML::SPR_TGETX()
+{
+	ARGC(2);
+	REQUIRE_IDENT(2);
+	SPRITE(STR(1));
+	if (sprite->has_grid())
+		ptm->set_var(IDENT(2), sprite->get_x());
+	else
+		ptm->set_var(IDENT(2), sprite->get_x() / t_tile::width);
+}
+
+void PTML::SPR_TGETY()
+{
+	ARGC(2);
+	REQUIRE_IDENT(2);
+	SPRITE(STR(1));
+	if (sprite->has_grid())
+		ptm->set_var(IDENT(2), sprite->get_y());
+	else
+		ptm->set_var(IDENT(2), sprite->get_y() / t_tile::height);
+}
+
 void PTML::SPR_SHOW()
 {
 	ARGC(2);

@@ -9,6 +9,8 @@ namespace PTML
 	void SPR_Y();
 	void SPR_GETX();
 	void SPR_GETY();
+	void SPR_TGETX();
+	void SPR_TGETY();
 	void SPR_SHOW();
 	void SPR_MOVE();
 	void SPR_DEL();
