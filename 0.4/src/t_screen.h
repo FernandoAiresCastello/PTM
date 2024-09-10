@@ -25,9 +25,9 @@ public:
 	const int rows;
 	const int last_col;
 	const int last_row;
-	const int default_fg = 0xa8;
-	const int default_bg = 0xa3;
-	const int default_bdr = 0xa2;
+	const int default_fg = 17;
+	const int default_bg = 16;
+	const int default_bdr = 109;
 
 	t_screen(int cols, int rows);
 	~t_screen() = default;
