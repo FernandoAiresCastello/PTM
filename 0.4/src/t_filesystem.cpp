@@ -330,7 +330,7 @@ const t_string& t_filesystem::get_root_directory()
     return root_directory;
 }
 
-void t_filesystem::save_charset(t_charset* chr, const t_string& filename)
+void t_filesystem::save_charset_plaintext(t_charset* chr, const t_string& filename)
 {
     t_list<t_string> chr_entries;
     for (int i = 0; i < chr->size(); i++) {
@@ -340,7 +340,7 @@ void t_filesystem::save_charset(t_charset* chr, const t_string& filename)
     write_all_lines(chr_entries, filename + charset_ext);
 }
 
-void t_filesystem::save_palette(t_palette* pal, const t_string& filename)
+void t_filesystem::save_palette_plaintext(t_palette* pal, const t_string& filename)
 {
     t_list<t_string> pal_entries;
     for (int i = 0; i < pal->size(); i++) {
@@ -350,7 +350,7 @@ void t_filesystem::save_palette(t_palette* pal, const t_string& filename)
     write_all_lines(pal_entries, filename + palette_ext);
 }
 
-void t_filesystem::load_charset(t_charset* chr, const t_string& filename)
+void t_filesystem::load_charset_plaintext(t_charset* chr, const t_string& filename)
 {
     auto chr_lines = read_all_lines(filename + charset_ext);
     chr->remove_all();
@@ -359,7 +359,7 @@ void t_filesystem::load_charset(t_charset* chr, const t_string& filename)
     }
 }
 
-void t_filesystem::load_palette(t_palette* pal, const t_string& filename)
+void t_filesystem::load_palette_plaintext(t_palette* pal, const t_string& filename)
 {
     auto pal_lines = read_all_lines(filename + palette_ext);
     pal->remove_all();

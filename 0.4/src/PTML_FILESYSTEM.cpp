@@ -12,45 +12,37 @@ void PTML::FILES()
 	}
 }
 
-void PTML::FILE_REN()
+void PTML::RENAME()
 {
 	ARGC(2);
 	auto&& old_name = STR(1);
 	auto&& new_name = STR(2);
 	VALIDATE_FILENAME(new_name);
-	REQUIRE_FILE(old_name);
-	t_filesystem::rename_file(old_name, new_name);
+
+	if (t_filesystem::file_exists(old_name)) {
+		t_filesystem::rename_file(old_name, new_name);
+	}
+	else if (t_filesystem::directory_exists(old_name)) {
+		t_filesystem::rename_directory(old_name, new_name);
+	}
+	else {
+		error = err.file_not_found;
+	}
 }
 
-void PTML::FILE_DEL()
+void PTML::KILL()
 {
 	ARGC(1);
 	auto&& name = STR(1);
-	VALIDATE_FILENAME(name);
-	REQUIRE_FILE(name);
-	t_filesystem::delete_file(name);
-}
 
-void PTML::DIR_REN()
-{
-	ARGC(2);
-	auto&& old_name = STR(1);
-	auto&& new_name = STR(2);
-	VALIDATE_FILENAME(new_name);
-	REQUIRE_DIR(old_name);
-	t_filesystem::rename_directory(old_name, new_name);
-}
-
-void PTML::DIR_DEL()
-{
-	ARGC(1);
-	auto&& name = STR(1);
-	VALIDATE_FILENAME(name);
-	REQUIRE_DIR(name);
-	bool deleted = t_filesystem::delete_directory(name);
-	if (!deleted) {
-		error = err.filesystem_error;
-		return;
+	if (t_filesystem::file_exists(name)) {
+		t_filesystem::delete_file(name);
+	}
+	else if (t_filesystem::directory_exists(name)) {
+		t_filesystem::delete_directory(name);
+	}
+	else {
+		error = err.file_not_found;
 	}
 }
 
@@ -153,4 +145,11 @@ void PTML::READ()
 		return;
 	}
 	ptm->set_var(IDENT(1), t_filesystem::read_record_file());
+}
+
+void PTML::FEOF()
+{
+	ARGC(1);
+	REQUIRE_IDENT(1);
+	ptm->set_var(IDENT(1), t_filesystem::is_record_file_eof() ? 1 : 0);
 }

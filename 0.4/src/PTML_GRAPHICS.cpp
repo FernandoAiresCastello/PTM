@@ -171,7 +171,7 @@ void PTML::PAL_SAVE()
 	ARGC(1);
 	auto&& filename = STR(1);
 	VALIDATE_FILENAME(filename);
-	t_filesystem::save_palette(&ptm->get_pal(), filename);
+	t_filesystem::save_palette_plaintext(&ptm->get_pal(), filename);
 }
 
 void PTML::PAL_LOAD()
@@ -180,7 +180,7 @@ void PTML::PAL_LOAD()
 	auto&& filename = STR(1);
 	VALIDATE_FILENAME(filename);
 	REQUIRE_FILE(filename);
-	t_filesystem::load_palette(&ptm->get_pal(), filename);
+	t_filesystem::load_palette_plaintext(&ptm->get_pal(), filename);
 }
 
 void PTML::CHR_SAVE()
@@ -188,7 +188,7 @@ void PTML::CHR_SAVE()
 	ARGC(1);
 	auto&& filename = STR(1);
 	VALIDATE_FILENAME(filename);
-	t_filesystem::save_charset(&ptm->get_chr(), filename);
+	t_filesystem::save_charset_plaintext(&ptm->get_chr(), filename);
 }
 
 void PTML::CHR_LOAD()
@@ -197,7 +197,7 @@ void PTML::CHR_LOAD()
 	auto&& filename = STR(1);
 	VALIDATE_FILENAME(filename);
 	REQUIRE_FILE(filename);
-	t_filesystem::load_charset(&ptm->get_chr(), filename);
+	t_filesystem::load_charset_plaintext(&ptm->get_chr(), filename);
 }
 
 void PTML::LOCATE()

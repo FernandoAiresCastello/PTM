@@ -13,7 +13,6 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 {
 	// === PROGRAM MANAGEMENT ===
 	CMD("LIST", LIST);
-	CMD("RUN", RUN);
 	CMD("NEW", NEW);
 	CMD("RENUM", RENUM);
 	CMD("SAVE", SAVE);
@@ -23,6 +22,9 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("PROG", PROG);
 
 	// === SYSTEM CONTROL ===
+	CMD("RUN", RUN);
+	CMD("END", END);
+	CMD("HALT", HALT);
 	CMD("EXIT", EXIT);
 	CMD("RESET", RESET);
 
@@ -46,10 +48,6 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("SQRT", SQRT);
 	CMD("RND", RND);
 	CMD("SWAP", SWAP);
-
-	// === CONTROL FLOW ===
-	CMD("END", END);
-	CMD("HALT", HALT);
 
 	// === GOTO ===
 	CMD("GOTO", GOTO);
@@ -79,10 +77,8 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 
 	// === FILESYSTEM ===
 	CMD("FILES", FILES);
-	CMD("FILE.REN", FILE_REN);
-	CMD("FILE.DEL", FILE_DEL);
-	CMD("DIR.REN", DIR_REN);
-	CMD("DIR.DEL", DIR_DEL);
+	CMD("RENAME", RENAME);
+	CMD("KILL", KILL);
 	CMD("MKDIR", MKDIR);
 	CMD("CHDIR", CHDIR);
 	CMD("QDIR", DIR_Q);
@@ -91,6 +87,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("CLOSE", CLOSE);
 	CMD("WRITE", WRITE);
 	CMD("READ", READ);
+	CMD("EOF", FEOF);
 
 	// === KEYBOARD INPUT ===
 	CMD("INKEY", INKEY);
