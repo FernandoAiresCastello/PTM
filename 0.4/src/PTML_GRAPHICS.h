@@ -33,6 +33,12 @@ namespace PTML
 	void TILE_NEW();
 	void TILE_ADD();
 	void TILE_Q();
+	void TILE_SETC();
+	void TILE_GETC();
+	void TILE_SETF();
+	void TILE_GETF();
+	void TILE_SETB();
+	void TILE_GETB();
 	void TILE_SETP();
 	void TILE_GETP();
 	void TILE_SAVE();
