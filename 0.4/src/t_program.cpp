@@ -61,3 +61,14 @@ void t_program::renumber_source_line(t_string& line, int new_line_nr)
 	line += " ";
 	line += old_line_src;
 }
+
+int t_program::find_label(const t_string& label)
+{
+	for (auto& line : lines) {
+		if (line.second.is_label && line.second.label == label) {
+			return line.second.line_nr;
+		}
+	}
+
+	return -1;
+}

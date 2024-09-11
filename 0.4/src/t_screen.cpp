@@ -183,7 +183,7 @@ void t_screen::fix_cursor_pos()
 
 void t_screen::update_cursor()
 {
-	if (!insert_mode) {
+	if (!insert_mode && !printing_lines) {
 		t_char& csr_char = csr->tile.get_char();
 		csr_char.ix = get_tile_at_csr().get_char().ix;
 		csr_char.fgc = back_color;
@@ -310,14 +310,25 @@ void t_screen::print_string_at(const t_string& str, int x, int y)
 
 bool t_screen::print_lines(const t_list<t_string>& lines, PTM* ptm)
 {
+	printing_lines = true;
+	t_char& csr_ch = csr->tile.get_char();
+	t_index prev_ch = csr_ch.ix;
+	t_index prev_fg = csr_ch.fgc;
+	t_index prev_bg = csr_ch.bgc;
+
 	bool escaped = false;
 	int lines_printed = 0;
+
 	for (const auto& line : lines) {
 		print_string_crlf(line);
 		lines_printed++;
-		if (lines_printed >= last_row) {
+		if (lines_printed >= last_row - 2) {
 			SDL_Keycode key = 0;
 			while (key != SDLK_RETURN && key != SDLK_ESCAPE) {
+				csr_ch.ix = predef_char.enter_symbol;
+				csr_ch.fgc = prev_fg;
+				csr_ch.bgc = prev_bg;
+
 				key = ptm->await_keypress();
 				if (key == SDLK_RETURN)
 					continue;
@@ -330,6 +341,12 @@ bool t_screen::print_lines(const t_list<t_string>& lines, PTM* ptm)
 		if (escaped)
 			break;
 	}
+
+	printing_lines = false;
+	csr_ch.ix = prev_ch;
+	csr_ch.fgc = prev_fg;
+	csr_ch.bgc = prev_bg;
+
 	return escaped;
 }
 

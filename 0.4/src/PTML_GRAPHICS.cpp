@@ -276,42 +276,42 @@ void PTML::TILE_SETC()
 {
 	IF_TILEREG_EMPTY_RET;
 	ARGC(2);
-	TILEREG.get_char(NUM(1)).ix = NUM(2);
+	TILEREG.get_char_wraparound(NUM(1)).ix = NUM(2);
 }
 
 void PTML::TILE_GETC()
 {
 	IF_TILEREG_EMPTY_RET;
 	ARGC(2);
-	ptm->set_var(IDENT(1), TILEREG.get_char(NUM(2)).ix);
+	ptm->set_var(IDENT(1), TILEREG.get_char_wraparound(NUM(2)).ix);
 }
 
 void PTML::TILE_SETF()
 {
 	IF_TILEREG_EMPTY_RET;
 	ARGC(2);
-	TILEREG.get_char(NUM(1)).fgc = NUM(2);
+	TILEREG.get_char_wraparound(NUM(1)).fgc = NUM(2);
 }
 
 void PTML::TILE_GETF()
 {
 	IF_TILEREG_EMPTY_RET;
 	ARGC(2);
-	ptm->set_var(IDENT(1), TILEREG.get_char(NUM(2)).fgc);
+	ptm->set_var(IDENT(1), TILEREG.get_char_wraparound(NUM(2)).fgc);
 }
 
 void PTML::TILE_SETB()
 {
 	IF_TILEREG_EMPTY_RET;
 	ARGC(2);
-	TILEREG.get_char(NUM(1)).bgc = NUM(2);
+	TILEREG.get_char_wraparound(NUM(1)).bgc = NUM(2);
 }
 
 void PTML::TILE_GETB()
 {
 	IF_TILEREG_EMPTY_RET;
 	ARGC(2);
-	ptm->set_var(IDENT(1), TILEREG.get_char(NUM(2)).bgc);
+	ptm->set_var(IDENT(1), TILEREG.get_char_wraparound(NUM(2)).bgc);
 }
 
 void PTML::TILE_SETP()

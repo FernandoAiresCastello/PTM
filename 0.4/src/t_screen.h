@@ -115,6 +115,7 @@ private:
 	t_color_mode color_mode = t_color_mode::mode0_monochrome;
 	t_string logical_line;
 	bool insert_mode = false;
+	bool printing_lines = false;
 
 	void update_monochrome_tiles();
 	void update_monochrome_tile(t_tile& tile) const;

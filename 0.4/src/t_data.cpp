@@ -1,6 +1,6 @@
 #include "t_data.h"
 
-const t_string t_data::null = "<null>";
+const t_string t_data::null = "(null)";
 const int t_data::null_int = INT_MIN;
 
 t_data::t_data()

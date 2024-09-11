@@ -566,3 +566,8 @@ bool PTM::has_tilereg(const t_string& name)
 {
 	return tile_presets.contains(name);
 }
+
+int PTM::find_program_label(const t_string& label)
+{
+	return prg.find_label(label);
+}

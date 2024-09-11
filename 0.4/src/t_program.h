@@ -13,6 +13,7 @@ public:
 	t_program_line* get_line(int line_nr);
 	t_string all_lines_to_single_string();
 	void renumber_lines(int interval);
+	int find_label(const t_string& label);
 
 private:
 	void renumber_source_line(t_string& line, int new_line_nr);

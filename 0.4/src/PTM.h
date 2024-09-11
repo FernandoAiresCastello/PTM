@@ -90,6 +90,7 @@ public:
 	void save_tilereg(const t_string& name);
 	void load_tilereg(const t_string& name);
 	bool has_tilereg(const t_string& name);
+	int find_program_label(const t_string& label);
 
 private:
 	bool running = false;
