@@ -36,6 +36,7 @@ void PTM::run()
 	halted = false;
 	tilereg.set_empty();
 	prg.lines.clear();
+	sound_gen.set_volume(t_sound_mml::max_volume / 4);
 
 	init();
 	run_main();
@@ -570,4 +571,9 @@ bool PTM::has_tilereg(const t_string& name)
 int PTM::find_program_label(const t_string& label)
 {
 	return prg.find_label(label);
+}
+
+t_sound_mml& PTM::get_sound_gen()
+{
+	return sound_gen;
 }

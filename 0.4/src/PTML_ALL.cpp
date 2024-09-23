@@ -8,6 +8,7 @@
 #include "PTML_FILESYSTEM.h"
 #include "PTML_INPUT.h"
 #include "PTML_SPRITES.h"
+#include "PTML_SOUND.h"
 
 t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 {
@@ -181,6 +182,9 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("SPR.TGET", SPR_TGET);
 	CMD("SPR.TSET", SPR_TSET);
 	CMD("SPR.CHK", SPR_CHK);
+
+	// === SOUND ===
+	CMD("BEEP", BEEP);
 
 	return nullptr;
 }

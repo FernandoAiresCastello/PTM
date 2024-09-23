@@ -14,6 +14,7 @@ void t_main_editor::init(PTM* ptm, t_screen* scr, t_keyboard* kb, t_interpreter*
 	this->scr = scr;
 	this->kb = kb;
 	this->intp = intp;
+	this->mml = &ptm->get_sound_gen();
 
 	reset();
 }
