@@ -185,6 +185,8 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 
 	// === SOUND ===
 	CMD("BEEP", BEEP);
+	CMD("PLAY", PLAY);
+	CMD("LPLAY", LPLAY);
 
 	return nullptr;
 }

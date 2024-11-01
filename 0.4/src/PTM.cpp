@@ -36,7 +36,7 @@ void PTM::run()
 	halted = false;
 	tilereg.set_empty();
 	prg.lines.clear();
-	sound_gen.set_volume(t_sound_mml::max_volume / 4);
+	sound_gen.set_volume(t_sound_mml::max_volume / 5);
 
 	init();
 	run_main();
@@ -66,6 +66,8 @@ void PTM::init()
 
 void PTM::run_main()
 {
+	sound_gen.beep(1450, 50);
+
 	bool autoexec = t_filesystem::file_exists(autoexec_file);
 	if (!autoexec)
 		main_editor.print_welcome(true);

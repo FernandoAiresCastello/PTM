@@ -18,7 +18,6 @@ const int CHANNELS = 1;
 
 // Simple frequencies for notes
 const std::map<std::string, double> freq_tbl = {
-    {"P", 0},
     {"C0", 16.35},
     {"C#0", 17.32},
     {"D0", 18.35},
@@ -231,4 +230,121 @@ void t_sound_mml::play_note(const t_string& note, int duration)
 {
     if (freq_tbl.contains(note))
         playFrequencyWithDuration(freq_tbl.at(note), duration);
+}
+
+// ===== THREADED MML - ONE-SHOT =====
+
+struct {
+    t_sound_mml* sound_gen = nullptr;
+    t_string mml = "";
+    int duration = 100;
+    const int delay_between_notes = 20;
+    int thread_count = 0;
+    const int max_thread_count = 3;
+} mml_thread_params;
+
+static int play_mml_threaded(void* dummy)
+{
+    static int min_duration = 0;
+    static int max_duration = 1000;
+
+    for (auto&& note : mml_thread_params.mml.to_upper().split(' ')) {
+        if (note[0] == 'L') {
+            if (note.length() >= 2) {
+                mml_thread_params.duration = std::clamp(note.skip(1).to_int(), min_duration, max_duration);
+            }
+        }
+        else if (note[0] == 'P') {
+            if (note.length() >= 2) {
+                SDL_Delay(std::clamp(note.skip(1).to_int(), min_duration, max_duration));
+            }
+        }
+        else {
+            mml_thread_params.sound_gen->play_note(note, mml_thread_params.duration);
+            SDL_Delay(mml_thread_params.duration + mml_thread_params.delay_between_notes);
+        }
+    }
+
+    mml_thread_params.thread_count--;
+    if (mml_thread_params.thread_count < 0)
+        mml_thread_params.thread_count = 0;
+
+    return 0;
+}
+
+void t_sound_mml::play_mml(const t_string& mml)
+{
+    if (mml_thread_params.thread_count >= mml_thread_params.max_thread_count)
+        return;
+
+    mml_thread_params.sound_gen = this;
+    mml_thread_params.mml = mml;
+    mml_thread_params.thread_count++;
+
+    SDL_Thread* thread = SDL_CreateThread(play_mml_threaded, "PTM_MML_Thread", nullptr);
+}
+
+// ===== THREADED MML - LOOP =====
+
+struct {
+    t_sound_mml* sound_gen = nullptr;
+    t_string mml = "";
+    int duration = 100;
+    const int delay_between_notes = 20;
+    int thread_count = 0;
+    const int max_thread_count = 1;
+    bool stop = false;
+} loop_mml_thread_params;
+
+static int play_mml_loop_threaded(void* dummy)
+{
+    static int min_duration = 0;
+    static int max_duration = 1000;
+
+    while (!loop_mml_thread_params.stop) {
+
+        for (auto&& note : loop_mml_thread_params.mml.to_upper().split(' ')) {
+            if (loop_mml_thread_params.stop)
+                break;
+
+            if (note[0] == 'L') {
+                if (note.length() >= 2) {
+                    loop_mml_thread_params.duration = std::clamp(note.skip(1).to_int(), min_duration, max_duration);
+                }
+            }
+            else if (note[0] == 'P') {
+                if (note.length() >= 2) {
+                    SDL_Delay(std::clamp(note.skip(1).to_int(), min_duration, max_duration));
+                }
+            }
+            else {
+                loop_mml_thread_params.sound_gen->play_note(note, loop_mml_thread_params.duration);
+                SDL_Delay(loop_mml_thread_params.duration + loop_mml_thread_params.delay_between_notes);
+            }
+        }
+    }
+
+    loop_mml_thread_params.thread_count--;
+    if (loop_mml_thread_params.thread_count < 0)
+        loop_mml_thread_params.thread_count = 0;
+
+    return 0;
+}
+
+void t_sound_mml::play_mml_loop(const t_string& mml)
+{
+    if (mml.trim().empty()) {
+        loop_mml_thread_params.stop = true;
+        return;
+    }
+    if (loop_mml_thread_params.thread_count >= loop_mml_thread_params.max_thread_count) {
+        return;
+    }
+
+    loop_mml_thread_params.sound_gen = this;
+    loop_mml_thread_params.mml = mml;
+    loop_mml_thread_params.thread_count++;
+    loop_mml_thread_params.stop = false;
+
+    SDL_Thread* thread = SDL_CreateThread(play_mml_loop_threaded, "PTM_MML_LOOP_Thread", nullptr);
 }

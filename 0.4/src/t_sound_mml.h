@@ -11,5 +11,12 @@ public:
 
 	void set_volume(int volume);
 	void beep(double frequency, int duration);
+	void play_mml(const t_string& mml);
+	void play_mml_loop(const t_string& mml);
+
+private:
+	friend int play_mml_threaded(void* mml_ptr);
+	friend int play_mml_loop_threaded(void* mml_ptr);
+
 	void play_note(const t_string& note, int duration);
 };
