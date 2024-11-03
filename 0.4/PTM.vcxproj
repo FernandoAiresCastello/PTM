@@ -33,7 +33,7 @@
     <ClCompile Include="src\PTML_SPRITES.cpp" />
     <ClCompile Include="src\PTML_VARS.cpp" />
     <ClCompile Include="src\t_record_file.cpp" />
-    <ClCompile Include="src\t_sound_mml.cpp" />
+    <ClCompile Include="src\t_sound.cpp" />
     <ClCompile Include="src\t_sound_wav.cpp" />
     <ClCompile Include="src\t_table.cpp" />
     <ClCompile Include="src\t_char.cpp" />
@@ -83,7 +83,7 @@
     <ClInclude Include="src\t_namespace.h" />
     <ClInclude Include="src\t_record_file.h" />
     <ClInclude Include="src\t_rect.h" />
-    <ClInclude Include="src\t_sound_mml.h" />
+    <ClInclude Include="src\t_sound.h" />
     <ClInclude Include="src\t_sound_wav.h" />
     <ClInclude Include="src\t_table.h" />
     <ClInclude Include="src\t_binary.h" />

@@ -8,8 +8,10 @@
 #include <condition_variable>
 #include <atomic>
 #include <map>
-#include "t_sound_mml.h"
+#include "t_sound.h"
 #include "t_string.h"
+
+bool sound_system_running = true;
 
 // Constants for 8-bit audio
 const int SAMPLE_RATE = 44100;
@@ -131,7 +133,7 @@ const std::map<std::string, double> freq_tbl = {
 // Global variables
 std::mutex audioMutex;
 double currentFrequency = 0.0;  // 0.0 means silence
-std::atomic<int> currentVolume(t_sound_mml::max_volume);  // Default volume is max (atomic for thread safety)
+std::atomic<int> currentVolume(t_sound::max_volume);  // Default volume is max (atomic for thread safety)
 std::atomic<int> remainingSamples(0);  // Tracks remaining samples for the current note
 
 // Audio generation callback
@@ -179,7 +181,7 @@ static void playFrequencyWithDuration(double frequency, int durationMs) {
 static void setVolume(int volume) {
     // Clamp volume to the 0 to MAX_AMPLITUDE range
     if (volume < 0) volume = 0;
-    if (volume > t_sound_mml::max_volume) volume = t_sound_mml::max_volume;
+    if (volume > t_sound::max_volume) volume = t_sound::max_volume;
     currentVolume.store(volume);  // Atomically set volume
 }
 
@@ -187,7 +189,7 @@ static void setVolume(int volume) {
 //      T_SOUND_MML
 //=============================================================================
 
-t_sound_mml::t_sound_mml()
+t_sound::t_sound()
 {
     // Set up the audio specification
     SDL_AudioSpec audioSpec;
@@ -205,146 +207,194 @@ t_sound_mml::t_sound_mml()
     SDL_PauseAudio(0);  // Start the audio stream
 }
 
-t_sound_mml::~t_sound_mml()
+t_sound::~t_sound()
 {
+    sound_system_running = false;
     SDL_CloseAudio();
 }
 
-void t_sound_mml::set_volume(int volume)
+void t_sound::set_volume(int volume)
 {
     // Volume should be between 0 and MAX_AMPLITUDE
     if (volume < 0) volume = 0;
-    if (volume > t_sound_mml::max_volume) volume = t_sound_mml::max_volume;
+    if (volume > t_sound::max_volume) volume = t_sound::max_volume;
 
     audioMutex.lock();
     currentVolume = volume;
     audioMutex.unlock();
 }
 
-void t_sound_mml::beep(double frequency, int duration)
+struct t_beep {
+    double frequency = 0.0;
+    int duration = 0;
+};
+t_list<t_beep> beep_seq;
+SDL_Thread* beep_thread = nullptr;
+
+static int beep_threaded(void* dummy)
 {
-    playFrequencyWithDuration(frequency, duration);
+    while (sound_system_running) {
+        if (beep_seq.empty())
+            continue;
+
+        auto&& b = beep_seq.back();
+        beep_seq.pop_back();
+        playFrequencyWithDuration(b.frequency, b.duration);
+        SDL_Delay(b.duration);
+    }
+    return 0;
 }
 
-void t_sound_mml::play_note(const t_string& note, int duration)
+void t_sound::beep(double frequency, int duration)
+{
+    t_beep b;
+    b.frequency = frequency;
+    b.duration = duration;
+    beep_seq.push_back(b);
+
+    if (!beep_thread)
+        beep_thread = SDL_CreateThread(beep_threaded, "PTM_BeepSeq_Thread", nullptr);
+}
+
+void t_sound::alert()
+{
+    beep(1450, 50);
+}
+
+void t_sound::keystroke()
+{
+    beep(70, 5);
+}
+
+// ===== MML =====
+
+void t_sound::play_note(const t_string& note, int duration)
 {
     if (freq_tbl.contains(note))
         playFrequencyWithDuration(freq_tbl.at(note), duration);
 }
 
-// ===== THREADED MML - ONE-SHOT =====
-
 struct {
-    t_sound_mml* sound_gen = nullptr;
-    t_string mml = "";
-    int duration = 100;
-    const int delay_between_notes = 20;
-    int thread_count = 0;
-    const int max_thread_count = 3;
+    t_sound* snd = nullptr;
+    int min_note_duration = 0;
+    int max_note_duration = 1000;
+
+    // ONE-SHOT
+    struct {
+        t_string mml = "";
+        int duration = 100;
+        const int delay_between_notes = 20;
+        int thread_count = 0;
+        const int max_thread_count = 3;
+        void pop_thread() {
+            thread_count--;
+            if (thread_count < 0)
+                thread_count = 0;
+        }
+    } one_shot;
+
+    // LOOPED
+    struct {
+        t_string mml = "";
+        int duration = 100;
+        const int delay_between_notes = 20;
+        int thread_count = 0;
+        const int max_thread_count = 1;
+        bool stop = false;
+        void pop_thread() {
+            thread_count--;
+            if (thread_count < 0)
+                thread_count = 0;
+        }
+    } looped;
+
 } mml_thread_params;
 
-static int play_mml_threaded(void* dummy)
+static void play_mml_common(bool loop)
 {
-    static int min_duration = 0;
-    static int max_duration = 1000;
+    auto&& mml = loop ? mml_thread_params.looped.mml : mml_thread_params.one_shot.mml;
 
-    for (auto&& note : mml_thread_params.mml.to_upper().split(' ')) {
+    for (auto&& note : mml.to_upper().split(' ')) {
         if (note[0] == 'L') {
             if (note.length() >= 2) {
-                mml_thread_params.duration = std::clamp(note.skip(1).to_int(), min_duration, max_duration);
+                int duration = std::clamp(note.skip(1).to_int(), 
+                    mml_thread_params.min_note_duration, mml_thread_params.max_note_duration);
+
+                if (loop)
+                    mml_thread_params.looped.duration = duration;
+                else
+                    mml_thread_params.one_shot.duration = duration;
             }
         }
         else if (note[0] == 'P') {
             if (note.length() >= 2) {
-                SDL_Delay(std::clamp(note.skip(1).to_int(), min_duration, max_duration));
+                int duration = std::clamp(note.skip(1).to_int(),
+                    mml_thread_params.min_note_duration, mml_thread_params.max_note_duration);
+
+                SDL_Delay(duration);
             }
         }
         else {
-            mml_thread_params.sound_gen->play_note(note, mml_thread_params.duration);
-            SDL_Delay(mml_thread_params.duration + mml_thread_params.delay_between_notes);
+            if (loop) {
+                mml_thread_params.snd->play_note(note, mml_thread_params.looped.duration);
+                SDL_Delay(mml_thread_params.looped.duration + mml_thread_params.looped.delay_between_notes);
+            }
+            else {
+                mml_thread_params.snd->play_note(note, mml_thread_params.one_shot.duration);
+                SDL_Delay(mml_thread_params.one_shot.duration + mml_thread_params.one_shot.delay_between_notes);
+            }
         }
     }
+}
 
-    mml_thread_params.thread_count--;
-    if (mml_thread_params.thread_count < 0)
-        mml_thread_params.thread_count = 0;
+// ===== THREADED MML - ONE-SHOT =====
+
+static int play_mml_threaded(void* dummy)
+{
+    play_mml_common(false);
+    mml_thread_params.one_shot.pop_thread();
 
     return 0;
 }
 
-void t_sound_mml::play_mml(const t_string& mml)
+void t_sound::play_mml(const t_string& mml)
 {
-    if (mml_thread_params.thread_count >= mml_thread_params.max_thread_count)
+    if (mml_thread_params.one_shot.thread_count >= mml_thread_params.one_shot.max_thread_count)
         return;
 
-    mml_thread_params.sound_gen = this;
-    mml_thread_params.mml = mml;
-    mml_thread_params.thread_count++;
+    mml_thread_params.snd = this;
+    mml_thread_params.one_shot.mml = mml;
+    mml_thread_params.one_shot.thread_count++;
 
     SDL_Thread* thread = SDL_CreateThread(play_mml_threaded, "PTM_MML_Thread", nullptr);
 }
 
 // ===== THREADED MML - LOOP =====
 
-struct {
-    t_sound_mml* sound_gen = nullptr;
-    t_string mml = "";
-    int duration = 100;
-    const int delay_between_notes = 20;
-    int thread_count = 0;
-    const int max_thread_count = 1;
-    bool stop = false;
-} loop_mml_thread_params;
-
 static int play_mml_loop_threaded(void* dummy)
 {
-    static int min_duration = 0;
-    static int max_duration = 1000;
+    while (!mml_thread_params.looped.stop)
+        play_mml_common(true);
 
-    while (!loop_mml_thread_params.stop) {
-
-        for (auto&& note : loop_mml_thread_params.mml.to_upper().split(' ')) {
-            if (loop_mml_thread_params.stop)
-                break;
-
-            if (note[0] == 'L') {
-                if (note.length() >= 2) {
-                    loop_mml_thread_params.duration = std::clamp(note.skip(1).to_int(), min_duration, max_duration);
-                }
-            }
-            else if (note[0] == 'P') {
-                if (note.length() >= 2) {
-                    SDL_Delay(std::clamp(note.skip(1).to_int(), min_duration, max_duration));
-                }
-            }
-            else {
-                loop_mml_thread_params.sound_gen->play_note(note, loop_mml_thread_params.duration);
-                SDL_Delay(loop_mml_thread_params.duration + loop_mml_thread_params.delay_between_notes);
-            }
-        }
-    }
-
-    loop_mml_thread_params.thread_count--;
-    if (loop_mml_thread_params.thread_count < 0)
-        loop_mml_thread_params.thread_count = 0;
+    mml_thread_params.looped.pop_thread();
 
     return 0;
 }
 
-void t_sound_mml::play_mml_loop(const t_string& mml)
+void t_sound::play_mml_loop(const t_string& mml)
 {
     if (mml.trim().empty()) {
-        loop_mml_thread_params.stop = true;
+        mml_thread_params.looped.stop = true;
         return;
     }
-    if (loop_mml_thread_params.thread_count >= loop_mml_thread_params.max_thread_count) {
+    if (mml_thread_params.looped.thread_count >= mml_thread_params.looped.max_thread_count) {
         return;
     }
 
-    loop_mml_thread_params.sound_gen = this;
-    loop_mml_thread_params.mml = mml;
-    loop_mml_thread_params.thread_count++;
-    loop_mml_thread_params.stop = false;
+    mml_thread_params.snd = this;
+    mml_thread_params.looped.mml = mml;
+    mml_thread_params.looped.thread_count++;
+    mml_thread_params.looped.stop = false;
 
     SDL_Thread* thread = SDL_CreateThread(play_mml_loop_threaded, "PTM_MML_LOOP_Thread", nullptr);
 }

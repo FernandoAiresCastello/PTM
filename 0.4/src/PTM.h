@@ -14,7 +14,7 @@
 #include "t_namespace.h"
 #include "t_pointers.h"
 #include "t_sprite.h"
-#include "t_sound_mml.h"
+#include "t_sound.h"
 #include "t_screen.h"
 
 class PTM
@@ -93,7 +93,7 @@ public:
 	void load_tilereg(const t_string& name);
 	bool has_tilereg(const t_string& name);
 	int find_program_label(const t_string& label);
-	t_sound_mml& get_sound_gen();
+	t_sound& get_sound();
 
 private:
 	bool running = false;
@@ -104,7 +104,6 @@ private:
 	t_namespace<t_sprite_ptr> sprites;
 	t_namespace<t_table> tables;
 	t_namespace<t_tile> tile_presets;
-	t_sound_mml sound_gen;
 
 	void init();
 	void run_tests();

@@ -122,7 +122,7 @@
     <ClCompile Include="src\t_record_file.cpp">
       <Filter>FILESYSTEM</Filter>
     </ClCompile>
-    <ClCompile Include="src\t_sound_mml.cpp">
+    <ClCompile Include="src\t_sound.cpp">
       <Filter>SOUND</Filter>
     </ClCompile>
     <ClCompile Include="src\PTML_SOUND.cpp">
@@ -295,7 +295,7 @@
     <ClInclude Include="src\t_record_file.h">
       <Filter>FILESYSTEM</Filter>
     </ClInclude>
-    <ClInclude Include="src\t_sound_mml.h">
+    <ClInclude Include="src\t_sound.h">
       <Filter>SOUND</Filter>
     </ClInclude>
     <ClInclude Include="src\PTML_SOUND.h">

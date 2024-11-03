@@ -14,7 +14,7 @@ void t_main_editor::init(PTM* ptm, t_screen* scr, t_keyboard* kb, t_interpreter*
 	this->scr = scr;
 	this->kb = kb;
 	this->intp = intp;
-	this->mml = &ptm->get_sound_gen();
+	this->snd = &ptm->get_sound();
 
 	reset();
 }
@@ -59,6 +59,8 @@ void t_main_editor::on_keydown()
 	if (!handle_control_key())
 		if (!handle_function_key())
 			handle_character_key();
+
+	snd->keystroke();
 
 	kb->pop_key();
 }

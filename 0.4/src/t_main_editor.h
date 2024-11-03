@@ -7,7 +7,7 @@ class PTM;
 class t_screen;
 class t_keyboard;
 class t_interpreter;
-class t_sound_mml;
+class t_sound;
 
 class t_main_editor
 {
@@ -25,7 +25,7 @@ private:
 	t_screen* scr = nullptr;
 	t_keyboard* kb = nullptr;
 	t_interpreter* intp = nullptr;
-	t_sound_mml* mml = nullptr;
+	t_sound* snd = nullptr;
 
 	bool handle_control_key();
 	bool handle_function_key();

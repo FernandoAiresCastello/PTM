@@ -82,6 +82,8 @@ bool t_interpreter::execute_line(t_program_line& line)
 			scr->print_string_crlf(PTML::error);
 		else
 			scr->print_string_crlf(t_string::fmt("%s in %i", PTML::error.c_str(), line.line_nr));
+
+		ptm->get_sound().alert();
 	}
 
 	if (line.immediate)

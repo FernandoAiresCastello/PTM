@@ -25,6 +25,7 @@ t_filesystem filesys;
 t_keyboard kb;
 t_charset chr;
 t_palette pal;
+t_sound snd;
 t_screen scr(256, t_window::rows - 2);
 
 void PTM::run()
@@ -36,7 +37,7 @@ void PTM::run()
 	halted = false;
 	tilereg.set_empty();
 	prg.lines.clear();
-	sound_gen.set_volume(t_sound_mml::max_volume / 5);
+	snd.set_volume(10);
 
 	init();
 	run_main();
@@ -66,7 +67,7 @@ void PTM::init()
 
 void PTM::run_main()
 {
-	sound_gen.beep(1450, 50);
+	snd.alert();
 
 	bool autoexec = t_filesystem::file_exists(autoexec_file);
 	if (!autoexec)
@@ -575,7 +576,7 @@ int PTM::find_program_label(const t_string& label)
 	return prg.find_label(label);
 }
 
-t_sound_mml& PTM::get_sound_gen()
+t_sound& PTM::get_sound()
 {
-	return sound_gen;
+	return snd;
 }
