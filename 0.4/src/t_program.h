@@ -11,7 +11,7 @@ public:
 	bool delete_line(int line_nr);
 	bool has_line(int line_nr) const;
 	t_program_line* get_line(int line_nr);
-	t_string all_lines_to_single_string();
+	t_string get_full_source_text();
 	void renumber_lines(int interval);
 	int find_label(const t_string& label);
 

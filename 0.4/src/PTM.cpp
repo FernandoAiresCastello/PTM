@@ -76,7 +76,7 @@ void PTM::run_main()
 	while (wnd.is_open()) {
 		if (autoexec) {
 			autoexec = false;
-			load_program(autoexec_file, true);
+			load_program(autoexec_file);
 			run_program_from_immediate_mode();
 			intp.print_prompt();
 		}
@@ -341,25 +341,17 @@ void PTM::new_program()
 	last_program_filename = "";
 }
 
-void PTM::save_program(const t_string& filename, bool hex)
+void PTM::save_program(const t_string& filename)
 {
-	if (hex)
-		filesys.save_program_binary(&prg, filename);
-	else
-		filesys.save_program_plaintext(&prg, filename);
-
+	filesys.save_program_plaintext(&prg, filename);
 	last_program_filename = filename.to_upper();
 }
 
-bool PTM::load_program(const t_string& filename, bool hex)
+bool PTM::load_program(const t_string& filename)
 {
 	try
 	{
-		if (hex)
-			filesys.load_program_binary(&intp, &prg, filename);
-		else
-			filesys.load_program_plaintext(&intp, &prg, filename);
-		
+		filesys.load_program_plaintext(&intp, &prg, filename);
 		if (!prg.lines.empty())
 			last_program_filename = filename.to_upper();
 
@@ -533,7 +525,7 @@ const t_string& PTM::get_last_program_filename() const
 
 void PTM::autosave_program_file()
 {
-	filesys.save_program_binary(&prg, autosave_file);
+	filesys.save_program_plaintext(&prg, autosave_file);
 }
 
 void PTM::create_table(const t_string& name, int cols, int rows)

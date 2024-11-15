@@ -111,7 +111,7 @@ void PTML::SAVE()
 		return;
 	}
 
-	ptm->save_program(filename, true);
+	ptm->save_program(filename);
 }
 
 void PTML::LOAD()
@@ -124,47 +124,7 @@ void PTML::LOAD()
 	REQUIRE_FILE(filename);
 
 	if (t_filesystem::file_exists(filename)) {
-		bool valid = ptm->load_program(filename, true);
-		if (!valid) {
-			error = err.invalid_program;
-		}
-	}
-	else {
-		error = err.file_not_found;
-	}
-}
-
-void PTML::CSAVE()
-{
-	REQUIRE_IMM;
-	ARGC(1);
-
-	auto&& filename = STR(1);
-	VALIDATE_FILENAME(filename);
-
-	if (ptm->get_prg().lines.empty()) {
-		error = err.invalid_program;
-		return;
-	}
-	if (t_filesystem::directory_exists(filename)) {
-		error = err.cant_create_file;
-		return;
-	}
-
-	ptm->save_program(filename, false);
-}
-
-void PTML::CLOAD()
-{
-	REQUIRE_IMM;
-	ARGC(1);
-
-	auto&& filename = STR(1);
-	VALIDATE_FILENAME(filename);
-	REQUIRE_FILE(filename);
-
-	if (t_filesystem::file_exists(filename)) {
-		bool valid = ptm->load_program(filename, false);
+		bool valid = ptm->load_program(filename);
 		if (!valid) {
 			error = err.invalid_program;
 		}

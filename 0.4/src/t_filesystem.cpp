@@ -268,7 +268,7 @@ bool t_filesystem::delete_directory(const t_string& name)
 
 void t_filesystem::save_program_plaintext(t_program* prg, const t_string& filename)
 {
-    write_all_text(prg->all_lines_to_single_string(), filename);
+    write_all_text(prg->get_full_source_text(), filename);
 }
 
 void t_filesystem::load_program_plaintext(t_interpreter* intp, t_program* prg, const t_string& filename)
@@ -277,29 +277,15 @@ void t_filesystem::load_program_plaintext(t_interpreter* intp, t_program* prg, c
 
     prg->lines.clear();
 
-    for (auto& src_line : src_lines) {
-        intp->interpret_line(src_line, true);
-        if (!intp->get_last_error().empty()) {
-            prg->lines.clear();
-            break;
-        }
-    }
-}
-
-void t_filesystem::save_program_binary(t_program* prg, const t_string& filename)
-{
-    write_hex_file(prg->all_lines_to_single_string(), filename);
-}
-
-void t_filesystem::load_program_binary(t_interpreter* intp, t_program* prg, const t_string& filename)
-{
-    auto&& file = read_hex_file(filename);
-    auto&& src_lines = file.split('\n');
-
-    prg->lines.clear();
+    int line_nr = 0;
 
     for (auto& src_line : src_lines) {
-        intp->interpret_line(src_line, true);
+        if (src_line.trim().empty())
+            continue;
+
+        line_nr += 10;
+        auto&& line = t_string::from_int(line_nr) + " " + src_line;
+        intp->interpret_line(line, true);
         if (!intp->get_last_error().empty()) {
             prg->lines.clear();
             break;

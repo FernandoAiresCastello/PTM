@@ -41,8 +41,6 @@ public:
 	// Program files
 	static void save_program_plaintext(t_program* prg, const t_string& filename);
 	static void load_program_plaintext(t_interpreter* intp, t_program* prg, const t_string& filename);
-	static void save_program_binary(t_program* prg, const t_string& filename);
-	static void load_program_binary(t_interpreter* intp, t_program* prg, const t_string& filename);
 
 	// Directories
 	static void create_directory(const t_string& dir);

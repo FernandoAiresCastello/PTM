@@ -18,8 +18,6 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("RENUM", RENUM);
 	CMD("SAVE", SAVE);
 	CMD("LOAD", LOAD);
-	CMD("CSAVE", CSAVE);
-	CMD("CLOAD", CLOAD);
 	CMD("PROG", PROG);
 
 	// === SYSTEM CONTROL ===
