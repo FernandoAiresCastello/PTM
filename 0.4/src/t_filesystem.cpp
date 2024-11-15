@@ -5,7 +5,6 @@
 #include "t_program.h"
 #include "t_program_line.h"
 #include "t_interpreter.h"
-#include "t_record_file.h"
 #include "t_screen.h"
 
 t_string directory = "";
@@ -145,7 +144,7 @@ t_string t_filesystem::read_hex_file(const t_string& filename)
     auto&& byte_lines = read_all_lines(filename);
 
     for (const auto& line : byte_lines) {
-        const auto&& bytes_str = line.split(' ');
+        const auto&& bytes_str = line.split(' ', true);
         for (const auto& byte_str : bytes_str) {
             unsigned char ch = 0;
             try {
@@ -185,7 +184,7 @@ t_list<t_string> t_filesystem::read_all_lines(const t_string& filename)
 {
     t_list<t_string> lines;
     t_string&& contents = read_all_text(filename);
-    auto raw_lines = contents.split('\n');
+    auto raw_lines = contents.split('\n', true);
 
     for (auto& line : raw_lines)
         lines.push_back(line.replace("\r", ""));
@@ -365,14 +364,14 @@ char t_filesystem::get_record_file_mode()
     return record_file.mode;
 }
 
-void t_filesystem::open_record_file(const t_string& filename, char mode)
+int t_filesystem::open_record_file(const t_string& filename, char mode)
 {
-    record_file.open(filename, mode);
+    return record_file.open(filename, mode);
 }
 
 void t_filesystem::close_record_file()
 {
-    record_file.close_and_save_hex_file();
+    record_file.close_and_save_text_file();
 }
 
 void t_filesystem::write_record_file(const t_string& data)

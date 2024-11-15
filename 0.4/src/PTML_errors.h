@@ -30,6 +30,7 @@ namespace PTML
 		const t_string file_already_open = "File already open";
 		const t_string file_not_open = "File not open";
 		const t_string bad_file_mode = "Bad file mode";
+		const t_string bad_file_format = "Bad file format";
 		const t_string end_of_file = "End of file";
 	}
 	err;

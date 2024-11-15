@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "PTML_FILESYSTEM.h"
 #include "PTML_shared_headers.h"
 
@@ -105,7 +106,12 @@ void PTML::OPEN_R()
 		error = err.file_already_open;
 		return;
 	}
-	t_filesystem::open_record_file(name, t_filesystem::read_mode);
+	
+	int state = t_filesystem::open_record_file(name, t_filesystem::read_mode);
+	if (state == RECFILE_STATE_BADFMT) {
+		error = err.bad_file_format;
+		return;
+	}
 }
 
 void PTML::CLOSE()

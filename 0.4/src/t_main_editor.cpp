@@ -56,12 +56,11 @@ void t_main_editor::print_welcome(bool show_prompt)
 
 void t_main_editor::on_keydown()
 {
-	if (!handle_control_key())
-		if (!handle_function_key())
+	if (!handle_control_key()) {
+		if (!handle_function_key()) {
 			handle_character_key();
-
-	snd->keystroke();
-
+		}
+	}
 	kb->pop_key();
 }
 
@@ -161,11 +160,14 @@ bool t_main_editor::handle_function_key()
 bool t_main_editor::handle_character_key()
 {
 	unsigned char ch = kb->keycode_to_char(kb->peek_key());
+
 	if (ch > 0) {
 		if (kb->ctrl())
 			return handle_ctrl_character_key();
 
 		scr->on_character_key_pressed(ch);
+		snd->keystroke();
+
 		return true;
 	}
 

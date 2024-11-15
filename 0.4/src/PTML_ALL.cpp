@@ -157,11 +157,11 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("GET", GET);
 	CMD("PUT", PUT);
 	CMD("RECT", RECT);
-	CMD("RECT.DEL", RECT_DEL);
-	CMD("LINE.H", LINE_H);
-	CMD("LINE.V", LINE_V);
 	CMD("FILL", FILL);
+	CMD("HLINE", LINE_H);
+	CMD("VLINE", LINE_V);
 	CMD("DEL", DEL);
+	CMD("DELR", RECT_DEL);
 
 	// === SPRITES ===
 	CMD("SPR.NEW", SPR_NEW);

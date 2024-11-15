@@ -125,9 +125,8 @@ void PTML::LOAD()
 
 	if (t_filesystem::file_exists(filename)) {
 		bool valid = ptm->load_program(filename);
-		if (!valid) {
+		if (!valid)
 			error = err.invalid_program;
-		}
 	}
 	else {
 		error = err.file_not_found;

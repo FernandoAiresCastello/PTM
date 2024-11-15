@@ -314,7 +314,7 @@ static void play_mml_common(bool loop)
 {
     auto&& mml = loop ? mml_thread_params.looped.mml : mml_thread_params.one_shot.mml;
 
-    for (auto&& note : mml.to_upper().split(' ')) {
+    for (auto&& note : mml.to_upper().split(' ', true)) {
         if (note[0] == 'L') {
             if (note.length() >= 2) {
                 int duration = std::clamp(note.skip(1).to_int(), 

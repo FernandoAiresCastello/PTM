@@ -1,34 +1,41 @@
+#include <stdexcept>
 #include "t_record_file.h"
 #include "t_filesystem.h"
 
-void t_record_file::open(const t_string& filename, char mode)
+char t_record_file::delimiter = '§';
+
+int t_record_file::open(const t_string& filename, char mode)
 {
-	is_open = true;
-	this->filename = filename;
-	this->mode = mode;
-	ptr = 0;
+	state = RECFILE_STATE_OK;
 
 	if (mode == t_filesystem::read_mode)
-		read_file_into_buffer();
+		read_file_into_buffer(filename);
 	else
 		buffer.clear();
-}
 
-void t_record_file::read_file_into_buffer()
-{
-	buffer = t_filesystem::read_hex_file(filename).split(delimiter);
-}
-
-void t_record_file::close_and_save_hex_file()
-{
-	is_open = false;
-
-	if (mode == t_filesystem::write_mode) {
-		t_string&& data = t_string::join(buffer, delimiter);
-		t_filesystem::write_hex_file(data, filename);
+	if (state == RECFILE_STATE_OK) {
+		this->filename = filename;
+		this->mode = mode;
+		is_open = true;
+		ptr = 0;
 	}
 
-	mode = 0;
+	return state;
+}
+
+void t_record_file::read_file_into_buffer(const t_string& filename)
+{
+	t_string&& text = t_filesystem::read_all_text(filename);
+
+	if (text.starts_and_ends_with(t_string(delimiter))) {
+		state = RECFILE_STATE_OK;
+		t_string&& records = text.substr(1, text.length() - 1);
+		buffer = records.split(delimiter, false);
+	}
+	else {
+		state = RECFILE_STATE_BADFMT;
+		return;
+	}
 }
 
 void t_record_file::close_and_save_text_file()
@@ -36,7 +43,7 @@ void t_record_file::close_and_save_text_file()
 	is_open = false;
 
 	if (mode == t_filesystem::write_mode) {
-		t_string&& data = t_string::join(buffer, delimiter);
+		t_string&& data = t_string(delimiter) + t_string::join(buffer, delimiter) + t_string(delimiter);
 		t_filesystem::write_all_text(data, filename);
 	}
 
@@ -70,5 +77,5 @@ t_string t_record_file::read()
 
 bool t_record_file::is_eof()
 {
-	return ptr < 0 || ptr >= buffer.size();
+	return ptr < 0 || ptr >= buffer.size() || !is_open;
 }

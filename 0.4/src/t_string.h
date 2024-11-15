@@ -59,7 +59,7 @@ public:
 	t_string remove_first_and_last(int count = 1) const;
 	t_string get_first(int count) const;
 	t_string get_last(int count) const;
-	t_list<t_string> split(char delim = ' ') const;
+	t_list<t_string> split(char delim, bool trim_tokens) const;
 	t_list<t_string> split_chunks(int chunk_size) const;
 	t_string substr(int first) const;
 	t_string substr(int first, int last) const;

@@ -2,16 +2,19 @@
 #include "t_string.h"
 #include "t_list.h"
 
+#define RECFILE_STATE_OK		0
+#define RECFILE_STATE_BADFMT	1
+
 class t_record_file
 {
 public:
 	char mode = 0;
 	bool is_open = false;
 	t_string filename;
-	char delimiter = '§';
+	static char delimiter;
+	int state = RECFILE_STATE_OK;
 
-	void open(const t_string& filename, char mode);
-	void close_and_save_hex_file();
+	int open(const t_string& filename, char mode);
 	void close_and_save_text_file();
 	void write(const t_string& data);
 	void write(int data);
@@ -24,5 +27,5 @@ private:
 	t_list<t_string> buffer;
 	int ptr = 0;
 
-	void read_file_into_buffer();
+	void read_file_into_buffer(const t_string& filename);
 };

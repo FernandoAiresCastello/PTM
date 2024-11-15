@@ -1,6 +1,7 @@
 #pragma once
 #include "t_string.h"
 #include "t_list.h"
+#include "t_record_file.h"
 
 class t_program;
 class t_interpreter;
@@ -60,7 +61,7 @@ public:
 
 	static bool is_record_file_open();
 	static char get_record_file_mode();
-	static void open_record_file(const t_string& filename, char mode);
+	static int open_record_file(const t_string& filename, char mode);
 	static void close_record_file();
 	static void write_record_file(const t_string& data);
 	static t_string read_record_file();

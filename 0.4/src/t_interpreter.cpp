@@ -3,6 +3,7 @@
 #include "t_program_line.h"
 #include "t_screen.h"
 #include "t_keyboard.h"
+#include "t_record_file.h"
 #include "PTM.h"
 #include "PTML_ALL.h"
 #include "PTML_runtime.h"
@@ -27,6 +28,11 @@ void t_interpreter::print_prompt()
 
 void t_interpreter::interpret_line(t_string& src, bool from_file)
 {
+	if (src.contains(t_record_file::delimiter)) {
+		PTML::error = "Bad program format";
+		return;
+	}
+
 	tokenizer.tokenize_line(src, tokens);
 	if (tokens.empty())
 		return;

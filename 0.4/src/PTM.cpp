@@ -104,6 +104,7 @@ void PTM::reset()
 	pal.reset();
 	scr.reset();
 	tilereg.set_empty();
+	tile_presets.clear();
 	delete_all_vars();
 	delete_all_tables();
 	delete_all_sprites();

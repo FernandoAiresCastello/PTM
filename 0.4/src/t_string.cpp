@@ -255,16 +255,17 @@ t_string t_string::get_last(int count) const
 	return value.substr(value.size() - count, count);
 }
 
-t_list<t_string> t_string::split(char delim) const
+t_list<t_string> t_string::split(char delim, bool trim_tokens) const
 {
 	t_list<t_string> elems;
 	std::string item;
 	std::stringstream ss(value);
 
 	while (std::getline(ss, item, delim)) {
-		t_string trimmed_item(item);
-		if (!trimmed_item.empty())
-			elems.push_back(trimmed_item.trim());
+		if (trim_tokens)
+			elems.emplace_back(t_string(item).trim());
+		else
+			elems.emplace_back(item);
 	}
 
 	return elems;
