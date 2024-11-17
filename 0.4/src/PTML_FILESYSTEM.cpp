@@ -78,12 +78,6 @@ void PTML::MKDIR()
 	t_filesystem::create_directory(name);
 }
 
-void PTML::DIR_Q()
-{
-	ARGC(0);
-	scr->print_string_crlf(t_filesystem::get_current_directory());
-}
-
 void PTML::OPEN_W()
 {
 	ARGC(1);

@@ -31,9 +31,6 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("SET", SET);
 	CMD("VARS", VARS);
 	CMD("MEMCLR", MEM_CLR);
-	CMD("ALLOC", TBL_NEW);
-	CMD("POKE", TBL_SET);
-	CMD("PEEK", TBL_GET);
 
 	// === MATH ===
 	CMD("INC", INC);
@@ -80,7 +77,6 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("KILL", KILL);
 	CMD("MKDIR", MKDIR);
 	CMD("CHDIR", CHDIR);
-	CMD("QDIR", DIR_Q);
 	CMD("OPEN.W", OPEN_W);
 	CMD("OPEN.R", OPEN_R);
 	CMD("CLOSE", CLOSE);
@@ -98,8 +94,6 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	// === PALETTE & CHARSET ===
 	CMD("PAL", PAL);
 	CMD("CHR", CHR);
-	CMD("QPAL", PAL_Q);
-	CMD("QCHR", CHR_Q);
 	CMD("PAL.RST", PAL_RESET);
 	CMD("CHR.RST", CHR_RESET);
 	CMD("PAL.SAVE", PAL_SAVE);
@@ -116,7 +110,6 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 
 	// === COLOR REGISTER ===
 	CMD("COLOR", COLOR);
-	CMD("QCOLOR", COLOR_Q);
 	CMD("COLOR.F", COLOR_SETF);
 	CMD("COLOR.B", COLOR_SETB);
 	CMD("COLOR.BR", COLOR_SETBR);
@@ -141,7 +134,6 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	// === TILE REGISTER ===
 	CMD("TILE.NEW", TILE_NEW);
 	CMD("TILE.ADD", TILE_ADD);
-	CMD("QTILE", TILE_Q);
 	CMD("TILE.SETC", TILE_SETC);
 	CMD("TILE.GETC", TILE_GETC);
 	CMD("TILE.SETF", TILE_SETF);

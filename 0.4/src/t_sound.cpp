@@ -1,4 +1,5 @@
 #include <SDL.h>
+#include <algorithm>
 #include <iostream>
 #include <cmath>
 #include <string>

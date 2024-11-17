@@ -3,7 +3,6 @@
 namespace PTML
 {
 	void COLOR();
-	void COLOR_Q();
 	void COLOR_MONO();
 	void COLOR_MULTI();
 	void COLOR_SETF();
@@ -18,8 +17,6 @@ namespace PTML
 	void CLS();
 	void PAL();
 	void CHR();
-	void PAL_Q();
-	void CHR_Q();
 	void PAL_RESET();
 	void CHR_RESET();
 	void PAL_SAVE();
@@ -32,7 +29,6 @@ namespace PTML
 	void CSR_OFF();
 	void TILE_NEW();
 	void TILE_ADD();
-	void TILE_Q();
 	void TILE_SETC();
 	void TILE_GETC();
 	void TILE_SETF();

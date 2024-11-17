@@ -53,7 +53,6 @@ public:
 	const t_namespace<t_string>& get_vars();
 	bool has_var(const t_string& var);
 	void delete_all_vars();
-	void delete_all_tables();
 	static t_palette& get_pal();
 	static t_charset& get_chr();
 	static t_screen& get_screen();
@@ -85,10 +84,6 @@ public:
 	void delete_all_sprites();
 	const t_string& get_last_program_filename() const;
 	void autosave_program_file();
-	void create_table(const t_string& name, int cols, int rows);
-	bool has_table(const t_string& name);
-	t_table& get_table(const t_string& name);
-	const t_namespace<t_table>& get_tables();
 	void save_tilereg(const t_string& name);
 	void load_tilereg(const t_string& name);
 	bool has_tilereg(const t_string& name);
@@ -102,7 +97,6 @@ private:
 	t_string last_program_filename;
 	t_namespace<t_string> vars;
 	t_namespace<t_sprite_ptr> sprites;
-	t_namespace<t_table> tables;
 	t_namespace<t_tile> tile_presets;
 
 	void init();

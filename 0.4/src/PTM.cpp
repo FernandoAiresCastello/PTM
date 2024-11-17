@@ -106,7 +106,6 @@ void PTM::reset()
 	tilereg.set_empty();
 	tile_presets.clear();
 	delete_all_vars();
-	delete_all_tables();
 	delete_all_sprites();
 	new_program();
 	main_editor.reset();
@@ -291,11 +290,6 @@ bool PTM::has_var(const t_string& var)
 void PTM::delete_all_vars()
 {
 	vars.clear();
-}
-
-void PTM::delete_all_tables()
-{
-	tables.clear();
 }
 
 t_palette& PTM::get_pal() { return pal; }
@@ -527,26 +521,6 @@ const t_string& PTM::get_last_program_filename() const
 void PTM::autosave_program_file()
 {
 	filesys.save_program_plaintext(&prg, autosave_file);
-}
-
-void PTM::create_table(const t_string& name, int cols, int rows)
-{
-	tables[name].init(cols, rows);
-}
-
-bool PTM::has_table(const t_string& name)
-{
-	return tables.contains(name);
-}
-
-t_table& PTM::get_table(const t_string& name)
-{
-	return tables[name];
-}
-
-const t_namespace<t_table>& PTM::get_tables()
-{
-	return tables;
 }
 
 void PTM::save_tilereg(const t_string& name)

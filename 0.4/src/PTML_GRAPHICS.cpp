@@ -19,13 +19,6 @@ void PTML::COLOR()
 	}
 }
 
-void PTML::COLOR_Q()
-{
-	ARGC(0);
-	scr->print_string_crlf(t_string::fmt("%i,%i,%i", 
-		scr->get_fg_color(), scr->get_bg_color(), scr->get_bdr_color()));
-}
-
 void PTML::COLOR_MONO()
 {
 	ARGC(0);
@@ -126,34 +119,6 @@ void PTML::CHR()
 	ptm->get_chr().set_row(NUM(1), NUM(2), STR(3));
 }
 
-void PTML::PAL_Q()
-{
-	ARGC(1);
-	t_index&& color_index = NUM(1);
-	t_tile tile(0, color_index, color_index);
-	tile.flags.monochrome = false;
-	scr->newline();
-	scr->set_tile(tile, 0, scr->csry() - 1);
-	t_rgb rgb = ptm->get_pal().get(color_index).to_rgb();
-	scr->print_string_at(t_string::fmt("&h%06X", rgb), 2, scr->csry() - 1);
-}
-
-void PTML::CHR_Q()
-{
-	ARGC(1);
-	t_index&& ch = NUM(1);
-	t_tile tile(ch, scr->get_fg_color(), scr->get_bg_color());
-	scr->newline();
-	scr->set_tile(tile, 0, scr->csry() - 1);
-	
-	t_list<t_string> rows;
-	int row_index = 0;
-	for (auto& row : ptm->get_chr().get(ch).split_chunks(8)) {
-		rows.push_back(row);
-	}
-	PRINT_LIST(rows);
-}
-
 void PTML::PAL_RESET()
 {
 	ARGC(0);
@@ -246,30 +211,6 @@ void PTML::TILE_ADD()
 {
 	ARGC(3);
 	TILEREG.add_char(NUM(1), NUM(2), NUM(3));
-}
-
-void PTML::TILE_Q()
-{
-	ARGC(0);
-	t_list<t_tile> tile_chars;
-	t_list<t_string> tile_values;
-
-	for (auto&& ch : TILEREG.get_all_chars()) {
-		tile_chars.push_back(ch);
-		tile_values.push_back(t_string::fmt(" %i,%i,%i", ch.ix, ch.fgc, ch.bgc));
-	}
-
-	if (scr->print_lines_with_icon(tile_chars, tile_values, ptm)) {
-		scr->print_string_crlf("Break"); 
-	}
-
-	if (TILEREG.data.is_not_empty()) {
-		t_list<t_string> props;
-		for (auto& prop : TILEREG.data.get_all())
-			props.push_back(t_string::fmt("%s: %s", prop.first.c_str(), prop.second.c_str()));
-
-		PRINT_LIST(props);
-	}
 }
 
 void PTML::TILE_SETC()
