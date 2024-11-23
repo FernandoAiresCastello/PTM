@@ -16,6 +16,7 @@
 #include "t_sprite.h"
 #include "t_sound.h"
 #include "t_screen.h"
+#include "t_array_ref.h"
 
 class PTM
 {
@@ -46,12 +47,19 @@ public:
 	void debug(const t_string& msg);
 	void save_program_line(t_program_line& line);
 	bool delete_program_line(int line_nr);
-	void set_var(const t_string& var, const t_string& value);
-	void set_var(const t_string& var, int value);
-	const t_string& get_var_str(const t_string& var);
-	int get_var_num(const t_string& var);
+	
+	void set_var(const t_param& param, int value, t_string& out_error);
+	void set_var(const t_param& param, const t_string& value, t_string& out_error);
+	int get_var_num(const t_param& param, t_string& out_error);
+	int get_var_num(const t_string& varname);
+	const t_string& get_var_str(const t_param& param, t_string& out_error);
+	const t_string& get_var_str(const t_string& varname);
+
 	const t_namespace<t_string>& get_vars();
 	bool has_var(const t_string& var);
+	bool has_array(const t_string& var);
+	void create_array(const t_array_ref& array_ref, t_string& out_error);
+	const t_string& get_array_element(const t_array_ref& ref, t_string& out_error);
 	void delete_all_vars();
 	static t_palette& get_pal();
 	static t_charset& get_chr();
@@ -88,9 +96,12 @@ private:
 
 	t_string last_program_filename;
 	t_namespace<t_string> vars;
+	t_namespace<t_list<t_string>> arrays;
 
 	void init();
 	void run_tests();
 	void run_graphics_test();
 	void run_main();
+
+	void set_array(const t_array_ref& ref, const t_string& value, t_string& out_error);
 };

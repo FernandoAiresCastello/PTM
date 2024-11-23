@@ -10,5 +10,7 @@ enum class t_token_type
 	identifier,
 	literal_num,
 	literal_str,
-	literal_char
+	literal_char,
+	array_subscript_literal,
+	array_subscript_variable
 };

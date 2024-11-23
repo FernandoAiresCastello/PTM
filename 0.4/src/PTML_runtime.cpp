@@ -24,6 +24,8 @@ t_string PTML::resolve_str(const t_param& arg)
 		return EMPTY_STR;
 	if (arg.type == t_token_type::identifier)
 		return ptm->has_var(arg.string_val) ? ptm->get_var_str(arg.string_val) : EMPTY_STR;
+	if (arg.is_array())
+		return ptm->get_array_element(arg.array_ref, error);
 
 	return arg.string_val;
 }
@@ -34,6 +36,8 @@ int PTML::resolve_num(const t_param& arg)
 		return EMPTY_NUM;
 	if (arg.type == t_token_type::identifier)
 		return ptm->has_var(arg.string_val) ? ptm->get_var_num(arg.string_val) : EMPTY_NUM;
+	else if (arg.type == t_token_type::array_subscript_literal || arg.type == t_token_type::array_subscript_variable)
+		return ptm->get_array_element(arg.array_ref, error).to_int();
 
 	return arg.numeric_val;
 }

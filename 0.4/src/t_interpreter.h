@@ -17,13 +17,11 @@ public:
 	void print_prompt();
 	void interpret_line(t_string& line, bool from_file = false);
 	bool execute_line(t_program_line& line);
-	const t_string& get_last_error();
+	const t_string& get_error();
 	void on_user_interrupt(t_program_line* line);
 
 private:
 	PTM* ptm = nullptr;
 	t_screen* scr = nullptr;
 	t_keyboard* kb = nullptr;
-
-	t_program_line make_program_line(const t_list<t_token>& tokens);
 };

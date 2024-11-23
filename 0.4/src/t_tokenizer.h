@@ -16,6 +16,8 @@ private:
 		char comma = ',';
 		char double_quote = '"';
 		char single_quote = '\'';
+		char array_sub_begin = '[';
+		char array_sub_end = ']';
 		t_string base_hex = "&H";
 		t_string base_bin = "&B";
 		char positive = '+';

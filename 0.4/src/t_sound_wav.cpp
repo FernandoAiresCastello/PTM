@@ -26,9 +26,9 @@ void t_sound_wav::stop_wav()
 	stop_all();
 }
 
-const t_string& t_sound_wav::get_last_error()
+const t_string& t_sound_wav::get_error()
 {
-	return last_error;
+	return error;
 }
 
 void t_sound_wav::load(const t_string& id, const t_string& file)
@@ -42,7 +42,7 @@ void t_sound_wav::load(const t_string& id, const t_string& file)
 
 	MCIERROR error = mciSendString(openString.c_str(), NULL, 0, NULL);
 	if (error)
-		set_last_error(error);
+		set_error(error);
 }
 
 void t_sound_wav::play(const t_string& id, bool async)
@@ -53,7 +53,7 @@ void t_sound_wav::play(const t_string& id, bool async)
 	std::string seekString = "seek " + id.s_str() + " to start";
 	MCIERROR seekError = mciSendString(seekString.c_str(), NULL, 0, NULL);
 	if (seekError) {
-		set_last_error(seekError);
+		set_error(seekError);
 		return;
 	}
 
@@ -63,7 +63,7 @@ void t_sound_wav::play(const t_string& id, bool async)
 	
 	MCIERROR playError = mciSendString(playString.c_str(), NULL, 0, NULL);
 	if (playError) {
-		set_last_error(playError);
+		set_error(playError);
 		return;
 	}
 }
@@ -74,7 +74,7 @@ void t_sound_wav::close_all()
 		std::string closeString = "close " + file.first.s_str();
 		MCIERROR error = mciSendString(closeString.c_str(), NULL, 0, NULL);
 		if (error)
-			set_last_error(error);
+			set_error(error);
 	}
 	files.clear();
 }
@@ -90,15 +90,15 @@ void t_sound_wav::stop_all()
 		std::string playString = "stop " + file.first.s_str();
 		MCIERROR playError = mciSendString(playString.c_str(), NULL, 0, NULL);
 		if (playError) {
-			set_last_error(playError);
+			set_error(playError);
 			return;
 		}
 	}
 }
 
-void t_sound_wav::set_last_error(unsigned long error)
+void t_sound_wav::set_error(unsigned long error)
 {
 	char msg[1024] = { 0 };
 	mciGetErrorString(error, msg, 1024);
-	t_sound_wav::last_error = msg;
+	t_sound_wav::error = msg;
 }

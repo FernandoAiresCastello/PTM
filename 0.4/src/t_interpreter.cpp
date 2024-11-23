@@ -29,7 +29,7 @@ void t_interpreter::print_prompt()
 void t_interpreter::interpret_line(t_string& src, bool from_file)
 {
 	if (src.contains(t_record_file::delimiter)) {
-		PTML::error = "Bad program format";
+		PTML::error = PTML::err.bad_file_format;
 		return;
 	}
 
@@ -49,10 +49,11 @@ void t_interpreter::interpret_line(t_string& src, bool from_file)
 		else {
 			tokens.erase(tokens.begin());
 			if (tokens.empty()) {
-				PTML::error = t_string::fmt("Invalid program line at %i", line_number);
+				PTML::error = t_string::fmt(
+					PTML::err.invalid_program_line_at.c_str(), line_number);
 			}
 			else {
-				t_program_line line = make_program_line(tokens);
+				t_program_line line = t_program_line(tokens);
 				line.line_nr = line_number;
 				line.immediate = false;
 				line.src = src;
@@ -61,7 +62,7 @@ void t_interpreter::interpret_line(t_string& src, bool from_file)
 		}
 	}
 	else {
-		t_program_line line = make_program_line(tokens);
+		t_program_line line = t_program_line(tokens);
 		line.immediate = true;
 		execute_line(line);
 	}
@@ -87,7 +88,8 @@ bool t_interpreter::execute_line(t_program_line& line)
 		if (line.immediate)
 			scr->print_string_crlf(PTML::error);
 		else
-			scr->print_string_crlf(t_string::fmt("%s in %i", PTML::error.c_str(), line.line_nr));
+			scr->print_string_crlf(t_string::fmt(
+				PTML::err.error_in_linenr.c_str(), PTML::error.c_str(), line.line_nr));
 
 		ptm->get_sound().alert();
 	}
@@ -99,47 +101,16 @@ bool t_interpreter::execute_line(t_program_line& line)
 	return !has_error;
 }
 
-const t_string& t_interpreter::get_last_error()
+const t_string& t_interpreter::get_error()
 {
 	return PTML::error;
 }
 
 void t_interpreter::on_user_interrupt(t_program_line* line)
 {
+	ptm->get_sound().alert();
+
 	scr->newline();
-	scr->print_string_crlf(t_string::fmt("Break in %i", line->line_nr));
-}
-
-t_program_line t_interpreter::make_program_line(const t_list<t_token>& tokens)
-{
-	t_program_line line;
-	const t_token_type& type = tokens[0].type;
-
-	if (type == t_token_type::command_or_identifier) {
-		const t_string& cmd = tokens[0].string_val.to_upper();
-		line.fn = PTML::get_cmd_pointer(cmd);
-		line.argc = int(tokens.size() - 1);
-
-		if (line.argc > 0) line.arg1 = t_param(tokens[1]);
-		if (line.argc > 1) line.arg2 = t_param(tokens[2]);
-		if (line.argc > 2) line.arg3 = t_param(tokens[3]);
-		if (line.argc > 3) line.arg4 = t_param(tokens[4]);
-		if (line.argc > 4) line.arg5 = t_param(tokens[5]);
-	}
-	else if (type == t_token_type::label) {
-		line.is_label = true;
-		line.label = tokens[0].string_val;
-	}
-	else if (type == t_token_type::comment) {
-		line.is_comment = true;
-	}
-
-	for (auto& token : tokens) {
-		if (token.type == t_token_type::invalid) {
-			line.has_error = true;
-			break;
-		}
-	}
-
-	return line;
+	scr->print_string_crlf(t_string::fmt(
+		PTML::err.break_in.c_str(), line->line_nr));
 }

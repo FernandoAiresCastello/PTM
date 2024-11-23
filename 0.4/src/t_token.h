@@ -1,5 +1,6 @@
 #pragma once
 #include "t_token_type.h"
+#include "t_array_ref.h"
 #include "t_string.h"
 
 struct t_token
@@ -8,6 +9,7 @@ struct t_token
 	t_string src;
 	t_string string_val;
 	int numeric_val;
+	t_array_ref array_ref;
 
 	t_token();
 	t_token(t_token_type type, const t_string& value);

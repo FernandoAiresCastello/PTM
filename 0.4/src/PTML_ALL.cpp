@@ -29,7 +29,8 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 
 	// === MEMORY ===
 	CMD("SET", SET);
-	CMD("MEMCLR", MEM_CLR);
+	CMD("DIM", DIM);
+	CMD("MEMCLR", MEMCLR);
 
 	// === MATH ===
 	CMD("INC", INC);
@@ -42,7 +43,6 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("POW", POW);
 	CMD("SQRT", SQRT);
 	CMD("RND", RND);
-	CMD("SWAP", SWAP);
 
 	// === GOTO ===
 	CMD("GOTO", GOTO);

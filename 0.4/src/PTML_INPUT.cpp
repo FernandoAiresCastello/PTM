@@ -4,8 +4,7 @@
 void PTML::INKEY()
 {
 	ARGC(1);
-	REQUIRE_IDENT(1);
-	ptm->set_var(IDENT(1), ptm->get_last_key());
+	ptm->set_var(ARG(1), ptm->get_last_key(), error);
 }
 
 void PTML::KB_FLUSH()
@@ -17,7 +16,6 @@ void PTML::KB_FLUSH()
 void PTML::INPUT()
 {
 	ARGC_MIN_MAX(1, 2);
-	REQUIRE_IDENT(1);
 	
 	t_string value;
 	if (COUNT(1))
@@ -25,5 +23,5 @@ void PTML::INPUT()
 	else if (COUNT(2))
 		value = ptm->input_string("", NUM(2));
 
-	ptm->set_var(IDENT(1), value);
+	ptm->set_var(ARG(1), value, error);
 }

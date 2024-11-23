@@ -1,5 +1,6 @@
 #include <stdexcept>
 #include "PTM.h"
+#include "PTML_errors.h"
 #include "t_tests.h"
 #include "t_window.h"
 #include "t_keyboard.h"
@@ -27,6 +28,7 @@ t_charset chr;
 t_palette pal;
 t_sound snd;
 t_screen scr(256, t_window::rows - 2);
+const t_string empty_string = "";
 
 void PTM::run()
 {
@@ -255,24 +257,66 @@ bool PTM::delete_program_line(int line_nr)
 	return prg.delete_line(line_nr);
 }
 
-void PTM::set_var(const t_string& var, const t_string& value)
+void PTM::set_var(const t_param& param, int value, t_string& out_error)
 {
-	vars[var] = value;
+	set_var(param, t_string(value), out_error);
 }
 
-void PTM::set_var(const t_string& var, int value)
+void PTM::set_var(const t_param& param, const t_string& value, t_string& out_error)
 {
-	vars[var] = value;
+	if (param.is_ident()) {
+		vars[param.string_val] = value;
+	}
+	else if (param.is_array()) {
+		set_array(param.array_ref, value, out_error);
+	}
+	else {
+		out_error = PTML::err.illegal_argument;
+	}
 }
 
-const t_string& PTM::get_var_str(const t_string& var)
+void PTM::set_array(const t_array_ref& ref, const t_string& value, t_string& out_error)
 {
-	return vars[var];
+	if (!has_array(ref.arr_name)) {
+		out_error = PTML::err.undefined_array;
+		return;
+	}
+
+	int&& index = ref.literal ? ref.arr_subscript_lit : get_var_num(ref.arr_subscript_var);
+
+	if (index >= arrays[ref.arr_name].size()) {
+		out_error = PTML::err.subscript_out_of_range;
+		return;
+	}
+
+	arrays[ref.arr_name][index] = value;
 }
 
-int PTM::get_var_num(const t_string& var)
+int PTM::get_var_num(const t_param& param, t_string& out_error)
 {
-	return vars[var].to_int();
+	return get_var_str(param, out_error).to_int();
+}
+
+int PTM::get_var_num(const t_string& varname)
+{
+	return vars[varname].to_int();
+}
+
+const t_string& PTM::get_var_str(const t_param& param, t_string& out_error)
+{
+	if (param.is_ident())
+		return vars[param.string_val];
+	else if (param.is_array())
+		return get_array_element(param.array_ref, out_error);
+
+	out_error = PTML::err.illegal_argument;
+
+	return empty_string;
+}
+
+const t_string& PTM::get_var_str(const t_string& varname)
+{
+	return vars[varname];
 }
 
 const t_namespace<t_string>& PTM::get_vars()
@@ -285,9 +329,42 @@ bool PTM::has_var(const t_string& var)
 	return vars.contains(var);
 }
 
+bool PTM::has_array(const t_string& var)
+{
+	return arrays.contains(var);
+}
+
+void PTM::create_array(const t_array_ref& array_ref, t_string& out_error)
+{
+	int&& length = array_ref.literal ? array_ref.arr_subscript_lit : get_var_num(array_ref.arr_subscript_var);
+
+	if (length > 0)
+		arrays[array_ref.arr_name] = t_list<t_string>(length);
+	else
+		out_error = PTML::err.illegal_argument;
+}
+
+const t_string& PTM::get_array_element(const t_array_ref& ref, t_string& out_error)
+{
+	if (!has_array(ref.arr_name)) {
+		out_error = PTML::err.undefined_array;
+		return empty_string;
+	}
+
+	int&& index = ref.literal ? ref.arr_subscript_lit : get_var_num(ref.arr_subscript_var);
+
+	if (index >= arrays[ref.arr_name].size()) {
+		out_error = PTML::err.subscript_out_of_range;
+		return empty_string;
+	}
+
+	return arrays[ref.arr_name][index];
+}
+
 void PTM::delete_all_vars()
 {
 	vars.clear();
+	arrays.clear();
 }
 
 t_palette& PTM::get_pal() { return pal; }

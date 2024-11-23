@@ -131,7 +131,6 @@ void PTML::WRITE()
 void PTML::READ()
 {
 	ARGC(1);
-	REQUIRE_IDENT(1);
 	if (!t_filesystem::is_record_file_open()) {
 		error = err.file_not_open;
 		return;
@@ -144,12 +143,11 @@ void PTML::READ()
 		error = err.end_of_file;
 		return;
 	}
-	ptm->set_var(IDENT(1), t_filesystem::read_record_file());
+	ptm->set_var(ARG(1), t_filesystem::read_record_file(), error);
 }
 
 void PTML::FEOF()
 {
 	ARGC(1);
-	REQUIRE_IDENT(1);
-	ptm->set_var(IDENT(1), t_filesystem::is_record_file_eof() ? 1 : 0);
+	ptm->set_var(ARG(1), t_filesystem::is_record_file_eof() ? 1 : 0, error);
 }

@@ -11,16 +11,16 @@ public:
 	void load_wav(const t_string& id, const t_string& filename);
 	void play_wav(const t_string& id);
 	void stop_wav();
-	const t_string& get_last_error();
+	const t_string& get_error();
 
 private:
 	t_dict<t_string, t_string> files; // id -> file_path
-	t_string last_error;
+	t_string error;
 
 	void load(const t_string& id, const t_string& file);
 	void play(const t_string& id, bool async);
 	bool has(const t_string& id) const;
 	void stop_all();
 	void close_all();
-	void set_last_error(unsigned long error);
+	void set_error(unsigned long error);
 };

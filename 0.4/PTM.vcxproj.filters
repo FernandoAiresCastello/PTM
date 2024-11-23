@@ -60,7 +60,7 @@
       <Filter>CORE</Filter>
     </ClCompile>
     <ClCompile Include="src\PTML_runtime.cpp">
-      <Filter>PTML - RUNTIME ENVIRONMENT</Filter>
+      <Filter>RUNTIME UTILITIES</Filter>
     </ClCompile>
     <ClCompile Include="src\t_program_runner.cpp">
       <Filter>CORE</Filter>
@@ -69,16 +69,16 @@
       <Filter>FILESYSTEM</Filter>
     </ClCompile>
     <ClCompile Include="src\t_program.cpp">
-      <Filter>PTML - PROGRAM STRUCTURE</Filter>
+      <Filter>PROGRAM STRUCTURE</Filter>
     </ClCompile>
     <ClCompile Include="src\t_program_line.cpp">
-      <Filter>PTML - PROGRAM STRUCTURE</Filter>
+      <Filter>PROGRAM STRUCTURE</Filter>
     </ClCompile>
     <ClCompile Include="src\t_token.cpp">
-      <Filter>PTML - PROGRAM STRUCTURE</Filter>
+      <Filter>PROGRAM STRUCTURE</Filter>
     </ClCompile>
     <ClCompile Include="src\t_tokenizer.cpp">
-      <Filter>PTML - PROGRAM STRUCTURE</Filter>
+      <Filter>PROGRAM STRUCTURE</Filter>
     </ClCompile>
     <ClCompile Include="src\PTML_CTFLOW.cpp">
       <Filter>PTML - COMMANDS</Filter>
@@ -200,7 +200,7 @@
       <Filter>UTIL</Filter>
     </ClInclude>
     <ClInclude Include="src\PTML_runtime.h">
-      <Filter>PTML - RUNTIME ENVIRONMENT</Filter>
+      <Filter>RUNTIME UTILITIES</Filter>
     </ClInclude>
     <ClInclude Include="src\t_program_runner.h">
       <Filter>CORE</Filter>
@@ -212,31 +212,31 @@
       <Filter>UTIL</Filter>
     </ClInclude>
     <ClInclude Include="src\PTML_macros.h">
-      <Filter>PTML - RUNTIME ENVIRONMENT</Filter>
+      <Filter>RUNTIME UTILITIES</Filter>
     </ClInclude>
     <ClInclude Include="src\PTML_errors.h">
-      <Filter>PTML - RUNTIME ENVIRONMENT</Filter>
+      <Filter>RUNTIME UTILITIES</Filter>
     </ClInclude>
     <ClInclude Include="src\t_param.h">
-      <Filter>PTML - PROGRAM STRUCTURE</Filter>
+      <Filter>PROGRAM STRUCTURE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_program.h">
-      <Filter>PTML - PROGRAM STRUCTURE</Filter>
+      <Filter>PROGRAM STRUCTURE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_program_line.h">
-      <Filter>PTML - PROGRAM STRUCTURE</Filter>
+      <Filter>PROGRAM STRUCTURE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_token.h">
-      <Filter>PTML - PROGRAM STRUCTURE</Filter>
+      <Filter>PROGRAM STRUCTURE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_token_type.h">
-      <Filter>PTML - PROGRAM STRUCTURE</Filter>
+      <Filter>PROGRAM STRUCTURE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_tokenizer.h">
-      <Filter>PTML - PROGRAM STRUCTURE</Filter>
+      <Filter>PROGRAM STRUCTURE</Filter>
     </ClInclude>
     <ClInclude Include="src\PTML_shared_headers.h">
-      <Filter>PTML - RUNTIME ENVIRONMENT</Filter>
+      <Filter>RUNTIME UTILITIES</Filter>
     </ClInclude>
     <ClInclude Include="src\PTML_CTFLOW.h">
       <Filter>PTML - COMMANDS</Filter>
@@ -295,6 +295,9 @@
     <ClInclude Include="src\t_sprite.h">
       <Filter>GRAPHICS - TILESYSTEM</Filter>
     </ClInclude>
+    <ClInclude Include="src\t_array_ref.h">
+      <Filter>PROGRAM STRUCTURE</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="UTIL">
@@ -315,12 +318,6 @@
     <Filter Include="PTML - COMMANDS">
       <UniqueIdentifier>{8919dff3-c9d1-49e7-8660-75b7b037409a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PTML - RUNTIME ENVIRONMENT">
-      <UniqueIdentifier>{d73b4aac-b700-424b-8ae1-15ba947d5ef1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="PTML - PROGRAM STRUCTURE">
-      <UniqueIdentifier>{e19b315d-17da-4bd4-84a4-6f6c7092ee77}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GRAPHICS - CORE">
       <UniqueIdentifier>{cb589e47-33ae-43f4-b8bf-f0954d4be141}</UniqueIdentifier>
     </Filter>
@@ -329,6 +326,12 @@
     </Filter>
     <Filter Include="SOUND">
       <UniqueIdentifier>{39bfc00e-8270-42a6-a789-23a456052617}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PROGRAM STRUCTURE">
+      <UniqueIdentifier>{e19b315d-17da-4bd4-84a4-6f6c7092ee77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RUNTIME UTILITIES">
+      <UniqueIdentifier>{d73b4aac-b700-424b-8ae1-15ba947d5ef1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

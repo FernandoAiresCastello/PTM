@@ -52,22 +52,19 @@ void PTML::COLOR_SETBR()
 void PTML::COLOR_GETF()
 {
 	ARGC(1);
-	REQUIRE_IDENT(1);
-	ptm->set_var(IDENT(1), scr->get_fg_color());
+	ptm->set_var(ARG(1), scr->get_fg_color(), error);
 }
 
 void PTML::COLOR_GETB()
 {
 	ARGC(1);
-	REQUIRE_IDENT(1);
-	ptm->set_var(IDENT(1), scr->get_bg_color());
+	ptm->set_var(ARG(1), scr->get_bg_color(), error);
 }
 
 void PTML::COLOR_GETBR()
 {
 	ARGC(1);
-	REQUIRE_IDENT(1);
-	ptm->set_var(IDENT(1), scr->get_bdr_color());
+	ptm->set_var(ARG(1), scr->get_bdr_color(), error);
 }
 
 void PTML::PRINT()
@@ -178,7 +175,7 @@ void PTML::TILE_GETC()
 {
 	IF_TILEREG_EMPTY_RET;
 	ARGC(2);
-	ptm->set_var(IDENT(1), TILEREG.get_char_wraparound(NUM(2)).ix);
+	ptm->set_var(ARG(1), TILEREG.get_char_wraparound(NUM(2)).ix, error);
 }
 
 void PTML::TILE_SETF()
@@ -192,7 +189,7 @@ void PTML::TILE_GETF()
 {
 	IF_TILEREG_EMPTY_RET;
 	ARGC(2);
-	ptm->set_var(IDENT(1), TILEREG.get_char_wraparound(NUM(2)).fgc);
+	ptm->set_var(ARG(1), TILEREG.get_char_wraparound(NUM(2)).fgc, error);
 }
 
 void PTML::TILE_SETB()
@@ -206,7 +203,7 @@ void PTML::TILE_GETB()
 {
 	IF_TILEREG_EMPTY_RET;
 	ARGC(2);
-	ptm->set_var(IDENT(1), TILEREG.get_char_wraparound(NUM(2)).bgc);
+	ptm->set_var(ARG(1), TILEREG.get_char_wraparound(NUM(2)).bgc, error);
 }
 
 void PTML::TILE_SETP()
@@ -220,7 +217,7 @@ void PTML::TILE_GETP()
 {
 	IF_TILEREG_EMPTY_RET;
 	ARGC(2);
-	ptm->set_var(IDENT(1), TILEREG.data.get(STR(2)));
+	ptm->set_var(ARG(1), TILEREG.data.get(STR(2)), error);
 }
 
 void PTML::PUT()
