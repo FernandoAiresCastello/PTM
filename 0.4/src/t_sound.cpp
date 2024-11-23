@@ -211,6 +211,7 @@ t_sound::t_sound()
 t_sound::~t_sound()
 {
     sound_system_running = false;
+
     SDL_CloseAudio();
 }
 

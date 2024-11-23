@@ -133,5 +133,15 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("PLAY", PLAY);
 	CMD("LPLAY", LPLAY);
 
+	// === STRING HANDLING ===
+	CMD("CONCAT", STR_CONCAT);
+	CMD("UPPER", STR_UPPER);
+	CMD("LOWER", STR_LOWER);
+	CMD("FIND", STR_FIND);
+	CMD("SUBSTR", STR_SUBSTR);
+	CMD("STRLEN", STR_LEN);
+	CMD("ASCII", STR_ASCII);
+	CMD("CHAR", STR_CHAR);
+
 	return nullptr;
 }
