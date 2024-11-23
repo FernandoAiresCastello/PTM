@@ -101,9 +101,6 @@
     <ClCompile Include="src\t_interpreter.cpp">
       <Filter>CORE</Filter>
     </ClCompile>
-    <ClCompile Include="src\t_sprite.cpp">
-      <Filter>GRAPHICS - TILESYSTEM</Filter>
-    </ClCompile>
     <ClCompile Include="src\PTML_FILESYSTEM.cpp">
       <Filter>PTML - COMMANDS</Filter>
     </ClCompile>
@@ -112,9 +109,6 @@
     </ClCompile>
     <ClCompile Include="src\t_table.cpp">
       <Filter>UTIL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PTML_SPRITES.cpp">
-      <Filter>PTML - COMMANDS</Filter>
     </ClCompile>
     <ClCompile Include="src\t_sound_wav.cpp">
       <Filter>SOUND</Filter>
@@ -127,6 +121,9 @@
     </ClCompile>
     <ClCompile Include="src\PTML_SOUND.cpp">
       <Filter>PTML - COMMANDS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_sprite.cpp">
+      <Filter>GRAPHICS - TILESYSTEM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -262,9 +259,6 @@
     <ClInclude Include="src\t_interpreter.h">
       <Filter>CORE</Filter>
     </ClInclude>
-    <ClInclude Include="src\t_sprite.h">
-      <Filter>GRAPHICS - TILESYSTEM</Filter>
-    </ClInclude>
     <ClInclude Include="src\PTML_FILESYSTEM.h">
       <Filter>PTML - COMMANDS</Filter>
     </ClInclude>
@@ -279,9 +273,6 @@
     </ClInclude>
     <ClInclude Include="src\t_namespace.h">
       <Filter>UTIL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PTML_SPRITES.h">
-      <Filter>PTML - COMMANDS</Filter>
     </ClInclude>
     <ClInclude Include="src\t_rect.h">
       <Filter>UTIL</Filter>
@@ -300,6 +291,9 @@
     </ClInclude>
     <ClInclude Include="src\PTML_SOUND.h">
       <Filter>PTML - COMMANDS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_sprite.h">
+      <Filter>GRAPHICS - TILESYSTEM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

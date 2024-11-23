@@ -8,16 +8,6 @@ void PTML::SET()
 	ptm->set_var(IDENT(1), STR(2));
 }
 
-void PTML::VARS()
-{
-	ARGC(0);
-	t_list<t_string> vars;
-	for (auto& var : ptm->get_vars())
-		vars.push_back(t_string::fmt("%s: %s", var.first.c_str(), var.second.c_str()));
-
-	PRINT_LIST(vars);
-}
-
 void PTML::SWAP()
 {
 	ARGC(2);

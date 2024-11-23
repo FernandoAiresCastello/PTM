@@ -104,9 +104,7 @@ void PTM::reset()
 	pal.reset();
 	scr.reset();
 	tilereg.set_empty();
-	tile_presets.clear();
 	delete_all_vars();
-	delete_all_sprites();
 	new_program();
 	main_editor.reset();
 	main_editor.print_welcome(false);
@@ -410,47 +408,6 @@ bool PTM::is_key_pressed(const t_string& keyname)
 	return kb.is_pressed(keyname);
 }
 
-bool PTM::set_function_key(const t_string& keyname, const t_string& value)
-{
-	bool shifted = false;
-	SDL_Keycode keycode = SDLK_UNKNOWN;
-
-	if (keyname.starts_with("S") || keyname.starts_with("s")) {
-		shifted = true;
-		t_string&& unshifted_keyname = keyname.skip(1);
-		keycode = kb.get_keycode_by_name(unshifted_keyname);
-	}
-	else {
-		keycode = kb.get_keycode_by_name(keyname);
-	}
-
-	if (keycode == SDLK_UNKNOWN)
-		return false;
-
-	if (shifted)
-		main_editor.function_keys_shifted[keycode] = value;
-	else
-		main_editor.function_keys[keycode] = value;
-
-	return true;
-}
-
-t_list<t_string> PTM::list_function_keys()
-{
-	t_list<t_string> list;
-	for (auto& entry : main_editor.function_keys) {
-		auto&& keyname = kb.get_name_by_keycode(entry.first);
-		auto& value = entry.second;
-		list.push_back(t_string::fmt("%s: %s", keyname.c_str(), value.c_str()));
-	}
-	for (auto& entry : main_editor.function_keys_shifted) {
-		auto&& keyname = kb.get_name_by_keycode(entry.first);
-		auto& value = entry.second;
-		list.push_back(t_string::fmt("s%s: %s", keyname.c_str(), value.c_str()));
-	}
-	return list;
-}
-
 t_string PTM::input_string(const t_string& prompt, int maxlen)
 {
 	t_string value;
@@ -493,26 +450,6 @@ t_string PTM::input_string(const t_string& prompt, int maxlen)
 	return value;
 }
 
-void PTM::add_sprite(const t_string& name, int x, int y, bool visible)
-{
-	sprites[name] = scr.add_sprite(tilereg, t_pos(x, y));
-	sprites[name]->set_visible(visible);
-}
-
-t_sprite_ptr PTM::get_sprite(const t_string& name)
-{
-	if (sprites.contains(name))
-		return sprites[name];
-
-	return nullptr;
-}
-
-void PTM::delete_all_sprites()
-{
-	scr.delete_all_sprites();
-	sprites.clear();
-}
-
 const t_string& PTM::get_last_program_filename() const
 {
 	return last_program_filename;
@@ -521,21 +458,6 @@ const t_string& PTM::get_last_program_filename() const
 void PTM::autosave_program_file()
 {
 	filesys.save_program_plaintext(&prg, autosave_file);
-}
-
-void PTM::save_tilereg(const t_string& name)
-{
-	tile_presets[name] = tilereg;
-}
-
-void PTM::load_tilereg(const t_string& name)
-{
-	tilereg = tile_presets[name];
-}
-
-bool PTM::has_tilereg(const t_string& name)
-{
-	return tile_presets.contains(name);
 }
 
 int PTM::find_program_label(const t_string& label)

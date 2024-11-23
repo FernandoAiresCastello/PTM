@@ -27,5 +27,4 @@ namespace PTML
 	void branch_conditional(t_comparison cp, t_branch_mode mode);
 	void branch_if_keypress(t_branch_mode mode, bool positive);
 	bool try_load_program(const t_string& filename);
-	t_sptr<t_sprite> get_sprite(const t_string& name);
 }

@@ -7,7 +7,6 @@
 #include "PTML_GRAPHICS.h"
 #include "PTML_FILESYSTEM.h"
 #include "PTML_INPUT.h"
-#include "PTML_SPRITES.h"
 #include "PTML_SOUND.h"
 
 t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
@@ -26,10 +25,10 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("HALT", HALT);
 	CMD("EXIT", EXIT);
 	CMD("RESET", RESET);
+	CMD("PAUSE", PAUSE);
 
 	// === MEMORY ===
 	CMD("SET", SET);
-	CMD("VARS", VARS);
 	CMD("MEMCLR", MEM_CLR);
 
 	// === MATH ===
@@ -68,15 +67,10 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("CALL.NK", CALL_IFNKEY);
 	CMD("RET", RET);
 
-	// === TIME ===
-	CMD("PAUSE", PAUSE);
-
 	// === FILESYSTEM ===
 	CMD("FILES", FILES);
 	CMD("RENAME", RENAME);
 	CMD("KILL", KILL);
-	CMD("MKDIR", MKDIR);
-	CMD("CHDIR", CHDIR);
 	CMD("OPEN.W", OPEN_W);
 	CMD("OPEN.R", OPEN_R);
 	CMD("CLOSE", CLOSE);
@@ -85,28 +79,24 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("EOF", FEOF);
 
 	// === KEYBOARD INPUT ===
+	CMD("INPUT", INPUT);
 	CMD("INKEY", INKEY);
 	CMD("KB.FLUSH", KB_FLUSH);
-	CMD("FN.SET", FN_SET);
-	CMD("FN.LIST", FN_LIST);
-	CMD("INPUT", INPUT);
 
-	// === PALETTE & CHARSET ===
+	// === GRAPHICS ===
 	CMD("PAL", PAL);
 	CMD("CHR", CHR);
-	CMD("PAL.RST", PAL_RESET);
-	CMD("CHR.RST", CHR_RESET);
-	CMD("PAL.SAVE", PAL_SAVE);
-	CMD("CHR.SAVE", CHR_SAVE);
-	CMD("PAL.LOAD", PAL_LOAD);
-	CMD("CHR.LOAD", CHR_LOAD);
-
-	// === SCREEN ===
 	CMD("SCR.ON", SCR_ON);
 	CMD("SCR.OFF", SCR_OFF);
 	CMD("SCR.FULL", SCR_FULL);
 	CMD("REFRESH", REFRESH);
 	CMD("CLS", CLS);
+	CMD("CSR.ON", CSR_ON);
+	CMD("CSR.OFF", CSR_OFF);
+	CMD("LOCATE", LOCATE);
+	CMD("PRINT", PRINT);
+	CMD("PRINTL", PRINTL);
+	CMD("PRINTF", PRINTF);
 
 	// === COLOR REGISTER ===
 	CMD("COLOR", COLOR);
@@ -116,20 +106,8 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("COLOR.GETF", COLOR_GETF);
 	CMD("COLOR.GETB", COLOR_GETB);
 	CMD("COLOR.GETBR", COLOR_GETBR);
-
-	// === COLOR MODES ===
 	CMD("COLOR.MONO", COLOR_MONO);
 	CMD("COLOR.MULTI", COLOR_MULTI);
-
-	// === CURSOR ===
-	CMD("CSR.ON", CSR_ON);
-	CMD("CSR.OFF", CSR_OFF);
-	CMD("LOCATE", LOCATE);
-
-	// === TEXT OUTPUT ===
-	CMD("PRINT", PRINT);
-	CMD("PRINTL", PRINTL);
-	CMD("PRINTF", PRINTF);
 
 	// === TILE REGISTER ===
 	CMD("TILE.NEW", TILE_NEW);
@@ -142,36 +120,13 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("TILE.GETB", TILE_GETB);
 	CMD("TILE.SETP", TILE_SETP);
 	CMD("TILE.GETP", TILE_GETP);
-	CMD("TILE.SAVE", TILE_SAVE);
-	CMD("TILE.LOAD", TILE_LOAD);
 
 	// === TILEBUFFER ===
 	CMD("GET", GET);
 	CMD("PUT", PUT);
+	CMD("DEL", DEL);
 	CMD("RECT", RECT);
 	CMD("FILL", FILL);
-	CMD("HLINE", LINE_H);
-	CMD("VLINE", LINE_V);
-	CMD("DEL", DEL);
-	CMD("DELR", RECT_DEL);
-
-	// === SPRITES ===
-	CMD("SPR.NEW", SPR_NEW);
-	CMD("SPR.GRID", SPR_GRID);
-	CMD("SPR.POS", SPR_POS);
-	CMD("SPR.X", SPR_X);
-	CMD("SPR.Y", SPR_Y);
-	CMD("SPR.GETX", SPR_GETX);
-	CMD("SPR.GETY", SPR_GETY);
-	CMD("SPR.TGETX", SPR_TGETX);
-	CMD("SPR.TGETY", SPR_TGETY);
-	CMD("SPR.SHOW", SPR_SHOW);
-	CMD("SPR.MOVE", SPR_MOVE);
-	CMD("SPR.DEL", SPR_DEL);
-	CMD("SPR.CLR", SPR_CLR);
-	CMD("SPR.TGET", SPR_TGET);
-	CMD("SPR.TSET", SPR_TSET);
-	CMD("SPR.CHK", SPR_CHK);
 
 	// === SOUND ===
 	CMD("BEEP", BEEP);

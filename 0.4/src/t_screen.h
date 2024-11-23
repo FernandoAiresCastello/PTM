@@ -96,8 +96,6 @@ public:
 	bool displace_tiles_right();
 	bool displace_tiles_left();
 	const t_tilebuffer_region& get_viewport();
-	t_sprite_ptr add_sprite(const t_tile& tile, const t_pos& pos);
-	void delete_sprite(t_sprite_ptr sprite);
 	void delete_all_sprites();
 	void draw_tile_path(const t_tile& tile, const t_string& path);
 

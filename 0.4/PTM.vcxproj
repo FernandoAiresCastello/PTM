@@ -30,11 +30,11 @@
     <ClCompile Include="src\PTML_runtime.cpp" />
     <ClCompile Include="src\PTML_ALL.cpp" />
     <ClCompile Include="src\PTML_SOUND.cpp" />
-    <ClCompile Include="src\PTML_SPRITES.cpp" />
     <ClCompile Include="src\PTML_VARS.cpp" />
     <ClCompile Include="src\t_record_file.cpp" />
     <ClCompile Include="src\t_sound.cpp" />
     <ClCompile Include="src\t_sound_wav.cpp" />
+    <ClCompile Include="src\t_sprite.cpp" />
     <ClCompile Include="src\t_table.cpp" />
     <ClCompile Include="src\t_char.cpp" />
     <ClCompile Include="src\t_charset.cpp" />
@@ -52,7 +52,6 @@
     <ClCompile Include="src\t_program_line.cpp" />
     <ClCompile Include="src\t_program_runner.cpp" />
     <ClCompile Include="src\t_screen.cpp" />
-    <ClCompile Include="src\t_sprite.cpp" />
     <ClCompile Include="src\t_string.cpp" />
     <ClCompile Include="src\t_tests.cpp" />
     <ClCompile Include="src\t_tile.cpp" />
@@ -78,13 +77,13 @@
     <ClInclude Include="src\PTML_macros.h" />
     <ClInclude Include="src\PTML_shared_headers.h" />
     <ClInclude Include="src\PTML_SOUND.h" />
-    <ClInclude Include="src\PTML_SPRITES.h" />
     <ClInclude Include="src\PTML_VARS.h" />
     <ClInclude Include="src\t_namespace.h" />
     <ClInclude Include="src\t_record_file.h" />
     <ClInclude Include="src\t_rect.h" />
     <ClInclude Include="src\t_sound.h" />
     <ClInclude Include="src\t_sound_wav.h" />
+    <ClInclude Include="src\t_sprite.h" />
     <ClInclude Include="src\t_table.h" />
     <ClInclude Include="src\t_binary.h" />
     <ClInclude Include="src\t_char.h" />
@@ -107,7 +106,6 @@
     <ClInclude Include="src\t_program_line.h" />
     <ClInclude Include="src\t_program_runner.h" />
     <ClInclude Include="src\t_screen.h" />
-    <ClInclude Include="src\t_sprite.h" />
     <ClInclude Include="src\t_stack.h" />
     <ClInclude Include="src\t_string.h" />
     <ClInclude Include="src\t_tests.h" />

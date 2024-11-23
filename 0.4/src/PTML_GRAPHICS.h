@@ -17,12 +17,6 @@ namespace PTML
 	void CLS();
 	void PAL();
 	void CHR();
-	void PAL_RESET();
-	void CHR_RESET();
-	void PAL_SAVE();
-	void PAL_LOAD();
-	void CHR_SAVE();
-	void CHR_LOAD();
 	void LOCATE();
 	void SCR_FULL();
 	void CSR_ON();
@@ -37,13 +31,8 @@ namespace PTML
 	void TILE_GETB();
 	void TILE_SETP();
 	void TILE_GETP();
-	void TILE_SAVE();
-	void TILE_LOAD();
 	void PUT();
 	void RECT();
-	void RECT_DEL();
-	void LINE_H();
-	void LINE_V();
 	void FILL();
 	void GET();
 	void DEL();

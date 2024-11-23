@@ -119,52 +119,6 @@ void PTML::CHR()
 	ptm->get_chr().set_row(NUM(1), NUM(2), STR(3));
 }
 
-void PTML::PAL_RESET()
-{
-	ARGC(0);
-	ptm->get_pal().reset();
-}
-
-void PTML::CHR_RESET()
-{
-	ARGC(0);
-	ptm->get_chr().reset();
-}
-
-void PTML::PAL_SAVE()
-{
-	ARGC(1);
-	auto&& filename = STR(1);
-	VALIDATE_FILENAME(filename);
-	t_filesystem::save_palette_plaintext(&ptm->get_pal(), filename);
-}
-
-void PTML::PAL_LOAD()
-{
-	ARGC(1);
-	auto&& filename = STR(1);
-	VALIDATE_FILENAME(filename);
-	REQUIRE_FILE(filename);
-	t_filesystem::load_palette_plaintext(&ptm->get_pal(), filename);
-}
-
-void PTML::CHR_SAVE()
-{
-	ARGC(1);
-	auto&& filename = STR(1);
-	VALIDATE_FILENAME(filename);
-	t_filesystem::save_charset_plaintext(&ptm->get_chr(), filename);
-}
-
-void PTML::CHR_LOAD()
-{
-	ARGC(1);
-	auto&& filename = STR(1);
-	VALIDATE_FILENAME(filename);
-	REQUIRE_FILE(filename);
-	t_filesystem::load_charset_plaintext(&ptm->get_chr(), filename);
-}
-
 void PTML::LOCATE()
 {
 	ARGC(2);
@@ -269,90 +223,43 @@ void PTML::TILE_GETP()
 	ptm->set_var(IDENT(1), TILEREG.data.get(STR(2)));
 }
 
-void PTML::TILE_SAVE()
-{
-	IF_TILEREG_EMPTY_RET;
-	ARGC(1);
-	ptm->save_tilereg(STR(1));
-}
-
-void PTML::TILE_LOAD()
-{
-	ARGC(1);
-	auto&& name = STR(1);
-	if (!ptm->has_tilereg(name)) {
-		error = err.tile_preset_not_found;
-		return;
-	}
-
-	ptm->load_tilereg(name);
-}
-
 void PTML::PUT()
 {
 	IF_TILEREG_EMPTY_RET;
-	ARGC_MIN_MAX(0, 2);
+	ARGC(0);
 	auto& tile = TILEREG;
 	tile.flags.monochrome = false;
 
-	if (COUNT(0)) {
-		if (IMM) {
-			scr->newline();
-			scr->set_tile(tile, 0, scr->csry() - 1);
-		}
-		else {
-			scr->set_tile_at_csr(tile);
-		}
+	if (IMM) {
+		scr->newline();
+		scr->set_tile(tile, 0, scr->csry() - 1);
 	}
-	else if (COUNT(2))
-		scr->set_tile(tile, NUM(1), NUM(2));
-	else
-		error = err.invalid_argc;
+	else {
+		scr->set_tile_at_csr(tile);
+	}
+}
+
+void PTML::GET()
+{
+	ARGC(0);
+	ptm->tilereg = scr->get_tile_at_csr();
+}
+
+void PTML::DEL()
+{
+	ARGC(0);
+	scr->set_blank_tile(scr->csrx(), scr->csry(), t_tileflags());
 }
 
 void PTML::RECT()
 {
 	IF_TILEREG_EMPTY_RET;
-	ARGC(5);
-	int&& x1 = NUM(1);
-	int&& y1 = NUM(2);
-	int&& x2 = NUM(3);
-	int&& y2 = NUM(4);
-	bool&& fill = BOOL(5);
-	if (fill)
-		scr->rect_fill(TILEREG, x1, y1, x2, y2);
-	else
-		scr->rect_border(TILEREG, x1, y1, x2, y2);
-}
-
-void PTML::RECT_DEL()
-{
 	ARGC(4);
 	int&& x1 = NUM(1);
 	int&& y1 = NUM(2);
 	int&& x2 = NUM(3);
 	int&& y2 = NUM(4);
-	scr->rect_clear(x1, y1, x2, y2);
-}
-
-void PTML::LINE_H()
-{
-	IF_TILEREG_EMPTY_RET;
-	ARGC(3);
-	int&& y = NUM(1);
-	int&& x1 = NUM(2);
-	int&& x2 = NUM(3);
-	scr->rect_fill(TILEREG, x1, y, x2, y);
-}
-
-void PTML::LINE_V()
-{
-	IF_TILEREG_EMPTY_RET;
-	ARGC(3);
-	int&& x = NUM(1);
-	int&& y1 = NUM(2);
-	int&& y2 = NUM(3);
-	scr->rect_fill(TILEREG, x, y1, x, y2);
+	scr->rect_fill(TILEREG, x1, y1, x2, y2);
 }
 
 void PTML::FILL()
@@ -360,36 +267,6 @@ void PTML::FILL()
 	IF_TILEREG_EMPTY_RET;
 	ARGC(0);
 	scr->fill(TILEREG);
-}
-
-void PTML::GET()
-{
-	ARGC_MIN_MAX(0, 2);
-
-	if (COUNT(0)) {
-		if (NOT_IMM) {
-			ptm->tilereg = scr->get_tile_at_csr();
-		}
-	}
-	else if (COUNT(2))
-		ptm->tilereg = scr->get_tile(t_pos(NUM(1), NUM(2)));
-	else
-		error = err.invalid_argc;
-}
-
-void PTML::DEL()
-{
-	ARGC_MIN_MAX(0, 2);
-
-	if (COUNT(0)) {
-		if (NOT_IMM) {
-			scr->set_blank_tile(scr->csrx(), scr->csry(), t_tileflags());
-		}
-	}
-	else if (COUNT(2))
-		scr->set_blank_tile(NUM(1), NUM(2));
-	else
-		error = err.invalid_argc;
 }
 
 void PTML::SCR_ON()

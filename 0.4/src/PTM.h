@@ -76,17 +76,9 @@ public:
 	void flush_keyboard();
 	bool is_key_pressed(int scancode);
 	bool is_key_pressed(const t_string& keyname);
-	bool set_function_key(const t_string& keyname, const t_string& value);
-	t_list<t_string> list_function_keys();
 	t_string input_string(const t_string& prompt, int maxlen);
-	void add_sprite(const t_string& name, int x, int y, bool visible);
-	t_sprite_ptr get_sprite(const t_string& name);
-	void delete_all_sprites();
 	const t_string& get_last_program_filename() const;
 	void autosave_program_file();
-	void save_tilereg(const t_string& name);
-	void load_tilereg(const t_string& name);
-	bool has_tilereg(const t_string& name);
 	int find_program_label(const t_string& label);
 	t_sound& get_sound();
 
@@ -96,8 +88,6 @@ private:
 
 	t_string last_program_filename;
 	t_namespace<t_string> vars;
-	t_namespace<t_sprite_ptr> sprites;
-	t_namespace<t_tile> tile_presets;
 
 	void init();
 	void run_tests();
