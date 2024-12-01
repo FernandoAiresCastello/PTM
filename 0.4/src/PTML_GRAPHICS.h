@@ -15,7 +15,7 @@ namespace PTML
 	void CHR();
 	void LOCATE();
 	void FULLSCR();
-	void CURSOR_MODE();
+	void CURSOR();
 	void TILE_NEW();
 	void TILE_ADD();
 	void TILE_SETC();

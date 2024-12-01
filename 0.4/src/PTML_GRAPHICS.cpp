@@ -114,7 +114,7 @@ void PTML::FULLSCR()
 		ptm->get_wnd().toggle_fullscreen();
 }
 
-void PTML::CURSOR_MODE()
+void PTML::CURSOR()
 {
 	ARGC(1);
 	scr->show_cursor(BOOL(1));
@@ -122,16 +122,8 @@ void PTML::CURSOR_MODE()
 
 void PTML::TILE_NEW()
 {
-	ARGC_MIN_MAX(0, 3);
-
+	ARGC(0);
 	TILEREG.set_empty();
-
-	if (COUNT(0))
-		return;
-	else if (COUNT(3))
-		TILEREG.add_char(NUM(1), NUM(2), NUM(3));
-	else
-		error = err.invalid_argc;
 }
 
 void PTML::TILE_ADD()
