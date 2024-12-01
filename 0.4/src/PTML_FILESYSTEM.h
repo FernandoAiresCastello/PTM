@@ -7,8 +7,7 @@ namespace PTML
 	void KILL();
 	void CHDIR();
 	void MKDIR();
-	void OPEN_W();
-	void OPEN_R();
+	void OPEN();
 	void CLOSE();
 	void WRITE();
 	void READ();

@@ -97,7 +97,6 @@ public:
 	bool displace_tiles_left();
 	const t_tilebuffer_region& get_viewport();
 	void delete_all_sprites();
-	void draw_tile_path(const t_tile& tile, const t_string& path);
 
 private:
 	t_window* wnd = nullptr;
@@ -122,5 +121,4 @@ private:
 	void clear_background();
 	void fix_horizontal_scroll();
 	void fix_vertical_scroll();
-	void split_draw_tile_path(const t_string& path);
 };

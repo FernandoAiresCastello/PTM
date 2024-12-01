@@ -3,8 +3,10 @@
 namespace PTML
 {
 	void SET();
+	void ARR_DIM();
+	void ARR_LEN();
+	void SWAP();
 	void MEMCLR();
-	void DIM();
 
 	void STR_CONCAT();
 	void STR_UPPER();

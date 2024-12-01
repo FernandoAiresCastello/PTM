@@ -7,22 +7,38 @@ void PTML::SET()
 	ptm->set_var(ARG(1), STR(2), error);
 }
 
-void PTML::MEMCLR()
+void PTML::ARR_LEN()
 {
-	ARGC(0);
-	ptm->delete_all_vars();
+	ARGC(2);
+	ptm->set_var(ARG(1), ptm->get_array_length(IDENT(2), error), error);
 }
 
-void PTML::DIM()
+void PTML::SWAP()
+{
+	ARGC(2);
+	
+	auto&& left = STR(1);
+	auto&& right = STR(2);
+
+	ptm->set_var(ARG(1), right, error);
+	if (error.empty())
+		ptm->set_var(ARG(2), left, error);
+}
+
+void PTML::ARR_DIM()
 {
 	ARGC(1);
-	
 	if (!ARG(1).is_array()) {
 		error = err.array_expected;
 		return;
 	}
-
 	ptm->create_array(ARG(1).array_ref, error);
+}
+
+void PTML::MEMCLR()
+{
+	ARGC(0);
+	ptm->delete_all_vars();
 }
 
 void PTML::STR_CONCAT()

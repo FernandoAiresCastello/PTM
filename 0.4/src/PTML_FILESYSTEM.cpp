@@ -78,33 +78,31 @@ void PTML::MKDIR()
 	t_filesystem::create_directory(name);
 }
 
-void PTML::OPEN_W()
+void PTML::OPEN()
 {
-	ARGC(1);
+	ARGC(2);
 	auto&& name = STR(1);
 	VALIDATE_FILENAME(name);
-	if (t_filesystem::is_record_file_open()) {
-		error = err.file_already_open;
-		return;
-	}
-	t_filesystem::open_record_file(name, t_filesystem::write_mode);
-}
+	auto&& mode = STR(2).to_upper();
 
-void PTML::OPEN_R()
-{
-	ARGC(1);
-	auto&& name = STR(1);
-	VALIDATE_FILENAME(name);
-	REQUIRE_FILE(name);
 	if (t_filesystem::is_record_file_open()) {
 		error = err.file_already_open;
 		return;
 	}
-	
-	int state = t_filesystem::open_record_file(name, t_filesystem::read_mode);
-	if (state == RECFILE_STATE_BADFMT) {
-		error = err.bad_file_format;
-		return;
+
+	if (mode == "W") {
+		t_filesystem::open_record_file(name, t_filesystem::write_mode);
+	}
+	else if (mode == "R") {
+		REQUIRE_FILE(name);
+		int state = t_filesystem::open_record_file(name, t_filesystem::read_mode);
+		if (state == RECFILE_STATE_BADFMT) {
+			error = err.bad_file_format;
+			return;
+		}
+	}
+	else {
+		error = err.illegal_argument;
 	}
 }
 

@@ -620,34 +620,3 @@ void t_screen::delete_all_sprites()
 {
 	buf->delete_all_sprites();
 }
-
-t_list<t_string> draw_tile_path_cmd;
-
-void t_screen::draw_tile_path(const t_tile& tile, const t_string& path)
-{
-	split_draw_tile_path(path);
-
-	for (auto& cmd : draw_tile_path_cmd) {
-
-	}
-}
-
-void t_screen::split_draw_tile_path(const t_string& path)
-{
-	draw_tile_path_cmd.clear();
-
-	t_string current;
-
-	for (size_t i = 0; i < path.length(); ++i) {
-		current += path[i];
-		if (i + 1 < path.length() &&
-			(std::isdigit(path[i]) && std::isalpha(path[i + 1])) ||
-			(std::isalpha(path[i]) && std::isdigit(path[i + 1]))) {
-			draw_tile_path_cmd.push_back(current);
-			current.clear();
-		}
-	}
-
-	if (!current.empty())
-		draw_tile_path_cmd.push_back(current);
-}

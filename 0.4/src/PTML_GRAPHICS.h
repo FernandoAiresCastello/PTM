@@ -3,14 +3,10 @@
 namespace PTML
 {
 	void COLOR();
-	void COLOR_MONO();
-	void COLOR_MULTI();
+	void COLOR_MODE();
 	void COLOR_SETF();
 	void COLOR_SETB();
 	void COLOR_SETBR();
-	void COLOR_GETF();
-	void COLOR_GETB();
-	void COLOR_GETBR();
 	void PRINT();
 	void PRINTL();
 	void PRINTF();
@@ -18,9 +14,8 @@ namespace PTML
 	void PAL();
 	void CHR();
 	void LOCATE();
-	void SCR_FULL();
-	void CSR_ON();
-	void CSR_OFF();
+	void FULLSCR();
+	void CURSOR_MODE();
 	void TILE_NEW();
 	void TILE_ADD();
 	void TILE_SETC();
@@ -36,7 +31,6 @@ namespace PTML
 	void FILL();
 	void GET();
 	void DEL();
-	void SCR_ON();
-	void SCR_OFF();
+	void AUTOREF();
 	void REFRESH();
 }

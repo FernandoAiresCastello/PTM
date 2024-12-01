@@ -19,16 +19,16 @@ void PTML::COLOR()
 	}
 }
 
-void PTML::COLOR_MONO()
+void PTML::COLOR_MODE()
 {
-	ARGC(0);
-	scr->set_color_mode(t_color_mode::mode0_monochrome);
-}
-
-void PTML::COLOR_MULTI()
-{
-	ARGC(0);
-	scr->set_color_mode(t_color_mode::mode1_multicolor);
+	ARGC(1);
+	int&& mode = NUM(1);
+	if (mode == 0)
+		scr->set_color_mode(t_color_mode::mode0_monochrome);
+	else if (mode == 1)
+		scr->set_color_mode(t_color_mode::mode1_multicolor);
+	else
+		error = err.illegal_argument;
 }
 
 void PTML::COLOR_SETF()
@@ -47,24 +47,6 @@ void PTML::COLOR_SETBR()
 {
 	ARGC(1);
 	scr->color_bdr(NUM(1));
-}
-
-void PTML::COLOR_GETF()
-{
-	ARGC(1);
-	ptm->set_var(ARG(1), scr->get_fg_color(), error);
-}
-
-void PTML::COLOR_GETB()
-{
-	ARGC(1);
-	ptm->set_var(ARG(1), scr->get_bg_color(), error);
-}
-
-void PTML::COLOR_GETBR()
-{
-	ARGC(1);
-	ptm->set_var(ARG(1), scr->get_bdr_color(), error);
 }
 
 void PTML::PRINT()
@@ -122,7 +104,7 @@ void PTML::LOCATE()
 	scr->locate(NUM(1), NUM(2));
 }
 
-void PTML::SCR_FULL()
+void PTML::FULLSCR()
 {
 	ARGC_MIN_MAX(0, 1);
 
@@ -132,16 +114,10 @@ void PTML::SCR_FULL()
 		ptm->get_wnd().toggle_fullscreen();
 }
 
-void PTML::CSR_ON()
+void PTML::CURSOR_MODE()
 {
-	ARGC(0);
-	scr->show_cursor(true);
-}
-
-void PTML::CSR_OFF()
-{
-	ARGC(0);
-	scr->show_cursor(false);
+	ARGC(1);
+	scr->show_cursor(BOOL(1));
 }
 
 void PTML::TILE_NEW()
@@ -256,26 +232,22 @@ void PTML::RECT()
 	int&& y1 = NUM(2);
 	int&& x2 = NUM(3);
 	int&& y2 = NUM(4);
-	scr->rect_fill(TILEREG, x1, y1, x2, y2);
+	auto& tile = TILEREG;
+	scr->rect_fill(tile, x1, y1, x2, y2);
 }
 
 void PTML::FILL()
 {
 	IF_TILEREG_EMPTY_RET;
 	ARGC(0);
-	scr->fill(TILEREG);
+	auto& tile = TILEREG;
+	scr->fill(tile);
 }
 
-void PTML::SCR_ON()
+void PTML::AUTOREF()
 {
-	ARGC(0);
-	ptm->auto_screen_update = true;
-}
-
-void PTML::SCR_OFF()
-{
-	ARGC(0);
-	ptm->auto_screen_update = false;
+	ARGC(1);
+	ptm->auto_screen_update = BOOL(1);
 }
 
 void PTML::REFRESH()

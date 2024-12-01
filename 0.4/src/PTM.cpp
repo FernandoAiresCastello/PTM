@@ -361,6 +361,15 @@ const t_string& PTM::get_array_element(const t_array_ref& ref, t_string& out_err
 	return arrays[ref.arr_name][index];
 }
 
+int PTM::get_array_length(const t_string& array_name, t_string& out_error)
+{
+	if (!has_array(array_name)) {
+		out_error = PTML::err.undefined_array;
+		return 0;
+	}
+	return arrays[array_name].size();
+}
+
 void PTM::delete_all_vars()
 {
 	vars.clear();

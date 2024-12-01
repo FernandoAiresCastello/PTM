@@ -29,7 +29,9 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 
 	// === MEMORY ===
 	CMD("SET", SET);
-	CMD("DIM", DIM);
+	CMD("DIM", ARR_DIM);
+	CMD("LEN", ARR_LEN);
+	CMD("SWAP", SWAP);
 	CMD("MEMCLR", MEMCLR);
 
 	// === MATH ===
@@ -71,8 +73,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("FILES", FILES);
 	CMD("RENAME", RENAME);
 	CMD("KILL", KILL);
-	CMD("OPEN.W", OPEN_W);
-	CMD("OPEN.R", OPEN_R);
+	CMD("OPEN", OPEN);
 	CMD("CLOSE", CLOSE);
 	CMD("WRITE", WRITE);
 	CMD("READ", READ);
@@ -81,18 +82,16 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	// === KEYBOARD INPUT ===
 	CMD("INPUT", INPUT);
 	CMD("INKEY", INKEY);
-	CMD("KB.FLUSH", KB_FLUSH);
+	CMD("KFLUSH", KB_FLUSH);
 
 	// === GRAPHICS ===
 	CMD("PAL", PAL);
 	CMD("CHR", CHR);
-	CMD("SCR.ON", SCR_ON);
-	CMD("SCR.OFF", SCR_OFF);
-	CMD("SCR.FULL", SCR_FULL);
+	CMD("AUTOREF", AUTOREF);
+	CMD("FULLSCR", FULLSCR);
 	CMD("REFRESH", REFRESH);
 	CMD("CLS", CLS);
-	CMD("CSR.ON", CSR_ON);
-	CMD("CSR.OFF", CSR_OFF);
+	CMD("CURSOR", CURSOR_MODE);
 	CMD("LOCATE", LOCATE);
 	CMD("PRINT", PRINT);
 	CMD("PRINTL", PRINTL);
@@ -100,15 +99,11 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 
 	// === COLOR REGISTER ===
 	CMD("COLOR", COLOR);
-	CMD("COLOR.F", COLOR_SETF);
-	CMD("COLOR.B", COLOR_SETB);
-	CMD("COLOR.BR", COLOR_SETBR);
-	CMD("COLOR.GETF", COLOR_GETF);
-	CMD("COLOR.GETB", COLOR_GETB);
-	CMD("COLOR.GETBR", COLOR_GETBR);
-	CMD("COLOR.MONO", COLOR_MONO);
-	CMD("COLOR.MULTI", COLOR_MULTI);
-
+	CMD("INK", COLOR_SETF);
+	CMD("PAPER", COLOR_SETB);
+	CMD("BORDER", COLOR_SETBR);
+	CMD("CMODE", COLOR_MODE);
+	
 	// === TILE REGISTER ===
 	CMD("TILE.NEW", TILE_NEW);
 	CMD("TILE.ADD", TILE_ADD);

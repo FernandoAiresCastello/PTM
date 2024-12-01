@@ -60,7 +60,9 @@ public:
 	bool has_array(const t_string& var);
 	void create_array(const t_array_ref& array_ref, t_string& out_error);
 	const t_string& get_array_element(const t_array_ref& ref, t_string& out_error);
+	int get_array_length(const t_string& array_name, t_string& out_error);
 	void delete_all_vars();
+
 	static t_palette& get_pal();
 	static t_charset& get_chr();
 	static t_screen& get_screen();
