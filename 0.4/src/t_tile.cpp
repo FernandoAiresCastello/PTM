@@ -49,6 +49,11 @@ t_tile& t_tile::operator=(const t_tile& other)
 	return *this;
 }
 
+t_tile t_tile::create_blank()
+{
+	return t_tile(t_char::blank());
+}
+
 t_char& t_tile::get_char()
 {
 	return chars[0];

@@ -23,6 +23,8 @@ public:
 	bool operator==(const t_tile& other) const;
 	t_tile& operator=(const t_tile& other);
 
+	static t_tile create_blank();
+
 	t_char& get_char();
 	t_char& get_char(int position);
 	t_char& get_char_wraparound(int position);

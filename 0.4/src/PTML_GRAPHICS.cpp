@@ -190,9 +190,8 @@ void PTML::TILE_GETP()
 
 void PTML::PUT()
 {
-	IF_TILEREG_EMPTY_RET;
 	ARGC(0);
-	auto& tile = TILEREG;
+	auto&& tile = TILEREG_OR_BLANK_TILE;
 	tile.flags.monochrome = false;
 
 	if (IMM) {
@@ -218,21 +217,19 @@ void PTML::DEL()
 
 void PTML::RECT()
 {
-	IF_TILEREG_EMPTY_RET;
 	ARGC(4);
 	int&& x1 = NUM(1);
 	int&& y1 = NUM(2);
 	int&& x2 = NUM(3);
 	int&& y2 = NUM(4);
-	auto& tile = TILEREG;
+	auto&& tile = TILEREG_OR_BLANK_TILE;
 	scr->rect_fill(tile, x1, y1, x2, y2);
 }
 
 void PTML::FILL()
 {
-	IF_TILEREG_EMPTY_RET;
 	ARGC(0);
-	auto& tile = TILEREG;
+	auto&& tile = TILEREG_OR_BLANK_TILE;
 	scr->fill(tile);
 }
 

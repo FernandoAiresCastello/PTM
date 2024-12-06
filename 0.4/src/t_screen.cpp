@@ -248,6 +248,13 @@ void t_screen::set_blank_tile_at_csr(t_tileflags flags)
 	set_blank_tile(csr->pos.x, csr->pos.y, flags);
 }
 
+t_tile t_screen::create_blank_tile(t_tileflags flags)
+{
+	auto&& tile = t_tile(0, fore_color, back_color);
+	tile.flags = flags;
+	return tile;
+}
+
 void t_screen::on_character_key_pressed(t_index ch)
 {
 	bool should_print = true;

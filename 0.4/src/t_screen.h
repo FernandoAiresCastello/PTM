@@ -59,6 +59,7 @@ public:
 	void set_tile_at_csr(const t_tile& tile);
 	void set_blank_tile(int x, int y, t_tileflags flags = t_tileflags());
 	void set_blank_tile_at_csr(t_tileflags flags = t_tileflags());
+	t_tile create_blank_tile(t_tileflags flags = t_tileflags());
 	void on_character_key_pressed(t_index ch);
 	void on_backspace_pressed();
 	void on_delete_pressed();
