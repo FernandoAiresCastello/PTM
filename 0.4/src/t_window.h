@@ -24,6 +24,7 @@ public:
 	bool is_open();
 	void toggle_fullscreen();
 	void set_fullscreen(bool full);
+	bool is_fullscreen() const;
 	void set_title(const t_string& title);
 	void clear(const t_color& color);
 	void refresh();

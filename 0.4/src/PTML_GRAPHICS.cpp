@@ -34,25 +34,28 @@ void PTML::COLOR_MODE()
 void PTML::COLOR_SETF()
 {
 	ARGC(1);
-	scr->color_fg(NUM(1));
+	int&& color = NUM(1);
+	scr->color_fg(color);
 }
 
 void PTML::COLOR_SETB()
 {
 	ARGC(1);
-	scr->color_bg(NUM(1));
+	int&& color = NUM(1);
+	scr->color_bg(color);
 }
 
 void PTML::COLOR_SETBR()
 {
 	ARGC(1);
-	scr->color_bdr(NUM(1));
+	int&& color = NUM(1);
+	scr->color_bdr(color);
 }
 
 void PTML::PRINT()
 {
-	ARGC(1);
-	auto&& value = STR(1);
+	ARGC_MIN_MAX(0, 1);
+	auto&& value = COUNT(1) ? STR(1) : "";
 	if (IMM && !value.empty())
 		scr->print_string_crlf(value);
 	else
@@ -101,7 +104,21 @@ void PTML::CHR()
 void PTML::LOCATE()
 {
 	ARGC(2);
-	scr->locate(NUM(1), NUM(2));
+	int&& x = NUM(1);
+	int&& y = NUM(2);
+	scr->locate(x, y);
+}
+
+void PTML::CSR_GETX()
+{
+	ARGC(1);
+	ptm->set_var(ARG(1), scr->csrx(), error);
+}
+
+void PTML::CSR_GETY()
+{
+	ARGC(1);
+	ptm->set_var(ARG(1), scr->csry(), error);
 }
 
 void PTML::FULLSCR()

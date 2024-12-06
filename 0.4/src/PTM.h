@@ -47,7 +47,7 @@ public:
 	void debug(const t_string& msg);
 	void save_program_line(t_program_line& line);
 	bool delete_program_line(int line_nr);
-	
+
 	void set_var(const t_param& param, int value, t_string& out_error);
 	void set_var(const t_param& param, const t_string& value, t_string& out_error);
 	int get_var_num(const t_param& param, t_string& out_error);
@@ -87,18 +87,18 @@ public:
 	bool is_key_pressed(int scancode);
 	bool is_key_pressed(const t_string& keyname);
 	t_string input_string(const t_string& prompt, int maxlen);
-	const t_string& get_last_program_filename() const;
 	void autosave_program_file();
 	int find_program_label(const t_string& label);
 	t_sound& get_sound();
+	const t_string& get_last_program_filename() const;
 
 private:
 	bool running = false;
 	bool halted = false;
 
-	t_string last_program_filename;
 	t_namespace<t_string> vars;
 	t_namespace<t_list<t_string>> arrays;
+	t_string last_program_filename;
 
 	void init();
 	void run_tests();

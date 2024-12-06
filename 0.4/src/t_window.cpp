@@ -70,6 +70,11 @@ void t_window::set_fullscreen(bool full)
 	refresh();
 }
 
+bool t_window::is_fullscreen() const
+{
+	return SDL_GetWindowFlags(sdl_wnd) & SDL_WINDOW_FULLSCREEN_DESKTOP;
+}
+
 void t_window::set_title(const t_string& title)
 {
 	SDL_SetWindowTitle(sdl_wnd, title.c_str());

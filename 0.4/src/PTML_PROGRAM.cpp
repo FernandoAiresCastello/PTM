@@ -133,15 +133,6 @@ void PTML::LOAD()
 	}
 }
 
-void PTML::PROG()
-{
-	REQUIRE_IMM;
-	ARGC(0);
-
-	if (!ptm->get_last_program_filename().empty())
-		scr->print_string_crlf(ptm->get_last_program_filename());
-}
-
 void PTML::RENUM()
 {
 	REQUIRE_IMM;
@@ -157,4 +148,11 @@ void PTML::RENUM()
 		else
 			ptm->renumber_program(interval);
 	}
+}
+
+void PTML::PROG()
+{
+	REQUIRE_IMM;
+	ARGC(0);
+	scr->print_string_crlf(ptm->get_last_program_filename());
 }

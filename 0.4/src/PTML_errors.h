@@ -39,6 +39,7 @@ namespace PTML
 		const t_string undefined_array = "Undefined array";
 		const t_string subscript_out_of_range = "Subscript out of range";
 		const t_string illegal_argument = "Illegal argument";
+		const t_string readonly = "Read-only variable";
 	}
 	err;
 }

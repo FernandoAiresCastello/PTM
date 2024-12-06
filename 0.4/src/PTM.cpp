@@ -536,11 +536,6 @@ t_string PTM::input_string(const t_string& prompt, int maxlen)
 	return value;
 }
 
-const t_string& PTM::get_last_program_filename() const
-{
-	return last_program_filename;
-}
-
 void PTM::autosave_program_file()
 {
 	filesys.save_program_plaintext(&prg, autosave_file);
@@ -554,4 +549,9 @@ int PTM::find_program_label(const t_string& label)
 t_sound& PTM::get_sound()
 {
 	return snd;
+}
+
+const t_string& PTM::get_last_program_filename() const
+{
+	return last_program_filename;
 }

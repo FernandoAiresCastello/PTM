@@ -14,6 +14,8 @@ namespace PTML
 	void PAL();
 	void CHR();
 	void LOCATE();
+	void CSR_GETX();
+	void CSR_GETY();
 	void FULLSCR();
 	void CURSOR();
 	void TILE_NEW();

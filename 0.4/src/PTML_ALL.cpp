@@ -97,7 +97,9 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	// === CURSOR ===
 	CMD("CURSOR", CURSOR);
 	CMD("LOCATE", LOCATE);
-
+	CMD("GETX", CSR_GETX);
+	CMD("GETY", CSR_GETY);
+	
 	// === TEXT OUTPUT ===
 	CMD("PRINT", PRINT);
 	CMD("PRINTL", PRINTL);
