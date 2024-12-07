@@ -2,70 +2,88 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="t_main_window.cpp">
-      <Filter>GRAPHICS</Filter>
-    </ClCompile>
     <ClCompile Include="t_string.cpp">
       <Filter>UTIL</Filter>
     </ClCompile>
     <ClCompile Include="t_list.cpp">
       <Filter>UTIL</Filter>
     </ClCompile>
-    <ClCompile Include="t_screen.cpp">
-      <Filter>GRAPHICS</Filter>
-    </ClCompile>
     <ClCompile Include="PTM.cpp">
       <Filter>CORE</Filter>
-    </ClCompile>
-    <ClCompile Include="t_color.cpp">
-      <Filter>GRAPHICS</Filter>
     </ClCompile>
     <ClCompile Include="t_util.cpp">
       <Filter>UTIL</Filter>
     </ClCompile>
+    <ClCompile Include="t_dict.cpp">
+      <Filter>UTIL</Filter>
+    </ClCompile>
     <ClCompile Include="t_charset.cpp">
-      <Filter>GRAPHICS</Filter>
+      <Filter>GRAPHICS\BASE</Filter>
+    </ClCompile>
+    <ClCompile Include="t_color.cpp">
+      <Filter>GRAPHICS\BASE</Filter>
     </ClCompile>
     <ClCompile Include="t_image.cpp">
-      <Filter>GRAPHICS</Filter>
+      <Filter>GRAPHICS\BASE</Filter>
+    </ClCompile>
+    <ClCompile Include="t_main_window.cpp">
+      <Filter>GRAPHICS\BASE</Filter>
+    </ClCompile>
+    <ClCompile Include="t_screen.cpp">
+      <Filter>GRAPHICS\BASE</Filter>
+    </ClCompile>
+    <ClCompile Include="t_palette.cpp">
+      <Filter>GRAPHICS\BASE</Filter>
+    </ClCompile>
+    <ClCompile Include="t_image_pool.cpp">
+      <Filter>GRAPHICS\SUPPORT</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="t_main_window.h">
-      <Filter>GRAPHICS</Filter>
-    </ClInclude>
     <ClInclude Include="t_string.h">
       <Filter>UTIL</Filter>
     </ClInclude>
     <ClInclude Include="t_list.h">
       <Filter>UTIL</Filter>
     </ClInclude>
-    <ClInclude Include="t_screen.h">
-      <Filter>GRAPHICS</Filter>
-    </ClInclude>
     <ClInclude Include="PTM.h">
       <Filter>CORE</Filter>
-    </ClInclude>
-    <ClInclude Include="t_color.h">
-      <Filter>GRAPHICS</Filter>
     </ClInclude>
     <ClInclude Include="t_util.h">
       <Filter>UTIL</Filter>
     </ClInclude>
-    <ClInclude Include="t_binary.h">
-      <Filter>GRAPHICS</Filter>
-    </ClInclude>
-    <ClInclude Include="t_charset.h">
-      <Filter>GRAPHICS</Filter>
-    </ClInclude>
     <ClInclude Include="t_index.h">
       <Filter>UTIL</Filter>
     </ClInclude>
-    <ClInclude Include="t_rgb.h">
-      <Filter>GRAPHICS</Filter>
+    <ClInclude Include="t_dict.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
+    <ClInclude Include="t_binary.h">
+      <Filter>GRAPHICS\BASE</Filter>
+    </ClInclude>
+    <ClInclude Include="t_charset.h">
+      <Filter>GRAPHICS\BASE</Filter>
+    </ClInclude>
+    <ClInclude Include="t_color.h">
+      <Filter>GRAPHICS\BASE</Filter>
     </ClInclude>
     <ClInclude Include="t_image.h">
-      <Filter>GRAPHICS</Filter>
+      <Filter>GRAPHICS\BASE</Filter>
+    </ClInclude>
+    <ClInclude Include="t_main_window.h">
+      <Filter>GRAPHICS\BASE</Filter>
+    </ClInclude>
+    <ClInclude Include="t_rgb.h">
+      <Filter>GRAPHICS\BASE</Filter>
+    </ClInclude>
+    <ClInclude Include="t_screen.h">
+      <Filter>GRAPHICS\BASE</Filter>
+    </ClInclude>
+    <ClInclude Include="t_palette.h">
+      <Filter>GRAPHICS\BASE</Filter>
+    </ClInclude>
+    <ClInclude Include="t_image_pool.h">
+      <Filter>GRAPHICS\SUPPORT</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -77,6 +95,12 @@
     </Filter>
     <Filter Include="CORE">
       <UniqueIdentifier>{08f6e765-5c0f-4eec-b762-c3fb209a89af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GRAPHICS\BASE">
+      <UniqueIdentifier>{44342616-f519-4a53-b53a-8d5ea70946f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GRAPHICS\SUPPORT">
+      <UniqueIdentifier>{b5cf3d74-c85a-481a-95ed-a692781e9c2b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -14,6 +14,15 @@ t_image::t_image(int w, int h, const t_color& back_color)
 		pixels.emplace_back(back_color);
 }
 
+t_image::t_image(const t_image& other)
+{
+	width = other.width;
+	height = other.height;
+
+	for (int i = 0; i < width * height; i++)
+		pixels.emplace_back(other.pixels[i]);
+}
+
 t_image::~t_image()
 {
 	pixels.clear();
@@ -31,6 +40,11 @@ const t_color& t_image::get_pixel(int x, int y) const
 		return pixels[y * width + x];
 
 	return t_color::invalid;
+}
+
+const t_list<t_color>& t_image::get_pixels() const
+{
+	return pixels;
 }
 
 void t_image::set_transparency_key(const t_color& color)

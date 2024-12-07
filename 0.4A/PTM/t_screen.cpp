@@ -1,7 +1,8 @@
 #include "t_screen.h"
 #include "t_main_window.h"
-#include "t_image.h"
 #include "t_charset.h"
+#include "t_image.h"
+#include "t_image_pool.h"
 
 t_screen::t_screen()
 {
@@ -44,6 +45,8 @@ void t_screen::toggle_fullscreen()
 
 void t_screen::draw_image(t_image* img, int x, int y)
 {
+	if (!img) return;
+
 	const int px = x;
 	for (int iy = 0; iy < img->get_height(); iy++) {
 		for (int ix = 0; ix < img->get_width(); ix++) {
@@ -56,6 +59,13 @@ void t_screen::draw_image(t_image* img, int x, int y)
 		y++;
 		x = px;
 	}
+}
+
+void t_screen::draw_image(t_image_pool* pool, t_index image_index, int x, int y)
+{
+	if (!pool) return;
+
+	draw_image(pool->get(image_index), x, y);
 }
 
 void t_screen::putch(t_index ch, int x, int y, const t_color& fore_color)

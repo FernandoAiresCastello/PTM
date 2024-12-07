@@ -4,8 +4,9 @@
 #include "t_color.h"
 
 class t_main_window;
-class t_image;
 class t_charset;
+class t_image;
+class t_image_pool;
 
 class t_screen
 {
@@ -20,6 +21,7 @@ public:
 	const t_color& get_backcolor() const;
 	void toggle_fullscreen();
 	void draw_image(t_image* img, int x, int y);
+	void draw_image(t_image_pool* pool, t_index image_index, int x, int y);
 	void putch(t_index ch, int x, int y, const t_color& fore_color);
 	void putch(t_index ch, int x, int y, const t_color& fore_color, const t_color& back_color);
 	void print(const t_string& str, int x, int y, const t_color& fore_color);

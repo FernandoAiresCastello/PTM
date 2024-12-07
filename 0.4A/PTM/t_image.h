@@ -7,11 +7,13 @@ class t_image
 {
 public:
 	t_image();
-	t_image(int w, int h, const t_color& back_color = 0xffffff);
+	t_image(int w, int h, const t_color& back_color);
+	t_image(const t_image& other);
 	~t_image();
 
 	void set_pixel(int x, int y, const t_color& color);
 	const t_color& get_pixel(int x, int y) const;
+	const t_list<t_color>& get_pixels() const;
 	void set_transparency_key(const t_color& color);
 	const t_color& get_transparency_key() const;
 	void set_transparent(bool transp);
