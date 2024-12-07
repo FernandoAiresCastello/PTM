@@ -8,7 +8,9 @@ public:
 	t_main_window();
 	~t_main_window();
 
-	void create(const t_string& title, int buffer_w, int buffer_h, int stretch_w, int stretch_h, const RGB& back_color);
+	void open(const t_string& title, int buffer_w, int buffer_h, int stretch_w, int stretch_h, const RGB& back_color);
+	bool is_open() const;
+	void close();
 	void update();
 	void draw_test_frame();
 	void clear(const RGB& back_color);
@@ -17,6 +19,7 @@ public:
 	const RGB& get_pixel(int x, int y) const;
 
 private:
+	bool created = false;
 	SDL_Window* wnd = nullptr;
 	SDL_Renderer* rend = nullptr;
 	SDL_Texture* tex = nullptr;

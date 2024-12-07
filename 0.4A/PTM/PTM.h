@@ -10,10 +10,13 @@ public:
 	~PTM();
 
 	int run();
+	void quit();
 
 private:
 	t_main_window wnd;
 	t_screen scr;
+
+	void on_keydown(SDL_Keycode& key);
 };
 
 static PTM ptm;

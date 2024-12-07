@@ -1,6 +1,7 @@
 #include "t_main_window.h"
+#include "t_color.h"
 
-RGB out_of_bounds_color = 0x000000;
+const RGB out_of_bounds_color = t_color::invalid.to_rgb();
 
 t_main_window::t_main_window()
 {
@@ -8,15 +9,10 @@ t_main_window::t_main_window()
 
 t_main_window::~t_main_window()
 {
-    SDL_DestroyRenderer(rend);
-    rend = nullptr;
-    SDL_DestroyWindow(wnd);
-    wnd = nullptr;
-    delete buffer;
-    buffer = nullptr;
+    close();
 }
 
-void t_main_window::create(const t_string& title, int buffer_w, int buffer_h, int stretch_w, int stretch_h, const RGB& back_color)
+void t_main_window::open(const t_string& title, int buffer_w, int buffer_h, int stretch_w, int stretch_h, const RGB& back_color)
 {
     this->buffer_w = buffer_w;
     this->buffer_h = buffer_h;
@@ -39,6 +35,25 @@ void t_main_window::create(const t_string& title, int buffer_w, int buffer_h, in
     
     clear(back_color);
     update();
+
+    created = true;
+}
+
+bool t_main_window::is_open() const
+{
+    return created;
+}
+
+void t_main_window::close()
+{
+    SDL_DestroyRenderer(rend);
+    rend = nullptr;
+    SDL_DestroyWindow(wnd);
+    wnd = nullptr;
+    delete buffer;
+    buffer = nullptr;
+
+    created = false;
 }
 
 void t_main_window::update()

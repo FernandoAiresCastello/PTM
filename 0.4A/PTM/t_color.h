@@ -4,6 +4,8 @@
 class t_color
 {
 public:
+	static t_color invalid;
+
 	t_color();
 	t_color(RGB rgb);
 	t_color(int r, int g, int b);

@@ -1,6 +1,8 @@
 #include "t_color.h"
 #include "t_util.h"
 
+t_color t_color::invalid = 0x000000;
+
 t_color::t_color() : r(0), g(0), b(0)
 {
 }

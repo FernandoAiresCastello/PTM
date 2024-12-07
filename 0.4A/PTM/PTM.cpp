@@ -1,4 +1,5 @@
 #include "PTM.h"
+#include "t_image.h"
 
 PTM::PTM()
 {
@@ -14,17 +15,35 @@ PTM::~PTM()
 
 int PTM::run()
 {
-	wnd.create("PTM", 360, 200, 4, 4, 0x000000);
+	wnd.open("PTM", 360, 200, 4, 4, 0x108020);
 
-    while (true) {
+    t_image img;
+    img.load("player.bmp");
+    img.set_transparency_key(0xffffff);
 
-        wnd.update();
+    while (wnd.is_open()) {
+
+        scr.draw_image(&img, 0, 0);
+        scr.update();
 
         SDL_Event event;
         SDL_PollEvent(&event);
         if (event.type == SDL_EVENT_QUIT)
-            break;
+            quit();
+        else if (event.type == SDL_EVENT_KEY_DOWN)
+            on_keydown(event.key.key);
     }
 
     return 0;
+}
+
+void PTM::quit()
+{
+    wnd.close();
+}
+
+void PTM::on_keydown(SDL_Keycode& key)
+{
+    if (key == SDLK_ESCAPE)
+        quit();
 }
