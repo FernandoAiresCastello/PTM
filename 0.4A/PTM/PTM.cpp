@@ -16,15 +16,14 @@ int PTM::run()
 {
 	wnd.create("PTM", 360, 200, 4, 4, 0x000000);
 
-    SDL_Event event;
-
     while (true) {
 
+        wnd.update();
+
+        SDL_Event event;
         SDL_PollEvent(&event);
         if (event.type == SDL_EVENT_QUIT)
             break;
-
-        wnd.update();
     }
 
     return 0;

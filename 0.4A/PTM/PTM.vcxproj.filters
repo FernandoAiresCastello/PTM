@@ -26,6 +26,9 @@
     <ClCompile Include="t_charset.cpp">
       <Filter>GRAPHICS</Filter>
     </ClCompile>
+    <ClCompile Include="t_image.cpp">
+      <Filter>GRAPHICS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="t_main_window.h">
@@ -62,6 +65,9 @@
       <Filter>UTIL</Filter>
     </ClInclude>
     <ClInclude Include="t_rgb.h">
+      <Filter>GRAPHICS</Filter>
+    </ClInclude>
+    <ClInclude Include="t_image.h">
       <Filter>GRAPHICS</Filter>
     </ClInclude>
   </ItemGroup>

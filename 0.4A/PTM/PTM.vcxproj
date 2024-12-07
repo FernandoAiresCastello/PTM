@@ -144,6 +144,7 @@
     <ClCompile Include="PTM.cpp" />
     <ClCompile Include="t_charset.cpp" />
     <ClCompile Include="t_color.cpp" />
+    <ClCompile Include="t_image.cpp" />
     <ClCompile Include="t_list.cpp" />
     <ClCompile Include="t_main_window.cpp" />
     <ClCompile Include="t_screen.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="t_binary.h" />
     <ClInclude Include="t_charset.h" />
     <ClInclude Include="t_color.h" />
+    <ClInclude Include="t_image.h" />
     <ClInclude Include="t_index.h" />
     <ClInclude Include="t_list.h" />
     <ClInclude Include="t_main_window.h" />
