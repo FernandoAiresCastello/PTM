@@ -1,7 +1,4 @@
-#include <filesystem>
 #include "t_image_pool.h"
-
-namespace fs = std::filesystem;
 
 t_image_pool::t_image_pool()
 {
@@ -12,9 +9,11 @@ t_image_pool::~t_image_pool()
 	images.clear();
 }
 
-t_image* t_image_pool::new_image(int w, int h, const t_color& color)
+t_index t_image_pool::new_image(int w, int h, const t_color& color)
 {
-	return &images.emplace_back(w, h, color);
+	images.emplace_back(w, h, color);
+
+	return images.size() - 1;
 }
 
 void t_image_pool::new_images(int w, int h, const t_color& color, int count)
@@ -39,4 +38,9 @@ const t_list<t_image>& t_image_pool::get_all()
 void t_image_pool::delete_all()
 {
 	images.clear();
+}
+
+int t_image_pool::size() const
+{
+	return images.size();
 }

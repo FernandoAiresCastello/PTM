@@ -20,8 +20,10 @@ public:
 	void set_image(t_index img_index);
 	t_index get_image() const;
 	void remove_image();
+	bool has_image() const;
 	bool empty() const;
 	void set_empty();
+	void reset_flags();
 
 private:
 	t_index image_index;

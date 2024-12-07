@@ -21,7 +21,7 @@ void t_main_window::open(const t_string& title, int buffer_w, int buffer_h, int 
     buffer_len = buffer_w * buffer_h * sizeof(int);
     buffer = new int[buffer_len];
 
-    SDL_CreateWindowAndRenderer(title.c_str(), buffer_w * stretch_w, buffer_h * stretch_h, 0, &wnd, &rend);
+    SDL_CreateWindowAndRenderer(title.c_str(), buffer_w * stretch_w, buffer_h * stretch_h, SDL_WINDOW_HIDDEN, &wnd, &rend);
     SDL_SetWindowPosition(wnd, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 
     tex = SDL_CreateTexture(rend, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, buffer_w, buffer_h);
@@ -36,6 +36,8 @@ void t_main_window::open(const t_string& title, int buffer_w, int buffer_h, int 
     
     clear(0x000000);
     update();
+
+    SDL_ShowWindow(wnd);
 
     created = true;
 }

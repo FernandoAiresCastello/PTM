@@ -10,18 +10,26 @@
 t_system::t_system()
 {
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+
+    add_subsystem(&sys_test);
+
+    sys_test.activate();
 }
 
 t_system::~t_system()
 {
-    for (int i = 0; i < subsystems.size(); i++) {
-        delete subsystems[i];
+    for (int i = 0; i < subsystems.size(); i++)
         subsystems[i] = nullptr;
-    }
+    
     subsystems.clear();
 
     quit();
 	SDL_Quit();
+}
+
+void t_system::add_subsystem(t_subsystem* sys)
+{
+    subsystems.push_back(sys);
 }
 
 void t_system::quit()
@@ -31,8 +39,11 @@ void t_system::quit()
 
 int t_system::run()
 {
-    ptm.wnd.open("PTM", 360, 200, 4, 4);
-    ptm.scr.set_backcolor(0x108020);
+    ptm.wnd.open(ptm.defaults.wnd_title, 
+        ptm.defaults.wnd_buffer_w, ptm.defaults.wnd_buffer_h, 
+        ptm.defaults.wnd_stretch_w, ptm.defaults.wnd_stretch_h);
+
+    ptm.scr.set_backcolor(ptm.defaults.back_color);
 
     while (ptm.wnd.is_open()) {
 

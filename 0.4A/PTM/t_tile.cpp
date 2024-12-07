@@ -28,15 +28,25 @@ void t_tile::remove_image()
 	image_index = ptm.invalid_index;
 }
 
+bool t_tile::has_image() const
+{
+	return image_index != ptm.invalid_index;
+}
+
 bool t_tile::empty() const
 {
-	return data.empty() && code.empty() && image_index == ptm.invalid_index;
+	return data.empty() && code.empty() && !has_image();
 }
 
 void t_tile::set_empty()
 {
 	data.clear();
 	remove_image();
+	reset_flags();
+}
+
+void t_tile::reset_flags()
+{
 	enabled = true;
 	visible = true;
 	solid = false;

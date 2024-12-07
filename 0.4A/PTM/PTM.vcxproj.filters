@@ -53,6 +53,12 @@
     <ClCompile Include="t_ptm.cpp">
       <Filter>CORE</Filter>
     </ClCompile>
+    <ClCompile Include="t_sys_test.cpp">
+      <Filter>SUBSYSTEMS</Filter>
+    </ClCompile>
+    <ClCompile Include="t_mouse.cpp">
+      <Filter>INPUT</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="t_string.h">
@@ -114,6 +120,15 @@
     </ClInclude>
     <ClInclude Include="t_ptm.h">
       <Filter>CORE</Filter>
+    </ClInclude>
+    <ClInclude Include="t_sys_test.h">
+      <Filter>SUBSYSTEMS</Filter>
+    </ClInclude>
+    <ClInclude Include="t_defaults.h">
+      <Filter>CORE</Filter>
+    </ClInclude>
+    <ClInclude Include="t_mouse.h">
+      <Filter>INPUT</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
