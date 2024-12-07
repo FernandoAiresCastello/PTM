@@ -159,6 +159,7 @@
     <ClCompile Include="t_subsystem.cpp" />
     <ClCompile Include="t_sys_test.cpp" />
     <ClCompile Include="t_tile.cpp" />
+    <ClCompile Include="t_board.cpp" />
     <ClCompile Include="t_util.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +185,7 @@
     <ClInclude Include="t_subsystem.h" />
     <ClInclude Include="t_sys_test.h" />
     <ClInclude Include="t_tile.h" />
+    <ClInclude Include="t_board.h" />
     <ClInclude Include="t_util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

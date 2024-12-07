@@ -59,6 +59,9 @@
     <ClCompile Include="t_mouse.cpp">
       <Filter>INPUT</Filter>
     </ClCompile>
+    <ClCompile Include="t_board.cpp">
+      <Filter>GRAPHICS\COMPLEX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="t_string.h">
@@ -129,6 +132,9 @@
     </ClInclude>
     <ClInclude Include="t_mouse.h">
       <Filter>INPUT</Filter>
+    </ClInclude>
+    <ClInclude Include="t_board.h">
+      <Filter>GRAPHICS\COMPLEX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
