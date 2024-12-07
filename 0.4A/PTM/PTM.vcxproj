@@ -152,7 +152,6 @@
     <ClCompile Include="t_util.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="global.h" />
     <ClInclude Include="PTM.h" />
     <ClInclude Include="t_binary.h" />
     <ClInclude Include="t_charset.h" />

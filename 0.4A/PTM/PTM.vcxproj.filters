@@ -34,9 +34,6 @@
     <ClInclude Include="t_main_window.h">
       <Filter>GRAPHICS</Filter>
     </ClInclude>
-    <ClInclude Include="global.h">
-      <Filter>CORE</Filter>
-    </ClInclude>
     <ClInclude Include="t_string.h">
       <Filter>UTIL</Filter>
     </ClInclude>

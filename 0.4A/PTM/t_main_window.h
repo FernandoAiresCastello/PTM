@@ -1,5 +1,6 @@
 #pragma once
-#include "global.h"
+#include <SDL3/SDL.h>
+#include "t_string.h"
 #include "t_rgb.h"
 
 class t_main_window
@@ -8,7 +9,7 @@ public:
 	t_main_window();
 	~t_main_window();
 
-	void open(const t_string& title, int buffer_w, int buffer_h, int stretch_w, int stretch_h, const RGB& back_color);
+	void open(const t_string& title, int buffer_w, int buffer_h, int stretch_w, int stretch_h);
 	bool is_open() const;
 	void close();
 	void update();

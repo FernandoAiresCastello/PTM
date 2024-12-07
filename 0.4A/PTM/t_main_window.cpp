@@ -1,3 +1,4 @@
+#include <random>
 #include "t_main_window.h"
 #include "t_color.h"
 
@@ -12,7 +13,7 @@ t_main_window::~t_main_window()
     close();
 }
 
-void t_main_window::open(const t_string& title, int buffer_w, int buffer_h, int stretch_w, int stretch_h, const RGB& back_color)
+void t_main_window::open(const t_string& title, int buffer_w, int buffer_h, int stretch_w, int stretch_h)
 {
     this->buffer_w = buffer_w;
     this->buffer_h = buffer_h;
@@ -33,7 +34,7 @@ void t_main_window::open(const t_string& title, int buffer_w, int buffer_h, int 
     SDL_RenderClear(rend);
     SDL_RenderPresent(rend);
     
-    clear(back_color);
+    clear(0x000000);
     update();
 
     created = true;

@@ -11,9 +11,30 @@ t_screen::~t_screen()
 {
 }
 
+void t_screen::init(t_main_window* wnd, t_charset* charset)
+{
+	this->wnd = wnd;
+	this->charset = charset;
+}
+
 void t_screen::update()
 {
 	wnd->update();
+}
+
+void t_screen::clear()
+{
+	wnd->clear(back_color.to_rgb());
+}
+
+void t_screen::set_backcolor(const t_color& color)
+{
+	back_color = color;
+}
+
+const t_color& t_screen::get_backcolor() const
+{
+	return back_color;
 }
 
 void t_screen::toggle_fullscreen()

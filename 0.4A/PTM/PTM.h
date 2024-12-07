@@ -1,5 +1,4 @@
 #pragma once
-#include "global.h"
 #include "t_main_window.h"
 #include "t_screen.h"
 #include "t_charset.h"
@@ -18,6 +17,7 @@ private:
 	t_screen scr;
 	t_charset charset;
 
+	void on_draw_frame();
 	void on_keydown(SDL_Keycode& key, SDL_Keymod& mod);
 };
 
