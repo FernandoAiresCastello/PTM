@@ -1,4 +1,5 @@
 #include "t_screen.h"
+#include "t_ptm.h"
 #include "t_main_window.h"
 #include "t_charset.h"
 #include "t_image.h"
@@ -12,20 +13,14 @@ t_screen::~t_screen()
 {
 }
 
-void t_screen::init(t_main_window* wnd, t_charset* charset)
-{
-	this->wnd = wnd;
-	this->charset = charset;
-}
-
 void t_screen::update()
 {
-	wnd->update();
+	ptm.wnd.update();
 }
 
 void t_screen::clear()
 {
-	wnd->clear(back_color.to_rgb());
+	ptm.wnd.clear(back_color.to_rgb());
 }
 
 void t_screen::set_backcolor(const t_color& color)
@@ -40,11 +35,12 @@ const t_color& t_screen::get_backcolor() const
 
 void t_screen::toggle_fullscreen()
 {
-	wnd->toggle_fullscreen();
+	ptm.wnd.toggle_fullscreen();
 }
 
-void t_screen::draw_image(t_image* img, int x, int y)
+void t_screen::draw_image(t_index img_index, int x, int y)
 {
+	const t_image* img = ptm.images.get(img_index);
 	if (!img) return;
 
 	const int px = x;
@@ -52,20 +48,13 @@ void t_screen::draw_image(t_image* img, int x, int y)
 		for (int ix = 0; ix < img->get_width(); ix++) {
 			const t_color& color = img->get_pixel(ix, iy);
 			if (!img->is_transparent() || img->get_transparency_key() != color)
-				wnd->set_pixel(x, y, color.to_rgb());
+				ptm.wnd.set_pixel(x, y, color.to_rgb());
 			
 			x++;
 		}
 		y++;
 		x = px;
 	}
-}
-
-void t_screen::draw_image(t_image_pool* pool, t_index image_index, int x, int y)
-{
-	if (!pool) return;
-
-	draw_image(pool->get(image_index), x, y);
 }
 
 void t_screen::putch(t_index ch, int x, int y, const t_color& fore_color)
@@ -92,7 +81,7 @@ void t_screen::print(const t_string& str, int x, int y, const t_color& fore_colo
 
 void t_screen::putch(t_index ch, int x, int y, const t_color& fore_color, const t_color& back_color, bool hide_back_color)
 {
-	const t_binary& bits = charset->get(ch);
+	const t_binary& bits = ptm.font.get(ch);
 
 	x *= t_charset::char_w;
 	y *= t_charset::char_h;
@@ -100,11 +89,12 @@ void t_screen::putch(t_index ch, int x, int y, const t_color& fore_color, const 
 	const int px = x;
 	for (auto& bit : bits.s_str()) {
 		if (hide_back_color) {
-			if (bit == '1')
-				wnd->set_pixel(x, y, fore_color.to_rgb());
+			if (bit == '1') {
+				ptm.wnd.set_pixel(x, y, fore_color.to_rgb());
+			}
 		}
 		else {
-			wnd->set_pixel(x, y, (bit == '1' ? fore_color : back_color).to_rgb());
+			ptm.wnd.set_pixel(x, y, (bit == '1' ? fore_color : back_color).to_rgb());
 		}
 		x++;
 		if (x >= px + t_charset::char_w) {

@@ -8,7 +8,7 @@
     <ClCompile Include="t_list.cpp">
       <Filter>UTIL</Filter>
     </ClCompile>
-    <ClCompile Include="PTM.cpp">
+    <ClCompile Include="t_system.cpp">
       <Filter>CORE</Filter>
     </ClCompile>
     <ClCompile Include="t_util.cpp">
@@ -18,25 +18,40 @@
       <Filter>UTIL</Filter>
     </ClCompile>
     <ClCompile Include="t_charset.cpp">
-      <Filter>GRAPHICS\BASE</Filter>
+      <Filter>GRAPHICS\BASIC</Filter>
     </ClCompile>
     <ClCompile Include="t_color.cpp">
-      <Filter>GRAPHICS\BASE</Filter>
+      <Filter>GRAPHICS\BASIC</Filter>
     </ClCompile>
     <ClCompile Include="t_image.cpp">
-      <Filter>GRAPHICS\BASE</Filter>
+      <Filter>GRAPHICS\BASIC</Filter>
     </ClCompile>
     <ClCompile Include="t_main_window.cpp">
-      <Filter>GRAPHICS\BASE</Filter>
+      <Filter>GRAPHICS\BASIC</Filter>
     </ClCompile>
     <ClCompile Include="t_screen.cpp">
-      <Filter>GRAPHICS\BASE</Filter>
+      <Filter>GRAPHICS\BASIC</Filter>
     </ClCompile>
     <ClCompile Include="t_palette.cpp">
-      <Filter>GRAPHICS\BASE</Filter>
+      <Filter>GRAPHICS\BASIC</Filter>
     </ClCompile>
     <ClCompile Include="t_image_pool.cpp">
-      <Filter>GRAPHICS\SUPPORT</Filter>
+      <Filter>GRAPHICS\COMPLEX</Filter>
+    </ClCompile>
+    <ClCompile Include="t_subsystem.cpp">
+      <Filter>SUBSYSTEMS</Filter>
+    </ClCompile>
+    <ClCompile Include="t_keyboard.cpp">
+      <Filter>INPUT</Filter>
+    </ClCompile>
+    <ClCompile Include="t_tile.cpp">
+      <Filter>GRAPHICS\COMPLEX</Filter>
+    </ClCompile>
+    <ClCompile Include="t_data.cpp">
+      <Filter>UTIL</Filter>
+    </ClCompile>
+    <ClCompile Include="t_ptm.cpp">
+      <Filter>CORE</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -46,7 +61,7 @@
     <ClInclude Include="t_list.h">
       <Filter>UTIL</Filter>
     </ClInclude>
-    <ClInclude Include="PTM.h">
+    <ClInclude Include="t_system.h">
       <Filter>CORE</Filter>
     </ClInclude>
     <ClInclude Include="t_util.h">
@@ -59,31 +74,46 @@
       <Filter>UTIL</Filter>
     </ClInclude>
     <ClInclude Include="t_binary.h">
-      <Filter>GRAPHICS\BASE</Filter>
+      <Filter>GRAPHICS\BASIC</Filter>
     </ClInclude>
     <ClInclude Include="t_charset.h">
-      <Filter>GRAPHICS\BASE</Filter>
+      <Filter>GRAPHICS\BASIC</Filter>
     </ClInclude>
     <ClInclude Include="t_color.h">
-      <Filter>GRAPHICS\BASE</Filter>
+      <Filter>GRAPHICS\BASIC</Filter>
     </ClInclude>
     <ClInclude Include="t_image.h">
-      <Filter>GRAPHICS\BASE</Filter>
+      <Filter>GRAPHICS\BASIC</Filter>
     </ClInclude>
     <ClInclude Include="t_main_window.h">
-      <Filter>GRAPHICS\BASE</Filter>
+      <Filter>GRAPHICS\BASIC</Filter>
     </ClInclude>
     <ClInclude Include="t_rgb.h">
-      <Filter>GRAPHICS\BASE</Filter>
+      <Filter>GRAPHICS\BASIC</Filter>
     </ClInclude>
     <ClInclude Include="t_screen.h">
-      <Filter>GRAPHICS\BASE</Filter>
+      <Filter>GRAPHICS\BASIC</Filter>
     </ClInclude>
     <ClInclude Include="t_palette.h">
-      <Filter>GRAPHICS\BASE</Filter>
+      <Filter>GRAPHICS\BASIC</Filter>
     </ClInclude>
     <ClInclude Include="t_image_pool.h">
-      <Filter>GRAPHICS\SUPPORT</Filter>
+      <Filter>GRAPHICS\COMPLEX</Filter>
+    </ClInclude>
+    <ClInclude Include="t_keyboard.h">
+      <Filter>INPUT</Filter>
+    </ClInclude>
+    <ClInclude Include="t_subsystem.h">
+      <Filter>SUBSYSTEMS</Filter>
+    </ClInclude>
+    <ClInclude Include="t_tile.h">
+      <Filter>GRAPHICS\COMPLEX</Filter>
+    </ClInclude>
+    <ClInclude Include="t_data.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
+    <ClInclude Include="t_ptm.h">
+      <Filter>CORE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -96,11 +126,17 @@
     <Filter Include="CORE">
       <UniqueIdentifier>{08f6e765-5c0f-4eec-b762-c3fb209a89af}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GRAPHICS\BASE">
-      <UniqueIdentifier>{44342616-f519-4a53-b53a-8d5ea70946f1}</UniqueIdentifier>
+    <Filter Include="INPUT">
+      <UniqueIdentifier>{6df5a51a-5f83-417f-9207-70188839c395}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GRAPHICS\SUPPORT">
+    <Filter Include="SUBSYSTEMS">
+      <UniqueIdentifier>{45341c82-7cce-4697-a766-45472cdd5995}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GRAPHICS\COMPLEX">
       <UniqueIdentifier>{b5cf3d74-c85a-481a-95ed-a692781e9c2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GRAPHICS\BASIC">
+      <UniqueIdentifier>{44342616-f519-4a53-b53a-8d5ea70946f1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
