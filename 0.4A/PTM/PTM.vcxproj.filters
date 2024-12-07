@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="t_main_window.cpp">
+      <Filter>GRAPHICS</Filter>
+    </ClCompile>
+    <ClCompile Include="t_string.cpp">
+      <Filter>UTIL</Filter>
+    </ClCompile>
+    <ClCompile Include="t_list.cpp">
+      <Filter>UTIL</Filter>
+    </ClCompile>
+    <ClCompile Include="t_screen.cpp">
+      <Filter>GRAPHICS</Filter>
+    </ClCompile>
+    <ClCompile Include="PTM.cpp">
+      <Filter>CORE</Filter>
+    </ClCompile>
+    <ClCompile Include="t_color.cpp">
+      <Filter>GRAPHICS</Filter>
+    </ClCompile>
+    <ClCompile Include="t_util.cpp">
+      <Filter>UTIL</Filter>
+    </ClCompile>
+    <ClCompile Include="t_charset.cpp">
+      <Filter>GRAPHICS</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="t_main_window.h">
+      <Filter>GRAPHICS</Filter>
+    </ClInclude>
+    <ClInclude Include="global.h">
+      <Filter>CORE</Filter>
+    </ClInclude>
+    <ClInclude Include="t_string.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
+    <ClInclude Include="t_list.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
+    <ClInclude Include="t_screen.h">
+      <Filter>GRAPHICS</Filter>
+    </ClInclude>
+    <ClInclude Include="PTM.h">
+      <Filter>CORE</Filter>
+    </ClInclude>
+    <ClInclude Include="t_color.h">
+      <Filter>GRAPHICS</Filter>
+    </ClInclude>
+    <ClInclude Include="t_util.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
+    <ClInclude Include="t_binary.h">
+      <Filter>GRAPHICS</Filter>
+    </ClInclude>
+    <ClInclude Include="t_charset.h">
+      <Filter>GRAPHICS</Filter>
+    </ClInclude>
+    <ClInclude Include="t_index.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
+    <ClInclude Include="t_rgb.h">
+      <Filter>GRAPHICS</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="GRAPHICS">
+      <UniqueIdentifier>{a0a9d060-1925-44ba-b67c-1196e7eafd6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UTIL">
+      <UniqueIdentifier>{4b4ffa97-998d-45d4-a96a-b2bf2e7862d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CORE">
+      <UniqueIdentifier>{08f6e765-5c0f-4eec-b762-c3fb209a89af}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

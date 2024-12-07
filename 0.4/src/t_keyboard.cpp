@@ -131,10 +131,7 @@ unsigned char t_keyboard::keycode_to_char(SDL_Keycode key)
 	if (key == SDLK_LEFTBRACKET) return shifted ? '{' : '[';
 	if (key == SDLK_RIGHTBRACKET) return shifted ? '}' : ']';
 	if (key == SDLK_BACKSLASH) return shifted ? '|' : '\\';
-
-	if (key == 231) /* c-cedilla */ return shifted ? 94 : 96;
-	if (key == 126) /* tilde */ return shifted ? 126 : 127;
-	if (key == 180) /* acute accent */ return shifted ? 2 : 1;
+	if (key == SDLK_BACKQUOTE) return shifted ? '~' : '`';
 
 	return 0;
 }
