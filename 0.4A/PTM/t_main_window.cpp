@@ -101,3 +101,11 @@ const RGB& t_main_window::get_pixel(int x, int y) const
 
     return out_of_bounds_color;
 }
+
+void t_main_window::toggle_fullscreen()
+{
+    Uint32 flag = SDL_WINDOW_FULLSCREEN;
+    Uint32 is_full = SDL_GetWindowFlags(wnd) & flag;
+    SDL_SetWindowFullscreen(wnd, is_full ? 0 : flag);
+    update();
+}

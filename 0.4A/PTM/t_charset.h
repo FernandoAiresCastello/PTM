@@ -6,6 +6,9 @@
 class t_charset
 {
 public:
+	static const int char_w = 8;
+	static const int char_h = 8;
+
 	t_charset();
 	t_charset(const t_charset& other);
 	t_charset& operator=(const t_charset& other);

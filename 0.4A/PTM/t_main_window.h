@@ -17,6 +17,7 @@ public:
 	void set_pixel(int i, const RGB& color);
 	void set_pixel(int x, int y, const RGB& color);
 	const RGB& get_pixel(int x, int y) const;
+	void toggle_fullscreen();
 
 private:
 	bool created = false;
