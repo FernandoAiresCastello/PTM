@@ -8,8 +8,8 @@ struct t_defaults
 
 	const int wnd_buffer_w = 360;
 	const int wnd_buffer_h = 200;
-	const int wnd_stretch_w = 4;
-	const int wnd_stretch_h = 4;
+	const int wnd_stretch_w = 3;
+	const int wnd_stretch_h = 3;
 
 	const t_color back_color = 0x000000;
 };
