@@ -125,6 +125,9 @@
     <ClCompile Include="src\t_sprite.cpp">
       <Filter>GRAPHICS - TILESYSTEM</Filter>
     </ClCompile>
+    <ClCompile Include="src\t_image.cpp">
+      <Filter>GRAPHICS - CORE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\t_string.h">
@@ -297,6 +300,9 @@
     </ClInclude>
     <ClInclude Include="src\t_array_ref.h">
       <Filter>PROGRAM STRUCTURE</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_image.h">
+      <Filter>GRAPHICS - CORE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

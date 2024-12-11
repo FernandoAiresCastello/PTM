@@ -8,6 +8,7 @@
 
 class t_charset;
 class t_palette;
+class t_image;
 
 class t_window
 {
@@ -36,6 +37,7 @@ public:
 	void draw_char(t_charset* chr, t_palette* pal, t_index char_index, int x, int y, t_index color1, t_index color0, bool grid, bool hide_color0);
 	void draw_text(t_charset* chr, t_palette* pal, const t_string& text, int x, int y, t_index color1, t_index color0, bool grid, bool hide_color0);
 	void draw_debug_text(t_charset* chr, const t_string& text, int x, int y);
+	void draw_image(t_image* image, int x, int y);
 
 private:
 	static constexpr int tilesize = t_tile::width * t_tile::height;

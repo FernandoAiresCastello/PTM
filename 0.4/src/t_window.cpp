@@ -3,6 +3,7 @@
 #include "t_util.h"
 #include "t_charset.h"
 #include "t_palette.h"
+#include "t_image.h"
 
 #define sdl_wnd ((SDL_Window*)wnd)
 #define sdl_rend ((SDL_Renderer*)rend)
@@ -120,6 +121,7 @@ int t_window::get_animation_frame() const
 
 #define is_valid_pixel(x, y)		x >= 0 && y >= 0 && x < image_w && y < image_h
 #define set_pixel(x, y, color)		if (is_valid_pixel(x, y)) { scrbuf[y * image_w + x] = color.to_rgb(); }
+#define set_pixel_rgb(x, y, color)	if (is_valid_pixel(x, y)) { scrbuf[y * image_w + x] = color; }
 #define snap_to_grid(grid, x, y)	if (grid) { x *= t_tile::width; y *= t_tile::height; }
 
 void t_window::draw_pixel(int x, int y, const t_color& color)
@@ -174,5 +176,18 @@ void t_window::draw_debug_text(t_charset* chr, const t_string& text, int x, int 
 	const char* ctext = text.c_str();
 	for (int i = 0; i < strlen(ctext); i++) {
 		draw_pixels(chr->get(ctext[i]), x++, y, 0xffffff, 0x000000, true, false);
+	}
+}
+
+void t_window::draw_image(t_image* image, int x, int y)
+{
+	const int px = x;
+	for (int iy = 0; iy < image->height; iy++) {
+		for (int ix = 0; ix < image->width; ix++) {
+			set_pixel_rgb(x, y, image->pixels[iy * image->width + ix]);
+			x++;
+		}
+		x = px;
+		y++;
 	}
 }
