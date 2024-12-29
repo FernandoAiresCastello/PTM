@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TileGameLib.Components;
 using TileGameLib.File;
@@ -14,7 +8,7 @@ using TileGameLib.Graphics;
 
 namespace PTMStudio
 {
-    public partial class TilesetEditPanel : UserControl
+	public partial class TilesetEditPanel : UserControl
     {
         private MainWindow MainWindow;
         private TiledDisplay Display;
@@ -36,9 +30,9 @@ namespace PTMStudio
             MainWindow = mainWnd;
 
             Display = new TiledDisplay(PnlTileset, 8, 8, 3);
-            Display.Graphics.Palette.Clear(2);
-            Display.Graphics.Palette.Set(0, 0x000000);
-            Display.Graphics.Palette.Set(1, 0xffffff);
+            //Display.Graphics.Palette.Clear(2);
+            //Display.Graphics.Palette.Set(0, 0x000000);
+            //Display.Graphics.Palette.Set(1, 0xffffff);
             Display.Graphics.Clear(1);
             Display.ShowGrid = true;
             Display.Cursor = Cursors.Hand;
@@ -51,7 +45,7 @@ namespace PTMStudio
             MaxTiles = Display.Graphics.Cols * Display.Graphics.Rows;
 
             DefaultTileset.Init(Display.Graphics.Tileset);
-            UpdateDisplay();
+			UpdateDisplay();
         }
 
         private void Display_MouseWheel(object sender, MouseEventArgs e)
@@ -199,7 +193,7 @@ namespace PTMStudio
             {
                 SaveFileDialog dialog = new SaveFileDialog();
                 dialog.InitialDirectory = Path.Combine(Filesystem.AbsoluteRootPath, "files");
-                dialog.Filter = "PTM Tileset File (*.ptm.chr)|*.ptm.chr";
+                dialog.Filter = "PTM Tileset File (*.chr)|*.chr";
                 if (dialog.ShowDialog() == DialogResult.OK)
                     Filename = dialog.FileName;
                 else
@@ -217,6 +211,7 @@ namespace PTMStudio
         private void BtnNew_Click(object sender, EventArgs e)
         {
             DefaultTileset.Init(Display.Graphics.Tileset);
+
             Filename = null;
             TxtFilename.Text = "<Unsaved>";
             FirstTile = 0;

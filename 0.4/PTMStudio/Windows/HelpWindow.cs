@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PTMStudio
 {
-    public partial class HelpWindow : Form
+	public partial class HelpWindow : Form
     {
         private readonly List<CommandHelp> Commands;
         private readonly List<CommandHelp> AllCommands;
@@ -60,11 +56,11 @@ namespace PTMStudio
 
         private void LoadCommands()
         {
-            string[] lines = File.ReadAllLines("docs/docgen_src.tsv");
+            string[] lines = File.ReadAllLines("commands.txt");
 
             Commands.Clear();
 
-            for (int i = 1; i < lines.Length; i++)
+            for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i].Trim();
                 string[] cols = line.Split('\t');
@@ -73,7 +69,8 @@ namespace PTMStudio
                 cmd.Command = cols[0];
                 cmd.Params = cols[1];
                 cmd.Description = cols[2];
-                cmd.Category = cols[3];
+                if (cols.Length > 3)
+                    cmd.Category = cols[3];
 
                 Commands.Add(cmd);
                 AllCommands.Add(cmd);
@@ -121,12 +118,12 @@ namespace PTMStudio
 
         public override string ToString()
         {
-            return Command + Params;
+            return Command + " " + Params;
         }
 
         public string ToHelpPanel()
         {
-            return Command + Params +
+            return Command + " " + Params +
                 Environment.NewLine + Environment.NewLine +
                 Description;
         }

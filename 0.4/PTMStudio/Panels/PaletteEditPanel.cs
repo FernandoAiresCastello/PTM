@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TileGameLib.Components;
 using TileGameLib.File;
@@ -16,7 +9,7 @@ using TileGameLib.Graphics;
 
 namespace PTMStudio
 {
-    public partial class PaletteEditPanel : UserControl
+	public partial class PaletteEditPanel : UserControl
     {
         private MainWindow MainWindow;
         private TiledDisplay Display;
@@ -38,9 +31,8 @@ namespace PTMStudio
             MainWindow = mainWnd;
 
             Display = new TiledDisplay(PnlPalette, 8, 8, 3);
-            InitDefaultPalette();
-            Display.Graphics.Tileset.ClearToSize(0);
-            Display.Graphics.Tileset.Add("1111111111111111111111111111111111111111111111111111111111111111");
+            //Display.Graphics.Tileset.ClearToSize(0);
+            //Display.Graphics.Tileset.Add("1111111111111111111111111111111111111111111111111111111111111111");
             Display.ShowGrid = true;
             Display.Cursor = Cursors.Hand;
             Display.SetMainGridColor(Color.FromArgb(80, 128, 128, 128));
@@ -52,14 +44,8 @@ namespace PTMStudio
 
             MaxColors = Display.Graphics.Cols * Display.Graphics.Rows;
 
-            UpdateDisplay();
-        }
-
-        private void InitDefaultPalette()
-        {
-            Display.Graphics.Palette.Clear(256, 0x000000);
-            Display.Graphics.Palette.Set(0, 0x101010);
-            Display.Graphics.Palette.Set(1, 0xf0f0f0);
+			DefaultPalette.Init(Display.Graphics.Palette);
+			UpdateDisplay();
         }
 
         private void Display_MouseWheel(object sender, MouseEventArgs e)
@@ -219,7 +205,7 @@ namespace PTMStudio
             {
                 SaveFileDialog dialog = new SaveFileDialog();
                 dialog.InitialDirectory = Path.Combine(Filesystem.AbsoluteRootPath, "files");
-                dialog.Filter = "PTM Palette File (*.ptm.pal)|*.ptm.pal";
+                dialog.Filter = "PTM Palette File (*.pal)|*.pal";
                 if (dialog.ShowDialog() == DialogResult.OK)
                     Filename = dialog.FileName;
                 else
@@ -236,8 +222,9 @@ namespace PTMStudio
 
         private void BtnNew_Click(object sender, EventArgs e)
         {
-            InitDefaultPalette();
-            Filename = null;
+			DefaultPalette.Init(Display.Graphics.Palette);
+
+			Filename = null;
             TxtFilename.Text = "<Unsaved>";
             FirstColor = 0;
             MainWindow.PaletteChanged(false);

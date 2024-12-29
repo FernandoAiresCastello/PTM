@@ -56,6 +56,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\DefaultPalette.cs" />
     <Compile Include="Windows\ColorEditWindow.cs">
       <SubType>Form</SubType>
     </Compile>

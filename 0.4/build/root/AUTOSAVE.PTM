@@ -5,10 +5,10 @@ SET ix,1
 SET iy,1
 SET c,0
 RTILE
-TILE 0,15,0
+TILE 0,0,0
 loop:
 LOCATE ix,iy
-CSET 0,c
+BSET 0,c
 PUT
 INC c
 INC ix
