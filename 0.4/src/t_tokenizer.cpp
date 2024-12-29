@@ -136,8 +136,8 @@ t_token t_tokenizer::parse_token(int token_index, t_string& src)
 		token.type = t_token_type::comment;
 	}
 	// ===== LABEL =====
-	else if (src.starts_with(sym.label)) {
-		auto&& val = src.skip(1);
+	else if (src.ends_with(sym.label)) {
+		auto&& val = src.substr(0, src.length() - 2);
 		if (val.empty()) {
 			token.type = t_token_type::invalid;
 		}

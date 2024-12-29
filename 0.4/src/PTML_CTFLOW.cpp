@@ -129,3 +129,9 @@ void PTML::PAUSE()
 	ARGC(1);
 	ptm->pause(NUM(1));
 }
+
+void PTML::BREAK()
+{
+	ARGC(1);
+	ptm->enable_user_break = BOOL(1);
+}

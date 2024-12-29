@@ -14,11 +14,13 @@
 #include "t_program.h"
 #include "t_program_line.h"
 #include "t_program_runner.h"
+#include "t_program_editor.h"
 #include "t_filesystem.h"
 
 int wnd_size = 3;
 t_window wnd;
 t_main_editor main_editor;
+t_program_editor program_editor;
 t_interpreter intp;
 t_program prg;
 t_program_runner prg_runner;
@@ -64,16 +66,21 @@ void PTM::init()
 	scr.set_palette(&pal);
 
 	intp.init(this, &scr, &kb);
+	program_editor.init(this, &scr, &kb);
 	main_editor.init(this, &scr, &kb, &intp);
+
+	main_editor.active = true;
+	program_editor.active = false;
 }
 
 void PTM::run_main()
 {
-	snd.alert();
-
 	bool autoexec = t_filesystem::file_exists(autoexec_file);
-	if (!autoexec)
+	
+	if (!autoexec) {
+		snd.alert();
 		main_editor.print_welcome(true);
+	}
 
 	while (wnd.is_open()) {
 		if (autoexec) {
@@ -110,6 +117,7 @@ void PTM::reset()
 	new_program();
 	main_editor.reset();
 	main_editor.print_welcome(false);
+	program_editor.reset();
 }
 
 void PTM::pause(int frames)
@@ -139,6 +147,9 @@ void PTM::on_machine_cycle()
 	if (!wnd.is_open())
 		return;
 
+	if (program_editor.active)
+		program_editor.draw_program();
+
 	if (auto_screen_update)
 		refresh_screen();
 
@@ -158,7 +169,10 @@ void PTM::on_machine_cycle()
 		else if (!kb.alt() && !halted) {
 			kb.push_key(key);
 			if (!prg_runner.is_running()) {
-				main_editor.on_keydown();
+				if (main_editor.active)
+					main_editor.on_keydown();
+				if (program_editor.active)
+					program_editor.on_keydown();
 			}
 		}
 	}
@@ -166,6 +180,9 @@ void PTM::on_machine_cycle()
 
 void PTM::on_escape_key_pressed()
 {
+	if (!enable_user_break)
+		return;
+
 	if (halted) {
 		halted = false;
 	}

@@ -56,9 +56,6 @@
     <ClCompile Include="src\t_screen.cpp">
       <Filter>GRAPHICS - CORE</Filter>
     </ClCompile>
-    <ClCompile Include="src\t_main_editor.cpp">
-      <Filter>CORE</Filter>
-    </ClCompile>
     <ClCompile Include="src\PTML_runtime.cpp">
       <Filter>RUNTIME UTILITIES</Filter>
     </ClCompile>
@@ -128,6 +125,12 @@
     <ClCompile Include="src\t_image.cpp">
       <Filter>GRAPHICS - CORE</Filter>
     </ClCompile>
+    <ClCompile Include="src\t_main_editor.cpp">
+      <Filter>EDITOR</Filter>
+    </ClCompile>
+    <ClCompile Include="src\t_program_editor.cpp">
+      <Filter>EDITOR</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\t_string.h">
@@ -195,9 +198,6 @@
     </ClInclude>
     <ClInclude Include="src\t_screen.h">
       <Filter>GRAPHICS - CORE</Filter>
-    </ClInclude>
-    <ClInclude Include="src\t_main_editor.h">
-      <Filter>CORE</Filter>
     </ClInclude>
     <ClInclude Include="src\t_function_ptr.h">
       <Filter>UTIL</Filter>
@@ -304,6 +304,12 @@
     <ClInclude Include="src\t_image.h">
       <Filter>GRAPHICS - CORE</Filter>
     </ClInclude>
+    <ClInclude Include="src\t_program_editor.h">
+      <Filter>EDITOR</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_main_editor.h">
+      <Filter>EDITOR</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="UTIL">
@@ -338,6 +344,9 @@
     </Filter>
     <Filter Include="RUNTIME UTILITIES">
       <UniqueIdentifier>{d73b4aac-b700-424b-8ae1-15ba947d5ef1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EDITOR">
+      <UniqueIdentifier>{a7b7ca7a-6d73-42da-885c-4b9bfc3e8753}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

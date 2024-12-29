@@ -26,4 +26,5 @@ namespace PTML
 	void CALL_IFNKEY();
 	void RET();
 	void PAUSE();
+	void BREAK();
 }

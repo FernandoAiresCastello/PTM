@@ -12,6 +12,8 @@ class t_sound;
 class t_main_editor
 {
 public:
+	bool active = true;
+
 	t_dict<SDL_Keycode, t_string> function_keys;
 	t_dict<SDL_Keycode, t_string> function_keys_shifted;
 

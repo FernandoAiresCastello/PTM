@@ -32,6 +32,7 @@ public:
 
 	t_tile tilereg;
 	bool auto_screen_update = true;
+	bool enable_user_break = true;
 
 	void run();
 	void exit();

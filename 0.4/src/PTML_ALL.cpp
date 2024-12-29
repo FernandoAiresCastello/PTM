@@ -26,6 +26,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("EXIT", EXIT);
 	CMD("RESET", RESET);
 	CMD("PAUSE", PAUSE);
+	CMD("BREAK", BREAK);
 
 	// === MEMORY ===
 	CMD("SET", SET);
