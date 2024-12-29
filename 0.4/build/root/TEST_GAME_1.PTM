@@ -1,0 +1,4 @@
+main:
+	CURSOR 0
+	PRINT "Hello World 123!"
+	HALT

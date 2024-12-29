@@ -32,7 +32,7 @@ t_sound snd;
 t_screen scr(256, t_window::rows - 2);
 const t_string empty_string = "";
 
-void PTM::run()
+void PTM::run(const char* initial_program)
 {
 	if (running)
 		return;
@@ -44,7 +44,7 @@ void PTM::run()
 	snd.set_volume(10);
 
 	init();
-	run_main();
+	run_main(initial_program);
 }
 
 void PTM::exit()
@@ -73,17 +73,24 @@ void PTM::init()
 	program_editor.active = false;
 }
 
-void PTM::run_main()
+void PTM::run_main(const char* initial_program)
 {
 	bool autoexec = t_filesystem::file_exists(autoexec_file);
-	
-	if (!autoexec) {
+	bool has_initial_prog = initial_program != nullptr;
+
+	if (!autoexec && !has_initial_prog) {
 		snd.alert();
 		main_editor.print_welcome(true);
 	}
 
 	while (wnd.is_open()) {
-		if (autoexec) {
+		if (has_initial_prog) {
+			has_initial_prog = false;
+			load_program(initial_program);
+			run_program_from_immediate_mode();
+			intp.print_prompt();
+		}
+		else if (autoexec) {
 			autoexec = false;
 			load_program(autoexec_file);
 			run_program_from_immediate_mode();
@@ -455,6 +462,9 @@ bool PTM::load_program(const t_string& filename)
 	}
 	catch (std::runtime_error error)
 	{
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "PTM - Error loading program", 
+			t_string::fmt("%s\n\n%s", error.what(), filename.c_str()).c_str(), nullptr);
+
 		return false;
 	}
 }

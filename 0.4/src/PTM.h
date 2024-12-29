@@ -28,8 +28,8 @@ public:
 	const t_string title_short		= "Programmable Tile Machine";
 	const t_string copyright_notice	= "` 2023-2024 by F.A.Castello";
 
-	const t_string autoexec_file = "AUTORUN";
-	const t_string autosave_file = "AUTOSAVE";
+	const t_string autoexec_file = "AUTORUN.PTM";
+	const t_string autosave_file = "AUTOSAVE.PTM";
 
 	t_tile tilereg;
 	bool auto_screen_update = true;
@@ -37,7 +37,7 @@ public:
 	t_user_tilebuffer usr_tilebuf;
 	bool usr_tilebuf_selected = false;
 
-	void run();
+	void run(const char* initial_program);
 	void exit();
 	void halt();
 	void reset();
@@ -108,7 +108,7 @@ private:
 	void init();
 	void run_tests();
 	void run_graphics_test();
-	void run_main();
+	void run_main(const char* initial_program);
 
 	void set_array(const t_array_ref& ref, const t_string& value, t_string& out_error);
 };

@@ -9,6 +9,7 @@
 
 t_string directory = "";
 const t_string root_directory = "ROOT";
+const t_string program_ext = ".PTM";
 const t_string palette_ext = ".PAL";
 const t_string charset_ext = ".CHR";
 const t_string screen_ext = ".SCR";
@@ -37,8 +38,6 @@ bool t_filesystem::is_valid_filename(const t_string& filename)
     if (trimmed_filename.empty())
         return false;
     if (trimmed_filename == "." || trimmed_filename == "..")
-        return false;
-    if (trimmed_filename.contains("."))
         return false;
     if (trimmed_filename.in(illegal_filenames))
         return false;
@@ -75,8 +74,6 @@ t_list<t_string> t_filesystem::list_files(const char* prefix)
     for (const auto& entry : fs::directory_iterator(ROOT + directory.s_str())) {
         if (fs::is_directory(entry.status())) {
             const auto&& path = entry.path().filename().string();
-            if (path.contains('.'))
-                continue;
             const auto&& dir = path + "/";
             if (prefix) {
                 if (path.starts_with(prefix))
@@ -91,8 +88,6 @@ t_list<t_string> t_filesystem::list_files(const char* prefix)
     for (const auto& entry : fs::directory_iterator(ROOT + directory.s_str())) {
         if (fs::is_regular_file(entry.status())) {
             const auto&& path = entry.path().filename().string();
-            if (path.contains('.'))
-                continue;
             if (prefix) {
                 if (path.starts_with(prefix))
                     files.emplace_back(path);
@@ -167,7 +162,9 @@ t_string t_filesystem::read_hex_file(const t_string& filename)
 
 t_string t_filesystem::read_all_text(const t_string& filename)
 {
-    std::ifstream file(PATH(filename), std::ios::in | std::ios::binary | std::ios::ate);
+    t_string path = filename.contains(":") ? filename : t_string(PATH(filename));
+
+    std::ifstream file(path, std::ios::in | std::ios::binary | std::ios::ate);
     if (!file)
         throw std::runtime_error("Could not open file");
 
