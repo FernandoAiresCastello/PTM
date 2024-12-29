@@ -131,6 +131,9 @@
     <ClCompile Include="src\t_program_editor.cpp">
       <Filter>EDITOR</Filter>
     </ClCompile>
+    <ClCompile Include="src\t_user_tilebuffer.cpp">
+      <Filter>GRAPHICS - TILESYSTEM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\t_string.h">
@@ -309,6 +312,9 @@
     </ClInclude>
     <ClInclude Include="src\t_main_editor.h">
       <Filter>EDITOR</Filter>
+    </ClInclude>
+    <ClInclude Include="src\t_user_tilebuffer.h">
+      <Filter>GRAPHICS - TILESYSTEM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

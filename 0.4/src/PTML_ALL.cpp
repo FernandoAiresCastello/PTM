@@ -126,11 +126,14 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("PGET", TILE_GETP);
 	
 	// === TILE BUFFER ===
+	CMD("BUF", BUF);
+	CMD("BSIZE", BSIZE);
 	CMD("GET", GET);
 	CMD("PUT", PUT);
 	CMD("DEL", DEL);
 	CMD("RECT", RECT);
 	CMD("FILL", FILL);
+	CMD("DRAW", DRAW);
 
 	// === SOUND ===
 	CMD("BEEP", BEEP);

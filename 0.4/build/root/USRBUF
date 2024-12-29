@@ -1,0 +1,10 @@
+cls
+cursor 0
+bsize 10,10
+rtile
+tile '@',15,5
+buf 1
+locate 4,4
+put
+draw 0,0,9,9,0,0
+halt

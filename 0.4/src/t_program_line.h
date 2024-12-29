@@ -24,6 +24,7 @@ public:
 	t_param arg3;
 	t_param arg4;
 	t_param arg5;
+	t_param arg6;
 	t_array_ref array_ref;
 
 	t_program_line();

@@ -17,6 +17,7 @@
 #include "t_sound.h"
 #include "t_screen.h"
 #include "t_array_ref.h"
+#include "t_user_tilebuffer.h"
 
 class PTM
 {
@@ -33,6 +34,8 @@ public:
 	t_tile tilereg;
 	bool auto_screen_update = true;
 	bool enable_user_break = true;
+	t_user_tilebuffer usr_tilebuf;
+	bool usr_tilebuf_selected = false;
 
 	void run();
 	void exit();
@@ -92,6 +95,7 @@ public:
 	int find_program_label(const t_string& label);
 	t_sound& get_sound();
 	const t_string& get_last_program_filename() const;
+	void draw_user_buffer(int x, int y, int w, int h, int xoff, int yoff);
 
 private:
 	bool running = false;

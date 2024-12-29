@@ -61,6 +61,7 @@
     <ClCompile Include="src\t_tileflags.cpp" />
     <ClCompile Include="src\t_token.cpp" />
     <ClCompile Include="src\t_tokenizer.cpp" />
+    <ClCompile Include="src\t_user_tilebuffer.cpp" />
     <ClCompile Include="src\t_util.cpp" />
     <ClCompile Include="src\t_window.cpp" />
   </ItemGroup>
@@ -122,6 +123,7 @@
     <ClInclude Include="src\t_token.h" />
     <ClInclude Include="src\t_tokenizer.h" />
     <ClInclude Include="src\t_token_type.h" />
+    <ClInclude Include="src\t_user_tilebuffer.h" />
     <ClInclude Include="src\t_util.h" />
     <ClInclude Include="src\t_window.h" />
   </ItemGroup>

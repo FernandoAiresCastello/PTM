@@ -28,6 +28,8 @@ namespace PTML
 	void TILE_GETB();
 	void TILE_SETP();
 	void TILE_GETP();
+	void BUF();
+	void BSIZE();
 	void PUT();
 	void RECT();
 	void FILL();
@@ -35,4 +37,5 @@ namespace PTML
 	void DEL();
 	void AUTOREF();
 	void REFRESH();
+	void DRAW();
 }

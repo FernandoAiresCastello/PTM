@@ -22,6 +22,7 @@ t_program_line::t_program_line(const t_list<t_token>& tokens)
 		if (argc > 2) arg3 = t_param(tokens[3]);
 		if (argc > 3) arg4 = t_param(tokens[4]);
 		if (argc > 4) arg5 = t_param(tokens[5]);
+		if (argc > 5) arg6 = t_param(tokens[6]);
 	}
 	else if (type == t_token_type::label) {
 		is_label = true;
@@ -58,6 +59,7 @@ t_program_line& t_program_line::operator=(const t_program_line& other)
     arg3 = other.arg3;
     arg4 = other.arg4;
     arg5 = other.arg5;
+	arg6 = other.arg6;
 
     return *this;
 }
