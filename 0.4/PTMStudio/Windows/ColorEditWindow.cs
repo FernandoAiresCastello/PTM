@@ -14,9 +14,9 @@ namespace PTMStudio
 {
     public partial class ColorEditWindow : Form
     {
-        private PaletteEditPanel PalettePanel;
-        private Palette Palette;
-        private int Index;
+        private readonly PaletteEditPanel PalettePanel;
+        private readonly Palette Palette;
+        private readonly int Index;
 
         private ColorEditWindow()
         {

@@ -6,10 +6,10 @@ void PTML::FILES()
 {
 	ARGC_MIN_MAX(0, 1);
 	if (COUNT(0)) {
-		PRINT_LIST(t_filesystem::list_files());
+		PRINT_LIST(t_filesystem::list_user_files());
 	}
 	else if (COUNT(1)) {
-		PRINT_LIST(t_filesystem::find_files(STR(1)));
+		PRINT_LIST(t_filesystem::find_user_files(STR(1)));
 	}
 }
 
@@ -22,9 +22,6 @@ void PTML::RENAME()
 
 	if (t_filesystem::file_exists(old_name)) {
 		t_filesystem::rename_file(old_name, new_name);
-	}
-	else if (t_filesystem::directory_exists(old_name)) {
-		t_filesystem::rename_directory(old_name, new_name);
 	}
 	else {
 		error = err.file_not_found;
@@ -39,43 +36,9 @@ void PTML::KILL()
 	if (t_filesystem::file_exists(name)) {
 		t_filesystem::delete_file(name);
 	}
-	else if (t_filesystem::directory_exists(name)) {
-		t_filesystem::delete_directory(name);
-	}
 	else {
 		error = err.file_not_found;
 	}
-}
-
-void PTML::CHDIR()
-{
-	ARGC_MIN_MAX(0, 1);
-	auto&& name = COUNT(0) ? "" : STR(1);
-
-	if (name.trim().empty() || name == t_filesystem::get_root_directory()) {
-		name = "";
-	}
-	else {
-		VALIDATE_FILENAME(name);
-		REQUIRE_DIR(name);
-	}
-
-	t_filesystem::change_directory(name);
-}
-
-void PTML::MKDIR()
-{
-	ARGC(1);
-	auto&& name = STR(1);
-	VALIDATE_FILENAME(name);
-	ASSERT_DIR_NOT_FOUND(name);
-
-	if (t_filesystem::file_exists(name)) {
-		error = err.cant_create_directory;
-		return;
-	}
-
-	t_filesystem::create_directory(name);
 }
 
 void PTML::OPEN()

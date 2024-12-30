@@ -1,14 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TileGameLib.Components;
 using TileGameLib.File;
@@ -19,11 +10,11 @@ namespace PTMStudio
 {
     public partial class TilebufferEditPanel : UserControl
     {
-        private MainWindow MainWindow;
-        private TiledDisplay Display;
+        private readonly MainWindow MainWindow;
+        private readonly TiledDisplay Display;
         private MapRenderer Renderer;
         private ObjectMap TileBuffer;
-        private Project Proj;
+        private readonly Project Proj;
 
         public string Filename { get; private set; }
 
@@ -37,8 +28,10 @@ namespace PTMStudio
             InitializeComponent();
             MainWindow = mainWnd;
 
-            Display = new TiledDisplay(DisplayPanel, 45, 25, 2);
-            Display.Parent = DisplayPanel;
+            Display = new TiledDisplay(DisplayPanel, 45, 25, 2)
+            {
+                Parent = DisplayPanel
+            };
             Display.Graphics.Palette = palette;
             Display.Graphics.Tileset = tileset;
             Display.Graphics.Clear(0);
@@ -47,9 +40,11 @@ namespace PTMStudio
             Display.MouseMove += Display_MouseMove;
             Display.MouseLeave += Display_MouseLeave;
 
-            Proj = new Project();
-            Proj.Palette = palette;
-            Proj.Tileset = tileset;
+            Proj = new Project
+            {
+                Palette = palette,
+                Tileset = tileset
+            };
 
             CreateNewBuffer();
             CmbLayer.SelectedIndexChanged += CmbLayer_SelectedIndexChanged;
@@ -179,9 +174,11 @@ namespace PTMStudio
         {
             if (string.IsNullOrWhiteSpace(Filename))
             {
-                SaveFileDialog dialog = new SaveFileDialog();
-                dialog.InitialDirectory = Path.Combine(Filesystem.AbsoluteRootPath, "files");
-                dialog.Filter = "PTM Tilebuffer File (*.ptm.buf)|*.ptm.buf";
+                SaveFileDialog dialog = new SaveFileDialog
+                {
+                    InitialDirectory = Filesystem.Root,
+                    Filter = "PTM Tilebuffer File (*.buf)|*.buf"
+                };
                 if (dialog.ShowDialog() == DialogResult.OK)
                     Filename = dialog.FileName;
                 else

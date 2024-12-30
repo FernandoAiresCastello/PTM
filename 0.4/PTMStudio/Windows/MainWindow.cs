@@ -9,18 +9,18 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace PTMStudio
 {
-	public partial class MainWindow : Form
+    public partial class MainWindow : Form
     {
-        private string PtmExe;
+        private readonly string PtmExe;
         private string ProgramFile = "";
         private readonly string MainProgramFile = "root/TEMP.PTM";
-        private ProgramEditPanel ProgramPanel;
-        private TilebufferEditPanel TilebufferPanel;
-        private FilesystemPanel FilePanel;
-        private ProgramLabelsPanel LabelsPanel;
-        private TilesetEditPanel TilesetPanel;
-        private PaletteEditPanel PalettePanel;
-        private TileRegisterPanel TileRegPanel;
+        private readonly ProgramEditPanel ProgramPanel;
+        private readonly TilebufferEditPanel TilebufferPanel;
+        private readonly FilesystemPanel FilePanel;
+        private readonly ProgramLabelsPanel LabelsPanel;
+        private readonly TilesetEditPanel TilesetPanel;
+        private readonly PaletteEditPanel PalettePanel;
+        private readonly TileRegisterPanel TileRegPanel;
         private HelpWindow HelpWindow;
         private string ProjectFile;
 
@@ -40,37 +40,51 @@ namespace PTMStudio
             MinimumSize = Size;
             PtmExe = ptmExe;
 
-            ProgramPanel = new ProgramEditPanel(this);
-            ProgramPanel.Parent = CenterPanel;
-            ProgramPanel.Dock = DockStyle.Fill;
+            ProgramPanel = new ProgramEditPanel(this)
+            {
+                Parent = CenterPanel,
+                Dock = DockStyle.Fill
+            };
 
-            FilePanel = new FilesystemPanel(this);
-            FilePanel.Parent = TopRightPanel;
-            FilePanel.Dock = DockStyle.Fill;
+            FilePanel = new FilesystemPanel(this)
+            {
+                Parent = TopRightPanel,
+                Dock = DockStyle.Fill
+            };
 
-            LabelsPanel = new ProgramLabelsPanel(this);
-            LabelsPanel.Parent = BtmRightPanel;
-            LabelsPanel.Dock = DockStyle.Fill;
+            LabelsPanel = new ProgramLabelsPanel(this)
+            {
+                Parent = BtmRightPanel,
+                Dock = DockStyle.Fill
+            };
 
-            TilesetPanel = new TilesetEditPanel(this);
-            TilesetPanel.Parent = TopLeftPanel;
-            TilesetPanel.Dock = DockStyle.Fill;
+            TilesetPanel = new TilesetEditPanel(this)
+            {
+                Parent = TopLeftPanel,
+                Dock = DockStyle.Fill
+            };
 
-            PalettePanel = new PaletteEditPanel(this);
-            PalettePanel.Parent = BtmLeftPanel;
-            PalettePanel.Dock = DockStyle.Fill;
+            PalettePanel = new PaletteEditPanel(this)
+            {
+                Parent = BtmLeftPanel,
+                Dock = DockStyle.Fill
+            };
 
-            TilebufferPanel = new TilebufferEditPanel(this, 
-                TilesetPanel.Tileset, PalettePanel.Palette);
-            TilebufferPanel.Parent = CenterPanel;
-            TilebufferPanel.Dock = DockStyle.Fill;
-            TilebufferPanel.Visible = false;
+            TilebufferPanel = new TilebufferEditPanel(this,
+                TilesetPanel.Tileset, PalettePanel.Palette)
+            {
+                Parent = CenterPanel,
+                Dock = DockStyle.Fill,
+                Visible = false
+            };
 
-            TileRegPanel = new TileRegisterPanel(this, 
-                TilesetPanel.Tileset, PalettePanel.Palette);
-            TileRegPanel.Parent = BtmRightPanel;
-            TileRegPanel.Dock = DockStyle.Fill;
-            TileRegPanel.Visible = false;
+            TileRegPanel = new TileRegisterPanel(this,
+                TilesetPanel.Tileset, PalettePanel.Palette)
+            {
+                Parent = BtmRightPanel,
+                Dock = DockStyle.Fill,
+                Visible = false
+            };
 
             if (!File.Exists(MainProgramFile))
                 File.Create(MainProgramFile).Close();
@@ -316,8 +330,10 @@ namespace PTMStudio
 
             LbChanges.Text = msg;
 
-            Timer timer = new Timer();
-            timer.Interval = seconds * 1000;
+            Timer timer = new Timer
+            {
+                Interval = seconds * 1000
+            };
             timer.Tick += Timer_Tick;
             timer.Tag = prevText;
             timer.Start();
@@ -339,9 +355,11 @@ namespace PTMStudio
         {
             if (string.IsNullOrWhiteSpace(ProjectFile))
             {
-                SaveFileDialog dialog = new SaveFileDialog();
-                dialog.InitialDirectory = Path.Combine(Filesystem.AbsoluteRootPath, "files");
-                dialog.Filter = "PTM Studio Project File (*.ptms)|*.ptms";
+                SaveFileDialog dialog = new SaveFileDialog
+                {
+                    InitialDirectory = Filesystem.Root,
+                    Filter = "PTM Project File (*.ptms)|*.ptms"
+                };
                 if (dialog.ShowDialog() == DialogResult.OK)
                     ProjectFile = dialog.FileName;
                 else
@@ -369,9 +387,11 @@ namespace PTMStudio
 
         private void LoadProject()
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.InitialDirectory = Path.Combine(Filesystem.AbsoluteRootPath, "files");
-            dialog.Filter = "PTM Studio Project File (*.ptms)|*.ptms";
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                InitialDirectory = Filesystem.Root,
+                Filter = "PTM Project File (*.ptms)|*.ptms"
+            };
             if (dialog.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -395,7 +415,7 @@ namespace PTMStudio
         public void NewProgramLoaded(string file)
         {
             ProgramFile = file;
-            Text = "PTM Studio - " + 
+            Text = "PTM - " + 
                 Filesystem.RemoveAbsoluteRootAndFilesPrefix(
                 Filesystem.NormalizePath(file));
 
@@ -437,9 +457,11 @@ namespace PTMStudio
 
         private void BtnNewProgram_Click(object sender, EventArgs e)
         {
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.InitialDirectory = Path.Combine(Filesystem.AbsoluteRootPath, "files");
-            dialog.Filter = "PTM Program File (*.ptm)|*.ptm";
+            SaveFileDialog dialog = new SaveFileDialog
+            {
+                InitialDirectory = Filesystem.Root,
+                Filter = "PTM Program File (*.ptm)|*.ptm"
+            };
 
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {

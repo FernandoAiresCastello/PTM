@@ -11,7 +11,7 @@ namespace PTMStudio
     {
         private readonly List<CommandHelp> Commands;
         private readonly List<CommandHelp> AllCommands;
-        private BindingSource BindingSrc;
+        private readonly BindingSource BindingSrc;
 
         public HelpWindow()
         {
@@ -26,8 +26,10 @@ namespace PTMStudio
 
             Commands = new List<CommandHelp>();
             AllCommands = new List<CommandHelp>();
-            BindingSrc = new BindingSource();
-            BindingSrc.DataSource = Commands;
+            BindingSrc = new BindingSource
+            {
+                DataSource = Commands
+            };
             LstCommands.DataSource = BindingSrc;
 
             LoadCommands();
@@ -65,10 +67,12 @@ namespace PTMStudio
                 string line = lines[i].Trim();
                 string[] cols = line.Split('\t');
 
-                CommandHelp cmd = new CommandHelp();
-                cmd.Command = cols[0];
-                cmd.Params = cols[1];
-                cmd.Description = cols[2];
+                CommandHelp cmd = new CommandHelp
+                {
+                    Command = cols[0],
+                    Params = cols[1],
+                    Description = cols[2]
+                };
                 if (cols.Length > 3)
                     cmd.Category = cols[3];
 

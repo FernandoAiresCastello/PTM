@@ -7,28 +7,17 @@
 #include "t_interpreter.h"
 #include "t_screen.h"
 
-t_string directory = "";
-const t_string root_directory = "ROOT";
-const t_string program_ext = ".PTM";
-const t_string palette_ext = ".PAL";
-const t_string charset_ext = ".CHR";
-const t_string screen_ext = ".SCR";
-
-#define CRLF        "\r\n"
-#define ROOT        "root\\"
-#define PATH(x)     (ROOT + directory.trim().to_upper().s_str() + "\\" + x.trim().to_upper().s_str())
-#define ROOTPATH(x) (ROOT + x.trim().to_upper().s_str())
-
 constexpr int bytes_per_line = 16;
 
 namespace fs = std::filesystem;
 
 t_list<t_string> t_filesystem::illegal_filenames = {
-    root_directory, "CON", "PRN", "AUX", "NUL",
+    "ROOT", "SYS", "CON", "PRN", "AUX", "NUL",
     "COM0", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "COM¹", "COM²", "COM³", 
     "LPT0", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9", "LPT¹", "LPT²", "LPT³"
 };
 
+t_string directory = "";
 t_record_file record_file;
 
 bool t_filesystem::is_valid_filename(const t_string& filename)
@@ -49,29 +38,21 @@ bool t_filesystem::is_valid_filename(const t_string& filename)
 
 bool t_filesystem::file_exists(const t_string& filename)
 {
-    if (!is_valid_filename(filename))
-        return false;
-
     return 
-        fs::exists(fs::path(PATH(filename))) && 
-        fs::is_regular_file(fs::path(PATH(filename)));
+        fs::exists(fs::path(filename.c_str())) && 
+        fs::is_regular_file(fs::path(filename.c_str()));
 }
 
-bool t_filesystem::directory_exists(const t_string& name)
+bool t_filesystem::user_file_exists(const t_string& filename)
 {
-    if (!is_valid_filename(name))
-        return false;
-
-    return 
-        fs::exists(fs::path(ROOTPATH(name))) && 
-        fs::is_directory(fs::path(ROOTPATH(name)));
+    return file_exists(t_string(USER_ROOT) + filename);
 }
 
-t_list<t_string> t_filesystem::list_files(const char* prefix)
+t_list<t_string> t_filesystem::list_user_files(const char* prefix)
 {
     t_list<t_string> files;
 
-    for (const auto& entry : fs::directory_iterator(ROOT + directory.s_str())) {
+    for (const auto& entry : fs::directory_iterator(USER_ROOT)) {
         if (fs::is_directory(entry.status())) {
             const auto&& path = entry.path().filename().string();
             const auto&& dir = path + "/";
@@ -85,7 +66,7 @@ t_list<t_string> t_filesystem::list_files(const char* prefix)
         }
     }
 
-    for (const auto& entry : fs::directory_iterator(ROOT + directory.s_str())) {
+    for (const auto& entry : fs::directory_iterator(USER_ROOT)) {
         if (fs::is_regular_file(entry.status())) {
             const auto&& path = entry.path().filename().string();
             if (prefix) {
@@ -101,9 +82,9 @@ t_list<t_string> t_filesystem::list_files(const char* prefix)
     return files;
 }
 
-t_list<t_string> t_filesystem::find_files(const t_string& namepart)
+t_list<t_string> t_filesystem::find_user_files(const t_string& namepart)
 {
-    return list_files(namepart.to_upper().c_str());
+    return list_user_files(namepart.to_upper().c_str());
 }
 
 void t_filesystem::write_hex_file(const t_string& data, const t_string& filename)
@@ -162,7 +143,7 @@ t_string t_filesystem::read_hex_file(const t_string& filename)
 
 t_string t_filesystem::read_all_text(const t_string& filename)
 {
-    t_string path = filename.contains(":") ? filename : t_string(PATH(filename));
+    t_string path = filename;
 
     std::ifstream file(path, std::ios::in | std::ios::binary | std::ios::ate);
     if (!file)
@@ -191,7 +172,7 @@ t_list<t_string> t_filesystem::read_all_lines(const t_string& filename)
 
 void t_filesystem::write_all_text(const t_string& text, const t_string& filename)
 {
-    std::ofstream file(PATH(filename), std::ios::out | std::ios::binary);
+    std::ofstream file(filename.c_str(), std::ios::out | std::ios::binary);
     if (!file)
         throw std::runtime_error("Could not open file");
 
@@ -204,7 +185,7 @@ void t_filesystem::write_all_lines(const t_list<t_string>& lines, const t_string
 
     for (auto& line : lines) {
         text += line;
-        text += CRLF;
+        text += "\r\n";
     }
 
     write_all_text(text, filename);
@@ -214,7 +195,7 @@ bool t_filesystem::rename_file(const t_string& old_name, const t_string& new_nam
 {
     try
     {
-        fs::rename(PATH(old_name), PATH(new_name));
+        fs::rename(old_name.c_str(), new_name.c_str());
         return true;
     }
     catch (std::exception)
@@ -227,7 +208,7 @@ bool t_filesystem::delete_file(const t_string& name)
 {
     try
     {
-        fs::remove(PATH(name));
+        fs::remove(name.c_str());
         return true;
     }
     catch (std::exception)
@@ -240,7 +221,7 @@ bool t_filesystem::rename_directory(const t_string& old_name, const t_string& ne
 {
     try
     {
-        fs::rename(ROOTPATH(old_name), ROOTPATH(new_name));
+        fs::rename(old_name.c_str(), new_name.c_str());
         return true;
     }
     catch (std::exception)
@@ -253,7 +234,7 @@ bool t_filesystem::delete_directory(const t_string& name)
 {
     try
     {
-        fs::remove_all(ROOTPATH(name));
+        fs::remove_all(name.c_str());
         return true;
     }
     catch (std::exception)
@@ -262,14 +243,29 @@ bool t_filesystem::delete_directory(const t_string& name)
     }
 }
 
+bool t_filesystem::has_autoexec_file()
+{
+    return file_exists(USER_ROOT AUTOEXEC_FILE);
+}
+
+t_string t_filesystem::get_autoexec_file()
+{
+    return USER_ROOT AUTOEXEC_FILE;
+}
+
+void t_filesystem::autosave_program(t_program* prg)
+{
+    save_program_plaintext(prg, USER_ROOT AUTOSAVE_FILE);
+}
+
 void t_filesystem::save_program_plaintext(t_program* prg, const t_string& filename)
 {
-    write_all_text(prg->get_full_source_text(), filename);
+    write_all_text(prg->get_full_source_text(), filename.to_upper());
 }
 
 void t_filesystem::load_program_plaintext(t_interpreter* intp, t_program* prg, const t_string& filename)
 {
-    auto src_lines = read_all_lines(filename);
+    auto src_lines = read_all_lines(filename.to_upper());
 
     prg->lines.clear();
 
@@ -289,29 +285,6 @@ void t_filesystem::load_program_plaintext(t_interpreter* intp, t_program* prg, c
     }
 }
 
-void t_filesystem::create_directory(const t_string& dir)
-{
-    fs::create_directory(ROOTPATH(dir));
-}
-
-void t_filesystem::change_directory(const t_string& dir)
-{
-    if (dir == root_directory)
-        directory = "";
-    else
-        directory = dir.to_upper();
-}
-
-const t_string& t_filesystem::get_current_directory()
-{
-    return directory.empty() ? root_directory : directory;
-}
-
-const t_string& t_filesystem::get_root_directory()
-{
-    return root_directory;
-}
-
 void t_filesystem::save_charset_plaintext(t_charset* chr, const t_string& filename)
 {
     t_list<t_string> chr_entries;
@@ -319,7 +292,7 @@ void t_filesystem::save_charset_plaintext(t_charset* chr, const t_string& filena
         t_binary& entry = chr->get(i);
         chr_entries.push_back(entry);
     }
-    write_all_lines(chr_entries, filename + charset_ext);
+    write_all_lines(chr_entries, filename.to_upper());
 }
 
 void t_filesystem::save_palette_plaintext(t_palette* pal, const t_string& filename)
@@ -329,12 +302,12 @@ void t_filesystem::save_palette_plaintext(t_palette* pal, const t_string& filena
         t_color& entry = pal->get(i);
         pal_entries.push_back(t_string::fmt("%06X", entry.to_rgb()));
     }
-    write_all_lines(pal_entries, filename + palette_ext);
+    write_all_lines(pal_entries, filename.to_upper());
 }
 
 void t_filesystem::load_charset_plaintext(t_charset* chr, const t_string& filename)
 {
-    auto chr_lines = read_all_lines(filename + charset_ext);
+    auto chr_lines = read_all_lines(filename.to_upper());
     chr->remove_all();
     for (auto& line : chr_lines) {
         chr->add(line);
@@ -343,12 +316,22 @@ void t_filesystem::load_charset_plaintext(t_charset* chr, const t_string& filena
 
 void t_filesystem::load_palette_plaintext(t_palette* pal, const t_string& filename)
 {
-    auto pal_lines = read_all_lines(filename + palette_ext);
+    auto pal_lines = read_all_lines(filename.to_upper());
     pal->remove_all();
     for (auto& line : pal_lines) {
         t_string rgb = t_string("0x") + line;
         pal->add(rgb.to_int());
     }
+}
+
+void t_filesystem::load_default_charset(t_charset* chr)
+{
+    load_charset_plaintext(chr, SYS_ROOT DEF_CHARSET_FILE);
+}
+
+void t_filesystem::load_default_palette(t_palette* pal)
+{
+    load_palette_plaintext(pal, SYS_ROOT DEF_PALETTE_FILE);
 }
 
 bool t_filesystem::is_record_file_open()
@@ -363,7 +346,7 @@ char t_filesystem::get_record_file_mode()
 
 int t_filesystem::open_record_file(const t_string& filename, char mode)
 {
-    return record_file.open(filename, mode);
+    return record_file.open(t_string(USER_ROOT) + filename.to_upper(), mode);
 }
 
 void t_filesystem::close_record_file()

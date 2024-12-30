@@ -8,10 +8,10 @@ using TileGameLib.Graphics;
 
 namespace PTMStudio
 {
-	public partial class TilesetEditPanel : UserControl
+    public partial class TilesetEditPanel : UserControl
     {
-        private MainWindow MainWindow;
-        private TiledDisplay Display;
+        private readonly MainWindow MainWindow;
+        private readonly TiledDisplay Display;
         private readonly int MaxTiles;
         private int FirstTile = 0;
         
@@ -30,9 +30,6 @@ namespace PTMStudio
             MainWindow = mainWnd;
 
             Display = new TiledDisplay(PnlTileset, 8, 8, 3);
-            //Display.Graphics.Palette.Clear(2);
-            //Display.Graphics.Palette.Set(0, 0x000000);
-            //Display.Graphics.Palette.Set(1, 0xffffff);
             Display.Graphics.Clear(1);
             Display.ShowGrid = true;
             Display.Cursor = Cursors.Hand;
@@ -154,8 +151,9 @@ namespace PTMStudio
 
         private void ScrollDisplay(int rows)
         {
-            int first = FirstTile + (8 * rows);
-            if (first >= 0)
+            int first = FirstTile + (Display.Cols * rows);
+
+            if (first >= 0 && first <= Tileset.Size - (Display.Cols * Display.Rows))
                 FirstTile = first;
 
             UpdateDisplay();
@@ -191,10 +189,12 @@ namespace PTMStudio
         {
             if (string.IsNullOrWhiteSpace(Filename))
             {
-                SaveFileDialog dialog = new SaveFileDialog();
-                dialog.InitialDirectory = Path.Combine(Filesystem.AbsoluteRootPath, "files");
-                dialog.Filter = "PTM Tileset File (*.chr)|*.chr";
-                if (dialog.ShowDialog() == DialogResult.OK)
+                SaveFileDialog dialog = new SaveFileDialog
+                {
+                    Filter = "PTM Tileset File (*.chr)|*.chr"
+                };
+
+                if (dialog.ShowDialog(this) == DialogResult.OK)
                     Filename = dialog.FileName;
                 else
                     return;

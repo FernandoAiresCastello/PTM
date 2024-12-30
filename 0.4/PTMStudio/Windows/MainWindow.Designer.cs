@@ -343,7 +343,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PTM Studio";
+            this.Text = "PTM";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);

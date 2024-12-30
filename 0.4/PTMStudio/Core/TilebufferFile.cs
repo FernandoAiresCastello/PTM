@@ -32,8 +32,10 @@ namespace PTMStudio
             int height = NextInt();
             int layers = NextInt();
 
-            ObjectMap buf = new ObjectMap(proj, layers, width, height);
-            buf.BackColorIndex = NextInt();
+            ObjectMap buf = new ObjectMap(proj, layers, width, height)
+            {
+                BackColorIndex = NextInt()
+            };
 
             for (int i = 0; i < layers; i++)
                 LoadLayer(buf.Layers[i]);

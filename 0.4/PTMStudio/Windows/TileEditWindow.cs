@@ -14,12 +14,12 @@ namespace PTMStudio
 {
     public partial class TileEditWindow : Form
     {
-        private TilesetEditPanel TilesetPanel;
-        private TiledDisplay Display;
+        private readonly TilesetEditPanel TilesetPanel;
+        private readonly TiledDisplay Display;
         private TiledDisplay MosaicDisplay;
-        private Tileset Tileset;
-        private int Index;
-        private TilePixels Original;
+        private readonly Tileset Tileset;
+        private readonly int Index;
+        private readonly TilePixels Original;
 
         private TileEditWindow()
         {

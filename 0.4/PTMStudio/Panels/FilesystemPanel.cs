@@ -5,9 +5,9 @@ using System.Windows.Forms;
 
 namespace PTMStudio
 {
-	public partial class FilesystemPanel : UserControl
+    public partial class FilesystemPanel : UserControl
     {
-        private MainWindow MainWindow;
+        private readonly MainWindow MainWindow;
 
         private FilesystemPanel()
         {
@@ -30,7 +30,7 @@ namespace PTMStudio
 
         public void UpdateFileList()
         {
-            ListDirectory(FileTree, "root");
+            ListDirectory(FileTree, Filesystem.Root);
             FileTree.Nodes[0].Expand();
         }
 
@@ -44,9 +44,11 @@ namespace PTMStudio
         private static TreeNode CreateDirectoryNode(DirectoryInfo directoryInfo)
         {
             var directoryNode = new TreeNode(directoryInfo.Name, 0, 0);
-            FilesystemEntry directoryEntry = new FilesystemEntry();
-            directoryEntry.IsDirectory = true;
-            directoryEntry.AbsolutePath = Filesystem.NormalizePath(directoryInfo.FullName);
+            FilesystemEntry directoryEntry = new FilesystemEntry
+            {
+                IsDirectory = true,
+                AbsolutePath = Filesystem.NormalizePath(directoryInfo.FullName)
+            };
             directoryEntry.RelativePath = Filesystem.RemoveFilesPrefix(Filesystem.RemoveAbsoluteRoot(directoryEntry.AbsolutePath));
             directoryNode.Tag = directoryEntry;
 
@@ -57,9 +59,11 @@ namespace PTMStudio
             foreach (var file in directoryInfo.GetFiles())
             {
                 var fileNode = new TreeNode(file.Name, 1, 1);
-                FilesystemEntry fileEntry = new FilesystemEntry();
-                fileEntry.IsDirectory = false;
-                fileEntry.AbsolutePath = Filesystem.NormalizePath(file.FullName);
+                FilesystemEntry fileEntry = new FilesystemEntry
+                {
+                    IsDirectory = false,
+                    AbsolutePath = Filesystem.NormalizePath(file.FullName)
+                };
                 fileEntry.RelativePath = Filesystem.RemoveFilesPrefix(Filesystem.RemoveAbsoluteRoot(fileEntry.AbsolutePath));
                 fileNode.Tag = fileEntry;
                 directoryNode.Nodes.Add(fileNode);
@@ -76,7 +80,7 @@ namespace PTMStudio
 
         private void BtnExplorer_Click(object sender, EventArgs e)
         {
-            Process.Start(Filesystem.AbsoluteRootFilesPath);
+            Process.Start(Filesystem.Root);
         }
 
         private void BtnRefresh_Click(object sender, EventArgs e)

@@ -14,7 +14,7 @@ namespace PTMStudio
 {
     public partial class ColorSelectWindow : Form
     {
-        private TiledDisplay Display;
+        private readonly TiledDisplay Display;
         private int FirstColor = 0;
         private readonly int MaxColors;
 

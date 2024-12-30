@@ -12,7 +12,9 @@ namespace PTMStudio
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            string ptmExe = Path.Combine(Filesystem.AbsoluteRootPath, "PTM.exe");
+            string dir = Environment.CurrentDirectory;
+
+            string ptmExe = Path.Combine(dir, "PTM.exe");
 
             if (File.Exists(ptmExe))
             {

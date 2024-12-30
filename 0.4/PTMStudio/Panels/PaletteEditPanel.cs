@@ -9,10 +9,10 @@ using TileGameLib.Graphics;
 
 namespace PTMStudio
 {
-	public partial class PaletteEditPanel : UserControl
+    public partial class PaletteEditPanel : UserControl
     {
-        private MainWindow MainWindow;
-        private TiledDisplay Display;
+        private readonly MainWindow MainWindow;
+        private readonly TiledDisplay Display;
         private int FirstColor = 0;
         private readonly int MaxColors;
 
@@ -30,11 +30,12 @@ namespace PTMStudio
             InitializeComponent();
             MainWindow = mainWnd;
 
-            Display = new TiledDisplay(PnlPalette, 8, 8, 3);
-            //Display.Graphics.Tileset.ClearToSize(0);
-            //Display.Graphics.Tileset.Add("1111111111111111111111111111111111111111111111111111111111111111");
-            Display.ShowGrid = true;
-            Display.Cursor = Cursors.Hand;
+            Display = new TiledDisplay(PnlPalette, 8, 8, 3)
+            {
+                ShowGrid = true,
+                Cursor = Cursors.Hand
+            };
+
             Display.SetMainGridColor(Color.FromArgb(80, 128, 128, 128));
             Display.MouseWheel += Display_MouseWheel;
             Display.MouseMove += Display_MouseMove;
@@ -103,8 +104,9 @@ namespace PTMStudio
 
         private void ScrollDisplay(int rows)
         {
-            int first = FirstColor + (8 * rows);
-            if (first >= 0)
+            int first = FirstColor + (Display.Cols * rows);
+
+            if (first >= 0 && first <= Palette.Size - (Display.Cols * Display.Rows))
                 FirstColor = first;
 
             UpdateDisplay();
@@ -203,10 +205,12 @@ namespace PTMStudio
         {
             if (string.IsNullOrWhiteSpace(Filename))
             {
-                SaveFileDialog dialog = new SaveFileDialog();
-                dialog.InitialDirectory = Path.Combine(Filesystem.AbsoluteRootPath, "files");
-                dialog.Filter = "PTM Palette File (*.pal)|*.pal";
-                if (dialog.ShowDialog() == DialogResult.OK)
+                SaveFileDialog dialog = new SaveFileDialog
+                {
+                    Filter = "PTM Palette File (*.pal)|*.pal"
+                };
+
+                if (dialog.ShowDialog(this) == DialogResult.OK)
                     Filename = dialog.FileName;
                 else
                     return;

@@ -28,9 +28,6 @@ public:
 	const t_string title_short		= "Programmable Tile Machine";
 	const t_string copyright_notice	= "` 2023-2024 by F.A.Castello";
 
-	const t_string autoexec_file = "AUTORUN.PTM";
-	const t_string autosave_file = "AUTOSAVE.PTM";
-
 	t_tile tilereg;
 	bool auto_screen_update = true;
 	bool enable_user_break = true;

@@ -8,8 +8,8 @@ namespace PTMStudio
 {
 	public partial class ProgramEditPanel : UserControl
     {
-        private MainWindow MainWindow;
-        private Scintilla Scintilla;
+        private readonly MainWindow MainWindow;
+        private readonly Scintilla Scintilla;
         
         public string LoadedFile { get; private set; }
 
@@ -23,12 +23,14 @@ namespace PTMStudio
             InitializeComponent();
             MainWindow = mainWnd;
 
-            Scintilla = new Scintilla();
-            Scintilla.Parent = ScintillaPanel;
-            Scintilla.Dock = DockStyle.Fill;
-            Scintilla.BorderStyle = BorderStyle.Fixed3D;
-            Scintilla.HScrollBar = true;
-            Scintilla.VScrollBar = true;
+            Scintilla = new Scintilla
+            {
+                Parent = ScintillaPanel,
+                Dock = DockStyle.Fill,
+                BorderStyle = BorderStyle.Fixed3D,
+                HScrollBar = true,
+                VScrollBar = true
+            };
             Scintilla.Margins[0].Width = 40;
             Scintilla.KeyDown += Scintilla_KeyDown;
 

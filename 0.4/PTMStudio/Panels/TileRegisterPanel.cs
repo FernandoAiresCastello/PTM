@@ -16,12 +16,12 @@ namespace PTMStudio
 {
     public partial class TileRegisterPanel : UserControl
     {
-        private MainWindow MainWindow;
-        private Tileset Tileset;
-        private Palette Palette;
-        private TiledDisplay TileSeqDisplay;
-        private TiledDisplay TileFrameDisplay;
-        private GameObject TileRegister;
+        private readonly MainWindow MainWindow;
+        private readonly Tileset Tileset;
+        private readonly Palette Palette;
+        private readonly TiledDisplay TileSeqDisplay;
+        private readonly TiledDisplay TileFrameDisplay;
+        private readonly GameObject TileRegister;
         private int FrameCount;
 
         public Tile TileRegisterFrame { get; private set; }

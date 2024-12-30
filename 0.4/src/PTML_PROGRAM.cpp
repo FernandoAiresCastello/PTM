@@ -106,10 +106,6 @@ void PTML::SAVE()
 		error = err.invalid_program;
 		return;
 	}
-	if (t_filesystem::directory_exists(filename)) {
-		error = err.cant_create_file;
-		return;
-	}
 
 	ptm->save_program(filename);
 }
@@ -123,14 +119,9 @@ void PTML::LOAD()
 	VALIDATE_FILENAME(filename);
 	REQUIRE_FILE(filename);
 
-	if (t_filesystem::file_exists(filename)) {
-		bool valid = ptm->load_program(filename);
-		if (!valid)
-			error = err.invalid_program;
-	}
-	else {
-		error = err.file_not_found;
-	}
+	bool valid = try_load_program(filename);
+	if (!valid)
+		error = err.invalid_program;
 }
 
 void PTML::RENUM()

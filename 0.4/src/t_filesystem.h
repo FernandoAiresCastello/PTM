@@ -3,6 +3,14 @@
 #include "t_list.h"
 #include "t_record_file.h"
 
+#define SYS_ROOT            "SYS/"
+#define USER_ROOT           "ROOT/"
+#define PROGRAM_FILE_EXT    ".PTM"
+#define AUTOEXEC_FILE       "AUTOEXEC" PROGRAM_FILE_EXT
+#define AUTOSAVE_FILE       "AUTOSAVE" PROGRAM_FILE_EXT
+#define DEF_CHARSET_FILE    "DEFAULT.CHR"
+#define DEF_PALETTE_FILE    "DEFAULT.PAL"
+
 class t_program;
 class t_interpreter;
 class t_charset;
@@ -17,11 +25,11 @@ public:
 	static t_list<t_string> illegal_filenames;
 	static bool is_valid_filename(const t_string& filename);
 	static bool file_exists(const t_string& filename);
-	static bool directory_exists(const t_string& name);
+	static bool user_file_exists(const t_string& filename);
 
 	// Listing
-	static t_list<t_string> list_files(const char* prefix = nullptr);
-	static t_list<t_string> find_files(const t_string& namepart);
+	static t_list<t_string> list_user_files(const char* prefix = nullptr);
+	static t_list<t_string> find_user_files(const t_string& namepart);
 	
 	// Write/read hex format
 	static void write_hex_file(const t_string& data, const t_string& filename);
@@ -40,20 +48,20 @@ public:
 	static bool delete_directory(const t_string& name);
 
 	// Program files
+	static bool has_autoexec_file();
+	static t_string get_autoexec_file();
+	static void autosave_program(t_program* prg);
 	static void save_program_plaintext(t_program* prg, const t_string& filename);
 	static void load_program_plaintext(t_interpreter* intp, t_program* prg, const t_string& filename);
-
-	// Directories
-	static void create_directory(const t_string& dir);
-	static void change_directory(const t_string& dir);
-	static const t_string& get_current_directory();
-	static const t_string& get_root_directory();
 
 	// Charset/palette files
 	static void save_charset_plaintext(t_charset* chr, const t_string& filename);
 	static void save_palette_plaintext(t_palette* pal, const t_string& filename);
 	static void load_charset_plaintext(t_charset* chr, const t_string& filename);
 	static void load_palette_plaintext(t_palette* pal, const t_string& filename);
+
+	static void load_default_charset(t_charset* chr);
+	static void load_default_palette(t_palette* pal);
 
 	// Record files
 	static const char read_mode = 'R';

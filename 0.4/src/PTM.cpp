@@ -24,7 +24,6 @@ t_program_editor program_editor;
 t_interpreter intp;
 t_program prg;
 t_program_runner prg_runner;
-t_filesystem filesys;
 t_keyboard kb;
 t_charset chr;
 t_palette pal;
@@ -75,7 +74,7 @@ void PTM::init()
 
 void PTM::run_main(const char* initial_program)
 {
-	bool autoexec = t_filesystem::file_exists(autoexec_file);
+	bool autoexec = t_filesystem::has_autoexec_file();
 	bool has_initial_prog = initial_program != nullptr;
 
 	if (!autoexec && !has_initial_prog) {
@@ -92,7 +91,7 @@ void PTM::run_main(const char* initial_program)
 		}
 		else if (autoexec) {
 			autoexec = false;
-			load_program(autoexec_file);
+			load_program(t_filesystem::get_autoexec_file());
 			run_program_from_immediate_mode();
 			intp.print_prompt();
 		}
@@ -446,7 +445,7 @@ void PTM::new_program()
 
 void PTM::save_program(const t_string& filename)
 {
-	filesys.save_program_plaintext(&prg, filename);
+	t_filesystem::save_program_plaintext(&prg, t_string(USER_ROOT) + filename + PROGRAM_FILE_EXT);
 	last_program_filename = filename.to_upper();
 }
 
@@ -454,7 +453,7 @@ bool PTM::load_program(const t_string& filename)
 {
 	try
 	{
-		filesys.load_program_plaintext(&intp, &prg, filename);
+		t_filesystem::load_program_plaintext(&intp, &prg, t_string(USER_ROOT) + filename + PROGRAM_FILE_EXT);
 		if (!prg.lines.empty())
 			last_program_filename = filename.to_upper();
 
@@ -565,7 +564,7 @@ t_string PTM::input_string(const t_string& prompt, int maxlen)
 
 void PTM::autosave_program_file()
 {
-	filesys.save_program_plaintext(&prg, autosave_file);
+	t_filesystem::autosave_program(&prg);
 }
 
 int PTM::find_program_label(const t_string& label)

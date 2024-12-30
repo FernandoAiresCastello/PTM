@@ -12,7 +12,7 @@ namespace PTMStudio
 {
     public partial class ProgramLabelsPanel : UserControl
     {
-        private MainWindow MainWindow;
+        private readonly MainWindow MainWindow;
 
         private ProgramLabelsPanel()
         {

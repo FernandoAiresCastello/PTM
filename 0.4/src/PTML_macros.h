@@ -17,9 +17,7 @@
 #define IDENT(n)				line->arg##n.string_val
 #define BOOL(n)					NUM(n) > 0
 #define VALIDATE_FILENAME(x)	if (!t_filesystem::is_valid_filename(x)) { error = err.invalid_filename; return; }
-#define REQUIRE_FILE(x)			if (!t_filesystem::file_exists(x)) { error = err.file_not_found; return; }
-#define REQUIRE_DIR(x)			if (!t_filesystem::directory_exists(x)) { error = err.directory_not_found; return; }
-#define ASSERT_DIR_NOT_FOUND(x)	if (t_filesystem::directory_exists(name)) { error = err.cant_create_directory; return; }
+#define REQUIRE_FILE(x)			if (!t_filesystem::user_file_exists(x)) { error = err.file_not_found; return; }
 #define EMPTY_STR				""
 #define EMPTY_NUM				0
 #define TILEREG					ptm->tilereg
