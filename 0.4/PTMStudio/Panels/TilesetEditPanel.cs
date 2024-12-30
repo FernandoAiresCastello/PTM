@@ -191,11 +191,11 @@ namespace PTMStudio
             {
                 SaveFileDialog dialog = new SaveFileDialog
                 {
-                    Filter = "PTM Tileset File (*.chr)|*.chr"
+                    Filter = "PTM Tileset File (*.CHR)|*.CHR"
                 };
 
                 if (dialog.ShowDialog(this) == DialogResult.OK)
-                    Filename = dialog.FileName;
+                    Filename = dialog.FileName.ToUpper();
                 else
                     return;
             }

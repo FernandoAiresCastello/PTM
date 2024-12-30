@@ -101,6 +101,26 @@ void PTML::CHR()
 	ptm->get_chr().set_row(NUM(1), NUM(2), STR(3));
 }
 
+void PTML::LDPAL()
+{
+	ARGC(1);
+	auto&& filename = STR(1);
+	VALIDATE_FILENAME(filename);
+	REQUIRE_FILE(filename);
+
+	ptm->get_pal().load(t_string(USER_ROOT) + filename);
+}
+
+void PTML::LDCHR()
+{
+	ARGC(1);
+	auto&& filename = STR(1);
+	VALIDATE_FILENAME(filename);
+	REQUIRE_FILE(filename);
+
+	ptm->get_chr().load(t_string(USER_ROOT) + filename);
+}
+
 void PTML::LOCATE()
 {
 	ARGC(2);

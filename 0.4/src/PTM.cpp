@@ -85,7 +85,7 @@ void PTM::run_main(const char* initial_program)
 	while (wnd.is_open()) {
 		if (has_initial_prog) {
 			has_initial_prog = false;
-			load_program(initial_program);
+			load_program_absolute_path(initial_program);
 			run_program_from_immediate_mode();
 			intp.print_prompt();
 		}
@@ -451,18 +451,23 @@ void PTM::save_program(const t_string& filename)
 
 bool PTM::load_program(const t_string& filename)
 {
+	return load_program_absolute_path(t_string(USER_ROOT) + filename + PROGRAM_FILE_EXT);
+}
+
+bool PTM::load_program_absolute_path(const t_string& path)
+{
 	try
 	{
-		t_filesystem::load_program_plaintext(&intp, &prg, t_string(USER_ROOT) + filename + PROGRAM_FILE_EXT);
+		t_filesystem::load_program_plaintext(&intp, &prg, path);
 		if (!prg.lines.empty())
-			last_program_filename = filename.to_upper();
+			last_program_filename = path.to_upper();
 
 		return !prg.lines.empty();
 	}
 	catch (std::runtime_error error)
 	{
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "PTM - Error loading program", 
-			t_string::fmt("%s\n\n%s", error.what(), filename.c_str()).c_str(), nullptr);
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "PTM - Error loading program",
+			t_string::fmt("%s\n\n%s", error.what(), path.c_str()).c_str(), nullptr);
 
 		return false;
 	}

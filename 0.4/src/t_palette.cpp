@@ -59,3 +59,9 @@ void t_palette::reset()
 	remove_all();
 	t_filesystem::load_default_palette(this);
 }
+
+void t_palette::load(const t_string& filename)
+{
+	remove_all();
+	t_filesystem::load_palette_plaintext(this, filename);
+}

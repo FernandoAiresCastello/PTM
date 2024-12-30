@@ -13,6 +13,8 @@ namespace PTML
 	void CLS();
 	void PAL();
 	void CHR();
+	void LDPAL();
+	void LDCHR();
 	void LOCATE();
 	void CSR_GETX();
 	void CSR_GETY();

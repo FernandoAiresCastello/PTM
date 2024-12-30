@@ -66,3 +66,9 @@ void t_charset::reset()
 	remove_all();
 	t_filesystem::load_default_charset(this);
 }
+
+void t_charset::load(const t_string& filename)
+{
+	remove_all();
+	t_filesystem::load_charset_plaintext(this, filename);
+}

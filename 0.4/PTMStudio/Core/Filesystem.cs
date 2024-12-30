@@ -32,12 +32,7 @@ namespace PTMStudio
 
         public static string RemoveFilesPrefix(string path)
         {
-            if (path.StartsWith($"/{RootDir}/") || path.StartsWith($"/{SysDir}/"))
-                path = path.Substring(7);
-            else if (path.StartsWith($"{RootDir}/") || path.StartsWith($"{SysDir}/"))
-                path = path.Substring(6);
-
-            return path;
+            return new FileInfo(path).Name;
         }
 
         public static string GetSystemFilePath(string file)

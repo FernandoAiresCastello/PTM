@@ -2,6 +2,7 @@
 #include "t_list.h"
 #include "t_binary.h"
 #include "t_index.h"
+#include "t_string.h"
 
 class t_charset
 {
@@ -17,6 +18,7 @@ public:
 	void set_row(t_index chr_index, t_index row, const t_binary& bits);
 	int size() const;
 	void reset();
+	void load(const t_string& filename);
 
 private:
 	t_list<t_binary> chars;

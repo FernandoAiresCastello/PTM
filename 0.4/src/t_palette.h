@@ -2,6 +2,7 @@
 #include "t_list.h"
 #include "t_color.h"
 #include "t_index.h"
+#include "t_string.h"
 
 class t_palette
 {
@@ -16,6 +17,7 @@ public:
 	void set(t_index index, const t_color& color);
 	int size() const;
 	void reset();
+	void load(const t_string& filename);
 
 private:
 	t_list<t_color> colors;

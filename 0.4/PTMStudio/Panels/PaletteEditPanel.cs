@@ -207,11 +207,11 @@ namespace PTMStudio
             {
                 SaveFileDialog dialog = new SaveFileDialog
                 {
-                    Filter = "PTM Palette File (*.pal)|*.pal"
+                    Filter = "PTM Palette File (*.PAL)|*.PAL"
                 };
 
                 if (dialog.ShowDialog(this) == DialogResult.OK)
-                    Filename = dialog.FileName;
+                    Filename = dialog.FileName.ToUpper();
                 else
                     return;
             }

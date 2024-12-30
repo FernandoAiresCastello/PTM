@@ -115,29 +115,17 @@ namespace PTMStudio
             string ext = Path.GetExtension(file).ToUpper();
             
             if (ext == ".PTM")
-            {
                 ProgramPanel.LoadFile(file);
-            }
             else if (ext == ".CHR")
-            {
                 TilesetPanel.LoadFile(file);
-            }
             else if (ext == ".PAL")
-            {
                 PalettePanel.LoadFile(file);
-            }
             else if (ext == ".BUF")
-            {
                 TilebufferPanel.LoadFile(file);
-            }
             else if (ext == ".PTMS")
-            {
                 LoadProject(file);
-            }
             else
-            {
                 MainWindow.Warning("Unsupported file format");
-            }
         }
 
         public void UpdateFilePanel()
@@ -358,7 +346,7 @@ namespace PTMStudio
                 SaveFileDialog dialog = new SaveFileDialog
                 {
                     InitialDirectory = Filesystem.Root,
-                    Filter = "PTM Project File (*.ptms)|*.ptms"
+                    Filter = "PTM Project File (*.PTMS)|*.PTMS"
                 };
                 if (dialog.ShowDialog() == DialogResult.OK)
                     ProjectFile = dialog.FileName;
@@ -390,8 +378,9 @@ namespace PTMStudio
             OpenFileDialog dialog = new OpenFileDialog
             {
                 InitialDirectory = Filesystem.Root,
-                Filter = "PTM Project File (*.ptms)|*.ptms"
+                Filter = "PTM Project File (*.PTMS)|*.PTMS"
             };
+
             if (dialog.ShowDialog() != DialogResult.OK)
                 return;
 
