@@ -1,18 +1,12 @@
 ﻿using ScintillaNET;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PTMStudio
 {
-    public partial class ProgramEditPanel : UserControl
+	public partial class ProgramEditPanel : UserControl
     {
         private MainWindow MainWindow;
         private Scintilla Scintilla;
@@ -39,7 +33,7 @@ namespace PTMStudio
             Scintilla.KeyDown += Scintilla_KeyDown;
 
             SetFont("Consolas");
-            SetFontSize(11);
+            SetFontSize(9);
         }
 
         private void Scintilla_KeyDown(object sender, KeyEventArgs e)
