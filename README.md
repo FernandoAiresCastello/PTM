@@ -26,7 +26,8 @@ You can download pre-built PTM releases on Itch.io here: https://fernandoairesca
 The latest released version is __0.2__.  
 The current development version is __0.4__ (pictured below).
 
-![PTM v0.4b](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptml_example_02.png?raw=true)
+![PTM Studio 0.4](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio.png?raw=true)
+![PTM 0.4](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptml_example_02.png?raw=true)
 
 *Note: development builds can be *very* unstable since they are being actively worked on and change frequently, so use at your own risk!*
 

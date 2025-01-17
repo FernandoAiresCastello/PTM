@@ -31,10 +31,11 @@ void t_program_editor::reset()
 
 void t_program_editor::draw_program()
 {
-	for (int i = first_line_ix; i <= last_line_ix; i++) {
-		if (i >= 0 && i < lines.size())
-			scr->print_string_crlf(lines[i]);
-		else
+	int scr_y = 0;
+	for (int i = first_line_ix; i <= last_line_ix && i < lines.size(); i++) {
+		scr->print_string_at(lines[i], 0, scr_y);
+		scr_y++;
+		if (scr_y > scr->last_row)
 			break;
 	}
 }
@@ -106,4 +107,6 @@ void t_program_editor::on_keydown()
 
 void t_program_editor::on_enter_pressed()
 {
+	lines.emplace_back("");
+	scr->newline(false);
 }

@@ -304,10 +304,10 @@ void t_screen::print_string(const t_string& str)
 	move_cursor_dist(str.length(), 0);
 }
 
-void t_screen::print_string_crlf(const t_string& str)
+void t_screen::print_string_crlf(const t_string& str, bool allow_scroll)
 {
 	print_string(str);
-	newline();
+	newline(allow_scroll);
 }
 
 void t_screen::print_string_at(const t_string& str, int x, int y)
@@ -391,7 +391,7 @@ void t_screen::print_debug(const t_string& str)
 	wnd->draw_debug_text(chr, str, 0, wnd->last_row);
 }
 
-void t_screen::newline()
+void t_screen::newline(bool allow_scroll)
 {
 	set_insert_mode(false);
 	reset_horizontal_scroll();
@@ -400,7 +400,9 @@ void t_screen::newline()
 	csr->pos.y++;
 	if (csr->pos.y > last_row) {
 		csr->pos.y = last_row;
-		scroll_up_for_text_editor();
+		if (allow_scroll) {
+			scroll_up_for_text_editor();
+		}
 	}
 }
 

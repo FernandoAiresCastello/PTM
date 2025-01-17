@@ -26,7 +26,7 @@ public:
 	
 	const t_string version_string	= "PTM 0.4";
 	const t_string title_short		= "Programmable Tile Machine";
-	const t_string copyright_notice	= "` 2023-2024 by F.A.Castello";
+	const t_string copyright_notice	= "` 2023-2025 by F.A.Castello";
 
 	t_tile tilereg;
 	bool auto_screen_update = true;

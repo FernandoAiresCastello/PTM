@@ -67,9 +67,6 @@ void PTM::init()
 	intp.init(this, &scr, &kb);
 	program_editor.init(this, &scr, &kb);
 	main_editor.init(this, &scr, &kb, &intp);
-
-	main_editor.active = true;
-	program_editor.active = false;
 }
 
 void PTM::run_main(const char* initial_program)
