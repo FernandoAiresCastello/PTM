@@ -14,7 +14,7 @@ This project is currently in early alpha stage. All released versions are to be 
 
 | **Version** | **Release date or status** | **Comments** |
 |-------------|------------------|--------------|
-| **0.4**     | _In development_ | Current implementation, started from scratch. PTML is an entirely different language from earlier versions. Program editor and interpreter operate seamlessly within the same application, similar to many line-based BASIC programming environments found in early 8-bit computers such as the Atari 800, MSX and ZX Spectrum. As such, no longer requires the use of any external code editor. |
+| **0.4**     | _In development_ | Current implementation, started from scratch. PTML is an entirely different language from earlier versions. Includes a built-in program editor with immediate mode, and also PTM Studio, which is an external IDE for editing code and data. |
 | **0.3**     | _Unreleased_     | This is an unreleased, abandoned version which included a complete IDE (PTM Studio, unrelated to the tool included in version 0.2). |
 | **0.2**     | _July 1, 2023_   | Many PTML improvements and new commands. This version also included a few standalone tools (PTM Studio and PTM Tile Editor) besides the main PTM interpreter. |
 | **0.1**     | _May 14, 2023_   | First release. Ranked 4th out of 61 entries in the [Tool Jam 3](https://itch.io/jam/the-tool-jam-3/results). |
