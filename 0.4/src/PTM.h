@@ -33,6 +33,7 @@ public:
 	bool enable_user_break = true;
 	t_user_tilebuffer usr_tilebuf;
 	bool usr_tilebuf_selected = false;
+	bool enable_autosave = true;
 
 	void run(const char* initial_program);
 	void exit();
@@ -89,7 +90,7 @@ public:
 	bool is_key_pressed(int scancode);
 	bool is_key_pressed(const t_string& keyname);
 	t_string input_string(const t_string& prompt, int maxlen);
-	void autosave_program_file();
+	void autosave_program_file() const;
 	int find_program_label(const t_string& label);
 	t_sound& get_sound();
 	const t_string& get_last_program_filename() const;
@@ -109,4 +110,5 @@ private:
 	void run_main(const char* initial_program);
 
 	void set_array(const t_array_ref& ref, const t_string& value, t_string& out_error);
+	void set_last_program_filename(const t_string& path);
 };

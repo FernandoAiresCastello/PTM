@@ -36,6 +36,9 @@ void PTM::run(const char* initial_program)
 	if (running)
 		return;
 
+	if (initial_program)
+		enable_autosave = false;
+
 	running = true;
 	halted = false;
 	tilereg.set_empty();
@@ -437,7 +440,7 @@ void PTM::on_program_end()
 void PTM::new_program()
 {
 	prg.lines.clear();
-	last_program_filename = "";
+	set_last_program_filename("");
 }
 
 void PTM::save_program(const t_string& filename)
@@ -447,7 +450,7 @@ void PTM::save_program(const t_string& filename)
 		actual_filename = filename + PROGRAM_FILE_EXT;
 
 	t_filesystem::save_program_plaintext(&prg, t_string(USER_ROOT) + actual_filename);
-	last_program_filename = actual_filename;
+	set_last_program_filename(actual_filename);
 }
 
 bool PTM::load_program(const t_string& filename)
@@ -464,8 +467,9 @@ bool PTM::load_program_absolute_path(const t_string& path)
 	try
 	{
 		t_filesystem::load_program_plaintext(&intp, &prg, path);
-		if (!prg.lines.empty())
-			last_program_filename = path.to_upper();
+		if (!prg.lines.empty()) {
+			set_last_program_filename(path);
+		}
 
 		return !prg.lines.empty();
 	}
@@ -475,6 +479,18 @@ bool PTM::load_program_absolute_path(const t_string& path)
 			t_string::fmt("%s\n\n%s", error.what(), path.c_str()).c_str(), nullptr);
 
 		return false;
+	}
+}
+
+void PTM::set_last_program_filename(const t_string& path)
+{
+	int last_slash_ix = path.last_index_of("/");
+	if (last_slash_ix >= 0) {
+		t_string filename = path.substr(last_slash_ix + 1);
+		last_program_filename = filename.to_upper();
+	}
+	else {
+		last_program_filename = path;
 	}
 }
 
@@ -572,9 +588,10 @@ t_string PTM::input_string(const t_string& prompt, int maxlen)
 	return value;
 }
 
-void PTM::autosave_program_file()
+void PTM::autosave_program_file() const
 {
-	t_filesystem::autosave_program(&prg);
+	if (enable_autosave)
+		t_filesystem::autosave_program(&prg);
 }
 
 int PTM::find_program_label(const t_string& label)

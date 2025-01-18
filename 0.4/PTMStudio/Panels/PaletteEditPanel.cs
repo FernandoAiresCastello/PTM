@@ -9,7 +9,7 @@ using TileGameLib.Graphics;
 
 namespace PTMStudio
 {
-    public partial class PaletteEditPanel : UserControl
+	public partial class PaletteEditPanel : UserControl
     {
         private readonly MainWindow MainWindow;
         private readonly TiledDisplay Display;
@@ -30,7 +30,7 @@ namespace PTMStudio
             InitializeComponent();
             MainWindow = mainWnd;
 
-            Display = new TiledDisplay(PnlPalette, 8, 8, 3)
+            Display = new TiledDisplay(PnlPalette, 16, 16, 2)
             {
                 ShowGrid = true,
                 Cursor = Cursors.Hand
@@ -226,7 +226,9 @@ namespace PTMStudio
 
         private void BtnNew_Click(object sender, EventArgs e)
         {
-			DefaultPalette.Init(Display.Graphics.Palette);
+            Display.Graphics.Palette.SetEmpty();
+            for (int i = 0; i < 256; i++)
+                Display.Graphics.Palette.Add(0xffffff);
 
 			Filename = null;
             TxtFilename.Text = "<Unsaved>";

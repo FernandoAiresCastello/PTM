@@ -323,6 +323,16 @@ namespace PTMStudio.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap logo {
+            get {
+                object obj = ResourceManager.GetObject("logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap magnifier_zoom_in {
             get {
                 object obj = ResourceManager.GetObject("magnifier_zoom_in", resourceCulture);
@@ -436,6 +446,16 @@ namespace PTMStudio.Properties {
         internal static System.Drawing.Bitmap shape_flip_vertical {
             get {
                 object obj = ResourceManager.GetObject("shape_flip_vertical", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap sort_asc_az {
+            get {
+                object obj = ResourceManager.GetObject("sort_asc_az", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

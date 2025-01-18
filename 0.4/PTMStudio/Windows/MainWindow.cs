@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PTMStudio.Windows;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -11,9 +12,10 @@ namespace PTMStudio
 {
 	public partial class MainWindow : Form
     {
+        private const string ProgramFileExt = ".PTM";
+        private const string AutosavedProgramFile = "ROOT/AUTOSAVE" + ProgramFileExt;
+        
         private readonly string PtmExe;
-        private string ProgramFile = "";
-        private readonly string AutosavedProgramFile = "root/AUTOSAVE.PTM";
         private readonly ProgramEditPanel ProgramPanel;
         private readonly TilebufferEditPanel TilebufferPanel;
         private readonly FilesystemPanel FilePanel;
@@ -21,8 +23,10 @@ namespace PTMStudio
         private readonly TilesetEditPanel TilesetPanel;
         private readonly PaletteEditPanel PalettePanel;
         private readonly TileRegisterPanel TileRegPanel;
+        
         private HelpWindow HelpWindow;
         private string ProjectFile;
+        private string ProgramFile;
 
         private class ChangeTracker
         {
@@ -36,13 +40,14 @@ namespace PTMStudio
         public MainWindow(string ptmExe)
         {
             InitializeComponent();
-            Size = new Size(1024, 605);
+            Size = new Size(1024, 730);
+			//Resize += MainWindow_Resize;
             MinimumSize = Size;
             PtmExe = ptmExe;
 
             ProgramPanel = new ProgramEditPanel(this)
             {
-                Parent = CenterPanel,
+                Parent = CenterBottomPanel,
                 Dock = DockStyle.Fill
             };
 
@@ -73,7 +78,7 @@ namespace PTMStudio
             TilebufferPanel = new TilebufferEditPanel(this,
                 TilesetPanel.Tileset, PalettePanel.Palette)
             {
-                Parent = CenterPanel,
+                Parent = CenterBottomPanel,
                 Dock = DockStyle.Fill,
                 Visible = false
             };
@@ -87,63 +92,71 @@ namespace PTMStudio
             };
 
             if (!File.Exists(AutosavedProgramFile))
+            {
                 File.Create(AutosavedProgramFile).Close();
+				FilePanel.UpdateFileList();
+			}
 
             Changes = new ChangeTracker();
             UpdateChangesLabel();
             LoadFile(AutosavedProgramFile);
 
-			FormClosing += MainWindow_FormClosing;
+            FormClosing += MainWindow_FormClosing;
         }
 
-		private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+		private void MainWindow_Resize(object sender, EventArgs e)
 		{
+            Text = Size.ToString();
+		}
+
+		private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
             if (Changes.Program)
             {
                 DialogResult result = ConfirmModifiedButNotSaved("Program");
                 
                 if (result == DialogResult.Cancel)
                     e.Cancel = true;
-				else if (result == DialogResult.Yes)
+                else if (result == DialogResult.Yes)
                     ProgramPanel.SaveFile();
             }
-			if (e.Cancel) return;
+            if (e.Cancel) return;
 
-			if (Changes.Tileset)
+            if (Changes.Tileset)
             {
-				DialogResult result = ConfirmModifiedButNotSaved("Tileset");
+                DialogResult result = ConfirmModifiedButNotSaved("Tileset");
 
-				if (result == DialogResult.Cancel)
-					e.Cancel = true;
-				else if (result == DialogResult.Yes)
-					TilesetPanel.SaveFile();
-			}
-			if (e.Cancel) return;
+                if (result == DialogResult.Cancel)
+                    e.Cancel = true;
+                else if (result == DialogResult.Yes)
+                    TilesetPanel.SaveFile();
+            }
+            if (e.Cancel) return;
 
-			if (Changes.Palette)
+            if (Changes.Palette)
             {
-				DialogResult result = ConfirmModifiedButNotSaved("Palette");
+                DialogResult result = ConfirmModifiedButNotSaved("Palette");
 
-				if (result == DialogResult.Cancel)
-					e.Cancel = true;
-				else if (result == DialogResult.Yes)
-					PalettePanel.SaveFile();
-			}
-			if (e.Cancel) return;
+                if (result == DialogResult.Cancel)
+                    e.Cancel = true;
+                else if (result == DialogResult.Yes)
+                    PalettePanel.SaveFile();
+            }
+            if (e.Cancel) return;
 
-			if (Changes.TileBuffer)
+            if (Changes.TileBuffer)
             {
-				DialogResult result = ConfirmModifiedButNotSaved("Tilebuffer");
+                DialogResult result = ConfirmModifiedButNotSaved("Tilebuffer");
 
-				if (result == DialogResult.Cancel)
-					e.Cancel = true;
-				else if (result == DialogResult.Yes)
-					TilebufferPanel.SaveFile();
-			}
-			if (e.Cancel) return;
-		}
+                if (result == DialogResult.Cancel)
+                    e.Cancel = true;
+                else if (result == DialogResult.Yes)
+                    TilebufferPanel.SaveFile();
+            }
+            if (e.Cancel) return;
+        }
 
-		private void MainWindow_ResizeEnd(object sender, EventArgs e)
+        private void MainWindow_ResizeEnd(object sender, EventArgs e)
         {
             Text = Size.ToString();
         }
@@ -153,15 +166,16 @@ namespace PTMStudio
             RunProgram();
         }
 
-		private void BtnRunEmpty_Click(object sender, EventArgs e)
-		{
-			Process.Start(PtmExe);
-		}
+        private void BtnRunEmpty_Click(object sender, EventArgs e)
+        {
+            Process.Start(PtmExe);
+        }
 
-		public void RunProgram()
+        public void RunProgram()
         {
             ProgramPanel.SaveFile();
-            Process.Start(PtmExe, ProgramFile);
+			FilePanel.UpdateFileList();
+			Process.Start(PtmExe, ProgramFile);
         }
 
         public void LoadFile(string file)
@@ -175,7 +189,7 @@ namespace PTMStudio
                     ProgramPanel.SaveFile();
             }
 
-			string ext = Path.GetExtension(file).ToUpper();
+            string ext = Path.GetExtension(file).ToUpper();
             
             if (ext == ".PTM")
                 ProgramPanel.LoadFile(file);
@@ -311,7 +325,8 @@ namespace PTMStudio
         private void BtnAbout_Click(object sender, EventArgs e)
         {
             MessageBox.Show(
-                "PTM\n\nVersion 0.4\n\n(C) 2023-2024 Developed by Fernando Aires Castello\n\n" +
+                "PTM - Programmable Tile Machine\n\nVersion 0.4\n\n" + 
+                "(C) 2023-2025 Developed by Fernando Aires Castello\n\n" +
                 "https://fernandoairescastello.itch.io/ptm\n" +
                 "https://github.com/FernandoAiresCastello/PTM",
                 "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -366,28 +381,24 @@ namespace PTMStudio
                 entries.Add("Tilebuffer");
 
             if (entries.Count == 0)
-            {
                 LbChanges.Text = "";
-            }
             else
-            {
                 LbChanges.Text = "Unsaved data: " + string.Join(", ", entries);
-            }
         }
 
         private void AlertOnStatusBar(string msg, int seconds)
         {
             string prevText = LbChanges.Text;
-
             LbChanges.Text = msg;
 
-            Timer timer = new Timer
-            {
-                Interval = seconds * 1000
-            };
-            timer.Tick += Timer_Tick;
-            timer.Tag = prevText;
-            timer.Start();
+			Timer timer = new Timer
+			{
+				Interval = seconds * 1000,
+				Tag = prevText
+			};
+
+			timer.Tick += Timer_Tick;
+			timer.Start();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -408,7 +419,7 @@ namespace PTMStudio
             {
                 SaveFileDialog dialog = new SaveFileDialog
                 {
-                    InitialDirectory = Filesystem.Root,
+                    InitialDirectory = Filesystem.UserRoot,
                     Filter = "PTM Project File (*.PTMS)|*.PTMS"
                 };
                 if (dialog.ShowDialog() == DialogResult.OK)
@@ -440,7 +451,7 @@ namespace PTMStudio
         {
             OpenFileDialog dialog = new OpenFileDialog
             {
-                InitialDirectory = Filesystem.Root,
+                InitialDirectory = Filesystem.UserRoot,
                 Filter = "PTM Project File (*.PTMS)|*.PTMS"
             };
 
@@ -487,18 +498,18 @@ namespace PTMStudio
             return result == DialogResult.Yes;
         }
 
-		private static DialogResult ConfirmModifiedButNotSaved(string what)
-		{
-            return YesNoCancel("Confirm", what + " is modified and not yet saved. Save now?");
-		}
-
-		public static DialogResult YesNoCancel(string title, string message)
+        private static DialogResult ConfirmModifiedButNotSaved(string what)
         {
-			return MessageBox.Show(message, title,
-				MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-		}
+            return YesNoCancel("Confirm", what + " is modified and not yet saved. Save now?");
+        }
 
-		public static void Warning(string message)
+        public static DialogResult YesNoCancel(string title, string message)
+        {
+            return MessageBox.Show(message, title,
+                MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+        }
+
+        public static void Warning(string message)
         {
             Warning("Warning", message);
         }
@@ -520,17 +531,31 @@ namespace PTMStudio
 
         private void BtnNewProgram_Click(object sender, EventArgs e)
         {
-            SaveFileDialog dialog = new SaveFileDialog
-            {
-                InitialDirectory = Filesystem.Root,
-                Filter = "PTM Program File (*.ptm)|*.ptm"
-            };
-
-            if (dialog.ShowDialog(this) == DialogResult.OK)
-            {
-                File.Create(dialog.FileName).Close();
-                ProgramPanel.LoadFile(dialog.FileName);
-            }
+            CreateNewProgramFile();
         }
-	}
+
+        public void CreateNewProgramFile()
+        {
+			SimpleTextInputDialog dialog = new
+				SimpleTextInputDialog("Create new program", "Enter program name:")
+			{
+				UppercaseOnly = true
+			};
+
+			if (dialog.ShowDialog(this) == DialogResult.OK)
+			{
+				string programName = dialog.Text.ToUpper();
+				if (string.IsNullOrWhiteSpace(programName))
+					return;
+
+				if (!programName.EndsWith(ProgramFileExt))
+					programName += ProgramFileExt;
+
+				string path = Filesystem.GetAbsoluteUserFilePath(programName);
+				File.Create(path).Close();
+				FilePanel.UpdateFileList();
+				ProgramPanel.LoadFile(path);
+			}
+		}
+    }
 }

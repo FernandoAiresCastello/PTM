@@ -8,7 +8,7 @@ using TileGameLib.Graphics;
 
 namespace PTMStudio
 {
-    public partial class TilesetEditPanel : UserControl
+	public partial class TilesetEditPanel : UserControl
     {
         private readonly MainWindow MainWindow;
         private readonly TiledDisplay Display;
@@ -29,7 +29,7 @@ namespace PTMStudio
             InitializeComponent();
             MainWindow = mainWnd;
 
-            Display = new TiledDisplay(PnlTileset, 8, 8, 3);
+            Display = new TiledDisplay(PnlTileset, 16, 16, 2);
             Display.Graphics.Clear(1);
             Display.ShowGrid = true;
             Display.Cursor = Cursors.Hand;

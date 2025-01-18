@@ -1,12 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TileGameLib.Components;
 using TileGameLib.GameElements;
@@ -14,11 +6,9 @@ using TileGameLib.Graphics;
 
 namespace PTMStudio
 {
-    public partial class TileRegisterPanel : UserControl
+	public partial class TileRegisterPanel : UserControl
     {
         private readonly MainWindow MainWindow;
-        private readonly Tileset Tileset;
-        private readonly Palette Palette;
         private readonly TiledDisplay TileSeqDisplay;
         private readonly TiledDisplay TileFrameDisplay;
         private readonly GameObject TileRegister;
@@ -35,11 +25,9 @@ namespace PTMStudio
         {
             InitializeComponent();
             MainWindow = mainWnd;
-            Tileset = tileset;
-            Palette = palette;
             TileRegister = new GameObject();
             TileRegister.Animation.Clear();
-            TileRegisterFrame = new Tile(0, 1, 0);
+            TileRegisterFrame = new Tile(0, 15, 15);
 
             TileSeqDisplay = new TiledDisplay(TileSeqPanel, 7, 1, 3);
             TileSeqDisplay.Graphics.Palette = palette;
@@ -78,10 +66,10 @@ namespace PTMStudio
         {
             FrameCount = 0;
             ChkTransparent.Checked = false;
-            TileRegisterFrame.Set(0, 1, 0);
+            TileRegisterFrame.Set(0, 15, 15);
             TileRegister.Animation.Frames.Clear();
             for (int i = 0; i < TileSeqDisplay.Cols; i++)
-                TileRegister.Animation.Frames.Add(new Tile(0, 1, 0));
+                TileRegister.Animation.Frames.Add(new Tile(0, 15, 15));
 
             TileRegister.Properties.Entries.Clear();
             UpdatePropertiesPanel();
@@ -135,10 +123,10 @@ namespace PTMStudio
 
         private void BtnSwitchColor_Click(object sender, EventArgs e)
         {
-            int temp = TileRegisterFrame.ForeColor;
-            TileRegisterFrame.ForeColor = TileRegisterFrame.BackColor;
-            TileRegisterFrame.BackColor = temp;
-            UpdateDisplay();
+			(TileRegisterFrame.BackColor, TileRegisterFrame.ForeColor) = 
+                (TileRegisterFrame.ForeColor, TileRegisterFrame.BackColor);
+
+			UpdateDisplay();
         }
 
         private void BtnNew_Click(object sender, EventArgs e)

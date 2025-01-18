@@ -116,6 +116,12 @@
       <DependentUpon>TilebufferEditPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\TilebufferFile.cs" />
+    <Compile Include="Windows\SimpleTextInputDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\SimpleTextInputDialog.Designer.cs">
+      <DependentUpon>SimpleTextInputDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Windows\TileEditWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,6 +177,9 @@
     <EmbeddedResource Include="Panels\TilebufferEditPanel.resx">
       <DependentUpon>TilebufferEditPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Windows\SimpleTextInputDialog.resx">
+      <DependentUpon>SimpleTextInputDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\TileEditWindow.resx">
       <DependentUpon>TileEditWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -194,6 +203,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\sort_asc_az.png" />
     <None Include="Resources\select.png" />
     <None Include="Resources\table_edit.png" />
     <None Include="Resources\script_code.png" />
@@ -217,6 +227,7 @@
     <None Include="Resources\font_size_decrease.png" />
     <None Include="Resources\control_play.png" />
     <None Include="Resources\page_white_copy.png" />
+    <None Include="Resources\logo.png" />
     <Content Include="Resources\ptm_icon.ico" />
     <None Include="Resources\page_white_paste.png" />
     <None Include="Resources\update.png" />

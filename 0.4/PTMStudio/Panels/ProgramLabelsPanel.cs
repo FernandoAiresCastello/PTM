@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PTMStudio
 {
-    public partial class ProgramLabelsPanel : UserControl
+	public partial class ProgramLabelsPanel : UserControl
     {
         private readonly MainWindow MainWindow;
 
@@ -40,8 +34,6 @@ namespace PTMStudio
                 if (line.EndsWith(":"))
                     LstLabels.Items.Add(line.Substring(0, line.Length - 1));
             }
-
-            LstLabels.Sorted = true;
         }
 
         private void BtnRefresh_Click(object sender, EventArgs e)
@@ -51,9 +43,14 @@ namespace PTMStudio
 
         private void LstLabels_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            string label = LstLabels.SelectedItem as string;
-            if (label != null)
-                MainWindow.GoToLabel(label);
-        }
-    }
+			if (LstLabels.SelectedItem is string label)
+				MainWindow.GoToLabel(label);
+		}
+
+		private void BtnSort_Click(object sender, EventArgs e)
+		{
+            LstLabels.Sorted = BtnSort.Checked;
+            UpdateLabels();
+		}
+	}
 }

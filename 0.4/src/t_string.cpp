@@ -403,7 +403,7 @@ int t_string::index_of(const t_string& str) const
 
 int t_string::last_index_of(const t_string& str) const
 {
-	return (int)value.find_last_not_of(str);
+	return (int)value.find_last_of(str);
 }
 
 t_list<int> t_string::find_all(const char& ch, size_t offset)

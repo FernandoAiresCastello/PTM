@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace PTMStudio
 {
-    public partial class FilesystemPanel : UserControl
+	public partial class FilesystemPanel : UserControl
     {
         private readonly MainWindow MainWindow;
 
@@ -26,17 +26,18 @@ namespace PTMStudio
         {
             if (FileTree.SelectedNode != null)
                 OnDoubleClickEntry(FileTree.SelectedNode.Tag as FilesystemEntry);
-        }
+		}
 
         public void UpdateFileList()
         {
-            ListDirectory(FileTree, Filesystem.Root);
-            FileTree.Nodes[0].Expand();
+			FileTree.Nodes.Clear();
+			ListDirectory(FileTree, Filesystem.UserRoot);
+			ListDirectory(FileTree, Filesystem.SysRoot);
+			FileTree.Nodes[0].Expand();
         }
 
         private void ListDirectory(TreeView treeView, string path)
         {
-            treeView.Nodes.Clear();
             var rootDirectoryInfo = new DirectoryInfo(path);
             treeView.Nodes.Add(CreateDirectoryNode(rootDirectoryInfo));
         }
@@ -80,7 +81,7 @@ namespace PTMStudio
 
         private void BtnExplorer_Click(object sender, EventArgs e)
         {
-            Process.Start(Filesystem.Root);
+            Process.Start(Filesystem.CurrentDir);
         }
 
         private void BtnRefresh_Click(object sender, EventArgs e)
@@ -92,12 +93,18 @@ namespace PTMStudio
         {
             if (FileTree.SelectedNode == null)
                 return;
+			if (FileTree.SelectedNode.Parent == null)
+				return;
+			if (!(FileTree.SelectedNode.Tag is FilesystemEntry file))
+				return;
 
-            FilesystemEntry file = FileTree.SelectedNode.Tag as FilesystemEntry;
-            if (file == null)
+            if (FileTree.SelectedNode.Parent.Text == Filesystem.SysRootDirName)
+            {
+                MainWindow.Warning("Cannot delete system files");
                 return;
+            }
 
-            bool ok = MainWindow.Confirm("Delete this file?\n\n" + file.RelativePath);
+			bool ok = MainWindow.Confirm("Delete this file?\n\n" + file.RelativePath);
 
             if (ok)
             {
@@ -106,18 +113,20 @@ namespace PTMStudio
                 UpdateFileList();
             }
         }
-    }
 
-    public class FilesystemEntry
+		private void BtnNew_Click(object sender, EventArgs e)
+		{
+            MainWindow.CreateNewProgramFile();
+		}
+	}
+
+	public class FilesystemEntry
     {
         public string AbsolutePath { get; set; }
         public string RelativePath { get; set; }
         public string DisplayPath { get; set; }
         public bool IsDirectory { get; set; }
 
-        public override string ToString()
-        {
-            return DisplayPath;
-        }
-    }
+		public override string ToString() => DisplayPath;
+	}
 }

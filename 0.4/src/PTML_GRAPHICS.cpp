@@ -22,10 +22,10 @@ void PTML::COLOR()
 void PTML::COLOR_MODE()
 {
 	ARGC(1);
-	int&& mode = NUM(1);
-	if (mode == 0)
+	t_color_mode&& mode = (t_color_mode)NUM(1);
+	if (mode == t_color_mode::mode0_monochrome)
 		scr->set_color_mode(t_color_mode::mode0_monochrome);
-	else if (mode == 1)
+	else if (mode == t_color_mode::mode1_multicolor)
 		scr->set_color_mode(t_color_mode::mode1_multicolor);
 	else
 		error = err.illegal_argument;
