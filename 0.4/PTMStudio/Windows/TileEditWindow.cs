@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TileGameLib.Components;
 using TileGameLib.Graphics;
 
 namespace PTMStudio
 {
-    public partial class TileEditWindow : Form
+	public partial class TileEditWindow : Form
     {
         private readonly TilesetEditPanel TilesetPanel;
         private readonly TiledDisplay Display;
@@ -36,7 +30,6 @@ namespace PTMStudio
             Original = Tileset.Get(index).Copy();
             Text = index.ToString();
 
-            //Size = new Size(248, 287);
             StartPosition = FormStartPosition.CenterParent;
             KeyPreview = true;
             KeyDown += TileEditWindow_KeyDown;
@@ -56,8 +49,6 @@ namespace PTMStudio
 
             InitMosaic();
             UpdateView();
-
-            //ResizeEnd += TileEditWindow_ResizeEnd;
         }
 
         private void InitMosaic()
@@ -219,12 +210,22 @@ namespace PTMStudio
             OnPixelsChanged();
         }
 
-        private void BtnPasteBinary_Click(object sender, EventArgs e)
+		private void BtnCopyBinary_Click(object sender, EventArgs e)
+		{
+            CopyBinaryString();
+		}
+
+		private void BtnPasteBinary_Click(object sender, EventArgs e)
         {
             PasteBinaryString();
         }
 
-        private void PasteBinaryString()
+		private void CopyBinaryString()
+        {
+            Clipboard.SetText(TxtBinary.Text);
+		}
+
+		private void PasteBinaryString()
         {
             string text = Clipboard.GetText();
             if (text.Length != 64)
@@ -253,12 +254,16 @@ namespace PTMStudio
 
         private void TileEditWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Control && e.KeyCode == Keys.V)
+            if (e.Control && e.KeyCode == Keys.C)
+                CopyBinaryString();
+            else if (e.Control && e.KeyCode == Keys.V)
                 PasteBinaryString();
             else if (e.Control && e.KeyCode == Keys.Z)
                 UndoChanges();
             else if (e.KeyCode == Keys.Delete)
                 ClearAllPixels();
+            else if (e.KeyCode == Keys.Escape)
+                Close();
         }
-    }
+	}
 }

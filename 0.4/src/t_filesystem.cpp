@@ -39,8 +39,8 @@ bool t_filesystem::is_valid_filename(const t_string& filename)
 bool t_filesystem::file_exists(const t_string& filename)
 {
     return 
-        fs::exists(fs::path(filename.c_str())) && 
-        fs::is_regular_file(fs::path(filename.c_str()));
+        fs::exists(fs::path(filename.to_upper().c_str())) &&
+        fs::is_regular_file(fs::path(filename.to_upper().c_str()));
 }
 
 bool t_filesystem::user_file_exists(const t_string& filename)
@@ -58,10 +58,10 @@ t_list<t_string> t_filesystem::list_user_files(const char* prefix)
             const auto&& dir = path + "/";
             if (prefix) {
                 if (path.starts_with(prefix))
-                    files.emplace_back(dir);
+                    files.emplace_back(t_string(dir).to_upper());
             }
             else {
-                files.emplace_back(dir);
+                files.emplace_back(t_string(dir).to_upper());
             }
         }
     }
@@ -71,10 +71,10 @@ t_list<t_string> t_filesystem::list_user_files(const char* prefix)
             const auto&& path = entry.path().filename().string();
             if (prefix) {
                 if (path.starts_with(prefix))
-                    files.emplace_back(path);
+                    files.emplace_back(t_string(path).to_upper());
             }
             else {
-                files.emplace_back(path);
+                files.emplace_back(t_string(path).to_upper());
             }
         }
     }
@@ -143,7 +143,7 @@ t_string t_filesystem::read_hex_file(const t_string& filename)
 
 t_string t_filesystem::read_all_text(const t_string& filename)
 {
-    t_string path = filename;
+    t_string path = filename.to_upper();
 
     std::ifstream file(path, std::ios::in | std::ios::binary | std::ios::ate);
     if (!file)
@@ -172,7 +172,7 @@ t_list<t_string> t_filesystem::read_all_lines(const t_string& filename)
 
 void t_filesystem::write_all_text(const t_string& text, const t_string& filename)
 {
-    std::ofstream file(filename.c_str(), std::ios::out | std::ios::binary);
+    std::ofstream file(filename.to_upper().c_str(), std::ios::out | std::ios::binary);
     if (!file)
         throw std::runtime_error("Could not open file");
 
@@ -195,7 +195,7 @@ bool t_filesystem::rename_file(const t_string& old_name, const t_string& new_nam
 {
     try
     {
-        fs::rename(old_name.c_str(), new_name.c_str());
+        fs::rename(old_name.to_upper().c_str(), new_name.to_upper().c_str());
         return true;
     }
     catch (std::exception)
@@ -208,7 +208,7 @@ bool t_filesystem::delete_file(const t_string& name)
 {
     try
     {
-        fs::remove(name.c_str());
+        fs::remove(name.to_upper().c_str());
         return true;
     }
     catch (std::exception)
@@ -221,7 +221,7 @@ bool t_filesystem::rename_directory(const t_string& old_name, const t_string& ne
 {
     try
     {
-        fs::rename(old_name.c_str(), new_name.c_str());
+        fs::rename(old_name.to_upper().c_str(), new_name.to_upper().c_str());
         return true;
     }
     catch (std::exception)
@@ -234,7 +234,7 @@ bool t_filesystem::delete_directory(const t_string& name)
 {
     try
     {
-        fs::remove_all(name.c_str());
+        fs::remove_all(name.to_upper().c_str());
         return true;
     }
     catch (std::exception)
@@ -260,12 +260,12 @@ void t_filesystem::autosave_program(t_program* prg)
 
 void t_filesystem::save_program_plaintext(t_program* prg, const t_string& filename)
 {
-    write_all_text(prg->get_full_source_text(), filename.to_upper());
+    write_all_text(prg->get_full_source_text(), filename);
 }
 
 void t_filesystem::load_program_plaintext(t_interpreter* intp, t_program* prg, const t_string& filename)
 {
-    auto src_lines = read_all_lines(filename.to_upper());
+    auto src_lines = read_all_lines(filename);
 
     prg->lines.clear();
 

@@ -99,7 +99,7 @@ void PTML::SAVE()
 	REQUIRE_IMM;
 	ARGC(1);
 
-	auto&& filename = STR(1);
+	auto&& filename = STR(1).to_upper() + PROGRAM_FILE_EXT;
 	VALIDATE_FILENAME(filename);
 
 	if (ptm->get_prg().lines.empty()) {
@@ -115,7 +115,7 @@ void PTML::LOAD()
 	REQUIRE_IMM;
 	ARGC(1);
 
-	auto&& filename = STR(1);
+	auto&& filename = STR(1).to_upper() + PROGRAM_FILE_EXT;
 	VALIDATE_FILENAME(filename);
 	REQUIRE_FILE(filename);
 

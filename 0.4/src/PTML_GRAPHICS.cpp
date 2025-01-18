@@ -97,8 +97,21 @@ void PTML::PAL()
 
 void PTML::CHR()
 {
-	ARGC(3);
-	ptm->get_chr().set_row(NUM(1), NUM(2), STR(3));
+	ARGC_MIN_MAX(2, 3);
+	if (COUNT(2)) {
+		auto&& binary = STR(2);
+		if (binary.has_length(64))
+			ptm->get_chr().set(NUM(1), binary);
+		else
+			error = err.binary_str_expected_64_bits;
+	}
+	else if (COUNT(3)) {
+		auto&& binary = STR(3);
+		if (binary.has_length(8))
+			ptm->get_chr().set_row(NUM(1), NUM(2), binary);
+		else
+			error = err.binary_str_expected_8_bits;
+	}
 }
 
 void PTML::LDPAL()

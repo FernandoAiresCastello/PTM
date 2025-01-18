@@ -8,7 +8,7 @@ using TileGameLib.Graphics;
 
 namespace PTMStudio
 {
-    public partial class TilebufferEditPanel : UserControl
+	public partial class TilebufferEditPanel : UserControl
     {
         private readonly MainWindow MainWindow;
         private readonly TiledDisplay Display;
@@ -319,8 +319,12 @@ namespace PTMStudio
 
         private void CreateNewBuffer()
         {
-            TileBuffer = new ObjectMap(Proj, 1, 45, 25);
-            if (Renderer == null)
+			TileBuffer = new ObjectMap(Proj, 1, 45, 25)
+			{
+				BackColorIndex = 15
+			};
+
+			if (Renderer == null)
                 Renderer = new MapRenderer(TileBuffer, Display);
             else
                 Renderer.Map = TileBuffer;

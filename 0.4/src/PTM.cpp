@@ -442,13 +442,21 @@ void PTM::new_program()
 
 void PTM::save_program(const t_string& filename)
 {
-	t_filesystem::save_program_plaintext(&prg, t_string(USER_ROOT) + filename + PROGRAM_FILE_EXT);
-	last_program_filename = filename.to_upper();
+	t_string actual_filename = filename.to_upper();
+	if (!actual_filename.ends_with(PROGRAM_FILE_EXT))
+		actual_filename = filename + PROGRAM_FILE_EXT;
+
+	t_filesystem::save_program_plaintext(&prg, t_string(USER_ROOT) + actual_filename);
+	last_program_filename = actual_filename;
 }
 
 bool PTM::load_program(const t_string& filename)
 {
-	return load_program_absolute_path(t_string(USER_ROOT) + filename + PROGRAM_FILE_EXT);
+	t_string actual_filename = filename.to_upper();
+	if (!actual_filename.ends_with(PROGRAM_FILE_EXT))
+		actual_filename = filename + PROGRAM_FILE_EXT;
+
+	return load_program_absolute_path(t_string(USER_ROOT) + actual_filename);
 }
 
 bool PTM::load_program_absolute_path(const t_string& path)

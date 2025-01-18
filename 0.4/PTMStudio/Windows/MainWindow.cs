@@ -9,11 +9,11 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace PTMStudio
 {
-    public partial class MainWindow : Form
+	public partial class MainWindow : Form
     {
         private readonly string PtmExe;
         private string ProgramFile = "";
-        private readonly string MainProgramFile = "root/TEMP.PTM";
+        private readonly string AutosavedProgramFile = "root/AUTOSAVE.PTM";
         private readonly ProgramEditPanel ProgramPanel;
         private readonly TilebufferEditPanel TilebufferPanel;
         private readonly FilesystemPanel FilePanel;
@@ -86,15 +86,64 @@ namespace PTMStudio
                 Visible = false
             };
 
-            if (!File.Exists(MainProgramFile))
-                File.Create(MainProgramFile).Close();
+            if (!File.Exists(AutosavedProgramFile))
+                File.Create(AutosavedProgramFile).Close();
 
             Changes = new ChangeTracker();
             UpdateChangesLabel();
-            LoadFile(MainProgramFile);
+            LoadFile(AutosavedProgramFile);
+
+			FormClosing += MainWindow_FormClosing;
         }
 
-        private void MainWindow_ResizeEnd(object sender, EventArgs e)
+		private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+		{
+            if (Changes.Program)
+            {
+                DialogResult result = ConfirmModifiedButNotSaved("Program");
+                
+                if (result == DialogResult.Cancel)
+                    e.Cancel = true;
+				else if (result == DialogResult.Yes)
+                    ProgramPanel.SaveFile();
+            }
+			if (e.Cancel) return;
+
+			if (Changes.Tileset)
+            {
+				DialogResult result = ConfirmModifiedButNotSaved("Tileset");
+
+				if (result == DialogResult.Cancel)
+					e.Cancel = true;
+				else if (result == DialogResult.Yes)
+					TilesetPanel.SaveFile();
+			}
+			if (e.Cancel) return;
+
+			if (Changes.Palette)
+            {
+				DialogResult result = ConfirmModifiedButNotSaved("Palette");
+
+				if (result == DialogResult.Cancel)
+					e.Cancel = true;
+				else if (result == DialogResult.Yes)
+					PalettePanel.SaveFile();
+			}
+			if (e.Cancel) return;
+
+			if (Changes.TileBuffer)
+            {
+				DialogResult result = ConfirmModifiedButNotSaved("Tilebuffer");
+
+				if (result == DialogResult.Cancel)
+					e.Cancel = true;
+				else if (result == DialogResult.Yes)
+					TilebufferPanel.SaveFile();
+			}
+			if (e.Cancel) return;
+		}
+
+		private void MainWindow_ResizeEnd(object sender, EventArgs e)
         {
             Text = Size.ToString();
         }
@@ -104,7 +153,12 @@ namespace PTMStudio
             RunProgram();
         }
 
-        public void RunProgram()
+		private void BtnRunEmpty_Click(object sender, EventArgs e)
+		{
+			Process.Start(PtmExe);
+		}
+
+		public void RunProgram()
         {
             ProgramPanel.SaveFile();
             Process.Start(PtmExe, ProgramFile);
@@ -112,7 +166,16 @@ namespace PTMStudio
 
         public void LoadFile(string file)
         {
-            string ext = Path.GetExtension(file).ToUpper();
+            if (Changes.Program)
+            {
+                DialogResult result = ConfirmModifiedButNotSaved("Program");
+                if (result == DialogResult.Cancel)
+                    return;
+                else if (result == DialogResult.Yes)
+                    ProgramPanel.SaveFile();
+            }
+
+			string ext = Path.GetExtension(file).ToUpper();
             
             if (ext == ".PTM")
                 ProgramPanel.LoadFile(file);
@@ -424,7 +487,18 @@ namespace PTMStudio
             return result == DialogResult.Yes;
         }
 
-        public static void Warning(string message)
+		private static DialogResult ConfirmModifiedButNotSaved(string what)
+		{
+            return YesNoCancel("Confirm", what + " is modified and not yet saved. Save now?");
+		}
+
+		public static DialogResult YesNoCancel(string title, string message)
+        {
+			return MessageBox.Show(message, title,
+				MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+		}
+
+		public static void Warning(string message)
         {
             Warning("Warning", message);
         }
@@ -458,5 +532,5 @@ namespace PTMStudio
                 ProgramPanel.LoadFile(dialog.FileName);
             }
         }
-    }
+	}
 }

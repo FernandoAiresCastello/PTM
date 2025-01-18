@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TileGameLib.Graphics;
 
 namespace PTMStudio
 {
-    public partial class ColorEditWindow : Form
+	public partial class ColorEditWindow : Form
     {
         private readonly PaletteEditPanel PalettePanel;
         private readonly Palette Palette;
@@ -32,7 +25,7 @@ namespace PTMStudio
             PalettePanel = palettePanel;
             Palette = palette;
             Index = index;
-            Text = index.ToString();
+			Text = $"Index: {index}";
             TxtColor.KeyDown += TxtColor_KeyDown;
             TxtColor.KeyUp += TxtColor_KeyUp;
 
@@ -44,9 +37,8 @@ namespace PTMStudio
 
         private void UpdateSwatches()
         {
-            int rgb;
-            bool ok = int.TryParse(TxtColor.Text, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out rgb);
-            if (!ok)
+			bool ok = int.TryParse(TxtColor.Text, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int rgb);
+			if (!ok)
                 return;
 
             PnlColor.BackColor = Color.FromArgb(255, Color.FromArgb(rgb));

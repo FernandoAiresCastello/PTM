@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TileGameLib.Components;
 using TileGameLib.Graphics;
 
 namespace PTMStudio
 {
-    public partial class ColorSelectWindow : Form
+	public partial class ColorSelectWindow : Form
     {
         private readonly TiledDisplay Display;
         private int FirstColor = 0;
