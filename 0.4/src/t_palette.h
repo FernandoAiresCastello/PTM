@@ -18,6 +18,7 @@ public:
 	int size() const;
 	void reset();
 	void load(const t_string& filename);
+	void save(const t_string& filename);
 
 private:
 	t_list<t_color> colors;

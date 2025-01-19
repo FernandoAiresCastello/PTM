@@ -176,7 +176,7 @@ namespace PTMStudio
         {
             TileBuffer = TilebufferFile.Load(Proj, file);
             Filename = file;
-            TxtFilename.Text = Filesystem.RemoveAbsoluteRootAndFilesPrefix(file);
+            TxtFilename.Text = Filesystem.RemoveAbsoluteRootAndNormalizePath(file);
             Renderer.Map = TileBuffer;
             UpdateDisplay();
             UpdateSizeLabel();

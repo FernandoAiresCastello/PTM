@@ -53,25 +53,18 @@ t_list<t_string> t_filesystem::list_user_files(const char* prefix)
     t_list<t_string> files;
 
     for (const auto& entry : fs::directory_iterator(USER_ROOT)) {
-        if (fs::is_directory(entry.status())) {
-            const auto&& path = entry.path().filename().string();
-            const auto&& dir = path + "/";
-            if (prefix) {
-                if (path.starts_with(prefix))
-                    files.emplace_back(t_string(dir).to_upper());
-            }
-            else {
-                files.emplace_back(t_string(dir).to_upper());
-            }
-        }
-    }
-
-    for (const auto& entry : fs::directory_iterator(USER_ROOT)) {
         if (fs::is_regular_file(entry.status())) {
             const auto&& path = entry.path().filename().string();
             if (prefix) {
-                if (path.starts_with(prefix))
+                if (prefix[0] == '*') {
+                    t_string suffix = t_string(prefix).skip(1);
+                    if (!suffix.empty() && path.ends_with(suffix.c_str())) {
+                        files.emplace_back(t_string(path).to_upper());
+                    }
+                }
+                else if (path.starts_with(prefix)) {
                     files.emplace_back(t_string(path).to_upper());
+                }
             }
             else {
                 files.emplace_back(t_string(path).to_upper());

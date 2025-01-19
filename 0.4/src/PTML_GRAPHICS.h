@@ -15,6 +15,8 @@ namespace PTML
 	void CHR();
 	void LDPAL();
 	void LDCHR();
+	void SVPAL();
+	void SVCHR();
 	void LOCATE();
 	void CSR_GETX();
 	void CSR_GETY();

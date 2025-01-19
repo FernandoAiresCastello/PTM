@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PTMStudio.Windows;
+using System;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -23,7 +24,7 @@ namespace PTMStudio
         private PaletteEditPanel()
         {
             InitializeComponent();
-        }
+		}
 
         public PaletteEditPanel(MainWindow mainWnd)
         {
@@ -47,7 +48,6 @@ namespace PTMStudio
 
 			MaxColors = Display.Graphics.Cols * Display.Graphics.Rows;
 
-			DefaultPalette.Init(Display.Graphics.Palette);
 			UpdateDisplay();
         }
 
@@ -126,7 +126,7 @@ namespace PTMStudio
 
             FirstColor = 0;
             Filename = file;
-            TxtFilename.Text = Filesystem.RemoveAbsoluteRootAndFilesPrefix(file);
+            TxtFilename.Text = Filesystem.RemoveAbsoluteRootAndNormalizePath(file);
             MainWindow.PaletteChanged(false);
             UpdateDisplay();
         }
@@ -249,22 +249,18 @@ namespace PTMStudio
         {
             if (string.IsNullOrWhiteSpace(Filename))
             {
-                SaveFileDialog dialog = new SaveFileDialog
-                {
-                    Filter = "PTM Palette File (*.PAL)|*.PAL"
-                };
+                SimpleTextInputDialog dialog = new SimpleTextInputDialog("Save palette file", "Enter file name:");
 
                 if (dialog.ShowDialog(this) == DialogResult.OK)
-                    Filename = dialog.FileName.ToUpper();
+                    Filename = dialog.Text.ToUpper();
                 else
                     return;
             }
 
-            PaletteFile.SaveAsHexadecimalRgb(Display.Graphics.Palette, Filename);
-            Filename = Filesystem.NormalizePath(Filename);
-            TxtFilename.Text = Filesystem.RemoveAbsoluteRoot(Filename);
-            TxtFilename.Text = Filesystem.RemoveFilesPrefix(TxtFilename.Text);
-            MainWindow.UpdateFilePanel();
+            Filename = Filesystem.GetUserFilePath(Filename) + ".PAL";
+			PaletteFile.SaveAsHexadecimalRgb(Display.Graphics.Palette, Filename);
+			TxtFilename.Text = Filesystem.RemoveAbsoluteRootAndNormalizePath(Filename);
+			MainWindow.UpdateFilePanel();
             MainWindow.PaletteChanged(false);
         }
 
@@ -283,7 +279,6 @@ namespace PTMStudio
 
 		private void BtnArrange_Click(object sender, EventArgs e)
 		{
-
 		}
 	}
 }

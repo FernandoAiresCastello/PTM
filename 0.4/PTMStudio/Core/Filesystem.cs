@@ -26,7 +26,12 @@ namespace PTMStudio
             return path.Replace(CurrentDir, "");
         }
 
-        public static string RemoveAbsoluteRootAndFilesPrefix(string path)
+		public static string RemoveAbsoluteRootAndNormalizePath(string path)
+        {
+            return NormalizePath(RemoveAbsoluteRoot(path));
+        }
+
+		public static string RemoveAbsoluteRootAndFilesPrefix(string path)
         {
             return RemoveFilesPrefix(path.Replace(CurrentDir, ""));
         }

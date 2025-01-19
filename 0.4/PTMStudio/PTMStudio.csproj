@@ -56,7 +56,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\DefaultPalette.cs" />
     <Compile Include="Windows\ColorEditWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,7 +68,6 @@
     <Compile Include="Windows\ColorSelectWindow.Designer.cs">
       <DependentUpon>ColorSelectWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Core\DefaultTileset.cs" />
     <Compile Include="Core\Filesystem.cs" />
     <Compile Include="Panels\FilesystemPanel.cs">
       <SubType>UserControl</SubType>

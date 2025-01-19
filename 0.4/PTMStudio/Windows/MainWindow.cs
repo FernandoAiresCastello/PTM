@@ -40,12 +40,15 @@ namespace PTMStudio
         public MainWindow(string ptmExe)
         {
             InitializeComponent();
+
             Size = new Size(1024, 730);
-			//Resize += MainWindow_Resize;
             MinimumSize = Size;
             PtmExe = ptmExe;
 
-            ProgramPanel = new ProgramEditPanel(this)
+			Changes = new ChangeTracker();
+			UpdateChangesLabel();
+
+			ProgramPanel = new ProgramEditPanel(this)
             {
                 Parent = CenterBottomPanel,
                 Dock = DockStyle.Fill
@@ -97,9 +100,10 @@ namespace PTMStudio
 				FilePanel.UpdateFileList();
 			}
 
-            Changes = new ChangeTracker();
-            UpdateChangesLabel();
-            LoadFile(AutosavedProgramFile);
+			PalettePanel.LoadFile(Filesystem.DefaultPaletteFile);
+			TilesetPanel.LoadFile(Filesystem.DefaultTilesetFile);
+
+            LoadProgramFile(AutosavedProgramFile);
 
             FormClosing += MainWindow_FormClosing;
         }
@@ -178,7 +182,7 @@ namespace PTMStudio
 			Process.Start(PtmExe, ProgramFile);
         }
 
-        public void LoadFile(string file)
+        public void LoadProgramFile(string file)
         {
             if (Changes.Program)
             {
@@ -202,7 +206,7 @@ namespace PTMStudio
             else if (ext == ".PTMS")
                 LoadProject(file);
             else
-                MainWindow.Warning("Unsupported file format");
+                Warning("Unsupported file format");
         }
 
         public void UpdateFilePanel()
@@ -478,9 +482,7 @@ namespace PTMStudio
         public void NewProgramLoaded(string file)
         {
             ProgramFile = file;
-            Text = "PTM - " + 
-                Filesystem.RemoveAbsoluteRootAndFilesPrefix(
-                Filesystem.NormalizePath(file));
+            Text = "PTM - " + Filesystem.RemoveAbsoluteRootAndNormalizePath(file);
 
             LabelsPanel.UpdateLabels();
         }

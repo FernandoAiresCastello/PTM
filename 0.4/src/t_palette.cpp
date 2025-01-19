@@ -65,3 +65,8 @@ void t_palette::load(const t_string& filename)
 	remove_all();
 	t_filesystem::load_palette_plaintext(this, filename);
 }
+
+void t_palette::save(const t_string& filename)
+{
+	t_filesystem::save_palette_plaintext(this, filename);
+}

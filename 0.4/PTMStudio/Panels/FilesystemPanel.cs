@@ -76,7 +76,7 @@ namespace PTMStudio
         private void OnDoubleClickEntry(FilesystemEntry entry)
         {
             if (!entry.IsDirectory)
-                MainWindow.LoadFile(entry.AbsolutePath);
+                MainWindow.LoadProgramFile(entry.AbsolutePath);
         }
 
         private void BtnExplorer_Click(object sender, EventArgs e)

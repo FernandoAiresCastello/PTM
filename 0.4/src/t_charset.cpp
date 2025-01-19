@@ -72,3 +72,8 @@ void t_charset::load(const t_string& filename)
 	remove_all();
 	t_filesystem::load_charset_plaintext(this, filename);
 }
+
+void t_charset::save(const t_string& filename)
+{
+	t_filesystem::save_charset_plaintext(this, filename);
+}

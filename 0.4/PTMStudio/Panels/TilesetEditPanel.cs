@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PTMStudio.Windows;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -41,7 +42,6 @@ namespace PTMStudio
 
             MaxTiles = Display.Graphics.Cols * Display.Graphics.Rows;
 
-            DefaultTileset.Init(Display.Graphics.Tileset);
 			UpdateDisplay();
         }
 
@@ -134,7 +134,7 @@ namespace PTMStudio
 
             FirstTile = 0;
             Filename = file;
-            TxtFilename.Text = Filesystem.RemoveAbsoluteRootAndFilesPrefix(file);
+            TxtFilename.Text = Filesystem.RemoveAbsoluteRootAndNormalizePath(file);
             MainWindow.TilesetChanged(false);
             UpdateDisplay();
         }
@@ -187,31 +187,28 @@ namespace PTMStudio
 
         public void SaveFile()
         {
-            if (string.IsNullOrWhiteSpace(Filename))
-            {
-                SaveFileDialog dialog = new SaveFileDialog
-                {
-                    Filter = "PTM Tileset File (*.CHR)|*.CHR"
-                };
+			if (string.IsNullOrWhiteSpace(Filename))
+			{
+				SimpleTextInputDialog dialog = new SimpleTextInputDialog("Save charset file", "Enter file name:");
 
-                if (dialog.ShowDialog(this) == DialogResult.OK)
-                    Filename = dialog.FileName.ToUpper();
-                else
-                    return;
-            }
+				if (dialog.ShowDialog(this) == DialogResult.OK)
+					Filename = dialog.Text.ToUpper();
+				else
+					return;
+			}
 
-            TilesetFile.SaveAsBinaryStrings(Display.Graphics.Tileset, Filename);
-            Filename = Filesystem.NormalizePath(Filename);
-            TxtFilename.Text = Filesystem.RemoveAbsoluteRoot(Filename);
-            TxtFilename.Text = Filesystem.RemoveFilesPrefix(TxtFilename.Text);
-            MainWindow.UpdateFilePanel();
+			Filename = Filesystem.GetUserFilePath(Filename) + ".CHR";
+			TilesetFile.SaveAsBinaryStrings(Display.Graphics.Tileset, Filename);
+			TxtFilename.Text = Filesystem.RemoveAbsoluteRootAndNormalizePath(Filename);
+			MainWindow.UpdateFilePanel();
             MainWindow.TilesetChanged(false);
         }
 
         private void BtnNew_Click(object sender, EventArgs e)
         {
-            DefaultTileset.Init(Display.Graphics.Tileset);
-
+			Display.Graphics.Tileset.SetEmpty();
+			Display.Graphics.Tileset.AddBlank(256);
+			
             Filename = null;
             TxtFilename.Text = "<Unsaved>";
             FirstTile = 0;
