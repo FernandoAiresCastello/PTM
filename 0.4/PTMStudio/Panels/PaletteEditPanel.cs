@@ -11,14 +11,14 @@ namespace PTMStudio
 {
 	public partial class PaletteEditPanel : UserControl
     {
+		public string Filename { get; private set; }
+		public Palette Palette { get => Display.Graphics.Palette; }
+		
         private readonly MainWindow MainWindow;
         private readonly TiledDisplay Display;
         private int FirstColor = 0;
         private readonly int MaxColors;
-
-        public string Filename { get; private set; }
-
-        public Palette Palette { get => Display.Graphics.Palette; }
+        private int? SelectedColorIndexForMoving = null;
 
         private PaletteEditPanel()
         {
@@ -42,14 +42,53 @@ namespace PTMStudio
             Display.MouseLeave += Display_MouseLeave;
             Display.MouseClick += Display_MouseClick;
             Display.MouseDoubleClick += Display_MouseDoubleClick;
+			Display.MouseDown += Display_MouseDown;
+			Display.MouseUp += Display_MouseUp;
 
-            MaxColors = Display.Graphics.Cols * Display.Graphics.Rows;
+			MaxColors = Display.Graphics.Cols * Display.Graphics.Rows;
 
 			DefaultPalette.Init(Display.Graphics.Palette);
 			UpdateDisplay();
         }
 
-        private void Display_MouseWheel(object sender, MouseEventArgs e)
+		private void Display_MouseDown(object sender, MouseEventArgs e)
+		{
+            if (!BtnArrange.Checked || e.Button != MouseButtons.Left)
+                return;
+
+            if (SelectedColorIndexForMoving == null)
+				SelectedColorIndexForMoving = GetColorIndexFromMousePos(e.Location);
+		}
+
+		private void Display_MouseUp(object sender, MouseEventArgs e)
+		{
+			if (!BtnArrange.Checked || e.Button != MouseButtons.Left)
+				return;
+
+            Point pos = GetColorPosFromMousePos(e.Location);
+            if (pos.X < 0 || pos.Y < 0 || pos.X >= Display.Cols || pos.Y >= Display.Rows)
+            {
+                SelectedColorIndexForMoving = null;
+				return;
+            }
+
+			if (SelectedColorIndexForMoving != null)
+            {
+				int startingColor = Palette.Get(SelectedColorIndexForMoving.Value);
+                int destinationIndex = GetColorIndexFromMousePos(e.Location);
+				int destinationColor = Palette.Get(destinationIndex);
+
+				// Copy the starting color to the destination index
+				Palette.Set(destinationIndex, startingColor);
+                // Copy the destination color back to the starting index
+                Palette.Set(SelectedColorIndexForMoving.Value, destinationColor);
+
+				SelectedColorIndexForMoving = null;
+				UpdateDisplay();
+			}
+		}
+
+		private void Display_MouseWheel(object sender, MouseEventArgs e)
         {
             if (e.Delta > 0)
                 ScrollDisplay(-1);
@@ -138,7 +177,12 @@ namespace PTMStudio
             return FirstColor + Display.GetMouseToCellIndex(mousePos);
         }
 
-        private void Display_MouseClick(object sender, MouseEventArgs e)
+		private Point GetColorPosFromMousePos(Point mousePos)
+		{
+			return Display.GetMouseToCellPos(mousePos);
+		}
+
+		private void Display_MouseClick(object sender, MouseEventArgs e)
         {
             int ix = GetColorIndexFromMousePos(e.Location);
             if (ix < 0 || ix >= Display.Graphics.Palette.Size)
@@ -236,5 +280,10 @@ namespace PTMStudio
             MainWindow.PaletteChanged(false);
             UpdateDisplay();
         }
-    }
+
+		private void BtnArrange_Click(object sender, EventArgs e)
+		{
+
+		}
+	}
 }

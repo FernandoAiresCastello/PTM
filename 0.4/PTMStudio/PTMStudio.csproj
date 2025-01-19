@@ -203,6 +203,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\transform_move.png" />
     <None Include="Resources\sort_asc_az.png" />
     <None Include="Resources\select.png" />
     <None Include="Resources\table_edit.png" />

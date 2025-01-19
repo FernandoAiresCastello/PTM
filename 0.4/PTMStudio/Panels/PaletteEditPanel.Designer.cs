@@ -31,13 +31,12 @@
 			this.PnlPalette = new System.Windows.Forms.Panel();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-			this.BtnNew = new System.Windows.Forms.ToolStripButton();
-			this.BtnSave = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.BtnPrev = new System.Windows.Forms.ToolStripButton();
-			this.BtnNext = new System.Windows.Forms.ToolStripButton();
 			this.LblIndicator = new System.Windows.Forms.ToolStripLabel();
 			this.TxtFilename = new System.Windows.Forms.TextBox();
+			this.BtnNew = new System.Windows.Forms.ToolStripButton();
+			this.BtnSave = new System.Windows.Forms.ToolStripButton();
+			this.BtnArrange = new System.Windows.Forms.ToolStripButton();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -77,9 +76,8 @@
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BtnNew,
             this.BtnSave,
+            this.BtnArrange,
             this.toolStripSeparator1,
-            this.BtnPrev,
-            this.BtnNext,
             this.LblIndicator});
 			this.toolStrip1.Location = new System.Drawing.Point(1, 1);
 			this.toolStrip1.Name = "toolStrip1";
@@ -87,50 +85,10 @@
 			this.toolStrip1.TabIndex = 4;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
-			// BtnNew
-			// 
-			this.BtnNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.BtnNew.Image = global::PTMStudio.Properties.Resources.page_white;
-			this.BtnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnNew.Name = "BtnNew";
-			this.BtnNew.Size = new System.Drawing.Size(23, 22);
-			this.BtnNew.Click += new System.EventHandler(this.BtnNew_Click);
-			// 
-			// BtnSave
-			// 
-			this.BtnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.BtnSave.Image = global::PTMStudio.Properties.Resources.diskette;
-			this.BtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnSave.Name = "BtnSave";
-			this.BtnSave.Size = new System.Drawing.Size(23, 22);
-			this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
-			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-			// 
-			// BtnPrev
-			// 
-			this.BtnPrev.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.BtnPrev.Image = global::PTMStudio.Properties.Resources.resultset_previous;
-			this.BtnPrev.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-			this.BtnPrev.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnPrev.Name = "BtnPrev";
-			this.BtnPrev.Size = new System.Drawing.Size(23, 22);
-			this.BtnPrev.Visible = false;
-			this.BtnPrev.Click += new System.EventHandler(this.BtnPrev_Click);
-			// 
-			// BtnNext
-			// 
-			this.BtnNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.BtnNext.Image = global::PTMStudio.Properties.Resources.resultset_next;
-			this.BtnNext.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-			this.BtnNext.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnNext.Name = "BtnNext";
-			this.BtnNext.Size = new System.Drawing.Size(23, 22);
-			this.BtnNext.Visible = false;
-			this.BtnNext.Click += new System.EventHandler(this.BtnNext_Click);
 			// 
 			// LblIndicator
 			// 
@@ -155,6 +113,35 @@
 			this.TxtFilename.TabStop = false;
 			this.TxtFilename.Text = "<Unsaved>";
 			// 
+			// BtnNew
+			// 
+			this.BtnNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnNew.Image = global::PTMStudio.Properties.Resources.page_white;
+			this.BtnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnNew.Name = "BtnNew";
+			this.BtnNew.Size = new System.Drawing.Size(23, 22);
+			this.BtnNew.Click += new System.EventHandler(this.BtnNew_Click);
+			// 
+			// BtnSave
+			// 
+			this.BtnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnSave.Image = global::PTMStudio.Properties.Resources.diskette;
+			this.BtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnSave.Name = "BtnSave";
+			this.BtnSave.Size = new System.Drawing.Size(23, 22);
+			this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
+			// 
+			// BtnArrange
+			// 
+			this.BtnArrange.CheckOnClick = true;
+			this.BtnArrange.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnArrange.Image = global::PTMStudio.Properties.Resources.transform_move;
+			this.BtnArrange.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnArrange.Name = "BtnArrange";
+			this.BtnArrange.Size = new System.Drawing.Size(23, 22);
+			this.BtnArrange.Text = "Arrange";
+			this.BtnArrange.Click += new System.EventHandler(this.BtnArrange_Click);
+			// 
 			// PaletteEditPanel
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -177,10 +164,9 @@
         private System.Windows.Forms.TextBox TxtFilename;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton BtnSave;
-        private System.Windows.Forms.ToolStripButton BtnPrev;
-        private System.Windows.Forms.ToolStripButton BtnNext;
         private System.Windows.Forms.ToolStripLabel LblIndicator;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton BtnNew;
-    }
+		private System.Windows.Forms.ToolStripButton BtnArrange;
+	}
 }

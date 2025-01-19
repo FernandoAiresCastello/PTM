@@ -33,8 +33,6 @@
 			this.BtnNew = new System.Windows.Forms.ToolStripButton();
 			this.BtnSave = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.BtnPrev = new System.Windows.Forms.ToolStripButton();
-			this.BtnNext = new System.Windows.Forms.ToolStripButton();
 			this.LblIndicator = new System.Windows.Forms.ToolStripLabel();
 			this.PnlTileset = new System.Windows.Forms.Panel();
 			this.TxtFilename = new System.Windows.Forms.TextBox();
@@ -67,8 +65,6 @@
             this.BtnNew,
             this.BtnSave,
             this.toolStripSeparator1,
-            this.BtnPrev,
-            this.BtnNext,
             this.LblIndicator});
 			this.toolStrip1.Location = new System.Drawing.Point(1, 1);
 			this.toolStrip1.Name = "toolStrip1";
@@ -98,28 +94,6 @@
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-			// 
-			// BtnPrev
-			// 
-			this.BtnPrev.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.BtnPrev.Image = global::PTMStudio.Properties.Resources.resultset_previous;
-			this.BtnPrev.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-			this.BtnPrev.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnPrev.Name = "BtnPrev";
-			this.BtnPrev.Size = new System.Drawing.Size(23, 22);
-			this.BtnPrev.Visible = false;
-			this.BtnPrev.Click += new System.EventHandler(this.BtnPrev_Click);
-			// 
-			// BtnNext
-			// 
-			this.BtnNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.BtnNext.Image = global::PTMStudio.Properties.Resources.resultset_next;
-			this.BtnNext.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-			this.BtnNext.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnNext.Name = "BtnNext";
-			this.BtnNext.Size = new System.Drawing.Size(23, 22);
-			this.BtnNext.Visible = false;
-			this.BtnNext.Click += new System.EventHandler(this.BtnNext_Click);
 			// 
 			// LblIndicator
 			// 
@@ -176,8 +150,6 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.Panel PnlTileset;
         private System.Windows.Forms.TextBox TxtFilename;
-        private System.Windows.Forms.ToolStripButton BtnNext;
-        private System.Windows.Forms.ToolStripButton BtnPrev;
         private System.Windows.Forms.ToolStripLabel LblIndicator;
         private System.Windows.Forms.ToolStripButton BtnSave;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
