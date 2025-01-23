@@ -88,10 +88,10 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	// === GRAPHICS ===
 	CMD("PAL", PAL);
 	CMD("CHR", CHR);
-	CMD("LDPAL", LDPAL);
-	CMD("LDCHR", LDCHR);
-	CMD("SVPAL", SVPAL);
-	CMD("SVCHR", SVCHR);
+	CMD("PLOAD", LDPAL);
+	CMD("CLOAD", LDCHR);
+	CMD("PSAVE", SVPAL);
+	CMD("CSAVE", SVCHR);
 
 	// === SCREEN ===
 	CMD("REFRESH", REFRESH);
@@ -135,6 +135,8 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("DEL", DEL);
 	CMD("RECT", RECT);
 	CMD("FILL", FILL);
+	CMD("BSAVE", SVBUF);
+	CMD("BLOAD", LDBUF);
 
 	// === SOUND ===
 	CMD("BEEP", BEEP);
@@ -148,7 +150,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("FIND", STR_FIND);
 	CMD("SUBSTR", STR_SUBSTR);
 	CMD("STRLEN", STR_LEN);
-	CMD("ASCII", STR_ASCII);
+	CMD("ASC", STR_ASCII);
 	CMD("CHAR", STR_CHAR);
 
 	return nullptr;

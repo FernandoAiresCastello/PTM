@@ -17,6 +17,8 @@ namespace PTML
 	void LDCHR();
 	void SVPAL();
 	void SVCHR();
+	void SVBUF();
+	void LDBUF();
 	void LOCATE();
 	void CSR_GETX();
 	void CSR_GETY();
@@ -32,8 +34,6 @@ namespace PTML
 	void TILE_GETB();
 	void TILE_SETP();
 	void TILE_GETP();
-	void BUF();
-	void BSIZE();
 	void PUT();
 	void RECT();
 	void FILL();
@@ -41,5 +41,4 @@ namespace PTML
 	void DEL();
 	void AUTOREF();
 	void REFRESH();
-	void DRAW();
 }

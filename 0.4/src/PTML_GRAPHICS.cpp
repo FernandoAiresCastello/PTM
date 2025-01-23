@@ -170,6 +170,34 @@ void PTML::SVCHR()
 	ptm->get_chr().save(t_string(USER_ROOT) + filename);
 }
 
+void PTML::SVBUF()
+{
+	ARGC(1);
+	auto&& filename = STR(1);
+	VALIDATE_FILENAME(filename);
+
+	t_string actual_filename = filename;
+	if (!actual_filename.ends_with(".BUF"))
+		actual_filename += ".BUF";
+
+	ptm->get_screen().save(actual_filename);
+}
+
+void PTML::LDBUF()
+{
+	ARGC(1);
+	auto&& filename = STR(1);
+	VALIDATE_FILENAME(filename);
+
+	t_string actual_filename = filename;
+	if (!actual_filename.ends_with(".BUF"))
+		actual_filename += ".BUF";
+
+	REQUIRE_FILE(actual_filename);
+	
+	ptm->get_screen().load(actual_filename);
+}
+
 void PTML::LOCATE()
 {
 	ARGC(2);
@@ -274,18 +302,6 @@ void PTML::TILE_GETP()
 	ptm->set_var(ARG(1), TILEREG.data.get(STR(2)), error);
 }
 
-void PTML::BUF()
-{
-	ARGC(1);
-	ptm->usr_tilebuf_selected = BOOL(1);
-}
-
-void PTML::BSIZE()
-{
-	ARGC(2);
-	ptm->usr_tilebuf.init(NUM(1), NUM(2));
-}
-
 void PTML::PUT()
 {
 	ARGC(0);
@@ -297,29 +313,20 @@ void PTML::PUT()
 		scr->set_tile(tile, 0, scr->csry() - 1);
 	}
 	else {
-		if (ptm->usr_tilebuf_selected)
-			ptm->usr_tilebuf.set(tile, scr->csrx(), scr->csry());
-		else
-			scr->set_tile_at_csr(tile);
+		scr->set_tile_at_csr(tile);
 	}
 }
 
 void PTML::GET()
 {
 	ARGC(0);
-	if (ptm->usr_tilebuf_selected)
-		ptm->tilereg = ptm->usr_tilebuf.get_copy(scr->csrx(), scr->csry());
-	else
-		ptm->tilereg = scr->get_tile_at_csr();
+	ptm->tilereg = scr->get_tile_at_csr();
 }
 
 void PTML::DEL()
 {
 	ARGC(0);
-	if (ptm->usr_tilebuf_selected)
-		ptm->usr_tilebuf.set_blank(scr->csrx(), scr->csry());
-	else
-		scr->set_blank_tile(scr->csrx(), scr->csry(), t_tileflags());
+	scr->set_blank_tile(scr->csrx(), scr->csry(), t_tileflags());
 }
 
 void PTML::RECT()
@@ -330,20 +337,14 @@ void PTML::RECT()
 	int&& x2 = NUM(3);
 	int&& y2 = NUM(4);
 	auto&& tile = TILEREG_OR_BLANK_TILE;
-	if (ptm->usr_tilebuf_selected)
-		ptm->usr_tilebuf.rect_fill(tile, x1, y1, x2, y2);
-	else
-		scr->rect_fill(tile, x1, y1, x2, y2);
+	scr->rect_fill(tile, x1, y1, x2, y2);
 }
 
 void PTML::FILL()
 {
 	ARGC(0);
 	auto&& tile = TILEREG_OR_BLANK_TILE;
-	if (ptm->usr_tilebuf_selected)
-		ptm->usr_tilebuf.fill(tile);
-	else
-		scr->fill(tile);
+	scr->fill(tile);
 }
 
 void PTML::AUTOREF()
@@ -356,16 +357,4 @@ void PTML::REFRESH()
 {
 	ARGC(0);
 	ptm->refresh_screen();
-}
-
-void PTML::DRAW()
-{
-	ARGC(6);
-	int&& x = NUM(1);
-	int&& y = NUM(2);
-	int&& w = NUM(3);
-	int&& h = NUM(4);
-	int&& xoff = NUM(5);
-	int&& yoff = NUM(6);
-	ptm->draw_user_buffer(x, y, w, h, xoff, yoff);
 }

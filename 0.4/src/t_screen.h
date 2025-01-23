@@ -98,6 +98,8 @@ public:
 	bool displace_tiles_left();
 	const t_tilebuffer_region& get_viewport();
 	void delete_all_sprites();
+	void save(const t_string& filename);
+	void load(const t_string& filename);
 
 private:
 	t_window* wnd = nullptr;

@@ -85,6 +85,8 @@ namespace PTMStudio
 
 				SelectedColorIndexForMoving = null;
 				UpdateDisplay();
+
+                MainWindow.PaletteChanged(true);
 			}
 		}
 

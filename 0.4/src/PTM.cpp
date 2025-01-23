@@ -605,25 +605,3 @@ const t_string& PTM::get_last_program_filename() const
 {
 	return last_program_filename;
 }
-
-void PTM::draw_user_buffer(int x, int y, int w, int h, int xoff, int yoff)
-{
-	auto& tiles = usr_tilebuf.get_tiles();
-
-	int buf_x = 0;
-	int buf_y = 0;
-
-	for (int scr_y = y; scr_y <= y + h; scr_y++) {
-		for (int scr_x = x; scr_x <= x + w; scr_x++) {
-			int&& cur_buf_x = buf_x + xoff;
-			int&& cur_buf_y = buf_y + yoff;
-			if (cur_buf_x >= 0 && cur_buf_y >= 0 && cur_buf_x < usr_tilebuf.width() && cur_buf_y < usr_tilebuf.height()) {
-				auto& tile = usr_tilebuf.get_ref(cur_buf_x, cur_buf_y);
-				scr.set_tile(tile, scr_x, scr_y);
-			}
-			buf_x++;
-		}
-		buf_y++;
-		buf_x = 0;
-	}
-}

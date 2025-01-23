@@ -629,3 +629,13 @@ void t_screen::delete_all_sprites()
 {
 	buf->delete_all_sprites();
 }
+
+void t_screen::save(const t_string& filename)
+{
+	buf->save(filename);
+}
+
+void t_screen::load(const t_string& filename)
+{
+	buf->load(filename);
+}

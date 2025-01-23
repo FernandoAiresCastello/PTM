@@ -35,6 +35,8 @@ public:
 	void delete_sprite(t_sprite_ptr sprite);
 	void delete_all_sprites();
 	t_sprite_ptr get_cursor();
+	void save(const t_string& filename);
+	void load(const t_string& filename);
 
 private:
 	const int length;

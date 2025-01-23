@@ -146,3 +146,72 @@ t_sprite_ptr t_tilebuffer::get_cursor()
 {
 	return cursor_sprite;
 }
+
+void t_tilebuffer::save(const t_string& filename)
+{
+/*
+	cols
+	rows
+
+	tiles:count
+	foreach tile
+	{
+		flag
+		{
+			visible
+			monochrome
+			hide_bgc
+		}
+
+		chars:count
+		foreach char
+		{
+			ix
+			fgc
+			bgc
+		}
+
+		data:count
+		foreach data
+		{
+			key
+			value
+		}
+	}
+	foreach sprite
+	{
+		pos:x
+		pos:y
+
+		tile
+		{
+			flag
+			{
+				visible
+				monochrome
+				hide_bgc
+			}
+
+			chars:count
+			foreach char
+			{
+				ix
+				fgc
+				bgc
+			}
+
+			data:count
+			foreach data
+			{
+				key
+				value
+			}
+		}
+	}
+*/
+
+}
+
+void t_tilebuffer::load(const t_string& filename)
+{
+}
