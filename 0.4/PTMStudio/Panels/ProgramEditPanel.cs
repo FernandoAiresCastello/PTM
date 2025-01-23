@@ -47,7 +47,8 @@ namespace PTMStudio
         {
             Scintilla.Text = File.ReadAllText(file);
             LoadedFile = file;
-            MainWindow.ShowProgramEditor();
+			LbFilename.Text = Filesystem.RemoveAbsoluteRootAndNormalizePath(file);
+			MainWindow.ShowProgramEditor();
             MainWindow.ProgramChanged(false);
             MainWindow.NewProgramLoaded(file);
         }

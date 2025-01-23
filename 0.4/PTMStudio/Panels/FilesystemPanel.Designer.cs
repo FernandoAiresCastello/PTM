@@ -132,6 +132,10 @@
 			this.FileTreeIcons.TransparentColor = System.Drawing.Color.Transparent;
 			this.FileTreeIcons.Images.SetKeyName(0, "folder.png");
 			this.FileTreeIcons.Images.SetKeyName(1, "page_white.png");
+			this.FileTreeIcons.Images.SetKeyName(2, "page.png");
+			this.FileTreeIcons.Images.SetKeyName(3, "document_black.png");
+			this.FileTreeIcons.Images.SetKeyName(4, "text_smallcaps.png");
+			this.FileTreeIcons.Images.SetKeyName(5, "color_wheel.png");
 			// 
 			// FilesystemPanel
 			// 

@@ -36,9 +36,6 @@ void PTM::run(const char* initial_program)
 	if (running)
 		return;
 
-	if (initial_program)
-		enable_autosave = false;
-
 	running = true;
 	halted = false;
 	tilereg.set_empty();

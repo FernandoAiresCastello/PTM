@@ -13,7 +13,7 @@ namespace PTMStudio
 	public partial class MainWindow : Form
     {
         private const string ProgramFileExt = ".PTM";
-        private const string AutosavedProgramFile = "ROOT/AUTOSAVE" + ProgramFileExt;
+        private const string AutosavedProgramFile = "ROOT/TEMP" + ProgramFileExt;
         
         private readonly string PtmExe;
         private readonly ProgramEditPanel ProgramPanel;
@@ -108,11 +108,6 @@ namespace PTMStudio
             FormClosing += MainWindow_FormClosing;
         }
 
-		private void MainWindow_Resize(object sender, EventArgs e)
-		{
-            Text = Size.ToString();
-		}
-
 		private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (Changes.Program)
@@ -158,11 +153,6 @@ namespace PTMStudio
                     TilebufferPanel.SaveFile();
             }
             if (e.Cancel) return;
-        }
-
-        private void MainWindow_ResizeEnd(object sender, EventArgs e)
-        {
-            Text = Size.ToString();
         }
 
         private void BtnRun_Click(object sender, EventArgs e)
@@ -482,7 +472,7 @@ namespace PTMStudio
         public void NewProgramLoaded(string file)
         {
             ProgramFile = file;
-            Text = "PTM - " + Filesystem.RemoveAbsoluteRootAndNormalizePath(file);
+            Text = "PTM 0.4";
 
             LabelsPanel.UpdateLabels();
         }

@@ -28,7 +28,13 @@ namespace PTMStudio
 
 		public static string RemoveAbsoluteRootAndNormalizePath(string path)
         {
-            return NormalizePath(RemoveAbsoluteRoot(path));
+            string result = NormalizePath(RemoveAbsoluteRoot(path));
+            if (result.StartsWith("/"))
+                result = result.Substring(1);
+            if (result.StartsWith("ROOT/"))
+                result = result.Substring(5);
+
+            return result;
         }
 
 		public static string RemoveAbsoluteRootAndFilesPrefix(string path)
