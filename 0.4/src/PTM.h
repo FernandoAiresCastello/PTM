@@ -48,6 +48,8 @@ public:
 	void save_program_line(t_program_line& line);
 	bool delete_program_line(int line_nr);
 
+	void set_var(const t_string& varname, int value);
+	void set_var(const t_string& varname, const t_string& value);
 	void set_var(const t_param& param, int value, t_string& out_error);
 	void set_var(const t_param& param, const t_string& value, t_string& out_error);
 	int get_var_num(const t_param& param, t_string& out_error);

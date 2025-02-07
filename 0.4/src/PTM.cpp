@@ -277,6 +277,16 @@ bool PTM::delete_program_line(int line_nr)
 	return prg.delete_line(line_nr);
 }
 
+void PTM::set_var(const t_string& varname, int value)
+{
+	vars[varname] = t_string(value);
+}
+
+void PTM::set_var(const t_string& varname, const t_string& value)
+{
+	vars[varname] = value;
+}
+
 void PTM::set_var(const t_param& param, int value, t_string& out_error)
 {
 	set_var(param, t_string(value), out_error);

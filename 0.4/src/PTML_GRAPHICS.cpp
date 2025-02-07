@@ -7,26 +7,42 @@ void PTML::COLOR()
 
 	if (COUNT(3)) {
 		scr->color_fg(NUM(1));
+		ptm->set_var("INK", NUM(1));
+
 		scr->color_bg(NUM(2));
+		ptm->set_var("PAPER", NUM(2));
+
 		scr->color_bdr(NUM(3));
+		ptm->set_var("BORDER", NUM(3));
+		
 	}
 	else if (COUNT(2)) {
 		scr->color_fg(NUM(1));
+		ptm->set_var("INK", NUM(1));
+
 		scr->color_bg(NUM(2));
+		ptm->set_var("PAPER", NUM(2));
 	}
 	else if (COUNT(1)) {
 		scr->color_fg(NUM(1));
+		ptm->set_var("INK", NUM(1));
 	}
 }
 
 void PTML::COLOR_MODE()
 {
 	ARGC(1);
+
 	t_color_mode&& mode = (t_color_mode)NUM(1);
-	if (mode == t_color_mode::mode0_monochrome)
+
+	if (mode == t_color_mode::mode0_monochrome) {
 		scr->set_color_mode(t_color_mode::mode0_monochrome);
-	else if (mode == t_color_mode::mode1_multicolor)
+		ptm->set_var("CMODE", (int)mode);
+	}
+	else if (mode == t_color_mode::mode1_multicolor) {
 		scr->set_color_mode(t_color_mode::mode1_multicolor);
+		ptm->set_var("CMODE", (int)mode);
+	}
 	else
 		error = err.illegal_argument;
 }
@@ -36,6 +52,7 @@ void PTML::COLOR_SETF()
 	ARGC(1);
 	int&& color = NUM(1);
 	scr->color_fg(color);
+	ptm->set_var("INK", color);
 }
 
 void PTML::COLOR_SETB()
@@ -43,6 +60,7 @@ void PTML::COLOR_SETB()
 	ARGC(1);
 	int&& color = NUM(1);
 	scr->color_bg(color);
+	ptm->set_var("PAPER", color);
 }
 
 void PTML::COLOR_SETBR()
@@ -50,6 +68,7 @@ void PTML::COLOR_SETBR()
 	ARGC(1);
 	int&& color = NUM(1);
 	scr->color_bdr(color);
+	ptm->set_var("BORDER", color);
 }
 
 void PTML::PRINT()
@@ -204,6 +223,8 @@ void PTML::LOCATE()
 	int&& x = NUM(1);
 	int&& y = NUM(2);
 	scr->locate(x, y);
+	ptm->set_var("CSRX", x);
+	ptm->set_var("CSRY", y);
 }
 
 void PTML::CSR_GETX()
@@ -226,12 +247,16 @@ void PTML::FULLSCR()
 		ptm->get_wnd().set_fullscreen(BOOL(1));
 	else if (COUNT(0))
 		ptm->get_wnd().toggle_fullscreen();
+
+	ptm->set_var("FULLSCR", ptm->get_wnd().is_fullscreen() ? 1 : 0);
 }
 
 void PTML::CURSOR()
 {
 	ARGC(1);
-	scr->show_cursor(BOOL(1));
+	bool&& show = BOOL(1);
+	scr->show_cursor(show);
+	ptm->set_var("CURSOR", show ? 1 : 0);
 }
 
 void PTML::TILE_NEW()
