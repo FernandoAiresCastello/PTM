@@ -41,6 +41,7 @@ public:
 	bool is_not_empty() const;
 	void set_empty();
 	t_list<t_char>& get_all_chars();
+	void delete_all_chars();
 
 private:
 	t_list<t_char> chars;

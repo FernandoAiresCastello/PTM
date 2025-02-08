@@ -35,8 +35,9 @@ public:
 	void delete_sprite(t_sprite_ptr sprite);
 	void delete_all_sprites();
 	t_sprite_ptr get_cursor();
+	int get_loaded_back_color() const;
 	void save(const t_string& filename);
-	void load(const t_string& filename);
+	bool load(const t_string& filename);
 
 private:
 	const int length;
@@ -44,6 +45,7 @@ private:
 	t_list<t_tile> tiles;
 	t_list<t_sprite_ptr> sprites;
 	t_sprite_ptr cursor_sprite;
+	int loaded_back_color = -1;
 
 	void draw_sprites(t_window* wnd, t_charset* chr, t_palette* pal);
 	void draw_tile_absolute_pos(t_tile& tile, t_window* wnd, t_charset* chr, t_palette* pal, int x, int y, bool grid) const;

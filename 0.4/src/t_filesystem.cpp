@@ -12,7 +12,7 @@ constexpr int bytes_per_line = 16;
 namespace fs = std::filesystem;
 
 t_list<t_string> t_filesystem::illegal_filenames = {
-    "ROOT", "SYS", "CON", "PRN", "AUX", "NUL",
+    "ROOT", "USR", "SYS", "CON", "PRN", "AUX", "NUL",
     "COM0", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "COM¹", "COM²", "COM³", 
     "LPT0", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9", "LPT¹", "LPT²", "LPT³"
 };

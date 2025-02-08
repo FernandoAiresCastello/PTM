@@ -197,7 +197,10 @@ namespace PTMStudio
 					return;
 			}
 
-			Filename = Filesystem.GetUserFilePath(Filename) + ".CHR";
+			Filename = Filesystem.GetUserFilePath(Filename);
+            if (!Filename.EndsWith(".CHR"))
+                Filename += ".CHR";
+
 			TilesetFile.SaveAsBinaryStrings(Display.Graphics.Tileset, Filename);
 			TxtFilename.Text = Filesystem.RemoveAbsoluteRootAndNormalizePath(Filename);
 			MainWindow.UpdateFilePanel();
@@ -206,8 +209,7 @@ namespace PTMStudio
 
         private void BtnNew_Click(object sender, EventArgs e)
         {
-			Display.Graphics.Tileset.SetEmpty();
-			Display.Graphics.Tileset.AddBlank(256);
+			LoadFile(Filesystem.DefaultTilesetFile);
 			
             Filename = null;
             TxtFilename.Text = "<Unsaved>";

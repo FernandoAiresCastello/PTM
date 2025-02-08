@@ -6,7 +6,7 @@ namespace PTMStudio
 {
 	public static class Filesystem
     {
-        public const string UserRootDirName = "ROOT";
+        public const string UserRootDirName = "USR";
         public const string SysRootDirName = "SYS";
 
         public static readonly string CurrentDir = NormalizePath(Environment.CurrentDirectory);
@@ -28,13 +28,7 @@ namespace PTMStudio
 
 		public static string RemoveAbsoluteRootAndNormalizePath(string path)
         {
-            string result = NormalizePath(RemoveAbsoluteRoot(path));
-            if (result.StartsWith("/"))
-                result = result.Substring(1);
-            if (result.StartsWith("ROOT/"))
-                result = result.Substring(5);
-
-            return result;
+            return NormalizePath(RemoveAbsoluteRoot(path));
         }
 
 		public static string RemoveAbsoluteRootAndFilesPrefix(string path)

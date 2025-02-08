@@ -48,6 +48,8 @@ void PTML::OPEN()
 	VALIDATE_FILENAME(name);
 	auto&& mode = STR(2).to_upper();
 
+	name += ".DAT";
+
 	if (t_filesystem::is_record_file_open()) {
 		error = err.file_already_open;
 		return;

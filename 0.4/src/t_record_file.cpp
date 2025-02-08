@@ -75,6 +75,11 @@ t_string t_record_file::read()
 	return buffer[ptr++];
 }
 
+int t_record_file::read_int()
+{
+	return read().to_int();
+}
+
 bool t_record_file::is_eof()
 {
 	return ptr < 0 || ptr >= buffer.size() || !is_open;

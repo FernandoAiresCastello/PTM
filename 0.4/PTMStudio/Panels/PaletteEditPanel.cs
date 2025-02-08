@@ -259,7 +259,10 @@ namespace PTMStudio
                     return;
             }
 
-            Filename = Filesystem.GetUserFilePath(Filename) + ".PAL";
+            Filename = Filesystem.GetUserFilePath(Filename);
+			if (!Filename.EndsWith(".PAL"))
+				Filename += ".PAL";
+
 			PaletteFile.SaveAsHexadecimalRgb(Display.Graphics.Palette, Filename);
 			TxtFilename.Text = Filesystem.RemoveAbsoluteRootAndNormalizePath(Filename);
 			MainWindow.UpdateFilePanel();

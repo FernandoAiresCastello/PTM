@@ -32,6 +32,7 @@ public:
 	bool auto_screen_update = true;
 	bool enable_user_break = true;
 	bool enable_autosave = true;
+	bool suppress_imm_prompt = false;
 
 	void run(const char* initial_program);
 	void exit();

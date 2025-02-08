@@ -59,7 +59,7 @@ namespace PTMStudio
             }
             foreach (var file in directoryInfo.GetFiles())
             {
-				int imageIndex = 1;
+				int imageIndex = 8;
 
                 if (file.Name == "AUTORUN.PTM" || file.Name == "AUTOSAVE.PTM" || file.Name == "TEMP.PTM")
                 {
@@ -70,6 +70,9 @@ namespace PTMStudio
 					case ".PTM": imageIndex = 2; break;
 					case ".CHR": imageIndex = 4; break;
 					case ".PAL": imageIndex = 5; break;
+					case ".BUF": imageIndex = 6; break;
+					case ".PTMS": imageIndex = 7; break;
+                    case ".DAT": imageIndex = 9; break;
 				}
 
 				var fileNode = new TreeNode(file.Name, imageIndex, imageIndex);

@@ -4,7 +4,7 @@
 #include "t_record_file.h"
 
 #define SYS_ROOT            "SYS/"
-#define USER_ROOT           "ROOT/"
+#define USER_ROOT           "USR/"
 #define PROGRAM_FILE_EXT    ".PTM"
 #define AUTOEXEC_FILE       "AUTOEXEC" PROGRAM_FILE_EXT
 #define AUTOSAVE_FILE       "AUTOSAVE" PROGRAM_FILE_EXT

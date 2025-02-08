@@ -199,7 +199,7 @@ void PTML::SVBUF()
 	if (!actual_filename.ends_with(".BUF"))
 		actual_filename += ".BUF";
 
-	ptm->get_screen().save(actual_filename);
+	ptm->get_screen().save(t_string(USER_ROOT) + actual_filename);
 }
 
 void PTML::LDBUF()
@@ -214,7 +214,9 @@ void PTML::LDBUF()
 
 	REQUIRE_FILE(actual_filename);
 	
-	ptm->get_screen().load(actual_filename);
+	ptm->get_screen().load(t_string(USER_ROOT) + actual_filename);
+
+	ptm->suppress_imm_prompt = true;
 }
 
 void PTML::LOCATE()

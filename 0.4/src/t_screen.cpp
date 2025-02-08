@@ -637,5 +637,10 @@ void t_screen::save(const t_string& filename)
 
 void t_screen::load(const t_string& filename)
 {
-	buf->load(filename);
+	bool ok = buf->load(filename);
+	if (!ok) return;
+
+	int new_back_color = buf->get_loaded_back_color();
+	if (new_back_color >= 0)
+		back_color = new_back_color;
 }

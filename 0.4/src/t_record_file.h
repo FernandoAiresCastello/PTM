@@ -21,6 +21,7 @@ public:
 	void write(bool data);
 	void write(const t_list<t_string>& data);
 	t_string read();
+	int read_int();
 	bool is_eof();
 
 private:

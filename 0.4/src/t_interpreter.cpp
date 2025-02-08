@@ -94,8 +94,10 @@ bool t_interpreter::execute_line(t_program_line& line)
 		ptm->get_sound().alert();
 	}
 
-	if (line.immediate)
+	if (line.immediate && !ptm->suppress_imm_prompt)
 		print_prompt();
+
+	ptm->suppress_imm_prompt = false;
 
 	PTML::error = "";
 	return !has_error;

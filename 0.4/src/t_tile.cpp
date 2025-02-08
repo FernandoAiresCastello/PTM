@@ -136,3 +136,8 @@ t_list<t_char>& t_tile::get_all_chars()
 {
 	return chars;
 }
+
+void t_tile::delete_all_chars()
+{
+	chars.clear();
+}

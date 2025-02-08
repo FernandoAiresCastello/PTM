@@ -4,6 +4,7 @@
 #include "t_charset.h"
 #include "t_palette.h"
 #include "predefined_charset_ix.h"
+#include "t_filesystem.h"
 
 #define tile_at(x, y)			tiles[y * cols + x]
 #define if_inside_bounds(x, y)	if (x >= 0 && y >= 0 && x < cols && y < rows)
@@ -147,71 +148,62 @@ t_sprite_ptr t_tilebuffer::get_cursor()
 	return cursor_sprite;
 }
 
-void t_tilebuffer::save(const t_string& filename)
+int t_tilebuffer::get_loaded_back_color() const
 {
-/*
-	cols
-	rows
-
-	tiles:count
-	foreach tile
-	{
-		flag
-		{
-			visible
-			monochrome
-			hide_bgc
-		}
-
-		chars:count
-		foreach char
-		{
-			ix
-			fgc
-			bgc
-		}
-
-		data:count
-		foreach data
-		{
-			key
-			value
-		}
-	}
-	foreach sprite
-	{
-		pos:x
-		pos:y
-
-		tile
-		{
-			flag
-			{
-				visible
-				monochrome
-				hide_bgc
-			}
-
-			chars:count
-			foreach char
-			{
-				ix
-				fgc
-				bgc
-			}
-
-			data:count
-			foreach data
-			{
-				key
-				value
-			}
-		}
-	}
-*/
-
+	return loaded_back_color;
 }
 
-void t_tilebuffer::load(const t_string& filename)
+void t_tilebuffer::save(const t_string& filename)
 {
+}
+
+bool t_tilebuffer::load(const t_string& filename)
+{
+	t_record_file file;
+	if (file.open(filename, t_filesystem::read_mode) != RECFILE_STATE_OK)
+		return false;
+
+	clear();
+
+	int width = file.read_int();
+	int height = file.read_int();
+	int layers = file.read_int();
+
+	loaded_back_color = file.read_int();
+
+	fill(t_tile(0, 0, loaded_back_color));
+
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+
+			t_tile tile(0, 0, loaded_back_color);
+
+			bool has_object = file.read_int() == 1;
+			if (has_object) {
+				
+				tile.delete_all_chars();
+
+				bool transparent = file.read_int() == 1;
+
+				int anim_size = file.read_int();
+				for (int i = 0; i < anim_size; i++) {
+					int ix = file.read_int();
+					int fgc = file.read_int();
+					int bgc = file.read_int();
+					tile.add_char(ix, fgc, bgc);
+				}
+
+				int prop_count = file.read_int();
+				for (int i = 0; i < prop_count; i++) {
+					t_string&& key = file.read();
+					t_string&& value = file.read();
+					tile.data.set(key, value);
+				}
+			}
+
+			set(tile, x, y);
+		}
+	}
+
+	return true;
 }

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 using TileGameLib.File;
 using TileGameLib.GameElements;
 using TileGameLib.Graphics;
 
 namespace PTMStudio
 {
-    public class TilebufferFile
+	public class TilebufferFile
     {
         private static readonly char Separator = '§';
 
@@ -25,6 +21,7 @@ namespace PTMStudio
         public static ObjectMap Load(Project proj, string path)
         {
             string input = Encoding.Default.GetString(File.ReadAllBytes(path));
+            input = input.Substring(1);
             file = input.Split(Separator);
             ptr = 0;
 
@@ -83,7 +80,8 @@ namespace PTMStudio
         {
             text = new StringBuilder();
 
-            Append(tilebuf.Width);
+            text.Append(Separator);
+			Append(tilebuf.Width);
             Append(tilebuf.Height);
             Append(tilebuf.Layers.Count);
             Append(tilebuf.BackColorIndex);

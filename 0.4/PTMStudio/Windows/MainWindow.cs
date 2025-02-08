@@ -14,7 +14,7 @@ namespace PTMStudio
 	public partial class MainWindow : Form
     {
         private const string ProgramFileExt = ".PTM";
-        private const string AutosavedProgramFile = "ROOT/TEMP" + ProgramFileExt;
+        private const string AutosavedProgramFile = "USR/TEMP" + ProgramFileExt;
         
         private readonly string PtmExe;
         private readonly ProgramEditPanel ProgramPanel;
@@ -467,10 +467,14 @@ namespace PTMStudio
 
             var lines = File.ReadAllLines(ProjectFile);
 
-            ProgramPanel.LoadFile(lines[0]);
-            TilesetPanel.LoadFile(lines[1]);
-            PalettePanel.LoadFile(lines[2]);
-            TilebufferPanel.LoadFile(lines[3]);
+			if (!string.IsNullOrWhiteSpace(lines[0]))
+				ProgramPanel.LoadFile(lines[0]);
+			if (!string.IsNullOrWhiteSpace(lines[1]))
+				TilesetPanel.LoadFile(lines[1]);
+			if (!string.IsNullOrWhiteSpace(lines[2]))
+				PalettePanel.LoadFile(lines[2]);
+            if (!string.IsNullOrWhiteSpace(lines[3]))
+                TilebufferPanel.LoadFile(lines[3]);
 
             AlertOnStatusBar("Project loaded from: " + ProjectFile, 2);
         }

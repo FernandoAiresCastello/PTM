@@ -136,6 +136,10 @@
 			this.FileTreeIcons.Images.SetKeyName(3, "document_black.png");
 			this.FileTreeIcons.Images.SetKeyName(4, "text_smallcaps.png");
 			this.FileTreeIcons.Images.SetKeyName(5, "color_wheel.png");
+			this.FileTreeIcons.Images.SetKeyName(6, "map.png");
+			this.FileTreeIcons.Images.SetKeyName(7, "bookshelf.png");
+			this.FileTreeIcons.Images.SetKeyName(8, "emotion_question.png");
+			this.FileTreeIcons.Images.SetKeyName(9, "table_layout_grand_totals.png");
 			// 
 			// FilesystemPanel
 			// 
