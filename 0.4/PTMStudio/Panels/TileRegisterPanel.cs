@@ -171,7 +171,6 @@ namespace PTMStudio
             if (obj.Animation.Frames.Count == 0)
                 obj.Animation.Frames.Add(TileRegisterFrame.Copy());
 
-
 			return obj;
         }
 

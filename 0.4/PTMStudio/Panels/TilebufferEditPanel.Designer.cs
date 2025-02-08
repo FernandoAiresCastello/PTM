@@ -32,21 +32,29 @@
 			this.TxtFilename = new System.Windows.Forms.TextBox();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.separator = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.LbSize = new System.Windows.Forms.ToolStripStatusLabel();
 			this.LbPos = new System.Windows.Forms.ToolStripStatusLabel();
+			this.LbObject = new System.Windows.Forms.ToolStripStatusLabel();
 			this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
 			this.DisplayPanel = new System.Windows.Forms.Panel();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.BtnNew = new System.Windows.Forms.ToolStripButton();
 			this.BtnSave = new System.Windows.Forms.ToolStripButton();
 			this.BtnSetBgColor = new System.Windows.Forms.ToolStripButton();
+			this.BtnText = new System.Windows.Forms.ToolStripButton();
 			this.BtnFill = new System.Windows.Forms.ToolStripButton();
+			this.BtnSetRandomly = new System.Windows.Forms.ToolStripButton();
 			this.BtnClear = new System.Windows.Forms.ToolStripButton();
+			this.BtnSelect = new System.Windows.Forms.ToolStripButton();
+			this.BtnDeselect = new System.Windows.Forms.ToolStripButton();
+			this.BtnCopy = new System.Windows.Forms.ToolStripButton();
+			this.BtnCut = new System.Windows.Forms.ToolStripButton();
+			this.BtnPaste = new System.Windows.Forms.ToolStripButton();
 			this.BtnZoomIn = new System.Windows.Forms.ToolStripButton();
 			this.BtnZoomOut = new System.Windows.Forms.ToolStripButton();
-			this.BtnText = new System.Windows.Forms.ToolStripButton();
 			this.BtnToggleGrid = new System.Windows.Forms.ToolStripButton();
-			this.LbObject = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
@@ -96,11 +104,19 @@
             this.BtnSave,
             this.separator,
             this.BtnSetBgColor,
+            this.BtnText,
             this.BtnFill,
+            this.BtnSetRandomly,
             this.BtnClear,
+            this.toolStripSeparator2,
+            this.BtnSelect,
+            this.BtnDeselect,
+            this.BtnCopy,
+            this.BtnCut,
+            this.BtnPaste,
+            this.toolStripSeparator1,
             this.BtnZoomIn,
             this.BtnZoomOut,
-            this.BtnText,
             this.BtnToggleGrid});
 			this.toolStrip1.Location = new System.Drawing.Point(1, 1);
 			this.toolStrip1.Name = "toolStrip1";
@@ -112,6 +128,11 @@
 			// 
 			this.separator.Name = "separator";
 			this.separator.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
 			// 
 			// statusStrip1
 			// 
@@ -139,6 +160,13 @@
 			this.LbPos.Size = new System.Drawing.Size(30, 19);
 			this.LbPos.Text = "Pos";
 			// 
+			// LbObject
+			// 
+			this.LbObject.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+			this.LbObject.Name = "LbObject";
+			this.LbObject.Size = new System.Drawing.Size(46, 19);
+			this.LbObject.Text = "Object";
+			// 
 			// LayoutPanel
 			// 
 			this.LayoutPanel.ColumnCount = 1;
@@ -164,6 +192,11 @@
 			this.DisplayPanel.Size = new System.Drawing.Size(602, 271);
 			this.DisplayPanel.TabIndex = 8;
 			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+			// 
 			// BtnNew
 			// 
 			this.BtnNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -171,6 +204,7 @@
 			this.BtnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.BtnNew.Name = "BtnNew";
 			this.BtnNew.Size = new System.Drawing.Size(23, 22);
+			this.BtnNew.Text = "New tile buffer";
 			this.BtnNew.Click += new System.EventHandler(this.BtnNew_Click);
 			// 
 			// BtnSave
@@ -180,6 +214,7 @@
 			this.BtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.BtnSave.Name = "BtnSave";
 			this.BtnSave.Size = new System.Drawing.Size(23, 22);
+			this.BtnSave.Text = "Save tile buffer";
 			this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
 			// 
 			// BtnSetBgColor
@@ -189,43 +224,8 @@
 			this.BtnSetBgColor.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.BtnSetBgColor.Name = "BtnSetBgColor";
 			this.BtnSetBgColor.Size = new System.Drawing.Size(23, 22);
+			this.BtnSetBgColor.Text = "Set background color";
 			this.BtnSetBgColor.Click += new System.EventHandler(this.BtnSetBgColor_Click);
-			// 
-			// BtnFill
-			// 
-			this.BtnFill.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.BtnFill.Image = global::PTMStudio.Properties.Resources.fill_color;
-			this.BtnFill.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnFill.Name = "BtnFill";
-			this.BtnFill.Size = new System.Drawing.Size(23, 22);
-			this.BtnFill.Click += new System.EventHandler(this.BtnFill_Click);
-			// 
-			// BtnClear
-			// 
-			this.BtnClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.BtnClear.Image = global::PTMStudio.Properties.Resources.broom;
-			this.BtnClear.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnClear.Name = "BtnClear";
-			this.BtnClear.Size = new System.Drawing.Size(23, 22);
-			this.BtnClear.Click += new System.EventHandler(this.BtnClear_Click);
-			// 
-			// BtnZoomIn
-			// 
-			this.BtnZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.BtnZoomIn.Image = global::PTMStudio.Properties.Resources.magnifier_zoom_in;
-			this.BtnZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnZoomIn.Name = "BtnZoomIn";
-			this.BtnZoomIn.Size = new System.Drawing.Size(23, 22);
-			this.BtnZoomIn.Click += new System.EventHandler(this.BtnZoomIn_Click);
-			// 
-			// BtnZoomOut
-			// 
-			this.BtnZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.BtnZoomOut.Image = global::PTMStudio.Properties.Resources.magnifier_zoom_out;
-			this.BtnZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnZoomOut.Name = "BtnZoomOut";
-			this.BtnZoomOut.Size = new System.Drawing.Size(23, 22);
-			this.BtnZoomOut.Click += new System.EventHandler(this.BtnZoomOut_Click);
 			// 
 			// BtnText
 			// 
@@ -235,8 +235,109 @@
 			this.BtnText.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.BtnText.Name = "BtnText";
 			this.BtnText.Size = new System.Drawing.Size(23, 22);
-			this.BtnText.Text = "toolStripButton1";
+			this.BtnText.Text = "Add text";
 			this.BtnText.Click += new System.EventHandler(this.BtnText_Click);
+			// 
+			// BtnFill
+			// 
+			this.BtnFill.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnFill.Image = global::PTMStudio.Properties.Resources.fill_color;
+			this.BtnFill.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnFill.Name = "BtnFill";
+			this.BtnFill.Size = new System.Drawing.Size(23, 22);
+			this.BtnFill.Text = "Fill buffer";
+			this.BtnFill.Click += new System.EventHandler(this.BtnFill_Click);
+			// 
+			// BtnSetRandomly
+			// 
+			this.BtnSetRandomly.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnSetRandomly.Image = global::PTMStudio.Properties.Resources.dice;
+			this.BtnSetRandomly.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnSetRandomly.Name = "BtnSetRandomly";
+			this.BtnSetRandomly.Size = new System.Drawing.Size(23, 22);
+			this.BtnSetRandomly.Text = "Set objects randomly";
+			this.BtnSetRandomly.Click += new System.EventHandler(this.BtnSetRandomly_Click);
+			// 
+			// BtnClear
+			// 
+			this.BtnClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnClear.Image = global::PTMStudio.Properties.Resources.broom;
+			this.BtnClear.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnClear.Name = "BtnClear";
+			this.BtnClear.Size = new System.Drawing.Size(23, 22);
+			this.BtnClear.Text = "Clear buffer";
+			this.BtnClear.Click += new System.EventHandler(this.BtnClear_Click);
+			// 
+			// BtnSelect
+			// 
+			this.BtnSelect.CheckOnClick = true;
+			this.BtnSelect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnSelect.Image = global::PTMStudio.Properties.Resources.select;
+			this.BtnSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnSelect.Name = "BtnSelect";
+			this.BtnSelect.Size = new System.Drawing.Size(23, 22);
+			this.BtnSelect.Text = "Toggle selection mode";
+			this.BtnSelect.Click += new System.EventHandler(this.BtnSelect_Click);
+			// 
+			// BtnDeselect
+			// 
+			this.BtnDeselect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnDeselect.Image = global::PTMStudio.Properties.Resources.layer_remove;
+			this.BtnDeselect.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnDeselect.Name = "BtnDeselect";
+			this.BtnDeselect.Size = new System.Drawing.Size(23, 22);
+			this.BtnDeselect.Text = "Deselect all tiles";
+			this.BtnDeselect.Click += new System.EventHandler(this.BtnDeselect_Click);
+			// 
+			// BtnCopy
+			// 
+			this.BtnCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnCopy.Image = global::PTMStudio.Properties.Resources.page_white_copy;
+			this.BtnCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnCopy.Name = "BtnCopy";
+			this.BtnCopy.Size = new System.Drawing.Size(23, 22);
+			this.BtnCopy.Text = "Copy selected tiles";
+			this.BtnCopy.Click += new System.EventHandler(this.BtnCopy_Click);
+			// 
+			// BtnCut
+			// 
+			this.BtnCut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnCut.Image = global::PTMStudio.Properties.Resources.cut;
+			this.BtnCut.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnCut.Name = "BtnCut";
+			this.BtnCut.Size = new System.Drawing.Size(23, 22);
+			this.BtnCut.Text = "Cut selected tiles";
+			this.BtnCut.Click += new System.EventHandler(this.BtnCut_Click);
+			// 
+			// BtnPaste
+			// 
+			this.BtnPaste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnPaste.Image = global::PTMStudio.Properties.Resources.page_white_paste;
+			this.BtnPaste.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnPaste.Name = "BtnPaste";
+			this.BtnPaste.Size = new System.Drawing.Size(23, 22);
+			this.BtnPaste.Text = "Paste copied tiles";
+			this.BtnPaste.Click += new System.EventHandler(this.BtnPaste_Click);
+			// 
+			// BtnZoomIn
+			// 
+			this.BtnZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnZoomIn.Image = global::PTMStudio.Properties.Resources.magnifier_zoom_in;
+			this.BtnZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnZoomIn.Name = "BtnZoomIn";
+			this.BtnZoomIn.Size = new System.Drawing.Size(23, 22);
+			this.BtnZoomIn.Text = "Zoom in";
+			this.BtnZoomIn.Click += new System.EventHandler(this.BtnZoomIn_Click);
+			// 
+			// BtnZoomOut
+			// 
+			this.BtnZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnZoomOut.Image = global::PTMStudio.Properties.Resources.magnifier_zoom_out;
+			this.BtnZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnZoomOut.Name = "BtnZoomOut";
+			this.BtnZoomOut.Size = new System.Drawing.Size(23, 22);
+			this.BtnZoomOut.Text = "Zoom out";
+			this.BtnZoomOut.Click += new System.EventHandler(this.BtnZoomOut_Click);
 			// 
 			// BtnToggleGrid
 			// 
@@ -248,15 +349,8 @@
 			this.BtnToggleGrid.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.BtnToggleGrid.Name = "BtnToggleGrid";
 			this.BtnToggleGrid.Size = new System.Drawing.Size(23, 22);
-			this.BtnToggleGrid.Text = "toolStripButton1";
+			this.BtnToggleGrid.Text = "Toggle grid";
 			this.BtnToggleGrid.Click += new System.EventHandler(this.BtnToggleGrid_Click);
-			// 
-			// LbObject
-			// 
-			this.LbObject.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-			this.LbObject.Name = "LbObject";
-			this.LbObject.Size = new System.Drawing.Size(46, 19);
-			this.LbObject.Text = "Object";
 			// 
 			// TilebufferEditPanel
 			// 
@@ -298,5 +392,13 @@
 		private System.Windows.Forms.ToolStripButton BtnText;
 		private System.Windows.Forms.ToolStripButton BtnToggleGrid;
 		private System.Windows.Forms.ToolStripStatusLabel LbObject;
+		private System.Windows.Forms.ToolStripButton BtnSelect;
+		private System.Windows.Forms.ToolStripButton BtnDeselect;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripButton BtnSetRandomly;
+		private System.Windows.Forms.ToolStripButton BtnCopy;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripButton BtnPaste;
+		private System.Windows.Forms.ToolStripButton BtnCut;
 	}
 }

@@ -12,14 +12,22 @@ namespace PTMStudio
 {
 	public partial class TilebufferEditPanel : UserControl
     {
-        private readonly MainWindow MainWindow;
+		private readonly MainWindow MainWindow;
         private readonly TiledDisplay Display;
         private MapRenderer Renderer;
         private ObjectMap TileBuffer;
-        private readonly Project Proj;
-        private bool TextMode = false;
+        private readonly Size TileBufferSize = new Size(41, 23);
+		private readonly Project Proj;
+		private static readonly Random random = new Random();
+		private bool TextMode = false;
+        private bool SelectionMode = false;
+        private Point? SelectionTopLeft = null;
+		private Point? SelectionBtmRight = null;
+        private bool HasSelection => SelectionTopLeft != null && SelectionBtmRight != null;
+        private readonly List<GameObject> ClipboardObjects = new List<GameObject>();
+        private Size ClipboardSize;
 
-        public string Filename { get; private set; }
+		public string Filename { get; private set; }
 
         private TilebufferEditPanel()
         {
@@ -31,16 +39,14 @@ namespace PTMStudio
             InitializeComponent();
             MainWindow = mainWnd;
 
-            Display = new TiledDisplay(DisplayPanel, 45, 25, 2)
-            {
-                Parent = DisplayPanel
-            };
-
+            Display = new TiledDisplay(DisplayPanel, TileBufferSize.Width, TileBufferSize.Height, 2);
             Display.Graphics.Palette = palette;
             Display.Graphics.Tileset = tileset;
             Display.Graphics.Clear(0);
             Display.ShowGrid = true;
-            Display.MouseClick += Display_MouseClick;
+            Display.Parent = DisplayPanel;
+			Display.MouseDown += Display_MouseClick;
+			Display.MouseClick += Display_MouseClick;
             Display.MouseMove += Display_MouseMove;
             Display.MouseLeave += Display_MouseLeave;
 
@@ -73,6 +79,12 @@ namespace PTMStudio
         private void Display_MouseMove(object sender, MouseEventArgs e)
         {
             Point pos = Display.GetMouseToCellPos(e.Location);
+            int x = pos.X;
+            int y = pos.Y;
+
+            if (x < 0 || y < 0 || x >= TileBuffer.Width || y >= TileBuffer.Height)
+                return;
+
             LbPos.Text = string.Format("X: {0} Y: {1}", pos.X, pos.Y);
 			LbPos.BorderSides = ToolStripStatusLabelBorderSides.Left;
 
@@ -110,14 +122,21 @@ namespace PTMStudio
 
             if (x >= 0 && y >= 0 && x < TileBuffer.Width && y < TileBuffer.Height)
             {
-                if (TextMode)
+				if (SelectionMode)
+				{
+                    if (e.Button == MouseButtons.Left)
+                        SelectTiles(pos);
+                    else if (e.Button == MouseButtons.Right || e.Button == MouseButtons.Middle)
+                        DeselectAllTiles();
+				}
+                else if (TextMode)
                 {
                     if (e.Button == MouseButtons.Left)
-                    {
-                        PrintText(x, y);
-                    }
-                }
-                else
+                        PrintText(x, y, false);
+					else if (e.Button == MouseButtons.Right)
+						PrintText(x, y, true);
+				}
+				else
                 {
                     if (e.Button == MouseButtons.Left)
                     {
@@ -127,13 +146,9 @@ namespace PTMStudio
                             PutTile(x, y);
                     }
 					else if (e.Button == MouseButtons.Right)
-                    {
                         GrabTile(x, y);
-                    }
 					else if (e.Button == MouseButtons.Middle)
-					{
 						DeleteTile(x, y);
-					}
 				}
 			}
         }
@@ -183,20 +198,14 @@ namespace PTMStudio
             }
         }
 
-        private GameObject GetObjectAt(int x, int y)
-        {
-            return TileBuffer.GetObject(new ObjectPosition(0, x, y));
-		}
+		private GameObject GetObjectAt(int x, int y) => 
+            TileBuffer.GetObject(new ObjectPosition(0, x, y));
 
-        private void BtnSave_Click(object sender, EventArgs e)
-        {
-            SaveFile();
-        }
+		private GameObject GetObjectAt(Point pos) =>
+			TileBuffer.GetObject(new ObjectPosition(0, pos));
 
-        private void BtnSetBgColor_Click(object sender, EventArgs e)
-        {
-            SelectBackColor();
-        }
+		private void BtnSave_Click(object sender, EventArgs e) => SaveFile();
+        private void BtnSetBgColor_Click(object sender, EventArgs e) => SelectBackColor();
 
         public void SaveFile()
         {
@@ -246,64 +255,51 @@ namespace PTMStudio
             }
         }
 
-        private void BtnFill_Click(object sender, EventArgs e)
-        {
-            FillLayer();
-        }
+        private void BtnFill_Click(object sender, EventArgs e) => FillBuffer();
 
-        private void FillLayer()
+        private void FillBuffer()
         {
             GameObject tile = MainWindow.GetTileRegister();
-            if (tile.Animation.Frames.Count > 0)
-            {
-                bool ok = MainWindow.Confirm("Fill entire tilebuffer with current tile register?");
 
-                if (ok)
-                {
-                    TileBuffer.Fill(tile, 0);
-                    MainWindow.TilebufferChanged(true);
-                }
+            if (!HasSelection)
+            {
+                if (!MainWindow.Confirm("Fill entire tile buffer with current tile register?"))
+                    return;
             }
+
+            if (HasSelection)
+                TileBuffer.SetObjects(tile, GetSelectedObjectPositions());
             else
+				TileBuffer.Fill(tile, 0);
+
+			MainWindow.TilebufferChanged(true);
+        }
+
+        private void DeleteTiles()
+        {
+            if (!HasSelection)
             {
-                AlertEmptyTileRegister();
+                if (!MainWindow.Confirm("Delete all tiles?"))
+                    return;
             }
-        }
 
-        private void BtnClear_Click(object sender, EventArgs e)
-        {
-            ClearLayer();
-        }
-
-        private void ClearLayer()
-        {
-            bool ok = MainWindow.Confirm("Delete all tiles?");
-
-            if (ok)
-            {
+            if (HasSelection)
+                foreach (var pos in GetSelectedObjectPositions())
+                    TileBuffer.DeleteObject(pos);
+            else
                 TileBuffer.Clear(0);
-                MainWindow.TilebufferChanged(true);
-            }
+
+            MainWindow.TilebufferChanged(true);
         }
 
-        private void BtnZoomIn_Click(object sender, EventArgs e)
-        {
-            Display.ZoomIn();
-        }
-
-        private void BtnZoomOut_Click(object sender, EventArgs e)
-        {
-            Display.ZoomOut();
-        }
-
-        private void BtnNew_Click(object sender, EventArgs e)
-        {
-            CreateNewBuffer();
-        }
+		private void BtnClear_Click(object sender, EventArgs e) => DeleteTiles();
+		private void BtnZoomIn_Click(object sender, EventArgs e) => Display.ZoomIn();
+		private void BtnZoomOut_Click(object sender, EventArgs e) => Display.ZoomOut();
+		private void BtnNew_Click(object sender, EventArgs e) => CreateNewBuffer();
 
         private void CreateNewBuffer()
         {
-			TileBuffer = new ObjectMap(Proj, 1, 45, 25)
+			TileBuffer = new ObjectMap(Proj, 1, TileBufferSize.Width, TileBufferSize.Height)
 			{
 				BackColorIndex = 15
 			};
@@ -326,16 +322,22 @@ namespace PTMStudio
             TextMode = BtnText.Checked;
 		}
 
-        private void PrintText(int x, int y)
+        private void PrintText(int x, int y, bool vertical)
         {
 			Tile tile = MainWindow.GetTileRegisterFrame();
 
-			SimpleTextInputDialog dialog = new SimpleTextInputDialog("Print text", "Enter text:");
+			SimpleTextInputDialog dialog = new SimpleTextInputDialog(
+                "Print text", "Enter text " + (vertical ? "(vertical mode):" : "(horizontal mode):"));
+
 			if (dialog.ShowDialog(MainWindow) != DialogResult.OK)
 				return;
-			
-			TileBuffer.SetHorizontalStringOfObjects(dialog.Text, 
-                new ObjectPosition(0, x, y), tile.ForeColor, tile.BackColor);
+
+            if (vertical)
+				TileBuffer.SetVerticalStringOfObjects(dialog.Text,
+					new ObjectPosition(0, x, y), tile.ForeColor, tile.BackColor);
+			else
+				TileBuffer.SetHorizontalStringOfObjects(dialog.Text, 
+                    new ObjectPosition(0, x, y), tile.ForeColor, tile.BackColor);
 
 			MainWindow.TilebufferChanged(true);
 		}
@@ -344,6 +346,193 @@ namespace PTMStudio
 		{
             Display.ShowGrid = BtnToggleGrid.Checked;
             Display.Refresh();
+		}
+
+		private void BtnSelect_Click(object sender, EventArgs e)
+		{
+            SelectionMode = BtnSelect.Checked;
+		}
+
+		private void SelectTiles(Point pos)
+        {
+            if (SelectionTopLeft == null || (pos.X < SelectionTopLeft.Value.X || pos.Y < SelectionTopLeft.Value.Y))
+            {
+                SelectionTopLeft = pos;
+                SelectionBtmRight = pos;
+				Display.DeselectAllTiles();
+				Display.SelectTile(pos);
+                Display.Refresh();
+				return;
+            }
+
+            SelectionBtmRight = pos;
+
+            Display.SelectTiles(GetSelectedPoints());
+			Display.Refresh();
+		}
+
+		private List<Point> GetSelectedPoints()
+        {
+            if (SelectionTopLeft == null || SelectionBtmRight == null)
+                return new List<Point>();
+
+            return GetPointsInsideRectangle(SelectionTopLeft, SelectionBtmRight);
+		}
+
+		private List<ObjectPosition> GetSelectedObjectPositions() => 
+            GetObjectPositions(GetSelectedPoints());
+
+		private List<ObjectPosition> GetObjectPositions(Point topLeft, Point btmRight) => 
+            GetObjectPositions(GetPointsInsideRectangle(topLeft, btmRight));
+
+		private List<ObjectPosition> GetObjectPositions(List<Point> points)
+        {
+			var positions = new List<ObjectPosition>();
+
+			foreach (var point in points)
+				positions.Add(new ObjectPosition(0, point));
+
+			return positions;
+		}
+
+		private static List<Point> GetPointsInsideRectangle(Point? topLeft, Point? bottomRight)
+		{
+			var points = new List<Point>();
+
+			for (int y = topLeft.Value.Y; y <= bottomRight.Value.Y; y++)
+				for (int x = topLeft.Value.X; x <= bottomRight.Value.X; x++)
+					points.Add(new Point(x, y));
+
+			return points;
+		}
+
+		private void DeselectAllTiles()
+		{
+            SelectionTopLeft = null;
+            SelectionBtmRight = null;
+            Display.DeselectAllTiles();
+			Display.Refresh();
+		}
+
+		private void BtnDeselect_Click(object sender, EventArgs e) => DeselectAllTiles();
+		private void BtnSetRandomly_Click(object sender, EventArgs e) => SetObjectsRandomly();
+
+		private void SetObjectsRandomly()
+        {
+			SimpleTextInputDialog dialog = new SimpleTextInputDialog("Set objects randomly", "Enter spawn rate (0-100):");
+			if (dialog.ShowDialog(MainWindow) != DialogResult.OK)
+				return;
+
+			if (!int.TryParse(dialog.Text, out int rate))
+				return;
+
+			Point topLeft, btmRight;
+
+			if (HasSelection)
+			{
+				topLeft = SelectionTopLeft.Value;
+				btmRight = SelectionBtmRight.Value;
+			}
+			else
+			{
+				topLeft = new Point(0, 0);
+				btmRight = new Point(TileBuffer.Width - 1, TileBuffer.Height - 1);
+			}
+
+			GameObject tile = MainWindow.GetTileRegister();
+
+			foreach (var pos in GetObjectPositions(topLeft, btmRight))
+			{
+				if (Chance(rate))
+					TileBuffer.SetObject(tile, pos);
+			}
+
+			MainWindow.TilebufferChanged(true);
+		}
+
+		private static bool Chance(int percentage)
+		{
+			if (percentage < 0 || percentage > 100)
+				throw new ArgumentOutOfRangeException(nameof(percentage), "Percentage must be between 0 and 100.");
+
+			return random.Next(100) < percentage;
+		}
+
+		private void BtnCopy_Click(object sender, EventArgs e) => CopySelectedTiles(true);
+		private void BtnPaste_Click(object sender, EventArgs e) => PasteSelectedTiles();
+
+		private void CopySelectedTiles(bool deselectAfter)
+        {
+            if (!HasSelection)
+            {
+                MainWindow.Warning("Can't copy tiles without a selection rectangle.");
+                return;
+            }
+
+			int w = SelectionBtmRight.Value.X - SelectionTopLeft.Value.X;
+			int h = SelectionBtmRight.Value.Y - SelectionTopLeft.Value.Y;
+			ClipboardSize = new Size(w, h);
+			ClipboardObjects.Clear();
+
+            foreach (var pos in GetSelectedPoints())
+                ClipboardObjects.Add(GetObjectAt(pos)?.Copy());
+
+            if (deselectAfter)
+                DeselectAllTiles();
+		}
+
+		private void PasteSelectedTiles()
+		{
+            if (!HasSelection)
+            {
+				MainWindow.Warning("Can't paste tiles without a selected position.");
+				return;
+            }
+
+            int initialY = SelectionTopLeft.Value.Y;
+			int initialX = SelectionTopLeft.Value.X;
+            int clipboardIndex = 0;
+
+            for (int y = initialY; y <= initialY + ClipboardSize.Height; y++)
+            {
+                for (int x = initialX; x <= initialX + ClipboardSize.Width; x++)
+                {
+                    GameObject o = ClipboardObjects[clipboardIndex++];
+                    
+                    if (o != null)
+                    {
+                        try
+                        {
+                            TileBuffer.SetObject(o, new ObjectPosition(0, x, y));
+                        }
+                        catch
+                        {
+                        }
+                    }
+                }
+            }
+
+			DeselectAllTiles();
+			Display.Refresh();
+            MainWindow.TilebufferChanged(true);
+		}
+
+		private void BtnCut_Click(object sender, EventArgs e)
+		{
+			if (!HasSelection)
+			{
+				MainWindow.Warning("Can't cut tiles without a selection rectangle.");
+				return;
+			}
+
+			CopySelectedTiles(false);
+
+			foreach (var pos in GetSelectedObjectPositions())
+				TileBuffer.DeleteObject(pos);
+
+			DeselectAllTiles();
+			Display.Refresh();
+			MainWindow.TilebufferChanged(true);
 		}
 	}
 }
