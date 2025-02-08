@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.5.33627.172
+VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PTM", "PTM.vcxproj", "{DD6F5822-D1AB-4473-BB41-7D631F7926B3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PTM", "PTM.vcxproj", "{9AC081A1-479F-4E6F-9CF3-C47BFA4D8E66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTMStudio", "Src\PTMStudio\PTMStudio.csproj", "{C62401D3-ADF8-477B-9295-B1C468F60D75}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTMStudio", "PTMStudio\PTMStudio.csproj", "{C62401D3-ADF8-477B-9295-B1C468F60D75}"
 	ProjectSection(ProjectDependencies) = postProject
-		{DD6F5822-D1AB-4473-BB41-7D631F7926B3} = {DD6F5822-D1AB-4473-BB41-7D631F7926B3}
+		{9AC081A1-479F-4E6F-9CF3-C47BFA4D8E66} = {9AC081A1-479F-4E6F-9CF3-C47BFA4D8E66}
 	EndProjectSection
 EndProject
 Global
@@ -20,18 +20,18 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DD6F5822-D1AB-4473-BB41-7D631F7926B3}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{DD6F5822-D1AB-4473-BB41-7D631F7926B3}.Debug|Any CPU.Build.0 = Debug|x64
-		{DD6F5822-D1AB-4473-BB41-7D631F7926B3}.Debug|x64.ActiveCfg = Debug|x64
-		{DD6F5822-D1AB-4473-BB41-7D631F7926B3}.Debug|x64.Build.0 = Debug|x64
-		{DD6F5822-D1AB-4473-BB41-7D631F7926B3}.Debug|x86.ActiveCfg = Debug|Win32
-		{DD6F5822-D1AB-4473-BB41-7D631F7926B3}.Debug|x86.Build.0 = Debug|Win32
-		{DD6F5822-D1AB-4473-BB41-7D631F7926B3}.Release|Any CPU.ActiveCfg = Release|x64
-		{DD6F5822-D1AB-4473-BB41-7D631F7926B3}.Release|Any CPU.Build.0 = Release|x64
-		{DD6F5822-D1AB-4473-BB41-7D631F7926B3}.Release|x64.ActiveCfg = Release|x64
-		{DD6F5822-D1AB-4473-BB41-7D631F7926B3}.Release|x64.Build.0 = Release|x64
-		{DD6F5822-D1AB-4473-BB41-7D631F7926B3}.Release|x86.ActiveCfg = Release|Win32
-		{DD6F5822-D1AB-4473-BB41-7D631F7926B3}.Release|x86.Build.0 = Release|Win32
+		{9AC081A1-479F-4E6F-9CF3-C47BFA4D8E66}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{9AC081A1-479F-4E6F-9CF3-C47BFA4D8E66}.Debug|Any CPU.Build.0 = Debug|x64
+		{9AC081A1-479F-4E6F-9CF3-C47BFA4D8E66}.Debug|x64.ActiveCfg = Debug|x64
+		{9AC081A1-479F-4E6F-9CF3-C47BFA4D8E66}.Debug|x64.Build.0 = Debug|x64
+		{9AC081A1-479F-4E6F-9CF3-C47BFA4D8E66}.Debug|x86.ActiveCfg = Debug|Win32
+		{9AC081A1-479F-4E6F-9CF3-C47BFA4D8E66}.Debug|x86.Build.0 = Debug|Win32
+		{9AC081A1-479F-4E6F-9CF3-C47BFA4D8E66}.Release|Any CPU.ActiveCfg = Release|x64
+		{9AC081A1-479F-4E6F-9CF3-C47BFA4D8E66}.Release|Any CPU.Build.0 = Release|x64
+		{9AC081A1-479F-4E6F-9CF3-C47BFA4D8E66}.Release|x64.ActiveCfg = Release|x64
+		{9AC081A1-479F-4E6F-9CF3-C47BFA4D8E66}.Release|x64.Build.0 = Release|x64
+		{9AC081A1-479F-4E6F-9CF3-C47BFA4D8E66}.Release|x86.ActiveCfg = Release|Win32
+		{9AC081A1-479F-4E6F-9CF3-C47BFA4D8E66}.Release|x86.Build.0 = Release|Win32
 		{C62401D3-ADF8-477B-9295-B1C468F60D75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C62401D3-ADF8-477B-9295-B1C468F60D75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C62401D3-ADF8-477B-9295-B1C468F60D75}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -49,6 +49,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {25D12A45-CE56-418C-90E8-3A6D888E9E84}
+		SolutionGuid = {86703DF1-59BE-4669-AC74-14803573CD84}
 	EndGlobalSection
 EndGlobal

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -18,10 +18,119 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\PTM.cpp" />
+    <ClCompile Include="src\PTML_CTFLOW.cpp" />
+    <ClCompile Include="src\PTML_FILESYSTEM.cpp" />
+    <ClCompile Include="src\PTML_GRAPHICS.cpp" />
+    <ClCompile Include="src\PTML_INPUT.cpp" />
+    <ClCompile Include="src\PTML_MATH.cpp" />
+    <ClCompile Include="src\PTML_PROGRAM.cpp" />
+    <ClCompile Include="src\PTML_runtime.cpp" />
+    <ClCompile Include="src\PTML_ALL.cpp" />
+    <ClCompile Include="src\PTML_SOUND.cpp" />
+    <ClCompile Include="src\PTML_VARS.cpp" />
+    <ClCompile Include="src\t_image.cpp" />
+    <ClCompile Include="src\t_program_editor.cpp" />
+    <ClCompile Include="src\t_record_file.cpp" />
+    <ClCompile Include="src\t_sound.cpp" />
+    <ClCompile Include="src\t_sound_wav.cpp" />
+    <ClCompile Include="src\t_sprite.cpp" />
+    <ClCompile Include="src\t_table.cpp" />
+    <ClCompile Include="src\t_char.cpp" />
+    <ClCompile Include="src\t_charset.cpp" />
+    <ClCompile Include="src\t_color.cpp" />
+    <ClCompile Include="src\t_data.cpp" />
+    <ClCompile Include="src\t_dict.cpp" />
+    <ClCompile Include="src\t_filesystem.cpp" />
+    <ClCompile Include="src\t_interpreter.cpp" />
+    <ClCompile Include="src\t_keyboard.cpp" />
+    <ClCompile Include="src\t_list.cpp" />
+    <ClCompile Include="src\t_main_editor.cpp" />
+    <ClCompile Include="src\t_palette.cpp" />
+    <ClCompile Include="src\t_pos.cpp" />
+    <ClCompile Include="src\t_program.cpp" />
+    <ClCompile Include="src\t_program_line.cpp" />
+    <ClCompile Include="src\t_program_runner.cpp" />
+    <ClCompile Include="src\t_screen.cpp" />
+    <ClCompile Include="src\t_string.cpp" />
+    <ClCompile Include="src\t_tests.cpp" />
+    <ClCompile Include="src\t_tile.cpp" />
+    <ClCompile Include="src\t_tilebuffer.cpp" />
+    <ClCompile Include="src\t_tileflags.cpp" />
+    <ClCompile Include="src\t_token.cpp" />
+    <ClCompile Include="src\t_tokenizer.cpp" />
+    <ClCompile Include="src\t_user_tilebuffer.cpp" />
+    <ClCompile Include="src\t_util.cpp" />
+    <ClCompile Include="src\t_window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\predefined_charset_ix.h" />
+    <ClInclude Include="src\PTM.h" />
+    <ClInclude Include="src\PTML_CTFLOW.h" />
+    <ClInclude Include="src\PTML_FILESYSTEM.h" />
+    <ClInclude Include="src\PTML_GRAPHICS.h" />
+    <ClInclude Include="src\PTML_INPUT.h" />
+    <ClInclude Include="src\PTML_MATH.h" />
+    <ClInclude Include="src\PTML_PROGRAM.h" />
+    <ClInclude Include="src\PTML_runtime.h" />
+    <ClInclude Include="src\PTML_ALL.h" />
+    <ClInclude Include="src\PTML_errors.h" />
+    <ClInclude Include="src\PTML_macros.h" />
+    <ClInclude Include="src\PTML_shared_headers.h" />
+    <ClInclude Include="src\PTML_SOUND.h" />
+    <ClInclude Include="src\PTML_VARS.h" />
+    <ClInclude Include="src\t_array_ref.h" />
+    <ClInclude Include="src\t_image.h" />
+    <ClInclude Include="src\t_namespace.h" />
+    <ClInclude Include="src\t_program_editor.h" />
+    <ClInclude Include="src\t_record_file.h" />
+    <ClInclude Include="src\t_rect.h" />
+    <ClInclude Include="src\t_sound.h" />
+    <ClInclude Include="src\t_sound_wav.h" />
+    <ClInclude Include="src\t_sprite.h" />
+    <ClInclude Include="src\t_table.h" />
+    <ClInclude Include="src\t_binary.h" />
+    <ClInclude Include="src\t_char.h" />
+    <ClInclude Include="src\t_charset.h" />
+    <ClInclude Include="src\t_color.h" />
+    <ClInclude Include="src\t_data.h" />
+    <ClInclude Include="src\t_dict.h" />
+    <ClInclude Include="src\t_filesystem.h" />
+    <ClInclude Include="src\t_function_ptr.h" />
+    <ClInclude Include="src\t_index.h" />
+    <ClInclude Include="src\t_interpreter.h" />
+    <ClInclude Include="src\t_keyboard.h" />
+    <ClInclude Include="src\t_list.h" />
+    <ClInclude Include="src\t_main_editor.h" />
+    <ClInclude Include="src\t_palette.h" />
+    <ClInclude Include="src\t_param.h" />
+    <ClInclude Include="src\t_pointers.h" />
+    <ClInclude Include="src\t_pos.h" />
+    <ClInclude Include="src\t_program.h" />
+    <ClInclude Include="src\t_program_line.h" />
+    <ClInclude Include="src\t_program_runner.h" />
+    <ClInclude Include="src\t_screen.h" />
+    <ClInclude Include="src\t_stack.h" />
+    <ClInclude Include="src\t_string.h" />
+    <ClInclude Include="src\t_tests.h" />
+    <ClInclude Include="src\t_tile.h" />
+    <ClInclude Include="src\t_tilebuffer.h" />
+    <ClInclude Include="src\t_tilebuffer_region.h" />
+    <ClInclude Include="src\t_tileflags.h" />
+    <ClInclude Include="src\t_tile_animation.h" />
+    <ClInclude Include="src\t_token.h" />
+    <ClInclude Include="src\t_tokenizer.h" />
+    <ClInclude Include="src\t_token_type.h" />
+    <ClInclude Include="src\t_user_tilebuffer.h" />
+    <ClInclude Include="src\t_util.h" />
+    <ClInclude Include="src\t_window.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>16.0</VCProjectVersion>
+    <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{dd6f5822-d1ab-4473-bb41-7d631f7926b3}</ProjectGuid>
+    <ProjectGuid>{9ac081a1-479f-4e6f-9cf3-c47bfa4d8e66}</ProjectGuid>
     <RootNamespace>PTM</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -43,7 +152,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -71,7 +180,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <TargetName>PTM</TargetName>
+    <OutDir>$(SolutionDir)build\</OutDir>
+    <IntDir>$(SolutionDir)temp\</IntDir>
+    <CopyCppRuntimeToOutputDir>false</CopyCppRuntimeToOutputDir>
+    <IncludePath>$(VCInstallDir)Auxiliary\VS\UnitTest\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VCInstallDir)Auxiliary\VS\UnitTest\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnabled>false</VcpkgEnabled>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -105,27 +221,21 @@
     <ClCompile>
       <WarningLevel>Level1</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;_HAS_AUTO_PTR_ETC;_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard_C>Default</LanguageStandard_C>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <CompileAs>CompileAsCpp</CompileAs>
-      <AdditionalIncludeDirectories>C:\Lib\SDL2-2.26.5\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AssemblerOutput>NoListing</AssemblerOutput>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;C:\Lib\SDL2-2.30.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Lib\SDL2-2.26.5\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Lib\SDL2-2.30.2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>del "$(SolutionDir)Build\PTM_v0.3b.zip"
-copy "$(TargetDir)SDL2.dll" "$(SolutionDir)Build\SDL2.dll"
-copy "$(TargetPath)" "$(SolutionDir)Build\$(TargetFileName)"
-cd "$(SolutionDir)Build"
-"C:\Program Files\7-Zip\7z.exe" a PTM_v0.3b.zip -x!PTM_v0.3b.zip</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -143,71 +253,6 @@ cd "$(SolutionDir)Build"
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="Resources\resource.h" />
-    <ClInclude Include="Src\Common\common.h" />
-    <ClInclude Include="Src\CppUtils\CppFile.h" />
-    <ClInclude Include="Src\CppUtils\CppGlobal.h" />
-    <ClInclude Include="Src\CppUtils\CppMsgBox.h" />
-    <ClInclude Include="Src\CppUtils\CppProperties.h" />
-    <ClInclude Include="Src\CppUtils\CppString.h" />
-    <ClInclude Include="Src\CppUtils\CppUtil.h" />
-    <ClInclude Include="Src\CppUtils\CppUtils.h" />
-    <ClInclude Include="Src\Docgen\docgen.h" />
-    <ClInclude Include="Src\PTML\t_compiler.h" />
-    <ClInclude Include="Src\PTML\t_interpreter.h" />
-    <ClInclude Include="Src\PTML\t_loop.h" />
-    <ClInclude Include="Src\PTML\t_param.h" />
-    <ClInclude Include="Src\PTML\t_program.h" />
-    <ClInclude Include="Src\PTML\t_program_line.h" />
-    <ClInclude Include="Src\PTML\t_source_line.h" />
-    <ClInclude Include="Src\PTML\t_variable.h" />
-    <ClInclude Include="Src\PTM\ptm_color_palette.h" />
-    <ClInclude Include="Src\PTM\ptm_commands.h" />
-    <ClInclude Include="Src\PTM\ptm_core.h" />
-    <ClInclude Include="Src\PTM\ptm_filesystem.h" />
-    <ClInclude Include="Src\PTM\ptm_graphics_base.h" />
-    <ClInclude Include="Src\PTM\ptm_image.h" />
-    <ClInclude Include="Src\PTM\ptm_keyboard.h" />
-    <ClInclude Include="Src\PTM\ptm_mml.h" />
-    <ClInclude Include="Src\PTM\ptm_sound_system.h" />
-    <ClInclude Include="Src\PTM\ptm_sprites.h" />
-    <ClInclude Include="Src\PTM\ptm_text_font.h" />
-    <ClInclude Include="Src\PTM\ptm_tile_system.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Resources\PTM.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Resources\app_icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Src\CppUtils\CppFile.cpp" />
-    <ClCompile Include="Src\CppUtils\CppMsgBox.cpp" />
-    <ClCompile Include="Src\CppUtils\CppProperties.cpp" />
-    <ClCompile Include="Src\CppUtils\CppString.cpp" />
-    <ClCompile Include="Src\CppUtils\CppUtil.cpp" />
-    <ClCompile Include="Src\Docgen\docgen.cpp" />
-    <ClCompile Include="Src\main.cpp" />
-    <ClCompile Include="Src\PTML\t_compiler.cpp" />
-    <ClCompile Include="Src\PTML\t_interpreter.cpp" />
-    <ClCompile Include="Src\PTML\t_param.cpp" />
-    <ClCompile Include="Src\PTML\t_program.cpp" />
-    <ClCompile Include="Src\PTML\t_source_line.cpp" />
-    <ClCompile Include="Src\PTML\t_variable.cpp" />
-    <ClCompile Include="Src\PTM\ptm_color_palette.cpp" />
-    <ClCompile Include="Src\PTM\ptm_commands.cpp" />
-    <ClCompile Include="Src\PTM\ptm_core.cpp" />
-    <ClCompile Include="Src\PTM\ptm_filesystem.cpp" />
-    <ClCompile Include="Src\PTM\ptm_graphics_base.cpp" />
-    <ClCompile Include="Src\PTM\ptm_image.cpp" />
-    <ClCompile Include="Src\PTM\ptm_keyboard.cpp" />
-    <ClCompile Include="Src\PTM\ptm_mml.cpp" />
-    <ClCompile Include="Src\PTM\ptm_sound_system.cpp" />
-    <ClCompile Include="Src\PTM\ptm_sprites.cpp" />
-    <ClCompile Include="Src\PTM\ptm_text_font.cpp" />
-    <ClCompile Include="Src\PTM\ptm_tile_system.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
