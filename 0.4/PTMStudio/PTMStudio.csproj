@@ -227,6 +227,8 @@
     <None Include="Resources\control_play.png" />
     <None Include="Resources\page_white_copy.png" />
     <None Include="Resources\logo.png" />
+    <None Include="Resources\insert_text.png" />
+    <None Include="Resources\layouts_four_grid.png" />
     <Content Include="Resources\ptm_icon.ico" />
     <None Include="Resources\page_white_paste.png" />
     <None Include="Resources\update.png" />

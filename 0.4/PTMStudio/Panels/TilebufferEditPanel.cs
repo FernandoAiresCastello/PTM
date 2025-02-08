@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PTMStudio.Windows;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using TileGameLib.Components;
@@ -15,6 +17,7 @@ namespace PTMStudio
         private MapRenderer Renderer;
         private ObjectMap TileBuffer;
         private readonly Project Proj;
+        private bool TextMode = false;
 
         public string Filename { get; private set; }
 
@@ -50,6 +53,7 @@ namespace PTMStudio
             CreateNewBuffer();
 
             LbPos.Text = "";
+            LbObject.Text = "";
             UpdateSizeLabel();
         }
 
@@ -61,14 +65,40 @@ namespace PTMStudio
         private void Display_MouseLeave(object sender, EventArgs e)
         {
             LbPos.Text = "";
-        }
+            LbPos.BorderSides = ToolStripStatusLabelBorderSides.None;
+			LbObject.Text = "";
+            LbObject.BorderSides = ToolStripStatusLabelBorderSides.None;
+		}
 
         private void Display_MouseMove(object sender, MouseEventArgs e)
         {
             Point pos = Display.GetMouseToCellPos(e.Location);
             LbPos.Text = string.Format("X: {0} Y: {1}", pos.X, pos.Y);
+			LbPos.BorderSides = ToolStripStatusLabelBorderSides.Left;
 
-            if (e.Button != MouseButtons.None)
+            GameObject o = GetObjectAt(pos.X, pos.Y);
+
+            if (o != null)
+            {
+                LbObject.Text = "OBJ ";
+                LbObject.BorderSides = ToolStripStatusLabelBorderSides.Left;
+
+                if (o.Properties.Entries.Count > 0)
+                {
+                    var props = new List<string>();
+                    foreach (var prop in o.Properties.Entries)
+                        props.Add($"{prop.Key}={prop.Value}");
+
+                    LbObject.Text += string.Join(" | ", props);
+                }
+			}
+            else
+            {
+                LbObject.Text = "";
+				LbObject.BorderSides = ToolStripStatusLabelBorderSides.None;
+			}
+
+			if (e.Button != MouseButtons.None)
                 Display_MouseClick(sender, e);
         }
 
@@ -80,18 +110,32 @@ namespace PTMStudio
 
             if (x >= 0 && y >= 0 && x < TileBuffer.Width && y < TileBuffer.Height)
             {
-                if (e.Button == MouseButtons.Left)
+                if (TextMode)
                 {
-                    if (ModifierKeys == Keys.Control)
-                        DeleteTile(x, y);
-                    else
-                        PutTile(x, y);
+                    if (e.Button == MouseButtons.Left)
+                    {
+                        PrintText(x, y);
+                    }
                 }
-                else if (e.Button == MouseButtons.Right)
+                else
                 {
-                    GrabTile(x, y);
-                }
-            }
+                    if (e.Button == MouseButtons.Left)
+                    {
+                        if (ModifierKeys == Keys.Control)
+                            DeleteTile(x, y);
+                        else
+                            PutTile(x, y);
+                    }
+					else if (e.Button == MouseButtons.Right)
+                    {
+                        GrabTile(x, y);
+                    }
+					else if (e.Button == MouseButtons.Middle)
+					{
+						DeleteTile(x, y);
+					}
+				}
+			}
         }
 
         public void UpdateDisplay()
@@ -127,7 +171,7 @@ namespace PTMStudio
 
         private void GrabTile(int x, int y)
         {
-            GameObject obj = TileBuffer.GetObject(new ObjectPosition(0, x, y));
+            GameObject obj = GetObjectAt(x, y);
 
             if (obj != null)
             {
@@ -138,6 +182,11 @@ namespace PTMStudio
                 MainWindow.Warning("No tile found at this buffer position");
             }
         }
+
+        private GameObject GetObjectAt(int x, int y)
+        {
+            return TileBuffer.GetObject(new ObjectPosition(0, x, y));
+		}
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
@@ -271,5 +320,30 @@ namespace PTMStudio
             UpdateSizeLabel();
             MainWindow.TilebufferChanged(false);
         }
-    }
+
+		private void BtnText_Click(object sender, EventArgs e)
+		{
+            TextMode = BtnText.Checked;
+		}
+
+        private void PrintText(int x, int y)
+        {
+			Tile tile = MainWindow.GetTileRegisterFrame();
+
+			SimpleTextInputDialog dialog = new SimpleTextInputDialog("Print text", "Enter text:");
+			if (dialog.ShowDialog(MainWindow) != DialogResult.OK)
+				return;
+			
+			TileBuffer.SetHorizontalStringOfObjects(dialog.Text, 
+                new ObjectPosition(0, x, y), tile.ForeColor, tile.BackColor);
+
+			MainWindow.TilebufferChanged(true);
+		}
+
+		private void BtnToggleGrid_Click(object sender, EventArgs e)
+		{
+            Display.ShowGrid = BtnToggleGrid.Checked;
+            Display.Refresh();
+		}
+	}
 }

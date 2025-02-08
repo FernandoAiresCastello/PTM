@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using TileGameLib.GameElements;
+using TileGameLib.Graphics;
 using Timer = System.Windows.Forms.Timer;
 
 namespace PTMStudio
@@ -78,7 +79,10 @@ namespace PTMStudio
                 Dock = DockStyle.Fill
             };
 
-            TilebufferPanel = new TilebufferEditPanel(this,
+			PalettePanel.LoadFile(Filesystem.DefaultPaletteFile);
+			TilesetPanel.LoadFile(Filesystem.DefaultTilesetFile);
+
+			TilebufferPanel = new TilebufferEditPanel(this,
                 TilesetPanel.Tileset, PalettePanel.Palette)
             {
                 Parent = CenterBottomPanel,
@@ -99,9 +103,6 @@ namespace PTMStudio
                 File.Create(AutosavedProgramFile).Close();
 				FilePanel.UpdateFileList();
 			}
-
-			PalettePanel.LoadFile(Filesystem.DefaultPaletteFile);
-			TilesetPanel.LoadFile(Filesystem.DefaultTilesetFile);
 
             LoadProgramFile(AutosavedProgramFile);
 
@@ -277,7 +278,12 @@ namespace PTMStudio
             TileRegPanel.UpdateDisplay();
         }
 
-        private GameObject CachedTileRegister;
+		public Tile GetTileRegisterFrame()
+        {
+            return TileRegPanel.TileRegisterFrame;
+        }
+
+		private GameObject CachedTileRegister;
 
         public GameObject GetTileRegister()
         {

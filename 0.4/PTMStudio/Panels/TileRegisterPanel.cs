@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using TileGameLib.Components;
 using TileGameLib.GameElements;
@@ -12,7 +13,9 @@ namespace PTMStudio
         private readonly TiledDisplay TileSeqDisplay;
         private readonly TiledDisplay TileFrameDisplay;
         private readonly GameObject TileRegister;
-        private int FrameCount;
+        private readonly int EmptyColor = 0;
+        private readonly Tile EmptyTile;
+		private int FrameCount;
 
         public Tile TileRegisterFrame { get; private set; }
 
@@ -27,25 +30,27 @@ namespace PTMStudio
             MainWindow = mainWnd;
             TileRegister = new GameObject();
             TileRegister.Animation.Clear();
-            TileRegisterFrame = new Tile(0, 15, 15);
+
+            EmptyTile = new Tile(0, EmptyColor, EmptyColor);
 
             TileSeqDisplay = new TiledDisplay(TileSeqPanel, 7, 1, 3);
             TileSeqDisplay.Graphics.Palette = palette;
             TileSeqDisplay.Graphics.Tileset = tileset;
-            TileSeqDisplay.Graphics.Clear(0);
+            TileSeqDisplay.Graphics.Clear(EmptyColor);
             TileSeqDisplay.ShowGrid = true;
-            TileSeqDisplay.BorderStyle = BorderStyle.None;
+			TileSeqDisplay.SetMainGridColor(Color.FromArgb(128, 80, 80, 80));
+			TileSeqDisplay.BorderStyle = BorderStyle.None;
             TileSeqDisplay.Cursor = Cursors.Hand;
             TileSeqDisplay.MouseClick += TileSeqDisplay_MouseClick;
 
             TileFrameDisplay = new TiledDisplay(TileFramePanel, 1, 1, 4);
             TileFrameDisplay.Graphics.Palette = palette;
             TileFrameDisplay.Graphics.Tileset = tileset;
-            TileFrameDisplay.Graphics.Clear(0);
+            TileFrameDisplay.Graphics.Clear(EmptyColor);
             TileFrameDisplay.ShowGrid = true;
-            TileFrameDisplay.BorderStyle = BorderStyle.None;
+			TileFrameDisplay.SetMainGridColor(Color.FromArgb(128, 80, 80, 80));
+			TileFrameDisplay.BorderStyle = BorderStyle.None;
 
-            ChkTransparent.CheckedChanged += ChkTransparent_CheckedChanged;
             PropertyGrid.CellValueChanged += PropertyGrid_CellValueChanged;
 
             ClearTileRegister();
@@ -64,21 +69,23 @@ namespace PTMStudio
 
         public void ClearTileRegister()
         {
-            FrameCount = 0;
-            ChkTransparent.Checked = false;
-            TileRegisterFrame.Set(0, 15, 15);
+			TileRegisterFrame = new Tile('X', 0, 15);
+
+			FrameCount = 1;
             TileRegister.Animation.Frames.Clear();
             for (int i = 0; i < TileSeqDisplay.Cols; i++)
-                TileRegister.Animation.Frames.Add(new Tile(0, 15, 15));
+                TileRegister.Animation.Frames.Add(EmptyTile.Copy());
 
-            TileRegister.Properties.Entries.Clear();
+            TileRegister.Animation.Frames[0] = new Tile(TileRegisterFrame);
+
+			TileRegister.Properties.Entries.Clear();
             UpdatePropertiesPanel();
             MainWindow.CacheTileRegister();
         }
 
         public void UpdateDisplay()
         {
-            TileSeqDisplay.Graphics.Clear(0);
+            TileSeqDisplay.Graphics.Clear(EmptyColor);
             int x = 0;
             int y = 0;
             
@@ -90,7 +97,7 @@ namespace PTMStudio
 
             TileSeqDisplay.Refresh();
 
-            TileFrameDisplay.Graphics.Clear(0);
+            TileFrameDisplay.Graphics.Clear(EmptyColor);
             TileFrameDisplay.Graphics.PutTile(0, 0, TileRegisterFrame);
             TileFrameDisplay.Refresh();
 
@@ -148,7 +155,7 @@ namespace PTMStudio
                 obj.Animation.Frames.Add(TileRegister.Animation.Frames[i].Copy());
             }
 
-            obj.Transparent = ChkTransparent.Checked;
+            obj.Transparent = false;
 
             obj.Properties.Entries.Clear();
             foreach (DataGridViewRow row in PropertyGrid.Rows)
@@ -161,7 +168,11 @@ namespace PTMStudio
                 }
             }
 
-            return obj;
+            if (obj.Animation.Frames.Count == 0)
+                obj.Animation.Frames.Add(TileRegisterFrame.Copy());
+
+
+			return obj;
         }
 
         public void SetTileRegister(GameObject tile)
@@ -175,14 +186,13 @@ namespace PTMStudio
                 if (i < copiedTile.Animation.Size)
                     TileRegister.Animation.Frames.Add(copiedTile.Animation.Frames[i]);
                 else
-                    TileRegister.Animation.Frames.Add(new Tile(0, 1, 0));
+                    TileRegister.Animation.Frames.Add(EmptyTile.Copy());
             }
 
             TileRegister.Transparent = copiedTile.Transparent;
             TileRegister.Properties.SetEqual(copiedTile.Properties);
 
             TileRegisterFrame = TileRegister.Tile.Copy();
-            ChkTransparent.Checked = TileRegister.Transparent;
 
             UpdatePropertiesPanel();
             UpdateDisplay();
