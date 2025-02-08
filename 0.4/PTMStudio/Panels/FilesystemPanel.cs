@@ -71,7 +71,7 @@ namespace PTMStudio
 					case ".CHR": imageIndex = 4; break;
 					case ".PAL": imageIndex = 5; break;
 					case ".BUF": imageIndex = 6; break;
-					case ".PTMS": imageIndex = 7; break;
+					case ".PROJ": imageIndex = 7; break;
                     case ".DAT": imageIndex = 9; break;
 				}
 

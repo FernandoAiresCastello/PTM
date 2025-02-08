@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Text;
+﻿using PTMStudio.Core;
 using TileGameLib.File;
 using TileGameLib.GameElements;
 using TileGameLib.Graphics;
@@ -8,30 +7,20 @@ namespace PTMStudio
 {
 	public class TilebufferFile
     {
-        private static readonly char Separator = '§';
+        private RecordFile RecFile;
 
-        private static StringBuilder text;
-        private static string[] file;
-        private static int ptr;
-
-        private static void Append(object o) => text.Append((o != null ? o.ToString() : "") + Separator.ToString());
-        private static string NextStr() => file[ptr++];
-        private static int NextInt() => int.Parse(file[ptr++]);
-
-        public static ObjectMap Load(Project proj, string path)
+        public ObjectMap Load(Project proj, string path)
         {
-            string input = Encoding.Default.GetString(File.ReadAllBytes(path));
-            input = input.Substring(1);
-            file = input.Split(Separator);
-            ptr = 0;
+            RecFile = new RecordFile();
+			RecFile.Load(path);
 
-            int width = NextInt();
-            int height = NextInt();
-            int layers = NextInt();
+            int width = RecFile.NextInt();
+            int height = RecFile.NextInt();
+            int layers = RecFile.NextInt();
 
             ObjectMap buf = new ObjectMap(proj, layers, width, height)
             {
-                BackColorIndex = NextInt()
+                BackColorIndex = RecFile.NextInt()
             };
 
             for (int i = 0; i < layers; i++)
@@ -40,34 +29,34 @@ namespace PTMStudio
             return buf;
         }
 
-        private static void LoadLayer(ObjectLayer layer)
+        private void LoadLayer(ObjectLayer layer)
         {
             for (int y = 0; y < layer.Height; y++)
             {
                 for (int x = 0; x < layer.Width; x++)
                 {
-                    int exists = NextInt();
+                    int exists = RecFile.NextInt();
                     if (exists != 1)
                         continue;
 
                     GameObject o = new GameObject();
                     o.Animation.Clear();
-                    o.Transparent = NextInt() == 1;
+                    o.Transparent = RecFile.NextInt() == 1;
 
-                    int frames = NextInt();
+                    int frames = RecFile.NextInt();
                     for (int i = 0; i < frames; i++)
                     {
-                        int ch = NextInt();
-                        int fgc = NextInt();
-                        int bgc = NextInt();
+                        int ch = RecFile.NextInt();
+                        int fgc = RecFile.NextInt();
+                        int bgc = RecFile.NextInt();
                         o.Animation.AddFrame(new Tile(ch, fgc, bgc));
                     }
 
-                    int props = NextInt();
+                    int props = RecFile.NextInt();
                     for (int i = 0; i < props; i++)
                     {
-                        string prop = NextStr();
-                        string value = NextStr();
+                        string prop = RecFile.NextStr();
+                        string value = RecFile.NextStr();
                         o.Properties.Set(prop, value);
                     }
 
@@ -76,25 +65,22 @@ namespace PTMStudio
             }
         }
 
-        public static void Save(ObjectMap tilebuf, string path)
+        public void Save(ObjectMap tilebuf, string path)
         {
-            text = new StringBuilder();
+            RecFile = new RecordFile();
 
-            text.Append(Separator);
-			Append(tilebuf.Width);
-            Append(tilebuf.Height);
-            Append(tilebuf.Layers.Count);
-            Append(tilebuf.BackColorIndex);
+			RecFile.Append(tilebuf.Width);
+			RecFile.Append(tilebuf.Height);
+			RecFile.Append(tilebuf.Layers.Count);
+			RecFile.Append(tilebuf.BackColorIndex);
 
             foreach (ObjectLayer layer in tilebuf.Layers)
                 SaveLayer(layer);
-            
-            MemoryFile file = new MemoryFile();
-            file.WriteString(text.ToString());
-            file.SaveToPhysicalFile(path);
+
+            RecFile.Save(path);
         }
 
-        private static void SaveLayer(ObjectLayer layer)
+        private void SaveLayer(ObjectLayer layer)
         {
             for (int y = 0; y < layer.Height; y++)
             {
@@ -104,28 +90,28 @@ namespace PTMStudio
 
                     if (o != null)
                     {
-                        Append(1);
+						RecFile.Append(1);
 
-                        Append(o.Transparent ? 1 : 0);
+                        RecFile.Append(o.Transparent ? 1 : 0);
 
-                        Append(o.Animation.Size);
+                        RecFile.Append(o.Animation.Size);
                         foreach (Tile tile in o.Animation.Frames)
                         {
-                            Append((short)tile.Index);
-                            Append((byte)tile.ForeColor);
-                            Append((byte)tile.BackColor);
+                            RecFile.Append((short)tile.Index);
+                            RecFile.Append((byte)tile.ForeColor);
+                            RecFile.Append((byte)tile.BackColor);
                         }
 
-                        Append(o.Properties.Entries.Count);
+                        RecFile.Append(o.Properties.Entries.Count);
                         foreach (var property in o.Properties.Entries)
                         {
-                            Append(property.Key);
-                            Append(property.Value);
+                            RecFile.Append(property.Key);
+                            RecFile.Append(property.Value);
                         }
                     }
                     else
                     {
-                        Append(0);
+                        RecFile.Append(0);
                     }
                 }
             }

@@ -27,7 +27,7 @@ namespace PTMStudio
             {
                 Parent = ScintillaPanel,
                 Dock = DockStyle.Fill,
-                BorderStyle = BorderStyle.Fixed3D,
+                BorderStyle = BorderStyle.None,
                 HScrollBar = true,
                 VScrollBar = true
             };

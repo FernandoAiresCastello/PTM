@@ -222,17 +222,17 @@ namespace PTMStudio
                     return;
             }
 
-            TilebufferFile.Save(TileBuffer, Filename);
+			new TilebufferFile().Save(TileBuffer, Filename);
+
             Filename = Filesystem.NormalizePath(Filename);
             TxtFilename.Text = Filesystem.RemoveAbsoluteRoot(Filename);
-            TxtFilename.Text = Filesystem.RemoveFilesPrefix(TxtFilename.Text);
             MainWindow.UpdateFilePanel();
             MainWindow.TilebufferChanged(false);
         }
 
         public void LoadFile(string file)
         {
-            TileBuffer = TilebufferFile.Load(Proj, file);
+            TileBuffer = new TilebufferFile().Load(Proj, file);
             Filename = file;
             TxtFilename.Text = Filesystem.RemoveAbsoluteRootAndNormalizePath(file);
             Renderer.Map = TileBuffer;

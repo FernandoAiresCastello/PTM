@@ -13,7 +13,8 @@ namespace PTMStudio
 {
 	public partial class MainWindow : Form
     {
-        private const string ProgramFileExt = ".PTM";
+        private const string WindowTitle = "PTM 0.4";
+		private const string ProgramFileExt = ".PTM";
         private const string AutosavedProgramFile = "USR/TEMP" + ProgramFileExt;
         
         private readonly string PtmExe;
@@ -26,7 +27,6 @@ namespace PTMStudio
         private readonly TileRegisterPanel TileRegPanel;
         
         private HelpWindow HelpWindow;
-        private string ProjectFile;
         private string ProgramFile;
 
         private class ChangeTracker
@@ -41,8 +41,9 @@ namespace PTMStudio
         public MainWindow(string ptmExe)
         {
             InitializeComponent();
-
-            Size = new Size(1024, 730);
+			
+            Text = WindowTitle;
+			Size = new Size(1024, 730);
             MinimumSize = Size;
             PtmExe = ptmExe;
 
@@ -194,7 +195,7 @@ namespace PTMStudio
                 PalettePanel.LoadFile(file);
             else if (ext == ".BUF")
                 TilebufferPanel.LoadFile(file);
-            else if (ext == ".PTMS")
+            else if (ext == ".PROJ")
                 LoadProject(file);
             else
                 Warning("Unsupported file format");
@@ -415,18 +416,14 @@ namespace PTMStudio
 
         private void BtnSaveProject_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(ProjectFile))
+            SaveFileDialog dialog = new SaveFileDialog
             {
-                SaveFileDialog dialog = new SaveFileDialog
-                {
-                    InitialDirectory = Filesystem.UserRoot,
-                    Filter = "PTM Project File (*.PTMS)|*.PTMS"
-                };
-                if (dialog.ShowDialog() == DialogResult.OK)
-                    ProjectFile = dialog.FileName;
-                else
-                    return;
-            }
+                InitialDirectory = Filesystem.UserRoot,
+                Filter = "PTM Project File (*.PROJ)|*.PROJ"
+			};
+
+            if (dialog.ShowDialog() != DialogResult.OK)
+                return;
 
             List<string> lines = new List<string>
             {
@@ -436,10 +433,10 @@ namespace PTMStudio
                 TilebufferPanel.Filename
             };
 
-            File.WriteAllLines(ProjectFile, lines);
+            File.WriteAllLines(dialog.FileName, lines);
 
             FilePanel.UpdateFileList();
-            AlertOnStatusBar("Project saved to: " + ProjectFile, 2);
+            AlertOnStatusBar("Project saved to: " + dialog.FileName, 2);
         }
 
         private void BtnLoadProject_Click(object sender, EventArgs e)
@@ -452,8 +449,8 @@ namespace PTMStudio
             OpenFileDialog dialog = new OpenFileDialog
             {
                 InitialDirectory = Filesystem.UserRoot,
-                Filter = "PTM Project File (*.PTMS)|*.PTMS"
-            };
+                Filter = "PTM Project File (*.PROJ)|*.PROJ"
+			};
 
             if (dialog.ShowDialog() != DialogResult.OK)
                 return;
@@ -463,9 +460,7 @@ namespace PTMStudio
 
         public void LoadProject(string file)
         {
-            ProjectFile = file;
-
-            var lines = File.ReadAllLines(ProjectFile);
+            var lines = File.ReadAllLines(file);
 
 			if (!string.IsNullOrWhiteSpace(lines[0]))
 				ProgramPanel.LoadFile(lines[0]);
@@ -476,14 +471,12 @@ namespace PTMStudio
             if (!string.IsNullOrWhiteSpace(lines[3]))
                 TilebufferPanel.LoadFile(lines[3]);
 
-            AlertOnStatusBar("Project loaded from: " + ProjectFile, 2);
+            AlertOnStatusBar("Project loaded from: " + file, 2);
         }
 
         public void NewProgramLoaded(string file)
         {
             ProgramFile = file;
-            Text = "PTM 0.4";
-
             LabelsPanel.UpdateLabels();
         }
 
