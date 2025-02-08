@@ -24,7 +24,7 @@ class PTM
 public:
 	const t_string title = "PTM - Programmable Tile Machine";
 	
-	const t_string version_string	= "PTM 0.4";
+	const t_string version_string	= "PTM 0.3";
 	const t_string title_short		= "Programmable Tile Machine";
 	const t_string copyright_notice	= "` 2023-2025 by F.A.Castello";
 

@@ -14,7 +14,7 @@ namespace PTMStudio
 {
 	public partial class MainWindow : Form
     {
-        private const string WindowTitle = "PTM 0.4";
+        private const string WindowTitle = "PTM 0.3";
 		private const string ProgramFileExt = ".PTM";
         private const string AutosavedProgramFile = "USR/TEMP" + ProgramFileExt;
         
@@ -382,8 +382,9 @@ namespace PTMStudio
         private void BtnAbout_Click(object sender, EventArgs e)
         {
             MessageBox.Show(
-                "PTM - Programmable Tile Machine\n\nVersion 0.4\n\n" + 
-                "(C) 2023-2025 Developed by Fernando Aires Castello\n\n" +
+                "PTM - Programmable Tile Machine\n\n" +
+				"© 2023-2025 Developed by Fernando Aires Castello\n\n" +
+				"Version 0.3\n\n" +
                 "https://fernandoairescastello.itch.io/ptm\n" +
                 "https://github.com/FernandoAiresCastello/PTM",
                 "About", MessageBoxButtons.OK, MessageBoxIcon.Information);

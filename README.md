@@ -48,7 +48,7 @@ The latest released version is __0.2__.
 The current development version is __0.3__ (pictured below).
 
 ![PTM Studio 0.4](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio.png?raw=true)
-![PTM 0.4](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptml_example_02.png?raw=true)
+![PTM 0.4](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptml_example_03.png?raw=true)
 
 *Note: development builds can be *very* unstable since they are being actively worked on and change frequently, so use at your own risk!*
 
