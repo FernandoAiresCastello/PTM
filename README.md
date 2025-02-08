@@ -2,11 +2,33 @@
 
 # PTM - Programmable Tile Machine
 
-## About
-	
-__PTM (Programmable Tile Machine)__ is a "pseudo-8-bit fantasy computer" that you can program using a built-in programming language called PTML. The system aims to be similar in look-and-feel to some early 8-bit, computer systems such as the MSX, ZX Spectrum and Atari 800 with a low-resolution, tile-based display. Also inspired by the modern game engines Bitsy and PICO-8.
+__PTM (Programmable Tile Machine)__ is a "pseudo-8-bit fantasy computer" that you can program using a built-in programming language called PTML. The system aims to be similar in look-and-feel to some early 8-bit computer systems with low-resolution and tile-based displays, such as the MSX, ZX Spectrum and Atari 800. Also inspired by the modern game engines Bitsy and PICO-8.
 
-__PTML__ is an interpreted, imperative, loosely typed, line-based, low-level programming language, with only two basic data types: strings and integers. The syntax is based on early dialects of BASIC and assembly languages for 8-bit computers. Familiarity with any of those will probably make it easier to learn and work with PTML, but the language itself is designed to be fairly straightforward.
+__PTML__ is an interpreted, imperative, loosely typed, line-based, low-level programming language, with only two basic data types: strings and integers, with support for fixed-size arrays. The syntax is based on early, unstructured dialects of BASIC and also Assembly languages for 8-bit computers (sometimes resembling Zilog Z80 code).
+
+## Machine Specs
+
+**Video**
+* Resolution: 360x200 pixels in total *(pixels are not individually addressable)*
+* Screen: 41x23 tile buffer, each tile being 8x8 pixels, having an indexed character and two indexed colors (foreground and background)
+* Color palette: 256 colors, no alpha transparency, fully editable, with built-in default colors
+* Character set: 256 characters, fully editable, with built-in default characters based on ASCII
+
+**Audio**
+* Single channel, square-wave tone generator
+* Simplified MML (music macro language) support
+
+**File System**
+* Native support for writing and reading files containing PTML programs (.PTM), color palettes (.PAL), character sets (.CHR), screen tile buffers (.BUF) and arbitrary data records (.DAT).
+* Sandboxed file system. The machine executable only has access to files and folders within its own root directory
+
+**Input**
+* Keyboard input only
+
+**Software Development**
+* Programming language: PTML support only
+* Built-in program editor and launcher
+* Supports external tools
 
 ## Version history
 
