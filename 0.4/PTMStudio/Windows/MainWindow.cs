@@ -1,4 +1,5 @@
-﻿using PTMStudio.Windows;
+﻿using PTMStudio.Core;
+using PTMStudio.Windows;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -105,7 +106,7 @@ namespace PTMStudio
 				FilePanel.UpdateFileList();
 			}
 
-            LoadProgramFile(AutosavedProgramFile);
+            LoadFile(AutosavedProgramFile);
 
             FormClosing += MainWindow_FormClosing;
         }
@@ -174,31 +175,86 @@ namespace PTMStudio
 			Process.Start(PtmExe, ProgramFile);
         }
 
-        public void LoadProgramFile(string file)
+        public void LoadFile(string file)
         {
-            if (Changes.Program)
-            {
-                DialogResult result = ConfirmModifiedButNotSaved("Program");
-                if (result == DialogResult.Cancel)
-                    return;
-                else if (result == DialogResult.Yes)
-                    ProgramPanel.SaveFile();
-            }
-
             string ext = Path.GetExtension(file).ToUpper();
-            
+
             if (ext == ".PTM")
+            {
+                if (Changes.Program)
+                {
+                    DialogResult result = ConfirmModifiedButNotSaved("Program");
+                    if (result == DialogResult.Cancel)
+                        return;
+                    else if (result == DialogResult.Yes)
+                        ProgramPanel.SaveFile();
+                }
+
                 ProgramPanel.LoadFile(file);
+            }
             else if (ext == ".CHR")
-                TilesetPanel.LoadFile(file);
+            {
+				if (Changes.Tileset)
+				{
+					DialogResult result = ConfirmModifiedButNotSaved("Tileset");
+					if (result == DialogResult.Cancel)
+						return;
+					else if (result == DialogResult.Yes)
+						TilesetPanel.SaveFile();
+				}
+
+				TilesetPanel.LoadFile(file);
+            }
             else if (ext == ".PAL")
-                PalettePanel.LoadFile(file);
+            {
+				if (Changes.Palette)
+				{
+					DialogResult result = ConfirmModifiedButNotSaved("Palette");
+					if (result == DialogResult.Cancel)
+						return;
+					else if (result == DialogResult.Yes)
+						PalettePanel.SaveFile();
+				}
+
+				PalettePanel.LoadFile(file);
+            }
             else if (ext == ".BUF")
-                TilebufferPanel.LoadFile(file);
-            else if (ext == ".PROJ")
+            {
+				if (Changes.TileBuffer)
+				{
+					DialogResult result = ConfirmModifiedButNotSaved("Tilebuffer");
+					if (result == DialogResult.Cancel)
+						return;
+					else if (result == DialogResult.Yes)
+						ProgramPanel.SaveFile();
+				}
+
+				TilebufferPanel.LoadFile(file);
+            }
+			else if (ext == ".DAT")
+            {
+                RecordFile recFile = new RecordFile();
+                recFile.Load(file);
+
+                RecordFileWindow wnd = new RecordFileWindow(
+                    Filesystem.RemoveAbsoluteRootAndNormalizePath(file), recFile.GetLoadedData());
+
+                wnd.ShowDialog(this);
+            }
+			else if (ext == ".PROJ")
+            {
+                if (Changes.Program || Changes.Palette || Changes.Tileset || Changes.TileBuffer)
+                {
+                    if (!Confirm("There are unsaved changes. Continue without saving?"))
+                        return;
+				}
+
                 LoadProject(file);
+            }
             else
+            {
                 Warning("Unsupported file format");
+            }
         }
 
         public void UpdateFilePanel()
@@ -504,7 +560,7 @@ namespace PTMStudio
                 MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
         }
 
-        public static void Warning(string message)
+		public static void Warning(string message)
         {
             Warning("Warning", message);
         }

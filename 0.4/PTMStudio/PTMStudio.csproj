@@ -115,6 +115,12 @@
       <DependentUpon>TilebufferEditPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\TilebufferFile.cs" />
+    <Compile Include="Windows\RecordFileWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\RecordFileWindow.Designer.cs">
+      <DependentUpon>RecordFileWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Windows\SimpleTextInputDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -175,6 +181,9 @@
     </Compile>
     <EmbeddedResource Include="Panels\TilebufferEditPanel.resx">
       <DependentUpon>TilebufferEditPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\RecordFileWindow.resx">
+      <DependentUpon>RecordFileWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\SimpleTextInputDialog.resx">
       <DependentUpon>SimpleTextInputDialog.cs</DependentUpon>

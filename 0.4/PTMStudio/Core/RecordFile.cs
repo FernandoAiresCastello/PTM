@@ -14,6 +14,7 @@ namespace PTMStudio.Core
 		private List<string> LoadedContents = new List<string>();
 		private int Ptr;
 
+		public string[] GetLoadedData() => LoadedContents.ToArray();
 		public void Append(object o) => OutputBuffer.Append((o != null ? o.ToString() : "") + Separator.ToString());
 		public string NextStr() => LoadedContents[Ptr++];
 		public int NextInt() => int.Parse(LoadedContents[Ptr++]);
@@ -26,7 +27,7 @@ namespace PTMStudio.Core
 		public void Load(string path)
 		{
 			string input = Encoding.Default.GetString(File.ReadAllBytes(path));
-			input = input.Substring(1); // Remove the first separator character
+			input = input.Substring(1, input.Length - 2); // Remove the first and last separator character
 			LoadedContents = input.Split(Separator).ToList();
 			OutputBuffer.Clear();
 			Ptr = 0;
