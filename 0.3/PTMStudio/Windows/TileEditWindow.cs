@@ -28,9 +28,9 @@ namespace PTMStudio
             Tileset = tileset;
             Index = index;
             Original = Tileset.Get(index).Copy();
-            Text = index.ToString();
+			Text = $"Index: {index}";
 
-            StartPosition = FormStartPosition.CenterParent;
+			StartPosition = FormStartPosition.CenterParent;
             KeyPreview = true;
             KeyDown += TileEditWindow_KeyDown;
 
