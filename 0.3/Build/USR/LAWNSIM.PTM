@@ -1,0 +1,212 @@
+#==========================================================
+#
+#               ADVANCED LAWNMOWER SIMULATOR
+#
+#==========================================================
+AUTOREF 0
+CALL init
+AUTOREF 1
+
+#==========================================================
+#   Title screens
+#==========================================================
+show_title_screen:
+    COLOR black, green, dkgreen
+
+options_loop:
+    LOAD "LAWNSIM_1.BUF"
+    INKEY opt
+    CALL.E opt,'1',opt_1
+    CALL.E opt,'2',opt_2
+    CALL.E opt,'3',opt_3
+    CALL.E opt,'4',opt_4
+    CALL.E opt,'5',opt_5
+    CALL.E opt,'6',opt_6
+    GOTO options_loop
+
+opt_1:
+    SET opt_sel, "CAMPARI GRASSMASTER"
+    CALL print_option
+    RET
+opt_2:
+    SET opt_sel, "DAF TURFOMATIC"
+    CALL print_option
+    RET
+opt_3:
+    SET opt_sel, "ACME MEGA-CUT 3000"
+    CALL print_option
+    RET
+opt_4:
+    SET opt_sel, "ACME LAWN-ACE"
+    CALL print_option
+    RET
+opt_5:
+    SET opt_sel, "FLYMO GRASSCHUM"
+    CALL print_option
+    RET
+opt_6:
+    GOTO print_working_option
+
+print_option:
+    CLS
+    LOCATE 5,10
+    PRINTL "I'M SORRY, I'M AFRAID THAT THE"
+    PRINTL opt_sel
+    PRINTL "IS BROKEN AT THE MOMENT"
+    PAUSE 150
+    RET
+
+print_working_option:
+    CLS
+    LOCATE 3,9
+    PRINTL "THE PATIO SPRINTETTE IS WORKING WELL"
+    PRINTL 
+    PRINTL "PRESSING 'M' ENGAGES THE MOTOR"
+    PRINTL "RELEASING 'M' DISENGAGES IT"
+    PRINTL 
+    PRINTL "PRESS ANY KEY TO START..."
+
+await_keypress_to_start:
+    INKEY key
+    GOTO.E key,0,await_keypress_to_start
+
+#==========================================================
+#   Game start
+#==========================================================
+start:
+    CLS
+    AUTOREF 0
+    COLOR white,green,green
+    LOAD "LAWNSIM_2.BUF"
+
+    SET score, 0
+    SET max_score, 307
+    SET man.x, 34
+    SET man.xi, man.x
+    SET man.y, 21
+    SET mach.x, 33
+    SET mach.xi, mach.x
+    SET mach.y, 21
+    SET current_row, 0
+
+main_loop:
+    REFRESH
+    CALL print_score
+    GOTO.GE score,max_score,well_mown
+    INKEY key
+    CALL.E key,'m',cut_grass
+    GOTO main_loop
+
+print_score:
+    COLOR white,green,green
+    LOCATE 1,1
+    PRINT score
+    RET
+
+cut_grass:
+    INC score
+    PLAY "L50 C2 D2"
+    PAUSE 5
+    GOTO.E mach.x,6,begin_next_row
+    CALL move_machine
+    CALL move_man
+    RET
+
+move_machine:
+    LOCATE mach.x,mach.y
+    GET
+    DEC mach.x
+    LOCATE mach.x,mach.y
+    PUT
+    RET
+
+move_man:
+    SET man.prevx,man.x
+    LOCATE man.x,man.y
+    GET
+    DEC man.x
+    LOCATE man.x,man.y
+    PUT
+    NEWTILE
+    TILE empty,green,dkgreen
+    LOCATE man.prevx,man.y
+    PUT
+    RET
+
+begin_next_row:
+    SET next_y,man.y
+    DEC next_y
+    LOCATE man.x,man.y
+    GET
+    LOCATE man.xi,next_y
+    PUT
+    LOCATE mach.x,mach.y
+    GET
+    LOCATE mach.xi,next_y
+    PUT
+    NEWTILE
+    TILE empty,green,dkgreen
+    RECT 6,man.y,34,man.y
+
+    DEC man.y
+    DEC mach.y
+    SET man.x,man.xi
+    SET mach.x,mach.xi
+    GOTO main_loop
+
+well_mown:
+    PAUSE 50
+    PLAY "L80 C6 D6 E6 D6 E6 F6 E6 F6 L300 G6"
+    COLOR white,black
+    LOCATE 15,14
+    PRINT " WELL MOWN! "
+    PAUSE 250
+
+end_game:
+    CLS
+    COLOR 1,0,0
+
+ending_loop:
+
+#==========================================================
+#   Auxiliary subroutines
+#==========================================================
+END
+
+init:
+    MODE 1
+    CURSOR 0
+
+    LOAD "LAWNSIM.CHR"
+    LOAD "LAWNSIM.PAL"
+
+    # Colors
+    SET black,0
+    SET white,1
+    SET green,2
+    SET dkgreen,3
+    SET ltgreen,4
+    SET cyan,5
+    SET yellow,6
+
+    # Characters
+    SET hline,1
+    SET vline,2
+    SET tl,3
+    SET tr,4
+    SET bl,5
+    SET br,6
+    SET sky,7
+    SET grass,8
+    SET man,9
+    SET machine,10
+    SET empty,11
+    SET shed_vl,12
+    SET shed_vr,13
+    SET shed_dl,14
+    SET shed_dr,15
+    SET sun_1,16
+    SET sun_2,17
+    SET solid,18
+
+    RET

@@ -68,12 +68,17 @@ void PTML::PRINT()
 void PTML::PRINTL()
 {
 	ARGC_MIN_MAX(0, 1);
+
+	int x = scr->csrx();
+
 	if (COUNT(0))
 		scr->newline();
 	else {
 		auto&& value = STR(1);
 		scr->print_string_crlf(value);
 	}
+
+	scr->locate_x(x);
 }
 
 void PTML::PRINTF()

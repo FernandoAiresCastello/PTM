@@ -46,6 +46,8 @@ public:
 	void color_bg(t_index bg);
 	void color_bdr(t_index bdr);
 	void locate(int x, int y);
+	void locate_x(int x);
+	void locate_y(int y);
 	void move_cursor_dist(int dx, int dy);
 	void move_cursor_top_left();
 	void move_cursor_line_start();

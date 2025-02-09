@@ -137,6 +137,16 @@ void t_screen::locate(int x, int y)
 	fix_cursor_pos();
 }
 
+void t_screen::locate_x(int x)
+{
+	csr->set_x(x);
+}
+
+void t_screen::locate_y(int y)
+{
+	csr->set_y(y);
+}
+
 void t_screen::move_cursor_dist(int dx, int dy)
 {
 	csr->move_dist(dx, dy);

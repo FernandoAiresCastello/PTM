@@ -126,7 +126,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("PGET", TILE_GETP); // Get property from tile register
 
 	// === SPRITES ===
-	CMD("SPRITE", SET_SPRITE); // Create sprite with tile equal to tile register, optionally at specified position
+	CMD("SPRITE", SET_SPRITE); // Create or update sprite with tile equal to tile register, optionally at specified position
 	CMD("MOVE", MOVE_SPRITE); // Move sprite to specified position
 	CMD("SHOW", SHOW_SPRITE); // Show or hide sprite
 	CMD("SGET", GET_SPRITE); // Copy sprite tile to tile register
