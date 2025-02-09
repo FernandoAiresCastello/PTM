@@ -13,6 +13,7 @@ __PTML__ is an interpreted, imperative, loosely typed, line-based, low-level pro
 * Screen: 41x23 tile buffer, each tile being 8x8 pixels, having an indexed character and two indexed colors (foreground and background)
 * Color palette: 256 colors, no alpha transparency, fully editable, with built-in default colors
 * Character set: 256 characters, fully editable, with built-in default characters based on ASCII
+* Sprites: 256 sprites, each sprite being a single tile, displayed at pixel coordinates over tile buffer
 
 **Audio**
 * Single channel, square-wave tone generator
