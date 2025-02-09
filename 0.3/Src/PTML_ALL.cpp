@@ -15,9 +15,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("LIST", LIST); // List current program
 	CMD("NEW", NEW); // Delete current program
 	CMD("RENUM", RENUM); // Renumber current program
-	CMD("SAVE", SAVE); // Save current program to disk
-	CMD("LOAD", LOAD); // Load program from disk
-	CMD("PROG", PROG); // Print filename of last loaded program
+	CMD("PROG", PROG); // Print filename of last loaded or saved program
 
 	// === SYSTEM CONTROL ===
 	CMD("RUN", RUN); // Execute current program, or load another program from disk and then execute it
@@ -72,6 +70,8 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 
 	// === FILE SYSTEM ===
 	CMD("FILES", FILES); // List files on disk
+	CMD("SAVE", SAVE); // Save file to disk
+	CMD("LOAD", LOAD); // Load file from disk
 	CMD("RENAME", RENAME); // Rename file
 	CMD("KILL", KILL); // Delete file
 	CMD("OPEN", OPEN); // Open record file for read or write
@@ -88,10 +88,6 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	// === GRAPHICS ===
 	CMD("PAL", PAL); // Set RGB value for color at palette index
 	CMD("CHR", CHR); // Set pixel pattern for character at charset index
-	CMD("PLOAD", LDPAL); // Load color palette from file on disk
-	CMD("PSAVE", SVPAL); // Save color palette to file on disk
-	CMD("CLOAD", LDCHR); // Load charset from file on disk
-	CMD("CSAVE", SVCHR); // Save charset to file on disk
 
 	// === SCREEN ===
 	CMD("REFRESH", REFRESH); // Force update the screen
@@ -118,7 +114,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("MODE", COLOR_MODE); // Change color mode (0 = monochrome; 1 = multicolor)
 	
 	// === TILE REGISTER ===
-	CMD("RTILE", TILE_NEW); // Remove all tiles from tile register
+	CMD("NEWTILE", TILE_NEW); // Clear tile register
 	CMD("TILE", TILE_ADD); // Add tile to tile register
 	CMD("CSET", TILE_SETC); // Set character index of tile register
 	CMD("CGET", TILE_GETC); // Get character index of tile register
@@ -135,8 +131,6 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("DEL", DEL); // Delete tile from screen buffer at current cursor position
 	CMD("RECT", RECT); // Fill a rectangle in the screen buffer with copies of tile from tile register
 	CMD("FILL", FILL); // Fill the entire screen buffer with copies of tile from tile register
-	CMD("BSAVE", SVBUF); // Save screen buffer to file on disk
-	CMD("BLOAD", LDBUF); // Load screen buffer from file on disk
 
 	// === SOUND ===
 	CMD("BEEP", BEEP); // Emit a beeping sound with the specified duration and frequency

@@ -10,4 +10,6 @@ namespace PTML
 	void WRITE();
 	void READ();
 	void FEOF();
+	void SAVE();
+	void LOAD();
 }

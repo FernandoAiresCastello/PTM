@@ -1,6 +1,13 @@
 #include <stdexcept>
 #include "PTML_FILESYSTEM.h"
+#include "PTML_GRAPHICS.h"
 #include "PTML_shared_headers.h"
+
+#define FILE_EXT_PROGRAM	".PTM"
+#define FILE_EXT_CHARSET	".CHR"
+#define FILE_EXT_PALETTE	".PAL"
+#define FILE_EXT_TILEBUF	".BUF"
+#define FILE_EXT_RECFILE	".DAT"
 
 void PTML::FILES()
 {
@@ -48,7 +55,7 @@ void PTML::OPEN()
 	VALIDATE_FILENAME(name);
 	auto&& mode = STR(2).to_upper();
 
-	name += ".DAT";
+	name += FILE_EXT_RECFILE;
 
 	if (t_filesystem::is_record_file_open()) {
 		error = err.file_already_open;
@@ -113,4 +120,65 @@ void PTML::FEOF()
 {
 	ARGC(1);
 	ptm->set_var(ARG(1), t_filesystem::is_record_file_eof() ? 1 : 0, error);
+}
+
+void PTML::SAVE()
+{
+	ARGC(1);
+
+	auto&& filename = STR(1).to_upper();
+	VALIDATE_FILENAME(filename);
+
+	if (filename.ends_with(FILE_EXT_PROGRAM)) {
+		REQUIRE_IMM;
+		if (ptm->get_prg().lines.empty()) {
+			error = err.invalid_program;
+			return;
+		}
+		ptm->save_program(filename);
+	}
+	else if (filename.ends_with(FILE_EXT_CHARSET)) {
+		SAVE_CHR();
+	}
+	else if (filename.ends_with(FILE_EXT_PALETTE)) {
+		SAVE_PAL();
+	}
+	else if (filename.ends_with(FILE_EXT_TILEBUF)) {
+		SAVE_BUF();
+	}
+	else {
+		error = err.invalid_file_ext;
+		return;
+	}
+}
+
+void PTML::LOAD()
+{
+	ARGC(1);
+
+	auto&& filename = STR(1).to_upper();
+	VALIDATE_FILENAME(filename);
+	REQUIRE_FILE(filename);
+
+	if (filename.ends_with(FILE_EXT_PROGRAM)) {
+		REQUIRE_IMM;
+		bool valid = try_load_program(filename);
+		if (!valid) {
+			error = err.invalid_program;
+			return;
+		}
+	}
+	else if (filename.ends_with(FILE_EXT_CHARSET)) {
+		LOAD_CHR();
+	}
+	else if (filename.ends_with(FILE_EXT_PALETTE)) {
+		LOAD_PAL();
+	}
+	else if (filename.ends_with(FILE_EXT_TILEBUF)) {
+		LOAD_BUF();
+	}
+	else {
+		error = err.invalid_file_ext;
+		return;
+	}
 }

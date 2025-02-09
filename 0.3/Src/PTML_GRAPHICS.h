@@ -13,12 +13,12 @@ namespace PTML
 	void CLS();
 	void PAL();
 	void CHR();
-	void LDPAL();
-	void LDCHR();
-	void SVPAL();
-	void SVCHR();
-	void SVBUF();
-	void LDBUF();
+	void LOAD_PAL();
+	void SAVE_PAL();
+	void LOAD_CHR();
+	void SAVE_CHR();
+	void LOAD_BUF();
+	void SAVE_BUF();
 	void LOCATE();
 	void CSR_GETX();
 	void CSR_GETY();

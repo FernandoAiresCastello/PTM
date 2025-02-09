@@ -19,6 +19,7 @@ namespace PTML
 		const t_string cant_create_directory = "Could not create directory";
 		const t_string cant_create_file = "Could not create file";
 		const t_string invalid_filename = "Illegal filename";
+		const t_string invalid_file_ext = "Illegal file extension";
 		const t_string arg_out_of_range = "Out of bounds";
 		const t_string invalid_program = "Invalid program";
 		const t_string unknown_keyname = "Unknown key name";

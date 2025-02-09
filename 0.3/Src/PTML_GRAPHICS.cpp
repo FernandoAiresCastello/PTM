@@ -133,90 +133,63 @@ void PTML::CHR()
 	}
 }
 
-void PTML::LDPAL()
+void PTML::LOAD_PAL()
 {
 	ARGC(1);
 	auto&& filename = STR(1);
 	VALIDATE_FILENAME(filename);
+	REQUIRE_FILE(filename);
 
-	t_string actual_filename = filename;
-	if (!actual_filename.ends_with(".PAL"))
-		actual_filename += ".PAL";
-	
-	REQUIRE_FILE(actual_filename);
-
-	ptm->get_pal().load(t_string(USER_ROOT) + actual_filename);
+	ptm->get_pal().load(t_string(USER_ROOT) + filename);
 }
 
-void PTML::LDCHR()
+void PTML::SAVE_PAL()
 {
 	ARGC(1);
 	auto&& filename = STR(1);
 	VALIDATE_FILENAME(filename);
 
-	t_string actual_filename = filename;
-	if (!actual_filename.ends_with(".CHR"))
-		actual_filename += ".CHR";
-
-	REQUIRE_FILE(actual_filename);
-
-	ptm->get_chr().load(t_string(USER_ROOT) + actual_filename);
+	ptm->get_pal().save(t_string(USER_ROOT) + filename);
 }
 
-void PTML::SVPAL()
+void PTML::LOAD_CHR()
 {
 	ARGC(1);
 	auto&& filename = STR(1);
 	VALIDATE_FILENAME(filename);
+	REQUIRE_FILE(filename);
 
-	t_string actual_filename = filename;
-	if (!actual_filename.ends_with(".PAL"))
-		actual_filename += ".PAL";
-
-	ptm->get_pal().save(t_string(USER_ROOT) + actual_filename);
+	ptm->get_chr().load(t_string(USER_ROOT) + filename);
 }
 
-void PTML::SVCHR()
+void PTML::SAVE_CHR()
 {
 	ARGC(1);
 	auto&& filename = STR(1);
 	VALIDATE_FILENAME(filename);
-
-	t_string actual_filename = filename;
-	if (!actual_filename.ends_with(".CHR"))
-		actual_filename += ".CHR";
 
 	ptm->get_chr().save(t_string(USER_ROOT) + filename);
 }
 
-void PTML::SVBUF()
+void PTML::LOAD_BUF()
 {
 	ARGC(1);
 	auto&& filename = STR(1);
 	VALIDATE_FILENAME(filename);
-
-	t_string actual_filename = filename;
-	if (!actual_filename.ends_with(".BUF"))
-		actual_filename += ".BUF";
-
-	ptm->get_screen().save(t_string(USER_ROOT) + actual_filename);
-}
-
-void PTML::LDBUF()
-{
-	ARGC(1);
-	auto&& filename = STR(1);
-	VALIDATE_FILENAME(filename);
-
-	t_string actual_filename = filename;
-	if (!actual_filename.ends_with(".BUF"))
-		actual_filename += ".BUF";
-
-	REQUIRE_FILE(actual_filename);
+	REQUIRE_FILE(filename);
 	
-	ptm->get_screen().load(t_string(USER_ROOT) + actual_filename);
+	ptm->get_screen().load(t_string(USER_ROOT) + filename);
 
 	ptm->suppress_imm_prompt = true;
+}
+
+void PTML::SAVE_BUF()
+{
+	ARGC(1);
+	auto&& filename = STR(1);
+	VALIDATE_FILENAME(filename);
+
+	ptm->get_screen().save(t_string(USER_ROOT) + filename);
 }
 
 void PTML::LOCATE()

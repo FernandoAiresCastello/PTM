@@ -265,6 +265,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)build"</PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)build"
+echo %25DATE:~6,4%25-%25DATE:~3,2%25-%25DATE:~0,2%25 %25TIME:~0,8%25 &gt;"$(SolutionDir)build\build_timestamp"</PostBuildEvent>
   </PropertyGroup>
 </Project>

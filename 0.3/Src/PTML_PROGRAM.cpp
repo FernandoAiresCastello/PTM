@@ -94,36 +94,6 @@ void PTML::NEW()
 	ptm->new_program();
 }
 
-void PTML::SAVE()
-{
-	REQUIRE_IMM;
-	ARGC(1);
-
-	auto&& filename = STR(1).to_upper() + PROGRAM_FILE_EXT;
-	VALIDATE_FILENAME(filename);
-
-	if (ptm->get_prg().lines.empty()) {
-		error = err.invalid_program;
-		return;
-	}
-
-	ptm->save_program(filename);
-}
-
-void PTML::LOAD()
-{
-	REQUIRE_IMM;
-	ARGC(1);
-
-	auto&& filename = STR(1).to_upper() + PROGRAM_FILE_EXT;
-	VALIDATE_FILENAME(filename);
-	REQUIRE_FILE(filename);
-
-	bool valid = try_load_program(filename);
-	if (!valid)
-		error = err.invalid_program;
-}
-
 void PTML::RENUM()
 {
 	REQUIRE_IMM;

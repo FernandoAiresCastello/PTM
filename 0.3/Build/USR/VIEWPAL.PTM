@@ -4,7 +4,7 @@ main:
 	SET ix,1
 	SET iy,1
 	SET c,0
-	RTILE
+	NEWTILE
 	TILE 0,0,0
 
 loop:
