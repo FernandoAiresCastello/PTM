@@ -28,6 +28,7 @@ t_tilebuffer::t_tilebuffer(int cols, int rows) :
 
 	cursor_sprite = std::make_shared<t_sprite>(
 		t_tile(predef_char.cursor, 0, 0, t_tileflags()), t_pos(0, 0), true);
+	cursor_sprite->enabled = true;
 }
 
 void t_tilebuffer::draw(t_window* wnd, t_charset* chr, t_palette* pal, const t_pos& scr_pos, const t_tilebuffer_region& region)
@@ -41,9 +42,8 @@ void t_tilebuffer::draw(t_window* wnd, t_charset* chr, t_palette* pal, const t_p
 			t_tile& tile = tile_at(x, y);
 			draw_tile_absolute_pos(tile, wnd, chr, pal, scr_pos.x + px, scr_pos.y + py, true);
 
-			if (cursor_sprite->get_x() == x && cursor_sprite->get_y() == y) {
+			if (cursor_sprite->get_x() == x && cursor_sprite->get_y() == y)
 				draw_tile_absolute_pos(cursor_sprite->get_tile(), wnd, chr, pal, scr_pos.x + px, scr_pos.y + py, true);
-			}
 
 			px++;
 		}
@@ -51,13 +51,11 @@ void t_tilebuffer::draw(t_window* wnd, t_charset* chr, t_palette* pal, const t_p
 		px = 0;
 	}
 
-	draw_sprites(wnd, chr, pal);
-}
-
-void t_tilebuffer::draw_sprites(t_window* wnd, t_charset* chr, t_palette* pal)
-{
-	for (const auto& spr : sprites) {
-		draw_tile_absolute_pos(spr->get_tile(), wnd, chr, pal, spr->get_x(), spr->get_y(), spr->has_grid());
+	if (sprites_enabled) {
+		for (auto& spr : sprites.get_all()) {
+			if (spr.enabled)
+				draw_tile_absolute_pos(spr.get_tile(), wnd, chr, pal, spr.get_x(), spr.get_y(), false);
+		}
 	}
 }
 
@@ -119,32 +117,6 @@ void t_tilebuffer::clear()
 t_list<t_tile>& t_tilebuffer::get_tiles()
 {
 	return tiles;
-}
-
-t_sprite_ptr t_tilebuffer::add_sprite(const t_tile& tile, const t_pos& pos, bool grid)
-{
-	t_sprite_ptr sprite = sprites.emplace_back(std::make_shared<t_sprite>(tile, pos, grid));
-	return sprite;
-}
-
-t_list<t_sprite_ptr>& t_tilebuffer::get_sprites()
-{
-	return sprites;
-}
-
-void t_tilebuffer::delete_sprite(t_sprite_ptr sprite)
-{
-	auto it = std::remove_if(sprites.begin(), sprites.end(),
-		[&sprite](const std::shared_ptr<t_sprite>& ptr) {
-			return ptr == sprite;
-		}
-	);
-	sprites.erase(it, sprites.end());
-}
-
-void t_tilebuffer::delete_all_sprites()
-{
-	sprites.clear();
 }
 
 t_sprite_ptr t_tilebuffer::get_cursor()

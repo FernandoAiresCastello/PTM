@@ -13,6 +13,7 @@
 #define NOT_TYPE(n, t)			line->arg##n.type != t
 #define STR(n)					resolve_str(line->arg##n)
 #define NUM(n)					resolve_num(line->arg##n)
+#define NUM_WRAP(n, max)		(resolve_num(line->arg##n) % max)
 #define REQUIRE_LABEL(n)		if (NOT_TYPE(n, t_token_type::identifier)) { error = err.label_expected; return; }
 #define IDENT(n)				line->arg##n.string_val
 #define BOOL(n)					NUM(n) > 0
@@ -26,6 +27,8 @@
 #define IF_TILEREG_EMPTY_RET	if (!TILEREG.has_any_char()) { return; }
 #define PRINT_LIST(x)			if (scr->print_lines(x, ptm)) { scr->print_string_crlf("Break"); }
 #define CHK_TBUF_BOUNDS(x, col, row)		if (col < 0 || row < 0 || col > x->last_col || row > x->last_row) { error = err.arg_out_of_range; return; }
-#define SPRITE(x)				auto&& sprite = get_sprite(x); if (sprite == nullptr) { return; }
+#define REQUIRE_SPRITE(x)		if (x < 0 || x >= t_spritelist::max_sprites) { error = err.invalid_sprite_number; return; }
 #define TILEBUF(x)				auto&& buf = get_tilebuffer(x); if (buf == nullptr) { return; }
 #define CHK_TBL_BOUNDS(x, col, row)		if (col < 0 || row < 0 || col >= x.get_cols() || row >= x.get_rows()) { error = err.arg_out_of_range; return; }
+#define PAL_SIZE				ptm->get_pal().size()
+#define CHR_SIZE				ptm->get_chr().size()

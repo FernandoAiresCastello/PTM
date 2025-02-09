@@ -18,9 +18,9 @@ t_screen::t_screen(int cols, int rows) :
 void t_screen::reset()
 {
 	color_mode = t_color_mode::mode0_monochrome;
-	delete_all_sprites();
 	color(default_fg, default_bg, default_bdr);
 	clear();
+	buf->sprites.reset_all();
 	update_monochrome_tiles();
 	show_cursor(true);
 	locate(0, 0);
@@ -487,9 +487,6 @@ void t_screen::update_monochrome_tiles()
 		for (int x = 0; x < buf->cols; x++)
 			update_monochrome_tile(buf->get_ref(x, y));
 
-	for (const auto& spr : buf->get_sprites())
-		update_monochrome_tile(spr->get_tile());
-
 	update_monochrome_tile(buf->get_cursor()->get_tile());
 }
 
@@ -625,11 +622,6 @@ const t_tilebuffer_region& t_screen::get_viewport()
 	return viewport;
 }
 
-void t_screen::delete_all_sprites()
-{
-	buf->delete_all_sprites();
-}
-
 void t_screen::save(const t_string& filename)
 {
 	buf->save(filename, back_color);
@@ -643,4 +635,20 @@ void t_screen::load(const t_string& filename)
 	int new_back_color = buf->get_loaded_back_color();
 	if (new_back_color >= 0)
 		back_color = new_back_color;
+}
+
+void t_screen::set_sprite(int index, const t_tile& tile)
+{
+	buf->sprites.get(index).set_tile(tile);
+}
+
+void t_screen::set_sprite(int index, const t_tile& tile, const t_pos& pos)
+{
+	t_sprite sprite(tile, pos, false);
+	buf->sprites.set(index, sprite);
+}
+
+t_sprite& t_screen::get_sprite(int index)
+{
+	return buf->sprites.get(index);
 }

@@ -4,6 +4,7 @@
 #include "t_index.h"
 #include "t_pos.h"
 #include "t_list.h"
+#include "t_tile.h"
 #include "t_sprite.h"
 #include "t_tilebuffer_region.h"
 
@@ -28,7 +29,7 @@ public:
 	const int default_fg = 14;
 	const int default_bg = 168;
 	const int default_bdr = 167;
-
+	
 	t_screen(int cols, int rows);
 	~t_screen() = default;
 
@@ -97,9 +98,11 @@ public:
 	bool displace_tiles_right();
 	bool displace_tiles_left();
 	const t_tilebuffer_region& get_viewport();
-	void delete_all_sprites();
 	void save(const t_string& filename);
 	void load(const t_string& filename);
+	void set_sprite(int index, const t_tile& tile);
+	void set_sprite(int index, const t_tile& tile, const t_pos& pos);
+	t_sprite& get_sprite(int index);
 
 private:
 	t_window* wnd = nullptr;

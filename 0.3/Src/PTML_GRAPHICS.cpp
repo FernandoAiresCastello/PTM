@@ -6,26 +6,17 @@ void PTML::COLOR()
 	ARGC_MIN_MAX(1, 3);
 
 	if (COUNT(3)) {
-		scr->color_fg(NUM(1));
-		ptm->set_var("INK", NUM(1));
-
-		scr->color_bg(NUM(2));
-		ptm->set_var("PAPER", NUM(2));
-
-		scr->color_bdr(NUM(3));
-		ptm->set_var("BORDER", NUM(3));
+		scr->color_fg(NUM_WRAP(1, PAL_SIZE));
+		scr->color_bg(NUM_WRAP(2, PAL_SIZE));
+		scr->color_bdr(NUM_WRAP(3, PAL_SIZE));
 		
 	}
 	else if (COUNT(2)) {
-		scr->color_fg(NUM(1));
-		ptm->set_var("INK", NUM(1));
-
-		scr->color_bg(NUM(2));
-		ptm->set_var("PAPER", NUM(2));
+		scr->color_fg(NUM_WRAP(1, PAL_SIZE));
+		scr->color_bg(NUM_WRAP(2, PAL_SIZE));
 	}
 	else if (COUNT(1)) {
-		scr->color_fg(NUM(1));
-		ptm->set_var("INK", NUM(1));
+		scr->color_fg(NUM_WRAP(1, PAL_SIZE));
 	}
 }
 
@@ -35,14 +26,10 @@ void PTML::COLOR_MODE()
 
 	t_color_mode&& mode = (t_color_mode)NUM(1);
 
-	if (mode == t_color_mode::mode0_monochrome) {
+	if (mode == t_color_mode::mode0_monochrome)
 		scr->set_color_mode(t_color_mode::mode0_monochrome);
-		ptm->set_var("CMODE", (int)mode);
-	}
-	else if (mode == t_color_mode::mode1_multicolor) {
+	else if (mode == t_color_mode::mode1_multicolor)
 		scr->set_color_mode(t_color_mode::mode1_multicolor);
-		ptm->set_var("CMODE", (int)mode);
-	}
 	else
 		error = err.illegal_argument;
 }
@@ -50,25 +37,22 @@ void PTML::COLOR_MODE()
 void PTML::COLOR_SETF()
 {
 	ARGC(1);
-	int&& color = NUM(1);
+	int&& color = NUM_WRAP(1, PAL_SIZE);
 	scr->color_fg(color);
-	ptm->set_var("INK", color);
 }
 
 void PTML::COLOR_SETB()
 {
 	ARGC(1);
-	int&& color = NUM(1);
+	int&& color = NUM_WRAP(1, PAL_SIZE);
 	scr->color_bg(color);
-	ptm->set_var("PAPER", color);
 }
 
 void PTML::COLOR_SETBR()
 {
 	ARGC(1);
-	int&& color = NUM(1);
+	int&& color = NUM_WRAP(1, PAL_SIZE);
 	scr->color_bdr(color);
-	ptm->set_var("BORDER", color);
 }
 
 void PTML::PRINT()
@@ -111,7 +95,7 @@ void PTML::CLS()
 void PTML::PAL()
 {
 	ARGC(2);
-	ptm->get_pal().set(NUM(1), NUM(2));
+	ptm->get_pal().set(NUM_WRAP(1, PAL_SIZE), NUM(2));
 }
 
 void PTML::CHR()
@@ -120,14 +104,14 @@ void PTML::CHR()
 	if (COUNT(2)) {
 		auto&& binary = STR(2);
 		if (binary.has_length(64))
-			ptm->get_chr().set(NUM(1), binary);
+			ptm->get_chr().set(NUM_WRAP(1, CHR_SIZE), binary);
 		else
 			error = err.binary_str_expected_64_bits;
 	}
 	else if (COUNT(3)) {
 		auto&& binary = STR(3);
 		if (binary.has_length(8))
-			ptm->get_chr().set_row(NUM(1), NUM(2), binary);
+			ptm->get_chr().set_row(NUM_WRAP(1, CHR_SIZE), NUM(2), binary);
 		else
 			error = err.binary_str_expected_8_bits;
 	}
@@ -198,8 +182,6 @@ void PTML::LOCATE()
 	int&& x = NUM(1);
 	int&& y = NUM(2);
 	scr->locate(x, y);
-	ptm->set_var("CSRX", x);
-	ptm->set_var("CSRY", y);
 }
 
 void PTML::CSR_GETX()
@@ -222,8 +204,6 @@ void PTML::FULLSCR()
 		ptm->get_wnd().set_fullscreen(BOOL(1));
 	else if (COUNT(0))
 		ptm->get_wnd().toggle_fullscreen();
-
-	ptm->set_var("FULLSCR", ptm->get_wnd().is_fullscreen() ? 1 : 0);
 }
 
 void PTML::CURSOR()
@@ -231,7 +211,6 @@ void PTML::CURSOR()
 	ARGC(1);
 	bool&& show = BOOL(1);
 	scr->show_cursor(show);
-	ptm->set_var("CURSOR", show ? 1 : 0);
 }
 
 void PTML::TILE_NEW()
@@ -250,7 +229,7 @@ void PTML::TILE_SETC()
 {
 	IF_TILEREG_EMPTY_RET;
 	ARGC(2);
-	TILEREG.get_char_wraparound(NUM(1)).ix = NUM(2);
+	TILEREG.get_char_wraparound(NUM(1)).ix = NUM(2) % ptm->get_chr().size();
 }
 
 void PTML::TILE_GETC()
@@ -264,7 +243,7 @@ void PTML::TILE_SETF()
 {
 	IF_TILEREG_EMPTY_RET;
 	ARGC(2);
-	TILEREG.get_char_wraparound(NUM(1)).fgc = NUM(2);
+	TILEREG.get_char_wraparound(NUM(1)).fgc = NUM(2) % ptm->get_pal().size();
 }
 
 void PTML::TILE_GETF()
@@ -278,7 +257,7 @@ void PTML::TILE_SETB()
 {
 	IF_TILEREG_EMPTY_RET;
 	ARGC(2);
-	TILEREG.get_char_wraparound(NUM(1)).bgc = NUM(2);
+	TILEREG.get_char_wraparound(NUM(1)).bgc = NUM(2) % ptm->get_pal().size();;
 }
 
 void PTML::TILE_GETB()
@@ -357,4 +336,54 @@ void PTML::REFRESH()
 {
 	ARGC(0);
 	ptm->refresh_screen();
+}
+
+void PTML::SET_SPRITE()
+{
+	ARGC_MIN_MAX(1, 3);
+
+	auto&& sprite_number = NUM(1);
+	REQUIRE_SPRITE(sprite_number);
+
+	if (COUNT(1)) {
+		ptm->get_screen().set_sprite(sprite_number, TILEREG);
+	}
+	else if (COUNT(3)) {
+		auto&& x = NUM(2);
+		auto&& y = NUM(3);
+		ptm->get_screen().set_sprite(sprite_number, TILEREG, t_pos(x, y));
+	}
+	else {
+		error = err.invalid_argc;
+		return;
+	}
+}
+
+void PTML::MOVE_SPRITE()
+{
+	ARGC(3);
+	auto&& sprite_number = NUM(1);
+	REQUIRE_SPRITE(sprite_number);
+
+	auto&& x = NUM(2);
+	auto&& y = NUM(3);
+	ptm->get_screen().get_sprite(sprite_number).move_to(x, y);
+}
+
+void PTML::SHOW_SPRITE()
+{
+	ARGC(2);
+	auto&& sprite_number = NUM(1);
+	REQUIRE_SPRITE(sprite_number);
+
+	auto&& visible = BOOL(2);
+	ptm->get_screen().get_sprite(sprite_number).set_visible(visible);
+}
+
+void PTML::GET_SPRITE()
+{
+	ARGC(1);
+	auto&& sprite_number = NUM(1);
+	REQUIRE_SPRITE(sprite_number);
+	TILEREG = ptm->get_screen().get_sprite(sprite_number).get_tile();;
 }

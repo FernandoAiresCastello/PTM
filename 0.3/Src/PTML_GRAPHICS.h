@@ -41,4 +41,8 @@ namespace PTML
 	void DEL();
 	void AUTOREF();
 	void REFRESH();
+	void SET_SPRITE();
+	void MOVE_SPRITE();
+	void SHOW_SPRITE();
+	void GET_SPRITE();
 }

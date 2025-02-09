@@ -37,6 +37,7 @@
     <ClCompile Include="src\t_sound.cpp" />
     <ClCompile Include="src\t_sound_wav.cpp" />
     <ClCompile Include="src\t_sprite.cpp" />
+    <ClCompile Include="src\t_spritelist.cpp" />
     <ClCompile Include="src\t_table.cpp" />
     <ClCompile Include="src\t_char.cpp" />
     <ClCompile Include="src\t_charset.cpp" />
@@ -90,6 +91,7 @@
     <ClInclude Include="src\t_sound.h" />
     <ClInclude Include="src\t_sound_wav.h" />
     <ClInclude Include="src\t_sprite.h" />
+    <ClInclude Include="src\t_spritelist.h" />
     <ClInclude Include="src\t_table.h" />
     <ClInclude Include="src\t_binary.h" />
     <ClInclude Include="src\t_char.h" />

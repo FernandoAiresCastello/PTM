@@ -8,8 +8,11 @@ class t_sprite
 public:
 	friend class t_screen;
 
+	bool enabled = false;
+
 	t_sprite(bool grid);
 	t_sprite(const t_tile& tile, const t_pos& pos, bool grid);
+	t_sprite(const t_sprite& other);
 
 	void set_tile(const t_tile& tile);
 	t_tile& get_tile();

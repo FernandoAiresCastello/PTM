@@ -4,6 +4,7 @@
 #include "t_tile.h"
 #include "t_pos.h"
 #include "t_tilebuffer_region.h"
+#include "t_spritelist.h"
 
 class t_window;
 class t_charset;
@@ -16,6 +17,9 @@ public:
 	const int rows;
 	const int last_row;
 	const int last_col;
+
+	t_spritelist sprites;
+	bool sprites_enabled = true;
 
 	t_tilebuffer();
 	t_tilebuffer(int cols, int rows);
@@ -30,10 +34,6 @@ public:
 	void fill(const t_tile& tile);
 	void clear();
 	t_list<t_tile>& get_tiles();
-	t_sprite_ptr add_sprite(const t_tile& tile, const t_pos& pos, bool grid);
-	t_list<t_sprite_ptr>& get_sprites();
-	void delete_sprite(t_sprite_ptr sprite);
-	void delete_all_sprites();
 	t_sprite_ptr get_cursor();
 	int get_loaded_back_color() const;
 	void save(const t_string& filename, int back_color);
@@ -43,10 +43,8 @@ private:
 	const int length;
 
 	t_list<t_tile> tiles;
-	t_list<t_sprite_ptr> sprites;
 	t_sprite_ptr cursor_sprite;
 	int loaded_back_color = -1;
 
-	void draw_sprites(t_window* wnd, t_charset* chr, t_palette* pal);
 	void draw_tile_absolute_pos(t_tile& tile, t_window* wnd, t_charset* chr, t_palette* pal, int x, int y, bool grid) const;
 };
