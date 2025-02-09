@@ -10,6 +10,10 @@
 #define if_inside_bounds(x, y)	if (x >= 0 && y >= 0 && x < cols && y < rows)
 #define if_out_of_bounds(x, y)	if (x < 0 || y < 0 || x >= cols || y >= rows)
 
+#define USR_WIDTH	41
+#define USR_HEIGHT	23
+#define LAYER_COUNT	1
+
 t_tilebuffer::t_tilebuffer() : t_tilebuffer(t_window::cols, t_window::rows)
 {
 }
@@ -153,8 +157,52 @@ int t_tilebuffer::get_loaded_back_color() const
 	return loaded_back_color;
 }
 
-void t_tilebuffer::save(const t_string& filename)
+void t_tilebuffer::save(const t_string& filename, int back_color)
 {
+	t_record_file file;
+	file.open(filename, t_filesystem::write_mode);
+
+	file.write(USR_WIDTH);
+	file.write(USR_HEIGHT);
+	file.write(LAYER_COUNT);
+	file.write(back_color);
+
+	for (int y = 0; y < USR_HEIGHT; y++) {
+		for (int x = 0; x < USR_WIDTH; x++) {
+			
+			t_tile& tile = get_ref(x, y);
+			bool has_object = tile.is_not_blank();
+			file.write(has_object);
+
+			if (has_object) {
+
+				bool transparent = false;
+				file.write(transparent);
+
+				int anim_size = tile.get_all_chars().size();
+				file.write(anim_size);
+
+				for (int i = 0; i < anim_size; i++) {
+					int ch = tile.get_char(i).ix;
+					int fgc = tile.get_char(i).fgc;
+					int bgc = tile.get_char(i).bgc;
+					file.write(ch);
+					file.write(fgc);
+					file.write(bgc);
+				}
+
+				int prop_count = tile.data.size();
+				file.write(prop_count);
+
+				for (auto& item : tile.data.get_all()) {
+					file.write(item.first);
+					file.write(item.second);
+				}
+			}
+		}
+	}
+
+	file.close_and_save();
 }
 
 bool t_tilebuffer::load(const t_string& filename)

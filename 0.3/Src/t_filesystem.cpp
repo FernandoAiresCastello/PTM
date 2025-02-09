@@ -344,7 +344,7 @@ int t_filesystem::open_record_file(const t_string& filename, char mode)
 
 void t_filesystem::close_record_file()
 {
-    record_file.close_and_save_text_file();
+    record_file.close_and_save();
 }
 
 void t_filesystem::write_record_file(const t_string& data)

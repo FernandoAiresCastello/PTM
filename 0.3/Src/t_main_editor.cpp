@@ -7,6 +7,7 @@
 #include "t_util.h"
 #include "t_interpreter.h"
 #include "predefined_charset_ix.h"
+#include "t_filesystem.h"
 
 void t_main_editor::init(PTM* ptm, t_screen* scr, t_keyboard* kb, t_interpreter* intp)
 {
@@ -182,12 +183,22 @@ bool t_main_editor::handle_ctrl_character_key()
 	switch (kb->peek_key())
 	{
 		case SDLK_c: {
+			clipboard_tile = scr->get_tile_at_csr();
 			return true;
 		}
 		case SDLK_x: {
+			clipboard_tile = scr->get_tile_at_csr();
+			scr->set_blank_tile_at_csr();
 			return true;
 		}
 		case SDLK_v: {
+			scr->set_tile_at_csr(clipboard_tile);
+			return true;
+		}
+		case SDLK_s: {
+			snd->alert();
+			t_string filename = t_util::datetime("%Y%m%d%H%M%S") + ".BUF";
+			scr->save(t_string(USER_ROOT) + filename);
 			return true;
 		}
 	}

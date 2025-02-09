@@ -38,7 +38,7 @@ void t_record_file::read_file_into_buffer(const t_string& filename)
 	}
 }
 
-void t_record_file::close_and_save_text_file()
+void t_record_file::close_and_save()
 {
 	is_open = false;
 

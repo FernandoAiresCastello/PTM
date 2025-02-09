@@ -15,7 +15,7 @@ public:
 	int state = RECFILE_STATE_OK;
 
 	int open(const t_string& filename, char mode);
-	void close_and_save_text_file();
+	void close_and_save();
 	void write(const t_string& data);
 	void write(int data);
 	void write(bool data);

@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include "t_dict.h"
 #include "t_string.h"
+#include "t_tile.h"
 
 class PTM;
 class t_screen;
@@ -28,6 +29,7 @@ private:
 	t_keyboard* kb = nullptr;
 	t_interpreter* intp = nullptr;
 	t_sound* snd = nullptr;
+	t_tile clipboard_tile;
 
 	bool handle_control_key();
 	bool handle_function_key();

@@ -36,7 +36,7 @@ public:
 	void delete_all_sprites();
 	t_sprite_ptr get_cursor();
 	int get_loaded_back_color() const;
-	void save(const t_string& filename);
+	void save(const t_string& filename, int back_color);
 	bool load(const t_string& filename);
 
 private:

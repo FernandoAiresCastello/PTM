@@ -632,7 +632,7 @@ void t_screen::delete_all_sprites()
 
 void t_screen::save(const t_string& filename)
 {
-	buf->save(filename);
+	buf->save(filename, back_color);
 }
 
 void t_screen::load(const t_string& filename)
