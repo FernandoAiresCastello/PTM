@@ -6,6 +6,8 @@ __PTM (Programmable Tile Machine)__ is a "pseudo-8-bit fantasy computer" that yo
 
 __PTML__ is an interpreted, imperative, loosely typed, line-based, low-level programming language, with only two basic data types: strings and integers, with support for fixed-size arrays. The syntax is based on early, unstructured dialects of BASIC and also Assembly languages for 8-bit computers (sometimes resembling Zilog Z80 code).
 
+Here is an example of PTML code, for the "Advanced Lawnmower Simulator" minigame: [LAWNSIM.PTM](https://github.com/FernandoAiresCastello/PTM/blob/master/0.3/Build/USR/LAWNSIM.PTM)
+
 ## Machine Specs
 
 **Video**
