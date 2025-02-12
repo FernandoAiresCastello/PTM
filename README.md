@@ -40,7 +40,7 @@ This project is currently in early alpha stage. All released versions are to be 
 
 | **Version** | **Release date or status** | **Comments** |
 |-------------|------------------|--------------|
-| **0.3**     | _In development_ | Current implementation, started from scratch. PTML is an entirely different language from earlier versions. Includes a built-in program editor with immediate mode and also an external IDE for editing code and data. |
+| **0.3**     | _In development_ | Current implementation, started from scratch. PTML is an entirely different language from earlier versions. Includes a built-in program editor with immediate mode and also an external IDE for editing code, graphics and data. |
 | **0.2**     | _July 1, 2023_   | Many PTML improvements and new commands. This version also included a few standalone tools (PTM Studio and PTM Tile Editor) besides the main PTM interpreter. |
 | **0.1**     | _May 14, 2023_   | First release. Ranked 4th out of 61 entries in the [Tool Jam 3](https://itch.io/jam/the-tool-jam-3/results). |
 
@@ -51,10 +51,12 @@ You can download pre-built PTM releases on Itch.io here: https://fernandoairesca
 The latest released version is __0.2__.  
 The current development version is __0.3__ (pictured below).
 
-![PTM Studio 0.4](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio.png?raw=true)
-![PTM 0.4](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptml_example_03.png?raw=true)
+![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio_1.png?raw=true)
+![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio_2.png?raw=true)
+![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio_3.png?raw=true)
+![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_lawnsim.png?raw=true)
 
-*Note: development builds can be *very* unstable since they are being actively worked on and change frequently, so use at your own risk!*
+*Note: development builds can be *very* unstable since they are being actively worked on and change frequently. Use at your own risk!*
 
 ## Documentation
 
