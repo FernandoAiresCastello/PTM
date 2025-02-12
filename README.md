@@ -30,8 +30,9 @@ Here is an example of PTML code, for the "Advanced Lawnmower Simulator" minigame
 
 **Software Development**
 * Programming language: PTML support only
-* Built-in program editor and launcher
-* Supports external tools
+* Built-in, line-based program editor and launcher
+* Includes a full-featured IDE for writing code, editing color palettes, character sets and tile buffers
+* Supports custom external tools
 
 ## Version history
 
