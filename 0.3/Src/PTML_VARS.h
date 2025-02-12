@@ -16,4 +16,5 @@ namespace PTML
 	void STR_LEN();
 	void STR_ASCII();
 	void STR_CHAR();
+	void STR_REPEAT();
 }

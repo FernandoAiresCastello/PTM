@@ -14,14 +14,13 @@ namespace PTMStudio
 {
 	public partial class MainWindow : Form
     {
-        private string WindowTitle = "PTM 0.3";
-        private readonly string BuildTimestamp;
-
 		private const string ProgramFileExt = ".PTM";
         private const string AutosavedProgramFile = "USR/TEMP" + ProgramFileExt;
-        
-        private readonly string PtmExe;
-        private readonly ProgramEditPanel ProgramPanel;
+
+		private readonly string WindowTitle = "PTM 0.3";
+		private readonly string PtmExe;
+		private readonly string BuildTimestamp;
+		private readonly ProgramEditPanel ProgramPanel;
         private readonly TilebufferEditPanel TilebufferPanel;
         private readonly FilesystemPanel FilePanel;
         private readonly ProgramLabelsPanel LabelsPanel;
@@ -203,7 +202,7 @@ namespace PTMStudio
                         ProgramPanel.SaveFile();
                 }
 
-                ProgramPanel.LoadFile(file);
+                ProgramPanel.LoadFile(file, true);
             }
             else if (ext == ".CHR")
             {
@@ -242,7 +241,7 @@ namespace PTMStudio
 						ProgramPanel.SaveFile();
 				}
 
-				TilebufferPanel.LoadFile(file);
+				TilebufferPanel.LoadFile(file, true);
             }
 			else if (ext == ".DAT")
             {
@@ -534,13 +533,13 @@ namespace PTMStudio
             var lines = File.ReadAllLines(file);
 
 			if (!string.IsNullOrWhiteSpace(lines[0]))
-				ProgramPanel.LoadFile(lines[0]);
+				ProgramPanel.LoadFile(lines[0], true);
 			if (!string.IsNullOrWhiteSpace(lines[1]))
 				TilesetPanel.LoadFile(lines[1]);
 			if (!string.IsNullOrWhiteSpace(lines[2]))
 				PalettePanel.LoadFile(lines[2]);
             if (!string.IsNullOrWhiteSpace(lines[3]))
-                TilebufferPanel.LoadFile(lines[3]);
+                TilebufferPanel.LoadFile(lines[3], false);
 
             AlertOnStatusBar("Project loaded from: " + file, 2);
         }
@@ -548,8 +547,13 @@ namespace PTMStudio
         public void NewProgramLoaded(string file)
         {
             ProgramFile = file;
-            LabelsPanel.UpdateLabels();
+            UpdateLabelsPanel();
         }
+
+        public void UpdateLabelsPanel()
+        {
+			LabelsPanel.UpdateLabels();
+		}
 
         public static bool Confirm(string message)
         {
@@ -620,7 +624,7 @@ namespace PTMStudio
 				string path = Filesystem.GetAbsoluteUserFilePath(programName);
 				File.Create(path).Close();
 				FilePanel.UpdateFileList();
-				ProgramPanel.LoadFile(path);
+				ProgramPanel.LoadFile(path, true);
 			}
 		}
     }

@@ -56,7 +56,7 @@ void PTM::init()
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
 
-	wnd.open(version_string, wnd_size);
+	wnd.open("", wnd_size);
 	
 	kb.init();
 

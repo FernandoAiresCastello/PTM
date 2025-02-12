@@ -1,49 +1,48 @@
-#==========================================================
-#
-#               ADVANCED LAWNMOWER SIMULATOR
-#
-#==========================================================
+TITLE "ADVANCED LAWNMOWER SIMULATOR"
+
 AUTOREF 0
+BREAK 0
 CALL init
-AUTOREF 1
 
 #==========================================================
 #   Title screens
 #==========================================================
 show_title_screen:
+    AUTOREF 1
+    CLS
     COLOR black, green, dkgreen
 
 options_loop:
     LOAD "LAWNSIM_1.BUF"
     INKEY opt
-    CALL.E opt,'1',opt_1
-    CALL.E opt,'2',opt_2
-    CALL.E opt,'3',opt_3
-    CALL.E opt,'4',opt_4
-    CALL.E opt,'5',opt_5
-    CALL.E opt,'6',opt_6
+    GOTO.E opt,'1',opt_1
+    GOTO.E opt,'2',opt_2
+    GOTO.E opt,'3',opt_3
+    GOTO.E opt,'4',opt_4
+    GOTO.E opt,'5',opt_5
+    GOTO.E opt,'6',opt_6
     GOTO options_loop
 
 opt_1:
     SET opt_sel, "CAMPARI GRASSMASTER"
     CALL print_option
-    RET
+    GOTO options_loop
 opt_2:
     SET opt_sel, "DAF TURFOMATIC"
     CALL print_option
-    RET
+    GOTO options_loop
 opt_3:
     SET opt_sel, "ACME MEGA-CUT 3000"
     CALL print_option
-    RET
+    GOTO options_loop
 opt_4:
     SET opt_sel, "ACME LAWN-ACE"
     CALL print_option
-    RET
+    GOTO options_loop
 opt_5:
     SET opt_sel, "FLYMO GRASSCHUM"
     CALL print_option
-    RET
+    GOTO options_loop
 opt_6:
     GOTO print_working_option
 
@@ -54,6 +53,7 @@ print_option:
     PRINTL opt_sel
     PRINTL "IS BROKEN AT THE MOMENT"
     PAUSE 150
+    FLUSH
     RET
 
 print_working_option:
@@ -163,10 +163,37 @@ well_mown:
     PAUSE 250
 
 end_game:
+    AUTOREF 0
     CLS
     COLOR 1,0,0
+    LOAD "LAWNSIM_3.BUF"
+    FLUSH
+    REPT spaces, " ", 27
+    SET msg_inner, "WELL DONE. YOU'VE EARNED YOURSELF A CORNED BEEF SANDWICH!"
+    JOIN msg, spaces
+    JOIN msg, msg_inner
+    JOIN msg, spaces
+    SET ix_begin, 0
+    SET ix_end, 26
+    LEN ix_begin_max, msg
 
 ending_loop:
+    SUBS msg_part, msg, ix_begin, ix_end
+    LOCATE 7,10
+    PRINT msg_part
+    REFRESH
+    PAUSE 5
+    INC ix_begin
+    INC ix_end
+    CALL.G ix_begin, ix_begin_max, loop_text
+    INKEY key
+    GOTO.E key, 0, ending_loop
+    GOTO show_title_screen
+
+loop_text:
+    SET ix_begin, 0
+    SET ix_end, 26
+    RET
 
 #==========================================================
 #   Auxiliary subroutines

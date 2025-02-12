@@ -31,30 +31,31 @@
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.TxtFilename = new System.Windows.Forms.TextBox();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+			this.BtnNew = new System.Windows.Forms.ToolStripButton();
+			this.BtnSave = new System.Windows.Forms.ToolStripButton();
 			this.separator = new System.Windows.Forms.ToolStripSeparator();
+			this.BtnSetBgColor = new System.Windows.Forms.ToolStripButton();
+			this.BtnText = new System.Windows.Forms.ToolStripButton();
+			this.BtnFill = new System.Windows.Forms.ToolStripButton();
+			this.BtnSetRandomly = new System.Windows.Forms.ToolStripButton();
+			this.BtnClear = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.BtnSelect = new System.Windows.Forms.ToolStripButton();
+			this.BtnDeselect = new System.Windows.Forms.ToolStripButton();
+			this.BtnCopy = new System.Windows.Forms.ToolStripButton();
+			this.BtnCut = new System.Windows.Forms.ToolStripButton();
+			this.BtnPaste = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.BtnZoomIn = new System.Windows.Forms.ToolStripButton();
+			this.BtnZoomOut = new System.Windows.Forms.ToolStripButton();
+			this.BtnToggleGrid = new System.Windows.Forms.ToolStripButton();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.LbSize = new System.Windows.Forms.ToolStripStatusLabel();
 			this.LbPos = new System.Windows.Forms.ToolStripStatusLabel();
 			this.LbObject = new System.Windows.Forms.ToolStripStatusLabel();
 			this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
 			this.DisplayPanel = new System.Windows.Forms.Panel();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.BtnNew = new System.Windows.Forms.ToolStripButton();
-			this.BtnSave = new System.Windows.Forms.ToolStripButton();
-			this.BtnSetBgColor = new System.Windows.Forms.ToolStripButton();
-			this.BtnText = new System.Windows.Forms.ToolStripButton();
-			this.BtnFill = new System.Windows.Forms.ToolStripButton();
-			this.BtnSetRandomly = new System.Windows.Forms.ToolStripButton();
-			this.BtnClear = new System.Windows.Forms.ToolStripButton();
-			this.BtnSelect = new System.Windows.Forms.ToolStripButton();
-			this.BtnDeselect = new System.Windows.Forms.ToolStripButton();
-			this.BtnCopy = new System.Windows.Forms.ToolStripButton();
-			this.BtnCut = new System.Windows.Forms.ToolStripButton();
-			this.BtnPaste = new System.Windows.Forms.ToolStripButton();
-			this.BtnZoomIn = new System.Windows.Forms.ToolStripButton();
-			this.BtnZoomOut = new System.Windows.Forms.ToolStripButton();
-			this.BtnToggleGrid = new System.Windows.Forms.ToolStripButton();
+			this.LbSelection = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
@@ -124,79 +125,6 @@
 			this.toolStrip1.TabIndex = 5;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
-			// separator
-			// 
-			this.separator.Name = "separator";
-			this.separator.Size = new System.Drawing.Size(6, 25);
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-			// 
-			// statusStrip1
-			// 
-			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.LbSize,
-            this.LbPos,
-            this.LbObject});
-			this.statusStrip1.Location = new System.Drawing.Point(1, 320);
-			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(602, 24);
-			this.statusStrip1.SizingGrip = false;
-			this.statusStrip1.TabIndex = 6;
-			this.statusStrip1.Text = "statusStrip1";
-			// 
-			// LbSize
-			// 
-			this.LbSize.Name = "LbSize";
-			this.LbSize.Size = new System.Drawing.Size(27, 19);
-			this.LbSize.Text = "Size";
-			// 
-			// LbPos
-			// 
-			this.LbPos.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-			this.LbPos.Name = "LbPos";
-			this.LbPos.Size = new System.Drawing.Size(30, 19);
-			this.LbPos.Text = "Pos";
-			// 
-			// LbObject
-			// 
-			this.LbObject.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-			this.LbObject.Name = "LbObject";
-			this.LbObject.Size = new System.Drawing.Size(46, 19);
-			this.LbObject.Text = "Object";
-			// 
-			// LayoutPanel
-			// 
-			this.LayoutPanel.ColumnCount = 1;
-			this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.LayoutPanel.Controls.Add(this.DisplayPanel, 0, 0);
-			this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.LayoutPanel.Location = new System.Drawing.Point(1, 47);
-			this.LayoutPanel.Margin = new System.Windows.Forms.Padding(0);
-			this.LayoutPanel.Name = "LayoutPanel";
-			this.LayoutPanel.RowCount = 1;
-			this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.LayoutPanel.Size = new System.Drawing.Size(602, 271);
-			this.LayoutPanel.TabIndex = 7;
-			// 
-			// DisplayPanel
-			// 
-			this.DisplayPanel.AutoScroll = true;
-			this.DisplayPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.DisplayPanel.Location = new System.Drawing.Point(0, 0);
-			this.DisplayPanel.Margin = new System.Windows.Forms.Padding(0);
-			this.DisplayPanel.Name = "DisplayPanel";
-			this.DisplayPanel.Size = new System.Drawing.Size(602, 271);
-			this.DisplayPanel.TabIndex = 8;
-			// 
-			// toolStripSeparator2
-			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-			// 
 			// BtnNew
 			// 
 			this.BtnNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -216,6 +144,11 @@
 			this.BtnSave.Size = new System.Drawing.Size(23, 22);
 			this.BtnSave.Text = "Save tile buffer";
 			this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
+			// 
+			// separator
+			// 
+			this.separator.Name = "separator";
+			this.separator.Size = new System.Drawing.Size(6, 25);
 			// 
 			// BtnSetBgColor
 			// 
@@ -268,6 +201,11 @@
 			this.BtnClear.Text = "Clear buffer";
 			this.BtnClear.Click += new System.EventHandler(this.BtnClear_Click);
 			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+			// 
 			// BtnSelect
 			// 
 			this.BtnSelect.CheckOnClick = true;
@@ -319,6 +257,11 @@
 			this.BtnPaste.Text = "Paste copied tiles";
 			this.BtnPaste.Click += new System.EventHandler(this.BtnPaste_Click);
 			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			// 
 			// BtnZoomIn
 			// 
 			this.BtnZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -351,6 +294,72 @@
 			this.BtnToggleGrid.Size = new System.Drawing.Size(23, 22);
 			this.BtnToggleGrid.Text = "Toggle grid";
 			this.BtnToggleGrid.Click += new System.EventHandler(this.BtnToggleGrid_Click);
+			// 
+			// statusStrip1
+			// 
+			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LbSize,
+            this.LbPos,
+            this.LbObject,
+            this.LbSelection});
+			this.statusStrip1.Location = new System.Drawing.Point(1, 320);
+			this.statusStrip1.Name = "statusStrip1";
+			this.statusStrip1.Size = new System.Drawing.Size(602, 24);
+			this.statusStrip1.SizingGrip = false;
+			this.statusStrip1.TabIndex = 6;
+			this.statusStrip1.Text = "statusStrip1";
+			// 
+			// LbSize
+			// 
+			this.LbSize.Name = "LbSize";
+			this.LbSize.Size = new System.Drawing.Size(27, 19);
+			this.LbSize.Text = "Size";
+			// 
+			// LbPos
+			// 
+			this.LbPos.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+			this.LbPos.Name = "LbPos";
+			this.LbPos.Size = new System.Drawing.Size(30, 19);
+			this.LbPos.Text = "Pos";
+			// 
+			// LbObject
+			// 
+			this.LbObject.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+			this.LbObject.Name = "LbObject";
+			this.LbObject.Size = new System.Drawing.Size(46, 19);
+			this.LbObject.Text = "Object";
+			// 
+			// LayoutPanel
+			// 
+			this.LayoutPanel.ColumnCount = 1;
+			this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.LayoutPanel.Controls.Add(this.DisplayPanel, 0, 0);
+			this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.LayoutPanel.Location = new System.Drawing.Point(1, 47);
+			this.LayoutPanel.Margin = new System.Windows.Forms.Padding(0);
+			this.LayoutPanel.Name = "LayoutPanel";
+			this.LayoutPanel.RowCount = 1;
+			this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.LayoutPanel.Size = new System.Drawing.Size(602, 271);
+			this.LayoutPanel.TabIndex = 7;
+			// 
+			// DisplayPanel
+			// 
+			this.DisplayPanel.AutoScroll = true;
+			this.DisplayPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.DisplayPanel.Location = new System.Drawing.Point(0, 0);
+			this.DisplayPanel.Margin = new System.Windows.Forms.Padding(0);
+			this.DisplayPanel.Name = "DisplayPanel";
+			this.DisplayPanel.Size = new System.Drawing.Size(602, 271);
+			this.DisplayPanel.TabIndex = 8;
+			// 
+			// LbSelection
+			// 
+			this.LbSelection.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+			this.LbSelection.Name = "LbSelection";
+			this.LbSelection.Size = new System.Drawing.Size(59, 19);
+			this.LbSelection.Text = "Selection";
 			// 
 			// TilebufferEditPanel
 			// 
@@ -400,5 +409,6 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripButton BtnPaste;
 		private System.Windows.Forms.ToolStripButton BtnCut;
+		private System.Windows.Forms.ToolStripStatusLabel LbSelection;
 	}
 }

@@ -43,21 +43,24 @@ namespace PTMStudio
             MainWindow.ProgramChanged(true);
         }
 
-        public void LoadFile(string file)
+        public void LoadFile(string file, bool showPanel)
         {
             Scintilla.Text = File.ReadAllText(file);
             LoadedFile = file;
 			LbFilename.Text = Filesystem.RemoveAbsoluteRootAndNormalizePath(file);
-			MainWindow.ShowProgramEditor();
             MainWindow.ProgramChanged(false);
             MainWindow.NewProgramLoaded(file);
-        }
+
+            if (showPanel)
+			    MainWindow.ShowProgramEditor();
+		}
 
         public void SaveFile()
         {
             File.WriteAllText(LoadedFile, Scintilla.Text);
             MainWindow.ProgramChanged(false);
-        }
+            MainWindow.UpdateLabelsPanel();
+		}
 
         private void BtnRun_Click(object sender, EventArgs e)
         {

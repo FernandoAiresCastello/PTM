@@ -11,7 +11,6 @@ PAUSE		Pause program execution for the specified number of frames
 BREAK		Enable or disable program termination by user using the ESC key
 SET		Set value to variable
 DIM		Create a new array
-LEN		Get length of array
 SWAP		Swap value between two variables
 MEMCLR		Delete all variables and arrays
 INC		Increment numeric variable value by 1
@@ -96,11 +95,13 @@ FILL		Fill the entire screen buffer with copies of tile from tile register
 BEEP		Emit a beeping sound with the specified duration and frequency
 PLAY		Play a sequence of notes, only once
 LPLAY		Play a sequence of notes, looping indefinitely
-CONCAT		Concatenate two strings into one
-UPPER		Convert all characters in string to uppercase
-LOWER		Convert all characters in string to lowercase
+JOIN		Concatenate two strings into one
+UCASE		Convert all characters in string to uppercase
+LCASE		Convert all characters in string to lowercase
 FIND		Find index of specified substring inside the given string
-SUBSTR		Extract a substring from the given string
-STRLEN		Get length of string
+SUBS		Extract a substring from the given string
+LEN		Get length of string
 ASC		Get the ASCII value of a character
 CHAR		Get the character at the specified index of the given string
+REPT		Repeat multiple copies of the same text in a single string
+TITLE		Set the program title (appears as the window caption)

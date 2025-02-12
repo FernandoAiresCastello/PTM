@@ -16,6 +16,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("NEW", NEW); // Delete current program
 	CMD("RENUM", RENUM); // Renumber current program
 	CMD("PROG", PROG); // Print filename of last loaded or saved program
+	CMD("TITLE", TITLE); // Set the program title (appears as the window caption)
 
 	// === SYSTEM CONTROL ===
 	CMD("RUN", RUN); // Execute current program, or load another program from disk and then execute it
@@ -29,7 +30,6 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	// === MEMORY ===
 	CMD("SET", SET); // Set value to variable
 	CMD("DIM", ARR_DIM); // Create a new array
-	CMD("LEN", ARR_LEN); // Get length of array
 	CMD("SWAP", SWAP); // Swap value between two variables
 	CMD("MEMCLR", MEMCLR); // Delete all variables and arrays
 
@@ -144,14 +144,15 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 	CMD("LPLAY", LPLAY); // Play a sequence of notes, looping indefinitely
 
 	// === STRING HANDLING ===
-	CMD("CONCAT", STR_CONCAT); // Concatenate two strings into one
-	CMD("UPPER", STR_UPPER); // Convert all characters in string to uppercase
-	CMD("LOWER", STR_LOWER); // Convert all characters in string to lowercase
+	CMD("JOIN", STR_CONCAT); // Concatenate two strings into one
+	CMD("UCASE", STR_UPPER); // Convert all characters in string to uppercase
+	CMD("LCASE", STR_LOWER); // Convert all characters in string to lowercase
 	CMD("FIND", STR_FIND); // Find index of specified substring inside the given string
-	CMD("SUBSTR", STR_SUBSTR); // Extract a substring from the given string
-	CMD("STRLEN", STR_LEN); // Get length of string
+	CMD("SUBS", STR_SUBSTR); // Extract a substring from the given string
+	CMD("LEN", STR_LEN); // Get length of string
 	CMD("ASC", STR_ASCII); // Get the ASCII value of a character
 	CMD("CHAR", STR_CHAR); // Get the character at the specified index of the given string
+	CMD("REPT", STR_REPEAT); // Repeat multiple copies of the same text in a single string
 
 	return nullptr;
 }

@@ -7,4 +7,5 @@ namespace PTML
 	void NEW();
 	void RENUM();
 	void PROG();
+	void TITLE();
 }

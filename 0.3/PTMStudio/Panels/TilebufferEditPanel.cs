@@ -60,6 +60,7 @@ namespace PTMStudio
 
             LbPos.Text = "";
             LbObject.Text = "";
+            LbSelection.Text = "";
             UpdateSizeLabel();
         }
 
@@ -76,7 +77,7 @@ namespace PTMStudio
             LbObject.BorderSides = ToolStripStatusLabelBorderSides.None;
 		}
 
-        private void Display_MouseMove(object sender, MouseEventArgs e)
+		private void Display_MouseMove(object sender, MouseEventArgs e)
         {
             Point pos = Display.GetMouseToCellPos(e.Location);
             int x = pos.X;
@@ -230,7 +231,7 @@ namespace PTMStudio
             MainWindow.TilebufferChanged(false);
         }
 
-        public void LoadFile(string file)
+        public void LoadFile(string file, bool showPanel)
         {
             TileBuffer = new TilebufferFile().Load(Proj, file);
             Filename = file;
@@ -238,9 +239,11 @@ namespace PTMStudio
             Renderer.Map = TileBuffer;
             UpdateDisplay();
             UpdateSizeLabel();
-            MainWindow.ShowTilebufferEditor();
             MainWindow.TilebufferChanged(false);
-        }
+
+            if (showPanel)
+			    MainWindow.ShowTilebufferEditor();
+		}
 
         private void SelectBackColor()
         {
@@ -320,6 +323,7 @@ namespace PTMStudio
 		private void BtnText_Click(object sender, EventArgs e)
 		{
             TextMode = BtnText.Checked;
+            BtnSelect.Checked = false;
 		}
 
         private void PrintText(int x, int y, bool vertical)
@@ -362,6 +366,7 @@ namespace PTMStudio
 				Display.DeselectAllTiles();
 				Display.SelectTile(pos);
                 Display.Refresh();
+                UpdateSelectionStatusLabel();
 				return;
             }
 
@@ -369,6 +374,24 @@ namespace PTMStudio
 
             Display.SelectTiles(GetSelectedPoints());
 			Display.Refresh();
+			UpdateSelectionStatusLabel();
+		}
+
+        private void UpdateSelectionStatusLabel()
+        {
+            if (HasSelection)
+            {
+                int w = SelectionBtmRight.Value.X - SelectionTopLeft.Value.X + 1;
+                int h = SelectionBtmRight.Value.Y - SelectionTopLeft.Value.Y + 1;
+
+				LbSelection.Text = $"Selection: {w} x {h} (total: {w * h})";
+				LbSelection.BorderSides = ToolStripStatusLabelBorderSides.Left;
+			}
+			else
+            {
+                LbSelection.Text = "";
+                LbSelection.BorderSides = ToolStripStatusLabelBorderSides.None;
+            }
 		}
 
 		private List<Point> GetSelectedPoints()
@@ -412,6 +435,7 @@ namespace PTMStudio
             SelectionBtmRight = null;
             Display.DeselectAllTiles();
 			Display.Refresh();
+			UpdateSelectionStatusLabel();
 		}
 
 		private void BtnDeselect_Click(object sender, EventArgs e) => DeselectAllTiles();

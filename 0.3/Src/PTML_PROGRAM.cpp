@@ -117,3 +117,9 @@ void PTML::PROG()
 	ARGC(0);
 	scr->print_string_crlf(ptm->get_last_program_filename());
 }
+
+void PTML::TITLE()
+{
+	ARGC(1);
+	ptm->get_wnd().set_title(STR(1));
+}

@@ -122,3 +122,9 @@ void PTML::STR_CHAR()
 	}
 	ptm->set_var(ARG(1), t_string(str[index]), error);
 }
+
+void PTML::STR_REPEAT()
+{
+	ARGC(3);
+	ptm->set_var(ARG(1), t_string::repeat(STR(2), NUM(3)), error);
+}
