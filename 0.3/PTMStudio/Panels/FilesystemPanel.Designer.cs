@@ -32,7 +32,6 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FilesystemPanel));
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-			this.BtnNew = new System.Windows.Forms.ToolStripButton();
 			this.BtnExplorer = new System.Windows.Forms.ToolStripButton();
 			this.BtnRefresh = new System.Windows.Forms.ToolStripButton();
 			this.BtnDelete = new System.Windows.Forms.ToolStripButton();
@@ -62,7 +61,6 @@
 			// toolStrip1
 			// 
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.BtnNew,
             this.BtnExplorer,
             this.BtnRefresh,
             this.BtnDelete});
@@ -71,17 +69,6 @@
 			this.toolStrip1.Size = new System.Drawing.Size(199, 25);
 			this.toolStrip1.TabIndex = 0;
 			this.toolStrip1.Text = "toolStrip1";
-			// 
-			// BtnNew
-			// 
-			this.BtnNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.BtnNew.Image = global::PTMStudio.Properties.Resources.page_white;
-			this.BtnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnNew.Name = "BtnNew";
-			this.BtnNew.Size = new System.Drawing.Size(23, 22);
-			this.BtnNew.Text = "New program file";
-			this.BtnNew.ToolTipText = "New program file";
-			this.BtnNew.Click += new System.EventHandler(this.BtnNew_Click);
 			// 
 			// BtnExplorer
 			// 
@@ -165,6 +152,5 @@
         private System.Windows.Forms.ToolStripButton BtnDelete;
         private System.Windows.Forms.TreeView FileTree;
         private System.Windows.Forms.ImageList FileTreeIcons;
-		private System.Windows.Forms.ToolStripButton BtnNew;
 	}
 }

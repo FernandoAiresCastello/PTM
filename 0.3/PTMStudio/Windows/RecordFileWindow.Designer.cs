@@ -28,11 +28,12 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RecordFileWindow));
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.LbSize = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.DataGrid = new System.Windows.Forms.DataGridView();
-			this.LbSize = new System.Windows.Forms.ToolStripStatusLabel();
 			this.statusStrip1.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.DataGrid)).BeginInit();
@@ -47,6 +48,12 @@
 			this.statusStrip1.Size = new System.Drawing.Size(371, 22);
 			this.statusStrip1.TabIndex = 0;
 			this.statusStrip1.Text = "statusStrip1";
+			// 
+			// LbSize
+			// 
+			this.LbSize.Name = "LbSize";
+			this.LbSize.Size = new System.Drawing.Size(27, 17);
+			this.LbSize.Text = "Size";
 			// 
 			// toolStrip1
 			// 
@@ -91,12 +98,6 @@
 			this.DataGrid.TabIndex = 0;
 			this.DataGrid.VirtualMode = true;
 			// 
-			// LbSize
-			// 
-			this.LbSize.Name = "LbSize";
-			this.LbSize.Size = new System.Drawing.Size(27, 17);
-			this.LbSize.Text = "Size";
-			// 
 			// RecordFileWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -105,6 +106,7 @@
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Controls.Add(this.toolStrip1);
 			this.Controls.Add(this.statusStrip1);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "RecordFileWindow";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Record File";

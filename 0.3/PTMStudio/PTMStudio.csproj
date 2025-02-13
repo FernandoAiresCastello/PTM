@@ -58,6 +58,12 @@
   <ItemGroup>
     <Compile Include="Core\KnownFileExtensions.cs" />
     <Compile Include="Core\RecordFile.cs" />
+    <Compile Include="Windows\AboutWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\AboutWindow.Designer.cs">
+      <DependentUpon>AboutWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Windows\ColorEditWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -146,6 +152,9 @@
     <Compile Include="Panels\TilesetEditPanel.Designer.cs">
       <DependentUpon>TilesetEditPanel.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Windows\AboutWindow.resx">
+      <DependentUpon>AboutWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\ColorEditWindow.resx">
       <DependentUpon>ColorEditWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -212,6 +221,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\restart_services.png" />
     <None Include="Resources\transform_move.png" />
     <None Include="Resources\sort_asc_az.png" />
     <None Include="Resources\select.png" />
@@ -245,6 +255,9 @@
     <None Include="Resources\bullet_brush.png" />
     <None Include="Resources\dice.png" />
     <None Include="Resources\cut.png" />
+    <None Include="Resources\bookshelf.png" />
+    <None Include="Resources\arrow_refresh.png" />
+    <None Include="Resources\logo.fw.png" />
     <Content Include="Resources\ptm_icon.ico" />
     <None Include="Resources\page_white_paste.png" />
     <None Include="Resources\update.png" />

@@ -190,7 +190,10 @@ namespace PTMStudio
         {
 			if (string.IsNullOrWhiteSpace(Filename))
 			{
-				SimpleTextInputDialog dialog = new SimpleTextInputDialog("Save charset file", "Enter file name:");
+                SimpleTextInputDialog dialog = new SimpleTextInputDialog("Save charset file", "Enter file name:")
+                {
+                    UppercaseOnly = true
+                };
 
 				if (dialog.ShowDialog(this) == DialogResult.OK)
 					Filename = dialog.Text.ToUpper();

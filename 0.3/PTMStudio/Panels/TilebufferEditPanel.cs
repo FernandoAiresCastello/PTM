@@ -1,4 +1,5 @@
-﻿using PTMStudio.Windows;
+﻿using PTMStudio.Core;
+using PTMStudio.Windows;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -59,9 +60,13 @@ namespace PTMStudio
             CreateNewBuffer();
 
             LbPos.Text = "";
-            LbObject.Text = "";
-            LbSelection.Text = "";
-            UpdateSizeLabel();
+			LbPos.BorderSides = ToolStripStatusLabelBorderSides.None;
+			LbObject.Text = "";
+			LbObject.BorderSides = ToolStripStatusLabelBorderSides.None;
+			LbSelection.Text = "";
+			LbSelection.BorderSides = ToolStripStatusLabelBorderSides.None;
+
+			UpdateSizeLabel();
         }
 
         private void UpdateSizeLabel()
@@ -212,24 +217,26 @@ namespace PTMStudio
         {
             if (string.IsNullOrWhiteSpace(Filename))
             {
-                SaveFileDialog dialog = new SaveFileDialog
-                {
-                    InitialDirectory = Filesystem.UserRoot,
-                    Filter = "PTM Tilebuffer File (*.buf)|*.buf"
-                };
-                if (dialog.ShowDialog() == DialogResult.OK)
-                    Filename = dialog.FileName;
-                else
-                    return;
-            }
+				SimpleTextInputDialog dialog = new SimpleTextInputDialog("Save tilebuffer file", "Enter file name:")
+				{
+					UppercaseOnly = true
+				};
+
+				if (dialog.ShowDialog(this) == DialogResult.OK)
+					Filename = dialog.Text.ToUpper();
+				else
+					return;
+			}
+
+			Filename = Filesystem.GetUserFilePath(Filename);
+			if (!Filename.EndsWith(KnownFileExtensions.TileBuffer))
+				Filename += KnownFileExtensions.TileBuffer;
 
 			new TilebufferFile().Save(TileBuffer, Filename);
-
-            Filename = Filesystem.NormalizePath(Filename);
-            TxtFilename.Text = Filesystem.RemoveAbsoluteRoot(Filename);
-            MainWindow.UpdateFilePanel();
-            MainWindow.TilebufferChanged(false);
-        }
+			TxtFilename.Text = Filesystem.RemoveAbsoluteRootAndNormalizePath(Filename);
+			MainWindow.UpdateFilePanel();
+			MainWindow.TilebufferChanged(false);
+		}
 
         public void LoadFile(string file, bool showPanel)
         {

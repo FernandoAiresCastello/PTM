@@ -131,11 +131,6 @@ namespace PTMStudio
                 UpdateFileList();
             }
         }
-
-		private void BtnNew_Click(object sender, EventArgs e)
-		{
-            MainWindow.CreateNewProgramFile();
-		}
 	}
 
 	public class FilesystemEntry

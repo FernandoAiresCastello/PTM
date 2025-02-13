@@ -20,7 +20,14 @@ namespace PTMStudio
             {
                 try
                 {
-                    Application.Run(new MainWindow(ptmExePath));
+                    MainWindow mainWindow;
+
+					do
+                    {
+						mainWindow = new MainWindow(ptmExePath);
+						Application.Run(mainWindow);
+                    }
+                    while (mainWindow.ShouldRestart);
                 }
                 catch (Exception ex)
                 {

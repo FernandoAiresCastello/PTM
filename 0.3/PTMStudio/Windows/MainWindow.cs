@@ -39,25 +39,19 @@ namespace PTMStudio
         }
         private ChangeTracker Changes { get; set; }
 
+        public bool ShouldRestart { get; private set; } = false;
+
         public MainWindow(string ptmExe)
         {
             InitializeComponent();
-
-            string buildTimestampFile = "build_timestamp";
-            if (File.Exists(buildTimestampFile))
-            {
-                BuildTimestamp = File.ReadAllText(buildTimestampFile).Trim();
-				WindowTitle += $" (Build {BuildTimestamp})";
-            }
-            else
-            {
-                BuildTimestamp = "Unknown";
-            }
+            ShouldRestart = false;
+			BuildTimestamp = File.ReadAllText("build_timestamp").Trim();
 
 			Text = WindowTitle;
 			Size = new Size(1024, 730);
             MinimumSize = Size;
-            PtmExe = ptmExe;
+			PtmExe = ptmExe;
+			KeyPreview = true;
 
 			Changes = new ChangeTracker();
 			UpdateChangesLabel();
@@ -120,7 +114,8 @@ namespace PTMStudio
             LoadFile(AutosavedProgramFile);
 
             FormClosing += MainWindow_FormClosing;
-        }
+            //Resize += (s, e) => { Text = Size.ToString(); };
+		}
 
 		private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -133,7 +128,7 @@ namespace PTMStudio
                 else if (result == DialogResult.Yes)
                     ProgramPanel.SaveFile();
             }
-            if (e.Cancel) return;
+            if (e.Cancel) { ShouldRestart = false; return; }
 
             if (Changes.Tileset)
             {
@@ -144,9 +139,9 @@ namespace PTMStudio
                 else if (result == DialogResult.Yes)
                     TilesetPanel.SaveFile();
             }
-            if (e.Cancel) return;
+			if (e.Cancel) { ShouldRestart = false; return; }
 
-            if (Changes.Palette)
+			if (Changes.Palette)
             {
                 DialogResult result = ConfirmModifiedButNotSaved("Palette");
 
@@ -155,9 +150,9 @@ namespace PTMStudio
                 else if (result == DialogResult.Yes)
                     PalettePanel.SaveFile();
             }
-            if (e.Cancel) return;
+			if (e.Cancel) { ShouldRestart = false; return; }
 
-            if (Changes.TileBuffer)
+			if (Changes.TileBuffer)
             {
                 DialogResult result = ConfirmModifiedButNotSaved("Tilebuffer");
 
@@ -166,10 +161,10 @@ namespace PTMStudio
                 else if (result == DialogResult.Yes)
                     TilebufferPanel.SaveFile();
             }
-            if (e.Cancel) return;
-        }
+			if (e.Cancel) { ShouldRestart = false; return; }
+		}
 
-        private void BtnRun_Click(object sender, EventArgs e)
+		private void BtnRun_Click(object sender, EventArgs e)
         {
             RunProgram();
         }
@@ -318,6 +313,8 @@ namespace PTMStudio
             TileRegPanel.Visible = true;
             ProgramPanel.Visible = false;
             LabelsPanel.Visible = false;
+
+            Size = new Size(1207, 730);
         }
         
         private void BtnAlternateEditor_Click(object sender, EventArgs e)
@@ -392,14 +389,7 @@ namespace PTMStudio
 
         private void BtnAbout_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(
-                "PTM - Programmable Tile Machine\n\n" +
-                "© 2023-2025 Developed by Fernando Aires Castello\n\n" +
-                "Version 0.3\n\n" +
-                $"Build timestamp: {BuildTimestamp}\n" + 
-                "https://fernandoairescastello.itch.io/ptm\n" +
-                "https://github.com/FernandoAiresCastello/PTM",
-                "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            new AboutWindow(BuildTimestamp).ShowDialog(this);
         }
 
         private void BtnSaveEverything_Click(object sender, EventArgs e)
@@ -476,11 +466,6 @@ namespace PTMStudio
             Timer timer = sender as Timer;
             timer.Stop();
             LbChanges.Text = timer.Tag.ToString();
-        }
-
-        private void BtnSaveProgram_Click(object sender, EventArgs e)
-        {
-            ProgramPanel.SaveFile();
         }
 
         private void BtnSaveProject_Click(object sender, EventArgs e)
@@ -598,15 +583,15 @@ namespace PTMStudio
             MessageBox.Show(message, "Unexpected error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private void BtnNewProgram_Click(object sender, EventArgs e)
-        {
-            CreateNewProgramFile();
-        }
+		public void SaveProgramFile()
+		{
+			ProgramPanel.SaveFile();
+		}
 
-        public void CreateNewProgramFile()
+		public void CreateNewProgramFile()
         {
-			SimpleTextInputDialog dialog = new
-				SimpleTextInputDialog("Create new program", "Enter program name:")
+			SimpleTextInputDialog dialog = 
+                new SimpleTextInputDialog("Create new program", "Enter program name:")
 			{
 				UppercaseOnly = true
 			};
@@ -626,5 +611,16 @@ namespace PTMStudio
 				ProgramPanel.LoadFile(path, true);
 			}
 		}
-    }
+
+		private void BtnRelaunchIde_Click(object sender, EventArgs e)
+		{
+            ShouldRestart = true;
+            Close();
+		}
+
+		private void BtnSaveProgram_Click(object sender, EventArgs e)
+		{
+            SaveProgramFile();
+		}
+	}
 }

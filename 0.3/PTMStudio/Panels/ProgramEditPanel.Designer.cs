@@ -30,13 +30,16 @@
         {
 			this.ScintillaPanel = new System.Windows.Forms.Panel();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-			this.BtnRun = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.BtnIncFont = new System.Windows.Forms.ToolStripButton();
-			this.BtnDecFont = new System.Windows.Forms.ToolStripButton();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.LbFilename = new System.Windows.Forms.Label();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.BtnNew = new System.Windows.Forms.ToolStripButton();
+			this.BtnSave = new System.Windows.Forms.ToolStripButton();
+			this.BtnRun = new System.Windows.Forms.ToolStripButton();
+			this.BtnIncFont = new System.Windows.Forms.ToolStripButton();
+			this.BtnDecFont = new System.Windows.Forms.ToolStripButton();
 			this.toolStrip1.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -56,6 +59,9 @@
 			// 
 			this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BtnNew,
+            this.BtnSave,
+            this.toolStripSeparator2,
             this.BtnRun,
             this.toolStripSeparator1,
             this.BtnIncFont,
@@ -66,40 +72,10 @@
 			this.toolStrip1.TabIndex = 4;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
-			// BtnRun
-			// 
-			this.BtnRun.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.BtnRun.Image = global::PTMStudio.Properties.Resources.control_play_blue;
-			this.BtnRun.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnRun.Name = "BtnRun";
-			this.BtnRun.Size = new System.Drawing.Size(23, 22);
-			this.BtnRun.Text = "Run (F5)";
-			this.BtnRun.Click += new System.EventHandler(this.BtnRun_Click);
-			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-			// 
-			// BtnIncFont
-			// 
-			this.BtnIncFont.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.BtnIncFont.Image = global::PTMStudio.Properties.Resources.font_size_decrease;
-			this.BtnIncFont.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnIncFont.Name = "BtnIncFont";
-			this.BtnIncFont.Size = new System.Drawing.Size(23, 22);
-			this.BtnIncFont.Text = "Increase font size";
-			this.BtnIncFont.Click += new System.EventHandler(this.BtnIncFont_Click);
-			// 
-			// BtnDecFont
-			// 
-			this.BtnDecFont.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.BtnDecFont.Image = global::PTMStudio.Properties.Resources.font_size_increase;
-			this.BtnDecFont.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnDecFont.Name = "BtnDecFont";
-			this.BtnDecFont.Size = new System.Drawing.Size(23, 22);
-			this.BtnDecFont.Text = "Decrease font size";
-			this.BtnDecFont.Click += new System.EventHandler(this.BtnDecFont_Click);
 			// 
 			// tableLayoutPanel1
 			// 
@@ -144,6 +120,61 @@
 			this.LbFilename.TabIndex = 0;
 			this.LbFilename.Text = "FILENAME.ABC";
 			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+			// 
+			// BtnNew
+			// 
+			this.BtnNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnNew.Image = global::PTMStudio.Properties.Resources.page_white;
+			this.BtnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnNew.Name = "BtnNew";
+			this.BtnNew.Size = new System.Drawing.Size(23, 22);
+			this.BtnNew.Text = "Create new program";
+			this.BtnNew.Click += new System.EventHandler(this.BtnNew_Click);
+			// 
+			// BtnSave
+			// 
+			this.BtnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnSave.Image = global::PTMStudio.Properties.Resources.diskette;
+			this.BtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnSave.Name = "BtnSave";
+			this.BtnSave.Size = new System.Drawing.Size(23, 22);
+			this.BtnSave.Text = "Save program";
+			this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
+			// 
+			// BtnRun
+			// 
+			this.BtnRun.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnRun.Image = global::PTMStudio.Properties.Resources.control_play_blue;
+			this.BtnRun.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnRun.Name = "BtnRun";
+			this.BtnRun.Size = new System.Drawing.Size(23, 22);
+			this.BtnRun.Text = "Run (F5)";
+			this.BtnRun.Click += new System.EventHandler(this.BtnRun_Click);
+			// 
+			// BtnIncFont
+			// 
+			this.BtnIncFont.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnIncFont.Image = global::PTMStudio.Properties.Resources.font_size_decrease;
+			this.BtnIncFont.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnIncFont.Name = "BtnIncFont";
+			this.BtnIncFont.Size = new System.Drawing.Size(23, 22);
+			this.BtnIncFont.Text = "Increase font size";
+			this.BtnIncFont.Click += new System.EventHandler(this.BtnIncFont_Click);
+			// 
+			// BtnDecFont
+			// 
+			this.BtnDecFont.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnDecFont.Image = global::PTMStudio.Properties.Resources.font_size_increase;
+			this.BtnDecFont.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnDecFont.Name = "BtnDecFont";
+			this.BtnDecFont.Size = new System.Drawing.Size(23, 22);
+			this.BtnDecFont.Text = "Decrease font size";
+			this.BtnDecFont.Click += new System.EventHandler(this.BtnDecFont_Click);
+			// 
 			// ProgramEditPanel
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -170,5 +201,8 @@
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.Label LbFilename;
+		private System.Windows.Forms.ToolStripButton BtnNew;
+		private System.Windows.Forms.ToolStripButton BtnSave;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 	}
 }

@@ -129,5 +129,15 @@ namespace PTMStudio
         {
             DecreaseFontSize();
         }
-    }
+
+		private void BtnNew_Click(object sender, EventArgs e)
+		{
+            MainWindow.CreateNewProgramFile();
+		}
+
+		private void BtnSave_Click(object sender, EventArgs e)
+		{
+            MainWindow.SaveProgramFile();
+		}
+	}
 }
