@@ -474,10 +474,7 @@ bool PTM::load_program_absolute_path(const t_string& path)
 	try
 	{
 		t_filesystem::load_program_plaintext(&intp, &prg, path);
-		if (!prg.lines.empty()) {
-			set_last_program_filename(path);
-		}
-
+		set_last_program_filename(path);
 		return !prg.lines.empty();
 	}
 	catch (std::runtime_error error)
@@ -614,4 +611,46 @@ t_sound& PTM::get_sound()
 const t_string& PTM::get_last_program_filename() const
 {
 	return last_program_filename;
+}
+
+void PTM::halt_and_catch_fire()
+{
+	t_filesystem::autosave_program(&prg);
+
+	scr.show_cursor(false);
+	scr.set_color_mode(t_color_mode::mode1_multicolor);
+	
+	t_tile tile;
+
+	while (wnd.is_open()) {
+
+		wnd.set_title(t_util::rnd_string(30));
+
+		for (int y = 0; y < scr.rows; y++) {
+			for (int x = 0; x < scr.cols; x++) {
+				t_index ix = t_util::rnd(0, 255);
+				t_index fgc = t_util::rnd(0, 255);
+				t_index bgc = t_util::rnd(0, 255);
+				t_index bdrc = t_util::rnd(0, 255);
+				scr.color(fgc, bgc, bdrc);
+
+				tile.set_char(ix, fgc, bgc);
+				scr.set_tile(tile, x, y);
+			}
+		}
+
+		refresh_screen();
+
+		SDL_Event e;
+		SDL_PollEvent(&e);
+		if (e.type == SDL_QUIT) {
+			wnd.close();
+		}
+		else if (e.type == SDL_KEYDOWN) {
+			SDL_Keycode& key = e.key.keysym.sym;
+			if (key == SDLK_RETURN && kb.alt()) {
+				wnd.toggle_fullscreen();
+			}
+		}
+	}
 }

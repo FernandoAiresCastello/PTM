@@ -27,4 +27,5 @@ namespace PTML
 	void RET();
 	void PAUSE();
 	void BREAK();
+	void HCF();
 }

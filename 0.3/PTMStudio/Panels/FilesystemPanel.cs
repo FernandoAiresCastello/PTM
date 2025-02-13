@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PTMStudio.Core;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
@@ -67,12 +68,12 @@ namespace PTMStudio
                 }
                 else switch (file.Extension.ToUpper())
 				{
-					case ".PTM": imageIndex = 2; break;
-					case ".CHR": imageIndex = 4; break;
-					case ".PAL": imageIndex = 5; break;
-					case ".BUF": imageIndex = 6; break;
-					case ".PROJ": imageIndex = 7; break;
-                    case ".DAT": imageIndex = 9; break;
+					case KnownFileExtensions.Program: imageIndex = 2; break;
+					case KnownFileExtensions.Charset: imageIndex = 4; break;
+					case KnownFileExtensions.Palette: imageIndex = 5; break;
+					case KnownFileExtensions.TileBuffer: imageIndex = 6; break;
+					case KnownFileExtensions.Project: imageIndex = 7; break;
+                    case KnownFileExtensions.Data: imageIndex = 9; break;
 				}
 
 				var fileNode = new TreeNode(file.Name, imageIndex, imageIndex);

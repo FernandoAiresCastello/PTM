@@ -14,8 +14,7 @@ namespace PTMStudio
 {
 	public partial class MainWindow : Form
     {
-		private const string ProgramFileExt = ".PTM";
-        private const string AutosavedProgramFile = "USR/TEMP" + ProgramFileExt;
+        private const string AutosavedProgramFile = "USR/TEMP" + KnownFileExtensions.Program;
 
 		private readonly string WindowTitle = "PTM 0.3";
 		private readonly string PtmExe;
@@ -184,14 +183,14 @@ namespace PTMStudio
         {
             ProgramPanel.SaveFile();
 			FilePanel.UpdateFileList();
-			Process.Start(PtmExe, ProgramFile);
+		    Process.Start(PtmExe, ProgramFile);
         }
 
         public void LoadFile(string file)
         {
             string ext = Path.GetExtension(file).ToUpper();
 
-            if (ext == ".PTM")
+            if (ext == KnownFileExtensions.Program)
             {
                 if (Changes.Program)
                 {
@@ -204,7 +203,7 @@ namespace PTMStudio
 
                 ProgramPanel.LoadFile(file, true);
             }
-            else if (ext == ".CHR")
+            else if (ext == KnownFileExtensions.Charset)
             {
 				if (Changes.Tileset)
 				{
@@ -217,7 +216,7 @@ namespace PTMStudio
 
 				TilesetPanel.LoadFile(file);
             }
-            else if (ext == ".PAL")
+            else if (ext == KnownFileExtensions.Palette)
             {
 				if (Changes.Palette)
 				{
@@ -230,7 +229,7 @@ namespace PTMStudio
 
 				PalettePanel.LoadFile(file);
             }
-            else if (ext == ".BUF")
+            else if (ext == KnownFileExtensions.TileBuffer)
             {
 				if (Changes.TileBuffer)
 				{
@@ -243,7 +242,7 @@ namespace PTMStudio
 
 				TilebufferPanel.LoadFile(file, true);
             }
-			else if (ext == ".DAT")
+			else if (ext == KnownFileExtensions.Data)
             {
                 RecordFile recFile = new RecordFile();
                 recFile.Load(file);
@@ -253,7 +252,7 @@ namespace PTMStudio
 
                 wnd.ShowDialog(this);
             }
-			else if (ext == ".PROJ")
+			else if (ext == KnownFileExtensions.Project)
             {
                 if (Changes.Program || Changes.Palette || Changes.Tileset || Changes.TileBuffer)
                 {
@@ -618,8 +617,8 @@ namespace PTMStudio
 				if (string.IsNullOrWhiteSpace(programName))
 					return;
 
-				if (!programName.EndsWith(ProgramFileExt))
-					programName += ProgramFileExt;
+				if (!programName.EndsWith(KnownFileExtensions.Program))
+					programName += KnownFileExtensions.Program;
 
 				string path = Filesystem.GetAbsoluteUserFilePath(programName);
 				File.Create(path).Close();

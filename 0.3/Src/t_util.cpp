@@ -47,7 +47,8 @@ t_string t_util::rnd_string(int length, const t_string& alphabet)
 	std::stringbuf sb;
 
 	for (auto i = 0; i < length; i++) {
-		char ch = alphabet[rnd((int)alphabet.length()) - 1];
+		int alphabet_ix = rnd((int)alphabet.length());
+		char ch = alphabet[alphabet_ix];
 		sb.sputc(ch);
 	}
 

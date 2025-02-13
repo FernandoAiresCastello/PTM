@@ -93,6 +93,7 @@ public:
 	int find_program_label(const t_string& label);
 	t_sound& get_sound();
 	const t_string& get_last_program_filename() const;
+	void halt_and_catch_fire();
 
 private:
 	bool running = false;

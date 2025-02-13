@@ -24,23 +24,7 @@ POW		Calculate the power of a numeric value
 SQRT		Calculate square root of a numeric value
 RND		Get a random numeric value
 GOTO		Go to label
-GOTO.E		Go to label if equal
-GOTO.NE		Go to label if not equal
-GOTO.G		Go to label if greater than
-GOTO.GE		Go to label if greater than or equal
-GOTO.L		Go to label if lesser than
-GOTO.LE		Go to label if lesser than or equal
-GOTO.K		Go to label if key is pressed
-GOTO.NK		Go to label if key is not pressed
 CALL		Call subroutine at label
-CALL.E		Call subroutine at label if equal
-CALL.NE		Call subroutine at label if not equal
-CALL.G		Call subroutine at label if greater than
-CALL.GE		Call subroutine at label if greater than or equal
-CALL.L		Call subroutine at label if lesser than
-CALL.LE		Call subroutine at label if lesser than or equal
-CALL.K		Call subroutine at label if key is pressed
-CALL.NK		Call subroutine at label if key is not pressed
 RET		Return from subroutine
 FILES		List files on disk
 SAVE		Save file to disk
@@ -63,8 +47,10 @@ FULLSCR		Enable, disable or toggle full-screen mode
 CLS		Clear the screen
 CURSOR		Make cursor visible or invisible
 LOCATE		Move cursor to position
-GETX		Get cursor X position
-GETY		Get cursor Y position
+XSET		Set cursor X position
+YSET		Set cursor Y position
+XGET		Get cursor X position
+YGET		Get cursor Y position
 PRINT		Print string on screen at current cursor position
 PRINTL		Print string on screen at current cursor position, then move cursor to next line
 PRINTF		Print formatted string on screen at current cursor position
@@ -73,8 +59,7 @@ INK		Change foreground color of tiles
 PAPER		Change background color of tiles
 BORDER		Change color of the screen border
 MODE		Change color mode (0 = monochrome; 1 = multicolor)
-NEWTILE		Clear tile register
-TILE		Add tile to tile register
+TILE		Add tile to tile register, or clear tile register if no arguments are given
 CSET		Set character index of tile register
 CGET		Get character index of tile register
 FSET		Set foreground color of tile register
@@ -83,7 +68,7 @@ BSET		Set background color of tile register
 BGET		Get background color of tile register
 PSET		Set property in tile register
 PGET		Get property from tile register
-SPRITE		Create sprite with tile equal to tile register, optionally at specified position
+SPRITE		Create or update sprite with tile equal to tile register, with optional position and visibility
 MOVE		Move sprite to specified position
 SHOW		Show or hide sprite
 SGET		Copy sprite tile to tile register

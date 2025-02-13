@@ -32,8 +32,8 @@ public:
 	void set_char(int position, t_index ix, t_index fgc, t_index bgc);
 	void add_char(t_index ix, t_index fgc, t_index bgc);
 	void add_blank_char();
-	int char_count();
-	bool has_any_char();
+	int char_count() const;
+	bool has_any_char() const;
 	bool is_blank() const;
 	bool is_not_blank() const;
 	void set_blank();

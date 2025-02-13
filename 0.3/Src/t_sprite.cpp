@@ -4,8 +4,10 @@ t_sprite::t_sprite(bool grid) : tile(), pos(), grid(grid)
 {
 }
 
-t_sprite::t_sprite(const t_tile& tile, const t_pos& pos, bool grid) : tile(tile), pos(pos), grid(grid)
+t_sprite::t_sprite(const t_tile& tile, const t_pos& pos, bool grid, bool visible) : 
+	tile(tile), pos(pos), grid(grid)
 {
+	this->tile.flags.visible = visible;
 }
 
 t_sprite::t_sprite(const t_sprite& other)
@@ -17,7 +19,10 @@ t_sprite::t_sprite(const t_sprite& other)
 
 void t_sprite::set_tile(const t_tile& tile)
 {
-	this->tile = tile;
+	if (tile.has_any_char())
+		this->tile = tile;
+	else
+		this->tile.set_blank();
 }
 
 t_tile& t_sprite::get_tile()

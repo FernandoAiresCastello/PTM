@@ -189,6 +189,18 @@ void PTML::LOCATE()
 	scr->locate(x, y);
 }
 
+void PTML::CSR_SETX()
+{
+	ARGC(1);
+	scr->locate_x(NUM(1));
+}
+
+void PTML::CSR_SETY()
+{
+	ARGC(1);
+	scr->locate_y(NUM(1));
+}
+
 void PTML::CSR_GETX()
 {
 	ARGC(1);
@@ -226,8 +238,12 @@ void PTML::TILE_NEW()
 
 void PTML::TILE_ADD()
 {
-	ARGC(3);
-	TILEREG.add_char(NUM(1), NUM(2), NUM(3));
+	ARGC_MIN_MAX(0, 3);
+
+	if (COUNT(0))
+		TILEREG.set_empty();
+	else
+		TILEREG.add_char(NUM(1), NUM(2), NUM(3));
 }
 
 void PTML::TILE_SETC()
@@ -345,7 +361,7 @@ void PTML::REFRESH()
 
 void PTML::SET_SPRITE()
 {
-	ARGC_MIN_MAX(1, 3);
+	ARGC_MIN_MAX(1, 4);
 
 	auto&& sprite_number = NUM(1);
 	REQUIRE_SPRITE(sprite_number);
@@ -353,10 +369,11 @@ void PTML::SET_SPRITE()
 	if (COUNT(1)) {
 		ptm->get_screen().set_sprite(sprite_number, TILEREG);
 	}
-	else if (COUNT(3)) {
+	else if (COUNT(3) || COUNT(4)) {
 		auto&& x = NUM(2);
 		auto&& y = NUM(3);
-		ptm->get_screen().set_sprite(sprite_number, TILEREG, t_pos(x, y));
+		bool visible = COUNT(4) ? NUM(4) : true;
+		ptm->get_screen().set_sprite(sprite_number, TILEREG, t_pos(x, y), visible);
 	}
 	else {
 		error = err.invalid_argc;
@@ -390,5 +407,5 @@ void PTML::GET_SPRITE()
 	ARGC(1);
 	auto&& sprite_number = NUM(1);
 	REQUIRE_SPRITE(sprite_number);
-	TILEREG = ptm->get_screen().get_sprite(sprite_number).get_tile();;
+	TILEREG = ptm->get_screen().get_sprite(sprite_number).get_tile();
 }

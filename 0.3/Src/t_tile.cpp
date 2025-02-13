@@ -89,12 +89,12 @@ void t_tile::add_blank_char()
 	chars.emplace_back(t_char::blank());
 }
 
-int t_tile::char_count()
+int t_tile::char_count() const
 {
 	return (int)chars.size();
 }
 
-bool t_tile::has_any_char()
+bool t_tile::has_any_char() const
 {
 	return !chars.empty();
 }

@@ -7,7 +7,7 @@
     <ProjectGuid>{C62401D3-ADF8-477B-9295-B1C468F60D75}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>PTMStudio</RootNamespace>
-    <AssemblyName>PTMStudio</AssemblyName>
+    <AssemblyName>PTM</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -56,6 +56,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\KnownFileExtensions.cs" />
     <Compile Include="Core\RecordFile.cs" />
     <Compile Include="Windows\ColorEditWindow.cs">
       <SubType>Form</SubType>

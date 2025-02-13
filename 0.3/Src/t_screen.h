@@ -103,7 +103,7 @@ public:
 	void save(const t_string& filename);
 	void load(const t_string& filename);
 	void set_sprite(int index, const t_tile& tile);
-	void set_sprite(int index, const t_tile& tile, const t_pos& pos);
+	void set_sprite(int index, const t_tile& tile, const t_pos& pos, bool visible);
 	t_sprite& get_sprite(int index);
 
 private:

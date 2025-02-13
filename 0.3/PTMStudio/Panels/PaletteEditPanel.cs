@@ -1,4 +1,5 @@
-﻿using PTMStudio.Windows;
+﻿using PTMStudio.Core;
+using PTMStudio.Windows;
 using System;
 using System.Drawing;
 using System.Globalization;
@@ -260,8 +261,8 @@ namespace PTMStudio
             }
 
             Filename = Filesystem.GetUserFilePath(Filename);
-			if (!Filename.EndsWith(".PAL"))
-				Filename += ".PAL";
+			if (!Filename.EndsWith(KnownFileExtensions.Palette))
+				Filename += KnownFileExtensions.Palette;
 
 			PaletteFile.SaveAsHexadecimalRgb(Display.Graphics.Palette, Filename);
 			TxtFilename.Text = Filesystem.RemoveAbsoluteRootAndNormalizePath(Filename);

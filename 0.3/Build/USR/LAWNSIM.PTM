@@ -1,7 +1,6 @@
 TITLE "ADVANCED LAWNMOWER SIMULATOR"
 
 AUTOREF 0
-BREAK 0
 CALL init
 
 #==========================================================
@@ -127,7 +126,7 @@ move_man:
     DEC man.x
     LOCATE man.x,man.y
     PUT
-    NEWTILE
+    TILE
     TILE empty,green,dkgreen
     LOCATE man.prevx,man.y
     PUT
@@ -144,7 +143,7 @@ begin_next_row:
     GET
     LOCATE mach.xi,next_y
     PUT
-    NEWTILE
+    TILE
     TILE empty,green,dkgreen
     RECT 6,man.y,34,man.y
 
@@ -201,8 +200,9 @@ loop_text:
 END
 
 init:
-    MODE 1
+    BREAK 0
     CURSOR 0
+    MODE 1
 
     LOAD "LAWNSIM.CHR"
     LOAD "LAWNSIM.PAL"

@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace PTMStudio
 {
-    internal static class Program
+	internal static class Program
     {
         [STAThread]
         static void Main()
@@ -12,15 +12,15 @@ namespace PTMStudio
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            string dir = Environment.CurrentDirectory;
+			string dir = Environment.CurrentDirectory;
+			string ptmExe = "PTM_INTP.exe";
+            string ptmExePath = Path.Combine(dir, ptmExe);
 
-            string ptmExe = Path.Combine(dir, "PTM.exe");
-
-            if (File.Exists(ptmExe))
+            if (File.Exists(ptmExePath))
             {
                 try
                 {
-                    Application.Run(new MainWindow(ptmExe));
+                    Application.Run(new MainWindow(ptmExePath));
                 }
                 catch (Exception ex)
                 {
@@ -29,7 +29,7 @@ namespace PTMStudio
             }
             else
             {
-                MainWindow.FatalError("PTM.exe not found");
+                MainWindow.FatalError($"PTML interpreter ({ptmExe}) not found");
             }
         }
     }

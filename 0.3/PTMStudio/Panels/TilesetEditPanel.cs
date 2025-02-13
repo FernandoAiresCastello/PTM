@@ -1,4 +1,5 @@
-﻿using PTMStudio.Windows;
+﻿using PTMStudio.Core;
+using PTMStudio.Windows;
 using System;
 using System.Drawing;
 using System.IO;
@@ -198,8 +199,8 @@ namespace PTMStudio
 			}
 
 			Filename = Filesystem.GetUserFilePath(Filename);
-            if (!Filename.EndsWith(".CHR"))
-                Filename += ".CHR";
+            if (!Filename.EndsWith(KnownFileExtensions.Charset))
+                Filename += KnownFileExtensions.Charset;
 
 			TilesetFile.SaveAsBinaryStrings(Display.Graphics.Tileset, Filename);
 			TxtFilename.Text = Filesystem.RemoveAbsoluteRootAndNormalizePath(Filename);

@@ -81,7 +81,9 @@ namespace PTMStudio
             }
 
             BindingSrc.ResetBindings(false);
-        }
+
+            Text = $"PTML Reference - {Commands.Count} commands";
+		}
 
         private void ShowHelpForSelectedCommand()
         {
