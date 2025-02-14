@@ -34,6 +34,7 @@
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.LbChanges = new System.Windows.Forms.ToolStripStatusLabel();
@@ -46,9 +47,10 @@
 			this.RightPanel = new System.Windows.Forms.TableLayoutPanel();
 			this.BtmLeftPanel = new System.Windows.Forms.Panel();
 			this.TopLeftPanel = new System.Windows.Forms.Panel();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.BtnSaveProgram = new System.Windows.Forms.ToolStripMenuItem();
 			this.BtnSaveEverything = new System.Windows.Forms.ToolStripMenuItem();
 			this.BtnSaveProject = new System.Windows.Forms.ToolStripMenuItem();
+			this.BtnPublish = new System.Windows.Forms.ToolStripMenuItem();
 			this.BtnRelaunchIde = new System.Windows.Forms.ToolStripMenuItem();
 			this.BtnQuit = new System.Windows.Forms.ToolStripMenuItem();
 			this.BtnRun = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,7 +60,6 @@
 			this.BtnAlternateEditor = new System.Windows.Forms.ToolStripMenuItem();
 			this.BtnHelp = new System.Windows.Forms.ToolStripMenuItem();
 			this.BtnAbout = new System.Windows.Forms.ToolStripMenuItem();
-			this.BtnSaveProgram = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.RootPanel.SuspendLayout();
@@ -86,6 +87,7 @@
             this.BtnSaveProgram,
             this.BtnSaveEverything,
             this.BtnSaveProject,
+            this.BtnPublish,
             this.toolStripSeparator1,
             this.BtnRelaunchIde,
             this.BtnQuit});
@@ -118,6 +120,11 @@
 			this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
 			this.viewToolStripMenuItem.Text = "View";
 			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(212, 6);
+			// 
 			// helpToolStripMenuItem
 			// 
 			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -149,7 +156,7 @@
 			this.RootPanel.ColumnCount = 3;
 			this.RootPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.31579F));
 			this.RootPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.68421F));
-			this.RootPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 271F));
+			this.RootPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 272F));
 			this.RootPanel.Controls.Add(this.CenterPanel, 1, 0);
 			this.RootPanel.Controls.Add(this.LeftPanel, 0, 0);
 			this.RootPanel.Controls.Add(this.RightPanel, 2, 0);
@@ -169,7 +176,7 @@
 			this.CenterPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.CenterPanel.Controls.Add(this.CenterBottomPanel, 0, 1);
 			this.CenterPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.CenterPanel.Location = new System.Drawing.Point(169, 10);
+			this.CenterPanel.Location = new System.Drawing.Point(168, 10);
 			this.CenterPanel.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
 			this.CenterPanel.Name = "CenterPanel";
 			this.CenterPanel.RowCount = 2;
@@ -200,7 +207,7 @@
 			this.LeftPanel.RowCount = 2;
 			this.LeftPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.LeftPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.LeftPanel.Size = new System.Drawing.Size(156, 440);
+			this.LeftPanel.Size = new System.Drawing.Size(155, 440);
 			this.LeftPanel.TabIndex = 1;
 			// 
 			// TopRightPanel
@@ -208,7 +215,7 @@
 			this.TopRightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.TopRightPanel.Location = new System.Drawing.Point(3, 3);
 			this.TopRightPanel.Name = "TopRightPanel";
-			this.TopRightPanel.Size = new System.Drawing.Size(150, 214);
+			this.TopRightPanel.Size = new System.Drawing.Size(149, 214);
 			this.TopRightPanel.TabIndex = 1;
 			// 
 			// BtmRightPanel
@@ -217,7 +224,7 @@
 			this.BtmRightPanel.Location = new System.Drawing.Point(3, 226);
 			this.BtmRightPanel.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
 			this.BtmRightPanel.Name = "BtmRightPanel";
-			this.BtmRightPanel.Size = new System.Drawing.Size(150, 211);
+			this.BtmRightPanel.Size = new System.Drawing.Size(149, 211);
 			this.BtmRightPanel.TabIndex = 2;
 			// 
 			// RightPanel
@@ -227,13 +234,13 @@
 			this.RightPanel.Controls.Add(this.BtmLeftPanel, 0, 1);
 			this.RightPanel.Controls.Add(this.TopLeftPanel, 0, 0);
 			this.RightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.RightPanel.Location = new System.Drawing.Point(602, 10);
+			this.RightPanel.Location = new System.Drawing.Point(601, 10);
 			this.RightPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.RightPanel.Name = "RightPanel";
 			this.RightPanel.RowCount = 2;
 			this.RightPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.RightPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.RightPanel.Size = new System.Drawing.Size(272, 440);
+			this.RightPanel.Size = new System.Drawing.Size(273, 440);
 			this.RightPanel.TabIndex = 2;
 			// 
 			// BtmLeftPanel
@@ -243,7 +250,7 @@
 			this.BtmLeftPanel.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
 			this.BtmLeftPanel.Name = "BtmLeftPanel";
 			this.BtmLeftPanel.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.BtmLeftPanel.Size = new System.Drawing.Size(266, 214);
+			this.BtmLeftPanel.Size = new System.Drawing.Size(267, 214);
 			this.BtmLeftPanel.TabIndex = 4;
 			// 
 			// TopLeftPanel
@@ -252,13 +259,17 @@
 			this.TopLeftPanel.Location = new System.Drawing.Point(3, 3);
 			this.TopLeftPanel.Name = "TopLeftPanel";
 			this.TopLeftPanel.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.TopLeftPanel.Size = new System.Drawing.Size(266, 214);
+			this.TopLeftPanel.Size = new System.Drawing.Size(267, 214);
 			this.TopLeftPanel.TabIndex = 3;
 			// 
-			// toolStripSeparator2
+			// BtnSaveProgram
 			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(212, 6);
+			this.BtnSaveProgram.Image = global::PTMStudio.Properties.Resources.diskette;
+			this.BtnSaveProgram.Name = "BtnSaveProgram";
+			this.BtnSaveProgram.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+			this.BtnSaveProgram.Size = new System.Drawing.Size(222, 22);
+			this.BtnSaveProgram.Text = "Save program";
+			this.BtnSaveProgram.Click += new System.EventHandler(this.BtnSaveProgram_Click);
 			// 
 			// BtnSaveEverything
 			// 
@@ -277,6 +288,14 @@
 			this.BtnSaveProject.Size = new System.Drawing.Size(222, 22);
 			this.BtnSaveProject.Text = "Save as project";
 			this.BtnSaveProject.Click += new System.EventHandler(this.BtnSaveProject_Click);
+			// 
+			// BtnPublish
+			// 
+			this.BtnPublish.Image = global::PTMStudio.Properties.Resources.package_go;
+			this.BtnPublish.Name = "BtnPublish";
+			this.BtnPublish.Size = new System.Drawing.Size(222, 22);
+			this.BtnPublish.Text = "Publish";
+			this.BtnPublish.Click += new System.EventHandler(this.BtnPublish_Click);
 			// 
 			// BtnRelaunchIde
 			// 
@@ -355,15 +374,6 @@
 			this.BtnAbout.Text = "About";
 			this.BtnAbout.Click += new System.EventHandler(this.BtnAbout_Click);
 			// 
-			// BtnSaveProgram
-			// 
-			this.BtnSaveProgram.Image = global::PTMStudio.Properties.Resources.diskette;
-			this.BtnSaveProgram.Name = "BtnSaveProgram";
-			this.BtnSaveProgram.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-			this.BtnSaveProgram.Size = new System.Drawing.Size(222, 22);
-			this.BtnSaveProgram.Text = "Save program";
-			this.BtnSaveProgram.Click += new System.EventHandler(this.BtnSaveProgram_Click);
-			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -422,6 +432,7 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripMenuItem BtnRelaunchIde;
 		private System.Windows.Forms.ToolStripMenuItem BtnSaveProgram;
+		private System.Windows.Forms.ToolStripMenuItem BtnPublish;
 	}
 }
 

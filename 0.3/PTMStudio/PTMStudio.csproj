@@ -122,6 +122,12 @@
       <DependentUpon>TilebufferEditPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\TilebufferFile.cs" />
+    <Compile Include="Windows\PublishWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\PublishWindow.Designer.cs">
+      <DependentUpon>PublishWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Windows\RecordFileWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -192,6 +198,9 @@
     <EmbeddedResource Include="Panels\TilebufferEditPanel.resx">
       <DependentUpon>TilebufferEditPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Windows\PublishWindow.resx">
+      <DependentUpon>PublishWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\RecordFileWindow.resx">
       <DependentUpon>RecordFileWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -258,6 +267,9 @@
     <None Include="Resources\bookshelf.png" />
     <None Include="Resources\arrow_refresh.png" />
     <None Include="Resources\logo.fw.png" />
+    <None Include="Resources\package_go.png" />
+    <None Include="Resources\arrow_right1.png" />
+    <None Include="Resources\arrow_left1.png" />
     <Content Include="Resources\ptm_icon.ico" />
     <None Include="Resources\page_white_paste.png" />
     <None Include="Resources\update.png" />

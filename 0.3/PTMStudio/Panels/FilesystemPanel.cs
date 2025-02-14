@@ -10,10 +10,7 @@ namespace PTMStudio
     {
         private readonly MainWindow MainWindow;
 
-        private FilesystemPanel()
-        {
-            InitializeComponent();
-        }
+        public TreeView FileTreeComponent => FileTree;
 
         public FilesystemPanel(MainWindow mainWnd)
         {
@@ -21,6 +18,9 @@ namespace PTMStudio
             MainWindow = mainWnd;
             FileTree.DoubleClick += FileTree_DoubleClick;
             UpdateFileList();
+
+            if (mainWnd == null)
+                ToolStrip.Visible = false;
         }
 
         private void FileTree_DoubleClick(object sender, EventArgs e)
@@ -29,7 +29,12 @@ namespace PTMStudio
                 OnDoubleClickEntry(FileTree.SelectedNode.Tag as FilesystemEntry);
 		}
 
-        public void UpdateFileList()
+		public void ClearFileList()
+        {
+			FileTree.Nodes.Clear();
+		}
+
+		public void UpdateFileList()
         {
 			FileTree.Nodes.Clear();
 			ListDirectory(FileTree, Filesystem.UserRoot);
@@ -45,7 +50,8 @@ namespace PTMStudio
 
         private static TreeNode CreateDirectoryNode(DirectoryInfo directoryInfo)
         {
-            var directoryNode = new TreeNode(directoryInfo.Name, 0, 0);
+            var directoryNode = new TreeNode(directoryInfo.Name, 0, 0) { Name = directoryInfo.Name };
+
             FilesystemEntry directoryEntry = new FilesystemEntry
             {
                 IsDirectory = true,
@@ -76,9 +82,9 @@ namespace PTMStudio
                     case KnownFileExtensions.Data: imageIndex = 9; break;
 				}
 
-				var fileNode = new TreeNode(file.Name, imageIndex, imageIndex);
+				var fileNode = new TreeNode(file.Name, imageIndex, imageIndex) { Name = file.Name };
 
-                FilesystemEntry fileEntry = new FilesystemEntry
+				FilesystemEntry fileEntry = new FilesystemEntry
                 {
                     IsDirectory = false,
                     AbsolutePath = Filesystem.NormalizePath(file.FullName)
@@ -93,6 +99,9 @@ namespace PTMStudio
 
         private void OnDoubleClickEntry(FilesystemEntry entry)
         {
+            if (MainWindow == null)
+                return;
+
             if (!entry.IsDirectory)
                 MainWindow.LoadFile(entry.AbsolutePath);
         }

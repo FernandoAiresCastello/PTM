@@ -243,7 +243,7 @@ bool t_filesystem::has_autoexec_file()
 
 t_string t_filesystem::get_autoexec_file()
 {
-    return USER_ROOT AUTOEXEC_FILE;
+    return AUTOEXEC_FILE;
 }
 
 void t_filesystem::autosave_program(t_program* prg)

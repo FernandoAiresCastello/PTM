@@ -525,7 +525,9 @@ namespace PTMStudio
             if (!string.IsNullOrWhiteSpace(lines[3]))
                 TilebufferPanel.LoadFile(lines[3], false);
 
-            AlertOnStatusBar("Project loaded from: " + file, 2);
+			AlertOnStatusBar("Project loaded from: " + file, 2);
+
+			Text = WindowTitle + " - Project: " + file;
         }
 
         public void NewProgramLoaded(string file)
@@ -621,6 +623,12 @@ namespace PTMStudio
 		private void BtnSaveProgram_Click(object sender, EventArgs e)
 		{
             SaveProgramFile();
+		}
+
+		private void BtnPublish_Click(object sender, EventArgs e)
+		{
+            PublishWindow wnd = new PublishWindow();
+            wnd.ShowDialog(this);
 		}
 	}
 }
