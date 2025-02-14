@@ -31,3 +31,4 @@ cppcheck
 0.3/build/USR/AUTORUN.PTM
 0.3/build/USR/AUTOSAVE.PTM
 0.3/build/USR/TEMP.PTM
+*.pub

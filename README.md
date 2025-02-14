@@ -54,6 +54,7 @@ The current development version is __0.3__ (pictured below).
 ![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio_1.png?raw=true)
 ![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio_2.png?raw=true)
 ![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio_3.png?raw=true)
+![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio_4.png?raw=true)
 ![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_lawnsim.png?raw=true)
 
 *Note: development builds can be *very* unstable since they are being actively worked on and change frequently. Use at your own risk!*

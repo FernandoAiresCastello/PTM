@@ -1,13 +1,15 @@
-﻿using PTMStudio.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
+using System.Linq;
 using System.Windows.Forms;
+using PTMStudio.Core;
 
 namespace PTMStudio.Windows
 {
-	public partial class PublishWindow : Form
+    public partial class PublishWindow : Form
 	{
 		private readonly FilesystemPanel FsPanel;
 		private readonly TreeView FileTree;
@@ -58,7 +60,27 @@ namespace PTMStudio.Windows
 			root.Expand();
 		}
 
-		private void RemoveSelectedFile()
+        private void AddFileFromPublishProfile(string path)
+        {
+            TreeNode root = PublishTree.Nodes[0];
+            string filename = Path.GetFileName(path);
+            if (root.Nodes.ContainsKey(filename))
+                return;
+
+			var nodes = FileTree.Nodes[0].Nodes.Find(filename, false);
+			if (nodes == null || nodes.Length == 0)
+			{
+				Error("File not found: " + filename);
+				return;
+			}
+
+			var node = nodes[0];
+            TreeNode clone = node.Clone() as TreeNode;
+            root.Nodes.Add(clone);
+            root.Expand();
+        }
+
+        private void RemoveSelectedFile()
 		{
 			if (PublishTree.SelectedNode == null || PublishTree.SelectedNode.Tag == null)
 				return;
@@ -88,55 +110,63 @@ namespace PTMStudio.Windows
 
 		private void BtnPublish_Click(object sender, EventArgs e)
 		{
-			if (string.IsNullOrWhiteSpace(TxtFolder.Text.Trim()))
-			{
-				MessageBox.Show("Please specify the output directory.",
-					"Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
+			if (!ValidatePublishProfile())
 				return;
-			}
-
-			if (CmbMainProgram.SelectedItem == null)
-			{
-				MessageBox.Show("Please specify the entry point.",
-					"Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-				return;
-			}
 
 			Publish();
 		}
 
 		private void Publish()
 		{
-			TxtFolder.Text = Path.Combine(TxtFolder.Text.Trim(), TxtProductName.Text.Trim());
+			string basePublishFolder = TxtFolder.Text.Trim();
+			string productName = TxtProductName.Text.Trim();
+			string publishFolder = Path.Combine(basePublishFolder, productName);
 
-			var outputFolder = TryCreateFolder(TxtFolder.Text.Trim());
-			if (outputFolder == null)
+			if (!TryCreateFolder(publishFolder))
 				return;
 
-			if (!PublishSystemFiles(outputFolder))
+			if (!PublishSystemFiles(publishFolder))
 				return;
 
 			string mainProgram = CmbMainProgram.SelectedItem.ToString();
-			if (!PublishUserFiles(outputFolder, mainProgram))
+			if (!PublishUserFiles(publishFolder, mainProgram))
 				return;
 
 			if (ChkZip.Checked)
 			{
-				if (!GenerateZipPackage())
+				if (!GenerateZipPackage(publishFolder, Path.Combine(basePublishFolder, productName + ".zip")))
 					return;
 			}
 
-			MessageBox.Show($"Publish successful!",
-				"Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			Success("Publish successful!");
 
-			Process.Start("explorer.exe", outputFolder);
+			if (ChkOpenPublishFolder.Checked)
+				Process.Start("explorer.exe", ChkZip.Checked ? basePublishFolder : publishFolder);
 		}
 
-		private bool GenerateZipPackage()
+		private bool GenerateZipPackage(string sourceFolderPath, string zipPath)
 		{
-			return true;
+			try
+			{
+				ZipFile.CreateFromDirectory(sourceFolderPath, zipPath, CompressionLevel.Optimal, true);
+			}
+			catch (Exception ex)
+			{
+				Error("Could not generate ZIP file.", ex);
+                return false;
+			}
+
+			try
+			{
+				Directory.Delete(sourceFolderPath, true);
+			}
+            catch (Exception ex)
+            {
+				Error("Could not delete publish folder after generating ZIP file.", ex);
+                return false;
+            }
+
+            return true;
 		}
 
 		private bool PublishSystemFiles(string outputFolder)
@@ -155,9 +185,7 @@ namespace PTMStudio.Windows
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show($"Publish aborted.\n\n" + ex.Message,
-					"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+				Error("Publish aborted.", ex);
 				return false;
 			}
 
@@ -178,33 +206,31 @@ namespace PTMStudio.Windows
 
 		private bool PublishUserFiles(string outputFolder, string mainProgram)
 		{
-			outputFolder = Path.Combine(outputFolder, Filesystem.UserRootDirName);
+			string userOutputFolder = Path.Combine(outputFolder, Filesystem.UserRootDirName);
 
 			try
 			{
-				TryCreateFolder(outputFolder);
+				TryCreateFolder(userOutputFolder);
 
 				foreach (var file in GetFilesToPublish())
 				{
 					string filename = new FileInfo(file).Name;
-					File.Copy(file, Path.Combine(outputFolder, filename));
+					File.Copy(file, Path.Combine(userOutputFolder, filename));
 				}
 
 				string autoexec = $"RUN \"{mainProgram}\"";
-				File.WriteAllText(Path.Combine(outputFolder, "AUTOEXEC.PTM"), autoexec);
+				File.WriteAllText(Path.Combine(userOutputFolder, "AUTOEXEC.PTM"), autoexec);
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show($"Publish aborted.\n\n" + ex.Message,
-					"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-				return false;
+                Error("Publish aborted.", ex);
+                return false;
 			}
 
 			return true;
 		}
 
-		private string TryCreateFolder(string folder)
+		private bool TryCreateFolder(string folder)
 		{
 			try
 			{
@@ -213,13 +239,11 @@ namespace PTMStudio.Windows
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show("Could not create output folder: " + ex.Message,
-					"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-				return null;
+                Error("Could not create folder.", ex);
+				return false;
 			}
 
-			return folder;
+			return true;
 		}
 
 		private string[] GetFilesToPublish()
@@ -238,5 +262,100 @@ namespace PTMStudio.Windows
 
 			return files.ToArray();
 		}
-	}
+
+        private void Success(string msg)
+		{
+            MessageBox.Show(msg, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void Warning(string msg)
+		{
+            MessageBox.Show(msg, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void Error(string msg, Exception ex = null)
+        {
+            MessageBox.Show(ex != null ? $"{msg}\n\n{ex.Message}" : msg,
+                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void BtnLoadProfile_Click(object sender, EventArgs e)
+        {
+            var dialog = new OpenFileDialog();
+            dialog.DefaultExt = KnownFileExtensions.PublishProfile;
+            if (dialog.ShowDialog() != DialogResult.OK)
+                return;
+
+			var lines = File.ReadAllLines(dialog.FileName);
+
+			TxtProductName.Text = lines[0];
+			TxtFolder.Text = lines[1];
+            CmbMainProgram.Items.Add(lines[2]);
+			CmbMainProgram.SelectedIndex = 0;
+            ChkZip.Checked = bool.Parse(lines[3]);
+			ChkOpenPublishFolder.Checked = bool.Parse(lines[4]);
+
+			foreach (TreeNode node in PublishTree.Nodes)
+			{
+				if (node.Text != Filesystem.UserRootDirName)
+					PublishTree.Nodes.Remove(node);
+			}
+
+            for (int i = 5; i < lines.Length; i++)
+                AddFileFromPublishProfile(lines[i]);
+        }
+
+        private void BtnSaveProfile_Click(object sender, EventArgs e)
+        {
+			if (!ValidatePublishProfile())
+				return;
+
+			var dialog = new SaveFileDialog();
+			dialog.DefaultExt = KnownFileExtensions.PublishProfile;
+			if (dialog.ShowDialog() != DialogResult.OK)
+				return;
+
+			var lines = new List<string>
+            {
+                TxtProductName.Text.Trim(),
+                TxtFolder.Text.Trim(),
+                CmbMainProgram.Text.Trim(),
+                ChkZip.Checked.ToString(),
+				ChkOpenPublishFolder.Checked.ToString()
+            };
+
+            lines.AddRange(GetFilesToPublish());
+
+            File.WriteAllLines(dialog.FileName, lines);
+        }
+
+		private bool ValidatePublishProfile()
+		{
+            if (!GetFilesToPublish().Any(file => file.EndsWith(KnownFileExtensions.Program)))
+            {
+                Warning("Please include at least one program file (.PTM).");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(TxtProductName.Text.Trim()))
+            {
+                Warning("Please specify the product name.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(TxtFolder.Text.Trim()))
+            {
+                Warning("Please specify the output directory.");
+                return false;
+            }
+
+            if (CmbMainProgram.SelectedItem == null)
+            {
+                Warning("Please specify the entry point.");
+                return false;
+            }
+
+            return true;
+        }
+    }
 }
