@@ -1,3 +1,4 @@
+
 ![PTM Logo](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/logo.fw.png?raw=true)
 
 # PTM - Programmable Tile Machine
@@ -36,11 +37,11 @@ Here is an example of PTML code, for the "Advanced Lawnmower Simulator" minigame
 
 ## Version history
 
-This project is currently in early alpha stage. All released versions are to be considered as experimental, but mostly functional.
+This project is currently in beta stage. All beta versions may contain bugs!
 
-| **Version** | **Release date or status** | **Comments** |
+| **Version** | **Release date** | **Comments** |
 |-------------|------------------|--------------|
-| **0.3**     | _In development_ | Current implementation, started from scratch. PTML is an entirely different language from earlier versions. Includes a built-in program editor with immediate mode and also an external IDE for editing code, graphics and data. |
+| **0.3**     | _TBA_ | Current implementation, started from scratch. PTML is an entirely different language from earlier versions. Includes a built-in program editor with immediate mode and also an external IDE for editing code, graphics and data. |
 | **0.2**     | _July 1, 2023_   | Many PTML improvements and new commands. This version also included a few standalone tools (PTM Studio and PTM Tile Editor) besides the main PTM interpreter. |
 | **0.1**     | _May 14, 2023_   | First release. Ranked 4th out of 61 entries in the [Tool Jam 3](https://itch.io/jam/the-tool-jam-3/results). |
 
@@ -51,13 +52,27 @@ You can download pre-built PTM releases on Itch.io here: https://fernandoairesca
 The latest released version is __0.2__.  
 The current development version is __0.3__ (pictured below).
 
-![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio_1.png?raw=true)
-![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio_2.png?raw=true)
-![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio_3.png?raw=true)
-![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio_4.png?raw=true)
-![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_lawnsim.png?raw=true)
+*Warning: development builds can be very unstable since they are being actively worked on and change frequently.
+Use at your own risk!*
 
-*Note: development builds can be *very* unstable since they are being actively worked on and change frequently. Use at your own risk!*
+## Screenshots
+
+All of the following screenshots are taken from the lastest development build.
+
+*Code editor view:*
+![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio_1.png?raw=true)
+
+*Tilebuffer editor view:*
+![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio_2.png?raw=true)
+
+*Tile editor:*
+![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio_3.png?raw=true)
+
+*Publish window:*
+![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio_4.png?raw=true)
+
+*PTML interpreter window:*
+![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_lawnsim.png?raw=true)
 
 ## Documentation
 
