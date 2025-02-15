@@ -31,28 +31,13 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.BtnSaveProgram = new System.Windows.Forms.ToolStripMenuItem();
-			this.BtnSaveEverything = new System.Windows.Forms.ToolStripMenuItem();
-			this.BtnSaveProject = new System.Windows.Forms.ToolStripMenuItem();
-			this.BtnPublish = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.BtnRelaunchIde = new System.Windows.Forms.ToolStripMenuItem();
-			this.BtnQuit = new System.Windows.Forms.ToolStripMenuItem();
 			this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.BtnSearchInProgram = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-			this.BtnViewPrgEdit = new System.Windows.Forms.ToolStripMenuItem();
-			this.BtnViewTilebufEdit = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.BtnAlternateEditor = new System.Windows.Forms.ToolStripMenuItem();
 			this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.BtnRun = new System.Windows.Forms.ToolStripMenuItem();
-			this.BtnRunEmpty = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.BtnHelp = new System.Windows.Forms.ToolStripMenuItem();
-			this.BtnAbout = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-			this.BtnBugReport = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.LbChanges = new System.Windows.Forms.ToolStripStatusLabel();
 			this.RootPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -64,6 +49,23 @@
 			this.RightPanel = new System.Windows.Forms.TableLayoutPanel();
 			this.BtmLeftPanel = new System.Windows.Forms.Panel();
 			this.TopLeftPanel = new System.Windows.Forms.Panel();
+			this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.BtnSaveProgram = new System.Windows.Forms.ToolStripMenuItem();
+			this.BtnSaveEverything = new System.Windows.Forms.ToolStripMenuItem();
+			this.BtnSaveProject = new System.Windows.Forms.ToolStripMenuItem();
+			this.BtnPublish = new System.Windows.Forms.ToolStripMenuItem();
+			this.BtnRelaunchIde = new System.Windows.Forms.ToolStripMenuItem();
+			this.BtnQuit = new System.Windows.Forms.ToolStripMenuItem();
+			this.BtnSearchInProgram = new System.Windows.Forms.ToolStripMenuItem();
+			this.BtnViewPrgEdit = new System.Windows.Forms.ToolStripMenuItem();
+			this.BtnViewTilebufEdit = new System.Windows.Forms.ToolStripMenuItem();
+			this.BtnAlternateEditor = new System.Windows.Forms.ToolStripMenuItem();
+			this.BtnRun = new System.Windows.Forms.ToolStripMenuItem();
+			this.BtnRunEmpty = new System.Windows.Forms.ToolStripMenuItem();
+			this.BtnEditSettingsFile = new System.Windows.Forms.ToolStripMenuItem();
+			this.BtnHelp = new System.Windows.Forms.ToolStripMenuItem();
+			this.BtnAbout = new System.Windows.Forms.ToolStripMenuItem();
+			this.BtnBugReport = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.RootPanel.SuspendLayout();
@@ -78,6 +80,7 @@
             this.fileToolStripMenuItem,
             this.viewToolStripMenuItem,
             this.runToolStripMenuItem,
+            this.settingsToolStripMenuItem,
             this.helpToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
@@ -98,6 +101,195 @@
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			this.fileToolStripMenuItem.Text = "File";
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(219, 6);
+			// 
+			// viewToolStripMenuItem
+			// 
+			this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BtnSearchInProgram,
+            this.toolStripSeparator4,
+            this.BtnViewPrgEdit,
+            this.BtnViewTilebufEdit,
+            this.toolStripSeparator2,
+            this.BtnAlternateEditor});
+			this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+			this.viewToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+			this.viewToolStripMenuItem.Text = "Edit";
+			// 
+			// toolStripSeparator4
+			// 
+			this.toolStripSeparator4.Name = "toolStripSeparator4";
+			this.toolStripSeparator4.Size = new System.Drawing.Size(212, 6);
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(212, 6);
+			// 
+			// runToolStripMenuItem
+			// 
+			this.runToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BtnRun,
+            this.BtnRunEmpty});
+			this.runToolStripMenuItem.Name = "runToolStripMenuItem";
+			this.runToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+			this.runToolStripMenuItem.Text = "Run";
+			// 
+			// helpToolStripMenuItem
+			// 
+			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BtnHelp,
+            this.BtnAbout,
+            this.toolStripSeparator3,
+            this.BtnBugReport});
+			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+			this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+			this.helpToolStripMenuItem.Text = "Help";
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(243, 6);
+			// 
+			// statusStrip1
+			// 
+			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LbChanges});
+			this.statusStrip1.Location = new System.Drawing.Point(0, 489);
+			this.statusStrip1.Name = "statusStrip1";
+			this.statusStrip1.Size = new System.Drawing.Size(884, 22);
+			this.statusStrip1.TabIndex = 1;
+			this.statusStrip1.Text = "statusStrip1";
+			// 
+			// LbChanges
+			// 
+			this.LbChanges.Name = "LbChanges";
+			this.LbChanges.Size = new System.Drawing.Size(99, 17);
+			this.LbChanges.Text = "Unsaved changes";
+			// 
+			// RootPanel
+			// 
+			this.RootPanel.BackColor = System.Drawing.SystemColors.Control;
+			this.RootPanel.ColumnCount = 3;
+			this.RootPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.31579F));
+			this.RootPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.68421F));
+			this.RootPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 268F));
+			this.RootPanel.Controls.Add(this.CenterPanel, 1, 0);
+			this.RootPanel.Controls.Add(this.LeftPanel, 0, 0);
+			this.RootPanel.Controls.Add(this.RightPanel, 2, 0);
+			this.RootPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.RootPanel.Location = new System.Drawing.Point(0, 24);
+			this.RootPanel.Margin = new System.Windows.Forms.Padding(0);
+			this.RootPanel.Name = "RootPanel";
+			this.RootPanel.Padding = new System.Windows.Forms.Padding(10, 10, 10, 15);
+			this.RootPanel.RowCount = 1;
+			this.RootPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.RootPanel.Size = new System.Drawing.Size(884, 465);
+			this.RootPanel.TabIndex = 2;
+			// 
+			// CenterPanel
+			// 
+			this.CenterPanel.ColumnCount = 1;
+			this.CenterPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.CenterPanel.Controls.Add(this.CenterBottomPanel, 0, 1);
+			this.CenterPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.CenterPanel.Location = new System.Drawing.Point(169, 10);
+			this.CenterPanel.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+			this.CenterPanel.Name = "CenterPanel";
+			this.CenterPanel.RowCount = 2;
+			this.CenterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.CenterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.CenterPanel.Size = new System.Drawing.Size(433, 440);
+			this.CenterPanel.TabIndex = 3;
+			// 
+			// CenterBottomPanel
+			// 
+			this.CenterBottomPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.CenterBottomPanel.Location = new System.Drawing.Point(0, 3);
+			this.CenterBottomPanel.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
+			this.CenterBottomPanel.Name = "CenterBottomPanel";
+			this.CenterBottomPanel.Size = new System.Drawing.Size(433, 440);
+			this.CenterBottomPanel.TabIndex = 0;
+			// 
+			// LeftPanel
+			// 
+			this.LeftPanel.ColumnCount = 1;
+			this.LeftPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.LeftPanel.Controls.Add(this.TopRightPanel, 0, 0);
+			this.LeftPanel.Controls.Add(this.BtmRightPanel, 0, 1);
+			this.LeftPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.LeftPanel.Location = new System.Drawing.Point(10, 10);
+			this.LeftPanel.Margin = new System.Windows.Forms.Padding(0);
+			this.LeftPanel.Name = "LeftPanel";
+			this.LeftPanel.RowCount = 2;
+			this.LeftPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.LeftPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.LeftPanel.Size = new System.Drawing.Size(156, 440);
+			this.LeftPanel.TabIndex = 1;
+			// 
+			// TopRightPanel
+			// 
+			this.TopRightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.TopRightPanel.Location = new System.Drawing.Point(3, 3);
+			this.TopRightPanel.Name = "TopRightPanel";
+			this.TopRightPanel.Size = new System.Drawing.Size(150, 214);
+			this.TopRightPanel.TabIndex = 1;
+			// 
+			// BtmRightPanel
+			// 
+			this.BtmRightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.BtmRightPanel.Location = new System.Drawing.Point(3, 226);
+			this.BtmRightPanel.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
+			this.BtmRightPanel.Name = "BtmRightPanel";
+			this.BtmRightPanel.Size = new System.Drawing.Size(150, 211);
+			this.BtmRightPanel.TabIndex = 2;
+			// 
+			// RightPanel
+			// 
+			this.RightPanel.ColumnCount = 1;
+			this.RightPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.RightPanel.Controls.Add(this.BtmLeftPanel, 0, 1);
+			this.RightPanel.Controls.Add(this.TopLeftPanel, 0, 0);
+			this.RightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.RightPanel.Location = new System.Drawing.Point(605, 10);
+			this.RightPanel.Margin = new System.Windows.Forms.Padding(0);
+			this.RightPanel.Name = "RightPanel";
+			this.RightPanel.RowCount = 2;
+			this.RightPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.RightPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.RightPanel.Size = new System.Drawing.Size(269, 440);
+			this.RightPanel.TabIndex = 2;
+			// 
+			// BtmLeftPanel
+			// 
+			this.BtmLeftPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.BtmLeftPanel.Location = new System.Drawing.Point(3, 226);
+			this.BtmLeftPanel.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
+			this.BtmLeftPanel.Name = "BtmLeftPanel";
+			this.BtmLeftPanel.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.BtmLeftPanel.Size = new System.Drawing.Size(263, 214);
+			this.BtmLeftPanel.TabIndex = 4;
+			// 
+			// TopLeftPanel
+			// 
+			this.TopLeftPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.TopLeftPanel.Location = new System.Drawing.Point(3, 3);
+			this.TopLeftPanel.Name = "TopLeftPanel";
+			this.TopLeftPanel.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.TopLeftPanel.Size = new System.Drawing.Size(263, 214);
+			this.TopLeftPanel.TabIndex = 3;
+			// 
+			// settingsToolStripMenuItem
+			// 
+			this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BtnEditSettingsFile});
+			this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+			this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+			this.settingsToolStripMenuItem.Text = "Settings";
 			// 
 			// BtnSaveProgram
 			// 
@@ -134,11 +326,6 @@
 			this.BtnPublish.Text = "Publish";
 			this.BtnPublish.Click += new System.EventHandler(this.BtnPublish_Click);
 			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(219, 6);
-			// 
 			// BtnRelaunchIde
 			// 
 			this.BtnRelaunchIde.Image = global::PTMStudio.Properties.Resources.restart_services;
@@ -157,19 +344,6 @@
 			this.BtnQuit.Text = "Quit";
 			this.BtnQuit.Click += new System.EventHandler(this.BtnQuit_Click);
 			// 
-			// viewToolStripMenuItem
-			// 
-			this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.BtnSearchInProgram,
-            this.toolStripSeparator4,
-            this.BtnViewPrgEdit,
-            this.BtnViewTilebufEdit,
-            this.toolStripSeparator2,
-            this.BtnAlternateEditor});
-			this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-			this.viewToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-			this.viewToolStripMenuItem.Text = "Edit";
-			// 
 			// BtnSearchInProgram
 			// 
 			this.BtnSearchInProgram.Image = global::PTMStudio.Properties.Resources.magnifier;
@@ -178,11 +352,6 @@
 			this.BtnSearchInProgram.Size = new System.Drawing.Size(215, 22);
 			this.BtnSearchInProgram.Text = "Search";
 			this.BtnSearchInProgram.Click += new System.EventHandler(this.BtnSearchInProgram_Click);
-			// 
-			// toolStripSeparator4
-			// 
-			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(212, 6);
 			// 
 			// BtnViewPrgEdit
 			// 
@@ -200,11 +369,6 @@
 			this.BtnViewTilebufEdit.Text = "Tilebuffer editor";
 			this.BtnViewTilebufEdit.Click += new System.EventHandler(this.BtnViewTilebufEdit_Click);
 			// 
-			// toolStripSeparator2
-			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(212, 6);
-			// 
 			// BtnAlternateEditor
 			// 
 			this.BtnAlternateEditor.Image = global::PTMStudio.Properties.Resources.arrow_refresh;
@@ -213,15 +377,6 @@
 			this.BtnAlternateEditor.Size = new System.Drawing.Size(215, 22);
 			this.BtnAlternateEditor.Text = "Switch between editors";
 			this.BtnAlternateEditor.Click += new System.EventHandler(this.BtnAlternateEditor_Click);
-			// 
-			// runToolStripMenuItem
-			// 
-			this.runToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.BtnRun,
-            this.BtnRunEmpty});
-			this.runToolStripMenuItem.Name = "runToolStripMenuItem";
-			this.runToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
-			this.runToolStripMenuItem.Text = "Run";
 			// 
 			// BtnRun
 			// 
@@ -240,16 +395,13 @@
 			this.BtnRunEmpty.Text = "Launch PTM without program";
 			this.BtnRunEmpty.Click += new System.EventHandler(this.BtnRunEmpty_Click);
 			// 
-			// helpToolStripMenuItem
+			// BtnEditSettingsFile
 			// 
-			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.BtnHelp,
-            this.BtnAbout,
-            this.toolStripSeparator3,
-            this.BtnBugReport});
-			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-			this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-			this.helpToolStripMenuItem.Text = "Help";
+			this.BtnEditSettingsFile.Image = global::PTMStudio.Properties.Resources.setting_tools;
+			this.BtnEditSettingsFile.Name = "BtnEditSettingsFile";
+			this.BtnEditSettingsFile.Size = new System.Drawing.Size(180, 22);
+			this.BtnEditSettingsFile.Text = "Edit settings.ini";
+			this.BtnEditSettingsFile.Click += new System.EventHandler(this.BtnEditSettingsFile_Click);
 			// 
 			// BtnHelp
 			// 
@@ -268,11 +420,6 @@
 			this.BtnAbout.Text = "About";
 			this.BtnAbout.Click += new System.EventHandler(this.BtnAbout_Click);
 			// 
-			// toolStripSeparator3
-			// 
-			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(243, 6);
-			// 
 			// BtnBugReport
 			// 
 			this.BtnBugReport.Image = global::PTMStudio.Properties.Resources.bug;
@@ -280,134 +427,6 @@
 			this.BtnBugReport.Size = new System.Drawing.Size(246, 22);
 			this.BtnBugReport.Text = "Submit a bug report (on GitHub)";
 			this.BtnBugReport.Click += new System.EventHandler(this.BtnBugReport_Click);
-			// 
-			// statusStrip1
-			// 
-			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.LbChanges});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 489);
-			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(884, 22);
-			this.statusStrip1.TabIndex = 1;
-			this.statusStrip1.Text = "statusStrip1";
-			// 
-			// LbChanges
-			// 
-			this.LbChanges.Name = "LbChanges";
-			this.LbChanges.Size = new System.Drawing.Size(99, 17);
-			this.LbChanges.Text = "Unsaved changes";
-			// 
-			// RootPanel
-			// 
-			this.RootPanel.BackColor = System.Drawing.SystemColors.Control;
-			this.RootPanel.ColumnCount = 3;
-			this.RootPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.31579F));
-			this.RootPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.68421F));
-			this.RootPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 267F));
-			this.RootPanel.Controls.Add(this.CenterPanel, 1, 0);
-			this.RootPanel.Controls.Add(this.LeftPanel, 0, 0);
-			this.RootPanel.Controls.Add(this.RightPanel, 2, 0);
-			this.RootPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.RootPanel.Location = new System.Drawing.Point(0, 24);
-			this.RootPanel.Margin = new System.Windows.Forms.Padding(0);
-			this.RootPanel.Name = "RootPanel";
-			this.RootPanel.Padding = new System.Windows.Forms.Padding(10, 10, 10, 15);
-			this.RootPanel.RowCount = 1;
-			this.RootPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.RootPanel.Size = new System.Drawing.Size(884, 465);
-			this.RootPanel.TabIndex = 2;
-			// 
-			// CenterPanel
-			// 
-			this.CenterPanel.ColumnCount = 1;
-			this.CenterPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.CenterPanel.Controls.Add(this.CenterBottomPanel, 0, 1);
-			this.CenterPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.CenterPanel.Location = new System.Drawing.Point(170, 10);
-			this.CenterPanel.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-			this.CenterPanel.Name = "CenterPanel";
-			this.CenterPanel.RowCount = 2;
-			this.CenterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.CenterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.CenterPanel.Size = new System.Drawing.Size(433, 440);
-			this.CenterPanel.TabIndex = 3;
-			// 
-			// CenterBottomPanel
-			// 
-			this.CenterBottomPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.CenterBottomPanel.Location = new System.Drawing.Point(0, 3);
-			this.CenterBottomPanel.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
-			this.CenterBottomPanel.Name = "CenterBottomPanel";
-			this.CenterBottomPanel.Size = new System.Drawing.Size(433, 440);
-			this.CenterBottomPanel.TabIndex = 0;
-			// 
-			// LeftPanel
-			// 
-			this.LeftPanel.ColumnCount = 1;
-			this.LeftPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.LeftPanel.Controls.Add(this.TopRightPanel, 0, 0);
-			this.LeftPanel.Controls.Add(this.BtmRightPanel, 0, 1);
-			this.LeftPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.LeftPanel.Location = new System.Drawing.Point(10, 10);
-			this.LeftPanel.Margin = new System.Windows.Forms.Padding(0);
-			this.LeftPanel.Name = "LeftPanel";
-			this.LeftPanel.RowCount = 2;
-			this.LeftPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.LeftPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.LeftPanel.Size = new System.Drawing.Size(157, 440);
-			this.LeftPanel.TabIndex = 1;
-			// 
-			// TopRightPanel
-			// 
-			this.TopRightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TopRightPanel.Location = new System.Drawing.Point(3, 3);
-			this.TopRightPanel.Name = "TopRightPanel";
-			this.TopRightPanel.Size = new System.Drawing.Size(151, 214);
-			this.TopRightPanel.TabIndex = 1;
-			// 
-			// BtmRightPanel
-			// 
-			this.BtmRightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.BtmRightPanel.Location = new System.Drawing.Point(3, 226);
-			this.BtmRightPanel.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
-			this.BtmRightPanel.Name = "BtmRightPanel";
-			this.BtmRightPanel.Size = new System.Drawing.Size(151, 211);
-			this.BtmRightPanel.TabIndex = 2;
-			// 
-			// RightPanel
-			// 
-			this.RightPanel.ColumnCount = 1;
-			this.RightPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.RightPanel.Controls.Add(this.BtmLeftPanel, 0, 1);
-			this.RightPanel.Controls.Add(this.TopLeftPanel, 0, 0);
-			this.RightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.RightPanel.Location = new System.Drawing.Point(606, 10);
-			this.RightPanel.Margin = new System.Windows.Forms.Padding(0);
-			this.RightPanel.Name = "RightPanel";
-			this.RightPanel.RowCount = 2;
-			this.RightPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.RightPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.RightPanel.Size = new System.Drawing.Size(268, 440);
-			this.RightPanel.TabIndex = 2;
-			// 
-			// BtmLeftPanel
-			// 
-			this.BtmLeftPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.BtmLeftPanel.Location = new System.Drawing.Point(3, 226);
-			this.BtmLeftPanel.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
-			this.BtmLeftPanel.Name = "BtmLeftPanel";
-			this.BtmLeftPanel.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.BtmLeftPanel.Size = new System.Drawing.Size(262, 214);
-			this.BtmLeftPanel.TabIndex = 4;
-			// 
-			// TopLeftPanel
-			// 
-			this.TopLeftPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TopLeftPanel.Location = new System.Drawing.Point(3, 3);
-			this.TopLeftPanel.Name = "TopLeftPanel";
-			this.TopLeftPanel.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.TopLeftPanel.Size = new System.Drawing.Size(262, 214);
-			this.TopLeftPanel.TabIndex = 3;
 			// 
 			// MainWindow
 			// 
@@ -472,6 +491,8 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripMenuItem BtnSearchInProgram;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+		private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem BtnEditSettingsFile;
 	}
 }
 

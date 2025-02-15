@@ -6,7 +6,12 @@ CALL init_player
 CALL init_player_missile
 CALL init_enemies
 
+SET score, 0
+
 main_loop:
+    LOCATE 8, 22
+    COLOR 2, 0
+    PRINTF "%05i", score
     CALL adjust_player_pos
     MOVETO player_spr,player_x,player_y
     CALL.E player_missile_active,1,move_player_missile
@@ -37,6 +42,7 @@ player_shoot:
     RET
 
 start_player_missile:
+    PLAY "L20 F5 D5 C5"
     SET player_missile_active,1
     SET player_missile_x, player_x
     SET player_missile_y, player_y
@@ -70,28 +76,48 @@ move_enemies:
 move_enemies_loop:
     CALL.E player_missile_active, 1, detect_enemy_collision
     MOVE enemy_index, 0, 1
+    SYGET enemy_index, enemy_y
+    CALL.L enemy_y, 8, hide_enemy
+    CALL.GE enemy_y, 8, show_enemy
+    CALL.GE enemy_y, 178, hide_enemy
     INC enemy_index
     GOTO.LE enemy_index, enemy_last_spr, move_enemies_loop
     RET
 detect_enemy_collision:
     CHKCOL has_collision, enemy_index, player_missile_spr
-    CALL.E has_collision, 1, kill_enemy
+    CALL.E has_collision, 1, try_kill_enemy
     RET
 
+hide_enemy:
+    SHOW enemy_index, 0
+    RET
+show_enemy:
+    SHOW enemy_index, 1
+    RET
+
+try_kill_enemy:
+    SGET enemy_index
+    PGET enemy_dead, "dead"
+    CALL.NE enemy_dead, "true", kill_enemy
+    RET
 kill_enemy:
+    PLAY "L20 C4 D4 F4"
+    CALL reset_player_missile
     TILE
     TILE ch_enemy_dead_1, color_red, color_magenta
     TILE ch_enemy_dead_2, color_orange, color_magenta
+    PSET "dead", "true"
     SPRITE enemy_index
+    INC score
     RET
 
 init_enemies:
     SET enemy_move_counter, 0
-    SET enemy_move_delay, 4
+    SET enemy_move_delay, 8
     SET enemy_index, enemy_first_spr
 init_enemies_loop:
-    RND enemy_x, 15, 30
-    RND enemy_y, -100, 0
+    RND enemy_x, 10, 32
+    RND enemy_y, -300, -1
     CALL init_enemy
     INC enemy_index
     GOTO.LE enemy_index, enemy_last_spr, init_enemies_loop
@@ -129,15 +155,16 @@ init_player:
 
 init_sprite_indices:
     SET invalid_spr, 0
-    SET player_missile_spr, 1
-    SET player_spr, 2
-    SET enemy_first_spr, 3
-    SET enemy_last_spr, 103
+    SET enemy_first_spr, 1
+    SET enemy_last_spr, 200
+    SET player_missile_spr, 201
+    SET player_spr, 202
     RET
 
 init_graphics:
     CURSOR 0
     AUTOREF 0
+    MODE 1
 
     # Colors
     SET color_black, 0

@@ -140,7 +140,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
     CMD("MOVETO", MOVE_SPRITE_TO);
     CMD("MOVE", MOVE_SPRITE_DIST);
     CMD("SHOW", SHOW_SPRITE);
-    CMD("SGET", GET_SPRITE);
+    CMD("SGET", GET_SPRITE_TILE);
     CMD("SXGET", GET_SPRITE_X);
     CMD("SYGET", GET_SPRITE_Y);
     CMD("CHKCOL", CHECK_SPRITE_COLLISION);

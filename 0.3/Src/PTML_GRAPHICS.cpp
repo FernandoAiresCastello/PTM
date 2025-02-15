@@ -416,7 +416,7 @@ void PTML::SHOW_SPRITE()
 	ptm->get_screen().get_sprite(sprite_number).set_visible(visible);
 }
 
-void PTML::GET_SPRITE()
+void PTML::GET_SPRITE_TILE()
 {
 	ARGC(1);
 	auto&& sprite_number = NUM(1);

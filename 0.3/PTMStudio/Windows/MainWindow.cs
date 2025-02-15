@@ -16,6 +16,7 @@ namespace PTMStudio
 	public partial class MainWindow : Form
     {
         private const string AutosavedProgramFile = "USR/TEMP" + KnownFileExtensions.Program;
+        private const string SettingsFile = "settings.ini";
 
 		private readonly string WindowTitle = "PTM 0.3";
 		private readonly string PtmExe;
@@ -122,10 +123,10 @@ namespace PTMStudio
 
 		private void LoadSettings()
         {
-            if (!File.Exists("settings.ini"))
+            if (!File.Exists(SettingsFile))
                 return;
 
-            Configuration config = Configuration.LoadFromFile("settings.ini");
+            Configuration config = Configuration.LoadFromFile(SettingsFile);
 
             if (config.Contains("PTM", "INITIAL_PROJECT"))
             {
@@ -669,6 +670,14 @@ namespace PTMStudio
 		private void BtnSearchInProgram_Click(object sender, EventArgs e)
 		{
             ProgramPanel.ActivateSearch();
+		}
+
+		private void BtnEditSettingsFile_Click(object sender, EventArgs e)
+		{
+            if (!File.Exists(SettingsFile))
+                File.Create(SettingsFile).Close();
+
+            Process.Start(SettingsFile);
 		}
 	}
 }

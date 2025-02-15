@@ -235,6 +235,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\setting_tools.png" />
     <None Include="Resources\restart_services.png" />
     <None Include="Resources\transform_move.png" />
     <None Include="Resources\sort_asc_az.png" />
