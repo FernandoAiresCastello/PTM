@@ -1,0 +1,50 @@
+<html>
+	<head>
+		<link rel='stylesheet' href='styles.css'>
+	</head>
+	<body>
+		<div class='command-name'>GOTO</div>
+		<div class='command-description'>Transfer execution to code starting at specified label</div>
+		
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>GOTO label</div>
+			<div class='syntax-description'>
+				Unconditionally go to label
+			</div>
+			<div class='syntax-format'>GOTO.E a, b, label</div>
+			<div class='syntax-description'>
+				Go to label if a = b
+			</div>
+			<div class='syntax-format'>GOTO.NE a, b, label</div>
+			<div class='syntax-description'>
+				Go to label if a != b (not equal)
+			</div>
+			<div class='syntax-format'>GOTO.G a, b, label</div>
+			<div class='syntax-description'>
+				Go to label if a > b
+			</div>
+			<div class='syntax-format'>GOTO.GE a, b, label</div>
+			<div class='syntax-description'>
+				Go to label if a >= b
+			</div>
+			<div class='syntax-format'>GOTO.L a, b, label</div>
+			<div class='syntax-description'>
+				Go to label if a < b
+			</div>
+			<div class='syntax-format'>GOTO.LE a, b, label</div>
+			<div class='syntax-description'>
+				Go to label if a <= b
+			</div>
+			<div class='syntax-format'>GOTO.K key, label</div>
+			<div class='syntax-description'>
+				Go to label if specified key is pressed
+			</div>
+			<div class='syntax-format'>GOTO.NK key, label</div>
+			<div class='syntax-description'>
+				Go to label if specified key is not pressed
+			</div>
+		</div>
+		
+	</body>
+</html>

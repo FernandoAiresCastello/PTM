@@ -14,12 +14,14 @@ void PTML::BEEP()
 
 void PTML::PLAY()
 {
-	ARGC(1);
-	SOUND.play_mml(STR(1));
-}
+	ARGC_MIN_MAX(1, 2);
 
-void PTML::LPLAY()
-{
-	ARGC(1);
-	SOUND.play_mml_loop(STR(1));
+	if (COUNT(1))
+		SOUND.play_mml(STR(1));
+	else {
+		if (BOOL(2))
+			SOUND.play_mml_loop(STR(1));
+		else
+			SOUND.play_mml(STR(1));
+	}
 }

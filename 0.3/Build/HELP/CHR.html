@@ -1,0 +1,35 @@
+<html>
+	<head>
+		<link rel='stylesheet' href='styles.css'>
+	</head>
+	<body>
+		<div class='command-name'>CHR</div>
+		<div class='command-description'>Set pixel pattern for character at charset index</div>
+		
+		<div class='syntax-header'>Syntax:</div>
+		
+		<div class='syntax'>
+			<div class='syntax-format'>CHR charset_index, 64_bit_pattern</div>
+			<div class='syntax-description'>
+				Set pixel pattern for character at charset index
+			</div>
+			<ul class='syntax-params'>
+				<li>charset_index = Charset index to alter</li>
+				<li>64_bit_pattern = Binary string of length 64, where "0" means a background pixel, and "1" means a foreground pixel in the pixel pattern. The string gets split into 8 substrings, each one of length 8, for each row of the pattern.</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>CHR charset_index, pattern_row, 8_bit_pattern</div>
+			<div class='syntax-description'>
+				Set pixel pattern for given pattern row of character at charset index
+			</div>
+			<ul class='syntax-params'>
+				<li>charset_index = Charset index to alter</li>
+				<li>pattern_row = Row index to alter</li>
+				<li>8_bit_pattern = Binary string of length 8, where "0" means a background pixel, and "1" means a foreground pixel in the pixel pattern of the given row.</li>
+			</ul>
+		</div>
+
+	</body>
+</html>

@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\HelpTopics.cs" />
     <Compile Include="Core\KnownFileExtensions.cs" />
     <Compile Include="Core\RecordFile.cs" />
     <Compile Include="Windows\AboutWindow.cs">
