@@ -363,24 +363,16 @@ void PTML::REFRESH()
 
 void PTML::SET_SPRITE()
 {
-	ARGC_MIN_MAX(1, 4);
+	ARGC(5);
 
 	auto&& sprite_number = NUM(1);
 	REQUIRE_SPRITE(sprite_number);
 
-	if (COUNT(1)) {
-		ptm->get_screen().set_sprite(sprite_number, TILEREG);
-	}
-	else if (COUNT(3) || COUNT(4)) {
-		auto&& x = NUM(2);
-		auto&& y = NUM(3);
-		bool visible = COUNT(4) ? NUM(4) : true;
-		ptm->get_screen().set_sprite(sprite_number, TILEREG, t_pos(x, y), visible);
-	}
-	else {
-		error = err.invalid_argc;
-		return;
-	}
+	auto&& x = NUM(2);
+	auto&& y = NUM(3);
+	bool transparent = BOOL(4);
+	bool visible = BOOL(5);
+	ptm->get_screen().set_sprite(sprite_number, TILEREG, t_pos(x, y), visible, transparent);
 }
 
 void PTML::MOVE_SPRITE()
@@ -409,5 +401,12 @@ void PTML::GET_SPRITE()
 	ARGC(1);
 	auto&& sprite_number = NUM(1);
 	REQUIRE_SPRITE(sprite_number);
+
 	TILEREG = ptm->get_screen().get_sprite(sprite_number).get_tile();
+}
+
+void PTML::ENABLE_SPRITES()
+{
+	ARGC(1);
+	ptm->get_screen().show_sprites(BOOL(1));
 }

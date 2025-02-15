@@ -1,18 +1,44 @@
 TITLE "PTM INVADERS"
 
 CALL init_graphics
+CALL init_sprite_indices
 CALL init_player
+CALL init_player_missile
 
 main_loop:
     LOCATE 0,0
-    #PRINTF "%03i", player_x
     CALL adjust_player_pos
     MOVE player_spr,player_x,player_y
+    CALL.E player_can_shoot,0,move_player_missile
     INKEY key
     CALL.K "RIGHT", player_move_right
     CALL.K "LEFT", player_move_left
+    CALL.K "SPACE", player_shoot
     REFRESH
     GOTO main_loop
+
+move_player_missile:
+    SUB player_missile_y, 2
+    MOVE player_missile_spr, player_missile_x, player_missile_y
+    CALL.L player_missile_y, player_missile_min_y, reset_player_missile
+    RET
+
+reset_player_missile:
+    SHOW player_missile_spr,0
+    MOVE player_missile_spr,-10,-10
+    SET player_can_shoot,1
+    RET
+
+player_shoot:
+    CALL.E player_can_shoot, 1, start_player_missile
+    RET
+
+start_player_missile:
+    SET player_can_shoot,0
+    SET player_missile_x, player_x
+    SET player_missile_y, player_y
+    SHOW player_missile_spr,1
+    RET
 
 player_move_right:
     ADD player_x, 2
@@ -35,15 +61,33 @@ fix_player_x_max:
     SET player_x, player_min_x
     RET
 
+init_player_missile:
+    TILE
+    TILE ch_missile, color_cyan, color_magenta
+    SET player_missile_min_y, 8
+    SET player_missile_x, -10
+    SET player_missile_y, -10
+    SUB player_missile_y, 8
+    SPRITE player_missile_spr, player_missile_x, player_missile_y, 1, 0
+    RET
+
 init_player:
     TILE
-    TILE ch_player, color_white, color_blue
-    SET player_spr, 0
+    TILE ch_player, color_white, color_magenta
     SET player_x, 175
     SET player_y, 170
     SET player_min_x, 16
     SET player_max_x, 336
-    SPRITE player_spr,player_x,player_y
+    SPRITE player_spr, player_x, player_y, 1, 1
+    SET player_can_shoot, 1
+    RET
+
+init_sprite_indices:
+    SET invalid_spr, 0
+    SET player_missile_spr, 1
+    SET player_spr, 2
+    SET enemy_first_spr, 3
+    SET enemy_last_spr, 103
     RET
 
 init_graphics:
@@ -63,6 +107,7 @@ init_graphics:
     SET color_orange, 9
     SET color_cyan, 10
     SET color_green_lt, 11
+    SET color_magenta, 12
 
     # Characters
     SET ch_blank, 0

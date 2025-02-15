@@ -40,6 +40,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\ScintillaNET.dll</HintPath>
     </Reference>
+    <Reference Include="SharpConfig">
+      <HintPath>.\SharpConfig.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression.FileSystem" />
@@ -272,6 +275,7 @@
     <None Include="Resources\arrow_right1.png" />
     <None Include="Resources\arrow_left1.png" />
     <None Include="Resources\bug.png" />
+    <None Include="Resources\magnifier.png" />
     <Content Include="Resources\ptm_icon.ico" />
     <None Include="Resources\page_white_paste.png" />
     <None Include="Resources\update.png" />

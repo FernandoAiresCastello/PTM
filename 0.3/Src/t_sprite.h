@@ -11,7 +11,7 @@ public:
 	bool enabled = false;
 
 	t_sprite(bool grid);
-	t_sprite(const t_tile& tile, const t_pos& pos, bool grid, bool visible);
+	t_sprite(const t_tile& tile, const t_pos& pos, bool grid, bool visible, bool transparent);
 	t_sprite(const t_sprite& other);
 
 	void set_tile(const t_tile& tile);

@@ -103,8 +103,9 @@ public:
 	void save(const t_string& filename);
 	void load(const t_string& filename);
 	void set_sprite(int index, const t_tile& tile);
-	void set_sprite(int index, const t_tile& tile, const t_pos& pos, bool visible);
+	void set_sprite(int index, const t_tile& tile, const t_pos& pos, bool visible, bool transparent);
 	t_sprite& get_sprite(int index);
+	void show_sprites(bool show);
 
 private:
 	t_window* wnd = nullptr;

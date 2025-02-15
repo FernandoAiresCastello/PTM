@@ -1,5 +1,6 @@
 ﻿using PTMStudio.Core;
 using PTMStudio.Windows;
+using SharpConfig;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -115,7 +116,23 @@ namespace PTMStudio
 
             FormClosing += MainWindow_FormClosing;
             //Resize += (s, e) => { Text = Size.ToString(); };
+
+            LoadSettings();
 		}
+
+		private void LoadSettings()
+        {
+            if (!File.Exists("settings.ini"))
+                return;
+
+            Configuration config = Configuration.LoadFromFile("settings.ini");
+
+            if (config.Contains("PTM", "INITIAL_PROJECT"))
+            {
+                string initialProject = config["PTM"]["INITIAL_PROJECT"].StringValue;
+                LoadProject(Path.Combine(Filesystem.UserRootDirName, initialProject));
+            }
+        }
 
 		private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -647,6 +664,11 @@ namespace PTMStudio
 		private void BtnBugReport_Click(object sender, EventArgs e)
 		{
             Process.Start("https://github.com/FernandoAiresCastello/PTM/issues");
+		}
+
+		private void BtnSearchInProgram_Click(object sender, EventArgs e)
+		{
+            ProgramPanel.ActivateSearch();
 		}
 	}
 }

@@ -27,7 +27,7 @@ t_tilebuffer::t_tilebuffer(int cols, int rows) :
 	clear();
 
 	cursor_sprite = std::make_shared<t_sprite>(
-		t_tile(predef_char.cursor, 0, 0, t_tileflags()), t_pos(0, 0), true, true);
+		t_tile(predef_char.cursor, 0, 0, t_tileflags()), t_pos(0, 0), true, true, false);
 
 	cursor_sprite->enabled = true;
 }

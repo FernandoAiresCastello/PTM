@@ -652,13 +652,19 @@ void t_screen::set_sprite(int index, const t_tile& tile)
 	buf->sprites.get(index).set_tile(tile);
 }
 
-void t_screen::set_sprite(int index, const t_tile& tile, const t_pos& pos, bool visible)
+void t_screen::set_sprite(int index, const t_tile& tile, const t_pos& pos, bool visible, bool transparent)
 {
-	t_sprite sprite(tile, pos, false, visible);
+	t_sprite sprite(tile, pos, false, visible, transparent);
 	buf->sprites.set(index, sprite);
 }
 
 t_sprite& t_screen::get_sprite(int index)
 {
 	return buf->sprites.get(index);
+}
+
+void t_screen::show_sprites(bool show)
+{
+	for (auto& spr : buf->sprites.get_all())
+		spr.set_visible(show);
 }

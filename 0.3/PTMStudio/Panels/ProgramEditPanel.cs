@@ -36,9 +36,21 @@ namespace PTMStudio
 
             SetFont("Consolas");
             SetFontSize(9);
-        }
 
-        private void Scintilla_KeyDown(object sender, KeyEventArgs e)
+			SearchPanel.Visible = false;
+			TxtSearch.KeyDown += TxtSearch_KeyDown;
+		}
+
+		private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
+		{
+            if (e.KeyCode == Keys.Enter)
+            {
+				e.Handled = true;
+				Search();
+            }
+		}
+
+		private void Scintilla_KeyDown(object sender, KeyEventArgs e)
         {
             MainWindow.ProgramChanged(true);
         }
@@ -138,6 +150,41 @@ namespace PTMStudio
 		private void BtnSave_Click(object sender, EventArgs e)
 		{
             MainWindow.SaveProgramFile();
+		}
+
+		private void BtnActivateSearch_Click(object sender, EventArgs e)
+		{
+            ActivateSearch();
+		}
+
+        public void ActivateSearch()
+        {
+			SearchPanel.Visible = !SearchPanel.Visible;
+			if (SearchPanel.Visible)
+				TxtSearch.Focus();
+		}
+
+		private void BtnSearch_Click(object sender, EventArgs e)
+		{
+            Search();
+		}
+
+        private void Search()
+        {
+            try
+            {
+                string substring = TxtSearch.Text.Trim();
+
+                Scintilla.TargetStart = Scintilla.CurrentPosition;
+                Scintilla.TargetEnd = Scintilla.TextLength;
+
+                int pos = Scintilla.SearchInTarget(substring);
+                Scintilla.SetSel(pos, pos + substring.Length);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.Error("An error occurred during search.", ex);
+            }
 		}
 	}
 }

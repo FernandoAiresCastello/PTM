@@ -47,4 +47,5 @@ namespace PTML
 	void MOVE_SPRITE();
 	void SHOW_SPRITE();
 	void GET_SPRITE();
+	void ENABLE_SPRITES();
 }

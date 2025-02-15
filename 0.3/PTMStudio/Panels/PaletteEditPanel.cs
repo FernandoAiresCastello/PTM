@@ -261,9 +261,10 @@ namespace PTMStudio
                     Filename = dialog.Text.ToUpper();
                 else
                     return;
-            }
 
-            Filename = Filesystem.GetUserFilePath(Filename);
+				Filename = Filesystem.GetUserFilePath(Filename);
+			}
+
 			if (!Filename.EndsWith(KnownFileExtensions.Palette))
 				Filename += KnownFileExtensions.Palette;
 

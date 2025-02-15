@@ -4,10 +4,11 @@ t_sprite::t_sprite(bool grid) : tile(), pos(), grid(grid)
 {
 }
 
-t_sprite::t_sprite(const t_tile& tile, const t_pos& pos, bool grid, bool visible) : 
+t_sprite::t_sprite(const t_tile& tile, const t_pos& pos, bool grid, bool visible, bool transparent) : 
 	tile(tile), pos(pos), grid(grid)
 {
 	this->tile.flags.visible = visible;
+	this->tile.flags.hide_bgc = transparent;
 }
 
 t_sprite::t_sprite(const t_sprite& other)

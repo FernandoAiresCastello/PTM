@@ -139,6 +139,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
     CMD("MOVE", MOVE_SPRITE);
     CMD("SHOW", SHOW_SPRITE);
     CMD("SGET", GET_SPRITE);
+    CMD("ENASPR", ENABLE_SPRITES);
 
     // === SOUND ===
     CMD("BEEP", BEEP);
