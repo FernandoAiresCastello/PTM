@@ -47,6 +47,7 @@
 			this.RightPanel = new System.Windows.Forms.TableLayoutPanel();
 			this.BtmLeftPanel = new System.Windows.Forms.Panel();
 			this.TopLeftPanel = new System.Windows.Forms.Panel();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.BtnSaveProgram = new System.Windows.Forms.ToolStripMenuItem();
 			this.BtnSaveEverything = new System.Windows.Forms.ToolStripMenuItem();
 			this.BtnSaveProject = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,6 +61,7 @@
 			this.BtnAlternateEditor = new System.Windows.Forms.ToolStripMenuItem();
 			this.BtnHelp = new System.Windows.Forms.ToolStripMenuItem();
 			this.BtnAbout = new System.Windows.Forms.ToolStripMenuItem();
+			this.BtnBugReport = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.RootPanel.SuspendLayout();
@@ -129,7 +131,9 @@
 			// 
 			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BtnHelp,
-            this.BtnAbout});
+            this.BtnAbout,
+            this.toolStripSeparator3,
+            this.BtnBugReport});
 			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
 			this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
 			this.helpToolStripMenuItem.Text = "Help";
@@ -156,7 +160,7 @@
 			this.RootPanel.ColumnCount = 3;
 			this.RootPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.31579F));
 			this.RootPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.68421F));
-			this.RootPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 272F));
+			this.RootPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 267F));
 			this.RootPanel.Controls.Add(this.CenterPanel, 1, 0);
 			this.RootPanel.Controls.Add(this.LeftPanel, 0, 0);
 			this.RootPanel.Controls.Add(this.RightPanel, 2, 0);
@@ -176,13 +180,13 @@
 			this.CenterPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.CenterPanel.Controls.Add(this.CenterBottomPanel, 0, 1);
 			this.CenterPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.CenterPanel.Location = new System.Drawing.Point(168, 10);
+			this.CenterPanel.Location = new System.Drawing.Point(170, 10);
 			this.CenterPanel.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
 			this.CenterPanel.Name = "CenterPanel";
 			this.CenterPanel.RowCount = 2;
 			this.CenterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.CenterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.CenterPanel.Size = new System.Drawing.Size(430, 440);
+			this.CenterPanel.Size = new System.Drawing.Size(433, 440);
 			this.CenterPanel.TabIndex = 3;
 			// 
 			// CenterBottomPanel
@@ -191,7 +195,7 @@
 			this.CenterBottomPanel.Location = new System.Drawing.Point(0, 3);
 			this.CenterBottomPanel.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
 			this.CenterBottomPanel.Name = "CenterBottomPanel";
-			this.CenterBottomPanel.Size = new System.Drawing.Size(430, 440);
+			this.CenterBottomPanel.Size = new System.Drawing.Size(433, 440);
 			this.CenterBottomPanel.TabIndex = 0;
 			// 
 			// LeftPanel
@@ -207,7 +211,7 @@
 			this.LeftPanel.RowCount = 2;
 			this.LeftPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.LeftPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.LeftPanel.Size = new System.Drawing.Size(155, 440);
+			this.LeftPanel.Size = new System.Drawing.Size(157, 440);
 			this.LeftPanel.TabIndex = 1;
 			// 
 			// TopRightPanel
@@ -215,7 +219,7 @@
 			this.TopRightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.TopRightPanel.Location = new System.Drawing.Point(3, 3);
 			this.TopRightPanel.Name = "TopRightPanel";
-			this.TopRightPanel.Size = new System.Drawing.Size(149, 214);
+			this.TopRightPanel.Size = new System.Drawing.Size(151, 214);
 			this.TopRightPanel.TabIndex = 1;
 			// 
 			// BtmRightPanel
@@ -224,7 +228,7 @@
 			this.BtmRightPanel.Location = new System.Drawing.Point(3, 226);
 			this.BtmRightPanel.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
 			this.BtmRightPanel.Name = "BtmRightPanel";
-			this.BtmRightPanel.Size = new System.Drawing.Size(149, 211);
+			this.BtmRightPanel.Size = new System.Drawing.Size(151, 211);
 			this.BtmRightPanel.TabIndex = 2;
 			// 
 			// RightPanel
@@ -234,13 +238,13 @@
 			this.RightPanel.Controls.Add(this.BtmLeftPanel, 0, 1);
 			this.RightPanel.Controls.Add(this.TopLeftPanel, 0, 0);
 			this.RightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.RightPanel.Location = new System.Drawing.Point(601, 10);
+			this.RightPanel.Location = new System.Drawing.Point(606, 10);
 			this.RightPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.RightPanel.Name = "RightPanel";
 			this.RightPanel.RowCount = 2;
 			this.RightPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.RightPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.RightPanel.Size = new System.Drawing.Size(273, 440);
+			this.RightPanel.Size = new System.Drawing.Size(268, 440);
 			this.RightPanel.TabIndex = 2;
 			// 
 			// BtmLeftPanel
@@ -250,7 +254,7 @@
 			this.BtmLeftPanel.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
 			this.BtmLeftPanel.Name = "BtmLeftPanel";
 			this.BtmLeftPanel.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.BtmLeftPanel.Size = new System.Drawing.Size(267, 214);
+			this.BtmLeftPanel.Size = new System.Drawing.Size(262, 214);
 			this.BtmLeftPanel.TabIndex = 4;
 			// 
 			// TopLeftPanel
@@ -259,8 +263,13 @@
 			this.TopLeftPanel.Location = new System.Drawing.Point(3, 3);
 			this.TopLeftPanel.Name = "TopLeftPanel";
 			this.TopLeftPanel.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.TopLeftPanel.Size = new System.Drawing.Size(267, 214);
+			this.TopLeftPanel.Size = new System.Drawing.Size(262, 214);
 			this.TopLeftPanel.TabIndex = 3;
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(243, 6);
 			// 
 			// BtnSaveProgram
 			// 
@@ -362,7 +371,7 @@
 			this.BtnHelp.Image = global::PTMStudio.Properties.Resources.help;
 			this.BtnHelp.Name = "BtnHelp";
 			this.BtnHelp.ShortcutKeys = System.Windows.Forms.Keys.F1;
-			this.BtnHelp.Size = new System.Drawing.Size(233, 22);
+			this.BtnHelp.Size = new System.Drawing.Size(246, 22);
 			this.BtnHelp.Text = "PTML command reference";
 			this.BtnHelp.Click += new System.EventHandler(this.BtnHelp_Click);
 			// 
@@ -370,9 +379,17 @@
 			// 
 			this.BtnAbout.Image = global::PTMStudio.Properties.Resources.information;
 			this.BtnAbout.Name = "BtnAbout";
-			this.BtnAbout.Size = new System.Drawing.Size(233, 22);
+			this.BtnAbout.Size = new System.Drawing.Size(246, 22);
 			this.BtnAbout.Text = "About";
 			this.BtnAbout.Click += new System.EventHandler(this.BtnAbout_Click);
+			// 
+			// BtnBugReport
+			// 
+			this.BtnBugReport.Image = global::PTMStudio.Properties.Resources.bug;
+			this.BtnBugReport.Name = "BtnBugReport";
+			this.BtnBugReport.Size = new System.Drawing.Size(246, 22);
+			this.BtnBugReport.Text = "Submit a bug report (on GitHub)";
+			this.BtnBugReport.Click += new System.EventHandler(this.BtnBugReport_Click);
 			// 
 			// MainWindow
 			// 
@@ -433,6 +450,8 @@
 		private System.Windows.Forms.ToolStripMenuItem BtnRelaunchIde;
 		private System.Windows.Forms.ToolStripMenuItem BtnSaveProgram;
 		private System.Windows.Forms.ToolStripMenuItem BtnPublish;
+		private System.Windows.Forms.ToolStripMenuItem BtnBugReport;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 	}
 }
 

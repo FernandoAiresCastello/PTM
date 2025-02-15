@@ -13,7 +13,7 @@ namespace PTMStudio
             Application.SetCompatibleTextRenderingDefault(false);
 
 			string dir = Environment.CurrentDirectory;
-			string ptmExe = "PTM_INTP.exe";
+			string ptmExe = "ptml.exe";
             string ptmExePath = Path.Combine(dir, ptmExe);
 
             if (File.Exists(ptmExePath))

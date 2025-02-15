@@ -80,6 +80,7 @@ namespace PTMStudio
 					case KnownFileExtensions.TileBuffer: imageIndex = 6; break;
 					case KnownFileExtensions.Project: imageIndex = 7; break;
                     case KnownFileExtensions.Data: imageIndex = 9; break;
+                    case KnownFileExtensions.PublishProfile: imageIndex = 10; break;
 				}
 
 				var fileNode = new TreeNode(file.Name, imageIndex, imageIndex) { Name = file.Name };

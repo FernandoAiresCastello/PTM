@@ -257,7 +257,13 @@ namespace PTMStudio
 
                 LoadProject(file);
             }
-            else
+			else if (ext == KnownFileExtensions.PublishProfile)
+            {
+				PublishWindow wnd = new PublishWindow();
+                wnd.LoadProfile(file);
+				wnd.ShowDialog(this);
+			}
+			else
             {
                 Warning("Unsupported file format");
             }
@@ -526,8 +532,6 @@ namespace PTMStudio
                 TilebufferPanel.LoadFile(lines[3], false);
 
 			AlertOnStatusBar("Project loaded from: " + file, 2);
-
-			Text = WindowTitle + " - Project: " + file;
         }
 
         public void NewProgramLoaded(string file)
@@ -629,6 +633,11 @@ namespace PTMStudio
 		{
             PublishWindow wnd = new PublishWindow();
             wnd.ShowDialog(this);
+		}
+
+		private void BtnBugReport_Click(object sender, EventArgs e)
+		{
+            Process.Start("https://github.com/FernandoAiresCastello/PTM/issues");
 		}
 	}
 }

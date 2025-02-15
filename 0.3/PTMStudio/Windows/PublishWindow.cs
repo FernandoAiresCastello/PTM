@@ -1,15 +1,15 @@
-﻿using System;
+﻿using PTMStudio.Core;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Windows.Forms;
-using PTMStudio.Core;
 
 namespace PTMStudio.Windows
 {
-    public partial class PublishWindow : Form
+	public partial class PublishWindow : Form
 	{
 		private readonly FilesystemPanel FsPanel;
 		private readonly TreeView FileTree;
@@ -175,7 +175,7 @@ namespace PTMStudio.Windows
 			{
 				string renamedPtmExe = TxtProductName.Text.Trim() + ".exe";
 
-				CopySystemFileAs("PTM_INTP.exe", renamedPtmExe, outputFolder);
+				CopySystemFileAs("ptml.exe", renamedPtmExe, outputFolder);
 				CopySystemFile("SDL2.dll", outputFolder);
 
 				TryCreateFolder(Path.Combine(outputFolder, Filesystem.SysRootDirName));
@@ -284,15 +284,20 @@ namespace PTMStudio.Windows
             var dialog = new OpenFileDialog();
             dialog.DefaultExt = KnownFileExtensions.PublishProfile;
             if (dialog.ShowDialog() != DialogResult.OK)
-                return;
+				return;
 
-			var lines = File.ReadAllLines(dialog.FileName);
+			LoadProfile(dialog.FileName);
+		}
+
+		public void LoadProfile(string path)
+		{
+			var lines = File.ReadAllLines(path);
 
 			TxtProductName.Text = lines[0];
 			TxtFolder.Text = lines[1];
-            CmbMainProgram.Items.Add(lines[2]);
+			CmbMainProgram.Items.Add(lines[2]);
 			CmbMainProgram.SelectedIndex = 0;
-            ChkZip.Checked = bool.Parse(lines[3]);
+			ChkZip.Checked = bool.Parse(lines[3]);
 			ChkOpenPublishFolder.Checked = bool.Parse(lines[4]);
 
 			foreach (TreeNode node in PublishTree.Nodes)
@@ -301,9 +306,9 @@ namespace PTMStudio.Windows
 					PublishTree.Nodes.Remove(node);
 			}
 
-            for (int i = 5; i < lines.Length; i++)
-                AddFileFromPublishProfile(lines[i]);
-        }
+			for (int i = 5; i < lines.Length; i++)
+				AddFileFromPublishProfile(lines[i]);
+		}
 
         private void BtnSaveProfile_Click(object sender, EventArgs e)
         {
