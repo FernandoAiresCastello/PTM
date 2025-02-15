@@ -102,7 +102,7 @@ public:
 	const t_tilebuffer_region& get_viewport();
 	void save(const t_string& filename);
 	void load(const t_string& filename);
-	void set_sprite(int index, const t_tile& tile);
+	void set_sprite_tile_keep_flags(int index, const t_tile& tile);
 	void set_sprite(int index, const t_tile& tile, const t_pos& pos, bool visible, bool transparent);
 	t_sprite& get_sprite(int index);
 	void show_sprites(bool show);

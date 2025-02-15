@@ -135,11 +135,15 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
     CMD("FILL", FILL);
 
     // === SPRITES ===
+    CMD("ENASPR", ENABLE_SPRITES);
     CMD("SPRITE", SET_SPRITE);
-    CMD("MOVE", MOVE_SPRITE);
+    CMD("MOVETO", MOVE_SPRITE_TO);
+    CMD("MOVE", MOVE_SPRITE_DIST);
     CMD("SHOW", SHOW_SPRITE);
     CMD("SGET", GET_SPRITE);
-    CMD("ENASPR", ENABLE_SPRITES);
+    CMD("SXGET", GET_SPRITE_X);
+    CMD("SYGET", GET_SPRITE_Y);
+    CMD("CHKCOL", CHECK_SPRITE_COLLISION);
 
     // === SOUND ===
     CMD("BEEP", BEEP);

@@ -38,14 +38,16 @@
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.BtnRelaunchIde = new System.Windows.Forms.ToolStripMenuItem();
 			this.BtnQuit = new System.Windows.Forms.ToolStripMenuItem();
-			this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.BtnRun = new System.Windows.Forms.ToolStripMenuItem();
-			this.BtnRunEmpty = new System.Windows.Forms.ToolStripMenuItem();
 			this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.BtnSearchInProgram = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.BtnViewPrgEdit = new System.Windows.Forms.ToolStripMenuItem();
 			this.BtnViewTilebufEdit = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.BtnAlternateEditor = new System.Windows.Forms.ToolStripMenuItem();
+			this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.BtnRun = new System.Windows.Forms.ToolStripMenuItem();
+			this.BtnRunEmpty = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.BtnHelp = new System.Windows.Forms.ToolStripMenuItem();
 			this.BtnAbout = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,8 +64,6 @@
 			this.RightPanel = new System.Windows.Forms.TableLayoutPanel();
 			this.BtmLeftPanel = new System.Windows.Forms.Panel();
 			this.TopLeftPanel = new System.Windows.Forms.Panel();
-			this.BtnSearchInProgram = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.RootPanel.SuspendLayout();
@@ -157,32 +157,6 @@
 			this.BtnQuit.Text = "Quit";
 			this.BtnQuit.Click += new System.EventHandler(this.BtnQuit_Click);
 			// 
-			// runToolStripMenuItem
-			// 
-			this.runToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.BtnRun,
-            this.BtnRunEmpty});
-			this.runToolStripMenuItem.Name = "runToolStripMenuItem";
-			this.runToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
-			this.runToolStripMenuItem.Text = "Run";
-			// 
-			// BtnRun
-			// 
-			this.BtnRun.Image = global::PTMStudio.Properties.Resources.control_play_blue;
-			this.BtnRun.Name = "BtnRun";
-			this.BtnRun.ShortcutKeys = System.Windows.Forms.Keys.F5;
-			this.BtnRun.Size = new System.Drawing.Size(233, 22);
-			this.BtnRun.Text = "Run current program";
-			this.BtnRun.Click += new System.EventHandler(this.BtnRun_Click);
-			// 
-			// BtnRunEmpty
-			// 
-			this.BtnRunEmpty.Image = global::PTMStudio.Properties.Resources.control_play;
-			this.BtnRunEmpty.Name = "BtnRunEmpty";
-			this.BtnRunEmpty.Size = new System.Drawing.Size(233, 22);
-			this.BtnRunEmpty.Text = "Launch PTM without program";
-			this.BtnRunEmpty.Click += new System.EventHandler(this.BtnRunEmpty_Click);
-			// 
 			// viewToolStripMenuItem
 			// 
 			this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -195,6 +169,20 @@
 			this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
 			this.viewToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
 			this.viewToolStripMenuItem.Text = "Edit";
+			// 
+			// BtnSearchInProgram
+			// 
+			this.BtnSearchInProgram.Image = global::PTMStudio.Properties.Resources.magnifier;
+			this.BtnSearchInProgram.Name = "BtnSearchInProgram";
+			this.BtnSearchInProgram.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
+			this.BtnSearchInProgram.Size = new System.Drawing.Size(215, 22);
+			this.BtnSearchInProgram.Text = "Search";
+			this.BtnSearchInProgram.Click += new System.EventHandler(this.BtnSearchInProgram_Click);
+			// 
+			// toolStripSeparator4
+			// 
+			this.toolStripSeparator4.Name = "toolStripSeparator4";
+			this.toolStripSeparator4.Size = new System.Drawing.Size(212, 6);
 			// 
 			// BtnViewPrgEdit
 			// 
@@ -225,6 +213,32 @@
 			this.BtnAlternateEditor.Size = new System.Drawing.Size(215, 22);
 			this.BtnAlternateEditor.Text = "Switch between editors";
 			this.BtnAlternateEditor.Click += new System.EventHandler(this.BtnAlternateEditor_Click);
+			// 
+			// runToolStripMenuItem
+			// 
+			this.runToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BtnRun,
+            this.BtnRunEmpty});
+			this.runToolStripMenuItem.Name = "runToolStripMenuItem";
+			this.runToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+			this.runToolStripMenuItem.Text = "Run";
+			// 
+			// BtnRun
+			// 
+			this.BtnRun.Image = global::PTMStudio.Properties.Resources.control_play_blue;
+			this.BtnRun.Name = "BtnRun";
+			this.BtnRun.ShortcutKeys = System.Windows.Forms.Keys.F5;
+			this.BtnRun.Size = new System.Drawing.Size(233, 22);
+			this.BtnRun.Text = "Run current program";
+			this.BtnRun.Click += new System.EventHandler(this.BtnRun_Click);
+			// 
+			// BtnRunEmpty
+			// 
+			this.BtnRunEmpty.Image = global::PTMStudio.Properties.Resources.control_play;
+			this.BtnRunEmpty.Name = "BtnRunEmpty";
+			this.BtnRunEmpty.Size = new System.Drawing.Size(233, 22);
+			this.BtnRunEmpty.Text = "Launch PTM without program";
+			this.BtnRunEmpty.Click += new System.EventHandler(this.BtnRunEmpty_Click);
 			// 
 			// helpToolStripMenuItem
 			// 
@@ -394,20 +408,6 @@
 			this.TopLeftPanel.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.TopLeftPanel.Size = new System.Drawing.Size(262, 214);
 			this.TopLeftPanel.TabIndex = 3;
-			// 
-			// BtnSearchInProgram
-			// 
-			this.BtnSearchInProgram.Image = global::PTMStudio.Properties.Resources.magnifier;
-			this.BtnSearchInProgram.Name = "BtnSearchInProgram";
-			this.BtnSearchInProgram.ShortcutKeys = System.Windows.Forms.Keys.F3;
-			this.BtnSearchInProgram.Size = new System.Drawing.Size(215, 22);
-			this.BtnSearchInProgram.Text = "Search";
-			this.BtnSearchInProgram.Click += new System.EventHandler(this.BtnSearchInProgram_Click);
-			// 
-			// toolStripSeparator4
-			// 
-			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(212, 6);
 			// 
 			// MainWindow
 			// 

@@ -363,19 +363,28 @@ void PTML::REFRESH()
 
 void PTML::SET_SPRITE()
 {
-	ARGC(5);
+	ARGC_MIN_MAX(1, 5);
 
 	auto&& sprite_number = NUM(1);
 	REQUIRE_SPRITE(sprite_number);
 
-	auto&& x = NUM(2);
-	auto&& y = NUM(3);
-	bool transparent = BOOL(4);
-	bool visible = BOOL(5);
-	ptm->get_screen().set_sprite(sprite_number, TILEREG, t_pos(x, y), visible, transparent);
+	if (COUNT(5)) {
+		auto&& x = NUM(2);
+		auto&& y = NUM(3);
+		bool transparent = BOOL(4);
+		bool visible = BOOL(5);
+		ptm->get_screen().set_sprite(sprite_number, TILEREG, t_pos(x, y), visible, transparent);
+	}
+	else if (COUNT(1)) {
+		ptm->get_screen().set_sprite_tile_keep_flags(sprite_number, TILEREG);
+	}
+	else {
+		error = err.invalid_argc;
+		return;
+	}
 }
 
-void PTML::MOVE_SPRITE()
+void PTML::MOVE_SPRITE_TO()
 {
 	ARGC(3);
 	auto&& sprite_number = NUM(1);
@@ -384,6 +393,17 @@ void PTML::MOVE_SPRITE()
 	auto&& x = NUM(2);
 	auto&& y = NUM(3);
 	ptm->get_screen().get_sprite(sprite_number).move_to(x, y);
+}
+
+void PTML::MOVE_SPRITE_DIST()
+{
+	ARGC(3);
+	auto&& sprite_number = NUM(1);
+	REQUIRE_SPRITE(sprite_number);
+
+	auto&& dx = NUM(2);
+	auto&& dy = NUM(3);
+	ptm->get_screen().get_sprite(sprite_number).move_dist(dx, dy);
 }
 
 void PTML::SHOW_SPRITE()
@@ -405,8 +425,42 @@ void PTML::GET_SPRITE()
 	TILEREG = ptm->get_screen().get_sprite(sprite_number).get_tile();
 }
 
+void PTML::GET_SPRITE_X()
+{
+	ARGC(2);
+	auto&& sprite_number = NUM(1);
+	REQUIRE_SPRITE(sprite_number);
+
+	ptm->set_var(ARG(2), ptm->get_screen().get_sprite(sprite_number).get_x(), error);
+}
+
+void PTML::GET_SPRITE_Y()
+{
+	ARGC(2);
+	auto&& sprite_number = NUM(1);
+	REQUIRE_SPRITE(sprite_number);
+
+	ptm->set_var(ARG(2), ptm->get_screen().get_sprite(sprite_number).get_y(), error);
+}
+
 void PTML::ENABLE_SPRITES()
 {
 	ARGC(1);
 	ptm->get_screen().show_sprites(BOOL(1));
+}
+
+void PTML::CHECK_SPRITE_COLLISION()
+{
+	ARGC(3);
+	auto&& sprite_1_number = NUM(2);
+	auto&& sprite_2_number = NUM(3);
+	REQUIRE_SPRITE(sprite_1_number);
+	REQUIRE_SPRITE(sprite_2_number);
+
+	auto&& sprite_1 = ptm->get_screen().get_sprite(sprite_1_number);
+	auto&& sprite_2 = ptm->get_screen().get_sprite(sprite_2_number);
+
+	bool has_collision = sprite_1.collides_with(&sprite_2);
+
+	ptm->set_var(ARG(1), has_collision ? 1 : 0, error);
 }

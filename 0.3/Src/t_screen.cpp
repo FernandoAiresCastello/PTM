@@ -647,9 +647,12 @@ void t_screen::load(const t_string& filename)
 		back_color = new_back_color;
 }
 
-void t_screen::set_sprite(int index, const t_tile& tile)
+void t_screen::set_sprite_tile_keep_flags(int index, const t_tile& tile)
 {
-	buf->sprites.get(index).set_tile(tile);
+	t_sprite& sprite = buf->sprites.get(index);
+	const t_tileflags original_flags = sprite.tile.flags;
+	sprite.tile = tile;
+	sprite.tile.flags = original_flags;
 }
 
 void t_screen::set_sprite(int index, const t_tile& tile, const t_pos& pos, bool visible, bool transparent)

@@ -4,12 +4,15 @@ CALL init_graphics
 CALL init_sprite_indices
 CALL init_player
 CALL init_player_missile
+CALL init_enemies
 
 main_loop:
-    LOCATE 0,0
     CALL adjust_player_pos
-    MOVE player_spr,player_x,player_y
-    CALL.E player_can_shoot,0,move_player_missile
+    MOVETO player_spr,player_x,player_y
+    CALL.E player_missile_active,1,move_player_missile
+    CALL.G enemy_move_counter, enemy_move_delay, move_enemies
+    INC enemy_move_counter
+
     INKEY key
     CALL.K "RIGHT", player_move_right
     CALL.K "LEFT", player_move_left
@@ -19,22 +22,22 @@ main_loop:
 
 move_player_missile:
     SUB player_missile_y, 2
-    MOVE player_missile_spr, player_missile_x, player_missile_y
+    MOVETO player_missile_spr, player_missile_x, player_missile_y
     CALL.L player_missile_y, player_missile_min_y, reset_player_missile
     RET
 
 reset_player_missile:
     SHOW player_missile_spr,0
-    MOVE player_missile_spr,-10,-10
-    SET player_can_shoot,1
+    MOVETO player_missile_spr,-10,-10
+    SET player_missile_active,0
     RET
 
 player_shoot:
-    CALL.E player_can_shoot, 1, start_player_missile
+    CALL.E player_missile_active, 0, start_player_missile
     RET
 
 start_player_missile:
-    SET player_can_shoot,0
+    SET player_missile_active,1
     SET player_missile_x, player_x
     SET player_missile_y, player_y
     SHOW player_missile_spr,1
@@ -61,6 +64,48 @@ fix_player_x_max:
     SET player_x, player_min_x
     RET
 
+move_enemies:
+    SET enemy_move_counter, 0
+    SET enemy_index, enemy_first_spr
+move_enemies_loop:
+    CALL.E player_missile_active, 1, detect_enemy_collision
+    MOVE enemy_index, 0, 1
+    INC enemy_index
+    GOTO.LE enemy_index, enemy_last_spr, move_enemies_loop
+    RET
+detect_enemy_collision:
+    CHKCOL has_collision, enemy_index, player_missile_spr
+    CALL.E has_collision, 1, kill_enemy
+    RET
+
+kill_enemy:
+    TILE
+    TILE ch_enemy_dead_1, color_red, color_magenta
+    TILE ch_enemy_dead_2, color_orange, color_magenta
+    SPRITE enemy_index
+    RET
+
+init_enemies:
+    SET enemy_move_counter, 0
+    SET enemy_move_delay, 4
+    SET enemy_index, enemy_first_spr
+init_enemies_loop:
+    RND enemy_x, 15, 30
+    RND enemy_y, -100, 0
+    CALL init_enemy
+    INC enemy_index
+    GOTO.LE enemy_index, enemy_last_spr, init_enemies_loop
+    RET
+
+init_enemy:
+    TILE
+    TILE ch_enemy_1, color_green, color_magenta
+    TILE ch_enemy_2, color_green, color_magenta
+    MUL enemy_x, 8
+    MUL enemy_y, 8
+    SPRITE enemy_index, enemy_x, enemy_y, 1, 1
+    RET
+
 init_player_missile:
     TILE
     TILE ch_missile, color_cyan, color_magenta
@@ -79,7 +124,7 @@ init_player:
     SET player_min_x, 16
     SET player_max_x, 336
     SPRITE player_spr, player_x, player_y, 1, 1
-    SET player_can_shoot, 1
+    SET player_missile_active, 0
     RET
 
 init_sprite_indices:

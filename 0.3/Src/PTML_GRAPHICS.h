@@ -44,8 +44,12 @@ namespace PTML
 	void AUTOREF();
 	void REFRESH();
 	void SET_SPRITE();
-	void MOVE_SPRITE();
+	void MOVE_SPRITE_TO();
+	void MOVE_SPRITE_DIST();
 	void SHOW_SPRITE();
 	void GET_SPRITE();
+	void GET_SPRITE_X();
+	void GET_SPRITE_Y();
 	void ENABLE_SPRITES();
+	void CHECK_SPRITE_COLLISION();
 }

@@ -173,13 +173,16 @@ namespace PTMStudio
         {
             try
             {
-                string substring = TxtSearch.Text.Trim();
+                string substring = TxtSearch.Text;
 
                 Scintilla.TargetStart = Scintilla.CurrentPosition;
                 Scintilla.TargetEnd = Scintilla.TextLength;
 
                 int pos = Scintilla.SearchInTarget(substring);
-                Scintilla.SetSel(pos, pos + substring.Length);
+                if (pos < 0)
+                    MainWindow.Warning("Text not found starting from current cursor position.");
+                else
+                    Scintilla.SetSel(pos, pos + substring.Length);
             }
             catch (Exception ex)
             {

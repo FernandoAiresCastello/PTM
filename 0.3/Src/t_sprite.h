@@ -19,6 +19,8 @@ public:
 	void set_visible(bool visible);
 	void set_grid(bool grid);
 	bool has_grid() const;
+	bool is_visible() const;
+	bool is_transparent() const;
 	const t_pos& get_pos() const;
 	int get_x() const;
 	int get_y() const;

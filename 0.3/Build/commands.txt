@@ -68,11 +68,15 @@ BSET		Set background color of tile register
 BGET		Get background color of tile register
 PSET		Set property in tile register
 PGET		Get property from tile register
-SPRITE		Create or update sprite with tile equal to tile register, position, transparency and visibility
+SPRITE		Create sprite with tile equal to tile register, position, transparency and visibility; or just update tile
 ENASPR		Enable or disable all sprites
-MOVE		Move sprite to specified position
+MOVE		Move sprite by specified distance
+MOVETO		Move sprite to specified position
 SHOW		Show or hide sprite
 SGET		Copy sprite tile to tile register
+SXGET		Get sprite X position
+SYGET		Get sprite Y position
+CHKCOL		Detect collision between two sprites
 GET		Get tile from screen buffer at current cursor position and store in tile register
 PUT		Copy tile from tile register to screen buffer at current cursor position
 DEL		Delete tile from screen buffer at current cursor position

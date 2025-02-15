@@ -46,6 +46,16 @@ bool t_sprite::has_grid() const
 	return grid;
 }
 
+bool t_sprite::is_visible() const
+{
+	return tile.flags.visible;
+}
+
+bool t_sprite::is_transparent() const
+{
+	return tile.flags.hide_bgc;
+}
+
 const t_pos& t_sprite::get_pos() const
 {
 	return pos;
