@@ -479,7 +479,8 @@ namespace PTMStudio
             SaveFileDialog dialog = new SaveFileDialog
             {
                 InitialDirectory = Filesystem.UserRoot,
-                Filter = "PTM Project File (*.PROJ)|*.PROJ"
+                DefaultExt = KnownFileExtensions.Project,
+				Filter = "PTM Project File (*.PROJ)|*.PROJ"
 			};
 
             if (dialog.ShowDialog() != DialogResult.OK)
@@ -520,18 +521,25 @@ namespace PTMStudio
 
         public void LoadProject(string file)
         {
-            var lines = File.ReadAllLines(file);
+            try
+            {
+                var lines = File.ReadAllLines(file);
 
-			if (!string.IsNullOrWhiteSpace(lines[0]))
-				ProgramPanel.LoadFile(lines[0], true);
-			if (!string.IsNullOrWhiteSpace(lines[1]))
-				TilesetPanel.LoadFile(lines[1]);
-			if (!string.IsNullOrWhiteSpace(lines[2]))
-				PalettePanel.LoadFile(lines[2]);
-            if (!string.IsNullOrWhiteSpace(lines[3]))
-                TilebufferPanel.LoadFile(lines[3], false);
+                if (!string.IsNullOrWhiteSpace(lines[0]))
+                    ProgramPanel.LoadFile(lines[0], true);
+                if (!string.IsNullOrWhiteSpace(lines[1]))
+                    TilesetPanel.LoadFile(lines[1]);
+                if (!string.IsNullOrWhiteSpace(lines[2]))
+                    PalettePanel.LoadFile(lines[2]);
+                if (!string.IsNullOrWhiteSpace(lines[3]))
+                    TilebufferPanel.LoadFile(lines[3], false);
 
-			AlertOnStatusBar("Project loaded from: " + file, 2);
+                AlertOnStatusBar("Project loaded from: " + file, 2);
+            }
+            catch (Exception ex)
+            {
+                Error("Error loading project.", ex);
+            }
         }
 
         public void NewProgramLoaded(string file)
@@ -579,9 +587,10 @@ namespace PTMStudio
             MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        public static void FatalError(string message)
+        public static void Error(string message, Exception ex = null)
         {
-            MessageBox.Show(message, "Fatal error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(ex != null ? message + "\n\n" + ex.Message : message, 
+                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         public static void UnexpectedError(string message)

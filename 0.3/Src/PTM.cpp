@@ -153,7 +153,7 @@ void PTM::on_machine_cycle()
 	if (program_editor.active)
 		program_editor.draw_program();
 
-	if (auto_screen_update)
+	if (auto_screen_update || halted)
 		refresh_screen();
 
 	SDL_Event e;

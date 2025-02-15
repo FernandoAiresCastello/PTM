@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace PTMStudio
@@ -62,13 +63,16 @@ namespace PTMStudio
 
             foreach (var directory in directoryInfo.GetDirectories())
             {
-                directoryNode.Nodes.Add(CreateDirectoryNode(directory));
+                // Let's not include nodes for subfolders yet, because in version 0.3
+                // the interpreter only sees the top-level USR root folder
+
+                //directoryNode.Nodes.Add(CreateDirectoryNode(directory));
             }
             foreach (var file in directoryInfo.GetFiles())
             {
 				int imageIndex = 8;
 
-                if (file.Name == "AUTORUN.PTM" || file.Name == "AUTOSAVE.PTM" || file.Name == "TEMP.PTM")
+                if (Filesystem.SpecialFiles.Contains(file.Name))
                 {
                     imageIndex = 3;
                 }
@@ -125,6 +129,8 @@ namespace PTMStudio
 				return;
 			if (!(FileTree.SelectedNode.Tag is FilesystemEntry file))
 				return;
+            if (file.IsDirectory)
+                return;
 
             if (FileTree.SelectedNode.Parent.Text == Filesystem.SysRootDirName)
             {

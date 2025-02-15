@@ -1,0 +1,80 @@
+TITLE "PTM INVADERS"
+
+CALL init_graphics
+CALL init_player
+
+main_loop:
+    LOCATE 0,0
+    #PRINTF "%03i", player_x
+    CALL adjust_player_pos
+    MOVE player_spr,player_x,player_y
+    INKEY key
+    CALL.K "RIGHT", player_move_right
+    CALL.K "LEFT", player_move_left
+    REFRESH
+    GOTO main_loop
+
+player_move_right:
+    ADD player_x, 2
+    RET
+
+player_move_left:
+    SUB player_x, 2
+    RET
+
+adjust_player_pos:
+    CALL.L player_x, player_min_x, fix_player_x_min
+    CALL.G player_x, player_max_x, fix_player_x_max
+    RET
+
+fix_player_x_min:
+    SET player_x, player_max_x
+    RET
+
+fix_player_x_max:
+    SET player_x, player_min_x
+    RET
+
+init_player:
+    TILE
+    TILE ch_player, color_white, color_blue
+    SET player_spr, 0
+    SET player_x, 175
+    SET player_y, 170
+    SET player_min_x, 16
+    SET player_max_x, 336
+    SPRITE player_spr,player_x,player_y
+    RET
+
+init_graphics:
+    CURSOR 0
+    AUTOREF 0
+
+    # Colors
+    SET color_black, 0
+    SET color_white, 1
+    SET color_gray, 2
+    SET color_blue_dkr, 3
+    SET color_blue_dk, 4
+    SET color_blue, 5
+    SET color_green, 6
+    SET color_yellow, 7
+    SET color_red, 8
+    SET color_orange, 9
+    SET color_cyan, 10
+    SET color_green_lt, 11
+
+    # Characters
+    SET ch_blank, 0
+    SET ch_player, 1
+    SET ch_enemy_1, 2
+    SET ch_enemy_2, 3
+    SET ch_missile, 4
+    SET ch_enemy_dead_1, 5
+    SET ch_enemy_dead_2, 6
+
+    COLOR 1,0,0
+    LOAD "INVADERS.CHR"
+    LOAD "INVADERS.PAL"
+    LOAD "INVADERS.BUF"
+    RET

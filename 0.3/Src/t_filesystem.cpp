@@ -265,10 +265,10 @@ void t_filesystem::load_program_plaintext(t_interpreter* intp, t_program* prg, c
     int line_nr = 0;
 
     for (auto& src_line : src_lines) {
+        line_nr++;
         if (src_line.trim().empty())
             continue;
 
-        line_nr += 10;
         auto&& line = t_string::from_int(line_nr) + " " + src_line;
         intp->interpret_line(line, true);
         if (!intp->get_error().empty()) {

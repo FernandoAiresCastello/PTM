@@ -281,9 +281,13 @@ namespace PTMStudio.Windows
 
         private void BtnLoadProfile_Click(object sender, EventArgs e)
         {
-            var dialog = new OpenFileDialog();
-            dialog.DefaultExt = KnownFileExtensions.PublishProfile;
-            if (dialog.ShowDialog() != DialogResult.OK)
+			var dialog = new OpenFileDialog
+			{
+				InitialDirectory = Filesystem.UserRoot,
+				Filter = "PTM Publish Profile (*.PUB)|*.PUB"
+			};
+
+			if (dialog.ShowDialog() != DialogResult.OK)
 				return;
 
 			LoadProfile(dialog.FileName);
@@ -315,8 +319,13 @@ namespace PTMStudio.Windows
 			if (!ValidatePublishProfile())
 				return;
 
-			var dialog = new SaveFileDialog();
-			dialog.DefaultExt = KnownFileExtensions.PublishProfile;
+			var dialog = new SaveFileDialog
+			{
+				InitialDirectory = Filesystem.UserRoot,
+				DefaultExt = KnownFileExtensions.PublishProfile,
+				Filter = "PTM Publish Profile (*.PUB)|*.PUB"
+			};
+
 			if (dialog.ShowDialog() != DialogResult.OK)
 				return;
 

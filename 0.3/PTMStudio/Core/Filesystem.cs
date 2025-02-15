@@ -16,6 +16,11 @@ namespace PTMStudio
         public static readonly string DefaultPaletteFile = GetSystemFilePath("DEFAULT.PAL");
         public static readonly string DefaultTilesetFile = GetSystemFilePath("DEFAULT.CHR");
 
+        public static readonly string[] SpecialFiles =
+        {
+			"AUTOEXEC.PTM", "AUTOSAVE.PTM", "TEMP.PTM"
+		};
+
         public static string NormalizePath(string path)
         {
             return path.Replace("\\", "/");

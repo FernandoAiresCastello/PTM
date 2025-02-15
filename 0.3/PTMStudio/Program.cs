@@ -36,7 +36,7 @@ namespace PTMStudio
             }
             else
             {
-                MainWindow.FatalError($"PTML interpreter ({ptmExe}) not found");
+                MainWindow.Error($"PTML interpreter ({ptmExe}) not found");
             }
         }
     }

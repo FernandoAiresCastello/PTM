@@ -242,8 +242,10 @@ void PTML::TILE_ADD()
 
 	if (COUNT(0))
 		TILEREG.set_empty();
-	else
+	else if (COUNT(3))
 		TILEREG.add_char(NUM(1), NUM(2), NUM(3));
+	else
+		error = err.invalid_argc;
 }
 
 void PTML::TILE_SETC()
