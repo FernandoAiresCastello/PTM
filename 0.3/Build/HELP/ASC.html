@@ -4,16 +4,18 @@
 	</head>
 	<body>
 		<div class='command-name'>ASC</div>
-		<div class='command-description'>Get the ASCII value of a character</div>
+		<div class='command-description'>Get ASCII value of character</div>
 		
 		<div class='syntax-header'>Syntax:</div>
 		<div class='syntax'>
-			<div class='syntax-format'>ASC</div>
+			<div class='syntax-format'>ASC var, character</div>
 			<div class='syntax-description'>
-				Get the ASCII value of a character
+				Get ASCII value of character, then store it in the given variable.<br><br>
+				If a literal string is given instead of a literal character, only the first character of the string is checked. If a variable is given as the second argument, the value of the variable is first converted to a string and then the first character is checked.
 			</div>
 			<ul class='syntax-params'>
-				<li>No parameters</li>
+				<li>var = Variable identifier</li>
+				<li>character = The character to get the ASCII value from</li>
 			</ul>
 		</div>
 	</body>

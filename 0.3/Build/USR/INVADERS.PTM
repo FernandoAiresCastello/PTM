@@ -1,12 +1,15 @@
 TITLE "PTM INVADERS"
 
+CALL init_graphics
+
 SET player_speed, 1
 SET total_enemy_count, 200
 SET enemy_count, total_enemy_count
 SET enemy_move_delay, 8
 SET enemies_killed, 0
 
-CALL init_graphics
+GOTO game_over
+
 CALL init_sprite_indices
 CALL init_player
 CALL init_player_missile
@@ -34,17 +37,6 @@ main_loop:
 
     REFRESH
     GOTO main_loop
-
-end_game:
-    PAUSE 200
-    PLAY "L80 C6 D6 E6 D6 E6 F6 E6 F6 L300 G6"
-    MODE 0
-    CLS
-    DELSPR
-    COLOR color_white
-    PRINTL "CONGRATULATIONS!"
-    PRINTL "You have saved Earth from the invasion!"
-    END
 
 print_score:
     COLOR color_gray, color_black
@@ -150,9 +142,9 @@ game_over:
     PAUSE 200
     PLAY "L80 F3 E3 F3 E3 D3 E3 D3 C3 L300 F2"
     MODE 0
+    COLOR color_red, color_black, color_black
     CLS
     DELSPR
-    COLOR color_red
     PRINTL "GAME OVER"
     PRINTL "The aliens have invaded Earth..."
     PRINTL
@@ -160,7 +152,18 @@ game_over:
     PRINTF "%i out of", enemies_killed
     PRINTF " %i invaders.", total_enemy_count
     PRINTL
-    XSET 0
+    END
+
+end_game:
+    PAUSE 200
+    PLAY "L80 C6 D6 E6 D6 E6 F6 E6 F6 L300 G6"
+    MODE 0
+    COLOR color_white, color_black, color_black
+    CLS
+    DELSPR
+    COLOR color_white
+    PRINTL "CONGRATULATIONS!"
+    PRINTL "You have saved Earth from the invasion!"
     END
 
 init_enemies:

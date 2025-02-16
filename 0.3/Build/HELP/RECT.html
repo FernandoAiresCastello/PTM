@@ -4,16 +4,19 @@
 	</head>
 	<body>
 		<div class='command-name'>RECT</div>
-		<div class='command-description'>Fill a rectangle in the screen buffer with copies of tile from tile register</div>
+		<div class='command-description'>Fill a rectangle in the tilebuffer with copies of tile from tile register</div>
 		
 		<div class='syntax-header'>Syntax:</div>
 		<div class='syntax'>
-			<div class='syntax-format'>RECT</div>
+			<div class='syntax-format'>RECT x1, y1, x2, y2</div>
 			<div class='syntax-description'>
-				Fill a rectangle in the screen buffer with copies of tile from tile register
+				Fill a rectangle in the tilebuffer with copies of tile from tile register
 			</div>
 			<ul class='syntax-params'>
-				<li>No parameters</li>
+				<li>x1 = First tilebuffer column</li>
+				<li>y1 = First tilebuffer row</li>
+				<li>x2 = Last tilebuffer column</li>
+				<li>y2 = Last tilebuffer row</li>
 			</ul>
 		</div>
 	</body>

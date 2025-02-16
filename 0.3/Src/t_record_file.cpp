@@ -82,5 +82,8 @@ int t_record_file::read_int()
 
 bool t_record_file::is_eof()
 {
+	if (is_open && mode == t_filesystem::write_mode)
+		return false;
+
 	return ptr < 0 || ptr >= buffer.size() || !is_open;
 }

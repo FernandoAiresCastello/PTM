@@ -4,16 +4,16 @@
 	</head>
 	<body>
 		<div class='command-name'>EOF</div>
-		<div class='command-description'>Check whether end of record file has been reached</div>
+		<div class='command-description'>Check for end of data record file</div>
 		
 		<div class='syntax-header'>Syntax:</div>
 		<div class='syntax'>
-			<div class='syntax-format'>EOF</div>
+			<div class='syntax-format'>EOF var</div>
 			<div class='syntax-description'>
-				Check whether end of record file has been reached
+				Check whether the read pointer of the data record file has reached end-of-file, then store in given variable: 1 if end-of-file has been reached; 0 otherwise
 			</div>
 			<ul class='syntax-params'>
-				<li>No parameters</li>
+				<li>var = Variable identifier</li>
 			</ul>
 		</div>
 	</body>

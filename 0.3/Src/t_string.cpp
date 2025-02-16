@@ -301,8 +301,10 @@ t_string t_string::substr(int first, int last) const
 
 	if (first < 0)
 		first = 0;
-	if (last > value.length() || last < first)
+	if (last < first)
 		return "";
+	if (last > value.length())
+		return value;
 
 	return value.substr(first, last - first);
 }

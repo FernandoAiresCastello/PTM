@@ -27,8 +27,8 @@ void PTML::RENAME()
 	auto&& new_name = STR(2);
 	VALIDATE_FILENAME(new_name);
 
-	if (t_filesystem::file_exists(old_name)) {
-		t_filesystem::rename_file(old_name, new_name);
+	if (t_filesystem::user_file_exists(old_name)) {
+		t_filesystem::rename_user_file(old_name, new_name);
 	}
 	else {
 		error = err.file_not_found;
@@ -38,10 +38,10 @@ void PTML::RENAME()
 void PTML::KILL()
 {
 	ARGC(1);
-	auto&& name = STR(1);
+	auto&& name = STR(1).to_upper();
 
-	if (t_filesystem::file_exists(name)) {
-		t_filesystem::delete_file(name);
+	if (t_filesystem::user_file_exists(name)) {
+		t_filesystem::delete_user_file(name);
 	}
 	else {
 		error = err.file_not_found;
@@ -51,11 +51,14 @@ void PTML::KILL()
 void PTML::OPEN()
 {
 	ARGC(2);
-	auto&& name = STR(1);
-	VALIDATE_FILENAME(name);
+	auto&& filename = STR(1).to_upper();
+	VALIDATE_FILENAME(filename);
 	auto&& mode = STR(2).to_upper();
 
-	name += FILE_EXT_RECFILE;
+	if (!filename.ends_with(FILE_EXT_RECFILE)) {
+		error = err.invalid_file_ext;
+		return;
+	}
 
 	if (t_filesystem::is_record_file_open()) {
 		error = err.file_already_open;
@@ -63,11 +66,11 @@ void PTML::OPEN()
 	}
 
 	if (mode == "W") {
-		t_filesystem::open_record_file(name, t_filesystem::write_mode);
+		t_filesystem::open_record_file(filename, t_filesystem::write_mode);
 	}
 	else if (mode == "R") {
-		REQUIRE_FILE(name);
-		int state = t_filesystem::open_record_file(name, t_filesystem::read_mode);
+		REQUIRE_FILE(filename);
+		int state = t_filesystem::open_record_file(filename, t_filesystem::read_mode);
 		if (state == RECFILE_STATE_BADFMT) {
 			error = err.bad_file_format;
 			return;
@@ -75,6 +78,7 @@ void PTML::OPEN()
 	}
 	else {
 		error = err.illegal_argument;
+		return;
 	}
 }
 

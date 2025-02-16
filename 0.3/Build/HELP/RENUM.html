@@ -4,17 +4,26 @@
 	</head>
 	<body>
 		<div class='command-name'>RENUM</div>
-		<div class='command-description'>Renumber current program</div>
+		<div class='command-description'>Renumber lines of current program</div>
 		
 		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>RENUM interval</div>
+			<div class='syntax-description'>
+				Renumber lines of current program, where each line number will increment by the given interval
+			</div>
+			<ul class='syntax-params'>
+				<li>interval = The interval between each line number</li>
+			</ul>
+		</div>
+		
 		<div class='syntax'>
 			<div class='syntax-format'>RENUM</div>
 			<div class='syntax-description'>
-				Renumber current program
+				Renumber lines of current program, where each line number will increment by 10 (the default interval)
 			</div>
-			<ul class='syntax-params'>
-				<li>No parameters</li>
-			</ul>
 		</div>
+
 	</body>
 </html>

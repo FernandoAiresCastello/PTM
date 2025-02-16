@@ -15,13 +15,11 @@ void PTML::KB_FLUSH()
 
 void PTML::INPUT()
 {
-	ARGC_MIN_MAX(1, 2);
-	
-	t_string value;
-	if (COUNT(1))
-		value = ptm->input_string("", 255);
-	else if (COUNT(2))
-		value = ptm->input_string("", NUM(2));
+	ARGC_MIN_MAX(1, 3);
+	auto&& var = ARG(1);
+	auto&& default_value = line->argc > 1 ? STR(2) : "";
+	auto&& maxlen = line->argc > 2 ? NUM(3) : 255;
 
-	ptm->set_var(ARG(1), value, error);
+	t_string value = ptm->input_string("", default_value, maxlen);
+	ptm->set_var(var, value, error);
 }

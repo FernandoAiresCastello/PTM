@@ -4,16 +4,17 @@
 	</head>
 	<body>
 		<div class='command-name'>READ</div>
-		<div class='command-description'>Read from record file</div>
+		<div class='command-description'>Read from data record file</div>
 		
 		<div class='syntax-header'>Syntax:</div>
 		<div class='syntax'>
-			<div class='syntax-format'>READ</div>
+			<div class='syntax-format'>READ var</div>
 			<div class='syntax-description'>
-				Read from record file
+				Read data from currently open record file, store value in given variable, then moves the read pointer to the next record.<br><br>
+				To read data, the file must be opened with the OPEN command in mode "R" (read), and the end-of-file must not be reached. To check for end-of-file, use the EOF command.
 			</div>
 			<ul class='syntax-params'>
-				<li>No parameters</li>
+				<li>var = Variable identifier that will receive the value read</li>
 			</ul>
 		</div>
 	</body>

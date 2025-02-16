@@ -7,14 +7,29 @@
 		<div class='command-description'>Save file to disk</div>
 		
 		<div class='syntax-header'>Syntax:</div>
+
 		<div class='syntax'>
-			<div class='syntax-format'>SAVE</div>
+			<div class='syntax-format'>SAVE filename</div>
 			<div class='syntax-description'>
-				Save file to disk
+				Save code or data to given file. What exactly gets saved (and consequently the file format) is determined by the filename extension. See section below for supported file formats.
 			</div>
 			<ul class='syntax-params'>
-				<li>No parameters</li>
+				<li>filename = The name of the file to save</li>
 			</ul>
 		</div>
+		
+		<div class='syntax-header'>Valid file formats:</div>
+
+		<div class='syntax'>
+			The PTML interpreter only has support for saving the following file formats:
+			<ul class='syntax-params'>
+				<li>.PTM = PTML program. Will save the current program in memory</li>
+				<li>.PAL = Color palette (256 entries). Will save the current color palette in memory</li>
+				<li>.CHR = Character set (256 entries). Will save the current character set in memory</li>
+				<li>.BUF = Tile buffer. Will save the current tile buffer in memory</li>
+				<li>.DAT = Data records (can't be saved by the SAVE command; use the OPEN and WRITE commands instead)</li>
+			</ul>
+		</div>
+
 	</body>
 </html>

@@ -4,17 +4,37 @@
 	</head>
 	<body>
 		<div class='command-name'>PRINTL</div>
-		<div class='command-description'>Print string on screen at current cursor position, then move cursor to next line</div>
+		<div class='command-description'>Print text on screen at current cursor position, then move cursor to next line</div>
 		
 		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>PRINTL string</div>
+			<div class='syntax-description'>
+				Print text on the screen at current cursor position, then move cursor to next line, at the same column where the previous PRINTL command started in the previous line.
+			</div>
+			<ul class='syntax-params'>
+				<li>string = The text to print</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>PRINTL string, keep_column</div>
+			<div class='syntax-description'>
+				Print text on the screen at current cursor position, then move cursor to next line. If keep_column = 1, the next line begins at the same column where the previous PRINTL command started in the previous line. If keep_column = 0, the next line starts at column 0.
+			</div>
+			<ul class='syntax-params'>
+				<li>string = The text to print</li>
+				<li>keep_column = 0: no; 1: yes</li>
+			</ul>
+		</div>
+
 		<div class='syntax'>
 			<div class='syntax-format'>PRINTL</div>
 			<div class='syntax-description'>
-				Print string on screen at current cursor position, then move cursor to next line
+				Print a "new line" character (invisible; effectively just moves cursor to next line)
 			</div>
-			<ul class='syntax-params'>
-				<li>No parameters</li>
-			</ul>
 		</div>
+
 	</body>
 </html>

@@ -184,11 +184,14 @@ void t_filesystem::write_all_lines(const t_list<t_string>& lines, const t_string
     write_all_text(text, filename);
 }
 
-bool t_filesystem::rename_file(const t_string& old_name, const t_string& new_name)
+bool t_filesystem::rename_user_file(const t_string& old_name, const t_string& new_name)
 {
     try
     {
-        fs::rename(old_name.to_upper().c_str(), new_name.to_upper().c_str());
+        t_string old_filename = t_string(USER_ROOT) + old_name.to_upper();
+        t_string new_filename = t_string(USER_ROOT) + new_name.to_upper();
+
+        fs::rename(old_filename.c_str(), new_filename.c_str());
         return true;
     }
     catch (std::exception)
@@ -197,11 +200,12 @@ bool t_filesystem::rename_file(const t_string& old_name, const t_string& new_nam
     }
 }
 
-bool t_filesystem::delete_file(const t_string& name)
+bool t_filesystem::delete_user_file(const t_string& name)
 {
     try
     {
-        fs::remove(name.to_upper().c_str());
+        t_string filename = t_string(USER_ROOT) + name.to_upper();
+        fs::remove(filename.c_str());
         return true;
     }
     catch (std::exception)

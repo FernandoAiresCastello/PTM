@@ -74,6 +74,10 @@ All of the following screenshots are taken from the lastest development build.
 
 ![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio_3.png?raw=true)
 
+*Help window:*
+
+![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio_5.png?raw=true)
+
 *Publish window:*
 
 ![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio_4.png?raw=true)

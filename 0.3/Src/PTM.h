@@ -88,7 +88,7 @@ public:
 	void flush_keyboard();
 	bool is_key_pressed(int scancode);
 	bool is_key_pressed(const t_string& keyname);
-	t_string input_string(const t_string& prompt, int maxlen);
+	t_string input_string(const t_string& prompt, const t_string& default_value, int maxlen);
 	void autosave_program_file() const;
 	int find_program_label(const t_string& label);
 	t_sound& get_sound();

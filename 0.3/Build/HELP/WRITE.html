@@ -4,16 +4,17 @@
 	</head>
 	<body>
 		<div class='command-name'>WRITE</div>
-		<div class='command-description'>Write to record file</div>
+		<div class='command-description'>Write to data record file</div>
 		
 		<div class='syntax-header'>Syntax:</div>
 		<div class='syntax'>
-			<div class='syntax-format'>WRITE</div>
+			<div class='syntax-format'>WRITE value</div>
 			<div class='syntax-description'>
-				Write to record file
+				Write data to currently open record file, then moves the write pointer to the next record.<br><br>
+				To write data, the file must be opened with the OPEN command in mode "W" (write). Data record files are buffered, meaning the physical file on disk is not modified until the CLOSE command is executed, which then saves the buffer to the file.
 			</div>
 			<ul class='syntax-params'>
-				<li>No parameters</li>
+				<li>value = Value to write</li>
 			</ul>
 		</div>
 	</body>

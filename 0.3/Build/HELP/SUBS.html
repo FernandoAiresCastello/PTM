@@ -4,17 +4,34 @@
 	</head>
 	<body>
 		<div class='command-name'>SUBS</div>
-		<div class='command-description'>Extract a substring from the given string</div>
+		<div class='command-description'>Get substring</div>
 		
 		<div class='syntax-header'>Syntax:</div>
+
 		<div class='syntax'>
-			<div class='syntax-format'>SUBS</div>
+			<div class='syntax-format'>SUBS var, source_string, first_index, last_index</div>
 			<div class='syntax-description'>
-				Extract a substring from the given string
+				Extract a substring from the given string, that starts at the first_index and ends at the last_index. The source string is not modified.
 			</div>
 			<ul class='syntax-params'>
-				<li>No parameters</li>
+				<li>var = Variable identifier that will receive the substring</li>
+				<li>source_string = Source string</li>
+				<li>first_index = The first index of the substring</li>
+				<li>last_index = The last index of the substring</li>
 			</ul>
 		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>SUBS var, source_string, first_index</div>
+			<div class='syntax-description'>
+				The same as the previous syntax, but the last_index is implied to be the index of the last character of the source string.
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier that will receive the substring</li>
+				<li>source_string = Source string</li>
+				<li>first_index = The first index of the substring</li>
+			</ul>
+		</div>
+
 	</body>
 </html>

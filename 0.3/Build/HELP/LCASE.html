@@ -4,17 +4,30 @@
 	</head>
 	<body>
 		<div class='command-name'>LCASE</div>
-		<div class='command-description'>Convert all characters in string to lowercase</div>
+		<div class='command-description'>Convert string to lowercase</div>
 		
 		<div class='syntax-header'>Syntax:</div>
+
 		<div class='syntax'>
-			<div class='syntax-format'>LCASE</div>
+			<div class='syntax-format'>LCASE var, string</div>
 			<div class='syntax-description'>
-				Convert all characters in string to lowercase
+				Convert to lowercase all characters of string, then store it in the given variable. The original string is not modified.
 			</div>
 			<ul class='syntax-params'>
-				<li>No parameters</li>
+				<li>var = Variable identifier</li>
+				<li>string = The string to convert</li>
 			</ul>
 		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>LCASE var</div>
+			<div class='syntax-description'>
+				Convert to lowercase all characters of string stored in the given variable.
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier which has the string to be converted</li>
+			</ul>
+		</div>
+
 	</body>
 </html>

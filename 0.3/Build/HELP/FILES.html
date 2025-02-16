@@ -4,17 +4,26 @@
 	</head>
 	<body>
 		<div class='command-name'>FILES</div>
-		<div class='command-description'>List files on disk</div>
+		<div class='command-description'>List user files on disk</div>
 		
 		<div class='syntax-header'>Syntax:</div>
+		
 		<div class='syntax'>
 			<div class='syntax-format'>FILES</div>
 			<div class='syntax-description'>
-				List files on disk
+				List all files on disk, that are in the user root folder (USR)
+			</div>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>FILES filter</div>
+			<div class='syntax-description'>
+				List files on disk, that are in the user root folder (USR), that start or end with the given filter string. To filter by the last characters of the filename, start the filter string with an asterisk (*). Otherwise, the list will be filtered by the first characters of the filename.
 			</div>
 			<ul class='syntax-params'>
-				<li>No parameters</li>
+				<li>filter = String used to filter the file list</li>
 			</ul>
 		</div>
+
 	</body>
 </html>

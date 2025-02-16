@@ -42,8 +42,8 @@ public:
 	static void write_all_lines(const t_list<t_string>& lines, const t_string& filename);
 	
 	// Rename/delete
-	static bool rename_file(const t_string& old_name, const t_string& new_name);
-	static bool delete_file(const t_string& name);
+	static bool rename_user_file(const t_string& old_name, const t_string& new_name);
+	static bool delete_user_file(const t_string& name);
 	static bool rename_directory(const t_string& old_name, const t_string& new_name);
 	static bool delete_directory(const t_string& name);
 

@@ -550,7 +550,7 @@ bool PTM::is_key_pressed(const t_string& keyname)
 	return kb.is_pressed(keyname);
 }
 
-t_string PTM::input_string(const t_string& prompt, int maxlen)
+t_string PTM::input_string(const t_string& prompt, const t_string& default_value, int maxlen)
 {
 	t_string value;
 	bool escaped = false;
@@ -559,7 +559,7 @@ t_string PTM::input_string(const t_string& prompt, int maxlen)
 	if (!prompt.empty())
 		scr.print_string(prompt);
 
-	while (wnd.is_open()) {
+	while (wnd.is_open() && !escaped) {
 		SDL_Keycode key = await_keypress();
 		if (key == SDLK_RETURN) {
 			scr.newline();
@@ -567,7 +567,8 @@ t_string PTM::input_string(const t_string& prompt, int maxlen)
 			break;
 		}
 		else if (key == SDLK_ESCAPE) {
-			on_escape_key_pressed();
+			scr.newline();
+			value = default_value;
 			escaped = true;
 			break;
 		}

@@ -7,14 +7,44 @@
 		<div class='command-description'>List current program</div>
 		
 		<div class='syntax-header'>Syntax:</div>
+
 		<div class='syntax'>
 			<div class='syntax-format'>LIST</div>
 			<div class='syntax-description'>
-				List current program
+				List all lines of the program currently stored in memory
+			</div>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>LIST label</div>
+			<div class='syntax-description'>
+				List lines of the program currently stored in memory, starting from the given label
 			</div>
 			<ul class='syntax-params'>
-				<li>No parameters</li>
+				<li>label = The program label</li>
 			</ul>
 		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>LIST line_number</div>
+			<div class='syntax-description'>
+				Print the given line of the program currently stored in memory
+			</div>
+			<ul class='syntax-params'>
+				<li>line_number = The number of the line to print</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>LIST first_line, last_line</div>
+			<div class='syntax-description'>
+				List lines of the program currently stored in memory, between the given first and last lines
+			</div>
+			<ul class='syntax-params'>
+				<li>first_line = The number of the first line</li>
+				<li>last_line = The number of the last line</li>
+			</ul>
+		</div>
+
 	</body>
 </html>

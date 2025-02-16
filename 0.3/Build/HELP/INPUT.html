@@ -4,17 +4,42 @@
 	</head>
 	<body>
 		<div class='command-name'>INPUT</div>
-		<div class='command-description'>Wait for user to type a string and press the ENTER key, then return the typed string</div>
+		<div class='command-description'>Wait for text input from user</div>
 		
 		<div class='syntax-header'>Syntax:</div>
+
 		<div class='syntax'>
-			<div class='syntax-format'>INPUT</div>
+			<div class='syntax-format'>INPUT var</div>
 			<div class='syntax-description'>
-				Wait for user to type a string and press the ENTER key, then return the typed string
+				Causes program to wait for user to write a line of text. When user presses the ENTER key, the text is stored in the given variable and program resumes execution. If user presses the ESCAPE key, an empty string is stored in the variable instead. By default, the user will not be able to type more than 255 characters.
 			</div>
 			<ul class='syntax-params'>
-				<li>No parameters</li>
+				<li>var = Variable id</li>
 			</ul>
 		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>INPUT var, default_value</div>
+			<div class='syntax-description'>
+				The same as the previous syntax, but if user presses the ESCAPE key, the default_value is stored in the variable instead of an empty string.
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable id</li>
+				<li>default_value = The value to assign to variable if ESCAPE key is pressed</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>INPUT var, default_value, max_length</div>
+			<div class='syntax-description'>
+				The same as the previous syntax, but limits input to the given maximum length. The user will not be able to type more characters than the specified limit.
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable id</li>
+				<li>default_value = The value to assign to variable if ESCAPE key is pressed</li>
+				<li>max_length = The maximum length of the text</li>
+			</ul>
+		</div>
+
 	</body>
 </html>

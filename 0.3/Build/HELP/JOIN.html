@@ -4,17 +4,32 @@
 	</head>
 	<body>
 		<div class='command-name'>JOIN</div>
-		<div class='command-description'>Concatenate two strings into one</div>
+		<div class='command-description'>Concatenate two strings</div>
 		
 		<div class='syntax-header'>Syntax:</div>
+
 		<div class='syntax'>
-			<div class='syntax-format'>JOIN</div>
+			<div class='syntax-format'>JOIN var, text_1, text_2</div>
 			<div class='syntax-description'>
-				Concatenate two strings into one
+				Concatenate text_1 with text_2, then store result in given variable
 			</div>
 			<ul class='syntax-params'>
-				<li>No parameters</li>
+				<li>var = Variable that will receive the two concatenated texts</li>
+				<li>text_1 = First text</li>
+				<li>text_2 = Second text</li>
 			</ul>
 		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>JOIN var, text</div>
+			<div class='syntax-description'>
+				Append text to the end of string stored in the given variable
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable to which the text will get appended</li>
+				<li>text = Text to append</li>
+			</ul>
+		</div>
+
 	</body>
 </html>

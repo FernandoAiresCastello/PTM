@@ -4,16 +4,17 @@
 	</head>
 	<body>
 		<div class='command-name'>PRINTF</div>
-		<div class='command-description'>Print formatted string on screen at current cursor position</div>
+		<div class='command-description'>Print formatted text on screen at current cursor position</div>
 		
 		<div class='syntax-header'>Syntax:</div>
 		<div class='syntax'>
-			<div class='syntax-format'>PRINTF</div>
+			<div class='syntax-format'>PRINTF format, value</div>
 			<div class='syntax-description'>
-				Print formatted string on screen at current cursor position
+				Print formatted text on screen at current cursor position. The format string is similar to the C language. However, the only supported format specifiers are %i (integer) and %x (hexadecimal), with optional padding zeroes (e.g. %05i). Only a single specifier is interpreted in the string, because PTML does not support variable length arguments.
 			</div>
 			<ul class='syntax-params'>
-				<li>No parameters</li>
+				<li>format = The format string (similar to the C language)</li>
+				<li>value = The value (or variable) to be formatted in the string</li>
 			</ul>
 		</div>
 	</body>

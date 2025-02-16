@@ -4,16 +4,17 @@
 	</head>
 	<body>
 		<div class='command-name'>OPEN</div>
-		<div class='command-description'>Open record file for read or write</div>
+		<div class='command-description'>Open data record file</div>
 		
 		<div class='syntax-header'>Syntax:</div>
 		<div class='syntax'>
-			<div class='syntax-format'>OPEN</div>
+			<div class='syntax-format'>OPEN filename, mode</div>
 			<div class='syntax-description'>
-				Open record file for read or write
+				Open data record file to read or write, depending on the given mode. Only the .DAT file format is supported (this is a built-in file format). Only one single data record file can be opened at any time.
 			</div>
 			<ul class='syntax-params'>
-				<li>No parameters</li>
+				<li>filename = The name of the file, including the .DAT extension</li>
+				<li>mode = "R" = read; "W" = write</li>
 			</ul>
 		</div>
 	</body>

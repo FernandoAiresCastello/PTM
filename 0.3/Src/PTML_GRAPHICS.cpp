@@ -67,24 +67,33 @@ void PTML::PRINT()
 
 void PTML::PRINTL()
 {
-	ARGC_MIN_MAX(0, 1);
+	ARGC_MIN_MAX(0, 2);
 
-	int x = scr->csrx();
+	int&& initialX = scr->csrx();
 
-	if (COUNT(0))
+	if (COUNT(0)) {
 		scr->newline();
-	else {
-		auto&& value = STR(1);
-		scr->print_string_crlf(value);
 	}
+	else if (COUNT(1) || COUNT(2)) {
+		bool returnToInitialX = COUNT(2) ? BOOL(2) : true;
 
-	scr->locate_x(x);
+		scr->print_string_crlf(STR(1));
+		if (returnToInitialX)
+			scr->locate_x(initialX);
+		else
+			scr->locate_x(0);
+	}
 }
 
 void PTML::PRINTF()
 {
 	ARGC(2);
 	auto&& fmt = STR(1);
+	if (fmt.contains("%s") || fmt.contains("%c")) {
+		error = err.illegal_format_specifier;
+		return;
+	}
+	auto& param = ARG(2);
 	auto&& value = NUM(2);
 	scr->print_string(t_string::fmt(fmt.c_str(), value));
 }
