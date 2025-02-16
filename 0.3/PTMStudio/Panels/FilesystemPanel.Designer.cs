@@ -127,7 +127,7 @@
 			this.FileTreeIcons.Images.SetKeyName(7, "bookshelf.png");
 			this.FileTreeIcons.Images.SetKeyName(8, "emotion_question.png");
 			this.FileTreeIcons.Images.SetKeyName(9, "table_layout_grand_totals.png");
-			this.FileTreeIcons.Images.SetKeyName(10, "package.png");
+			this.FileTreeIcons.Images.SetKeyName(10, "package_go.png");
 			// 
 			// FilesystemPanel
 			// 

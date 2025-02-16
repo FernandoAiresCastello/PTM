@@ -8,8 +8,6 @@ SET enemy_count, total_enemy_count
 SET enemy_move_delay, 8
 SET enemies_killed, 0
 
-GOTO game_over
-
 CALL init_sprite_indices
 CALL init_player
 CALL init_player_missile

@@ -38,18 +38,18 @@ namespace PTMStudio
 		public void UpdateFileList()
         {
 			FileTree.Nodes.Clear();
-			ListDirectory(FileTree, Filesystem.UserRoot);
-			ListDirectory(FileTree, Filesystem.SysRoot);
+			ListDirectory(FileTree, Filesystem.UserRoot, false);
+			ListDirectory(FileTree, Filesystem.SysRoot, true);
 			FileTree.Nodes[0].Expand();
         }
 
-        private void ListDirectory(TreeView treeView, string path)
+        private void ListDirectory(TreeView treeView, string path, bool includeSubfolders)
         {
             var rootDirectoryInfo = new DirectoryInfo(path);
-            treeView.Nodes.Add(CreateDirectoryNode(rootDirectoryInfo));
+            treeView.Nodes.Add(CreateDirectoryNode(rootDirectoryInfo, includeSubfolders));
         }
 
-        private static TreeNode CreateDirectoryNode(DirectoryInfo directoryInfo)
+        private static TreeNode CreateDirectoryNode(DirectoryInfo directoryInfo, bool includeSubfolders)
         {
             var directoryNode = new TreeNode(directoryInfo.Name, 0, 0) { Name = directoryInfo.Name };
 
@@ -61,13 +61,12 @@ namespace PTMStudio
             directoryEntry.RelativePath = Filesystem.RemoveFilesPrefix(Filesystem.RemoveAbsoluteRoot(directoryEntry.AbsolutePath));
             directoryNode.Tag = directoryEntry;
 
-            foreach (var directory in directoryInfo.GetDirectories())
+            if (includeSubfolders)
             {
-                // Let's not include nodes for subfolders yet, because in version 0.3
-                // the interpreter only sees the top-level USR root folder
-
-                //directoryNode.Nodes.Add(CreateDirectoryNode(directory));
+                foreach (var directory in directoryInfo.GetDirectories())
+                    directoryNode.Nodes.Add(CreateDirectoryNode(directory, includeSubfolders));
             }
+
             foreach (var file in directoryInfo.GetFiles())
             {
 				int imageIndex = 8;
@@ -132,7 +131,8 @@ namespace PTMStudio
             if (file.IsDirectory)
                 return;
 
-            if (FileTree.SelectedNode.Parent.Text == Filesystem.SysRootDirName)
+            TreeNode sysRootNode = FindNode(FileTree.Nodes, Filesystem.SysRootDirName);
+            if (sysRootNode != null && IsDescendantNode(FileTree.SelectedNode, sysRootNode))
             {
                 MainWindow.Warning("Cannot delete system files");
                 return;
@@ -147,6 +147,32 @@ namespace PTMStudio
                 UpdateFileList();
             }
         }
+
+		TreeNode FindNode(TreeNodeCollection nodes, string searchText)
+		{
+			foreach (TreeNode node in nodes)
+			{
+				if (node.Text == searchText)
+					return node;
+
+				TreeNode found = FindNode(node.Nodes, searchText);
+				if (found != null)
+					return found;
+			}
+			return null;
+		}
+
+		private bool IsDescendantNode(TreeNode child, TreeNode root)
+		{
+			while (child != null)
+			{
+				if (child == root)
+					return true;
+
+				child = child.Parent;
+			}
+			return false;
+		}
 	}
 
 	public class FilesystemEntry

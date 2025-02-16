@@ -7,14 +7,61 @@
 		<div class='command-description'>Get code of last pressed key</div>
 		
 		<div class='syntax-header'>Syntax:</div>
+		
 		<div class='syntax'>
 			<div class='syntax-format'>INKEY var</div>
 			<div class='syntax-description'>
-				Store code of last pressed key in the given variable
+				Store code of last pressed key in the given variable.<br><br>
+				This command is subject to the keyboard repeat rate and delay. For continuous input, check the scancode of a currently pressed key and then branch to a subroutine, using any of the GOTO.K, GOTO.NK, CALL.K, CALL.NK commands.<br><br>
+				See the next section for common keycodes.
 			</div>
 			<ul class='syntax-params'>
 				<li>var = Variable identifier</li>
 			</ul>
 		</div>
+
+		<div class='syntax-header'>Common keycodes:</div>
+		<div class='syntax'>
+			<div class='syntax-description'>
+				Some keycodes may differ depending on keyboard layout.
+			</div>
+			<ul class='syntax-params'>
+				<li>A through Z = 97 through 122</li>
+				<li>0 through 9 = 48 through 57 (on main keyboard; see below for numpad)</li>
+				<li>SPACE = 32</li>
+				<li>ENTER/RETURN = 13</li>
+				<li>RIGHT = 1073741903</li>
+				<li>LEFT = 1073741904</li>
+				<li>DOWN = 1073741905</li>
+				<li>UP = 1073741906</li>
+				<li>BACKSPACE = 8</li>
+				<li>TAB = 9</li>
+				<li>CAPSLOCK = 1073741881</li>
+				<li>LEFT SHIFT = 1073742049</li>
+				<li>RIGHT SHIFT = 1073742053</li>
+				<li>LEFT CTRL = 1073742048</li>
+				<li>RIGHT CTRL = 1073742052</li>
+				<li>INSERT = 1073741897</li>
+				<li>DELETE = 127</li>
+				<li>HOME = 1073741898</li>
+				<li>END = 1073741901</li>
+				<li>PAGEUP = 1073741899</li>
+				<li>PAGEDOWN = 1073741902</li>
+				<li>PRINTSCREEN = 1073741894</li>
+				<li>SCROLL LOCK = 1073741895</li>
+				<li>PAUSE/BREAK = 1073741896</li>
+				<li>F1 through F12 = 1073741882 through 1073741893</li>
+				<li>Numpad 1 through 9 = 1073741913 through 1073741921</li>
+				<li>Numpad 0 = 1073741922</li>
+				<li>Numpad ENTER = 1073741912</li>
+				<li>Numpad / = 1073741908</li>
+				<li>Numpad * = 1073741909</li>
+				<li>Numpad - = 1073741910</li>
+				<li>Numpad + = 1073741911</li>
+				<li>Numpad . = 1073741923</li>
+				<li>NUMLOCK = 1073741907</li>
+			</ul>
+		</div>
+		
 	</body>
 </html>

@@ -56,7 +56,7 @@ namespace PTMStudio
 			KeyPreview = true;
 
             HelpWindow = new HelpWindow();
-            HelpWindow.StartPosition = FormStartPosition.CenterParent;
+            HelpWindow.StartPosition = FormStartPosition.Manual;
 
 			Changes = new ChangeTracker();
 			UpdateChangesLabel();
@@ -405,7 +405,14 @@ namespace PTMStudio
         private void BtnHelp_Click(object sender, EventArgs e)
         {
             if (!HelpWindow.Visible)
-                HelpWindow.Show();
+            {
+				HelpWindow.StartPosition = FormStartPosition.Manual;
+				HelpWindow.Location = new Point(
+					Left + (Width - HelpWindow.Width) / 2,
+					Top + (Height - HelpWindow.Height) / 2
+				);
+				HelpWindow.Show();
+            }
 
 			HelpWindow.WindowState = FormWindowState.Normal;
 			HelpWindow.BringToFront();
