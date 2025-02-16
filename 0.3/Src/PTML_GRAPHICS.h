@@ -51,5 +51,6 @@ namespace PTML
 	void GET_SPRITE_X();
 	void GET_SPRITE_Y();
 	void ENABLE_SPRITES();
+	void RESET_SPRITES();
 	void CHECK_SPRITE_COLLISION();
 }

@@ -34,6 +34,7 @@ void t_window::open(const t_string& title, int size)
 	clear(0x000000);
 	refresh();
 
+	SDL_ShowCursor(false);
 	SDL_ShowWindow(sdl_wnd);
 	SDL_RaiseWindow(sdl_wnd);
 }

@@ -303,7 +303,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "PublishWindow";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Publish";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

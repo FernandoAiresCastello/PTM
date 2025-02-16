@@ -55,7 +55,7 @@
 			this.tableLayoutPanel2.RowCount = 2;
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(147, 314);
+			this.tableLayoutPanel2.Size = new System.Drawing.Size(147, 438);
 			this.tableLayoutPanel2.TabIndex = 2;
 			// 
 			// LstCommands
@@ -68,8 +68,9 @@
 			this.LstCommands.Location = new System.Drawing.Point(1, 27);
 			this.LstCommands.Margin = new System.Windows.Forms.Padding(0);
 			this.LstCommands.Name = "LstCommands";
-			this.LstCommands.Size = new System.Drawing.Size(145, 286);
+			this.LstCommands.Size = new System.Drawing.Size(145, 410);
 			this.LstCommands.TabIndex = 2;
+			this.LstCommands.TabStop = false;
 			// 
 			// TxtSearch
 			// 
@@ -81,7 +82,7 @@
 			this.TxtSearch.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
 			this.TxtSearch.Name = "TxtSearch";
 			this.TxtSearch.Size = new System.Drawing.Size(139, 15);
-			this.TxtSearch.TabIndex = 3;
+			this.TxtSearch.TabIndex = 1;
 			// 
 			// tableLayoutPanel1
 			// 
@@ -95,7 +96,7 @@
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 1;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(520, 320);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(726, 444);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// panel1
@@ -105,7 +106,7 @@
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(153, 3);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(364, 314);
+			this.panel1.Size = new System.Drawing.Size(570, 438);
 			this.panel1.TabIndex = 3;
 			// 
 			// HelpView
@@ -115,18 +116,19 @@
 			this.HelpView.Margin = new System.Windows.Forms.Padding(0);
 			this.HelpView.MinimumSize = new System.Drawing.Size(20, 20);
 			this.HelpView.Name = "HelpView";
-			this.HelpView.Size = new System.Drawing.Size(362, 312);
+			this.HelpView.Size = new System.Drawing.Size(568, 436);
 			this.HelpView.TabIndex = 4;
+			this.HelpView.TabStop = false;
 			// 
 			// HelpWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(520, 320);
+			this.ClientSize = new System.Drawing.Size(726, 444);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "HelpWindow";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "PTML Command Reference";
 			this.tableLayoutPanel2.ResumeLayout(false);
 			this.tableLayoutPanel2.PerformLayout();

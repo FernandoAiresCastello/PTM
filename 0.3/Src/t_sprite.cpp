@@ -101,3 +101,8 @@ bool t_sprite::collides_with(t_sprite* other) const
 	return pos.x + t_tile::width > other->pos.x && pos.x < other->pos.x + t_tile::width &&
 		   pos.y + t_tile::height > other->pos.y && pos.y < other->pos.y + t_tile::height;
 }
+
+void t_sprite::reset()
+{
+	*this = t_sprite(false);
+}

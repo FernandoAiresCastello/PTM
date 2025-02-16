@@ -671,3 +671,8 @@ void t_screen::show_sprites(bool show)
 	for (auto& spr : buf->sprites.get_all())
 		spr.set_visible(show);
 }
+
+void t_screen::reset_sprites()
+{
+	buf->sprites.reset_all();
+}

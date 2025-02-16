@@ -1,6 +1,7 @@
 ﻿using ScintillaNET;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -31,11 +32,13 @@ namespace PTMStudio
                 HScrollBar = true,
                 VScrollBar = true
             };
-            Scintilla.Margins[0].Width = 40;
+			Scintilla.Margins[0].Width = 40;
             Scintilla.KeyDown += Scintilla_KeyDown;
+            Scintilla.SetSelectionBackColor(true, SystemColors.Highlight);
+			Scintilla.SetSelectionForeColor(true, SystemColors.HighlightText);
 
-            SetFont("Consolas");
-            SetFontSize(9);
+			SetFont("Consolas");
+            SetFontSize(8);
 
 			SearchPanel.Visible = false;
 			TxtSearch.KeyDown += TxtSearch_KeyDown;

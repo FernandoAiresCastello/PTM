@@ -1,5 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.IO;
 
 namespace PTMStudio.Core
@@ -7,7 +7,7 @@ namespace PTMStudio.Core
 	public class HelpTopics
 	{
 		public readonly string HelpBaseDir = Path.Combine(Environment.CurrentDirectory, "HELP/");
-		public readonly BindingList<CommandHelp> Commands = new BindingList<CommandHelp>();
+		public readonly List<CommandHelp> Commands = new List<CommandHelp>();
 
 		public HelpTopics()
 		{

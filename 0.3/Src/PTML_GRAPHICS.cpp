@@ -449,6 +449,15 @@ void PTML::ENABLE_SPRITES()
 	ptm->get_screen().show_sprites(BOOL(1));
 }
 
+void PTML::RESET_SPRITES()
+{
+	ARGC_MIN_MAX(0, 1);
+	if (COUNT(0))
+		ptm->get_screen().reset_sprites();
+	else if (COUNT(1))
+		ptm->get_screen().get_sprite(NUM(1)).reset();
+}
+
 void PTML::CHECK_SPRITE_COLLISION()
 {
 	ARGC(3);

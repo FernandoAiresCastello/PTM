@@ -1,5 +1,6 @@
 ﻿using PTMStudio.Core;
 using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace PTMStudio
@@ -7,28 +8,35 @@ namespace PTMStudio
 	public partial class HelpWindow : Form
     {
         private readonly HelpTopics HelpTopics = new HelpTopics();
-        private readonly BindingSource BindingSrc;
 
         public HelpWindow()
         {
             InitializeComponent();
 
 			Text = $"PTML Reference - {HelpTopics.Commands.Count} commands";
-			KeyPreview = true;
-            KeyDown += HelpWindow_KeyDown;
-            Shown += HelpWindow_Shown;
-            LstCommands.Sorted = true;
-            LstCommands.SelectedIndexChanged += LstCommands_SelectedIndexChanged;
-            TxtSearch.TextChanged += TxtSearch_TextChanged;
+            StartPosition = FormStartPosition.CenterParent;
 
-            BindingSrc = new BindingSource
-            {
-                DataSource = HelpTopics.Commands
-            };
-            LstCommands.DataSource = BindingSrc;
+			LstCommands.Sorted = true;
+            LstCommands.SelectedIndexChanged += LstCommands_SelectedIndexChanged;
+            LstCommands.DataSource = HelpTopics.Commands;
+
+			KeyPreview = true;
+			KeyDown += HelpWindow_KeyDown;
+			Shown += HelpWindow_Shown;
+			FormClosing += HelpWindow_FormClosing;
+			TxtSearch.TextChanged += TxtSearch_TextChanged;
 		}
 
-        private void TxtSearch_TextChanged(object sender, EventArgs e)
+		private void HelpWindow_FormClosing(object sender, FormClosingEventArgs e)
+		{
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                Hide();
+            }
+		}
+
+		private void TxtSearch_TextChanged(object sender, EventArgs e)
         {
             FilterCommandList();
         }
@@ -60,8 +68,19 @@ namespace PTMStudio
 
         private void FilterCommandList()
         {
-            BindingSrc.Filter = $"Command LIKE {TxtSearch.Text.Trim().ToUpper()}%";
-            
+            string search = TxtSearch.Text.Trim();
+            if (string.IsNullOrWhiteSpace(search))
+                return;
+
+			CommandHelp helpTopic = HelpTopics.Commands.FirstOrDefault(
+                help => help.Command.StartsWith(search));
+
+            if (helpTopic == null)
+                return;
+
+            int index = HelpTopics.Commands.IndexOf(helpTopic);
+            if (index >= 0)
+                LstCommands.SelectedIndex = index;
 		}
     }
 }

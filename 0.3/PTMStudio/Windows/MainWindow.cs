@@ -28,8 +28,8 @@ namespace PTMStudio
         private readonly TilesetEditPanel TilesetPanel;
         private readonly PaletteEditPanel PalettePanel;
         private readonly TileRegisterPanel TileRegPanel;
-        
-        private HelpWindow HelpWindow;
+        private readonly HelpWindow HelpWindow;
+
         private string ProgramFile;
 
         private class ChangeTracker
@@ -54,6 +54,9 @@ namespace PTMStudio
             MinimumSize = Size;
 			PtmExe = ptmExe;
 			KeyPreview = true;
+
+            HelpWindow = new HelpWindow();
+            HelpWindow.StartPosition = FormStartPosition.CenterParent;
 
 			Changes = new ChangeTracker();
 			UpdateChangesLabel();
@@ -401,14 +404,11 @@ namespace PTMStudio
 
         private void BtnHelp_Click(object sender, EventArgs e)
         {
-            if (HelpWindow == null || HelpWindow.IsDisposed)
-                HelpWindow = new HelpWindow();
-
             if (!HelpWindow.Visible)
                 HelpWindow.Show();
 
-            HelpWindow.WindowState = FormWindowState.Normal;
-            HelpWindow.BringToFront();
+			HelpWindow.WindowState = FormWindowState.Normal;
+			HelpWindow.BringToFront();
         }
 
         private void BtnAbout_Click(object sender, EventArgs e)

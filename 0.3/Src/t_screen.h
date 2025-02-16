@@ -106,6 +106,7 @@ public:
 	void set_sprite(int index, const t_tile& tile, const t_pos& pos, bool visible, bool transparent);
 	t_sprite& get_sprite(int index);
 	void show_sprites(bool show);
+	void reset_sprites();
 
 private:
 	t_window* wnd = nullptr;
