@@ -81,7 +81,6 @@ namespace PTMStudio
 					case KnownFileExtensions.Charset: imageIndex = 4; break;
 					case KnownFileExtensions.Palette: imageIndex = 5; break;
 					case KnownFileExtensions.TileBuffer: imageIndex = 6; break;
-					case KnownFileExtensions.Project: imageIndex = 7; break;
                     case KnownFileExtensions.Data: imageIndex = 9; break;
                     case KnownFileExtensions.PublishProfile: imageIndex = 10; break;
 				}

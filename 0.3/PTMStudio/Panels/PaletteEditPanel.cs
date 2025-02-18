@@ -250,6 +250,12 @@ namespace PTMStudio
 
         public void SaveFile()
         {
+            if (Filesystem.DefaultPaletteFile.Equals(Filename))
+            {
+                MainWindow.Warning("Cannot overwrite default system palette");
+                return;
+            }
+
             if (string.IsNullOrWhiteSpace(Filename))
             {
                 SimpleTextInputDialog dialog = new SimpleTextInputDialog("Save palette file", "Enter file name:")

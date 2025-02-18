@@ -267,16 +267,6 @@ namespace PTMStudio
 
                 wnd.ShowDialog(this);
             }
-			else if (ext == KnownFileExtensions.Project)
-            {
-                if (Changes.Program || Changes.Palette || Changes.Tileset || Changes.TileBuffer)
-                {
-                    if (!Confirm("There are unsaved changes. Continue without saving?"))
-                        return;
-				}
-
-                LoadProject(file);
-            }
 			else if (ext == KnownFileExtensions.PublishProfile)
             {
 				PublishWindow wnd = new PublishWindow();
@@ -496,32 +486,6 @@ namespace PTMStudio
             Timer timer = sender as Timer;
             timer.Stop();
             LbChanges.Text = timer.Tag.ToString();
-        }
-
-        private void BtnSaveProject_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog dialog = new SaveFileDialog
-            {
-                InitialDirectory = Filesystem.UserRoot,
-                DefaultExt = KnownFileExtensions.Project,
-				Filter = "PTM Project File (*.PROJ)|*.PROJ"
-			};
-
-            if (dialog.ShowDialog() != DialogResult.OK)
-                return;
-
-            List<string> lines = new List<string>
-            {
-                ProgramPanel.LoadedFile,
-                TilesetPanel.Filename,
-                PalettePanel.Filename,
-                TilebufferPanel.Filename
-            };
-
-            File.WriteAllLines(dialog.FileName, lines);
-
-            FilePanel.UpdateFileList();
-            AlertOnStatusBar("Project saved to: " + dialog.FileName, 2);
         }
 
         private void BtnLoadProject_Click(object sender, EventArgs e)

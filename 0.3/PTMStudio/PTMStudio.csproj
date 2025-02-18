@@ -302,6 +302,7 @@
     <None Include="Resources\folder_vertical_open.png" />
     <None Include="Resources\lightbulb.png" />
     <None Include="Resources\door_out.png" />
+    <None Include="Resources\door_out1.png" />
     <Content Include="Resources\ptm_icon.ico" />
     <None Include="Resources\page_white_paste.png" />
     <None Include="Resources\update.png" />

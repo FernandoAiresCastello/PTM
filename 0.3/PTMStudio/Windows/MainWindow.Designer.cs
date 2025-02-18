@@ -36,6 +36,7 @@
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -49,10 +50,8 @@
 			this.RightPanel = new System.Windows.Forms.TableLayoutPanel();
 			this.BtmLeftPanel = new System.Windows.Forms.Panel();
 			this.TopLeftPanel = new System.Windows.Forms.Panel();
-			this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.BtnSaveProgram = new System.Windows.Forms.ToolStripMenuItem();
 			this.BtnSaveEverything = new System.Windows.Forms.ToolStripMenuItem();
-			this.BtnSaveProject = new System.Windows.Forms.ToolStripMenuItem();
 			this.BtnPublish = new System.Windows.Forms.ToolStripMenuItem();
 			this.BtnRelaunchIde = new System.Windows.Forms.ToolStripMenuItem();
 			this.BtnQuit = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,7 +92,6 @@
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BtnSaveProgram,
             this.BtnSaveEverything,
-            this.BtnSaveProject,
             this.BtnPublish,
             this.toolStripSeparator1,
             this.BtnRelaunchIde,
@@ -139,6 +137,14 @@
 			this.runToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
 			this.runToolStripMenuItem.Text = "Run";
 			// 
+			// settingsToolStripMenuItem
+			// 
+			this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BtnEditSettingsFile});
+			this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+			this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+			this.settingsToolStripMenuItem.Text = "Settings";
+			// 
 			// helpToolStripMenuItem
 			// 
 			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -177,7 +183,7 @@
 			this.RootPanel.ColumnCount = 3;
 			this.RootPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.31579F));
 			this.RootPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.68421F));
-			this.RootPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 268F));
+			this.RootPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 269F));
 			this.RootPanel.Controls.Add(this.CenterPanel, 1, 0);
 			this.RootPanel.Controls.Add(this.LeftPanel, 0, 0);
 			this.RootPanel.Controls.Add(this.RightPanel, 2, 0);
@@ -203,7 +209,7 @@
 			this.CenterPanel.RowCount = 2;
 			this.CenterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.CenterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.CenterPanel.Size = new System.Drawing.Size(433, 440);
+			this.CenterPanel.Size = new System.Drawing.Size(432, 440);
 			this.CenterPanel.TabIndex = 3;
 			// 
 			// CenterBottomPanel
@@ -212,7 +218,7 @@
 			this.CenterBottomPanel.Location = new System.Drawing.Point(0, 3);
 			this.CenterBottomPanel.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
 			this.CenterBottomPanel.Name = "CenterBottomPanel";
-			this.CenterBottomPanel.Size = new System.Drawing.Size(433, 440);
+			this.CenterBottomPanel.Size = new System.Drawing.Size(432, 440);
 			this.CenterBottomPanel.TabIndex = 0;
 			// 
 			// LeftPanel
@@ -255,13 +261,13 @@
 			this.RightPanel.Controls.Add(this.BtmLeftPanel, 0, 1);
 			this.RightPanel.Controls.Add(this.TopLeftPanel, 0, 0);
 			this.RightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.RightPanel.Location = new System.Drawing.Point(605, 10);
+			this.RightPanel.Location = new System.Drawing.Point(604, 10);
 			this.RightPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.RightPanel.Name = "RightPanel";
 			this.RightPanel.RowCount = 2;
 			this.RightPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.RightPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.RightPanel.Size = new System.Drawing.Size(269, 440);
+			this.RightPanel.Size = new System.Drawing.Size(270, 440);
 			this.RightPanel.TabIndex = 2;
 			// 
 			// BtmLeftPanel
@@ -271,7 +277,7 @@
 			this.BtmLeftPanel.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
 			this.BtmLeftPanel.Name = "BtmLeftPanel";
 			this.BtmLeftPanel.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.BtmLeftPanel.Size = new System.Drawing.Size(263, 214);
+			this.BtmLeftPanel.Size = new System.Drawing.Size(264, 214);
 			this.BtmLeftPanel.TabIndex = 4;
 			// 
 			// TopLeftPanel
@@ -280,16 +286,8 @@
 			this.TopLeftPanel.Location = new System.Drawing.Point(3, 3);
 			this.TopLeftPanel.Name = "TopLeftPanel";
 			this.TopLeftPanel.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.TopLeftPanel.Size = new System.Drawing.Size(263, 214);
+			this.TopLeftPanel.Size = new System.Drawing.Size(264, 214);
 			this.TopLeftPanel.TabIndex = 3;
-			// 
-			// settingsToolStripMenuItem
-			// 
-			this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.BtnEditSettingsFile});
-			this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-			this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-			this.settingsToolStripMenuItem.Text = "Settings";
 			// 
 			// BtnSaveProgram
 			// 
@@ -310,14 +308,6 @@
 			this.BtnSaveEverything.Text = "Save all panels";
 			this.BtnSaveEverything.Click += new System.EventHandler(this.BtnSaveEverything_Click);
 			// 
-			// BtnSaveProject
-			// 
-			this.BtnSaveProject.Image = global::PTMStudio.Properties.Resources.bookshelf;
-			this.BtnSaveProject.Name = "BtnSaveProject";
-			this.BtnSaveProject.Size = new System.Drawing.Size(222, 22);
-			this.BtnSaveProject.Text = "Save as project";
-			this.BtnSaveProject.Click += new System.EventHandler(this.BtnSaveProject_Click);
-			// 
 			// BtnPublish
 			// 
 			this.BtnPublish.Image = global::PTMStudio.Properties.Resources.package_go;
@@ -328,20 +318,20 @@
 			// 
 			// BtnRelaunchIde
 			// 
-			this.BtnRelaunchIde.Image = global::PTMStudio.Properties.Resources.restart_services;
+			this.BtnRelaunchIde.Image = global::PTMStudio.Properties.Resources.cancel;
 			this.BtnRelaunchIde.Name = "BtnRelaunchIde";
 			this.BtnRelaunchIde.Size = new System.Drawing.Size(222, 22);
-			this.BtnRelaunchIde.Text = "Relaunch IDE";
+			this.BtnRelaunchIde.Text = "Close project";
 			this.BtnRelaunchIde.Click += new System.EventHandler(this.BtnRelaunchIde_Click);
 			// 
 			// BtnQuit
 			// 
-			this.BtnQuit.Image = global::PTMStudio.Properties.Resources.cancel;
+			this.BtnQuit.Image = global::PTMStudio.Properties.Resources.door_out1;
 			this.BtnQuit.Name = "BtnQuit";
 			this.BtnQuit.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.Q)));
 			this.BtnQuit.Size = new System.Drawing.Size(222, 22);
-			this.BtnQuit.Text = "Quit";
+			this.BtnQuit.Text = "Exit";
 			this.BtnQuit.Click += new System.EventHandler(this.BtnQuit_Click);
 			// 
 			// BtnSearchInProgram
@@ -399,7 +389,7 @@
 			// 
 			this.BtnEditSettingsFile.Image = global::PTMStudio.Properties.Resources.setting_tools;
 			this.BtnEditSettingsFile.Name = "BtnEditSettingsFile";
-			this.BtnEditSettingsFile.Size = new System.Drawing.Size(180, 22);
+			this.BtnEditSettingsFile.Size = new System.Drawing.Size(154, 22);
 			this.BtnEditSettingsFile.Text = "Edit settings.ini";
 			this.BtnEditSettingsFile.Click += new System.EventHandler(this.BtnEditSettingsFile_Click);
 			// 
@@ -477,7 +467,6 @@
         private System.Windows.Forms.ToolStripMenuItem BtnSaveEverything;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripStatusLabel LbChanges;
-        private System.Windows.Forms.ToolStripMenuItem BtnSaveProject;
 		private System.Windows.Forms.ToolStripMenuItem BtnRunEmpty;
 		private System.Windows.Forms.TableLayoutPanel CenterPanel;
 		private System.Windows.Forms.Panel CenterBottomPanel;

@@ -188,6 +188,12 @@ namespace PTMStudio
 
         public void SaveFile()
         {
+			if (Filesystem.DefaultTilesetFile.Equals(Filename))
+			{
+				MainWindow.Warning("Cannot overwrite default system charset");
+				return;
+			}
+
 			if (string.IsNullOrWhiteSpace(Filename))
 			{
                 SimpleTextInputDialog dialog = new SimpleTextInputDialog("Save charset file", "Enter file name:")
