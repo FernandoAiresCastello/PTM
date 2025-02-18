@@ -62,6 +62,10 @@ Use at your own risk!*
 
 All of the following screenshots are taken from the lastest development build.
 
+*Welcome window:*
+
+![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio_0.png?raw=true)
+
 *Code editor view:*
 
 ![PTM Studio 0.3](https://github.com/FernandoAiresCastello/PTM/blob/master/Images/ptm_studio_1.png?raw=true)
