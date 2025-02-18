@@ -8,5 +8,6 @@
 		public const string TileBuffer = ".BUF";
 		public const string Data = ".DAT";
         public const string PublishProfile = ".PUB";
-    }
+		public const string Project = ".PROJ";
+	}
 }

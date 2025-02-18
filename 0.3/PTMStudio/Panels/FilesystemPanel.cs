@@ -69,6 +69,9 @@ namespace PTMStudio
 
             foreach (var file in directoryInfo.GetFiles())
             {
+                if (file.Name.EndsWith(KnownFileExtensions.Project))
+                    continue;
+
 				int imageIndex = 8;
 
                 if (Filesystem.SpecialFiles.Contains(file.Name))

@@ -23,6 +23,11 @@ namespace PTMStudio
 		private readonly HelpWindow HelpWindow;
 
 		private readonly string ProjectFolder;
+        private readonly string ProjectName;
+
+        private string DefaultWorkspaceFile => 
+            Path.Combine(ProjectFolder, ProjectName + KnownFileExtensions.Project);
+
 		private string ProgramFile;
 
 		public bool ShouldRestart { get; private set; } = false;
@@ -51,14 +56,17 @@ namespace PTMStudio
         {
             InitializeComponent();
             ShouldRestart = false;
-			BuildTimestamp = File.ReadAllText("build_timestamp").Trim();
-			FormClosing += MainWindow_FormClosing;
-            ProjectFolder = projectFolder;
-			Text = WindowTitle + " - " + projectFolder.Replace('\\', '/');
-			Size = new Size(1024, 730);
-            MinimumSize = Size;
-			PtmExe = ptmExe;
 			KeyPreview = true;
+			Size = new Size(1024, 730);
+			MinimumSize = Size;
+			FormClosing += MainWindow_FormClosing;
+			
+            PtmExe = ptmExe;
+			BuildTimestamp = File.ReadAllText("build_timestamp").Trim();
+
+			ProjectFolder = projectFolder;
+            ProjectName = Path.GetFileName(projectFolder);
+            Text = WindowTitle + " - " + ProjectName;
 
 			HelpWindow = new HelpWindow
 			{
@@ -66,9 +74,32 @@ namespace PTMStudio
 			};
 
 			Changes = new ChangeTracker();
+
 			UpdateChangesLabel();
             InitPanels();
 			LoadSettings();
+
+            if (File.Exists(DefaultWorkspaceFile))
+                LoadDefaultWorkspace();
+		}
+
+        private void LoadDefaultWorkspace()
+        {
+            var lines = File.ReadAllLines(DefaultWorkspaceFile);
+
+            string programFile = lines[0];
+			string paletteFile = lines[1];
+			string charsetFile = lines[2];
+			string tilebufferFile = lines[3];
+
+            if (!string.IsNullOrWhiteSpace(programFile))
+                LoadFile(programFile, false);
+			if (!string.IsNullOrWhiteSpace(paletteFile))
+				LoadFile(paletteFile, false);
+			if (!string.IsNullOrWhiteSpace(charsetFile))
+				LoadFile(charsetFile, false);
+			if (!string.IsNullOrWhiteSpace(tilebufferFile))
+				LoadFile(tilebufferFile, false);
 		}
 
         private void InitPanels()
@@ -201,8 +232,11 @@ namespace PTMStudio
 		    Process.Start(PtmExe, ProgramFile);
         }
 
-        public void LoadFile(string file)
+        public void LoadFile(string file, bool switchToLoadedPanel = true)
         {
+            if (file.StartsWith("\\") || file.StartsWith("/"))
+                file = file.Substring(1);
+
             string ext = Path.GetExtension(file).ToUpper();
 
             if (ext == KnownFileExtensions.Program)
@@ -216,7 +250,7 @@ namespace PTMStudio
                         ProgramPanel.SaveFile();
                 }
 
-                ProgramPanel.LoadFile(file, true);
+                ProgramPanel.LoadFile(file, switchToLoadedPanel);
             }
             else if (ext == KnownFileExtensions.Charset)
             {
@@ -255,7 +289,7 @@ namespace PTMStudio
 						ProgramPanel.SaveFile();
 				}
 
-				TilebufferPanel.LoadFile(file, true);
+				TilebufferPanel.LoadFile(file, switchToLoadedPanel);
             }
 			else if (ext == KnownFileExtensions.Data)
             {
@@ -565,6 +599,16 @@ namespace PTMStudio
                 MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
         }
 
+		public static void Info(string title, string message)
+        {
+			MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
+		}
+
+		public static void Success(string message)
+		{
+            Info("Success", message);
+		}
+
 		public static void Warning(string message)
         {
             Warning("Warning", message);
@@ -655,5 +699,40 @@ namespace PTMStudio
         {
             File.Copy(filename, Path.Combine(ProjectFolder, Path.GetFileName(filename)), true);
         }
+
+		private void BtnSaveWorkspace_Click(object sender, EventArgs e)
+		{
+            try
+            {
+                var filenames = new List<string>();
+
+                if (!string.IsNullOrWhiteSpace(ProgramPanel.LoadedFile))
+                    filenames.Add(Filesystem.RemoveAbsoluteRootAndNormalizePath(ProgramPanel.LoadedFile));
+                else
+					filenames.Add("");
+
+				if (!string.IsNullOrWhiteSpace(PalettePanel.Filename))
+                    filenames.Add(Filesystem.RemoveAbsoluteRootAndNormalizePath(PalettePanel.Filename));
+                else
+                    filenames.Add("");
+
+				if (!string.IsNullOrWhiteSpace(TilesetPanel.Filename))
+					filenames.Add(Filesystem.RemoveAbsoluteRootAndNormalizePath(TilesetPanel.Filename));
+                else
+					filenames.Add("");
+
+				if (!string.IsNullOrWhiteSpace(TilebufferPanel.Filename))
+					filenames.Add(Filesystem.RemoveAbsoluteRootAndNormalizePath(TilebufferPanel.Filename));
+                else
+					filenames.Add("");
+
+				File.WriteAllLines(DefaultWorkspaceFile, filenames);
+                Success($"The default workspace file for this project has been saved successfully to {DefaultWorkspaceFile}.");
+            }
+            catch (Exception ex)
+            {
+                Error("Could not save default workspace file.", ex);
+            }
+		}
 	}
 }
