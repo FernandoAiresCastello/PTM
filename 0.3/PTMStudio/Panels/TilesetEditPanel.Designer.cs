@@ -1,4 +1,6 @@
-﻿namespace PTMStudio
+﻿using PTMStudio.Core;
+
+namespace PTMStudio
 {
     partial class TilesetEditPanel
     {
@@ -126,7 +128,7 @@
 			this.TxtFilename.Size = new System.Drawing.Size(217, 13);
 			this.TxtFilename.TabIndex = 2;
 			this.TxtFilename.TabStop = false;
-			this.TxtFilename.Text = "<Unsaved>";
+			this.TxtFilename.Text = GlobalConstants.Unsaved;
 			// 
 			// TilesetEditPanel
 			// 

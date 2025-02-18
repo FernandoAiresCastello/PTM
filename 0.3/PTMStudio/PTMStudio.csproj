@@ -60,8 +60,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\GlobalConstants.cs" />
     <Compile Include="Core\HelpTopics.cs" />
     <Compile Include="Core\KnownFileExtensions.cs" />
+    <Compile Include="Core\ProjectFolder.cs" />
     <Compile Include="Core\RecordFile.cs" />
     <Compile Include="Windows\AboutWindow.cs">
       <SubType>Form</SubType>
@@ -127,6 +129,12 @@
       <DependentUpon>TilebufferEditPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\TilebufferFile.cs" />
+    <Compile Include="Windows\ProjectLoadWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\ProjectLoadWindow.Designer.cs">
+      <DependentUpon>ProjectLoadWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Windows\PublishWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,6 +152,12 @@
     </Compile>
     <Compile Include="Windows\SimpleTextInputDialog.Designer.cs">
       <DependentUpon>SimpleTextInputDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\StartWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\StartWindow.Designer.cs">
+      <DependentUpon>StartWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Windows\TileEditWindow.cs">
       <SubType>Form</SubType>
@@ -203,6 +217,9 @@
     <EmbeddedResource Include="Panels\TilebufferEditPanel.resx">
       <DependentUpon>TilebufferEditPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ProjectLoadWindow.resx">
+      <DependentUpon>ProjectLoadWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\PublishWindow.resx">
       <DependentUpon>PublishWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -211,6 +228,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\SimpleTextInputDialog.resx">
       <DependentUpon>SimpleTextInputDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\StartWindow.resx">
+      <DependentUpon>StartWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\TileEditWindow.resx">
       <DependentUpon>TileEditWindow.cs</DependentUpon>
@@ -278,6 +298,10 @@
     <None Include="Resources\arrow_left1.png" />
     <None Include="Resources\bug.png" />
     <None Include="Resources\magnifier.png" />
+    <None Include="Resources\flag_new.png" />
+    <None Include="Resources\folder_vertical_open.png" />
+    <None Include="Resources\lightbulb.png" />
+    <None Include="Resources\door_out.png" />
     <Content Include="Resources\ptm_icon.ico" />
     <None Include="Resources\page_white_paste.png" />
     <None Include="Resources\update.png" />

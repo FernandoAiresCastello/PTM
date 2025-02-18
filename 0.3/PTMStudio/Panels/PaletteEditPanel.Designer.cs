@@ -1,4 +1,6 @@
-﻿namespace PTMStudio
+﻿using PTMStudio.Core;
+
+namespace PTMStudio
 {
     partial class PaletteEditPanel
     {
@@ -111,7 +113,7 @@
 			this.TxtFilename.Size = new System.Drawing.Size(209, 13);
 			this.TxtFilename.TabIndex = 3;
 			this.TxtFilename.TabStop = false;
-			this.TxtFilename.Text = "<Unsaved>";
+			this.TxtFilename.Text = GlobalConstants.Unsaved;
 			// 
 			// BtnNew
 			// 

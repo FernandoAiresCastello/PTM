@@ -1,0 +1,38 @@
+main:
+	AUTOREF 0
+	CLS
+	SET ix,1
+	SET iy,1
+	SET c,0
+	TILE
+	TILE 0,15,0
+
+loop:
+	LOCATE ix,iy
+	CSET 0,c
+	PUT
+	INC c
+	INC ix
+	GOTO.LE ix,16,loop
+	INC iy
+	SET ix,1
+	GOTO.LE iy,16,loop
+	SET ix,1
+	SET iy,0
+	SET ch,0
+loop2:
+	LOCATE ix,iy
+	PRINTF "%X",ch
+	INC ix
+	INC ch
+	GOTO.LE ix,16,loop2
+	SET ix,0
+	SET iy,1
+	SET ch,0
+loop3:
+	LOCATE ix,iy
+	PRINTF "%X",ch
+	INC iy
+	INC ch
+	GOTO.LE iy,16,loop3
+	LOCATE 0,18

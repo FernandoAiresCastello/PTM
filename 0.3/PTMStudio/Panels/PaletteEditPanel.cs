@@ -272,7 +272,8 @@ namespace PTMStudio
 			TxtFilename.Text = Filesystem.RemoveAbsoluteRootAndNormalizePath(Filename);
 			MainWindow.UpdateFilePanel();
             MainWindow.PaletteChanged(false);
-        }
+			MainWindow.CopyFileFromUsrFolderToProjectFolder(Filename);
+		}
 
         private void BtnNew_Click(object sender, EventArgs e)
         {
@@ -281,7 +282,7 @@ namespace PTMStudio
                 Display.Graphics.Palette.Add(0xffffff);
 
 			Filename = null;
-            TxtFilename.Text = "<Unsaved>";
+            TxtFilename.Text = GlobalConstants.Unsaved;
             FirstColor = 0;
             MainWindow.PaletteChanged(false);
             UpdateDisplay();

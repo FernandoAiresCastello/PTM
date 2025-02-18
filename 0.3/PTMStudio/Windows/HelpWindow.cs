@@ -16,9 +16,9 @@ namespace PTMStudio
 			Text = $"PTML Reference - {HelpTopics.Commands.Count} commands";
             StartPosition = FormStartPosition.CenterParent;
 
-			LstCommands.Sorted = true;
-            LstCommands.SelectedIndexChanged += LstCommands_SelectedIndexChanged;
-            LstCommands.DataSource = HelpTopics.Commands;
+			LstTopics.Sorted = true;
+            LstTopics.SelectedIndexChanged += LstCommands_SelectedIndexChanged;
+            LstTopics.DataSource = HelpTopics.Commands;
 
 			KeyPreview = true;
 			KeyDown += HelpWindow_KeyDown;
@@ -59,10 +59,10 @@ namespace PTMStudio
 
         private void ShowHelpForSelectedCommand()
         {
-            if (LstCommands.SelectedItem == null)
+            if (LstTopics.SelectedItem == null)
                 return;
 
-            CommandHelp help = LstCommands.SelectedItem as CommandHelp;
+            CommandHelp help = LstTopics.SelectedItem as CommandHelp;
             HelpView.Url = new Uri(help.HtmlFilePath);
 		}
 
@@ -80,7 +80,7 @@ namespace PTMStudio
 
             int index = HelpTopics.Commands.IndexOf(helpTopic);
             if (index >= 0)
-                LstCommands.SelectedIndex = index;
+                LstTopics.SelectedIndex = index;
 		}
     }
 }

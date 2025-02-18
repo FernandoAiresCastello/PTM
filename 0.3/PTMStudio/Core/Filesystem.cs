@@ -6,17 +6,19 @@ namespace PTMStudio
 {
 	public static class Filesystem
     {
-        public const string UserRootDirName = "USR";
-        public const string SysRootDirName = "SYS";
+		public const string SysRootDirName = "SYS";
+		public const string UserRootDirName = "USR";
+		public const string ProjectDirName = "PROJ";
 
-        public static readonly string CurrentDir = NormalizePath(Environment.CurrentDirectory);
+		public static readonly string CurrentDir = NormalizePath(Environment.CurrentDirectory);
         public static readonly string UserRoot = NormalizePath(Path.Combine(Environment.CurrentDirectory, UserRootDirName));
         public static readonly string SysRoot = NormalizePath(Path.Combine(Environment.CurrentDirectory, SysRootDirName));
 
-        public static readonly string DefaultPaletteFile = GetSystemFilePath("DEFAULT.PAL");
+		public const string ScratchpadProjectFolder = "SCRATCHPAD";
+		public static readonly string DefaultPaletteFile = GetSystemFilePath("DEFAULT.PAL");
         public static readonly string DefaultTilesetFile = GetSystemFilePath("DEFAULT.CHR");
 
-        public static readonly string[] SpecialFiles =
+		public static readonly string[] SpecialFiles =
         {
 			"AUTOEXEC.PTM", "AUTOSAVE.PTM", "TEMP.PTM"
 		};

@@ -210,14 +210,15 @@ namespace PTMStudio
 			TxtFilename.Text = Filesystem.RemoveAbsoluteRootAndNormalizePath(Filename);
 			MainWindow.UpdateFilePanel();
             MainWindow.TilesetChanged(false);
-        }
+            MainWindow.CopyFileFromUsrFolderToProjectFolder(Filename);
+		}
 
         private void BtnNew_Click(object sender, EventArgs e)
         {
 			LoadFile(Filesystem.DefaultTilesetFile);
 			
             Filename = null;
-            TxtFilename.Text = "<Unsaved>";
+            TxtFilename.Text = GlobalConstants.Unsaved;
             FirstTile = 0;
             MainWindow.TilesetChanged(false);
             UpdateDisplay();

@@ -1,4 +1,6 @@
-﻿using ScintillaNET;
+﻿using PTMStudio.Core;
+using PTMStudio.Windows;
+using ScintillaNET;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -40,6 +42,7 @@ namespace PTMStudio
 			SetFont("Consolas");
             SetFontSize(8);
 
+            LbFilename.Text = GlobalConstants.Unsaved;
 			SearchPanel.Visible = false;
 			TxtSearch.KeyDown += TxtSearch_KeyDown;
 		}
@@ -72,9 +75,34 @@ namespace PTMStudio
 
         public void SaveFile()
         {
-            File.WriteAllText(LoadedFile, Scintilla.Text);
-            MainWindow.ProgramChanged(false);
-            MainWindow.UpdateLabelsPanel();
+            if (string.IsNullOrWhiteSpace(LoadedFile))
+            {
+                SimpleTextInputDialog dialog = new SimpleTextInputDialog("Save program file", "Enter file name:")
+                {
+                    UppercaseOnly = true
+                };
+
+                if (dialog.ShowDialog(this) == DialogResult.OK)
+                    LoadedFile = dialog.Text.ToUpper();
+                else
+                    return;
+
+                LoadedFile = Filesystem.GetUserFilePath(LoadedFile);
+                if (!LoadedFile.EndsWith(KnownFileExtensions.Program))
+                    LoadedFile += KnownFileExtensions.Program;
+
+				File.WriteAllText(LoadedFile, Scintilla.Text);
+				MainWindow.ProgramChanged(false);
+				MainWindow.LoadFile(LoadedFile);
+            }
+            else
+            {
+                File.WriteAllText(LoadedFile, Scintilla.Text);
+                MainWindow.ProgramChanged(false);
+                MainWindow.UpdateLabelsPanel();
+            }
+
+            MainWindow.CopyFileFromUsrFolderToProjectFolder(LoadedFile);
 		}
 
         private void BtnRun_Click(object sender, EventArgs e)

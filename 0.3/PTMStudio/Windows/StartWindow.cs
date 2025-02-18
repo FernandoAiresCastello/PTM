@@ -1,0 +1,77 @@
+﻿using System.IO;
+using System.Windows.Forms;
+
+namespace PTMStudio.Windows
+{
+	public partial class StartWindow : Form
+	{
+		public string ProjectFolder { get; private set; }
+
+		public StartWindow()
+		{
+			InitializeComponent();
+		}
+
+		private void BtnExit_Click(object sender, System.EventArgs e)
+		{
+			DialogResult = DialogResult.Cancel;
+		}
+
+		private void BtnLoad_Click(object sender, System.EventArgs e)
+		{
+			ProjectLoadWindow wnd = new ProjectLoadWindow();
+			if (wnd.ShowDialog(this) != DialogResult.OK)
+				return;
+
+			ProjectFolder = wnd.SelectedProject.Path;
+			CopyFiles(ProjectFolder, Filesystem.UserRootDirName);
+			DialogResult = DialogResult.OK;
+		}
+
+		private void BtnScratchpad_Click(object sender, System.EventArgs e)
+		{
+			ProjectFolder = Path.Combine(Filesystem.ProjectDirName, Filesystem.ScratchpadProjectFolder);
+			CopyFiles(ProjectFolder, Filesystem.UserRootDirName);
+			DialogResult = DialogResult.OK;
+		}
+
+		private void BtnNew_Click(object sender, System.EventArgs e)
+		{
+			SimpleTextInputDialog dialog = new SimpleTextInputDialog("Create new project", "Enter project name:")
+			{
+				UppercaseOnly = true
+			};
+
+			string newProjectFolder;
+			if (dialog.ShowDialog(this) == DialogResult.OK)
+				newProjectFolder = dialog.Text.ToUpper();
+			else
+				return;
+
+			ProjectFolder = Path.Combine(Filesystem.ProjectDirName, newProjectFolder);
+			Directory.CreateDirectory(ProjectFolder);
+			DeleteAllFiles(Filesystem.UserRootDirName);
+			DialogResult = DialogResult.OK;
+		}
+
+		private static void CopyFiles(string sourceDir, string destDir)
+		{
+			if (Directory.Exists(destDir))
+				DeleteAllFiles(destDir);
+			else
+				Directory.CreateDirectory(destDir);
+
+			foreach (string file in Directory.GetFiles(sourceDir))
+			{
+				string destFile = Path.Combine(destDir, Path.GetFileName(file));
+				File.Copy(file, destFile, true);
+			}
+		}
+
+		private static void DeleteAllFiles(string folderPath)
+		{
+			foreach (string file in Directory.GetFiles(folderPath))
+				File.Delete(file);
+		}
+	}
+}

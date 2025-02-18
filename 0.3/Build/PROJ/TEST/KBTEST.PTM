@@ -1,0 +1,19 @@
+AUTOREF 0
+COLOR 15,2,1
+CURSOR 0
+SET last_key, 0
+
+loop:
+    CLS
+    LOCATE 3,3
+    PRINT "Key code:"
+    LOCATE 3,4
+    INKEY key
+    CALL.NE key,0,update_key
+    PRINT last_key
+    REFRESH
+    GOTO loop
+
+update_key:
+    SET last_key, key
+    RET

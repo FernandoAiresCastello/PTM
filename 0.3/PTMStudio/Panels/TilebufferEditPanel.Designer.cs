@@ -1,4 +1,6 @@
-﻿namespace PTMStudio
+﻿using PTMStudio.Core;
+
+namespace PTMStudio
 {
     partial class TilebufferEditPanel
     {
@@ -96,7 +98,7 @@
 			this.TxtFilename.ReadOnly = true;
 			this.TxtFilename.Size = new System.Drawing.Size(594, 13);
 			this.TxtFilename.TabIndex = 4;
-			this.TxtFilename.Text = "<Unsaved>";
+			this.TxtFilename.Text = GlobalConstants.Unsaved;
 			// 
 			// toolStrip1
 			// 

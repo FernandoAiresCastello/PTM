@@ -15,23 +15,28 @@ namespace PTMStudio
 {
 	public partial class MainWindow : Form
     {
-        private const string AutosavedProgramFile = "USR/TEMP" + KnownFileExtensions.Program;
         private const string SettingsFile = "settings.ini";
 
 		private readonly string WindowTitle = "PTM 0.3";
 		private readonly string PtmExe;
 		private readonly string BuildTimestamp;
-		private readonly ProgramEditPanel ProgramPanel;
-        private readonly TilebufferEditPanel TilebufferPanel;
-        private readonly FilesystemPanel FilePanel;
-        private readonly ProgramLabelsPanel LabelsPanel;
-        private readonly TilesetEditPanel TilesetPanel;
-        private readonly PaletteEditPanel PalettePanel;
-        private readonly TileRegisterPanel TileRegPanel;
-        private readonly HelpWindow HelpWindow;
+		private readonly HelpWindow HelpWindow;
 
-        private string ProgramFile;
+		private readonly string ProjectFolder;
+		private string ProgramFile;
 
+		public bool ShouldRestart { get; private set; } = false;
+
+		// Panels
+		private ProgramEditPanel ProgramPanel;
+        private TilebufferEditPanel TilebufferPanel;
+        private FilesystemPanel FilePanel;
+        private ProgramLabelsPanel LabelsPanel;
+        private TilesetEditPanel TilesetPanel;
+        private PaletteEditPanel PalettePanel;
+        private TileRegisterPanel TileRegPanel;
+
+        // Change tracking
         private class ChangeTracker
         {
             public bool Program { set; get; } = false;
@@ -41,87 +46,81 @@ namespace PTMStudio
         }
         private ChangeTracker Changes { get; set; }
 
-        public bool ShouldRestart { get; private set; } = false;
-
-        public MainWindow(string ptmExe)
+        // Constructor
+        public MainWindow(string ptmExe, string projectFolder)
         {
             InitializeComponent();
             ShouldRestart = false;
 			BuildTimestamp = File.ReadAllText("build_timestamp").Trim();
-
-			Text = WindowTitle;
+			FormClosing += MainWindow_FormClosing;
+            ProjectFolder = projectFolder;
+			Text = WindowTitle + " - " + projectFolder.Replace('\\', '/');
 			Size = new Size(1024, 730);
             MinimumSize = Size;
 			PtmExe = ptmExe;
 			KeyPreview = true;
 
-            HelpWindow = new HelpWindow();
-            HelpWindow.StartPosition = FormStartPosition.Manual;
+			HelpWindow = new HelpWindow
+			{
+				StartPosition = FormStartPosition.Manual
+			};
 
 			Changes = new ChangeTracker();
 			UpdateChangesLabel();
+            InitPanels();
+			LoadSettings();
+		}
 
+        private void InitPanels()
+        {
 			ProgramPanel = new ProgramEditPanel(this)
-            {
-                Parent = CenterBottomPanel,
-                Dock = DockStyle.Fill
-            };
+			{
+				Parent = CenterBottomPanel,
+				Dock = DockStyle.Fill
+			};
 
-            FilePanel = new FilesystemPanel(this)
-            {
-                Parent = TopRightPanel,
-                Dock = DockStyle.Fill
-            };
+			FilePanel = new FilesystemPanel(this)
+			{
+				Parent = TopRightPanel,
+				Dock = DockStyle.Fill
+			};
 
-            LabelsPanel = new ProgramLabelsPanel(this)
-            {
-                Parent = BtmRightPanel,
-                Dock = DockStyle.Fill
-            };
+			LabelsPanel = new ProgramLabelsPanel(this)
+			{
+				Parent = BtmRightPanel,
+				Dock = DockStyle.Fill
+			};
 
-            TilesetPanel = new TilesetEditPanel(this)
-            {
-                Parent = TopLeftPanel,
-                Dock = DockStyle.Fill
-            };
+			TilesetPanel = new TilesetEditPanel(this)
+			{
+				Parent = TopLeftPanel,
+				Dock = DockStyle.Fill
+			};
 
-            PalettePanel = new PaletteEditPanel(this)
-            {
-                Parent = BtmLeftPanel,
-                Dock = DockStyle.Fill
-            };
+			PalettePanel = new PaletteEditPanel(this)
+			{
+				Parent = BtmLeftPanel,
+				Dock = DockStyle.Fill
+			};
 
 			PalettePanel.LoadFile(Filesystem.DefaultPaletteFile);
 			TilesetPanel.LoadFile(Filesystem.DefaultTilesetFile);
 
 			TilebufferPanel = new TilebufferEditPanel(this,
-                TilesetPanel.Tileset, PalettePanel.Palette)
-            {
-                Parent = CenterBottomPanel,
-                Dock = DockStyle.Fill,
-                Visible = false
-            };
+				TilesetPanel.Tileset, PalettePanel.Palette)
+			{
+				Parent = CenterBottomPanel,
+				Dock = DockStyle.Fill,
+				Visible = false
+			};
 
-            TileRegPanel = new TileRegisterPanel(this,
-                TilesetPanel.Tileset, PalettePanel.Palette)
-            {
-                Parent = BtmRightPanel,
-                Dock = DockStyle.Fill,
-                Visible = false
-            };
-
-            if (!File.Exists(AutosavedProgramFile))
-            {
-                File.Create(AutosavedProgramFile).Close();
-				FilePanel.UpdateFileList();
-			}
-
-            LoadFile(AutosavedProgramFile);
-
-            FormClosing += MainWindow_FormClosing;
-            //Resize += (s, e) => { Text = Size.ToString(); };
-
-            LoadSettings();
+			TileRegPanel = new TileRegisterPanel(this,
+				TilesetPanel.Tileset, PalettePanel.Palette)
+			{
+				Parent = BtmRightPanel,
+				Dock = DockStyle.Fill,
+				Visible = false
+			};
 		}
 
 		private void LoadSettings()
@@ -649,6 +648,7 @@ namespace PTMStudio
 				File.Create(path).Close();
 				FilePanel.UpdateFileList();
 				ProgramPanel.LoadFile(path, true);
+                CopyFileFromUsrFolderToProjectFolder(path);
 			}
 		}
 
@@ -686,5 +686,10 @@ namespace PTMStudio
 
             Process.Start(SettingsFile);
 		}
+
+        public void CopyFileFromUsrFolderToProjectFolder(string filename)
+        {
+            File.Copy(filename, Path.Combine(ProjectFolder, Path.GetFileName(filename)), true);
+        }
 	}
 }

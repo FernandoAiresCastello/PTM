@@ -237,6 +237,7 @@ namespace PTMStudio
 			TxtFilename.Text = Filesystem.RemoveAbsoluteRootAndNormalizePath(Filename);
 			MainWindow.UpdateFilePanel();
 			MainWindow.TilebufferChanged(false);
+			MainWindow.CopyFileFromUsrFolderToProjectFolder(Filename);
 		}
 
         public void LoadFile(string file, bool showPanel)
@@ -321,7 +322,7 @@ namespace PTMStudio
                 Renderer.Map = TileBuffer;
 
             Filename = null;
-            TxtFilename.Text = "<Unsaved>";
+            TxtFilename.Text = GlobalConstants.Unsaved;
 
             UpdateDisplay();
             UpdateSizeLabel();

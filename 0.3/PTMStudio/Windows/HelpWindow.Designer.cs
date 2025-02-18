@@ -30,7 +30,7 @@
         {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HelpWindow));
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			this.LstCommands = new System.Windows.Forms.ListBox();
+			this.LstTopics = new System.Windows.Forms.ListBox();
 			this.TxtSearch = new System.Windows.Forms.TextBox();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.panel1 = new System.Windows.Forms.Panel();
@@ -46,7 +46,7 @@
 			this.tableLayoutPanel2.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
 			this.tableLayoutPanel2.ColumnCount = 1;
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel2.Controls.Add(this.LstCommands, 0, 1);
+			this.tableLayoutPanel2.Controls.Add(this.LstTopics, 0, 1);
 			this.tableLayoutPanel2.Controls.Add(this.TxtSearch, 0, 0);
 			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
@@ -58,19 +58,19 @@
 			this.tableLayoutPanel2.Size = new System.Drawing.Size(147, 438);
 			this.tableLayoutPanel2.TabIndex = 2;
 			// 
-			// LstCommands
+			// LstTopics
 			// 
-			this.LstCommands.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.LstCommands.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.LstCommands.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.LstCommands.FormattingEnabled = true;
-			this.LstCommands.ItemHeight = 14;
-			this.LstCommands.Location = new System.Drawing.Point(1, 27);
-			this.LstCommands.Margin = new System.Windows.Forms.Padding(0);
-			this.LstCommands.Name = "LstCommands";
-			this.LstCommands.Size = new System.Drawing.Size(145, 410);
-			this.LstCommands.TabIndex = 2;
-			this.LstCommands.TabStop = false;
+			this.LstTopics.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.LstTopics.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.LstTopics.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LstTopics.FormattingEnabled = true;
+			this.LstTopics.ItemHeight = 14;
+			this.LstTopics.Location = new System.Drawing.Point(1, 27);
+			this.LstTopics.Margin = new System.Windows.Forms.Padding(0);
+			this.LstTopics.Name = "LstTopics";
+			this.LstTopics.Size = new System.Drawing.Size(145, 410);
+			this.LstTopics.TabIndex = 2;
+			this.LstTopics.TabStop = false;
 			// 
 			// TxtSearch
 			// 
@@ -129,7 +129,7 @@
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "HelpWindow";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "PTML Command Reference";
+			this.Text = "Help";
 			this.tableLayoutPanel2.ResumeLayout(false);
 			this.tableLayoutPanel2.PerformLayout();
 			this.tableLayoutPanel1.ResumeLayout(false);
@@ -141,7 +141,7 @@
 		#endregion
 
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-		private System.Windows.Forms.ListBox LstCommands;
+		private System.Windows.Forms.ListBox LstTopics;
 		private System.Windows.Forms.TextBox TxtSearch;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.Panel panel1;
