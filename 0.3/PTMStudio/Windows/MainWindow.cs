@@ -734,5 +734,10 @@ namespace PTMStudio
                 Error("Could not save default workspace file.", ex);
             }
 		}
+
+		private void BtnOpenProjFolder_Click(object sender, EventArgs e)
+		{
+            Process.Start("explorer.exe", ProjectFolder);
+		}
 	}
 }

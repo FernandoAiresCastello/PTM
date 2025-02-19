@@ -28,5 +28,6 @@ temp.ptm
 fernando/
 temp/
 cppcheck
-0.3/build/USR/*
 *.pub
+0.3/build/USR/*
+0.3/build/PROJ/SCRATCHPAD/*

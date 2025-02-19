@@ -293,9 +293,5 @@ namespace PTMStudio
             MainWindow.PaletteChanged(false);
             UpdateDisplay();
         }
-
-		private void BtnArrange_Click(object sender, EventArgs e)
-		{
-		}
 	}
 }

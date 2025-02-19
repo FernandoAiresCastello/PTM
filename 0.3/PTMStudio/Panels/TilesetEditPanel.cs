@@ -16,8 +16,9 @@ namespace PTMStudio
         private readonly TiledDisplay Display;
         private readonly int MaxTiles;
         private int FirstTile = 0;
-        
-        public string Filename { get; private set; }
+		private int? SelectedCharIndexForMoving = null;
+
+		public string Filename { get; private set; }
 
         public Tileset Tileset { get => Display.Graphics.Tileset; }
 
@@ -40,13 +41,59 @@ namespace PTMStudio
             Display.MouseMove += Display_MouseMove;
             Display.MouseLeave += Display_MouseLeave;
             Display.MouseWheel += Display_MouseWheel;
+			Display.MouseDown += Display_MouseDown;
+			Display.MouseUp += Display_MouseUp;
 
             MaxTiles = Display.Graphics.Cols * Display.Graphics.Rows;
 
 			UpdateDisplay();
         }
 
-        private void Display_MouseWheel(object sender, MouseEventArgs e)
+		private void Display_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (!BtnArrange.Checked || e.Button != MouseButtons.Left)
+				return;
+
+			if (SelectedCharIndexForMoving == null)
+				SelectedCharIndexForMoving = GetTileIndexFromMousePos(e.Location);
+		}
+
+		private void Display_MouseUp(object sender, MouseEventArgs e)
+		{
+			if (!BtnArrange.Checked || e.Button != MouseButtons.Left)
+				return;
+
+			Point pos = GetTilePosFromMousePos(e.Location);
+			if (pos.X < 0 || pos.Y < 0 || pos.X >= Display.Cols || pos.Y >= Display.Rows)
+			{
+				SelectedCharIndexForMoving = null;
+				return;
+			}
+
+			if (SelectedCharIndexForMoving != null)
+			{
+				TilePixels startingTile = Tileset.Get(SelectedCharIndexForMoving.Value);
+				int destinationIndex = GetTileIndexFromMousePos(e.Location);
+				TilePixels destinationTile = Tileset.Get(destinationIndex);
+
+				// Copy the starting tile to the destination index
+				Tileset.Set(destinationIndex, startingTile);
+				// Copy the destination tile back to the starting index
+				Tileset.Set(SelectedCharIndexForMoving.Value, destinationTile);
+
+				SelectedCharIndexForMoving = null;
+				UpdateDisplay();
+
+				MainWindow.PaletteChanged(true);
+			}
+		}
+
+		private Point GetTilePosFromMousePos(Point mousePos)
+		{
+			return Display.GetMouseToCellPos(mousePos);
+		}
+
+		private void Display_MouseWheel(object sender, MouseEventArgs e)
         {
             if (e.Delta > 0)
                 ScrollDisplay(-1);
@@ -229,5 +276,5 @@ namespace PTMStudio
             MainWindow.TilesetChanged(false);
             UpdateDisplay();
         }
-    }
+	}
 }

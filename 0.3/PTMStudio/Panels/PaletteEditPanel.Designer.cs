@@ -33,12 +33,12 @@ namespace PTMStudio
 			this.PnlPalette = new System.Windows.Forms.Panel();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.LblIndicator = new System.Windows.Forms.ToolStripLabel();
-			this.TxtFilename = new System.Windows.Forms.TextBox();
 			this.BtnNew = new System.Windows.Forms.ToolStripButton();
 			this.BtnSave = new System.Windows.Forms.ToolStripButton();
 			this.BtnArrange = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.LblIndicator = new System.Windows.Forms.ToolStripLabel();
+			this.TxtFilename = new System.Windows.Forms.TextBox();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -87,6 +87,36 @@ namespace PTMStudio
 			this.toolStrip1.TabIndex = 4;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
+			// BtnNew
+			// 
+			this.BtnNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnNew.Image = global::PTMStudio.Properties.Resources.page_white;
+			this.BtnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnNew.Name = "BtnNew";
+			this.BtnNew.Size = new System.Drawing.Size(23, 22);
+			this.BtnNew.Text = "New file";
+			this.BtnNew.Click += new System.EventHandler(this.BtnNew_Click);
+			// 
+			// BtnSave
+			// 
+			this.BtnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnSave.Image = global::PTMStudio.Properties.Resources.diskette;
+			this.BtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnSave.Name = "BtnSave";
+			this.BtnSave.Size = new System.Drawing.Size(23, 22);
+			this.BtnSave.Text = "Save";
+			this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
+			// 
+			// BtnArrange
+			// 
+			this.BtnArrange.CheckOnClick = true;
+			this.BtnArrange.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnArrange.Image = global::PTMStudio.Properties.Resources.transform_move;
+			this.BtnArrange.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnArrange.Name = "BtnArrange";
+			this.BtnArrange.Size = new System.Drawing.Size(23, 22);
+			this.BtnArrange.Text = "Rearrange colors";
+			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -113,36 +143,7 @@ namespace PTMStudio
 			this.TxtFilename.Size = new System.Drawing.Size(209, 13);
 			this.TxtFilename.TabIndex = 3;
 			this.TxtFilename.TabStop = false;
-			this.TxtFilename.Text = GlobalConstants.Unsaved;
-			// 
-			// BtnNew
-			// 
-			this.BtnNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.BtnNew.Image = global::PTMStudio.Properties.Resources.page_white;
-			this.BtnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnNew.Name = "BtnNew";
-			this.BtnNew.Size = new System.Drawing.Size(23, 22);
-			this.BtnNew.Click += new System.EventHandler(this.BtnNew_Click);
-			// 
-			// BtnSave
-			// 
-			this.BtnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.BtnSave.Image = global::PTMStudio.Properties.Resources.diskette;
-			this.BtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnSave.Name = "BtnSave";
-			this.BtnSave.Size = new System.Drawing.Size(23, 22);
-			this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
-			// 
-			// BtnArrange
-			// 
-			this.BtnArrange.CheckOnClick = true;
-			this.BtnArrange.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.BtnArrange.Image = global::PTMStudio.Properties.Resources.transform_move;
-			this.BtnArrange.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnArrange.Name = "BtnArrange";
-			this.BtnArrange.Size = new System.Drawing.Size(23, 22);
-			this.BtnArrange.Text = "Arrange";
-			this.BtnArrange.Click += new System.EventHandler(this.BtnArrange_Click);
+			this.TxtFilename.Text = "<Unsaved>";
 			// 
 			// PaletteEditPanel
 			// 

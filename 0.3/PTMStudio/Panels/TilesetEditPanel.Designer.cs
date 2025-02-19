@@ -38,6 +38,7 @@ namespace PTMStudio
 			this.LblIndicator = new System.Windows.Forms.ToolStripLabel();
 			this.PnlTileset = new System.Windows.Forms.Panel();
 			this.TxtFilename = new System.Windows.Forms.TextBox();
+			this.BtnArrange = new System.Windows.Forms.ToolStripButton();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -66,6 +67,7 @@ namespace PTMStudio
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BtnNew,
             this.BtnSave,
+            this.BtnArrange,
             this.toolStripSeparator1,
             this.LblIndicator});
 			this.toolStrip1.Location = new System.Drawing.Point(1, 1);
@@ -81,6 +83,7 @@ namespace PTMStudio
 			this.BtnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.BtnNew.Name = "BtnNew";
 			this.BtnNew.Size = new System.Drawing.Size(23, 22);
+			this.BtnNew.Text = "New charset file";
 			this.BtnNew.Click += new System.EventHandler(this.BtnNew_Click);
 			// 
 			// BtnSave
@@ -90,6 +93,7 @@ namespace PTMStudio
 			this.BtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.BtnSave.Name = "BtnSave";
 			this.BtnSave.Size = new System.Drawing.Size(23, 22);
+			this.BtnSave.Text = "Save charset file";
 			this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
 			// 
 			// toolStripSeparator1
@@ -128,7 +132,17 @@ namespace PTMStudio
 			this.TxtFilename.Size = new System.Drawing.Size(217, 13);
 			this.TxtFilename.TabIndex = 2;
 			this.TxtFilename.TabStop = false;
-			this.TxtFilename.Text = GlobalConstants.Unsaved;
+			this.TxtFilename.Text = "<Unsaved>";
+			// 
+			// BtnArrange
+			// 
+			this.BtnArrange.CheckOnClick = true;
+			this.BtnArrange.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnArrange.Image = global::PTMStudio.Properties.Resources.transform_move;
+			this.BtnArrange.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnArrange.Name = "BtnArrange";
+			this.BtnArrange.Size = new System.Drawing.Size(23, 22);
+			this.BtnArrange.Text = "Rearrange tiles";
 			// 
 			// TilesetEditPanel
 			// 
@@ -156,5 +170,6 @@ namespace PTMStudio
         private System.Windows.Forms.ToolStripButton BtnSave;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton BtnNew;
-    }
+		private System.Windows.Forms.ToolStripButton BtnArrange;
+	}
 }

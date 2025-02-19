@@ -66,6 +66,7 @@
 			this.BtmLeftPanel = new System.Windows.Forms.Panel();
 			this.TopLeftPanel = new System.Windows.Forms.Panel();
 			this.BtnSaveWorkspace = new System.Windows.Forms.ToolStripMenuItem();
+			this.BtnOpenProjFolder = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.RootPanel.SuspendLayout();
@@ -94,6 +95,7 @@
             this.BtnSaveProgram,
             this.BtnSaveEverything,
             this.BtnSaveWorkspace,
+            this.BtnOpenProjFolder,
             this.BtnPublish,
             this.toolStripSeparator1,
             this.BtnRelaunchIde,
@@ -107,7 +109,7 @@
 			this.BtnSaveProgram.Image = global::PTMStudio.Properties.Resources.diskette;
 			this.BtnSaveProgram.Name = "BtnSaveProgram";
 			this.BtnSaveProgram.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-			this.BtnSaveProgram.Size = new System.Drawing.Size(222, 22);
+			this.BtnSaveProgram.Size = new System.Drawing.Size(236, 22);
 			this.BtnSaveProgram.Text = "Save program";
 			this.BtnSaveProgram.Click += new System.EventHandler(this.BtnSaveProgram_Click);
 			// 
@@ -117,7 +119,7 @@
 			this.BtnSaveEverything.Name = "BtnSaveEverything";
 			this.BtnSaveEverything.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
-			this.BtnSaveEverything.Size = new System.Drawing.Size(222, 22);
+			this.BtnSaveEverything.Size = new System.Drawing.Size(236, 22);
 			this.BtnSaveEverything.Text = "Save all panels";
 			this.BtnSaveEverything.Click += new System.EventHandler(this.BtnSaveEverything_Click);
 			// 
@@ -125,20 +127,20 @@
 			// 
 			this.BtnPublish.Image = global::PTMStudio.Properties.Resources.package_go;
 			this.BtnPublish.Name = "BtnPublish";
-			this.BtnPublish.Size = new System.Drawing.Size(222, 22);
+			this.BtnPublish.Size = new System.Drawing.Size(236, 22);
 			this.BtnPublish.Text = "Publish";
 			this.BtnPublish.Click += new System.EventHandler(this.BtnPublish_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(219, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(233, 6);
 			// 
 			// BtnRelaunchIde
 			// 
 			this.BtnRelaunchIde.Image = global::PTMStudio.Properties.Resources.cancel;
 			this.BtnRelaunchIde.Name = "BtnRelaunchIde";
-			this.BtnRelaunchIde.Size = new System.Drawing.Size(222, 22);
+			this.BtnRelaunchIde.Size = new System.Drawing.Size(236, 22);
 			this.BtnRelaunchIde.Text = "Close project";
 			this.BtnRelaunchIde.Click += new System.EventHandler(this.BtnRelaunchIde_Click);
 			// 
@@ -148,7 +150,7 @@
 			this.BtnQuit.Name = "BtnQuit";
 			this.BtnQuit.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.Q)));
-			this.BtnQuit.Size = new System.Drawing.Size(222, 22);
+			this.BtnQuit.Size = new System.Drawing.Size(236, 22);
 			this.BtnQuit.Text = "Exit";
 			this.BtnQuit.Click += new System.EventHandler(this.BtnQuit_Click);
 			// 
@@ -424,9 +426,17 @@
 			// 
 			this.BtnSaveWorkspace.Image = global::PTMStudio.Properties.Resources.bookshelf;
 			this.BtnSaveWorkspace.Name = "BtnSaveWorkspace";
-			this.BtnSaveWorkspace.Size = new System.Drawing.Size(222, 22);
+			this.BtnSaveWorkspace.Size = new System.Drawing.Size(236, 22);
 			this.BtnSaveWorkspace.Text = "Save as default workspace";
 			this.BtnSaveWorkspace.Click += new System.EventHandler(this.BtnSaveWorkspace_Click);
+			// 
+			// BtnOpenProjFolder
+			// 
+			this.BtnOpenProjFolder.Image = global::PTMStudio.Properties.Resources.folder;
+			this.BtnOpenProjFolder.Name = "BtnOpenProjFolder";
+			this.BtnOpenProjFolder.Size = new System.Drawing.Size(236, 22);
+			this.BtnOpenProjFolder.Text = "Open project folder in explorer";
+			this.BtnOpenProjFolder.Click += new System.EventHandler(this.BtnOpenProjFolder_Click);
 			// 
 			// MainWindow
 			// 
@@ -493,6 +503,7 @@
 		private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem BtnEditSettingsFile;
 		private System.Windows.Forms.ToolStripMenuItem BtnSaveWorkspace;
+		private System.Windows.Forms.ToolStripMenuItem BtnOpenProjFolder;
 	}
 }
 

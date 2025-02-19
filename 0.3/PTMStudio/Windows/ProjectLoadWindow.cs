@@ -16,9 +16,7 @@ namespace PTMStudio.Windows
 
 			foreach (var path in Directory.EnumerateDirectories(Filesystem.ProjectDirName))
 			{
-				string name = path.Replace(Filesystem.ProjectDirName, "")
-					.Replace("\\", "").Replace("/", "");
-
+				string name = Path.GetFileName(path);
 				if (name != Filesystem.ScratchpadProjectFolder)
 					LstProjectFolders.Items.Add(new ProjectFolder(path, name));
 			}
