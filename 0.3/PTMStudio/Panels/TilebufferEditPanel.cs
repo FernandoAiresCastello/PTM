@@ -46,7 +46,7 @@ namespace PTMStudio
             Display.Graphics.Clear(0);
             Display.ShowGrid = true;
             Display.Parent = DisplayPanel;
-			Display.MouseDown += Display_MouseClick;
+			Display.MouseDown += Display_MouseDown;
 			Display.MouseClick += Display_MouseClick;
             Display.MouseMove += Display_MouseMove;
             Display.MouseLeave += Display_MouseLeave;
@@ -117,49 +117,63 @@ namespace PTMStudio
 			}
 
 			if (e.Button != MouseButtons.None)
-                Display_MouseClick(sender, e);
+                Display_MouseDown(sender, e);
         }
 
-        private void Display_MouseClick(object sender, MouseEventArgs e)
+		private void Display_MouseDown(object sender, MouseEventArgs e)
         {
-            Point pos = Display.GetMouseToCellPos(e.Location);
-            int x = pos.X;
-            int y = pos.Y;
+            if (ModifierKeys == Keys.Control)
+                return;
 
-            if (x >= 0 && y >= 0 && x < TileBuffer.Width && y < TileBuffer.Height)
-            {
+			Point pos = Display.GetMouseToCellPos(e.Location);
+			int x = pos.X;
+			int y = pos.Y;
+
+			if (x >= 0 && y >= 0 && x < TileBuffer.Width && y < TileBuffer.Height)
+			{
 				if (SelectionMode)
 				{
-                    if (e.Button == MouseButtons.Left)
-                        SelectTiles(pos);
-                    else if (e.Button == MouseButtons.Right || e.Button == MouseButtons.Middle)
-                        DeselectAllTiles();
+					if (e.Button == MouseButtons.Left)
+						SelectTiles(pos);
+					else if (e.Button == MouseButtons.Right || e.Button == MouseButtons.Middle)
+						DeselectAllTiles();
 				}
-                else if (TextMode)
-                {
-                    if (e.Button == MouseButtons.Left)
-                        PrintText(x, y, false);
+				else if (TextMode)
+				{
+					if (e.Button == MouseButtons.Left)
+						PrintText(x, y, false);
 					else if (e.Button == MouseButtons.Right)
 						PrintText(x, y, true);
 				}
 				else
-                {
-                    if (e.Button == MouseButtons.Left)
-                    {
-                        if (ModifierKeys == Keys.Control)
-                            DeleteTile(x, y);
-                        else
-                            PutTile(x, y);
-                    }
+				{
+					if (e.Button == MouseButtons.Left)
+						PutTile(x, y);
 					else if (e.Button == MouseButtons.Right)
-                        GrabTile(x, y);
+						GrabTile(x, y);
 					else if (e.Button == MouseButtons.Middle)
 						DeleteTile(x, y);
 				}
 			}
-        }
+		}
 
-        public void UpdateDisplay()
+		private void Display_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (SelectionMode || TextMode)
+                return;
+
+			Point pos = Display.GetMouseToCellPos(e.Location);
+			int x = pos.X;
+			int y = pos.Y;
+
+            if (x >= 0 && y >= 0 && x < TileBuffer.Width && y < TileBuffer.Height)
+            {
+                if (e.Button == MouseButtons.Left && ModifierKeys == Keys.Control)
+                    AppendTile(x, y);
+            }
+		}
+
+		public void UpdateDisplay()
         {
             Renderer.Render();
         }
@@ -172,6 +186,7 @@ namespace PTMStudio
         private void PutTile(int x, int y)
         {
             GameObject tile = MainWindow.GetTileRegister();
+
             if (tile.Animation.Frames.Count > 0)
             {
                 TileBuffer.SetObject(tile, new ObjectPosition(0, x, y));
@@ -184,7 +199,29 @@ namespace PTMStudio
             }
         }
 
-        private void DeleteTile(int x, int y)
+		private void AppendTile(int x, int y)
+        {
+			GameObject tile = MainWindow.GetTileRegister();
+
+			if (tile.Animation.Frames.Count > 0)
+			{
+                GameObject o = TileBuffer.GetObject(new ObjectPosition(0, x, y));
+                if (o == null)
+                    return;
+
+                foreach (var frame in tile.Animation.Frames)
+                    o.Animation.AddFrame(frame);
+				
+				UpdateDisplay();
+				MainWindow.TilebufferChanged(true);
+			}
+			else
+			{
+				AlertEmptyTileRegister();
+			}
+		}
+
+		private void DeleteTile(int x, int y)
         {
             TileBuffer.DeleteObject(new ObjectPosition(0, x, y));
             MainWindow.TilebufferChanged(true);
@@ -321,7 +358,9 @@ namespace PTMStudio
             else
                 Renderer.Map = TileBuffer;
 
-            Filename = null;
+            Renderer.AnimationInterval = MainWindow.TileAnimationInterval;
+
+			Filename = null;
             TxtFilename.Text = GlobalConstants.Unsaved;
 
             UpdateDisplay();
@@ -332,7 +371,7 @@ namespace PTMStudio
 		private void BtnText_Click(object sender, EventArgs e)
 		{
             TextMode = BtnText.Checked;
-            BtnSelect.Checked = false;
+            BtnSelect.Checked = SelectionMode = false;
 		}
 
         private void PrintText(int x, int y, bool vertical)
@@ -364,6 +403,7 @@ namespace PTMStudio
 		private void BtnSelect_Click(object sender, EventArgs e)
 		{
             SelectionMode = BtnSelect.Checked;
+            BtnText.Checked = TextMode = false;
 		}
 
 		private void SelectTiles(Point pos)

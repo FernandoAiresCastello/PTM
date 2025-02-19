@@ -31,6 +31,9 @@ namespace PTMStudio.Windows
 		private void BtnScratchpad_Click(object sender, System.EventArgs e)
 		{
 			ProjectFolder = Path.Combine(Filesystem.ProjectDirName, Filesystem.ScratchpadProjectFolder);
+			if (!Directory.Exists(ProjectFolder))
+				Directory.CreateDirectory(ProjectFolder);
+
 			CopyFiles(ProjectFolder, Filesystem.UserRootDirName);
 			DialogResult = DialogResult.OK;
 		}

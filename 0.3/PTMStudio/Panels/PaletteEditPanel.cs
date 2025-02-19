@@ -238,7 +238,7 @@ namespace PTMStudio
                 Display.Graphics.Palette.Set(index, wnd.GetSelectedColor());
                 UpdateDisplay();
                 MainWindow.UpdateTilebufferEditorDisplay();
-                MainWindow.UpdateTileRegisterPanelDisplay();
+                MainWindow.UpdateTileRegisterPanelInfoLabels();
                 MainWindow.PaletteChanged(true);
             }
         }

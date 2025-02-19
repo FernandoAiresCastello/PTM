@@ -55,9 +55,10 @@ namespace PTMStudio
 			this.LbSize = new System.Windows.Forms.ToolStripStatusLabel();
 			this.LbPos = new System.Windows.Forms.ToolStripStatusLabel();
 			this.LbObject = new System.Windows.Forms.ToolStripStatusLabel();
+			this.LbSelection = new System.Windows.Forms.ToolStripStatusLabel();
 			this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
 			this.DisplayPanel = new System.Windows.Forms.Panel();
-			this.LbSelection = new System.Windows.Forms.ToolStripStatusLabel();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
@@ -98,7 +99,7 @@ namespace PTMStudio
 			this.TxtFilename.ReadOnly = true;
 			this.TxtFilename.Size = new System.Drawing.Size(594, 13);
 			this.TxtFilename.TabIndex = 4;
-			this.TxtFilename.Text = GlobalConstants.Unsaved;
+			this.TxtFilename.Text = "<Unsaved>";
 			// 
 			// toolStrip1
 			// 
@@ -114,6 +115,7 @@ namespace PTMStudio
             this.toolStripSeparator2,
             this.BtnSelect,
             this.BtnDeselect,
+            this.toolStripSeparator3,
             this.BtnCopy,
             this.BtnCut,
             this.BtnPaste,
@@ -331,6 +333,13 @@ namespace PTMStudio
 			this.LbObject.Size = new System.Drawing.Size(46, 19);
 			this.LbObject.Text = "Object";
 			// 
+			// LbSelection
+			// 
+			this.LbSelection.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+			this.LbSelection.Name = "LbSelection";
+			this.LbSelection.Size = new System.Drawing.Size(59, 19);
+			this.LbSelection.Text = "Selection";
+			// 
 			// LayoutPanel
 			// 
 			this.LayoutPanel.ColumnCount = 1;
@@ -349,6 +358,7 @@ namespace PTMStudio
 			// DisplayPanel
 			// 
 			this.DisplayPanel.AutoScroll = true;
+			this.DisplayPanel.BackColor = System.Drawing.SystemColors.AppWorkspace;
 			this.DisplayPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.DisplayPanel.Location = new System.Drawing.Point(0, 0);
 			this.DisplayPanel.Margin = new System.Windows.Forms.Padding(0);
@@ -356,12 +366,10 @@ namespace PTMStudio
 			this.DisplayPanel.Size = new System.Drawing.Size(602, 271);
 			this.DisplayPanel.TabIndex = 8;
 			// 
-			// LbSelection
+			// toolStripSeparator3
 			// 
-			this.LbSelection.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-			this.LbSelection.Name = "LbSelection";
-			this.LbSelection.Size = new System.Drawing.Size(59, 19);
-			this.LbSelection.Text = "Selection";
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
 			// 
 			// TilebufferEditPanel
 			// 
@@ -412,5 +420,6 @@ namespace PTMStudio
 		private System.Windows.Forms.ToolStripButton BtnPaste;
 		private System.Windows.Forms.ToolStripButton BtnCut;
 		private System.Windows.Forms.ToolStripStatusLabel LbSelection;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 	}
 }

@@ -30,6 +30,7 @@ namespace PTMStudio
 
 		private string ProgramFile;
 
+		public int TileAnimationInterval { get; private set; } = 350;
 		public bool ShouldRestart { get; private set; } = false;
 
 		// Panels
@@ -343,9 +344,9 @@ namespace PTMStudio
             TilebufferPanel.UpdateDisplay();
         }
 
-        public void UpdateTileRegisterPanelDisplay()
+        public void UpdateTileRegisterPanelInfoLabels()
         {
-            TileRegPanel.UpdateDisplay();
+            TileRegPanel.UpdateInfoLabels();
         }
 
         public void ShowProgramEditor()
@@ -377,47 +378,32 @@ namespace PTMStudio
 
         public void SetTileRegisterForeColor(int index)
         {
-            TileRegPanel.TileRegisterFrame.ForeColor = index;
-            TileRegPanel.UpdateDisplay();
+            TileRegPanel.SetTileRegisterForeColor(index);
         }
 
         public void SetTileRegisterBackColor(int index)
         {
-            TileRegPanel.TileRegisterFrame.BackColor = index;
-            TileRegPanel.UpdateDisplay();
+            TileRegPanel.SetTileRegisterBackColor(index);
         }
 
         public void SetTileRegisterTile(int index)
         {
-            TileRegPanel.TileRegisterFrame.Index = index;
-            TileRegPanel.UpdateDisplay();
+            TileRegPanel.SetTileRegisterChar(index);
         }
 
 		public Tile GetTileRegisterFrame()
         {
-            return TileRegPanel.TileRegisterFrame;
+            return TileRegPanel.TileRegister.Tile;
         }
-
-		private GameObject CachedTileRegister;
 
         public GameObject GetTileRegister()
         {
-            if (CachedTileRegister == null)
-                CachedTileRegister = TileRegPanel.GetTileRegister();
-
-            return CachedTileRegister;
-        }
-
-        public void CacheTileRegister()
-        {
-            if (TileRegPanel != null)
-                CachedTileRegister = TileRegPanel.GetTileRegister();
-        }
+            return TileRegPanel.GetTileRegister();
+		}
 
         public void SetTileRegister(GameObject tile)
         {
             TileRegPanel.SetTileRegister(tile);
-            CacheTileRegister();
         }
 
         private void BtnQuit_Click(object sender, EventArgs e)

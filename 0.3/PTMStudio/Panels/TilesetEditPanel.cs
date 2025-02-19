@@ -224,7 +224,7 @@ namespace PTMStudio
             wnd.ShowDialog(this);
 
             MainWindow.UpdateTilebufferEditorDisplay();
-            MainWindow.UpdateTileRegisterPanelDisplay();
+            MainWindow.UpdateTileRegisterPanelInfoLabels();
             MainWindow.TilesetChanged(true);
         }
 

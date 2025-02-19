@@ -9,17 +9,15 @@ namespace PTMStudio
 {
 	public partial class TileRegisterPanel : UserControl
     {
-        private readonly MainWindow MainWindow;
-        private readonly TiledDisplay TileSeqDisplay;
+		public GameObject TileRegister { get; private set; }
+
+		private readonly MainWindow MainWindow;
         private readonly TiledDisplay TileFrameDisplay;
-        private readonly GameObject TileRegister;
-        private readonly int EmptyColor = 0;
-        private readonly Tile EmptyTile;
+		private readonly int EmptyColor = 0;
 		private int FrameCount;
+        private int AnimationFrameIndex = 0;
 
-        public Tile TileRegisterFrame { get; private set; }
-
-        private TileRegisterPanel()
+		private TileRegisterPanel()
         {
             InitializeComponent();
         }
@@ -31,18 +29,6 @@ namespace PTMStudio
             TileRegister = new GameObject();
             TileRegister.Animation.Clear();
 
-            EmptyTile = new Tile(0, EmptyColor, EmptyColor);
-
-            TileSeqDisplay = new TiledDisplay(TileSeqPanel, 7, 1, 3);
-            TileSeqDisplay.Graphics.Palette = palette;
-            TileSeqDisplay.Graphics.Tileset = tileset;
-            TileSeqDisplay.Graphics.Clear(EmptyColor);
-            TileSeqDisplay.ShowGrid = true;
-			TileSeqDisplay.SetMainGridColor(Color.FromArgb(128, 80, 80, 80));
-			TileSeqDisplay.BorderStyle = BorderStyle.None;
-            TileSeqDisplay.Cursor = Cursors.Hand;
-            TileSeqDisplay.MouseClick += TileSeqDisplay_MouseClick;
-
             TileFrameDisplay = new TiledDisplay(TileFramePanel, 1, 1, 4);
             TileFrameDisplay.Graphics.Palette = palette;
             TileFrameDisplay.Graphics.Tileset = tileset;
@@ -51,95 +37,62 @@ namespace PTMStudio
 			TileFrameDisplay.SetMainGridColor(Color.FromArgb(128, 80, 80, 80));
 			TileFrameDisplay.BorderStyle = BorderStyle.None;
 
-            PropertyGrid.CellValueChanged += PropertyGrid_CellValueChanged;
-
             ClearTileRegister();
-            UpdateDisplay();
-        }
+            UpdateInfoLabels();
 
-        private void PropertyGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+            Timer tileRegAnimTimer = new Timer();
+			tileRegAnimTimer.Tick += TileRegAnimTimer_Tick;
+			tileRegAnimTimer.Interval = MainWindow.TileAnimationInterval;
+			tileRegAnimTimer.Start();
+		}
+
+		private void TileRegAnimTimer_Tick(object sender, EventArgs e)
+		{
+            UpdateTileFrameDisplay();
+		}
+
+		public void ClearTileRegister()
         {
-            MainWindow.CacheTileRegister();
-        }
-
-        private void ChkTransparent_CheckedChanged(object sender, EventArgs e)
-        {
-            MainWindow.CacheTileRegister();
-        }
-
-        public void ClearTileRegister()
-        {
-			TileRegisterFrame = new Tile('X', 0, 15);
-
-			FrameCount = 1;
             TileRegister.Animation.Frames.Clear();
-            for (int i = 0; i < TileSeqDisplay.Cols; i++)
-                TileRegister.Animation.Frames.Add(EmptyTile.Copy());
-
-            TileRegister.Animation.Frames[0] = new Tile(TileRegisterFrame);
-
+			TileRegister.Animation.Frames.Add(new Tile('?', 0, 15));
 			TileRegister.Properties.Entries.Clear();
+
+            FrameCount = TileRegister.Animation.Frames.Count;
+
             UpdatePropertiesPanel();
-            MainWindow.CacheTileRegister();
         }
 
-        public void UpdateDisplay()
+        public void UpdateInfoLabels()
         {
-            TileSeqDisplay.Graphics.Clear(EmptyColor);
-            int x = 0;
-            int y = 0;
-            
-            foreach (Tile tile in TileRegister.Animation.Frames)
-            {
-                TileSeqDisplay.Graphics.PutTile(x, y, tile);
-                x++;
-            }
+            UpdateTileFrameDisplay();
 
-            TileSeqDisplay.Refresh();
-
-            TileFrameDisplay.Graphics.Clear(EmptyColor);
-            TileFrameDisplay.Graphics.PutTile(0, 0, TileRegisterFrame);
-            TileFrameDisplay.Refresh();
-
-            LbTileRegFrame.Text = string.Format("{0}, {1}, {2}",
-                TileRegisterFrame.Index, TileRegisterFrame.ForeColor, TileRegisterFrame.BackColor);
+			LbTileRegFrame.Text = string.Format("{0}, {1}, {2}",
+                TileRegister.Tile.Index, TileRegister.Tile.ForeColor, TileRegister.Tile.BackColor);
 
             LblFrameCount.Text = FrameCount.ToString();
         }
 
-        private void TileSeqDisplay_MouseClick(object sender, MouseEventArgs e)
+        private void UpdateTileFrameDisplay()
         {
-            int frameIndex = TileSeqDisplay.GetMouseToCellPos(e.Location).X;
+            Tile frame = TileRegister.Animation.Frames[AnimationFrameIndex % TileRegister.Animation.Frames.Count];
+			TileFrameDisplay.Graphics.PutTile(0, 0, frame);
+			TileFrameDisplay.Refresh();
 
-            if (e.Button == MouseButtons.Left)
-            {
-                if (FrameCount < frameIndex + 1)
-                    FrameCount = frameIndex + 1;
+            AnimationFrameIndex++;
+		}
 
-                TileRegister.Animation.SetFrame(frameIndex, TileRegisterFrame.Copy());
-                UpdateDisplay();
-                MainWindow.CacheTileRegister();
-            }
-            else if (e.Button == MouseButtons.Right)
-            {
-                Tile tile = TileRegister.Animation.Frames[frameIndex];
-                TileRegisterFrame.SetEqual(tile);
-                UpdateDisplay();
-            }
-        }
-
-        private void BtnSwitchColor_Click(object sender, EventArgs e)
+		private void BtnSwitchColor_Click(object sender, EventArgs e)
         {
-			(TileRegisterFrame.BackColor, TileRegisterFrame.ForeColor) = 
-                (TileRegisterFrame.ForeColor, TileRegisterFrame.BackColor);
+			(TileRegister.Tile.BackColor, TileRegister.Tile.ForeColor) = 
+                (TileRegister.Tile.ForeColor, TileRegister.Tile.BackColor);
 
-			UpdateDisplay();
+			UpdateInfoLabels();
         }
 
         private void BtnNew_Click(object sender, EventArgs e)
         {
             ClearTileRegister();
-            UpdateDisplay();
+            UpdateInfoLabels();
         }
 
         public GameObject GetTileRegister()
@@ -169,7 +122,7 @@ namespace PTMStudio
             }
 
             if (obj.Animation.Frames.Count == 0)
-                obj.Animation.Frames.Add(TileRegisterFrame.Copy());
+                obj.Animation.Frames.Add(TileRegister.Tile.Copy());
 
 			return obj;
         }
@@ -180,24 +133,46 @@ namespace PTMStudio
             FrameCount = copiedTile.Animation.Size;
 
             TileRegister.Animation.Frames.Clear();
-            for (int i = 0; i < TileSeqDisplay.Cols; i++)
-            {
-                if (i < copiedTile.Animation.Size)
-                    TileRegister.Animation.Frames.Add(copiedTile.Animation.Frames[i]);
-                else
-                    TileRegister.Animation.Frames.Add(EmptyTile.Copy());
-            }
+            for (int i = 0; i < FrameCount; i++)
+                TileRegister.Animation.Frames.Add(copiedTile.Animation.Frames[i]);
 
             TileRegister.Transparent = copiedTile.Transparent;
             TileRegister.Properties.SetEqual(copiedTile.Properties);
 
-            TileRegisterFrame = TileRegister.Tile.Copy();
-
             UpdatePropertiesPanel();
-            UpdateDisplay();
+            UpdateInfoLabels();
         }
 
-        private void UpdatePropertiesPanel()
+		public void SetTileRegisterForeColor(int color)
+        {
+            Tile firstTile = new Tile(TileRegister.Animation.Frames[0]);
+            firstTile.ForeColor = color;
+			SetSingleTileRegisterFrame(firstTile);
+		}
+
+		public void SetTileRegisterBackColor(int color)
+		{
+			Tile firstTile = new Tile(TileRegister.Animation.Frames[0]);
+			firstTile.BackColor = color;
+			SetSingleTileRegisterFrame(firstTile);
+		}
+
+		public void SetTileRegisterChar(int ch)
+		{
+			Tile firstTile = new Tile(TileRegister.Animation.Frames[0]);
+			firstTile.Index = ch;
+            SetSingleTileRegisterFrame(firstTile);
+		}
+
+        private void SetSingleTileRegisterFrame(Tile firstTile)
+        {
+			TileRegister.Animation.Frames.Clear();
+			TileRegister.Animation.Frames.Add(firstTile);
+			FrameCount = TileRegister.Animation.Frames.Count;
+			UpdateInfoLabels();
+		}
+
+		private void UpdatePropertiesPanel()
         {
             PropertyGrid.Rows.Clear();
             foreach (var item in TileRegister.Properties.Entries)
