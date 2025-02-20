@@ -621,6 +621,7 @@ namespace PTMStudio
 		public void SaveProgramFile()
 		{
 			ProgramPanel.SaveFile();
+            FilePanel.UpdateFileList();
 		}
 
 		public void CreateNewProgramFile()

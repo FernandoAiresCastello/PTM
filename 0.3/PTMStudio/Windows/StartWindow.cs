@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
 
 namespace PTMStudio.Windows
@@ -89,6 +90,16 @@ namespace PTMStudio.Windows
 		{
 			foreach (string file in Directory.GetFiles(folderPath))
 				File.Delete(file);
+		}
+
+		private void BtnItchio_Click(object sender, System.EventArgs e)
+		{
+			Process.Start("https://fernandoairescastello.itch.io/ptm");
+		}
+
+		private void BtnGitHub_Click(object sender, System.EventArgs e)
+		{
+			Process.Start("https://github.com/FernandoAiresCastello/PTM");
 		}
 	}
 }

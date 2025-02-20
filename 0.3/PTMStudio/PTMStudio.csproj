@@ -255,6 +255,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\thumb_up.png" />
     <None Include="Resources\setting_tools.png" />
     <None Include="Resources\restart_services.png" />
     <None Include="Resources\transform_move.png" />
@@ -303,6 +304,8 @@
     <None Include="Resources\lightbulb.png" />
     <None Include="Resources\door_out.png" />
     <None Include="Resources\door_out1.png" />
+    <None Include="Resources\github-2.png" />
+    <None Include="Resources\itchio-2.png" />
     <Content Include="Resources\ptm_icon.ico" />
     <None Include="Resources\page_white_paste.png" />
     <None Include="Resources\update.png" />

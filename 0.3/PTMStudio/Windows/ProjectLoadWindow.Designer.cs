@@ -62,7 +62,7 @@
 			this.panel1.Location = new System.Drawing.Point(0, 25);
 			this.panel1.Margin = new System.Windows.Forms.Padding(0);
 			this.panel1.Name = "panel1";
-			this.panel1.Padding = new System.Windows.Forms.Padding(10, 5, 10, 10);
+			this.panel1.Padding = new System.Windows.Forms.Padding(10, 2, 10, 5);
 			this.panel1.Size = new System.Drawing.Size(249, 274);
 			this.panel1.TabIndex = 1;
 			// 
@@ -72,11 +72,11 @@
 			this.LstProjectFolders.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.LstProjectFolders.FormattingEnabled = true;
 			this.LstProjectFolders.ItemHeight = 21;
-			this.LstProjectFolders.Location = new System.Drawing.Point(10, 5);
+			this.LstProjectFolders.Location = new System.Drawing.Point(10, 2);
 			this.LstProjectFolders.Margin = new System.Windows.Forms.Padding(0);
 			this.LstProjectFolders.Name = "LstProjectFolders";
 			this.LstProjectFolders.ScrollAlwaysVisible = true;
-			this.LstProjectFolders.Size = new System.Drawing.Size(229, 259);
+			this.LstProjectFolders.Size = new System.Drawing.Size(229, 267);
 			this.LstProjectFolders.TabIndex = 0;
 			// 
 			// toolStrip1
@@ -106,7 +106,6 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(249, 299);
 			this.Controls.Add(this.tableLayoutPanel1);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
