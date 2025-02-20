@@ -1,4 +1,5 @@
 ﻿using PTMStudio.Core;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
@@ -12,7 +13,7 @@ namespace PTMStudio.Windows
 		{
 			InitializeComponent();
 			FormClosing += ProjectLoadWindow_FormClosing;
-			LstProjectFolders.MouseDoubleClick += LstProjectFolders_MouseDoubleClick;
+			LstProjectFolders.MouseDoubleClick += LstProjectFolders_MouseClick;
 
 			foreach (var path in Directory.EnumerateDirectories(Filesystem.ProjectDirName))
 			{
@@ -28,13 +29,18 @@ namespace PTMStudio.Windows
 				DialogResult = DialogResult.Cancel;
 		}
 
-		private void LstProjectFolders_MouseDoubleClick(object sender, MouseEventArgs e)
+		private void LstProjectFolders_MouseClick(object sender, MouseEventArgs e)
 		{
 			if (LstProjectFolders.SelectedItem == null)
 				return;
 
 			SelectedProject = LstProjectFolders.SelectedItem as ProjectFolder;
 			DialogResult = DialogResult.OK;
+		}
+
+		private void BtnOpenProjectsFolder_Click(object sender, System.EventArgs e)
+		{
+			Process.Start("explorer.exe", Filesystem.ProjectDirName);
 		}
 	}
 }

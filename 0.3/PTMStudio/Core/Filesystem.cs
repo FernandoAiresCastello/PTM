@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PTMStudio.Core;
+using System;
 using System.IO;
 using System.Windows.Forms;
 
@@ -15,6 +16,7 @@ namespace PTMStudio
         public static readonly string SysRoot = NormalizePath(Path.Combine(Environment.CurrentDirectory, SysRootDirName));
 
 		public const string ScratchpadProjectFolder = "SCRATCHPAD";
+		public const string DefaultMainProgramFileName = "MAIN" + KnownFileExtensions.Program;
 		public static readonly string DefaultPaletteFile = GetSystemFilePath("DEFAULT.PAL");
         public static readonly string DefaultTilesetFile = GetSystemFilePath("DEFAULT.CHR");
 

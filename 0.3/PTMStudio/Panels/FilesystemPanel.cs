@@ -144,8 +144,8 @@ namespace PTMStudio
 
             if (ok)
             {
-                string path = file.AbsolutePath;
-                File.Delete(path);
+                File.Delete(file.AbsolutePath);
+                MainWindow.DeleteFileFromProjectFolder(file.RelativePath);
                 UpdateFileList();
             }
         }

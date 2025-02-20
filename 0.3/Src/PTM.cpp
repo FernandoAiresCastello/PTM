@@ -488,9 +488,11 @@ bool PTM::load_program_absolute_path(const t_string& path)
 
 void PTM::set_last_program_filename(const t_string& path)
 {
-	int last_slash_ix = path.last_index_of("/");
+	t_string normalized_path = path.replace('\\', '/');
+	int last_slash_ix = normalized_path.last_index_of("/");
+
 	if (last_slash_ix >= 0) {
-		t_string filename = path.substr(last_slash_ix + 1);
+		t_string filename = normalized_path.substr(last_slash_ix + 1);
 		last_program_filename = filename.to_upper();
 	}
 	else {

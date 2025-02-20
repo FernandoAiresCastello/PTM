@@ -40,21 +40,35 @@ namespace PTMStudio.Windows
 
 		private void BtnNew_Click(object sender, System.EventArgs e)
 		{
-			SimpleTextInputDialog dialog = new SimpleTextInputDialog("Create new project", "Enter project name:")
+			bool ok = false;
+
+			while (!ok)
 			{
-				UppercaseOnly = true
-			};
+				SimpleTextInputDialog dialog = new SimpleTextInputDialog(
+					"Create new project", "Enter project name:")
+				{ UppercaseOnly = true };
 
-			string newProjectFolder;
-			if (dialog.ShowDialog(this) == DialogResult.OK)
-				newProjectFolder = dialog.Text.ToUpper();
-			else
-				return;
+				string newProjectFolder;
+				if (dialog.ShowDialog(this) == DialogResult.OK)
+					newProjectFolder = dialog.Text.ToUpper();
+				else
+					return;
 
-			ProjectFolder = Path.Combine(Filesystem.ProjectDirName, newProjectFolder);
-			Directory.CreateDirectory(ProjectFolder);
-			DeleteAllFiles(Filesystem.UserRootDirName);
-			DialogResult = DialogResult.OK;
+				string folderToCreate = Path.Combine(Filesystem.ProjectDirName, newProjectFolder);
+
+				if (Directory.Exists(folderToCreate))
+				{
+					MainWindow.Warning($"Project \"{newProjectFolder}\" already exists. Please enter another name.");
+					continue;
+				}
+
+				ok = true;
+				ProjectFolder = folderToCreate;
+				Directory.CreateDirectory(ProjectFolder);
+				File.Create(Path.Combine(ProjectFolder, Filesystem.DefaultMainProgramFileName)).Close();
+				CopyFiles(ProjectFolder, Filesystem.UserRootDirName);
+				DialogResult = DialogResult.OK;
+			}
 		}
 
 		private static void CopyFiles(string sourceDir, string destDir)

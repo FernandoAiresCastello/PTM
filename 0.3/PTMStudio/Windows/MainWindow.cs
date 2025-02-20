@@ -82,6 +82,8 @@ namespace PTMStudio
 
             if (File.Exists(DefaultWorkspaceFile))
                 LoadDefaultWorkspace();
+            else if (File.Exists(Filesystem.GetUserFilePath(Filesystem.DefaultMainProgramFileName)))
+                LoadFile(Filesystem.GetUserFilePath(Filesystem.DefaultMainProgramFileName));
 		}
 
         private void LoadDefaultWorkspace()
@@ -684,6 +686,11 @@ namespace PTMStudio
         public void CopyFileFromUsrFolderToProjectFolder(string filename)
         {
             File.Copy(filename, Path.Combine(ProjectFolder, Path.GetFileName(filename)), true);
+        }
+
+		public void DeleteFileFromProjectFolder(string filename)
+        {
+			File.Delete(Path.Combine(ProjectFolder, Path.GetFileName(filename)));
         }
 
 		private void BtnSaveWorkspace_Click(object sender, EventArgs e)
