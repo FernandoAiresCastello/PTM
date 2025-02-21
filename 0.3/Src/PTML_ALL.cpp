@@ -160,6 +160,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
     CMD("ASC", STR_ASCII);
     CMD("CHAR", STR_CHAR);
     CMD("REPT", STR_REPEAT);
+    CMD("SPLIT", STR_SPLIT);
 
 	return nullptr;
 }

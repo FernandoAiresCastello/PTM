@@ -128,3 +128,31 @@ void PTML::STR_REPEAT()
 	ARGC(3);
 	ptm->set_var(ARG(1), t_string::repeat(STR(2), NUM(3)), error);
 }
+
+void PTML::STR_SPLIT()
+{
+	ARGC(3);
+	auto&& arr_name = ARG(1);
+	auto arr = ptm->get_array(arr_name.string_val);
+	if (arr == nullptr) {
+		error = err.undefined_array;
+		return;
+	}
+
+	t_string&& str = STR(2);
+
+	char delim = 0;
+	auto&& delim_param = ARG(3);
+	if (delim_param.type == t_token_type::literal_char || delim_param.type == t_token_type::literal_num) {
+		delim = delim_param.numeric_val;
+	}
+	else {
+		auto&& str = STR(3);
+		delim = str[0];
+	}
+
+	auto parts = str.split(delim, true);
+	for (int i = 0; i < arr->size() && i < parts.size(); i++) {
+		(*arr)[i] = parts[i];
+	}
+}

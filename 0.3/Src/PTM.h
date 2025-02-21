@@ -62,6 +62,8 @@ public:
 	void create_array(const t_array_ref& array_ref, t_string& out_error);
 	const t_string& get_array_element(const t_array_ref& ref, t_string& out_error);
 	int get_array_length(const t_string& array_name, t_string& out_error);
+	t_list<t_string>* get_array(const t_string& array_name);
+
 	void delete_all_vars();
 
 	static t_palette& get_pal();

@@ -400,6 +400,14 @@ int PTM::get_array_length(const t_string& array_name, t_string& out_error)
 	return arrays[array_name].size();
 }
 
+t_list<t_string>* PTM::get_array(const t_string& array_name)
+{
+	if (!has_array(array_name))
+		return nullptr;
+
+	return &arrays[array_name];
+}
+
 void PTM::delete_all_vars()
 {
 	vars.clear();
