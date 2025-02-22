@@ -37,7 +37,7 @@
 			// LbPrompt
 			// 
 			this.LbPrompt.AutoSize = true;
-			this.LbPrompt.Location = new System.Drawing.Point(12, 9);
+			this.LbPrompt.Location = new System.Drawing.Point(12, 10);
 			this.LbPrompt.Name = "LbPrompt";
 			this.LbPrompt.Size = new System.Drawing.Size(40, 13);
 			this.LbPrompt.TabIndex = 0;
@@ -45,7 +45,7 @@
 			// 
 			// TxtInput
 			// 
-			this.TxtInput.Location = new System.Drawing.Point(14, 31);
+			this.TxtInput.Location = new System.Drawing.Point(14, 33);
 			this.TxtInput.Name = "TxtInput";
 			this.TxtInput.Size = new System.Drawing.Size(271, 20);
 			this.TxtInput.TabIndex = 1;
@@ -53,9 +53,9 @@
 			// BtnOk
 			// 
 			this.BtnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.BtnOk.Location = new System.Drawing.Point(132, 57);
+			this.BtnOk.Location = new System.Drawing.Point(75, 62);
 			this.BtnOk.Name = "BtnOk";
-			this.BtnOk.Size = new System.Drawing.Size(75, 23);
+			this.BtnOk.Size = new System.Drawing.Size(75, 26);
 			this.BtnOk.TabIndex = 2;
 			this.BtnOk.Text = "OK";
 			this.BtnOk.UseVisualStyleBackColor = true;
@@ -63,9 +63,9 @@
 			// BtnCancel
 			// 
 			this.BtnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.BtnCancel.Location = new System.Drawing.Point(210, 57);
+			this.BtnCancel.Location = new System.Drawing.Point(153, 62);
 			this.BtnCancel.Name = "BtnCancel";
-			this.BtnCancel.Size = new System.Drawing.Size(75, 23);
+			this.BtnCancel.Size = new System.Drawing.Size(75, 26);
 			this.BtnCancel.TabIndex = 3;
 			this.BtnCancel.Text = "Cancel";
 			this.BtnCancel.UseVisualStyleBackColor = true;
@@ -74,7 +74,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(299, 91);
+			this.ClientSize = new System.Drawing.Size(299, 96);
 			this.Controls.Add(this.BtnCancel);
 			this.Controls.Add(this.BtnOk);
 			this.Controls.Add(this.TxtInput);

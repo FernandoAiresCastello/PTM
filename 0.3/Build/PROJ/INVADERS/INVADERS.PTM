@@ -93,7 +93,7 @@ move_enemies:
 move_enemies_loop:
     CALL.E player_missile_active, 1, detect_enemy_collision
     MOVE enemy_index, 0, 1
-    SYGET enemy_index, enemy_y
+    SPRY enemy_index, enemy_y
     CALL.L enemy_y, 8, hide_enemy
     CALL.GE enemy_y, 8, show_enemy
     CALL.G enemy_y, 176, check_game_over
@@ -149,7 +149,7 @@ game_over:
     PRINTL "You've destroyed"
     PRINTF "%i out of", enemies_killed
     PRINTF " %i invaders.", total_enemy_count
-    PRINTL
+    PRINTL "",0
     END
 
 end_game:

@@ -99,10 +99,10 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
     // === CURSOR ===
     CMD("CURSOR", CURSOR);
     CMD("LOCATE", LOCATE);
-    CMD("XSET", CSR_SETX);
-    CMD("YSET", CSR_SETY);
-    CMD("XGET", CSR_GETX);
-    CMD("YGET", CSR_GETY);
+    CMD("LOCX", CSR_SETX);
+    CMD("LOCY", CSR_SETY);
+    CMD("CSRX", CSR_GETX);
+    CMD("CSRY", CSR_GETY);
 
     // === TEXT OUTPUT ===
     CMD("PRINT", PRINT);
@@ -142,12 +142,12 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
     CMD("MOVE", MOVE_SPRITE_DIST);
     CMD("SHOW", SHOW_SPRITE);
     CMD("TILESPR", GET_SPRITE_TILE);
-    CMD("SXGET", GET_SPRITE_X);
-    CMD("SYGET", GET_SPRITE_Y);
-    CMD("STXGET", GET_SPRITE_TILED_X);
-    CMD("STYGET", GET_SPRITE_TILED_Y);
+    CMD("SPRX", GET_SPRITE_X);
+    CMD("SPRY", GET_SPRITE_Y);
+    CMD("TSPRX", GET_SPRITE_TILED_X);
+    CMD("TSPRY", GET_SPRITE_TILED_Y);
     CMD("CHKCOL", CHECK_SPRITE_COLLISION);
-
+    
     // === SOUND ===
     CMD("BEEP", BEEP);
     CMD("PLAY", PLAY);

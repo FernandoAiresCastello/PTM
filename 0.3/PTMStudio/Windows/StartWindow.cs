@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
@@ -55,6 +56,12 @@ namespace PTMStudio.Windows
 				else
 					return;
 
+				if (string.IsNullOrWhiteSpace(newProjectFolder))
+				{
+					MainWindow.Warning($"Please enter the project name.");
+					continue;
+				}
+
 				string folderToCreate = Path.Combine(Filesystem.ProjectDirName, newProjectFolder);
 
 				if (Directory.Exists(folderToCreate))
@@ -63,12 +70,20 @@ namespace PTMStudio.Windows
 					continue;
 				}
 
-				ok = true;
-				ProjectFolder = folderToCreate;
-				Directory.CreateDirectory(ProjectFolder);
-				File.Create(Path.Combine(ProjectFolder, Filesystem.DefaultMainProgramFileName)).Close();
-				CopyFiles(ProjectFolder, Filesystem.UserRootDirName);
-				DialogResult = DialogResult.OK;
+				try
+				{
+					Directory.CreateDirectory(folderToCreate);
+					File.Create(Path.Combine(folderToCreate, Filesystem.DefaultMainProgramFileName)).Close();
+					CopyFiles(folderToCreate, Filesystem.UserRootDirName);
+					ProjectFolder = folderToCreate;
+					DialogResult = DialogResult.OK;
+					ok = true;
+				}
+				catch (Exception ex)
+				{
+					MainWindow.Error($"Could not create project.", ex);
+					continue;
+				}
 			}
 		}
 

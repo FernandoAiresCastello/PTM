@@ -58,6 +58,10 @@ namespace PTMStudio
 
 		private void Scintilla_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.Control || e.KeyCode == Keys.Shift || e.KeyCode == Keys.Alt || 
+                e.KeyCode == Keys.Home || e.KeyCode == Keys.End || e.KeyCode == Keys.Insert || 
+                e.KeyCode == Keys.PageUp || e.KeyCode == Keys.PageDown || e.KeyCode == Keys.CapsLock)
+
             MainWindow.ProgramChanged(true);
         }
 

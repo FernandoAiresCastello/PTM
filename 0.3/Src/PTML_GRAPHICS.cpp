@@ -71,18 +71,16 @@ void PTML::PRINTL()
 
 	int&& initialX = scr->csrx();
 
-	if (COUNT(0)) {
+	if (COUNT(0))
 		scr->newline();
-	}
-	else if (COUNT(1) || COUNT(2)) {
-		bool returnToInitialX = COUNT(2) ? BOOL(2) : true;
-
+	else if (COUNT(1) || COUNT(2))
 		scr->print_string_crlf(STR(1));
-		if (returnToInitialX)
-			scr->locate_x(initialX);
-		else
-			scr->locate_x(0);
-	}
+
+	bool returnToInitialX = COUNT(2) ? BOOL(2) : true;
+	if (returnToInitialX)
+		scr->locate_x(initialX);
+	else
+		scr->locate_x(0);
 }
 
 void PTML::PRINTF()

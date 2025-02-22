@@ -59,10 +59,10 @@ print_working_option:
     CLS
     LOCATE 3,9
     PRINTL "THE PATIO SPRINTETTE IS WORKING WELL"
-    PRINTL 
+    PRINTL
     PRINTL "PRESSING 'M' ENGAGES THE MOTOR"
     PRINTL "RELEASING 'M' DISENGAGES IT"
-    PRINTL 
+    PRINTL
     PRINTL "PRESS ANY KEY TO START..."
 
 await_keypress_to_start:
@@ -105,7 +105,7 @@ print_score:
 cut_grass:
     INC score
     PLAY "L50 C2 D2"
-    PAUSE 5
+    PAUSE 0
     GOTO.E mach.x,6,begin_next_row
     CALL move_machine
     CALL move_man

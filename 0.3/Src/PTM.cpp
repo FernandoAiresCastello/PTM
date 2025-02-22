@@ -17,6 +17,9 @@
 #include "t_program_editor.h"
 #include "t_filesystem.h"
 
+constexpr int TARGET_FPS = 30;
+constexpr int FRAME_DELAY = 1000 / TARGET_FPS;
+
 int wnd_size = 3;
 t_window wnd;
 t_main_editor main_editor;
@@ -30,6 +33,7 @@ t_palette pal;
 t_sound snd;
 t_screen scr(256, t_window::rows - 2);
 const t_string empty_string = "";
+Uint32 frame_start = 0, frame_time = 0;
 
 void PTM::run(const char* initial_program)
 {
@@ -153,8 +157,13 @@ void PTM::on_machine_cycle()
 	if (program_editor.active)
 		program_editor.draw_program();
 
-	if (auto_screen_update || halted)
+	if (auto_screen_update || halted) {
+		frame_start = SDL_GetTicks();
 		refresh_screen();
+		frame_time = SDL_GetTicks() - frame_start;
+		if (frame_time < FRAME_DELAY)
+			SDL_Delay(FRAME_DELAY - frame_time);
+	}
 
 	SDL_Event e;
 	SDL_PollEvent(&e);
@@ -195,7 +204,7 @@ void PTM::on_escape_key_pressed()
 	}
 }
 
-void PTM::on_exit()
+void PTM::on_exit() const
 {
 	autosave_program_file();
 }
@@ -631,6 +640,8 @@ void PTM::halt_and_catch_fire()
 	scr.show_cursor(false);
 	scr.set_color_mode(t_color_mode::mode1_multicolor);
 	
+	snd.play_mml_loop("L500 C1");
+
 	t_tile tile;
 
 	while (wnd.is_open()) {

@@ -304,9 +304,10 @@ t_string t_string::substr(int first, int last) const
 	if (last < first)
 		return "";
 	if (last > value.length())
-		return value;
+		return "";
 
-	return value.substr(first, last - first);
+	int&& count = last - first;
+	return value.substr(first, count);
 }
 
 t_string t_string::replace(const t_string& original, const t_string& replacement) const

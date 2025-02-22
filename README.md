@@ -5,7 +5,7 @@
 
 __PTM (Programmable Tile Machine)__ is a "pseudo-8-bit fantasy computer" that you can program using a built-in programming language called PTML. The system aims to be similar in look-and-feel to some early 8-bit computer systems with low-resolution and tile-based displays, such as the MSX, ZX Spectrum and Atari 800. Also inspired by the modern game engines Bitsy and PICO-8.
 
-__PTML__ is an interpreted, imperative, loosely typed, line-based, low-level programming language, with only two basic data types: strings and integers, with support for fixed-size arrays. The syntax is based on early, unstructured dialects of BASIC and also Assembly languages for 8-bit computers (sometimes resembling Zilog Z80 code).
+__PTML__ is an interpreted, imperative, loosely typed, line-based, low-level programming language, with only two basic data types: strings and integers, with support for fixed-size arrays. The syntax is based on early, unstructured dialects of BASIC and also Assembly languages for 8-bit computers (sometimes resembling Zilog Z80 code). PTML has approximately 100 commands (some of which have a few variants).
 
 Here are a few examples of minigames programmed in PTML:
 

@@ -39,7 +39,7 @@ public:
 	void pause(int frames);
 	void on_machine_cycle();
 	void on_escape_key_pressed();
-	void on_exit();
+	void on_exit() const;
 	SDL_Keycode await_keypress();
 	void refresh_screen();
 	bool is_window_open() const;
