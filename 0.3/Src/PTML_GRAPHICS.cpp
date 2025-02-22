@@ -452,6 +452,28 @@ void PTML::GET_SPRITE_Y()
 	ptm->set_var(ARG(2), ptm->get_screen().get_sprite(sprite_number).get_y(), error);
 }
 
+void PTML::GET_SPRITE_TILED_X()
+{
+	ARGC(2);
+	auto&& sprite_number = NUM(1);
+	REQUIRE_SPRITE(sprite_number);
+	auto&& sprite = ptm->get_screen().get_sprite(sprite_number);
+	int&& tx = ((sprite.get_x() + 4) / t_tile::width) - 2;
+
+	ptm->set_var(ARG(2), tx, error);
+}
+
+void PTML::GET_SPRITE_TILED_Y()
+{
+	ARGC(2);
+	auto&& sprite_number = NUM(1);
+	REQUIRE_SPRITE(sprite_number);
+	auto&& sprite = ptm->get_screen().get_sprite(sprite_number);
+	int&& ty = ((sprite.get_y() + 4) / t_tile::height) - 1;
+
+	ptm->set_var(ARG(2), ty, error);
+}
+
 void PTML::ENABLE_SPRITES()
 {
 	ARGC(1);

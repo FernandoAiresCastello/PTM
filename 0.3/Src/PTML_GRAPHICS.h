@@ -50,6 +50,8 @@ namespace PTML
 	void GET_SPRITE_TILE();
 	void GET_SPRITE_X();
 	void GET_SPRITE_Y();
+	void GET_SPRITE_TILED_X();
+	void GET_SPRITE_TILED_Y();
 	void ENABLE_SPRITES();
 	void RESET_SPRITES();
 	void CHECK_SPRITE_COLLISION();

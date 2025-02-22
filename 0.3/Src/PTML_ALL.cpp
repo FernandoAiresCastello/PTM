@@ -144,6 +144,8 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
     CMD("TILESPR", GET_SPRITE_TILE);
     CMD("SXGET", GET_SPRITE_X);
     CMD("SYGET", GET_SPRITE_Y);
+    CMD("STXGET", GET_SPRITE_TILED_X);
+    CMD("STYGET", GET_SPRITE_TILED_Y);
     CMD("CHKCOL", CHECK_SPRITE_COLLISION);
 
     // === SOUND ===
