@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 namespace PTMStudio
@@ -32,12 +33,23 @@ namespace PTMStudio
                 Dock = DockStyle.Fill,
                 BorderStyle = BorderStyle.None,
                 HScrollBar = true,
-                VScrollBar = true
+                VScrollBar = true,
+                Lexer = Lexer.Cpp,
             };
+
 			Scintilla.Margins[0].Width = 40;
             Scintilla.KeyDown += Scintilla_KeyDown;
             Scintilla.SetSelectionBackColor(true, SystemColors.Highlight);
 			Scintilla.SetSelectionForeColor(true, SystemColors.HighlightText);
+
+            Scintilla.SetKeywords(0, GetPtmlCommands());
+
+			Scintilla.Styles[Style.Cpp.Default].ForeColor = Color.Black;
+			Scintilla.Styles[Style.Cpp.Word].ForeColor = Color.Blue;
+			Scintilla.Styles[Style.Cpp.String].ForeColor = Color.Green;
+			Scintilla.Styles[Style.Cpp.Number].ForeColor = Color.Red;
+			Scintilla.Styles[Style.Cpp.Character].ForeColor = Color.Red;
+			Scintilla.Styles[Style.Cpp.Preprocessor].ForeColor = Color.Gray;
 
 			SetFont("Consolas");
             SetFontSize(8);
@@ -46,6 +58,24 @@ namespace PTMStudio
 			SearchPanel.Visible = false;
 			TxtSearch.KeyDown += TxtSearch_KeyDown;
 		}
+
+        private string GetPtmlCommands()
+        {
+            StringBuilder commands = new StringBuilder();
+            var files = Directory.EnumerateFiles(Path.Combine(Filesystem.CurrentDir, "HELP"));
+
+			foreach (var path in files)
+            {
+                if (!path.EndsWith(".html"))
+                    continue;
+
+                string filename = Path.GetFileNameWithoutExtension(path);
+                commands.Append(filename.ToUpper().Trim() + " ");
+				commands.Append(filename.ToLower().Trim() + " ");
+			}
+
+			return commands.ToString().Trim();
+        }
 
 		private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
 		{
