@@ -44,7 +44,7 @@ This project is currently in beta stage. All beta versions may contain bugs!
 
 | **Version** | **Release date** | **Comments** |
 |-------------|------------------|--------------|
-| **0.3**     | _TBA 2025_ | Current implementation, started from scratch. PTML is an entirely different language from earlier versions. Includes a built-in program editor with immediate mode and also an external IDE for editing code, graphics and data. |
+| **0.3**     | _TBA 2026_ | Current implementation, started from scratch. PTML is an entirely different language from earlier versions. Includes a built-in program editor with immediate mode and also an external IDE for editing code, graphics and data. |
 | **0.2**     | _July 1, 2023_   | Many PTML improvements and new commands. This version also included a few standalone tools (PTM Studio and PTM Tile Editor) besides the main PTM interpreter. |
 | **0.1**     | _May 14, 2023_   | First release. Ranked 4th out of 61 entries in the [Tool Jam 3](https://itch.io/jam/the-tool-jam-3/results). |
 
