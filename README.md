@@ -9,8 +9,8 @@ __PTML__ is an interpreted, imperative, loosely typed, line-based, low-level pro
 
 Here are a few examples of minigames programmed in PTML:
 
-* PTM Invaders: [INVADERS.PTM](https://github.com/FernandoAiresCastello/PTM/blob/master/0.3/Build/USR/INVADERS.PTM)
-* Advanced Lawnmower Simulator: [LAWNSIM.PTM](https://github.com/FernandoAiresCastello/PTM/blob/master/0.3/Build/USR/LAWNSIM.PTM)
+* PTM Invaders: [INVADERS.PTM](https://github.com/FernandoAiresCastello/PTM/blob/master/0.3_with_editor/build/PROJ/INVADERS/INVADERS.PTM)
+* Advanced Lawnmower Simulator: [LAWNSIM.PTM](https://github.com/FernandoAiresCastello/PTM/blob/master/0.3_with_editor/build/PROJ/LAWNSIM/LAWNSIM.PTM)
 
 ## Machine Specs
 
