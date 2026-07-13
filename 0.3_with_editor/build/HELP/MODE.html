@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<link rel='stylesheet' href='styles.css'>
+	</head>
+	<body>
+		<div class='command-name'>MODE</div>
+		<div class='command-description'>Switch color mode</div>
+		
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>MODE mode</div>
+			<div class='syntax-description'>
+				Switch the color mode.<br><br>
+				Monochrome mode is the default, where every tile on the screen has the same foreground and background color, and the COLOR, INK and PAPER commands change the color of all tiles on the screen at once.<br><br>
+				Multicolor mode prevents the COLOR, INK and PAPER commands to change existing tiles, and instead only sets the color of subsequent tiles.
+			</div>
+			<ul class='syntax-params'>
+				<li>mode = 0: monochrome; 1 = multicolor</li>
+			</ul>
+		</div>
+	</body>
+</html>

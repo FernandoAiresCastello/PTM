@@ -1,0 +1,120 @@
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Windows.Forms;
+
+namespace PTMStudio.Windows
+{
+	public partial class StartWindow : Form
+	{
+		public string ProjectFolder { get; private set; }
+
+		public StartWindow()
+		{
+			InitializeComponent();
+		}
+
+		private void BtnExit_Click(object sender, System.EventArgs e)
+		{
+			DialogResult = DialogResult.Cancel;
+		}
+
+		private void BtnLoad_Click(object sender, System.EventArgs e)
+		{
+			ProjectLoadWindow wnd = new ProjectLoadWindow();
+			if (wnd.ShowDialog(this) != DialogResult.OK)
+				return;
+
+			ProjectFolder = wnd.SelectedProject.Path;
+			CopyFiles(ProjectFolder, Filesystem.UserRootDirName);
+			DialogResult = DialogResult.OK;
+		}
+
+		private void BtnScratchpad_Click(object sender, System.EventArgs e)
+		{
+			ProjectFolder = Path.Combine(Filesystem.ProjectDirName, Filesystem.ScratchpadProjectFolder);
+			if (!Directory.Exists(ProjectFolder))
+				Directory.CreateDirectory(ProjectFolder);
+
+			CopyFiles(ProjectFolder, Filesystem.UserRootDirName);
+			DialogResult = DialogResult.OK;
+		}
+
+		private void BtnNew_Click(object sender, System.EventArgs e)
+		{
+			bool ok = false;
+
+			while (!ok)
+			{
+				SimpleTextInputDialog dialog = new SimpleTextInputDialog(
+					"Create new project", "Enter project name:")
+				{ UppercaseOnly = true };
+
+				string newProjectFolder;
+				if (dialog.ShowDialog(this) == DialogResult.OK)
+					newProjectFolder = dialog.Text.ToUpper();
+				else
+					return;
+
+				if (string.IsNullOrWhiteSpace(newProjectFolder))
+				{
+					MainWindow.Warning($"Please enter the project name.");
+					continue;
+				}
+
+				string folderToCreate = Path.Combine(Filesystem.ProjectDirName, newProjectFolder);
+
+				if (Directory.Exists(folderToCreate))
+				{
+					MainWindow.Warning($"Project \"{newProjectFolder}\" already exists. Please enter another name.");
+					continue;
+				}
+
+				try
+				{
+					Directory.CreateDirectory(folderToCreate);
+					File.Create(Path.Combine(folderToCreate, Filesystem.DefaultMainProgramFileName)).Close();
+					CopyFiles(folderToCreate, Filesystem.UserRootDirName);
+					ProjectFolder = folderToCreate;
+					DialogResult = DialogResult.OK;
+					ok = true;
+				}
+				catch (Exception ex)
+				{
+					MainWindow.Error($"Could not create project.", ex);
+					continue;
+				}
+			}
+		}
+
+		private static void CopyFiles(string sourceDir, string destDir)
+		{
+			if (Directory.Exists(destDir))
+				DeleteAllFiles(destDir);
+			else
+				Directory.CreateDirectory(destDir);
+
+			foreach (string file in Directory.GetFiles(sourceDir))
+			{
+				string destFile = Path.Combine(destDir, Path.GetFileName(file));
+				File.Copy(file, destFile, true);
+			}
+		}
+
+		private static void DeleteAllFiles(string folderPath)
+		{
+			foreach (string file in Directory.GetFiles(folderPath))
+				File.Delete(file);
+		}
+
+		private void BtnItchio_Click(object sender, System.EventArgs e)
+		{
+			Process.Start("https://fernandoairescastello.itch.io/ptm");
+		}
+
+		private void BtnGitHub_Click(object sender, System.EventArgs e)
+		{
+			Process.Start("https://github.com/FernandoAiresCastello/PTM");
+		}
+	}
+}
