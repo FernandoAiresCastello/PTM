@@ -136,7 +136,7 @@ void PTML::LOAD_PAL()
 	VALIDATE_FILENAME(filename);
 	REQUIRE_FILE(filename);
 
-	ptm->get_pal().load(t_string(USER_ROOT) + filename);
+	ptm->get_pal().load(filename);
 }
 
 void PTML::SAVE_PAL()
@@ -145,7 +145,7 @@ void PTML::SAVE_PAL()
 	auto&& filename = STR(1);
 	VALIDATE_FILENAME(filename);
 
-	ptm->get_pal().save(t_string(USER_ROOT) + filename);
+	ptm->get_pal().save(filename);
 }
 
 void PTML::LOAD_CHR()
@@ -155,7 +155,7 @@ void PTML::LOAD_CHR()
 	VALIDATE_FILENAME(filename);
 	REQUIRE_FILE(filename);
 
-	ptm->get_chr().load(t_string(USER_ROOT) + filename);
+	ptm->get_chr().load(filename);
 }
 
 void PTML::SAVE_CHR()
@@ -164,7 +164,7 @@ void PTML::SAVE_CHR()
 	auto&& filename = STR(1);
 	VALIDATE_FILENAME(filename);
 
-	ptm->get_chr().save(t_string(USER_ROOT) + filename);
+	ptm->get_chr().save(filename);
 }
 
 void PTML::LOAD_BUF()
@@ -174,7 +174,7 @@ void PTML::LOAD_BUF()
 	VALIDATE_FILENAME(filename);
 	REQUIRE_FILE(filename);
 	
-	ptm->get_screen().load(t_string(USER_ROOT) + filename);
+	ptm->get_screen().load(filename);
 
 	ptm->suppress_imm_prompt = true;
 }
@@ -185,7 +185,7 @@ void PTML::SAVE_BUF()
 	auto&& filename = STR(1);
 	VALIDATE_FILENAME(filename);
 
-	ptm->get_screen().save(t_string(USER_ROOT) + filename);
+	ptm->get_screen().save(filename);
 }
 
 void PTML::LOCATE()

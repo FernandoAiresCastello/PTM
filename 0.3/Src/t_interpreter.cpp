@@ -20,12 +20,6 @@ void t_interpreter::init(PTM* ptm, t_screen* scr, t_keyboard* kb)
 
 	PTML::set_env(ptm, scr);
 }
-
-void t_interpreter::print_prompt()
-{
-	scr->print_string_crlf(prompt);
-}
-
 void t_interpreter::interpret_line(t_string& src, bool from_file)
 {
 	if (src.contains(t_record_file::delimiter)) {
@@ -43,7 +37,6 @@ void t_interpreter::interpret_line(t_string& src, bool from_file)
 			bool ok = ptm->delete_program_line(line_number);
 			if (!ok) {
 				scr->print_string_crlf(PTML::err.undefined_line_nr);
-				print_prompt();
 			}
 		}
 		else {
@@ -84,18 +77,10 @@ bool t_interpreter::execute_line(t_program_line& line)
 		return has_error;
 
 	if (has_error) {
-		scr->move_cursor_line_start();
-		if (line.immediate)
-			scr->print_string_crlf(PTML::error);
-		else
-			scr->print_string_crlf(t_string::fmt(
-				PTML::err.error_in_linenr.c_str(), PTML::error.c_str(), line.line_nr));
-
 		ptm->get_sound().alert();
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "PTM - Runtime Error", 
+			t_string::fmt("%s at line %i", PTML::error.c_str(), line.line_nr).c_str(), nullptr);
 	}
-
-	if (line.immediate && !ptm->suppress_imm_prompt)
-		print_prompt();
 
 	ptm->suppress_imm_prompt = false;
 
@@ -106,13 +91,4 @@ bool t_interpreter::execute_line(t_program_line& line)
 const t_string& t_interpreter::get_error()
 {
 	return PTML::error;
-}
-
-void t_interpreter::on_user_interrupt(t_program_line* line)
-{
-	ptm->get_sound().alert();
-
-	scr->newline();
-	scr->print_string_crlf(t_string::fmt(
-		PTML::err.break_in.c_str(), line->line_nr));
 }

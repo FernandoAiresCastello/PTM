@@ -1,0 +1,31 @@
+<html>
+	<head>
+		<link rel='stylesheet' href='styles.css'>
+	</head>
+	<body>
+		<div class='command-name'>TILE</div>
+		<div class='command-description'>Set tile register</div>
+		
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>TILE ch, fgc, bgc</div>
+			<div class='syntax-description'>
+				Append a new character with given colors to the end of the tile register
+			</div>
+			<ul class='syntax-params'>
+				<li>ch = Charset index</li>
+				<li>fgc = Palette index for the foreground color</li>
+				<li>bgc = Palette index for the background color</li>
+			</ul>
+		</div>
+		
+		<div class='syntax'>
+			<div class='syntax-format'>TILE</div>
+			<div class='syntax-description'>
+				Remove all characters from the tile register
+			</div>
+		</div>
+
+	</body>
+</html>

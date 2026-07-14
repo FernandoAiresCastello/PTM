@@ -1,0 +1,250 @@
+TITLE "PTM INVADERS"
+
+CALL init_graphics
+
+SET player_speed, 1
+SET total_enemy_count, 200
+SET enemy_count, total_enemy_count
+SET enemy_move_delay, 8
+SET enemies_killed, 0
+
+CALL init_sprite_indices
+CALL init_player
+CALL init_player_missile
+CALL init_enemies
+
+main_loop:
+    CALL print_score
+    GOTO.E enemy_count, 0, end_game
+
+    CALL adjust_player_pos
+    MOVETO player_spr,player_x,player_y
+    CALL.E player_missile_active,1,move_player_missile
+
+    CALL.G enemy_move_counter, enemy_move_delay, move_enemies
+    INC enemy_move_counter
+
+    INKEY key
+    CALL.K "RIGHT", player_move_right
+    CALL.K "D", player_move_right
+    CALL.K "LEFT", player_move_left
+    CALL.K "A", player_move_left
+    CALL.K "SPACE", player_shoot
+    CALL.K "W", player_shoot
+    CALL.K "S", player_shoot
+
+    REFRESH
+    GOTO main_loop
+
+print_score:
+    COLOR color_gray, color_black
+    LOCATE 11, 22
+    PRINTF "%03i", enemy_count
+    RET
+
+move_player_missile:
+    SUB player_missile_y, 2
+    MOVETO player_missile_spr, player_missile_x, player_missile_y
+    CALL.L player_missile_y, player_missile_min_y, reset_player_missile
+    RET
+
+reset_player_missile:
+    SHOW player_missile_spr,0
+    MOVETO player_missile_spr,-10,-10
+    SET player_missile_active,0
+    RET
+
+player_shoot:
+    CALL.E player_missile_active, 0, start_player_missile
+    RET
+
+start_player_missile:
+    PLAY "L20 F5 D5 C5"
+    SET player_missile_active,1
+    SET player_missile_x, player_x
+    SET player_missile_y, player_y
+    SHOW player_missile_spr,1
+    RET
+
+player_move_right:
+    ADD player_x, player_speed
+    RET
+
+player_move_left:
+    SUB player_x, player_speed
+    RET
+
+adjust_player_pos:
+    CALL.L player_x, player_min_x, fix_player_x_min
+    CALL.G player_x, player_max_x, fix_player_x_max
+    RET
+
+fix_player_x_min:
+    SET player_x, player_max_x
+    RET
+
+fix_player_x_max:
+    SET player_x, player_min_x
+    RET
+
+move_enemies:
+    SET enemy_move_counter, 0
+    SET enemy_index, enemy_first_spr
+move_enemies_loop:
+    CALL.E player_missile_active, 1, detect_enemy_collision
+    MOVE enemy_index, 0, 1
+    SPRY enemy_index, enemy_y
+    CALL.L enemy_y, 8, hide_enemy
+    CALL.GE enemy_y, 8, show_enemy
+    CALL.G enemy_y, 176, check_game_over
+    INC enemy_index
+    GOTO.LE enemy_index, enemy_last_spr, move_enemies_loop
+    RET
+detect_enemy_collision:
+    CHKCOL has_collision, enemy_index, player_missile_spr
+    CALL.E has_collision, 1, try_kill_enemy
+    RET
+
+hide_enemy:
+    SHOW enemy_index, 0
+    RET
+show_enemy:
+    SHOW enemy_index, 1
+    RET
+
+try_kill_enemy:
+    TILESPR enemy_index
+    PGET enemy_dead, "dead"
+    CALL.NE enemy_dead, "true", kill_enemy
+    RET
+kill_enemy:
+    PLAY "L20 C4 D4 F4"
+    CALL reset_player_missile
+    TILE
+    TILE ch_enemy_dead_1, color_red, color_magenta
+    TILE ch_enemy_dead_2, color_orange, color_magenta
+    PSET "dead", "true"
+    SPRITE enemy_index
+    DEC enemy_count
+    INC enemies_killed
+    RET
+
+check_game_over:
+    TILESPR enemy_index
+    PGET enemy_dead, "dead"
+    GOTO.NE enemy_dead, "true", game_over
+    SHOW enemy_index, 0
+    RET
+
+game_over:
+    PAUSE 200
+    PLAY "L80 F3 E3 F3 E3 D3 E3 D3 C3 L300 F2"
+    MODE 0
+    COLOR color_red, color_black, color_black
+    CLS
+    DELSPR
+    PRINTL "GAME OVER"
+    PRINTL "The aliens have invaded Earth..."
+    PRINTL
+    PRINTL "You've destroyed"
+    PRINTF "%i out of", enemies_killed
+    PRINTF " %i invaders.", total_enemy_count
+    PRINTL "",0
+    END
+
+end_game:
+    PAUSE 200
+    PLAY "L80 C6 D6 E6 D6 E6 F6 E6 F6 L300 G6"
+    MODE 0
+    COLOR color_white, color_black, color_black
+    CLS
+    DELSPR
+    COLOR color_white
+    PRINTL "CONGRATULATIONS!"
+    PRINTL "You have saved Earth from the invasion!"
+    END
+
+init_enemies:
+    SET enemy_move_counter, 0
+    SET enemy_index, enemy_first_spr
+init_enemies_loop:
+    RND enemy_x, 10, 32
+    RND enemy_y, -300, 5
+    CALL init_enemy
+    INC enemy_index
+    GOTO.LE enemy_index, enemy_last_spr, init_enemies_loop
+    RET
+
+init_enemy:
+    TILE
+    TILE ch_enemy_1, color_green, color_magenta
+    TILE ch_enemy_2, color_green, color_magenta
+    MUL enemy_x, 8
+    MUL enemy_y, 8
+    SPRITE enemy_index, enemy_x, enemy_y, 1, 1
+    RET
+
+init_player_missile:
+    TILE
+    TILE ch_missile, color_cyan, color_magenta
+    SET player_missile_min_y, 8
+    SET player_missile_x, -10
+    SET player_missile_y, -10
+    SUB player_missile_y, 8
+    SPRITE player_missile_spr, player_missile_x, player_missile_y, 1, 0
+    RET
+
+init_player:
+    TILE
+    TILE ch_player, color_white, color_magenta
+    SET player_x, 175
+    SET player_y, 170
+    SET player_min_x, 16
+    SET player_max_x, 336
+    SPRITE player_spr, player_x, player_y, 1, 1
+    SET player_missile_active, 0
+    RET
+
+init_sprite_indices:
+    SET invalid_spr, 0
+    SET enemy_first_spr, 1
+    SET enemy_last_spr, enemy_count
+    SET player_missile_spr, 201
+    SET player_spr, 202
+    RET
+
+init_graphics:
+    CURSOR 0
+    AUTOREF 0
+    MODE 1
+    DELSPR
+
+    # Colors
+    SET color_black, 0
+    SET color_white, 1
+    SET color_gray, 2
+    SET color_blue_dkr, 3
+    SET color_blue_dk, 4
+    SET color_blue, 5
+    SET color_green, 6
+    SET color_yellow, 7
+    SET color_red, 8
+    SET color_orange, 9
+    SET color_cyan, 10
+    SET color_green_lt, 11
+    SET color_magenta, 12
+
+    # Characters
+    SET ch_blank, 0
+    SET ch_player, 1
+    SET ch_enemy_1, 2
+    SET ch_enemy_2, 3
+    SET ch_missile, 4
+    SET ch_enemy_dead_1, 5
+    SET ch_enemy_dead_2, 6
+
+    COLOR color_white, color_black, color_black
+    LOAD "INVADERS.CHR"
+    LOAD "INVADERS.PAL"
+    LOAD "INVADERS.BUF"
+    RET

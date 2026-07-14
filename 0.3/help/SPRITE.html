@@ -1,0 +1,38 @@
+<html>
+	<head>
+		<link rel='stylesheet' href='styles.css'>
+	</head>
+	<body>
+		<div class='command-name'>SPRITE</div>
+		<div class='command-description'>Create or update sprite</div>
+		
+		<div class='syntax-header'>Syntax:</div>
+		
+		<div class='syntax'>
+			<div class='syntax-format'>SPRITE id, x, y, transparency, visible</div>
+			<div class='syntax-description'>
+				Create sprite with tile equal to tile register, position, transparency and visibility<br><br>
+				Sprites are not part of the screen tile buffer, therefore their coordinates are pixel-based, rather than tile-based<br><br>
+				"Transparent" sprites have only a single color (their foreground pixels), while their background pixels are completely hidden, allowing the colors of underlying tiles to be seen through.
+			</div>
+			<ul class='syntax-params'>
+				<li>id = Sprite id</li>
+				<li>x = X-coordinate on the screen</li>
+				<li>y = Y-coordinate on the screen</li>
+				<li>transparency = 0: opaque; 1: transparent</li>
+				<li>visible = 0: not visible; 1: visible</li>
+			</ul>
+		</div>
+		
+		<div class='syntax'>
+			<div class='syntax-format'>SPRITE id</div>
+			<div class='syntax-description'>
+				Set sprite tile equal to tile register, without changing any other property
+			</div>
+			<ul class='syntax-params'>
+				<li>id = Sprite id</li>
+			</ul>
+		</div>
+		
+	</body>
+</html>

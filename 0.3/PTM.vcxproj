@@ -32,7 +32,6 @@
     <ClCompile Include="src\PTML_SOUND.cpp" />
     <ClCompile Include="src\PTML_VARS.cpp" />
     <ClCompile Include="src\t_image.cpp" />
-    <ClCompile Include="src\t_program_editor.cpp" />
     <ClCompile Include="src\t_record_file.cpp" />
     <ClCompile Include="src\t_sound.cpp" />
     <ClCompile Include="src\t_sound_wav.cpp" />
@@ -48,7 +47,6 @@
     <ClCompile Include="src\t_interpreter.cpp" />
     <ClCompile Include="src\t_keyboard.cpp" />
     <ClCompile Include="src\t_list.cpp" />
-    <ClCompile Include="src\t_main_editor.cpp" />
     <ClCompile Include="src\t_palette.cpp" />
     <ClCompile Include="src\t_pos.cpp" />
     <ClCompile Include="src\t_program.cpp" />
@@ -85,7 +83,6 @@
     <ClInclude Include="src\t_array_ref.h" />
     <ClInclude Include="src\t_image.h" />
     <ClInclude Include="src\t_namespace.h" />
-    <ClInclude Include="src\t_program_editor.h" />
     <ClInclude Include="src\t_record_file.h" />
     <ClInclude Include="src\t_rect.h" />
     <ClInclude Include="src\t_sound.h" />
@@ -105,7 +102,6 @@
     <ClInclude Include="src\t_interpreter.h" />
     <ClInclude Include="src\t_keyboard.h" />
     <ClInclude Include="src\t_list.h" />
-    <ClInclude Include="src\t_main_editor.h" />
     <ClInclude Include="src\t_palette.h" />
     <ClInclude Include="src\t_param.h" />
     <ClInclude Include="src\t_pointers.h" />

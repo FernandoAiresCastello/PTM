@@ -1,0 +1,20 @@
+<html>
+	<head>
+		<link rel='stylesheet' href='styles.css'>
+	</head>
+	<body>
+		<div class='command-name'>AUTOREF</div>
+		<div class='command-description'>Enable or disable automatic screen refresh</div>
+		
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>AUTOREF state</div>
+			<div class='syntax-description'>
+				Enable or disable the automatic update of the screen. When enabled, the machine automatically copies the entire tile buffer to the screen on every frame, which can significantly reduce performance. To speed up performance, disable the automatic refresh, and execute the REFRESH command when needed to manually update the screen.
+			</div>
+			<ul class='syntax-params'>
+				<li>state = 0: disabled; 1: enabled</li>
+			</ul>
+		</div>
+	</body>
+</html>

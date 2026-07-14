@@ -45,14 +45,14 @@ bool t_filesystem::file_exists(const t_string& filename)
 
 bool t_filesystem::user_file_exists(const t_string& filename)
 {
-    return file_exists(t_string(USER_ROOT) + filename);
+    return file_exists(filename);
 }
 
 t_list<t_string> t_filesystem::list_user_files(const char* prefix)
 {
     t_list<t_string> files;
 
-    for (const auto& entry : fs::directory_iterator(USER_ROOT)) {
+    for (const auto& entry : fs::directory_iterator(".")) {
         if (fs::is_regular_file(entry.status())) {
             const auto&& path = entry.path().filename().string();
             if (prefix) {
@@ -188,8 +188,8 @@ bool t_filesystem::rename_user_file(const t_string& old_name, const t_string& ne
 {
     try
     {
-        t_string old_filename = t_string(USER_ROOT) + old_name.to_upper();
-        t_string new_filename = t_string(USER_ROOT) + new_name.to_upper();
+        t_string old_filename = old_name.to_upper();
+        t_string new_filename = new_name.to_upper();
 
         fs::rename(old_filename.c_str(), new_filename.c_str());
         return true;
@@ -204,7 +204,7 @@ bool t_filesystem::delete_user_file(const t_string& name)
 {
     try
     {
-        t_string filename = t_string(USER_ROOT) + name.to_upper();
+        t_string filename = name.to_upper();
         fs::remove(filename.c_str());
         return true;
     }
@@ -242,17 +242,12 @@ bool t_filesystem::delete_directory(const t_string& name)
 
 bool t_filesystem::has_autoexec_file()
 {
-    return file_exists(USER_ROOT AUTOEXEC_FILE);
+    return file_exists(AUTOEXEC_FILE);
 }
 
 t_string t_filesystem::get_autoexec_file()
 {
     return AUTOEXEC_FILE;
-}
-
-void t_filesystem::autosave_program(t_program* prg)
-{
-    save_program_plaintext(prg, USER_ROOT AUTOSAVE_FILE);
 }
 
 void t_filesystem::save_program_plaintext(t_program* prg, const t_string& filename)
@@ -323,12 +318,12 @@ void t_filesystem::load_palette_plaintext(t_palette* pal, const t_string& filena
 
 void t_filesystem::load_default_charset(t_charset* chr)
 {
-    load_charset_plaintext(chr, SYS_ROOT DEF_CHARSET_FILE);
+    load_charset_plaintext(chr, DEF_CHARSET_FILE);
 }
 
 void t_filesystem::load_default_palette(t_palette* pal)
 {
-    load_palette_plaintext(pal, SYS_ROOT DEF_PALETTE_FILE);
+    load_palette_plaintext(pal, DEF_PALETTE_FILE);
 }
 
 bool t_filesystem::is_record_file_open()
@@ -343,7 +338,7 @@ char t_filesystem::get_record_file_mode()
 
 int t_filesystem::open_record_file(const t_string& filename, char mode)
 {
-    return record_file.open(t_string(USER_ROOT) + filename.to_upper(), mode);
+    return record_file.open(filename.to_upper(), mode);
 }
 
 void t_filesystem::close_record_file()

@@ -24,7 +24,7 @@ class PTM
 public:
 	const t_string version_string	= "PTM 0.3";
 	const t_string title_short		= "Programmable Tile Machine";
-	const t_string copyright_notice	= "` 2023-2025 by F.A.Castello";
+	const t_string copyright_notice	= "` 2023-2026 by F.A.Castello";
 
 	t_tile tilereg;
 	bool auto_screen_update = true;
@@ -91,7 +91,6 @@ public:
 	bool is_key_pressed(int scancode);
 	bool is_key_pressed(const t_string& keyname);
 	t_string input_string(const t_string& prompt, const t_string& default_value, int maxlen);
-	void autosave_program_file() const;
 	int find_program_label(const t_string& label);
 	t_sound& get_sound();
 	const t_string& get_last_program_filename() const;

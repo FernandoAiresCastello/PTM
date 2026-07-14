@@ -1,0 +1,64 @@
+<html>
+	<head>
+		<link rel='stylesheet' href='styles.css'>
+	</head>
+	<body>
+		<div class='command-name'>PLAY</div>
+		<div class='command-description'>Play a sequence of sound tones (MML)</div>
+		
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>PLAY mml</div>
+			<div class='syntax-description'>
+				Play a sequence of MML commands and sound tones from a string. Each MML command and tone in the string must be separated by a space character.
+			</div>
+			<ul class='syntax-params'>
+				<li>mml = String of MML commands and sound tones</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>PLAY mml, loop</div>
+			<div class='syntax-description'>
+				The same as the first syntax, optionally looping when finished.
+			</div>
+			<ul class='syntax-params'>
+				<li>mml = String of MML commands and sound tones</li>
+				<li>loop = 0: play only once; 1: loop indefinitely</li>
+			</ul>
+		</div>
+
+		<div class='syntax-header'>MML commands:</div>
+
+		<div class='syntax'>
+			<ul class='syntax-params'>
+				<li>L = Note length. All subsequent notes will be played with this newly specified length.</li>
+				<li>P = Pause. Pauses MML execution for the specified interval.</li>
+			</ul>
+		</div>
+		
+		<div class='syntax-header'>MML sound tones:</div>
+		
+		<div class='syntax'>
+			<div class='syntax-description'>
+				Each tone must be followed by an octave, from 0 to 8.
+			</div>
+			<ul class='syntax-params'>
+				<li>C = Do</li>
+				<li>C# = Do (sharp)</li>
+				<li>D = Re</li>
+				<li>D# = Re (sharp)</li>
+				<li>E = Mi</li>
+				<li>F = Fa</li>
+				<li>F# = Fa (sharp)</li>
+				<li>G = Sol</li>
+				<li>G# = Sol (sharp)</li>
+				<li>A = La</li>
+				<li>A# = La (sharp)</li>
+				<li>B = Si</li>
+			</ul>
+		</div>
+
+	</body>
+</html>

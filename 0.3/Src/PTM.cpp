@@ -9,12 +9,10 @@
 #include "t_tilebuffer.h"
 #include "t_screen.h"
 #include "t_util.h"
-#include "t_main_editor.h"
 #include "t_interpreter.h"
 #include "t_program.h"
 #include "t_program_line.h"
 #include "t_program_runner.h"
-#include "t_program_editor.h"
 #include "t_filesystem.h"
 
 constexpr int TARGET_FPS = 30;
@@ -22,8 +20,6 @@ constexpr int FRAME_DELAY = 1000 / TARGET_FPS;
 
 int wnd_size = 3;
 t_window wnd;
-t_main_editor main_editor;
-t_program_editor program_editor;
 t_interpreter intp;
 t_program prg;
 t_program_runner prg_runner;
@@ -39,6 +35,13 @@ void PTM::run(const char* initial_program)
 {
 	if (running)
 		return;
+	
+	bool autoexec = t_filesystem::has_autoexec_file();
+
+	if (!initial_program && !autoexec) {
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "PTM - Boot Error", "No program file given", nullptr);
+		return;
+	}
 
 	running = true;
 	halted = false;
@@ -69,8 +72,6 @@ void PTM::init()
 	scr.set_palette(&pal);
 
 	intp.init(this, &scr, &kb);
-	program_editor.init(this, &scr, &kb);
-	main_editor.init(this, &scr, &kb, &intp);
 }
 
 void PTM::run_main(const char* initial_program)
@@ -78,23 +79,16 @@ void PTM::run_main(const char* initial_program)
 	bool autoexec = t_filesystem::has_autoexec_file();
 	bool has_initial_prog = initial_program != nullptr;
 
-	if (!autoexec && !has_initial_prog) {
-		snd.alert();
-		main_editor.print_welcome(true);
-	}
-
 	while (wnd.is_open()) {
 		if (has_initial_prog) {
 			has_initial_prog = false;
 			load_program_absolute_path(initial_program);
 			run_program_from_immediate_mode();
-			intp.print_prompt();
 		}
 		else if (autoexec) {
 			autoexec = false;
 			load_program(t_filesystem::get_autoexec_file());
 			run_program_from_immediate_mode();
-			intp.print_prompt();
 		}
 		on_machine_cycle();
 	}
@@ -112,8 +106,6 @@ void PTM::halt()
 
 void PTM::reset()
 {
-	autosave_program_file();
-
 	halted = false;
 	prg_runner.stop();
 	chr.reset();
@@ -122,9 +114,6 @@ void PTM::reset()
 	tilereg.set_empty();
 	delete_all_vars();
 	new_program();
-	main_editor.reset();
-	main_editor.print_welcome(false);
-	program_editor.reset();
 }
 
 void PTM::pause(int frames)
@@ -154,9 +143,6 @@ void PTM::on_machine_cycle()
 	if (!wnd.is_open())
 		return;
 
-	if (program_editor.active)
-		program_editor.draw_program();
-
 	if (auto_screen_update || halted) {
 		frame_start = SDL_GetTicks();
 		refresh_screen();
@@ -175,38 +161,14 @@ void PTM::on_machine_cycle()
 		if (key == SDLK_RETURN && kb.alt()) {
 			wnd.toggle_fullscreen();
 		}
-		else if (key == SDLK_ESCAPE) {
-			on_escape_key_pressed();
-		}
 		else if (!kb.alt() && !halted) {
 			kb.push_key(key);
-			if (!prg_runner.is_running()) {
-				if (main_editor.active)
-					main_editor.on_keydown();
-				if (program_editor.active)
-					program_editor.on_keydown();
-			}
 		}
-	}
-}
-
-void PTM::on_escape_key_pressed()
-{
-	if (!enable_user_break)
-		return;
-
-	if (halted) {
-		halted = false;
-	}
-	if (prg_runner.is_running()) {
-		prg_runner.stop();
-		intp.on_user_interrupt(prg_runner.get_current_line());
 	}
 }
 
 void PTM::on_exit() const
 {
-	autosave_program_file();
 }
 
 SDL_Keycode PTM::await_keypress()
@@ -435,8 +397,6 @@ t_program& PTM::get_prg()
 
 void PTM::run_program_from_immediate_mode()
 {
-	autosave_program_file();
-
 	prg_runner.run_program_from_immediate_mode(this, &prg, &intp);
 }
 
@@ -457,8 +417,7 @@ void PTM::end_program()
 
 void PTM::on_program_end()
 {
-	scr.show_cursor(true);
-	auto_screen_update = true;
+	exit();
 }
 
 void PTM::new_program()
@@ -473,7 +432,7 @@ void PTM::save_program(const t_string& filename)
 	if (!actual_filename.ends_with(PROGRAM_FILE_EXT))
 		actual_filename = filename + PROGRAM_FILE_EXT;
 
-	t_filesystem::save_program_plaintext(&prg, t_string(USER_ROOT) + actual_filename);
+	t_filesystem::save_program_plaintext(&prg, actual_filename);
 	set_last_program_filename(actual_filename);
 }
 
@@ -483,7 +442,7 @@ bool PTM::load_program(const t_string& filename)
 	if (!actual_filename.ends_with(PROGRAM_FILE_EXT))
 		actual_filename = filename + PROGRAM_FILE_EXT;
 
-	return load_program_absolute_path(t_string(USER_ROOT) + actual_filename);
+	return load_program_absolute_path(actual_filename);
 }
 
 bool PTM::load_program_absolute_path(const t_string& path)
@@ -496,7 +455,7 @@ bool PTM::load_program_absolute_path(const t_string& path)
 	}
 	catch (std::runtime_error error)
 	{
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "PTM - Error loading program",
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "PTM - Runtime Error",
 			t_string::fmt("%s\n\n%s", error.what(), path.c_str()).c_str(), nullptr);
 
 		return false;
@@ -612,12 +571,6 @@ t_string PTM::input_string(const t_string& prompt, const t_string& default_value
 	return value;
 }
 
-void PTM::autosave_program_file() const
-{
-	if (enable_autosave)
-		t_filesystem::autosave_program(&prg);
-}
-
 int PTM::find_program_label(const t_string& label)
 {
 	return prg.find_label(label);
@@ -635,8 +588,6 @@ const t_string& PTM::get_last_program_filename() const
 
 void PTM::halt_and_catch_fire()
 {
-	t_filesystem::autosave_program(&prg);
-
 	scr.show_cursor(false);
 	scr.set_color_mode(t_color_mode::mode1_multicolor);
 	

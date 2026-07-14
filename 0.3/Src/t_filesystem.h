@@ -3,11 +3,8 @@
 #include "t_list.h"
 #include "t_record_file.h"
 
-#define SYS_ROOT            "SYS/"
-#define USER_ROOT           "USR/"
 #define PROGRAM_FILE_EXT    ".PTM"
 #define AUTOEXEC_FILE       "AUTOEXEC" PROGRAM_FILE_EXT
-#define AUTOSAVE_FILE       "AUTOSAVE" PROGRAM_FILE_EXT
 #define DEF_CHARSET_FILE    "DEFAULT.CHR"
 #define DEF_PALETTE_FILE    "DEFAULT.PAL"
 
@@ -50,7 +47,6 @@ public:
 	// Program files
 	static bool has_autoexec_file();
 	static t_string get_autoexec_file();
-	static void autosave_program(t_program* prg);
 	static void save_program_plaintext(t_program* prg, const t_string& filename);
 	static void load_program_plaintext(t_interpreter* intp, t_program* prg, const t_string& filename);
 
