@@ -1,0 +1,2055 @@
+<html>
+	<head>
+		<style>
+			body
+			{
+				font-family: sans-serif;
+				font-size: 14px;
+			}
+			.toc
+			{
+				margin-bottom: 20px;
+				padding: 10px 15px;
+				border: 1px solid #ccc;
+				background: #f7f7f7;
+			}
+			.toc-title
+			{
+				font-size: 18px;
+				font-weight: bold;
+				margin-bottom: 8px;
+			}
+			.toc-list
+			{
+				columns: 3;
+				column-gap: 20px;
+				margin: 0;
+				padding-left: 20px;
+			}
+			.toc-list li
+			{
+				margin-bottom: 4px;
+			}
+			.toc-list a
+			{
+				color: #0066cc;
+				text-decoration: none;
+			}
+			.toc-list a:hover
+			{
+				text-decoration: underline;
+			}
+			.command-name
+			{
+				font-size: 24px;
+				font-weight: bold;
+			}
+			.command-description
+			{
+				margin-top: 5px;
+				margin-bottom: 10px;
+				padding: 5px 0;
+				border-top: 1px solid black;
+				border-bottom: 1px solid black;
+			}
+			.syntax-header
+			{
+				font-weight: bold;
+				margin-bottom: 5px;
+			}
+			.syntax
+			{
+				padding: 5px 10px;
+				margin-bottom: 10px;
+				background: #eee;
+			}
+			.syntax-format
+			{
+				font-family: consolas, monospace;
+				font-weight: bold;
+				color: #f00;
+			}
+			.syntax-description
+			{
+				margin-left: 10px;
+			}
+			.syntax-params
+			{
+				border: 1px solid #ccc;
+				margin-top: 10px;
+				margin-bottom: 0;
+				margin-left: 10px;
+				padding-left: 20px;
+				list-style-type: square;
+				font-style: italic;
+			}
+			.syntax-params li
+			{
+				text-decoration: none;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>PTML 3.0</h1>
+		<div class='toc'>
+			<div class='toc-title'>Commands:</div>
+			<ul class='toc-list'>
+				<li><a href='#ADD'>ADD</a></li>
+				<li><a href='#ASC'>ASC</a></li>
+				<li><a href='#AUTOREF'>AUTOREF</a></li>
+				<li><a href='#BEEP'>BEEP</a></li>
+				<li><a href='#BGET'>BGET</a></li>
+				<li><a href='#BORDER'>BORDER</a></li>
+				<li><a href='#BSET'>BSET</a></li>
+				<li><a href='#CALL'>CALL</a></li>
+				<li><a href='#CGET'>CGET</a></li>
+				<li><a href='#CHAR'>CHAR</a></li>
+				<li><a href='#CHKCOL'>CHKCOL</a></li>
+				<li><a href='#CHR'>CHR</a></li>
+				<li><a href='#CHRGET'>CHRGET</a></li>
+				<li><a href='#CLOSE'>CLOSE</a></li>
+				<li><a href='#CLS'>CLS</a></li>
+				<li><a href='#COLOR'>COLOR</a></li>
+				<li><a href='#CSET'>CSET</a></li>
+				<li><a href='#CSRX'>CSRX</a></li>
+				<li><a href='#CSRY'>CSRY</a></li>
+				<li><a href='#CURSOR'>CURSOR</a></li>
+				<li><a href='#DEC'>DEC</a></li>
+				<li><a href='#DEL'>DEL</a></li>
+				<li><a href='#DELSPR'>DELSPR</a></li>
+				<li><a href='#DIM'>DIM</a></li>
+				<li><a href='#DIV'>DIV</a></li>
+				<li><a href='#DIVR'>DIVR</a></li>
+				<li><a href='#ENASPR'>ENASPR</a></li>
+				<li><a href='#END'>END</a></li>
+				<li><a href='#EOF'>EOF</a></li>
+				<li><a href='#EXIT'>EXIT</a></li>
+				<li><a href='#FGET'>FGET</a></li>
+				<li><a href='#FILES'>FILES</a></li>
+				<li><a href='#FILL'>FILL</a></li>
+				<li><a href='#FIND'>FIND</a></li>
+				<li><a href='#FLUSH'>FLUSH</a></li>
+				<li><a href='#FSET'>FSET</a></li>
+				<li><a href='#FULLSCR'>FULLSCR</a></li>
+				<li><a href='#GET'>GET</a></li>
+				<li><a href='#GOTO'>GOTO</a></li>
+				<li><a href='#HALT'>HALT</a></li>
+				<li><a href='#INC'>INC</a></li>
+				<li><a href='#INK'>INK</a></li>
+				<li><a href='#INKEY'>INKEY</a></li>
+				<li><a href='#INPUT'>INPUT</a></li>
+				<li><a href='#JOIN'>JOIN</a></li>
+				<li><a href='#KILL'>KILL</a></li>
+				<li><a href='#LCASE'>LCASE</a></li>
+				<li><a href='#LEN'>LEN</a></li>
+				<li><a href='#LOAD'>LOAD</a></li>
+				<li><a href='#LOCATE'>LOCATE</a></li>
+				<li><a href='#LOCX'>LOCX</a></li>
+				<li><a href='#LOCY'>LOCY</a></li>
+				<li><a href='#MEMCLR'>MEMCLR</a></li>
+				<li><a href='#MODE'>MODE</a></li>
+				<li><a href='#MOVE'>MOVE</a></li>
+				<li><a href='#MOVETO'>MOVETO</a></li>
+				<li><a href='#MUL'>MUL</a></li>
+				<li><a href='#OPEN'>OPEN</a></li>
+				<li><a href='#PAL'>PAL</a></li>
+				<li><a href='#PALGET'>PALGET</a></li>
+				<li><a href='#PAPER'>PAPER</a></li>
+				<li><a href='#PAUSE'>PAUSE</a></li>
+				<li><a href='#PGET'>PGET</a></li>
+				<li><a href='#PLAY'>PLAY</a></li>
+				<li><a href='#POW'>POW</a></li>
+				<li><a href='#PRINT'>PRINT</a></li>
+				<li><a href='#PRINTF'>PRINTF</a></li>
+				<li><a href='#PRINTL'>PRINTL</a></li>
+				<li><a href='#PSET'>PSET</a></li>
+				<li><a href='#PUT'>PUT</a></li>
+				<li><a href='#READ'>READ</a></li>
+				<li><a href='#RECT'>RECT</a></li>
+				<li><a href='#REFRESH'>REFRESH</a></li>
+				<li><a href='#RENAME'>RENAME</a></li>
+				<li><a href='#REPT'>REPT</a></li>
+				<li><a href='#RESET'>RESET</a></li>
+				<li><a href='#RET'>RET</a></li>
+				<li><a href='#RND'>RND</a></li>
+				<li><a href='#RUN'>RUN</a></li>
+				<li><a href='#SAVE'>SAVE</a></li>
+				<li><a href='#SET'>SET</a></li>
+				<li><a href='#SHOW'>SHOW</a></li>
+				<li><a href='#SPLIT'>SPLIT</a></li>
+				<li><a href='#SPRITE'>SPRITE</a></li>
+				<li><a href='#SPRX'>SPRX</a></li>
+				<li><a href='#SPRY'>SPRY</a></li>
+				<li><a href='#SQRT'>SQRT</a></li>
+				<li><a href='#SUB'>SUB</a></li>
+				<li><a href='#SUBS'>SUBS</a></li>
+				<li><a href='#SWAP'>SWAP</a></li>
+				<li><a href='#TILE'>TILE</a></li>
+				<li><a href='#TILESPR'>TILESPR</a></li>
+				<li><a href='#TITLE'>TITLE</a></li>
+				<li><a href='#UCASE'>UCASE</a></li>
+				<li><a href='#WRITE'>WRITE</a></li>
+			</ul>
+		</div>
+		<div class='command-name' id="ADD">ADD</div>
+		<div class='command-description'>Add two numeric values</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>ADD a, b</div>
+			<div class='syntax-description'>
+				Calculates a = a + b
+			</div>
+			<ul class='syntax-params'>
+				<li>a = Variable identifier</li>
+				<li>b = Variable identifier or number literal</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>ADD a, b, c</div>
+			<div class='syntax-description'>
+				Calculates a = b + c
+			</div>
+			<ul class='syntax-params'>
+				<li>a = Variable identifier</li>
+				<li>b = Variable identifier or number literal</li>
+				<li>c = Variable identifier or number literal</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="ASC">ASC</div>
+		<div class='command-description'>Get ASCII value of character</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>ASC var, character</div>
+			<div class='syntax-description'>
+				Get ASCII value of character, then store it in the given variable.<br><br>
+				If a literal string is given instead of a literal character, only the first character of the string is checked. If a variable is given as the second argument, the value of the variable is first converted to a string and then the first character is checked.
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier</li>
+				<li>character = The character to get the ASCII value from</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="AUTOREF">AUTOREF</div>
+		<div class='command-description'>Enable or disable automatic screen refresh</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>AUTOREF state</div>
+			<div class='syntax-description'>
+				Enable or disable the automatic update of the screen. When enabled, the machine automatically copies the entire tile buffer to the screen on every frame, which can significantly reduce performance. To speed up performance, disable the automatic refresh, and execute the REFRESH command when needed to manually update the screen.
+			</div>
+			<ul class='syntax-params'>
+				<li>state = 0: disabled; 1: enabled</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="BEEP">BEEP</div>
+		<div class='command-description'>Emit a beeping sound</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>BEEP freq, length</div>
+			<div class='syntax-description'>
+				Emit a beeping sound with the specified frequency and duration
+			</div>
+			<ul class='syntax-params'>
+				<li>freq = The sound frequency</li>
+				<li>length = The beep duration</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>BEEP</div>
+			<div class='syntax-description'>
+				Emit the standard PTM beeping sound (frequency: 1450, length: 50)
+			</div>
+		</div>
+
+		<div class='command-name' id="BGET">BGET</div>
+		<div class='command-description'>Get background color of tile register</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>BGET var, tile_index</div>
+			<div class='syntax-description'>
+				Get background color of tile register and store it in the given variable
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier</li>
+				<li>tile_index = Index of tile in the tile register to get the color from</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="BORDER">BORDER</div>
+		<div class='command-description'>Change color of the screen border</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>BORDER palette_index</div>
+			<div class='syntax-description'>
+				Change color of the screen border
+			</div>
+			<ul class='syntax-params'>
+				<li>palette_index = Palette index of the color</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="BSET">BSET</div>
+		<div class='command-description'>Set background color of tile register</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>BSET tile_index, palette_index</div>
+			<div class='syntax-description'>
+				Set background color of tile register
+			</div>
+			<ul class='syntax-params'>
+				<li>tile_index = Index of tile to alter in the tile register</li>
+				<li>palette_index = Palette index to assign to the tile</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="CALL">CALL</div>
+		<div class='command-description'>Call subroutine that starts at specified label</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>CALL label</div>
+			<div class='syntax-description'>
+				Unconditionally call subroutine
+			</div>
+			<div class='syntax-format'>CALL.E a, b, label</div>
+			<div class='syntax-description'>
+				Call subroutine if a = b
+			</div>
+			<div class='syntax-format'>CALL.NE a, b, label</div>
+			<div class='syntax-description'>
+				Call subroutine if a != b (not equal)
+			</div>
+			<div class='syntax-format'>CALL.G a, b, label</div>
+			<div class='syntax-description'>
+				Call subroutine if a > b
+			</div>
+			<div class='syntax-format'>CALL.GE a, b, label</div>
+			<div class='syntax-description'>
+				Call subroutine if a >= b
+			</div>
+			<div class='syntax-format'>CALL.L a, b, label</div>
+			<div class='syntax-description'>
+				Call subroutine if a < b
+			</div>
+			<div class='syntax-format'>CALL.LE a, b, label</div>
+			<div class='syntax-description'>
+				Call subroutine if a <= b
+			</div>
+			<div class='syntax-format'>CALL.K scancode_name, label</div>
+			<div class='syntax-description'>
+				Call subroutine if specified key is pressed. Use scancode names below
+			</div>
+			<div class='syntax-format'>CALL.NK scancode_name, label</div>
+			<div class='syntax-description'>
+				Call subroutine if specified key is not pressed. Use scancode names below
+			</div>
+		</div>
+
+				<div class='syntax-header'>Scancode names to use with CALL.K and CALL.NK:</div>
+		<div class='syntax'>
+			<div class='syntax-description'>
+				Scancode names are strings and as such should be used with double quotes.
+			</div>
+			<ul class='syntax-params'>
+				<li>RIGHT</li>
+				<li>LEFT</li>
+				<li>UP</li>
+				<li>DOWN</li>
+				<li>SPACE</li>
+				<li>RETURN</li>
+				<li>BACKSPACE</li>
+				<li>TAB</li>
+				<li>DELETE</li>
+				<li>INSERT</li>
+				<li>HOME</li>
+				<li>END</li>
+				<li>PAGEUP</li>
+				<li>PAGEDOWN</li>
+				<li>LSHIFT</li>
+				<li>RSHIFT</li>
+				<li>LCTRL</li>
+				<li>RCTRL</li>
+				<li>LALT</li>
+				<li>RALT</li>
+				<li>PAUSE</li>
+				<li>PRINTSREEN</li>
+				<li>ESCAPE</li>
+				<li>0 through 9</li>
+				<li>A through Z</li>
+				<li>F1 through F12</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="CGET">CGET</div>
+		<div class='command-description'>Get character index of tile register</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>CGET var, tile_index</div>
+			<div class='syntax-description'>
+				Get character index of tile register and store it in the given variable
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier</li>
+				<li>tile_index = Index of tile in the tile register to get the character from</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="CHAR">CHAR</div>
+		<div class='command-description'>Get character at index of string</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>CHAR var, string, index</div>
+			<div class='syntax-description'>
+				Get the character at specified index of string, then store it in the given variable. The character itself is stored, not its ASCII value. To get the ASCII value of the character, the ASC command must be used.
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier</li>
+				<li>string = The source string</li>
+				<li>index = The index in the source string from which to get the character</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="CHKCOL">CHKCOL</div>
+		<div class='command-description'>Detect collision between two sprites</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>CHKCOL var, id_1, id_2</div>
+			<div class='syntax-description'>
+				Detect collision between two sprites, then store result in variable. 0: no collision detected; 1: collision detected
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier</li>
+				<li>id_1 = First sprite id</li>
+				<li>id_2 = Second sprite id</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="CHR">CHR</div>
+		<div class='command-description'>Set pixel pattern for character at charset index</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>CHR charset_index, 64_bit_pattern</div>
+			<div class='syntax-description'>
+				Set pixel pattern for character at charset index
+			</div>
+			<ul class='syntax-params'>
+				<li>charset_index = Charset index to alter</li>
+				<li>64_bit_pattern = Binary string of length 64, where "0" means a background pixel, and "1" means a foreground pixel in the pixel pattern. The string gets split into 8 substrings, each one of length 8, for each row of the pattern.</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>CHR charset_index, pattern_row, 8_bit_pattern</div>
+			<div class='syntax-description'>
+				Set pixel pattern for given pattern row of character at charset index
+			</div>
+			<ul class='syntax-params'>
+				<li>charset_index = Charset index to alter</li>
+				<li>pattern_row = Row index to alter</li>
+				<li>8_bit_pattern = Binary string of length 8, where "0" means a background pixel, and "1" means a foreground pixel in the pixel pattern of the given row.</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="CHRGET">CHRGET</div>
+		<div class='command-description'>Get pixel pattern of character at charset index</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>CHRGET var, charset_index</div>
+			<div class='syntax-description'>
+				Get pixel pattern of character at charset index and store it in the given variable
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier.</li>
+				<li>charset_index = Charset index</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="CLOSE">CLOSE</div>
+		<div class='command-description'>Close data record file</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>CLOSE</div>
+			<div class='syntax-description'>
+				Close the data record file. If the file was opened in mode "W" (write), the data record buffer gets flushed to the physical file on disk (i.e. the file is then saved).
+			</div>
+		</div>
+
+		<div class='command-name' id="CLS">CLS</div>
+		<div class='command-description'>Clear the screen tile buffer</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>CLS</div>
+			<div class='syntax-description'>
+				Clear the entire screen tile buffer. Sprites are not affected.
+			</div>
+		</div>
+
+		<div class='command-name' id="COLOR">COLOR</div>
+		<div class='command-description'>Change foreground/background colors of tiles and/or color of the screen border</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>COLOR fgc</div>
+			<div class='syntax-description'>
+				Change foreground color of tiles
+			</div>
+			<ul class='syntax-params'>
+				<li>fgc = Palette index for the foreground color</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>COLOR fgc, bgc</div>
+			<div class='syntax-description'>
+				Change foreground and background color of tiles
+			</div>
+			<ul class='syntax-params'>
+				<li>fgc = Palette index for the foreground color</li>
+				<li>bgc = Palette index for the background color</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>COLOR fgc, bgc, border</div>
+			<div class='syntax-description'>
+				Change foreground and background color of tiles, and screen border color
+			</div>
+			<ul class='syntax-params'>
+				<li>fgc = Palette index for the foreground color</li>
+				<li>bgc = Palette index for the background color</li>
+				<li>border = Palette index for the screen border color</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="CSET">CSET</div>
+		<div class='command-description'>Set character index of tile register</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>CSET tile_index, charset_index</div>
+			<div class='syntax-description'>
+				Set character index of tile register
+			</div>
+			<ul class='syntax-params'>
+				<li>tile_index = Index of tile to alter in the tile register</li>
+				<li>charset_index = Charset index to assign to the tile</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="CSRX">CSRX</div>
+		<div class='command-description'>Get screen cursor column</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>CSRX var</div>
+			<div class='syntax-description'>
+				Get column in the tile buffer where the screen cursor is located and store it in the given variable
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="CSRY">CSRY</div>
+		<div class='command-description'>Get screen cursor row</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>CSRY var</div>
+			<div class='syntax-description'>
+				Get row in the tile buffer where the screen cursor is located and store it in the given variable
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="CURSOR">CURSOR</div>
+		<div class='command-description'>Show or hide the screen cursor</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>CURSOR state</div>
+			<div class='syntax-description'>
+				Make screen cursor visible or invisible
+			</div>
+			<ul class='syntax-params'>
+				<li>state = 0: hide; 1: show</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="DEC">DEC</div>
+		<div class='command-description'>Decrement numeric variable value by 1</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>DEC var</div>
+			<div class='syntax-description'>
+				Calculate var = var - 1
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="DEL">DEL</div>
+		<div class='command-description'>Delete tile from tilebuffer</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>DEL</div>
+			<div class='syntax-description'>
+				Delete tile from tilebuffer at current cursor position
+			</div>
+		</div>
+
+		<div class='command-name' id="DELSPR">DELSPR</div>
+		<div class='command-description'>Delete one or all sprites</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>DELSPR id</div>
+			<div class='syntax-description'>
+				Delete given sprite
+			</div>
+			<ul class='syntax-params'>
+				<li>id = Sprite id</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>DELSPR</div>
+			<div class='syntax-description'>
+				Delete all sprites
+			</div>
+		</div>
+
+		<div class='command-name' id="DIM">DIM</div>
+		<div class='command-description'>Create a new array</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>DIM name[length]</div>
+			<div class='syntax-description'>
+				Create a new array with the fixed given length. Arrays are stored in a different namespace than regular variables. Therefore, it is possible to create an array with the same name as an existing variable.
+			</div>
+			<ul class='syntax-params'>
+				<li>name = The name (identifier) of the array</li>
+				<li>length = The fixed length of the array</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="DIV">DIV</div>
+		<div class='command-description'>Divide two numeric values</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>DIV a, b</div>
+			<div class='syntax-description'>
+				Calculates a = a / b
+			</div>
+			<ul class='syntax-params'>
+				<li>a = Variable identifier</li>
+				<li>b = Variable identifier or number literal</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>DIV a, b, c</div>
+			<div class='syntax-description'>
+				Calculates a = b / c
+			</div>
+			<ul class='syntax-params'>
+				<li>a = Variable identifier</li>
+				<li>b = Variable identifier or number literal</li>
+				<li>c = Variable identifier or number literal</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="DIVR">DIVR</div>
+		<div class='command-description'>Divide two numeric values and get the remainder</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>DIVR a, b</div>
+			<div class='syntax-description'>
+				Calculates a = remainder of a / b
+			</div>
+			<ul class='syntax-params'>
+				<li>a = Variable identifier</li>
+				<li>b = Variable identifier or number literal</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>DIVR a, b, c</div>
+			<div class='syntax-description'>
+				Calculates a = remainder of b / c
+			</div>
+			<ul class='syntax-params'>
+				<li>a = Variable identifier</li>
+				<li>b = Variable identifier or number literal</li>
+				<li>c = Variable identifier or number literal</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="ENASPR">ENASPR</div>
+		<div class='command-description'>Enable or disable all sprites</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>ENASPR state</div>
+			<div class='syntax-description'>
+				Enable or disable all sprites
+			</div>
+			<ul class='syntax-params'>
+				<li>state = 0: disabled; 1: enabled</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="END">END</div>
+		<div class='command-description'>End program</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>END</div>
+			<div class='syntax-description'>
+				End execution of current program, returning to the program editor
+			</div>
+		</div>
+
+		<div class='command-name' id="EOF">EOF</div>
+		<div class='command-description'>Check for end of data record file</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>EOF var</div>
+			<div class='syntax-description'>
+				Check whether the read pointer of the data record file has reached end-of-file, then store in given variable: 1 if end-of-file has been reached; 0 otherwise
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="EXIT">EXIT</div>
+		<div class='command-description'>Exit PTML interpreter</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>EXIT</div>
+			<div class='syntax-description'>
+				Exit the PTML interpreter, returning to the host operating system (i.e. the window is closed and the PTML interpreter process is terminated)
+			</div>
+		</div>
+
+		<div class='command-name' id="FGET">FGET</div>
+		<div class='command-description'>Get foreground color of tile register</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>FGET var, tile_index</div>
+			<div class='syntax-description'>
+				Get foreground color of tile register and store it in the given variable
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier</li>
+				<li>tile_index = Index of tile in the tile register to get the color from</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="FILES">FILES</div>
+		<div class='command-description'>List user files on disk</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>FILES</div>
+			<div class='syntax-description'>
+				List all files on disk, that are in the user root folder (USR)
+			</div>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>FILES filter</div>
+			<div class='syntax-description'>
+				List files on disk, that are in the user root folder (USR), that start or end with the given filter string. To filter by the last characters of the filename, start the filter string with an asterisk (*). Otherwise, the list will be filtered by the first characters of the filename.
+			</div>
+			<ul class='syntax-params'>
+				<li>filter = String used to filter the file list</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="FILL">FILL</div>
+		<div class='command-description'>Fill the entire tilebuffer with copies of tile from tile register</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>FILL</div>
+			<div class='syntax-description'>
+				Fill the entire tilebuffer with copies of tile from tile register
+			</div>
+		</div>
+
+		<div class='command-name' id="FIND">FIND</div>
+		<div class='command-description'>Find index of substring</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>FIND var, source_string, substring</div>
+			<div class='syntax-description'>
+				Find first index of substring inside the source string, then store it in the given variable. If the substring is not found, -1 is stored instead.
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier that will receive the index found</li>
+				<li>source_string = Source string</li>
+				<li>substring = Substring that will be searched for inside the source string</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="FLUSH">FLUSH</div>
+		<div class='command-description'>Clear keyboard buffer</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>FLUSH</div>
+			<div class='syntax-description'>
+				Remove all key codes from the keyboard buffer
+			</div>
+		</div>
+
+		<div class='command-name' id="FSET">FSET</div>
+		<div class='command-description'>Set foreground color of tile register</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>FSET tile_index, palette_index</div>
+			<div class='syntax-description'>
+				Set foreground color of tile register
+			</div>
+			<ul class='syntax-params'>
+				<li>tile_index = Index of tile to alter in the tile register</li>
+				<li>palette_index = Palette index to assign to the tile</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="FULLSCR">FULLSCR</div>
+		<div class='command-description'>Enable, disable or toggle fullscreen mode</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>FULLSCR state</div>
+			<div class='syntax-description'>
+				Set fullscreen mode on or off
+			</div>
+			<ul class='syntax-params'>
+				<li>state = 0: off (windowed mode); 1: on (fullscreen mode)</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>FULLSCR</div>
+			<div class='syntax-description'>
+				Toggle fullscreen mode
+			</div>
+		</div>
+
+		<div class='command-name' id="GET">GET</div>
+		<div class='command-description'>Get tile from tilebuffer</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>GET</div>
+			<div class='syntax-description'>
+				Copy tile from tilebuffer at current cursor position and store in the tile register
+			</div>
+		</div>
+
+		<div class='command-name' id="GOTO">GOTO</div>
+		<div class='command-description'>Transfer execution to code starting at specified label</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>GOTO label</div>
+			<div class='syntax-description'>
+				Unconditionally go to label
+			</div>
+			<div class='syntax-format'>GOTO.E a, b, label</div>
+			<div class='syntax-description'>
+				Go to label if a = b
+			</div>
+			<div class='syntax-format'>GOTO.NE a, b, label</div>
+			<div class='syntax-description'>
+				Go to label if a != b (not equal)
+			</div>
+			<div class='syntax-format'>GOTO.G a, b, label</div>
+			<div class='syntax-description'>
+				Go to label if a > b
+			</div>
+			<div class='syntax-format'>GOTO.GE a, b, label</div>
+			<div class='syntax-description'>
+				Go to label if a >= b
+			</div>
+			<div class='syntax-format'>GOTO.L a, b, label</div>
+			<div class='syntax-description'>
+				Go to label if a < b
+			</div>
+			<div class='syntax-format'>GOTO.LE a, b, label</div>
+			<div class='syntax-description'>
+				Go to label if a <= b
+			</div>
+			<div class='syntax-format'>GOTO.K scancode_name, label</div>
+			<div class='syntax-description'>
+				Go to label if specified key is pressed. Use scancode names below
+			</div>
+			<div class='syntax-format'>GOTO.NK scancode_name, label</div>
+			<div class='syntax-description'>
+				Go to label if specified key is not pressed. Use scancode names below
+			</div>
+		</div>
+
+		<div class='syntax-header'>Scancode names to use with GOTO.K and GOTO.NK:</div>
+		<div class='syntax'>
+			<div class='syntax-description'>
+				Scancode names are strings and as such should be used with double quotes.
+			</div>
+			<ul class='syntax-params'>
+				<li>RIGHT</li>
+				<li>LEFT</li>
+				<li>UP</li>
+				<li>DOWN</li>
+				<li>SPACE</li>
+				<li>RETURN</li>
+				<li>BACKSPACE</li>
+				<li>TAB</li>
+				<li>DELETE</li>
+				<li>INSERT</li>
+				<li>HOME</li>
+				<li>END</li>
+				<li>PAGEUP</li>
+				<li>PAGEDOWN</li>
+				<li>LSHIFT</li>
+				<li>RSHIFT</li>
+				<li>LCTRL</li>
+				<li>RCTRL</li>
+				<li>LALT</li>
+				<li>RALT</li>
+				<li>PAUSE</li>
+				<li>PRINTSREEN</li>
+				<li>ESCAPE</li>
+				<li>0 through 9</li>
+				<li>A through Z</li>
+				<li>F1 through F12</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="HALT">HALT</div>
+		<div class='command-description'>Stop machine</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>HALT</div>
+			<div class='syntax-description'>
+				Stop execution of current program and does nothing else. The only way to exit this state is by closing the interpreter window.
+			</div>
+		</div>
+
+		<div class='command-name' id="INC">INC</div>
+		<div class='command-description'>Increment numeric variable value by 1</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>INC var</div>
+			<div class='syntax-description'>
+				Calculate var = var + 1
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="INK">INK</div>
+		<div class='command-description'>Change foreground color of tiles</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>INK palette_index</div>
+			<div class='syntax-description'>
+				Change foreground color of tiles
+			</div>
+			<ul class='syntax-params'>
+				<li>palette_index = Palette index of the color</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="INKEY">INKEY</div>
+		<div class='command-description'>Get code of last pressed key</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>INKEY var</div>
+			<div class='syntax-description'>
+				Store code of last pressed key in the given variable.<br><br>
+				This command is subject to the keyboard repeat rate and delay. For continuous input, check the scancode of a currently pressed key and then branch to a subroutine, using any of the GOTO.K, GOTO.NK, CALL.K, CALL.NK commands.<br><br>
+				See the next section for common keycodes.
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier</li>
+			</ul>
+		</div>
+
+		<div class='syntax-header'>Common keycodes:</div>
+		<div class='syntax'>
+			<div class='syntax-description'>
+				Some keycodes may differ depending on keyboard layout.
+			</div>
+			<ul class='syntax-params'>
+				<li>A through Z = 97 through 122</li>
+				<li>0 through 9 = 48 through 57 (on main keyboard; see below for numpad)</li>
+				<li>SPACE = 32</li>
+				<li>ENTER/RETURN = 13</li>
+				<li>RIGHT = 1073741903</li>
+				<li>LEFT = 1073741904</li>
+				<li>DOWN = 1073741905</li>
+				<li>UP = 1073741906</li>
+				<li>BACKSPACE = 8</li>
+				<li>TAB = 9</li>
+				<li>CAPSLOCK = 1073741881</li>
+				<li>LEFT SHIFT = 1073742049</li>
+				<li>RIGHT SHIFT = 1073742053</li>
+				<li>LEFT CTRL = 1073742048</li>
+				<li>RIGHT CTRL = 1073742052</li>
+				<li>INSERT = 1073741897</li>
+				<li>DELETE = 127</li>
+				<li>HOME = 1073741898</li>
+				<li>END = 1073741901</li>
+				<li>PAGEUP = 1073741899</li>
+				<li>PAGEDOWN = 1073741902</li>
+				<li>PRINTSCREEN = 1073741894</li>
+				<li>SCROLL LOCK = 1073741895</li>
+				<li>PAUSE/BREAK = 1073741896</li>
+				<li>F1 through F12 = 1073741882 through 1073741893</li>
+				<li>Numpad 1 through 9 = 1073741913 through 1073741921</li>
+				<li>Numpad 0 = 1073741922</li>
+				<li>Numpad ENTER = 1073741912</li>
+				<li>Numpad / = 1073741908</li>
+				<li>Numpad * = 1073741909</li>
+				<li>Numpad - = 1073741910</li>
+				<li>Numpad + = 1073741911</li>
+				<li>Numpad . = 1073741923</li>
+				<li>NUMLOCK = 1073741907</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="INPUT">INPUT</div>
+		<div class='command-description'>Wait for text input from user</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>INPUT var</div>
+			<div class='syntax-description'>
+				Causes program to wait for user to write a line of text. When user presses the ENTER key, the text is stored in the given variable and program resumes execution. If user presses the ESCAPE key, an empty string is stored in the variable instead. By default, the user will not be able to type more than 255 characters.
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable id</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>INPUT var, default_value</div>
+			<div class='syntax-description'>
+				The same as the previous syntax, but if user presses the ESCAPE key, the default_value is stored in the variable instead of an empty string.
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable id</li>
+				<li>default_value = The value to assign to variable if ESCAPE key is pressed</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>INPUT var, default_value, max_length</div>
+			<div class='syntax-description'>
+				The same as the previous syntax, but limits input to the given maximum length. The user will not be able to type more characters than the specified limit.
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable id</li>
+				<li>default_value = The value to assign to variable if ESCAPE key is pressed</li>
+				<li>max_length = The maximum length of the text</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="JOIN">JOIN</div>
+		<div class='command-description'>Concatenate two strings</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>JOIN var, text_1, text_2</div>
+			<div class='syntax-description'>
+				Concatenate text_1 with text_2, then store result in given variable
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable that will receive the two concatenated texts</li>
+				<li>text_1 = First text</li>
+				<li>text_2 = Second text</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>JOIN var, text</div>
+			<div class='syntax-description'>
+				Append text to the end of string stored in the given variable
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable to which the text will get appended</li>
+				<li>text = Text to append</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="KILL">KILL</div>
+		<div class='command-description'>Delete file</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>KILL filename</div>
+			<div class='syntax-description'>
+				Delete file from disk
+			</div>
+			<ul class='syntax-params'>
+				<li>filename = The name of the file to delete</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="LCASE">LCASE</div>
+		<div class='command-description'>Convert string to lowercase</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>LCASE var, string</div>
+			<div class='syntax-description'>
+				Convert to lowercase all characters of string, then store it in the given variable. The original string is not modified.
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier</li>
+				<li>string = The string to convert</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>LCASE var</div>
+			<div class='syntax-description'>
+				Convert to lowercase all characters of string stored in the given variable.
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier which has the string to be converted</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="LEN">LEN</div>
+		<div class='command-description'>Get length of string</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>LEN var, string</div>
+			<div class='syntax-description'>
+				Get length of string and store it in the given variable
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier</li>
+				<li>string = String to get the length from</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="LOAD">LOAD</div>
+		<div class='command-description'>Load file from disk</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>LOAD filename</div>
+			<div class='syntax-description'>
+				Load the given file from disk. The file format is determined by the filename extension. See section below for supported file formats.
+			</div>
+			<ul class='syntax-params'>
+				<li>filename = The name of the file to load</li>
+			</ul>
+		</div>
+
+		<div class='syntax-header'>Valid file formats:</div>
+
+		<div class='syntax'>
+			The PTML interpreter only has support for loading the following file formats:
+			<ul class='syntax-params'>
+				<li>.PTM = PTML program</li>
+				<li>.PAL = Color palette (256 entries)</li>
+				<li>.CHR = Character set (256 entries)</li>
+				<li>.BUF = Tile buffer</li>
+				<li>.DAT = Data records (can't be loaded by the LOAD command; use the OPEN and READ commands instead)</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="LOCATE">LOCATE</div>
+		<div class='command-description'>Set screen cursor position</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>LOCATE col, row</div>
+			<div class='syntax-description'>
+				Move screen cursor to given position in the tile buffer
+			</div>
+			<ul class='syntax-params'>
+				<li>col = The tile buffer column</li>
+				<li>row = The tile buffer row</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="LOCX">LOCX</div>
+		<div class='command-description'>Set screen cursor column</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>LOCX col</div>
+			<div class='syntax-description'>
+				Move screen cursor to given column in the tile buffer
+			</div>
+			<ul class='syntax-params'>
+				<li>col = The tile buffer column</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="LOCY">LOCY</div>
+		<div class='command-description'>Set screen cursor row</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>LOCY row</div>
+			<div class='syntax-description'>
+				Move screen cursor to given row in the tile buffer
+			</div>
+			<ul class='syntax-params'>
+				<li>row = The tile buffer row</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="MEMCLR">MEMCLR</div>
+		<div class='command-description'>Delete all variables and arrays</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>MEMCLR</div>
+			<div class='syntax-description'>
+				Delete all variables and arrays
+			</div>
+		</div>
+
+		<div class='command-name' id="MODE">MODE</div>
+		<div class='command-description'>Switch color mode</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>MODE mode</div>
+			<div class='syntax-description'>
+				Switch the color mode.<br><br>
+				Monochrome mode is the default, where every tile on the screen has the same foreground and background color, and the COLOR, INK and PAPER commands change the color of all tiles on the screen at once.<br><br>
+				Multicolor mode prevents the COLOR, INK and PAPER commands to change existing tiles, and instead only sets the color of subsequent tiles.
+			</div>
+			<ul class='syntax-params'>
+				<li>mode = 0: monochrome; 1 = multicolor</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="MOVE">MOVE</div>
+		<div class='command-description'>Move sprite by specified distance</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>MOVE id, dx, dy</div>
+			<div class='syntax-description'>
+				Move sprite by specified distance
+			</div>
+			<ul class='syntax-params'>
+				<li>dx = Horizontal distance in pixels</li>
+				<li>dy = Vertical distance in pixels</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="MOVETO">MOVETO</div>
+		<div class='command-description'>Move sprite to specified position</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>MOVETO id, x, y</div>
+			<div class='syntax-description'>
+				Move sprite to specified position
+			</div>
+			<ul class='syntax-params'>
+				<li>id = Sprite id</li>
+				<li>x = X-coordinate on the screen</li>
+				<li>y = Y-coordinate on the screen</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="MUL">MUL</div>
+		<div class='command-description'>Multiply two numeric values</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>MUL a, b</div>
+			<div class='syntax-description'>
+				Calculates a = a * b
+			</div>
+			<ul class='syntax-params'>
+				<li>a = Variable identifier</li>
+				<li>b = Variable identifier or number literal</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>MUL a, b, c</div>
+			<div class='syntax-description'>
+				Calculates a = b * c
+			</div>
+			<ul class='syntax-params'>
+				<li>a = Variable identifier</li>
+				<li>b = Variable identifier or number literal</li>
+				<li>c = Variable identifier or number literal</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="OPEN">OPEN</div>
+		<div class='command-description'>Open data record file</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>OPEN filename, mode</div>
+			<div class='syntax-description'>
+				Open data record file to read or write, depending on the given mode. Only the .DAT file format is supported (this is a built-in file format). Only one single data record file can be opened at any time.
+			</div>
+			<ul class='syntax-params'>
+				<li>filename = The name of the file, including the .DAT extension</li>
+				<li>mode = "R" = read; "W" = write</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="PAL">PAL</div>
+		<div class='command-description'>Set RGB value for color at palette index</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>PAL palette_index, rgb</div>
+			<div class='syntax-description'>
+				Set RGB value for color at palette index
+			</div>
+			<ul class='syntax-params'>
+				<li>palette_index = Palette index to alter</li>
+				<li>rgb = Integer representing a packed-RGB value. When using hexadecimal, the order is RRGGBB. For example, &HFF00FF is magenta.</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="PALGET">PALGET</div>
+		<div class='command-description'>Get RGB value of color at palette index</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>PALGET var, palette_index</div>
+			<div class='syntax-description'>
+				Get RGB value of color at palette index and store it in the given variable
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier.</li>
+				<li>palette_index = Palette index to alter</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="PAPER">PAPER</div>
+		<div class='command-description'>Change background color of tiles</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>PAPER palette_index</div>
+			<div class='syntax-description'>
+				Change background color of tiles
+			</div>
+			<ul class='syntax-params'>
+				<li>palette_index = Palette index of the color</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="PAUSE">PAUSE</div>
+		<div class='command-description'>Temporarily pause program execution</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>PAUSE frames</div>
+			<div class='syntax-description'>
+				Pause program execution for the specified number of frames, then resumes normal execution
+			</div>
+			<ul class='syntax-params'>
+				<li>frames - The number of frames to wait</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="PGET">PGET</div>
+		<div class='command-description'>Get property from tile register</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>PGET var, property</div>
+			<div class='syntax-description'>
+				Get property from tile register and store it in the given variable
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier</li>
+				<li>property = The name of the property</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="PLAY">PLAY</div>
+		<div class='command-description'>Play a sequence of sound tones (MML)</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>PLAY mml</div>
+			<div class='syntax-description'>
+				Play a sequence of MML commands and sound tones from a string. Each MML command and tone in the string must be separated by a space character.
+			</div>
+			<ul class='syntax-params'>
+				<li>mml = String of MML commands and sound tones</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>PLAY mml, loop</div>
+			<div class='syntax-description'>
+				The same as the first syntax, optionally looping when finished.
+			</div>
+			<ul class='syntax-params'>
+				<li>mml = String of MML commands and sound tones</li>
+				<li>loop = 0: play only once; 1: loop indefinitely</li>
+			</ul>
+		</div>
+
+		<div class='syntax-header'>MML commands:</div>
+
+		<div class='syntax'>
+			<ul class='syntax-params'>
+				<li>L = Note length. All subsequent notes will be played with this newly specified length.</li>
+				<li>P = Pause. Pauses MML execution for the specified interval.</li>
+			</ul>
+		</div>
+
+		<div class='syntax-header'>MML sound tones:</div>
+
+		<div class='syntax'>
+			<div class='syntax-description'>
+				Each tone must be followed by an octave, from 0 to 8.
+			</div>
+			<ul class='syntax-params'>
+				<li>C = Do</li>
+				<li>C# = Do (sharp)</li>
+				<li>D = Re</li>
+				<li>D# = Re (sharp)</li>
+				<li>E = Mi</li>
+				<li>F = Fa</li>
+				<li>F# = Fa (sharp)</li>
+				<li>G = Sol</li>
+				<li>G# = Sol (sharp)</li>
+				<li>A = La</li>
+				<li>A# = La (sharp)</li>
+				<li>B = Si</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="POW">POW</div>
+		<div class='command-description'>Calculate the power of a numeric value</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>POW var, base, power</div>
+			<div class='syntax-description'>
+				Calculate var = base ^ power
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier</li>
+				<li>base = The base value</li>
+				<li>power = The exponent</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="PRINT">PRINT</div>
+		<div class='command-description'>Print text on the screen at current cursor position</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>PRINT string</div>
+			<div class='syntax-description'>
+				Print text on the screen at current cursor position. The cursor automatically moves forward to the next column after the last printed character.
+			</div>
+			<ul class='syntax-params'>
+				<li>string = The text to print</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="PRINTF">PRINTF</div>
+		<div class='command-description'>Print formatted text on screen at current cursor position</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>PRINTF format, value</div>
+			<div class='syntax-description'>
+				Print formatted text on screen at current cursor position. The format string is similar to the C language. However, the only supported format specifiers are %i (integer) and %x (hexadecimal), with optional padding zeroes (e.g. %05i). Only a single specifier is interpreted in the string, because PTML does not support variable length arguments.
+			</div>
+			<ul class='syntax-params'>
+				<li>format = The format string (similar to the C language)</li>
+				<li>value = The value (or variable) to be formatted in the string</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="PRINTL">PRINTL</div>
+		<div class='command-description'>Print text on screen at current cursor position, then move cursor to next line</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>PRINTL string</div>
+			<div class='syntax-description'>
+				Print text on the screen at current cursor position, then move cursor to next line, at the same column where the previous PRINTL command started in the previous line.
+			</div>
+			<ul class='syntax-params'>
+				<li>string = The text to print</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>PRINTL string, keep_column</div>
+			<div class='syntax-description'>
+				Print text on the screen at current cursor position, then move cursor to next line. If keep_column = 1, the next line begins at the same column where the previous PRINTL command started in the previous line. If keep_column = 0, the next line starts at column 0.
+			</div>
+			<ul class='syntax-params'>
+				<li>string = The text to print</li>
+				<li>keep_column = 0: no; 1: yes</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>PRINTL</div>
+			<div class='syntax-description'>
+				Print a "new line" character (invisible; effectively just moves cursor to next line)
+			</div>
+		</div>
+
+		<div class='command-name' id="PSET">PSET</div>
+		<div class='command-description'>Set property in tile register</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>PSET property, value</div>
+			<div class='syntax-description'>
+				Set property in tile register
+			</div>
+			<ul class='syntax-params'>
+				<li>property = The name of the property</li>
+				<li>value = The value to assign to the property</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="PUT">PUT</div>
+		<div class='command-description'>Put tile in tilebuffer</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>PUT</div>
+			<div class='syntax-description'>
+				Copy tile from tile register to the tilebuffer at current cursor position
+			</div>
+		</div>
+
+		<div class='command-name' id="READ">READ</div>
+		<div class='command-description'>Read from data record file</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>READ var</div>
+			<div class='syntax-description'>
+				Read data from currently open record file, store value in given variable, then moves the read pointer to the next record.<br><br>
+				To read data, the file must be opened with the OPEN command in mode "R" (read), and the end-of-file must not be reached. To check for end-of-file, use the EOF command.
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier that will receive the value read</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="RECT">RECT</div>
+		<div class='command-description'>Fill a rectangle in the tilebuffer with copies of tile from tile register</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>RECT x1, y1, x2, y2</div>
+			<div class='syntax-description'>
+				Fill a rectangle in the tilebuffer with copies of tile from tile register
+			</div>
+			<ul class='syntax-params'>
+				<li>x1 = First tilebuffer column</li>
+				<li>y1 = First tilebuffer row</li>
+				<li>x2 = Last tilebuffer column</li>
+				<li>y2 = Last tilebuffer row</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="REFRESH">REFRESH</div>
+		<div class='command-description'>Refresh the screen manually</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>REFRESH</div>
+			<div class='syntax-description'>
+				Copy the entire tile buffer to the screen. This is required when automatic screen refresh is disabled with the AUTOREF command. Should not be called when automatic refresh is enabled, or performance will be severely diminished.
+			</div>
+		</div>
+
+		<div class='command-name' id="RENAME">RENAME</div>
+		<div class='command-description'>Rename file</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>RENAME current_filename, new_filename</div>
+			<div class='syntax-description'>
+				Rename file
+			</div>
+			<ul class='syntax-params'>
+				<li>current_filename = The current filename</li>
+				<li>new_filename = The new filename</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="REPT">REPT</div>
+		<div class='command-description'>Repeat text in a single string</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>REPT var, text, count</div>
+			<div class='syntax-description'>
+				Repeat multiple copies of the same text in a single string
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier</li>
+				<li>text = String to repeat</li>
+				<li>count = Number of copies</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="RESET">RESET</div>
+		<div class='command-description'>Reset machine</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>RESET</div>
+			<div class='syntax-description'>
+				Reset and restart the PTML interpreter. The effect is the same as exiting then starting the PTML interpreter process again.
+			</div>
+		</div>
+
+		<div class='command-name' id="RET">RET</div>
+		<div class='command-description'>Return from subroutine</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>RET</div>
+			<div class='syntax-description'>
+				Return from subroutine, i.e. transfer program execution back to the line which immediately follows the one where a CALL command was last executed.
+			</div>
+		</div>
+
+		<div class='command-name' id="RND">RND</div>
+		<div class='command-description'>Get a random number</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>RND var, min, max</div>
+			<div class='syntax-description'>
+				Generate a random number between min and max (inclusive), and store it in the given variable
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier</li>
+				<li>min = Minimum value</li>
+				<li>max = Maximum value</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>RND var, max</div>
+			<div class='syntax-description'>
+				Generate a random number between 0 and max (inclusive), and store it in the given variable
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier</li>
+				<li>max = Maximum value</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="RUN">RUN</div>
+		<div class='command-description'>Execute program</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>RUN</div>
+			<div class='syntax-description'>
+				Execute the program that is currently in memory
+			</div>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>RUN filename</div>
+			<div class='syntax-description'>
+				Load program from given file into memory, then execute it
+			</div>
+			<ul class='syntax-params'>
+				<li>filename = The program filename</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="SAVE">SAVE</div>
+		<div class='command-description'>Save file to disk</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>SAVE filename</div>
+			<div class='syntax-description'>
+				Save code or data to given file. What exactly gets saved (and consequently the file format) is determined by the filename extension. See section below for supported file formats.
+			</div>
+			<ul class='syntax-params'>
+				<li>filename = The name of the file to save</li>
+			</ul>
+		</div>
+
+		<div class='syntax-header'>Valid file formats:</div>
+
+		<div class='syntax'>
+			The PTML interpreter only has support for saving the following file formats:
+			<ul class='syntax-params'>
+				<li>.PTM = PTML program. Will save the current program in memory</li>
+				<li>.PAL = Color palette (256 entries). Will save the current color palette in memory</li>
+				<li>.CHR = Character set (256 entries). Will save the current character set in memory</li>
+				<li>.BUF = Tile buffer. Will save the current tile buffer in memory</li>
+				<li>.DAT = Data records (can't be saved by the SAVE command; use the OPEN and WRITE commands instead)</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="SET">SET</div>
+		<div class='command-description'>Set value to variable</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>SET var, value</div>
+			<div class='syntax-description'>
+				Store the string or numeric value in the given variable
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier</li>
+				<li>value = Variable identifier or value (string or number)</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="SHOW">SHOW</div>
+		<div class='command-description'>Show or hide sprite</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>SHOW id, state</div>
+			<div class='syntax-description'>
+				Show or hide sprite
+			</div>
+			<ul class='syntax-params'>
+				<li>id = Sprite id</li>
+				<li>state = 0: not visible; 1: visible</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="SPLIT">SPLIT</div>
+		<div class='command-description'>Split string into array</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>SPLIT array_name, string, delimiter</div>
+			<div class='syntax-description'>
+				Split string at the given delimiter, then each part gets assigned to each element of the specified array. If the array is not long enough to contain all parts, the remaining parts are discarded.
+			</div>
+			<ul class='syntax-params'>
+				<li>array_name = Name of the array that will contain the string parts</li>
+				<li>string = The string to split</li>
+				<li>delimiter = The delimiter at which to split the string. It should be a literal character or a number. If a string (or variable that contains a string) is given, only the first character of the string is taken as the delimiter.</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="SPRITE">SPRITE</div>
+		<div class='command-description'>Create or update sprite</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>SPRITE id, x, y, transparency, visible</div>
+			<div class='syntax-description'>
+				Create sprite with tile equal to tile register, position, transparency and visibility<br><br>
+				Sprites are not part of the screen tile buffer, therefore their coordinates are pixel-based, rather than tile-based<br><br>
+				"Transparent" sprites have only a single color (their foreground pixels), while their background pixels are completely hidden, allowing the colors of underlying tiles to be seen through.
+			</div>
+			<ul class='syntax-params'>
+				<li>id = Sprite id</li>
+				<li>x = X-coordinate on the screen</li>
+				<li>y = Y-coordinate on the screen</li>
+				<li>transparency = 0: opaque; 1: transparent</li>
+				<li>visible = 0: not visible; 1: visible</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>SPRITE id</div>
+			<div class='syntax-description'>
+				Set sprite tile equal to tile register, without changing any other property
+			</div>
+			<ul class='syntax-params'>
+				<li>id = Sprite id</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="SPRX">SPRX</div>
+		<div class='command-description'>Get sprite X position</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>SPRX id, var</div>
+			<div class='syntax-description'>
+				Get sprite X position and store it in the variable
+			</div>
+			<ul class='syntax-params'>
+				<li>id = Sprite id</li>
+				<li>var = Variable identifier</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="SPRY">SPRY</div>
+		<div class='command-description'>Get sprite Y position</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>SPRY id, var</div>
+			<div class='syntax-description'>
+				Get sprite Y position and store it in the variable
+			</div>
+			<ul class='syntax-params'>
+				<li>id = Sprite id</li>
+				<li>var = Variable identifier</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="SQRT">SQRT</div>
+		<div class='command-description'>Calculate square root of a numeric value</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>SQRT var, value</div>
+			<div class='syntax-description'>
+				Calculate var = &#8730;value (square root)
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier</li>
+				<li>value = The base value</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="SUB">SUB</div>
+		<div class='command-description'>Subtract two numeric values</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>SUB a, b</div>
+			<div class='syntax-description'>
+				Calculates a = a - b
+			</div>
+			<ul class='syntax-params'>
+				<li>a = Variable identifier</li>
+				<li>b = Variable identifier or number literal</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>SUB a, b, c</div>
+			<div class='syntax-description'>
+				Calculates a = b - c
+			</div>
+			<ul class='syntax-params'>
+				<li>a = Variable identifier</li>
+				<li>b = Variable identifier or number literal</li>
+				<li>c = Variable identifier or number literal</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="SUBS">SUBS</div>
+		<div class='command-description'>Get substring</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>SUBS var, source_string, first_index, last_index</div>
+			<div class='syntax-description'>
+				Extract a substring from the given string, that starts at the first_index and ends at the last_index. The source string is not modified.
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier that will receive the substring</li>
+				<li>source_string = Source string</li>
+				<li>first_index = The first index of the substring</li>
+				<li>last_index = The last index of the substring</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>SUBS var, source_string, first_index</div>
+			<div class='syntax-description'>
+				The same as the previous syntax, but the last_index is implied to be the index of the last character of the source string.
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier that will receive the substring</li>
+				<li>source_string = Source string</li>
+				<li>first_index = The first index of the substring</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="SWAP">SWAP</div>
+		<div class='command-description'>Swap value between two variables</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>SWAP var_1, var_2</div>
+			<div class='syntax-description'>
+				Swap value between two variables
+			</div>
+			<ul class='syntax-params'>
+				<li>var_1 = First variable</li>
+				<li>var_2 = Second variable</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="TILE">TILE</div>
+		<div class='command-description'>Set tile register</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>TILE ch, fgc, bgc</div>
+			<div class='syntax-description'>
+				Append a new character with given colors to the end of the tile register
+			</div>
+			<ul class='syntax-params'>
+				<li>ch = Charset index</li>
+				<li>fgc = Palette index for the foreground color</li>
+				<li>bgc = Palette index for the background color</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>TILE</div>
+			<div class='syntax-description'>
+				Remove all characters from the tile register
+			</div>
+		</div>
+
+		<div class='command-name' id="TILESPR">TILESPR</div>
+		<div class='command-description'>Copy sprite tile to tile register</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>TILESPR id</div>
+			<div class='syntax-description'>
+				Copy sprite tile to tile register
+			</div>
+			<ul class='syntax-params'>
+				<li>id = Sprite id</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="TITLE">TITLE</div>
+		<div class='command-description'>Set the program title</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>TITLE title</div>
+			<div class='syntax-description'>
+				Set the program title. The title appears as the window caption of the host operating system
+			</div>
+			<ul class='syntax-params'>
+				<li>title = The string to be used as program title</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="UCASE">UCASE</div>
+		<div class='command-description'>Convert string to uppercase</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>UCASE var, string</div>
+			<div class='syntax-description'>
+				Convert to uppercase all characters of string, then store it in the given variable. The original string is not modified.
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier</li>
+				<li>string = The string to convert</li>
+			</ul>
+		</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>UCASE var</div>
+			<div class='syntax-description'>
+				Convert to uppercase all characters of string stored in the given variable.
+			</div>
+			<ul class='syntax-params'>
+				<li>var = Variable identifier which has the string to be converted</li>
+			</ul>
+		</div>
+
+		<div class='command-name' id="WRITE">WRITE</div>
+		<div class='command-description'>Write to data record file</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>WRITE value</div>
+			<div class='syntax-description'>
+				Write data to currently open record file, then moves the write pointer to the next record.<br><br>
+				To write data, the file must be opened with the OPEN command in mode "W" (write). Data record files are buffered, meaning the physical file on disk is not modified until the CLOSE command is executed, which then saves the buffer to the file.
+			</div>
+			<ul class='syntax-params'>
+				<li>value = Value to write</li>
+			</ul>
+		</div>
+	</body>
+</html>

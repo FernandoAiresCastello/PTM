@@ -22,15 +22,8 @@
 class PTM
 {
 public:
-	const t_string version_string	= "PTM 0.3";
-	const t_string title_short		= "Programmable Tile Machine";
-	const t_string copyright_notice	= "` 2023-2026 by F.A.Castello";
-
 	t_tile tilereg;
 	bool auto_screen_update = true;
-	bool enable_user_break = true;
-	bool enable_autosave = true;
-	bool suppress_imm_prompt = false;
 
 	void run(const char* initial_program);
 	void exit();
@@ -38,7 +31,6 @@ public:
 	void reset();
 	void pause(int frames);
 	void on_machine_cycle();
-	void on_escape_key_pressed();
 	void on_exit() const;
 	SDL_Keycode await_keypress();
 	void refresh_screen();

@@ -80,8 +80,6 @@ bool t_interpreter::execute_line(t_program_line& line)
 			t_string::fmt("%s at line %i", PTML::error.c_str(), line.line_nr).c_str(), nullptr);
 	}
 
-	ptm->suppress_imm_prompt = false;
-
 	PTML::error = "";
 	return !has_error;
 }

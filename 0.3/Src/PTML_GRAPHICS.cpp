@@ -186,8 +186,6 @@ void PTML::LOAD_BUF()
 	REQUIRE_FILE(filename);
 	
 	ptm->get_screen().load(filename);
-
-	ptm->suppress_imm_prompt = true;
 }
 
 void PTML::SAVE_BUF()
