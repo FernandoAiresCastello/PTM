@@ -26,7 +26,7 @@ public:
 	const int rows;
 	const int last_col;
 	const int last_row;
-	const int default_fg = 15;
+	const int default_fg = 1;
 	const int default_bg = 0;
 	const int default_bdr = 0;
 	

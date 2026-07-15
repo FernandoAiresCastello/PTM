@@ -45,7 +45,6 @@ t_program_line& t_program_line::operator=(const t_program_line& other)
     if (this == &other)
         return *this;
 
-    immediate = other.immediate;
     is_label = other.is_label;
     is_comment = other.is_comment;
     label = other.label;

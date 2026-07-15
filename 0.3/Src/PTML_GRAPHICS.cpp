@@ -59,10 +59,7 @@ void PTML::PRINT()
 {
 	ARGC_MIN_MAX(0, 1);
 	auto&& value = COUNT(1) ? STR(1) : "";
-	if (IMM && !value.empty())
-		scr->print_string_crlf(value);
-	else
-		scr->print_string(value);
+	scr->print_string(value);
 }
 
 void PTML::PRINTL()
@@ -316,14 +313,7 @@ void PTML::PUT()
 	ARGC(0);
 	auto&& tile = TILEREG_OR_BLANK_TILE;
 	tile.flags.monochrome = false;
-
-	if (IMM) {
-		scr->newline();
-		scr->set_tile(tile, 0, scr->csry() - 1);
-	}
-	else {
-		scr->set_tile_at_csr(tile);
-	}
+	scr->set_tile_at_csr(tile);
 }
 
 void PTML::GET()
@@ -448,28 +438,6 @@ void PTML::GET_SPRITE_Y()
 	REQUIRE_SPRITE(sprite_number);
 
 	ptm->set_var(ARG(2), ptm->get_screen().get_sprite(sprite_number).get_y(), error);
-}
-
-void PTML::GET_SPRITE_TILED_X()
-{
-	ARGC(2);
-	auto&& sprite_number = NUM(1);
-	REQUIRE_SPRITE(sprite_number);
-	auto&& sprite = ptm->get_screen().get_sprite(sprite_number);
-	int&& tx = ((sprite.get_x() + 4) / t_tile::width) - 2;
-
-	ptm->set_var(ARG(2), tx, error);
-}
-
-void PTML::GET_SPRITE_TILED_Y()
-{
-	ARGC(2);
-	auto&& sprite_number = NUM(1);
-	REQUIRE_SPRITE(sprite_number);
-	auto&& sprite = ptm->get_screen().get_sprite(sprite_number);
-	int&& ty = ((sprite.get_y() + 4) / t_tile::height) - 1;
-
-	ptm->set_var(ARG(2), ty, error);
 }
 
 void PTML::ENABLE_SPRITES()

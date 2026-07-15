@@ -3,8 +3,6 @@
 #define CMD(k, fn)				if (cmd == k) { return PTML::fn; }
 #define IMM						line->immediate
 #define NOT_IMM					!line->immediate
-#define REQUIRE_IMM				if (!IMM) { error = err.cmd_not_available; return; }
-#define REQUIRE_NOT_IMM			if (IMM) { error = err.cmd_not_available; return; }
 #define COUNT(count)			line->argc == count
 #define ARGC(count)				if (line->argc != count) { error = err.invalid_argc; return; }
 #define ARGC_MIN_MAX(min, max)	if (line->argc < min || line->argc > max) { error = err.invalid_argc; return; }

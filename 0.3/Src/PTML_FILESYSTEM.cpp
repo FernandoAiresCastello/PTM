@@ -133,15 +133,7 @@ void PTML::SAVE()
 	auto&& filename = STR(1).to_upper();
 	VALIDATE_FILENAME(filename);
 
-	if (filename.ends_with(FILE_EXT_PROGRAM)) {
-		REQUIRE_IMM;
-		if (ptm->get_prg().lines.empty()) {
-			error = err.invalid_program;
-			return;
-		}
-		ptm->save_program(filename);
-	}
-	else if (filename.ends_with(FILE_EXT_CHARSET)) {
+	if (filename.ends_with(FILE_EXT_CHARSET)) {
 		SAVE_CHR();
 	}
 	else if (filename.ends_with(FILE_EXT_PALETTE)) {
@@ -164,15 +156,7 @@ void PTML::LOAD()
 	VALIDATE_FILENAME(filename);
 	REQUIRE_FILE(filename);
 
-	if (filename.ends_with(FILE_EXT_PROGRAM)) {
-		REQUIRE_IMM;
-		bool valid = try_load_program(filename);
-		if (!valid) {
-			error = err.invalid_program;
-			return;
-		}
-	}
-	else if (filename.ends_with(FILE_EXT_CHARSET)) {
+	if (filename.ends_with(FILE_EXT_CHARSET)) {
 		LOAD_CHR();
 	}
 	else if (filename.ends_with(FILE_EXT_PALETTE)) {

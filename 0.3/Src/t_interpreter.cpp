@@ -48,7 +48,6 @@ void t_interpreter::interpret_line(t_string& src, bool from_file)
 			else {
 				t_program_line line = t_program_line(tokens);
 				line.line_nr = line_number;
-				line.immediate = false;
 				line.src = src;
 				ptm->save_program_line(line);
 			}
@@ -56,7 +55,6 @@ void t_interpreter::interpret_line(t_string& src, bool from_file)
 	}
 	else {
 		t_program_line line = t_program_line(tokens);
-		line.immediate = true;
 		execute_line(line);
 	}
 }

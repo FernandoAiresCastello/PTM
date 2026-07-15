@@ -56,7 +56,6 @@ void PTML::branch_to(const t_string& label, t_branch_mode mode)
 
 void PTML::branch_unconditional(t_branch_mode mode)
 {
-	REQUIRE_NOT_IMM;
 	ARGC(1);
 	REQUIRE_LABEL(1);
 	branch_to(IDENT(1), mode);
@@ -64,7 +63,6 @@ void PTML::branch_unconditional(t_branch_mode mode)
 
 void PTML::branch_conditional(t_comparison cp, t_branch_mode mode)
 {
-	REQUIRE_NOT_IMM;
 	ARGC(3);
 
 	auto&& str_a = STR(1);
@@ -87,7 +85,6 @@ void PTML::branch_conditional(t_comparison cp, t_branch_mode mode)
 
 void PTML::branch_if_keypress(t_branch_mode mode, bool positive)
 {
-	REQUIRE_NOT_IMM;
 	ARGC(2);
 	
 	auto&& key = STR(1).to_upper();

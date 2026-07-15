@@ -32,12 +32,6 @@ Here are a few examples of minigames programmed in PTML:
 **Input**
 * Keyboard input only
 
-**Software Development**
-* Programming language: PTML support only
-* Built-in, line-based program editor and launcher
-* Includes a full-featured IDE for writing code, editing color palettes, character sets and tile buffers
-* Supports custom external tools
-
 ## Version history
 
 This project is currently in beta stage. All beta versions may contain bugs!

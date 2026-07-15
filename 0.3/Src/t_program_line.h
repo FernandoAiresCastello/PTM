@@ -9,7 +9,6 @@
 class t_program_line
 {
 public:
-	bool immediate = false;
 	bool is_label = false;
 	bool is_comment = false;
 	bool is_array_ref = false;

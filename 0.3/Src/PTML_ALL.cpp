@@ -11,14 +11,8 @@
 
 t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
 {
-    // === PROGRAM MANAGEMENT ===
-    CMD("LIST", LIST);
-    CMD("NEW", NEW);
-    CMD("RENUM", RENUM);
-    CMD("PROG", PROG);
-    CMD("TITLE", TITLE);
-
     // === SYSTEM CONTROL ===
+    CMD("TITLE", TITLE);
     CMD("RUN", RUN);
     CMD("END", END);
     CMD("HALT", HALT);
@@ -144,8 +138,6 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
     CMD("TILESPR", GET_SPRITE_TILE);
     CMD("SPRX", GET_SPRITE_X);
     CMD("SPRY", GET_SPRITE_Y);
-    CMD("TSPRX", GET_SPRITE_TILED_X);
-    CMD("TSPRY", GET_SPRITE_TILED_Y);
     CMD("CHKCOL", CHECK_SPRITE_COLLISION);
     
     // === SOUND ===
