@@ -1,3 +1,2 @@
-CURSOR 0
 PRINTL "Hello World!"
 HALT

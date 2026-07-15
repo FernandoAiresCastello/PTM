@@ -533,6 +533,7 @@ t_string PTM::input_string(const t_string& prompt, const t_string& default_value
 	t_string value;
 	bool escaped = false;
 	const int initial_x = scr.csrx();
+	scr.show_cursor(true);
 
 	if (!prompt.empty())
 		scr.print_string(prompt);
@@ -567,6 +568,8 @@ t_string PTM::input_string(const t_string& prompt, const t_string& default_value
 			}
 		}
 	}
+
+	scr.show_cursor(false);
 
 	return value;
 }

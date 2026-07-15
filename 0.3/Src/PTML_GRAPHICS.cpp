@@ -126,6 +126,20 @@ void PTML::CHR()
 	}
 }
 
+void PTML::PALGET()
+{
+	ARGC(2);
+	auto&& color = ptm->get_pal().get(NUM_WRAP(2, PAL_SIZE));
+	ptm->set_var(ARG(1), color.to_rgb(), error);
+}
+
+void PTML::CHRGET()
+{
+	ARGC(2);
+	auto&& chr = ptm->get_chr().get(NUM_WRAP(2, CHR_SIZE));
+	ptm->set_var(ARG(1), chr, error);
+}
+
 void PTML::LOAD_PAL()
 {
 	ARGC(1);

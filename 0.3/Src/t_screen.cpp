@@ -22,7 +22,7 @@ void t_screen::reset()
 	clear();
 	buf->sprites.reset_all();
 	update_monochrome_tiles();
-	show_cursor(true);
+	show_cursor(false);
 	locate(0, 0);
 	logical_line = t_string::repeat(" ", cols);
 	reset_horizontal_scroll();

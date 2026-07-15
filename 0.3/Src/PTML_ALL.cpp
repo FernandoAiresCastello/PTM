@@ -83,6 +83,8 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
     // === GRAPHICS ===
     CMD("PAL", PAL);
     CMD("CHR", CHR);
+    CMD("PALGET", PALGET);
+    CMD("CHRGET", CHRGET);
 
     // === SCREEN ===
     CMD("REFRESH", REFRESH);

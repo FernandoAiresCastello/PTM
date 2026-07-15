@@ -13,6 +13,8 @@ namespace PTML
 	void CLS();
 	void PAL();
 	void CHR();
+	void PALGET();
+	void CHRGET();
 	void LOAD_PAL();
 	void SAVE_PAL();
 	void LOAD_CHR();
