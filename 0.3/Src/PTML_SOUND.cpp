@@ -1,5 +1,6 @@
 #include "PTML_SOUND.h"
 #include "PTML_shared_headers.h"
+#include "t_sound_wav.h"
 
 void PTML::BEEP()
 {

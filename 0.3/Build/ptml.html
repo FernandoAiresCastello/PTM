@@ -99,7 +99,9 @@
 				<li><a href='#AUTOREF'>AUTOREF</a></li>
 				<li><a href='#BEEP'>BEEP</a></li>
 				<li><a href='#BGET'>BGET</a></li>
+				<li><a href='#BLOAD'>BLOAD</a></li>
 				<li><a href='#BORDER'>BORDER</a></li>
+				<li><a href='#BSAVE'>BSAVE</a></li>
 				<li><a href='#BSET'>BSET</a></li>
 				<li><a href='#CALL'>CALL</a></li>
 				<li><a href='#CGET'>CGET</a></li>
@@ -107,9 +109,10 @@
 				<li><a href='#CHKCOL'>CHKCOL</a></li>
 				<li><a href='#CHR'>CHR</a></li>
 				<li><a href='#CHRGET'>CHRGET</a></li>
-				<li><a href='#CLOSE'>CLOSE</a></li>
+				<li><a href='#CLOAD'>CLOAD</a></li>
 				<li><a href='#CLS'>CLS</a></li>
 				<li><a href='#COLOR'>COLOR</a></li>
+				<li><a href='#CSAVE'>CSAVE</a></li>
 				<li><a href='#CSET'>CSET</a></li>
 				<li><a href='#CSRX'>CSRX</a></li>
 				<li><a href='#CSRY'>CSRY</a></li>
@@ -125,7 +128,6 @@
 				<li><a href='#EOF'>EOF</a></li>
 				<li><a href='#EXIT'>EXIT</a></li>
 				<li><a href='#FGET'>FGET</a></li>
-				<li><a href='#FILES'>FILES</a></li>
 				<li><a href='#FILL'>FILL</a></li>
 				<li><a href='#FIND'>FIND</a></li>
 				<li><a href='#FLUSH'>FLUSH</a></li>
@@ -151,7 +153,6 @@
 				<li><a href='#MOVE'>MOVE</a></li>
 				<li><a href='#MOVETO'>MOVETO</a></li>
 				<li><a href='#MUL'>MUL</a></li>
-				<li><a href='#OPEN'>OPEN</a></li>
 				<li><a href='#PAL'>PAL</a></li>
 				<li><a href='#PALGET'>PALGET</a></li>
 				<li><a href='#PAPER'>PAPER</a></li>
@@ -164,7 +165,6 @@
 				<li><a href='#PRINTL'>PRINTL</a></li>
 				<li><a href='#PSET'>PSET</a></li>
 				<li><a href='#PUT'>PUT</a></li>
-				<li><a href='#READ'>READ</a></li>
 				<li><a href='#RECT'>RECT</a></li>
 				<li><a href='#REFRESH'>REFRESH</a></li>
 				<li><a href='#RENAME'>RENAME</a></li>
@@ -188,7 +188,6 @@
 				<li><a href='#TILESPR'>TILESPR</a></li>
 				<li><a href='#TITLE'>TITLE</a></li>
 				<li><a href='#UCASE'>UCASE</a></li>
-				<li><a href='#WRITE'>WRITE</a></li>
 			</ul>
 		</div>
 		<div class='command-name' id="ADD">ADD</div>
@@ -287,6 +286,36 @@
 			</ul>
 		</div>
 
+		<div class='command-name' id="BLOAD">BLOAD</div>
+		<div class='command-description'>Read bytes from a file</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>BLOAD filename, array_name</div>
+			<div class='syntax-description'>
+				Read bytes from a binary file into a new array
+			</div>
+			<ul class='syntax-params'>
+				<li>filename = The file to read from</li>
+				<li>array_name = The name of array to write</li>
+			</ul>
+		</div>
+		
+		<div class='command-name' id="BSAVE">BSAVE</div>
+		<div class='command-description'>Write bytes to a file</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>BSAVE filename, array_name</div>
+			<div class='syntax-description'>
+				Write bytes from an array into a binary file. If the array contains strings that can't be converted to integers, or has numbers below 0 or above 255, these will be written as 0 to the file
+			</div>
+			<ul class='syntax-params'>
+				<li>filename = The file to write to</li>
+				<li>array_name = The array containing the bytes</li>
+			</ul>
+		</div>
+		
 		<div class='command-name' id="BORDER">BORDER</div>
 		<div class='command-description'>Change color of the screen border</div>
 
@@ -485,15 +514,19 @@
 			</ul>
 		</div>
 
-		<div class='command-name' id="CLOSE">CLOSE</div>
-		<div class='command-description'>Close data record file</div>
+		<div class='command-name' id="CLOAD">CLOAD</div>
+		<div class='command-description'>Read text from a file</div>
 
 		<div class='syntax-header'>Syntax:</div>
 		<div class='syntax'>
-			<div class='syntax-format'>CLOSE</div>
+			<div class='syntax-format'>CLOAD filename, var</div>
 			<div class='syntax-description'>
-				Close the data record file. If the file was opened in mode "W" (write), the data record buffer gets flushed to the physical file on disk (i.e. the file is then saved).
+				Read text from a file into a variable
 			</div>
+			<ul class='syntax-params'>
+				<li>filename = The file to read from</li>
+				<li>var = The variable to write</li>
+			</ul>
 		</div>
 
 		<div class='command-name' id="CLS">CLS</div>
@@ -545,6 +578,21 @@
 			</ul>
 		</div>
 
+		<div class='command-name' id="CSAVE">CSAVE</div>
+		<div class='command-description'>Write text to a file</div>
+
+		<div class='syntax-header'>Syntax:</div>
+		<div class='syntax'>
+			<div class='syntax-format'>CSAVE filename, text</div>
+			<div class='syntax-description'>
+				Write text to a file
+			</div>
+			<ul class='syntax-params'>
+				<li>filename = The file to write to</li>
+				<li>text = The text to write</li>
+			</ul>
+		</div>
+		
 		<div class='command-name' id="CSET">CSET</div>
 		<div class='command-description'>Set character index of tile register</div>
 
@@ -778,28 +826,6 @@
 			<ul class='syntax-params'>
 				<li>var = Variable identifier</li>
 				<li>tile_index = Index of tile in the tile register to get the color from</li>
-			</ul>
-		</div>
-
-		<div class='command-name' id="FILES">FILES</div>
-		<div class='command-description'>List user files on disk</div>
-
-		<div class='syntax-header'>Syntax:</div>
-
-		<div class='syntax'>
-			<div class='syntax-format'>FILES</div>
-			<div class='syntax-description'>
-				List all files on disk, that are in the user root folder (USR)
-			</div>
-		</div>
-
-		<div class='syntax'>
-			<div class='syntax-format'>FILES filter</div>
-			<div class='syntax-description'>
-				List files on disk, that are in the user root folder (USR), that start or end with the given filter string. To filter by the last characters of the filename, start the filter string with an asterisk (*). Otherwise, the list will be filtered by the first characters of the filename.
-			</div>
-			<ul class='syntax-params'>
-				<li>filter = String used to filter the file list</li>
 			</ul>
 		</div>
 
@@ -1342,21 +1368,6 @@
 			</ul>
 		</div>
 
-		<div class='command-name' id="OPEN">OPEN</div>
-		<div class='command-description'>Open data record file</div>
-
-		<div class='syntax-header'>Syntax:</div>
-		<div class='syntax'>
-			<div class='syntax-format'>OPEN filename, mode</div>
-			<div class='syntax-description'>
-				Open data record file to read or write, depending on the given mode. Only the .DAT file format is supported (this is a built-in file format). Only one single data record file can be opened at any time.
-			</div>
-			<ul class='syntax-params'>
-				<li>filename = The name of the file, including the .DAT extension</li>
-				<li>mode = "R" = read; "W" = write</li>
-			</ul>
-		</div>
-
 		<div class='command-name' id="PAL">PAL</div>
 		<div class='command-description'>Set RGB value for color at palette index</div>
 
@@ -1589,21 +1600,6 @@
 			<div class='syntax-description'>
 				Copy tile from tile register to the tilebuffer at current cursor position
 			</div>
-		</div>
-
-		<div class='command-name' id="READ">READ</div>
-		<div class='command-description'>Read from data record file</div>
-
-		<div class='syntax-header'>Syntax:</div>
-		<div class='syntax'>
-			<div class='syntax-format'>READ var</div>
-			<div class='syntax-description'>
-				Read data from currently open record file, store value in given variable, then moves the read pointer to the next record.<br><br>
-				To read data, the file must be opened with the OPEN command in mode "R" (read), and the end-of-file must not be reached. To check for end-of-file, use the EOF command.
-			</div>
-			<ul class='syntax-params'>
-				<li>var = Variable identifier that will receive the value read</li>
-			</ul>
 		</div>
 
 		<div class='command-name' id="RECT">RECT</div>
@@ -2037,19 +2033,5 @@
 			</ul>
 		</div>
 
-		<div class='command-name' id="WRITE">WRITE</div>
-		<div class='command-description'>Write to data record file</div>
-
-		<div class='syntax-header'>Syntax:</div>
-		<div class='syntax'>
-			<div class='syntax-format'>WRITE value</div>
-			<div class='syntax-description'>
-				Write data to currently open record file, then moves the write pointer to the next record.<br><br>
-				To write data, the file must be opened with the OPEN command in mode "W" (write). Data record files are buffered, meaning the physical file on disk is not modified until the CLOSE command is executed, which then saves the buffer to the file.
-			</div>
-			<ul class='syntax-params'>
-				<li>value = Value to write</li>
-			</ul>
-		</div>
 	</body>
 </html>

@@ -184,6 +184,34 @@ void t_filesystem::write_all_lines(const t_list<t_string>& lines, const t_string
     write_all_text(text, filename);
 }
 
+t_list<int> t_filesystem::read_all_bytes(const t_string& filename)
+{
+    std::ifstream file(filename.to_upper().c_str(), std::ios::binary | std::ios::ate);
+    if (!file)
+        throw std::runtime_error("Could not open file");
+
+    std::streamsize size = file.tellg();
+    file.seekg(0, std::ios::beg);
+
+    std::vector<unsigned char> buffer(static_cast<size_t>(size));
+    if (!file.read(reinterpret_cast<char*>(buffer.data()), size))
+        throw std::runtime_error("Failed to read file");
+
+    std::vector<int> result(buffer.begin(), buffer.end());
+    return result;
+}
+
+void t_filesystem::write_all_bytes(t_list<int>& bytes, const t_string& filename)
+{
+    std::ofstream file(filename.to_upper().c_str(), std::ios::binary);
+    if (!file)
+        throw std::runtime_error("Failed to open file for writing");
+
+    std::vector<unsigned char> buffer(bytes.begin(), bytes.end());
+    if (!file.write(reinterpret_cast<const char*>(buffer.data()), buffer.size()))
+        throw std::runtime_error("Failed to write file");
+}
+
 bool t_filesystem::rename_user_file(const t_string& old_name, const t_string& new_name)
 {
     try

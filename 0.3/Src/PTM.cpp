@@ -345,6 +345,12 @@ void PTM::create_array(const t_array_ref& array_ref, t_string& out_error)
 		out_error = PTML::err.illegal_argument;
 }
 
+t_list<t_string>* PTM::create_array(const t_string array_name)
+{
+	arrays[array_name] = t_list<t_string>();
+	return &arrays[array_name];
+}
+
 const t_string& PTM::get_array_element(const t_array_ref& ref, t_string& out_error)
 {
 	if (!has_array(ref.arr_name)) {

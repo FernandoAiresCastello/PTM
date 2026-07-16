@@ -2,14 +2,12 @@
 
 namespace PTML
 {
-	void FILES();
-	void RENAME();
-	void KILL();
-	void OPEN();
-	void CLOSE();
-	void WRITE();
-	void READ();
-	void FEOF();
 	void SAVE();
 	void LOAD();
+	void CSAVE();
+	void CLOAD();
+	void BSAVE();
+	void BLOAD();
+	void RENAME();
+	void KILL();
 }

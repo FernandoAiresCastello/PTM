@@ -38,6 +38,10 @@ public:
 	static void write_all_text(const t_string& text, const t_string& filename);
 	static void write_all_lines(const t_list<t_string>& lines, const t_string& filename);
 	
+	// Write/read binary format
+	static t_list<int> read_all_bytes(const t_string& filename);
+	static void write_all_bytes(t_list<int>& bytes, const t_string& filename);
+
 	// Rename/delete
 	static bool rename_user_file(const t_string& old_name, const t_string& new_name);
 	static bool delete_user_file(const t_string& name);

@@ -9,123 +9,6 @@
 #define FILE_EXT_TILEBUF	".BUF"
 #define FILE_EXT_RECFILE	".DAT"
 
-void PTML::FILES()
-{
-	ARGC_MIN_MAX(0, 1);
-	if (COUNT(0)) {
-		PRINT_LIST(t_filesystem::list_user_files());
-	}
-	else if (COUNT(1)) {
-		PRINT_LIST(t_filesystem::find_user_files(STR(1)));
-	}
-}
-
-void PTML::RENAME()
-{
-	ARGC(2);
-	auto&& old_name = STR(1);
-	auto&& new_name = STR(2);
-	VALIDATE_FILENAME(new_name);
-
-	if (t_filesystem::user_file_exists(old_name)) {
-		t_filesystem::rename_user_file(old_name, new_name);
-	}
-	else {
-		error = err.file_not_found;
-	}
-}
-
-void PTML::KILL()
-{
-	ARGC(1);
-	auto&& name = STR(1).to_upper();
-
-	if (t_filesystem::user_file_exists(name)) {
-		t_filesystem::delete_user_file(name);
-	}
-	else {
-		error = err.file_not_found;
-	}
-}
-
-void PTML::OPEN()
-{
-	ARGC(2);
-	auto&& filename = STR(1).to_upper();
-	VALIDATE_FILENAME(filename);
-	auto&& mode = STR(2).to_upper();
-
-	if (!filename.ends_with(FILE_EXT_RECFILE)) {
-		error = err.invalid_file_ext;
-		return;
-	}
-
-	if (t_filesystem::is_record_file_open()) {
-		error = err.file_already_open;
-		return;
-	}
-
-	if (mode == "W") {
-		t_filesystem::open_record_file(filename, t_filesystem::write_mode);
-	}
-	else if (mode == "R") {
-		REQUIRE_FILE(filename);
-		int state = t_filesystem::open_record_file(filename, t_filesystem::read_mode);
-		if (state == RECFILE_STATE_BADFMT) {
-			error = err.bad_file_format;
-			return;
-		}
-	}
-	else {
-		error = err.illegal_argument;
-		return;
-	}
-}
-
-void PTML::CLOSE()
-{
-	ARGC(0);
-	t_filesystem::close_record_file();
-}
-
-void PTML::WRITE()
-{
-	ARGC(1);
-	if (!t_filesystem::is_record_file_open()) {
-		error = err.file_not_open;
-		return;
-	}
-	if (t_filesystem::get_record_file_mode() != t_filesystem::write_mode) {
-		error = err.bad_file_mode;
-		return;
-	}
-	t_filesystem::write_record_file(STR(1));
-}
-
-void PTML::READ()
-{
-	ARGC(1);
-	if (!t_filesystem::is_record_file_open()) {
-		error = err.file_not_open;
-		return;
-	}
-	if (t_filesystem::get_record_file_mode() != t_filesystem::read_mode) {
-		error = err.bad_file_mode;
-		return;
-	}
-	if (t_filesystem::is_record_file_eof()) {
-		error = err.end_of_file;
-		return;
-	}
-	ptm->set_var(ARG(1), t_filesystem::read_record_file(), error);
-}
-
-void PTML::FEOF()
-{
-	ARGC(1);
-	ptm->set_var(ARG(1), t_filesystem::is_record_file_eof() ? 1 : 0, error);
-}
-
 void PTML::SAVE()
 {
 	ARGC(1);
@@ -168,5 +51,106 @@ void PTML::LOAD()
 	else {
 		error = err.invalid_file_ext;
 		return;
+	}
+}
+
+void PTML::CSAVE()
+{
+	ARGC(2);
+
+	auto&& filename = STR(1).to_upper();
+	VALIDATE_FILENAME(filename);
+
+	t_filesystem::write_all_text(STR(2), filename);
+}
+
+void PTML::CLOAD()
+{
+	ARGC(2);
+
+	auto&& filename = STR(1).to_upper();
+	VALIDATE_FILENAME(filename);
+
+	try {
+		t_string content = t_filesystem::read_all_text(filename);
+		ptm->set_var(ARG(2), content, error);
+	}
+	catch (std::exception& ex) {
+		error = ex.what();
+	}
+}
+
+void PTML::BSAVE()
+{
+	ARGC(2);
+
+	auto&& filename = STR(1).to_upper();
+	VALIDATE_FILENAME(filename);
+
+	auto&& arr_name = ARG(2);
+	auto array = ptm->get_array(arr_name.string_val);
+	if (array == nullptr) {
+		error = err.undefined_array;
+		return;
+	}
+
+	t_list<int> bytes;
+
+	for (auto& str : *array) {
+		int byte = str.to_int();
+		if (byte < 0 || byte > 255)
+			byte = 0;
+		
+		bytes.push_back(byte);
+	}
+
+	t_filesystem::write_all_bytes(bytes, filename);
+}
+
+void PTML::BLOAD()
+{
+	ARGC(2);
+
+	auto&& filename = STR(1).to_upper();
+	VALIDATE_FILENAME(filename);
+
+	try {
+		t_list<int> bytes = t_filesystem::read_all_bytes(filename);
+
+		auto&& arr_name = ARG(2);
+		t_list<t_string>* array = ptm->create_array(arr_name.string_val);
+		for (auto& byte : bytes)
+			array->push_back(t_string::from_int(byte));
+	}
+	catch (std::exception& ex) {
+		error = ex.what();
+	}
+}
+
+void PTML::RENAME()
+{
+	ARGC(2);
+	auto&& old_name = STR(1);
+	auto&& new_name = STR(2);
+	VALIDATE_FILENAME(new_name);
+
+	if (t_filesystem::user_file_exists(old_name)) {
+		t_filesystem::rename_user_file(old_name, new_name);
+	}
+	else {
+		error = err.file_not_found;
+	}
+}
+
+void PTML::KILL()
+{
+	ARGC(1);
+	auto&& name = STR(1).to_upper();
+
+	if (t_filesystem::user_file_exists(name)) {
+		t_filesystem::delete_user_file(name);
+	}
+	else {
+		error = err.file_not_found;
 	}
 }

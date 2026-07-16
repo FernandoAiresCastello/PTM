@@ -63,16 +63,14 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
     CMD("RET", RET);
 
     // === FILE SYSTEM ===
-    CMD("FILES", FILES);
     CMD("SAVE", SAVE);
     CMD("LOAD", LOAD);
+    CMD("CSAVE", CSAVE);
+    CMD("CLOAD", CLOAD);
+    CMD("BSAVE", BSAVE);
+    CMD("BLOAD", BLOAD);
     CMD("RENAME", RENAME);
     CMD("KILL", KILL);
-    CMD("OPEN", OPEN);
-    CMD("CLOSE", CLOSE);
-    CMD("WRITE", WRITE);
-    CMD("READ", READ);
-    CMD("EOF", FEOF);
 
     // === KEYBOARD INPUT ===
     CMD("INPUT", INPUT);

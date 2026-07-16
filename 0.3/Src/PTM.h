@@ -15,6 +15,7 @@
 #include "t_pointers.h"
 #include "t_sprite.h"
 #include "t_sound.h"
+#include "t_sound_wav.h"
 #include "t_screen.h"
 #include "t_array_ref.h"
 #include "t_user_tilebuffer.h"
@@ -23,6 +24,7 @@ class PTM
 {
 public:
 	t_tile tilereg;
+	t_sound_wav wav_sounds;
 	bool auto_screen_update = true;
 
 	void run(const char* initial_program);
@@ -52,6 +54,7 @@ public:
 	bool has_var(const t_string& var);
 	bool has_array(const t_string& var);
 	void create_array(const t_array_ref& array_ref, t_string& out_error);
+	t_list<t_string>* create_array(const t_string array_name);
 	const t_string& get_array_element(const t_array_ref& ref, t_string& out_error);
 	int get_array_length(const t_string& array_name, t_string& out_error);
 	t_list<t_string>* get_array(const t_string& array_name);

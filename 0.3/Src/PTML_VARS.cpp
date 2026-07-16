@@ -133,11 +133,7 @@ void PTML::STR_SPLIT()
 {
 	ARGC(3);
 	auto&& arr_name = ARG(1);
-	auto arr = ptm->get_array(arr_name.string_val);
-	if (arr == nullptr) {
-		error = err.undefined_array;
-		return;
-	}
+	t_list<t_string>* array = ptm->create_array(arr_name.string_val);
 
 	t_string&& str = STR(2);
 
@@ -152,7 +148,7 @@ void PTML::STR_SPLIT()
 	}
 
 	auto parts = str.split(delim, true);
-	for (int i = 0; i < arr->size() && i < parts.size(); i++) {
-		(*arr)[i] = parts[i];
+	for (int i = 0; i < parts.size(); i++) {
+		array->push_back(parts[i]);
 	}
 }
