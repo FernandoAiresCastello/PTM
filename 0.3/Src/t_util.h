@@ -4,6 +4,8 @@
 class t_util
 {
 public:
+	static void rnd_seed();
+	static void rnd_seed(int seed);
 	static int rnd(int max);
 	static int rnd(int min, int max);
 	static int rnd_byte();

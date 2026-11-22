@@ -38,6 +38,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
     CMD("POW", POW);
     CMD("SQRT", SQRT);
     CMD("RND", RND);
+    CMD("RSEED", RND_SEED);
 
     // === JUMPS ===
     CMD("GOTO", GOTO);
@@ -80,8 +81,8 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
     // === GRAPHICS ===
     CMD("PAL", PAL);
     CMD("CHR", CHR);
-    CMD("PALGET", PALGET);
-    CMD("CHRGET", CHRGET);
+    CMD("GETPAL", PALGET);
+    CMD("GETCHR", CHRGET);
 
     // === SCREEN ===
     CMD("REFRESH", REFRESH);
@@ -92,10 +93,8 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
     // === CURSOR ===
     CMD("CURSOR", CURSOR);
     CMD("LOCATE", LOCATE);
-    CMD("LOCX", CSR_SETX);
-    CMD("LOCY", CSR_SETY);
-    CMD("CSRX", CSR_GETX);
-    CMD("CSRY", CSR_GETY);
+    CMD("COL", CSR_SETX);
+    CMD("ROW", CSR_SETY);
 
     // === TEXT OUTPUT ===
     CMD("PRINT", PRINT);

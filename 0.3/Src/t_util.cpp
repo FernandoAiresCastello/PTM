@@ -7,6 +7,16 @@
 std::random_device rd;
 std::mt19937 mt(rd());
 
+void t_util::rnd_seed()
+{
+	mt.seed(rd());
+}
+
+void t_util::rnd_seed(int seed)
+{
+	mt.seed(seed);
+}
+
 int t_util::rnd(int max)
 {
 	return std::uniform_int_distribution<int>(0, max)(mt);

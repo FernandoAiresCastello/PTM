@@ -108,14 +108,12 @@
 				<li><a href='#CHAR'>CHAR</a></li>
 				<li><a href='#CHKCOL'>CHKCOL</a></li>
 				<li><a href='#CHR'>CHR</a></li>
-				<li><a href='#CHRGET'>CHRGET</a></li>
+				<li><a href='#CHRGET'>GETCHR</a></li>
 				<li><a href='#CLOAD'>CLOAD</a></li>
 				<li><a href='#CLS'>CLS</a></li>
 				<li><a href='#COLOR'>COLOR</a></li>
 				<li><a href='#CSAVE'>CSAVE</a></li>
 				<li><a href='#CSET'>CSET</a></li>
-				<li><a href='#CSRX'>CSRX</a></li>
-				<li><a href='#CSRY'>CSRY</a></li>
 				<li><a href='#CURSOR'>CURSOR</a></li>
 				<li><a href='#DEC'>DEC</a></li>
 				<li><a href='#DEL'>DEL</a></li>
@@ -146,15 +144,15 @@
 				<li><a href='#LEN'>LEN</a></li>
 				<li><a href='#LOAD'>LOAD</a></li>
 				<li><a href='#LOCATE'>LOCATE</a></li>
-				<li><a href='#LOCX'>LOCX</a></li>
-				<li><a href='#LOCY'>LOCY</a></li>
+				<li><a href='#LOCX'>COL</a></li>
+				<li><a href='#LOCY'>ROW</a></li>
 				<li><a href='#MEMCLR'>MEMCLR</a></li>
 				<li><a href='#MODE'>MODE</a></li>
 				<li><a href='#MOVE'>MOVE</a></li>
 				<li><a href='#MOVETO'>MOVETO</a></li>
 				<li><a href='#MUL'>MUL</a></li>
 				<li><a href='#PAL'>PAL</a></li>
-				<li><a href='#PALGET'>PALGET</a></li>
+				<li><a href='#PALGET'>GETPAL</a></li>
 				<li><a href='#PAPER'>PAPER</a></li>
 				<li><a href='#PAUSE'>PAUSE</a></li>
 				<li><a href='#PGET'>PGET</a></li>
@@ -172,6 +170,7 @@
 				<li><a href='#RESET'>RESET</a></li>
 				<li><a href='#RET'>RET</a></li>
 				<li><a href='#RND'>RND</a></li>
+				<li><a href='#RSEED'>RSEED</a></li>
 				<li><a href='#RUN'>RUN</a></li>
 				<li><a href='#SAVE'>SAVE</a></li>
 				<li><a href='#SET'>SET</a></li>
@@ -498,13 +497,13 @@
 			</ul>
 		</div>
 
-		<div class='command-name' id="CHRGET">CHRGET</div>
+		<div class='command-name' id="CHRGET">GETCHR</div>
 		<div class='command-description'>Get pixel pattern of character at charset index</div>
 
 		<div class='syntax-header'>Syntax:</div>
 
 		<div class='syntax'>
-			<div class='syntax-format'>CHRGET var, charset_index</div>
+			<div class='syntax-format'>GETCHR var, charset_index</div>
 			<div class='syntax-description'>
 				Get pixel pattern of character at charset index and store it in the given variable
 			</div>
@@ -605,34 +604,6 @@
 			<ul class='syntax-params'>
 				<li>tile_index = Index of tile to alter in the tile register</li>
 				<li>charset_index = Charset index to assign to the tile</li>
-			</ul>
-		</div>
-
-		<div class='command-name' id="CSRX">CSRX</div>
-		<div class='command-description'>Get screen cursor column</div>
-
-		<div class='syntax-header'>Syntax:</div>
-		<div class='syntax'>
-			<div class='syntax-format'>CSRX var</div>
-			<div class='syntax-description'>
-				Get column in the tile buffer where the screen cursor is located and store it in the given variable
-			</div>
-			<ul class='syntax-params'>
-				<li>var = Variable identifier</li>
-			</ul>
-		</div>
-
-		<div class='command-name' id="CSRY">CSRY</div>
-		<div class='command-description'>Get screen cursor row</div>
-
-		<div class='syntax-header'>Syntax:</div>
-		<div class='syntax'>
-			<div class='syntax-format'>CSRY var</div>
-			<div class='syntax-description'>
-				Get row in the tile buffer where the screen cursor is located and store it in the given variable
-			</div>
-			<ul class='syntax-params'>
-				<li>var = Variable identifier</li>
 			</ul>
 		</div>
 
@@ -1255,12 +1226,12 @@
 			</ul>
 		</div>
 
-		<div class='command-name' id="LOCX">LOCX</div>
+		<div class='command-name' id="LOCX">COL</div>
 		<div class='command-description'>Set screen cursor column</div>
 
 		<div class='syntax-header'>Syntax:</div>
 		<div class='syntax'>
-			<div class='syntax-format'>LOCX col</div>
+			<div class='syntax-format'>COL col</div>
 			<div class='syntax-description'>
 				Move screen cursor to given column in the tile buffer
 			</div>
@@ -1269,12 +1240,12 @@
 			</ul>
 		</div>
 
-		<div class='command-name' id="LOCY">LOCY</div>
+		<div class='command-name' id="LOCY">ROW</div>
 		<div class='command-description'>Set screen cursor row</div>
 
 		<div class='syntax-header'>Syntax:</div>
 		<div class='syntax'>
-			<div class='syntax-format'>LOCY row</div>
+			<div class='syntax-format'>ROW row</div>
 			<div class='syntax-description'>
 				Move screen cursor to given row in the tile buffer
 			</div>
@@ -1382,12 +1353,12 @@
 			</ul>
 		</div>
 
-		<div class='command-name' id="PALGET">PALGET</div>
+		<div class='command-name' id="PALGET">GETPAL</div>
 		<div class='command-description'>Get RGB value of color at palette index</div>
 
 		<div class='syntax-header'>Syntax:</div>
 		<div class='syntax'>
-			<div class='syntax-format'>PALGET var, palette_index</div>
+			<div class='syntax-format'>GETPAL var, palette_index</div>
 			<div class='syntax-description'>
 				Get RGB value of color at palette index and store it in the given variable
 			</div>
@@ -1710,6 +1681,28 @@
 			</ul>
 		</div>
 
+		<div class='command-name' id="RSEED">RSEED</div>
+		<div class='command-description'>Seed the random number generator</div>
+
+		<div class='syntax-header'>Syntax:</div>
+
+		<div class='syntax'>
+			<div class='syntax-format'>RSEED value</div>
+			<div class='syntax-description'>
+				Set a specific seed to be used by the random number generator
+			</div>
+			<ul class='syntax-params'>
+				<li>value = The seed value</li>
+			</ul>
+		</div>
+		
+		<div class='syntax'>
+			<div class='syntax-format'>RSEED</div>
+			<div class='syntax-description'>
+				Set a random seed to be used by the random number generator
+			</div>
+		</div>
+		
 		<div class='command-name' id="RUN">RUN</div>
 		<div class='command-description'>Execute program</div>
 

@@ -104,3 +104,13 @@ void PTML::RND()
 	else if (COUNT(2))
 		ptm->set_var(ARG(1), t_util::rnd(NUM(2)), error);
 }
+
+void PTML::RND_SEED()
+{
+	ARGC_MIN_MAX(0, 1);
+
+	if (COUNT(1))
+		t_util::rnd_seed(NUM(1));
+	else
+		t_util::rnd_seed();
+}

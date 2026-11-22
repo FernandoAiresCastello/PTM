@@ -12,4 +12,5 @@ namespace PTML
 	void POW();
 	void SQRT();
 	void RND();
+	void RND_SEED();
 }

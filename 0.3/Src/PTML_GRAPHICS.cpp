@@ -217,18 +217,6 @@ void PTML::CSR_SETY()
 	scr->locate_y(NUM(1));
 }
 
-void PTML::CSR_GETX()
-{
-	ARGC(1);
-	ptm->set_var(ARG(1), scr->csrx(), error);
-}
-
-void PTML::CSR_GETY()
-{
-	ARGC(1);
-	ptm->set_var(ARG(1), scr->csry(), error);
-}
-
 void PTML::FULLSCR()
 {
 	ARGC_MIN_MAX(0, 1);
