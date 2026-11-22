@@ -3,7 +3,6 @@
 namespace PTML
 {
 	void END();
-	void EXIT();
 	void HALT();
 	void RESET();
 	void GOTO();

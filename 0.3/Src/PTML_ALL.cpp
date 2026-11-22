@@ -16,7 +16,6 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
     CMD("RUN", RUN);
     CMD("END", END);
     CMD("HALT", HALT);
-    CMD("EXIT", EXIT);
     CMD("RESET", RESET);
     CMD("PAUSE", PAUSE);
     CMD("HCF", HCF);

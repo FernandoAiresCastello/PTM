@@ -7,12 +7,6 @@ void PTML::END()
 	ptm->end_program();
 }
 
-void PTML::EXIT()
-{
-	ARGC(0);
-	ptm->exit();
-}
-
 void PTML::HALT()
 {
 	ARGC(0);
