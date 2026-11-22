@@ -27,7 +27,7 @@ t_keyboard kb;
 t_charset chr;
 t_palette pal;
 t_sound snd;
-t_screen scr(256, t_window::rows - 2);
+t_screen scr;
 const t_string empty_string = "";
 Uint32 frame_start = 0, frame_time = 0;
 
@@ -63,10 +63,11 @@ void PTM::init()
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
 
-	wnd.open("", wnd_size);
-	
 	kb.init();
 
+	wnd.open("", wnd_size);
+
+	scr.init(256, t_window::rows - 2);
 	scr.set_window(&wnd);
 	scr.set_charset(&chr);
 	scr.set_palette(&pal);
@@ -608,8 +609,8 @@ void PTM::halt_and_catch_fire()
 
 		wnd.set_title(t_util::rnd_string(30));
 
-		for (int y = 0; y < scr.rows; y++) {
-			for (int x = 0; x < scr.cols; x++) {
+		for (int y = 0; y < scr.get_rows(); y++) {
+			for (int x = 0; x < scr.get_cols(); x++) {
 				t_index ix = t_util::rnd(0, 255);
 				t_index fgc = t_util::rnd(0, 255);
 				t_index bgc = t_util::rnd(0, 255);

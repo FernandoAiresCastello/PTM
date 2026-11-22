@@ -6,11 +6,18 @@
 #include "t_charset.h"
 #include "predefined_charset_ix.h"
 
-t_screen::t_screen(int cols, int rows) :
-	cols(cols), rows(rows), last_col(cols - 1), last_row(rows - 1),
-	buf(std::make_unique<t_tilebuffer>(cols, rows)),
-	viewport(t_tilebuffer_region(0, 0, t_window::cols - 4, t_window::rows - 2))
+t_screen::t_screen()
 {
+}
+
+void t_screen::init(int cols, int rows)
+{
+	this->cols = cols;
+	this->rows = rows;
+	last_col = cols - 1;
+	last_row = rows - 1;
+	buf = std::make_unique<t_tilebuffer>(cols, rows);
+	viewport = t_tilebuffer_region(0, 0, t_window::cols - 4, t_window::rows - 2);
 	csr = buf->get_cursor();
 	reset();
 }
@@ -229,6 +236,9 @@ t_pos t_screen::csr_pos() const
 {
 	return csr->get_pos();
 }
+
+int t_screen::get_cols() const { return cols; }
+int t_screen::get_rows() const { return rows; }
 
 void t_screen::show_cursor(bool visible)
 {

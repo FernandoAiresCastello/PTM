@@ -22,17 +22,10 @@ enum class t_color_mode
 class t_screen
 {
 public:
-	const int cols;
-	const int rows;
-	const int last_col;
-	const int last_row;
-	const int default_fg = 1;
-	const int default_bg = 0;
-	const int default_bdr = 0;
-	
-	t_screen(int cols, int rows);
+	t_screen();
 	~t_screen() = default;
 
+	void init(int cols, int rows);
 	void reset();
 	void set_window(t_window* wnd);
 	void set_charset(t_charset* chr);
@@ -57,6 +50,8 @@ public:
 	int csry() const;
 	int eol() const;
 	t_pos csr_pos() const;
+	int get_cols() const;
+	int get_rows() const;
 	void show_cursor(bool visible);
 	void set_tile(const t_tile& tile, int x, int y);
 	void set_tile_at_csr(const t_tile& tile);
@@ -109,6 +104,14 @@ public:
 	void reset_sprites();
 
 private:
+	int cols = 0;
+	int rows = 0;
+	int last_col = 0;
+	int last_row = 0;
+	const int default_fg = 1;
+	const int default_bg = 0;
+	const int default_bdr = 0;
+
 	t_window* wnd = nullptr;
 	t_charset* chr = nullptr;
 	t_palette* pal = nullptr;
