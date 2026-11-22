@@ -21,7 +21,7 @@
 			}
 			.toc-list
 			{
-				columns: 3;
+				columns: 6;
 				column-gap: 20px;
 				margin: 0;
 				padding-left: 20px;
@@ -1214,14 +1214,14 @@
 		</div>
 
 		<div class='command-name' id="LOAD">LOAD</div>
-		<div class='command-description'>Load file from disk</div>
+		<div class='command-description'>Load resource file</div>
 
 		<div class='syntax-header'>Syntax:</div>
 
 		<div class='syntax'>
 			<div class='syntax-format'>LOAD filename</div>
 			<div class='syntax-description'>
-				Load the given file from disk. The file format is determined by the filename extension. See section below for supported file formats.
+				Load the given resource file from disk. The type of resource and file format is determined by the filename extension. See section below for supported file formats.
 			</div>
 			<ul class='syntax-params'>
 				<li>filename = The name of the file to load</li>
@@ -1231,13 +1231,12 @@
 		<div class='syntax-header'>Valid file formats:</div>
 
 		<div class='syntax'>
-			The PTML interpreter only has support for loading the following file formats:
+			This command supports loading the following types of resource:
 			<ul class='syntax-params'>
 				<li>.PTM = PTML program</li>
-				<li>.PAL = Color palette (256 entries)</li>
-				<li>.CHR = Character set (256 entries)</li>
+				<li>.PAL = Color palette</li>
+				<li>.CHR = Character set</li>
 				<li>.BUF = Tile buffer</li>
-				<li>.DAT = Data records (can't be loaded by the LOAD command; use the OPEN and READ commands instead)</li>
 			</ul>
 		</div>
 
@@ -1734,14 +1733,14 @@
 		</div>
 
 		<div class='command-name' id="SAVE">SAVE</div>
-		<div class='command-description'>Save file to disk</div>
+		<div class='command-description'>Save resource file</div>
 
 		<div class='syntax-header'>Syntax:</div>
 
 		<div class='syntax'>
 			<div class='syntax-format'>SAVE filename</div>
 			<div class='syntax-description'>
-				Save code or data to given file. What exactly gets saved (and consequently the file format) is determined by the filename extension. See section below for supported file formats.
+				Save data to given resource file. What exactly gets saved (and consequently the file format) is determined by the filename extension. See section below for supported file formats.
 			</div>
 			<ul class='syntax-params'>
 				<li>filename = The name of the file to save</li>
@@ -1751,18 +1750,16 @@
 		<div class='syntax-header'>Valid file formats:</div>
 
 		<div class='syntax'>
-			The PTML interpreter only has support for saving the following file formats:
+			This command supports saving the following types of resource:
 			<ul class='syntax-params'>
-				<li>.PTM = PTML program. Will save the current program in memory</li>
-				<li>.PAL = Color palette (256 entries). Will save the current color palette in memory</li>
-				<li>.CHR = Character set (256 entries). Will save the current character set in memory</li>
-				<li>.BUF = Tile buffer. Will save the current tile buffer in memory</li>
-				<li>.DAT = Data records (can't be saved by the SAVE command; use the OPEN and WRITE commands instead)</li>
+				<li>.PAL = Color palette</li>
+				<li>.CHR = Character set</li>
+				<li>.BUF = Tile buffer</li>
 			</ul>
 		</div>
 
 		<div class='command-name' id="SET">SET</div>
-		<div class='command-description'>Set value to variable</div>
+		<div class='command-description'>Store value in variable or array index</div>
 
 		<div class='syntax-header'>Syntax:</div>
 		<div class='syntax'>
@@ -1776,6 +1773,18 @@
 			</ul>
 		</div>
 
+		<div class='syntax'>
+			<div class='syntax-format'>SET array_name[index], value</div>
+			<div class='syntax-description'>
+				Store the string or numeric value in the given array index
+			</div>
+			<ul class='syntax-params'>
+				<li>array_name = Array name</li>
+				<li>index = Array index</li>
+				<li>value = Variable identifier or value (string or number)</li>
+			</ul>
+		</div>
+		
 		<div class='command-name' id="SHOW">SHOW</div>
 		<div class='command-description'>Show or hide sprite</div>
 
@@ -1797,13 +1806,13 @@
 		<div class='syntax-header'>Syntax:</div>
 
 		<div class='syntax'>
-			<div class='syntax-format'>SPLIT array_name, string, delimiter</div>
+			<div class='syntax-format'>SPLIT string, array_name, delimiter</div>
 			<div class='syntax-description'>
 				Split string at the given delimiter, then each part gets assigned to each element of the specified array. If the array is not long enough to contain all parts, the remaining parts are discarded.
 			</div>
 			<ul class='syntax-params'>
-				<li>array_name = Name of the array that will contain the string parts</li>
 				<li>string = The string to split</li>
+				<li>array_name = Name of the array that will contain the string parts</li>
 				<li>delimiter = The delimiter at which to split the string. It should be a literal character or a number. If a string (or variable that contains a string) is given, only the first character of the string is taken as the delimiter.</li>
 			</ul>
 		</div>

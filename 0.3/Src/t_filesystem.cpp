@@ -22,7 +22,7 @@ t_record_file record_file;
 
 bool t_filesystem::is_valid_filename(const t_string& filename)
 {
-    t_string trimmed_filename = filename.trim().to_upper();
+    t_string trimmed_filename = filename.trim();
 
     if (trimmed_filename.empty())
         return false;
@@ -39,8 +39,8 @@ bool t_filesystem::is_valid_filename(const t_string& filename)
 bool t_filesystem::file_exists(const t_string& filename)
 {
     return 
-        fs::exists(fs::path(filename.to_upper().c_str())) &&
-        fs::is_regular_file(fs::path(filename.to_upper().c_str()));
+        fs::exists(fs::path(filename.c_str())) &&
+        fs::is_regular_file(fs::path(filename.c_str()));
 }
 
 bool t_filesystem::user_file_exists(const t_string& filename)
@@ -59,15 +59,15 @@ t_list<t_string> t_filesystem::list_user_files(const char* prefix)
                 if (prefix[0] == '*') {
                     t_string suffix = t_string(prefix).skip(1);
                     if (!suffix.empty() && path.ends_with(suffix.c_str())) {
-                        files.emplace_back(t_string(path).to_upper());
+                        files.emplace_back(t_string(path));
                     }
                 }
                 else if (path.starts_with(prefix)) {
-                    files.emplace_back(t_string(path).to_upper());
+                    files.emplace_back(t_string(path));
                 }
             }
             else {
-                files.emplace_back(t_string(path).to_upper());
+                files.emplace_back(t_string(path));
             }
         }
     }
@@ -77,7 +77,7 @@ t_list<t_string> t_filesystem::list_user_files(const char* prefix)
 
 t_list<t_string> t_filesystem::find_user_files(const t_string& namepart)
 {
-    return list_user_files(namepart.to_upper().c_str());
+    return list_user_files(namepart.c_str());
 }
 
 void t_filesystem::write_hex_file(const t_string& data, const t_string& filename)
@@ -136,7 +136,7 @@ t_string t_filesystem::read_hex_file(const t_string& filename)
 
 t_string t_filesystem::read_all_text(const t_string& filename)
 {
-    t_string path = filename.to_upper();
+    t_string path = filename;
 
     std::ifstream file(path, std::ios::in | std::ios::binary | std::ios::ate);
     if (!file)
@@ -165,7 +165,7 @@ t_list<t_string> t_filesystem::read_all_lines(const t_string& filename)
 
 void t_filesystem::write_all_text(const t_string& text, const t_string& filename)
 {
-    std::ofstream file(filename.to_upper().c_str(), std::ios::out | std::ios::binary);
+    std::ofstream file(filename.c_str(), std::ios::out | std::ios::binary);
     if (!file)
         throw std::runtime_error("Could not open file");
 
@@ -186,7 +186,7 @@ void t_filesystem::write_all_lines(const t_list<t_string>& lines, const t_string
 
 t_list<int> t_filesystem::read_all_bytes(const t_string& filename)
 {
-    std::ifstream file(filename.to_upper().c_str(), std::ios::binary | std::ios::ate);
+    std::ifstream file(filename.c_str(), std::ios::binary | std::ios::ate);
     if (!file)
         throw std::runtime_error("Could not open file");
 
@@ -203,7 +203,7 @@ t_list<int> t_filesystem::read_all_bytes(const t_string& filename)
 
 void t_filesystem::write_all_bytes(t_list<int>& bytes, const t_string& filename)
 {
-    std::ofstream file(filename.to_upper().c_str(), std::ios::binary);
+    std::ofstream file(filename.c_str(), std::ios::binary);
     if (!file)
         throw std::runtime_error("Failed to open file for writing");
 
@@ -216,8 +216,8 @@ bool t_filesystem::rename_user_file(const t_string& old_name, const t_string& ne
 {
     try
     {
-        t_string old_filename = old_name.to_upper();
-        t_string new_filename = new_name.to_upper();
+        t_string old_filename = old_name;
+        t_string new_filename = new_name;
 
         fs::rename(old_filename.c_str(), new_filename.c_str());
         return true;
@@ -232,7 +232,7 @@ bool t_filesystem::delete_user_file(const t_string& name)
 {
     try
     {
-        t_string filename = name.to_upper();
+        t_string filename = name;
         fs::remove(filename.c_str());
         return true;
     }
@@ -246,7 +246,7 @@ bool t_filesystem::rename_directory(const t_string& old_name, const t_string& ne
 {
     try
     {
-        fs::rename(old_name.to_upper().c_str(), new_name.to_upper().c_str());
+        fs::rename(old_name.c_str(), new_name.c_str());
         return true;
     }
     catch (std::exception)
@@ -259,7 +259,7 @@ bool t_filesystem::delete_directory(const t_string& name)
 {
     try
     {
-        fs::remove_all(name.to_upper().c_str());
+        fs::remove_all(name.c_str());
         return true;
     }
     catch (std::exception)
@@ -312,7 +312,7 @@ void t_filesystem::save_charset_plaintext(t_charset* chr, const t_string& filena
         t_binary& entry = chr->get(i);
         chr_entries.push_back(entry);
     }
-    write_all_lines(chr_entries, filename.to_upper());
+    write_all_lines(chr_entries, filename);
 }
 
 void t_filesystem::save_palette_plaintext(t_palette* pal, const t_string& filename)
@@ -322,12 +322,12 @@ void t_filesystem::save_palette_plaintext(t_palette* pal, const t_string& filena
         t_color& entry = pal->get(i);
         pal_entries.push_back(t_string::fmt("%06X", entry.to_rgb()));
     }
-    write_all_lines(pal_entries, filename.to_upper());
+    write_all_lines(pal_entries, filename);
 }
 
 void t_filesystem::load_charset_plaintext(t_charset* chr, const t_string& filename)
 {
-    auto chr_lines = read_all_lines(filename.to_upper());
+    auto chr_lines = read_all_lines(filename);
     chr->remove_all();
     for (auto& line : chr_lines) {
         chr->add(line);
@@ -336,7 +336,7 @@ void t_filesystem::load_charset_plaintext(t_charset* chr, const t_string& filena
 
 void t_filesystem::load_palette_plaintext(t_palette* pal, const t_string& filename)
 {
-    auto pal_lines = read_all_lines(filename.to_upper());
+    auto pal_lines = read_all_lines(filename);
     pal->remove_all();
     for (auto& line : pal_lines) {
         t_string rgb = t_string("0x") + line;
@@ -366,7 +366,7 @@ char t_filesystem::get_record_file_mode()
 
 int t_filesystem::open_record_file(const t_string& filename, char mode)
 {
-    return record_file.open(filename.to_upper(), mode);
+    return record_file.open(filename, mode);
 }
 
 void t_filesystem::close_record_file()

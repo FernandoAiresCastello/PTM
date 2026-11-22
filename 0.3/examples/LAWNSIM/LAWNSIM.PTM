@@ -200,7 +200,6 @@ loop_text:
 END
 
 init:
-    BREAK 0
     CURSOR 0
     MODE 1
 

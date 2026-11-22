@@ -99,7 +99,7 @@ void PTML::branch_if_keypress(t_branch_mode mode, bool positive)
 
 bool PTML::try_load_program(const t_string& filename)
 {
-	t_string actual_filename = filename.to_upper();
+	t_string actual_filename = filename;
 
 	if (t_filesystem::user_file_exists(actual_filename)) {
 		bool valid = ptm->load_program(actual_filename);

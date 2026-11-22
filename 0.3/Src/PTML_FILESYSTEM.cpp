@@ -13,7 +13,7 @@ void PTML::SAVE()
 {
 	ARGC(1);
 
-	auto&& filename = STR(1).to_upper();
+	auto&& filename = STR(1);
 	VALIDATE_FILENAME(filename);
 
 	if (filename.ends_with(FILE_EXT_CHARSET)) {
@@ -35,7 +35,7 @@ void PTML::LOAD()
 {
 	ARGC(1);
 
-	auto&& filename = STR(1).to_upper();
+	auto&& filename = STR(1);
 	VALIDATE_FILENAME(filename);
 	REQUIRE_FILE(filename);
 
@@ -58,7 +58,7 @@ void PTML::CSAVE()
 {
 	ARGC(2);
 
-	auto&& filename = STR(1).to_upper();
+	auto&& filename = STR(1);
 	VALIDATE_FILENAME(filename);
 
 	t_filesystem::write_all_text(STR(2), filename);
@@ -68,7 +68,7 @@ void PTML::CLOAD()
 {
 	ARGC(2);
 
-	auto&& filename = STR(1).to_upper();
+	auto&& filename = STR(1);
 	VALIDATE_FILENAME(filename);
 
 	try {
@@ -84,7 +84,7 @@ void PTML::BSAVE()
 {
 	ARGC(2);
 
-	auto&& filename = STR(1).to_upper();
+	auto&& filename = STR(1);
 	VALIDATE_FILENAME(filename);
 
 	auto&& arr_name = ARG(2);
@@ -111,7 +111,7 @@ void PTML::BLOAD()
 {
 	ARGC(2);
 
-	auto&& filename = STR(1).to_upper();
+	auto&& filename = STR(1);
 	VALIDATE_FILENAME(filename);
 
 	try {
@@ -145,7 +145,7 @@ void PTML::RENAME()
 void PTML::KILL()
 {
 	ARGC(1);
-	auto&& name = STR(1).to_upper();
+	auto&& name = STR(1);
 
 	if (t_filesystem::user_file_exists(name)) {
 		t_filesystem::delete_user_file(name);

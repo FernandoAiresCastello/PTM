@@ -434,7 +434,7 @@ void PTM::new_program()
 
 void PTM::save_program(const t_string& filename)
 {
-	t_string actual_filename = filename.to_upper();
+	t_string actual_filename = filename;
 	if (!actual_filename.ends_with(PROGRAM_FILE_EXT))
 		actual_filename = filename + PROGRAM_FILE_EXT;
 
@@ -444,7 +444,7 @@ void PTM::save_program(const t_string& filename)
 
 bool PTM::load_program(const t_string& filename)
 {
-	t_string actual_filename = filename.to_upper();
+	t_string actual_filename = filename;
 	if (!actual_filename.ends_with(PROGRAM_FILE_EXT))
 		actual_filename = filename + PROGRAM_FILE_EXT;
 
@@ -475,7 +475,7 @@ void PTM::set_last_program_filename(const t_string& path)
 
 	if (last_slash_ix >= 0) {
 		t_string filename = normalized_path.substr(last_slash_ix + 1);
-		last_program_filename = filename.to_upper();
+		last_program_filename = filename;
 	}
 	else {
 		last_program_filename = path;

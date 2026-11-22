@@ -132,10 +132,11 @@ void PTML::STR_REPEAT()
 void PTML::STR_SPLIT()
 {
 	ARGC(3);
-	auto&& arr_name = ARG(1);
+	
+	t_string&& str = STR(1);
+	
+	auto&& arr_name = ARG(2);
 	t_list<t_string>* array = ptm->create_array(arr_name.string_val);
-
-	t_string&& str = STR(2);
 
 	char delim = 0;
 	auto&& delim_param = ARG(3);
