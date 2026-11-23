@@ -29,7 +29,7 @@ void t_window::open(int img_w, int img_h, int wnd_zoom)
 
 	auto wnd_flags = (fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0) | SDL_WINDOW_HIDDEN;
 
-	wnd = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, wnd_w, wnd_h, wnd_flags);
+	wnd = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, wnd_w, wnd_h, wnd_flags | SDL_WINDOW_RESIZABLE);
 	rend = SDL_CreateRenderer(sdl_wnd, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
 	tex = SDL_CreateTexture(sdl_rend, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, image_w, image_h);
 
@@ -44,7 +44,7 @@ void t_window::open(int img_w, int img_h, int wnd_zoom)
 	clear(0x000000);
 	refresh();
 
-	SDL_ShowCursor(false);
+	SDL_ShowCursor(true);
 	SDL_ShowWindow(sdl_wnd);
 	SDL_RaiseWindow(sdl_wnd);
 }
@@ -73,12 +73,14 @@ void t_window::toggle_fullscreen()
 	Uint32 flag = SDL_WINDOW_FULLSCREEN_DESKTOP;
 	Uint32 is_full = SDL_GetWindowFlags(sdl_wnd) & flag;
 	SDL_SetWindowFullscreen(sdl_wnd, is_full ? 0 : flag);
+	SDL_ShowCursor(is_full);
 	refresh();
 }
 
 void t_window::set_fullscreen(bool full)
 {
 	SDL_SetWindowFullscreen(sdl_wnd, full ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
+	SDL_ShowCursor(full);
 	refresh();
 }
 
