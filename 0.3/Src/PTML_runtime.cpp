@@ -3,14 +3,16 @@
 #include "PTML_shared_headers.h"
 
 PTM*			PTML::ptm = nullptr;
+t_window*		PTML::wnd = nullptr;
 t_screen*		PTML::scr = nullptr;
 t_program_line* PTML::line = nullptr;
 t_string		PTML::error;
 
-void PTML::set_env(PTM* _ptm, t_screen* _scr)
+void PTML::set_env(PTM* _ptm, t_window* _wnd, t_screen* _scr)
 {
 	ptm = _ptm;
 	scr = _scr;
+	wnd = _wnd;
 }
 
 void PTML::set_line(t_program_line* _line)

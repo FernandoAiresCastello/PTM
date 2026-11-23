@@ -14,10 +14,6 @@
 #define USR_HEIGHT	23
 #define LAYER_COUNT	1
 
-t_tilebuffer::t_tilebuffer() : t_tilebuffer(t_window::cols, t_window::rows)
-{
-}
-
 t_tilebuffer::t_tilebuffer(int cols, int rows) : 
 	cols(cols), rows(rows), last_col(cols - 1), last_row(rows-1), length(cols * rows)
 {

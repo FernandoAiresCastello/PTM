@@ -25,11 +25,8 @@ public:
 	t_screen();
 	~t_screen() = default;
 
-	void init(int cols, int rows);
+	void init(t_window* wnd, t_charset* chr, t_palette* pal, int cols, int rows);
 	void reset();
-	void set_window(t_window* wnd);
-	void set_charset(t_charset* chr);
-	void set_palette(t_palette* pal);
 	void refresh();
 	void draw();
 	void clear();

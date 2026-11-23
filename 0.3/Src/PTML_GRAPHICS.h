@@ -2,6 +2,7 @@
 
 namespace PTML
 {
+	void SCREEN();
 	void COLOR();
 	void COLOR_MODE();
 	void COLOR_SETF();

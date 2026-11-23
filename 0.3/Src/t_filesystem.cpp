@@ -297,7 +297,7 @@ void t_filesystem::load_program_plaintext(t_interpreter* intp, t_program* prg, c
             continue;
 
         auto&& line = t_string::from_int(line_nr) + " " + src_line;
-        intp->interpret_line(line, true);
+        intp->interpret_line(line);
         if (!intp->get_error().empty()) {
             prg->lines.clear();
             break;

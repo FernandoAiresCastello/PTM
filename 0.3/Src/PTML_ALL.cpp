@@ -84,6 +84,7 @@ t_function_ptr PTML::get_cmd_pointer(const t_string& cmd)
     CMD("GETCHR", CHRGET);
 
     // === SCREEN ===
+    CMD("SCREEN", SCREEN);
     CMD("REFRESH", REFRESH);
     CMD("AUTOREF", AUTOREF);
     CMD("FULLSCR", FULLSCR);

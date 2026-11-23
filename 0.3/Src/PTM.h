@@ -100,7 +100,6 @@ private:
 	t_string last_program_filename;
 
 	void init();
-	void run_tests();
 	void run_graphics_test();
 	void run_main(const char* initial_program);
 

@@ -10,14 +10,22 @@ t_screen::t_screen()
 {
 }
 
-void t_screen::init(int cols, int rows)
+void t_screen::init(t_window* wnd, t_charset* chr, t_palette* pal, int cols, int rows)
 {
+	this->wnd = wnd;
+	this->chr = chr;
+	this->pal = pal;
+
 	this->cols = cols;
 	this->rows = rows;
 	last_col = cols - 1;
 	last_row = rows - 1;
 	buf = std::make_unique<t_tilebuffer>(cols, rows);
-	viewport = t_tilebuffer_region(0, 0, t_window::cols - 4, t_window::rows - 2);
+
+	int vw_cols = wnd->get_cols() - 4;
+	int vw_rows = wnd->get_rows() - 2;
+	viewport = t_tilebuffer_region(0, 0, vw_cols, vw_rows);
+
 	csr = buf->get_cursor();
 	reset();
 }
@@ -33,21 +41,6 @@ void t_screen::reset()
 	locate(0, 0);
 	logical_line = t_string::repeat(" ", cols);
 	reset_horizontal_scroll();
-}
-
-void t_screen::set_window(t_window* wnd)
-{
-	this->wnd = wnd;
-}
-
-void t_screen::set_charset(t_charset* chr)
-{
-	this->chr = chr;
-}
-
-void t_screen::set_palette(t_palette* pal)
-{
-	this->pal = pal;
 }
 
 void t_screen::refresh()
@@ -408,7 +401,7 @@ bool t_screen::print_lines_with_icon(const t_list<t_tile>& icons, const t_list<t
 
 void t_screen::print_debug(const t_string& str)
 {
-	wnd->draw_debug_text(chr, str, 0, wnd->last_row);
+	wnd->draw_debug_text(chr, str, 0, wnd->get_rows() - 1);
 }
 
 void t_screen::newline(bool allow_scroll)

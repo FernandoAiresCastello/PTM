@@ -17,9 +17,6 @@
     <ClCompile Include="src\t_data.cpp">
       <Filter>UTIL</Filter>
     </ClCompile>
-    <ClCompile Include="src\t_tests.cpp">
-      <Filter>TEST</Filter>
-    </ClCompile>
     <ClCompile Include="src\t_window.cpp">
       <Filter>GRAPHICS - CORE</Filter>
     </ClCompile>
@@ -147,9 +144,6 @@
     </ClInclude>
     <ClInclude Include="src\t_data.h">
       <Filter>UTIL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\t_tests.h">
-      <Filter>TEST</Filter>
     </ClInclude>
     <ClInclude Include="src\t_binary.h">
       <Filter>UTIL</Filter>
@@ -314,9 +308,6 @@
   <ItemGroup>
     <Filter Include="UTIL">
       <UniqueIdentifier>{1e5749d2-762f-4f97-b9eb-39d554790416}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="TEST">
-      <UniqueIdentifier>{a56445db-2f75-4346-b2cc-eee7843ce292}</UniqueIdentifier>
     </Filter>
     <Filter Include="INPUT">
       <UniqueIdentifier>{31c97c3a-1b06-47e4-9c67-9dbac0326a30}</UniqueIdentifier>

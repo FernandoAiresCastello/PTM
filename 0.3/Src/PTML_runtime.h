@@ -11,6 +11,7 @@
 namespace PTML
 {
 	extern PTM* ptm;
+	extern t_window* wnd;
 	extern t_screen* scr;
 	extern t_program_line* line;
 	extern t_string error;
@@ -18,7 +19,7 @@ namespace PTML
 	enum class t_comparison { eq, neq, gt, gte, lt, lte };
 	enum class t_branch_mode { go_to, call };
 
-	void set_env(PTM* _ptm, t_screen* _scr);
+	void set_env(PTM* _ptm, t_window* _wnd, t_screen* _scr);
 	void set_line(t_program_line* _line);
 	t_string resolve_str(const t_param& arg);
 	int resolve_num(const t_param& arg);

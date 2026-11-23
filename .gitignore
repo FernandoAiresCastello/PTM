@@ -29,5 +29,4 @@ fernando/
 temp/
 cppcheck
 *.pub
-0.3/build/USR/*
-0.3/build/PROJ/SCRATCHPAD/*
+autoexec.ptm

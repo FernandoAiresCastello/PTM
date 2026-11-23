@@ -9,26 +9,36 @@
 #define sdl_rend ((SDL_Renderer*)rend)
 #define sdl_tex ((SDL_Texture*)tex)
 
-void t_window::open(const t_string& title, int size)
+void t_window::open(int img_w, int img_h, int wnd_zoom)
 {
-	if (size < 1) size = 1;
-	else if (size > 5) size = 5;
+	image_w = img_w;
+	image_h = img_h;
+	cols = image_w / t_tile::width;
+	rows = image_h / t_tile::height;
+	last_col = cols - 1;
+	last_row = rows - 1;
+	window_zoom = wnd_zoom;
+	buflen = image_w * image_h * sizeof(t_rgb);
+	scrbuf = std::make_unique<t_rgb[]>(buflen);
 
-	int wnd_w = image_w * size;
-	int wnd_h = image_h * size;
+	int wnd_w = image_w * window_zoom;
+	int wnd_h = image_h * window_zoom;
 
 	SDL_SetHint(SDL_HINT_RENDER_DRIVER, "direct3d");
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
 
 	auto wnd_flags = (fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0) | SDL_WINDOW_HIDDEN;
 
-	wnd = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, wnd_w, wnd_h, wnd_flags);
+	wnd = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, wnd_w, wnd_h, wnd_flags);
 	rend = SDL_CreateRenderer(sdl_wnd, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
 	tex = SDL_CreateTexture(sdl_rend, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, image_w, image_h);
 
 	SDL_SetRenderDrawBlendMode(sdl_rend, SDL_BLENDMODE_NONE);
 	SDL_SetTextureBlendMode(sdl_tex, SDL_BLENDMODE_NONE);
-	SDL_RenderSetLogicalSize(sdl_rend, image_w, image_h);
+
+	if (!stretch_fullscreen)
+		SDL_RenderSetLogicalSize(sdl_rend, image_w, image_h);
+
 	SDL_SetWindowPosition(sdl_wnd, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 
 	clear(0x000000);
@@ -85,7 +95,7 @@ void t_window::set_title(const t_string& title)
 void t_window::clear(const t_color& color)
 {
 	for (int i = 0; i < buflen; i++) {
-		scrbuf[i] = color.to_rgb();
+		scrbuf.get()[i] = color.to_rgb();
 	}
 }
 
@@ -97,7 +107,7 @@ void t_window::refresh()
 	static void* pixels;
 
 	SDL_LockTexture(sdl_tex, nullptr, &pixels, &pitch);
-	SDL_memcpy(pixels, scrbuf, buflen);
+	SDL_memcpy(pixels, scrbuf.get(), buflen);
 	SDL_UnlockTexture(sdl_tex);
 	SDL_RenderCopy(sdl_rend, sdl_tex, nullptr, nullptr);
 	SDL_RenderPresent(sdl_rend);
@@ -121,8 +131,8 @@ int t_window::get_animation_frame() const
 }
 
 #define is_valid_pixel(x, y)		x >= 0 && y >= 0 && x < image_w && y < image_h
-#define set_pixel(x, y, color)		if (is_valid_pixel(x, y)) { scrbuf[y * image_w + x] = color.to_rgb(); }
-#define set_pixel_rgb(x, y, color)	if (is_valid_pixel(x, y)) { scrbuf[y * image_w + x] = color; }
+#define set_pixel(x, y, color)		if (is_valid_pixel(x, y)) { scrbuf.get()[y * image_w + x] = color.to_rgb(); }
+#define set_pixel_rgb(x, y, color)	if (is_valid_pixel(x, y)) { scrbuf.get()[y * image_w + x] = color; }
 #define snap_to_grid(grid, x, y)	if (grid) { x *= t_tile::width; y *= t_tile::height; }
 
 void t_window::draw_pixel(int x, int y, const t_color& color)
@@ -192,3 +202,6 @@ void t_window::draw_image(t_image* image, int x, int y)
 		y++;
 	}
 }
+
+int t_window::get_cols() { return cols; }
+int t_window::get_rows() { return rows; }

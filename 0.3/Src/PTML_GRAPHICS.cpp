@@ -1,6 +1,23 @@
 #include "PTML_GRAPHICS.h"
 #include "PTML_shared_headers.h"
 
+void PTML::SCREEN()
+{
+	ARGC(3);
+
+	if (wnd->is_open()) {
+		error = err.duplicate_screen_def;
+		return;
+	}
+
+	int width = NUM(1);
+	int height = NUM(2);
+	int zoom = NUM(3);
+
+	wnd->open(width, height, zoom);
+	scr->init(wnd, &ptm->get_chr(), &ptm->get_pal(), 256, wnd->get_rows() - 2);
+}
+
 void PTML::COLOR()
 {
 	ARGC_MIN_MAX(1, 3);

@@ -21,7 +21,6 @@ public:
 	t_spritelist sprites;
 	bool sprites_enabled = true;
 
-	t_tilebuffer();
 	t_tilebuffer(int cols, int rows);
 	~t_tilebuffer() = default;
 

@@ -44,6 +44,7 @@ namespace PTML
 		const t_string binary_str_expected_8_bits = "8-bit binary string expected";
 		const t_string binary_str_expected_64_bits = "64-bit binary string expected";
 		const t_string illegal_format_specifier = "Illegal format specifier";
+		const t_string duplicate_screen_def = "Duplicate screen definition";
 	}
 	err;
 }

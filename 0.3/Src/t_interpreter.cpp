@@ -12,15 +12,14 @@
 t_tokenizer tokenizer;
 t_list<t_token> tokens;
 
-void t_interpreter::init(PTM* ptm, t_screen* scr, t_keyboard* kb)
+void t_interpreter::init(PTM* ptm, t_screen* scr, t_window* wnd, t_keyboard* kb)
 {
 	this->ptm = ptm;
-	this->scr = scr;
 	this->kb = kb;
 
-	PTML::set_env(ptm, scr);
+	PTML::set_env(ptm, wnd, scr);
 }
-void t_interpreter::interpret_line(t_string& src, bool from_file)
+void t_interpreter::interpret_line(t_string& src)
 {
 	if (src.contains(t_record_file::delimiter)) {
 		PTML::error = PTML::err.bad_file_format;
@@ -33,24 +32,16 @@ void t_interpreter::interpret_line(t_string& src, bool from_file)
 
 	if (tokens[0].type == t_token_type::line_number) {
 		int line_number = tokens[0].numeric_val;
-		if (tokens.size() == 1 && !from_file) {
-			bool ok = ptm->delete_program_line(line_number);
-			if (!ok) {
-				scr->print_string_crlf(PTML::err.undefined_line_nr);
-			}
+		tokens.erase(tokens.begin());
+		if (tokens.empty()) {
+			PTML::error = t_string::fmt(
+				PTML::err.invalid_program_line_at.c_str(), line_number);
 		}
 		else {
-			tokens.erase(tokens.begin());
-			if (tokens.empty()) {
-				PTML::error = t_string::fmt(
-					PTML::err.invalid_program_line_at.c_str(), line_number);
-			}
-			else {
-				t_program_line line = t_program_line(tokens);
-				line.line_nr = line_number;
-				line.src = src;
-				ptm->save_program_line(line);
-			}
+			t_program_line line = t_program_line(tokens);
+			line.line_nr = line_number;
+			line.src = src;
+			ptm->save_program_line(line);
 		}
 	}
 	else {
@@ -76,7 +67,7 @@ bool t_interpreter::execute_line(t_program_line& line)
 
 	if (has_error) {
 		ptm->get_sound().alert();
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "PTM - Runtime Error", 
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Runtime Error", 
 			t_string::fmt("%s at line %i", PTML::error.c_str(), line.line_nr).c_str(), nullptr);
 	}
 

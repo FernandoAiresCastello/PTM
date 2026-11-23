@@ -1,7 +1,6 @@
 #include <stdexcept>
 #include "PTM.h"
 #include "PTML_errors.h"
-#include "t_tests.h"
 #include "t_window.h"
 #include "t_keyboard.h"
 #include "t_charset.h"
@@ -39,7 +38,7 @@ void PTM::run(const char* initial_program)
 	bool autoexec = t_filesystem::has_autoexec_file();
 
 	if (!initial_program && !autoexec) {
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "PTM - Boot Error", "No program file given", nullptr);
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Boot Error", "No program file given", nullptr);
 		return;
 	}
 
@@ -65,22 +64,16 @@ void PTM::init()
 
 	kb.init();
 
-	wnd.open("", wnd_size);
-
-	scr.init(256, t_window::rows - 2);
-	scr.set_window(&wnd);
-	scr.set_charset(&chr);
-	scr.set_palette(&pal);
-
-	intp.init(this, &scr, &kb);
+	intp.init(this, &scr, &wnd, &kb);
 }
 
 void PTM::run_main(const char* initial_program)
 {
 	bool autoexec = t_filesystem::has_autoexec_file();
 	bool has_initial_prog = initial_program != nullptr;
+	bool running = true;
 
-	while (wnd.is_open()) {
+	while (running) {
 		if (has_initial_prog) {
 			has_initial_prog = false;
 			load_program_absolute_path(initial_program);
@@ -92,6 +85,9 @@ void PTM::run_main(const char* initial_program)
 			run_program_from_immediate_mode();
 		}
 		on_machine_cycle();
+
+		if (!wnd.is_open())
+			running = false;
 	}
 
 	on_exit();
@@ -210,12 +206,6 @@ void PTM::refresh_screen()
 bool PTM::is_window_open() const
 {
 	return wnd.is_open();
-}
-
-void PTM::run_tests()
-{
-	t_tests tests;
-	tests.run();
 }
 
 void PTM::run_graphics_test()
@@ -462,7 +452,7 @@ bool PTM::load_program_absolute_path(const t_string& path)
 	}
 	catch (std::runtime_error error)
 	{
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "PTM - Runtime Error",
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Runtime Error",
 			t_string::fmt("%s\n\n%s", error.what(), path.c_str()).c_str(), nullptr);
 
 		return false;
